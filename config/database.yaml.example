@@ -1,0 +1,6 @@
+driver: 'pgsql'	
+host: ''
+port: 
+db: ''
+user: ''
+password: ''
