@@ -49,7 +49,7 @@ class Postgis
 				$tags,
 			));
 			if (!$success) {
-				echo "FAILED TO INSERT POINT:".print_r($pq->errorInfo())."<br>";
+				throw (new tbApiException("Failed to insert the track into the database", 500));
 			}
 		}
 
@@ -76,9 +76,11 @@ class Postgis
 					GROUP BY route.id, routepoint.routeid";
 
 		$pq = $this->prepare($q);
-		$success = $pq->execute(array(16,16));
-		if (!$success) {echo "FAILED TO SELECT:".print_r($pq->errorInfo())."<br>";}
-		var_dump ($pq->fetchAll());
+		$success = $pq->execute(array($routeid,$routeid));
+		if (!$success) {
+			throw (new tbApiException("Failed to fetch route from Database", 500));
+		}
+		return json_encode($pq->fetchAll());
 	}
 }
 
