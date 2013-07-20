@@ -1,33 +1,35 @@
 ﻿CREATE EXTENSION IF NOT EXISTS POSTGIS; 
 CREATE EXTENSION IF NOT EXISTS HSTORE;
 
-DROP TABLE trackpoints;
-DROP TABLE tracks;
-CREATE TABLE tracks (
+--DROP TABLE routepoints;
+--DROP TABLE routes;
+CREATE TABLE  IF NOT EXISTS routes(
   id SERIAL PRIMARY KEY,
-  name varchar(15) UNIQUE
+  name varchar(15),
+  center GEOMETRY
 );
 
-CREATE TABLE trackpoints (
+CREATE TABLE IF NOT EXISTS routepoints (
   id  SERIAL PRIMARY KEY,
-  trackid SERIAL REFERENCES tracks(id) NOT NULL,
+  routeid SERIAL REFERENCES routes(id) NOT NULL,
+  pointnumber INTEGER NOT NULL,
   coords GEOMETRY, -- POINT(X, Y)
   tags HSTORE      -- elevation, speed, date/time...
 );
 
 
-INSERT INTO tracks (name) VALUES ('Ultraks');
+INSERT INTO routes (name) VALUES ('Ultraks');
 
-INSERT INTO trackpoints (trackid, coords, tags) VALUES (
-    (select id from tracks where name = 'Ultraks'), 
-    'POINT(46.019698202 7.746125325)',
-    '"elevation" => "1624", "time"=>"2013-07-02T18:37:07Z"'
-),(
-    (select id from tracks where name = 'Ultraks'), 
-    'POINT(46.019588282 7.7468478)',
-    '"elevation" => "1623", "time"=>"2013-07-02T18:37:07Z"'
-),(
-    (select id from tracks where name = 'Ultraks'), 
-    'POINT(46.019389325 7.747234049)',
-    '"elevation" => "1618", "time"=>"2013-07-02T18:37:07Z"'
-);
+
+
+
+UPDATE routes
+    SET center = (
+        SELECT  ST_AsBinary(ST_Centroid(ST_MakeLine(rp.coords ORDER BY rp.pointnumber ASC)))
+        FROM routepoints rp
+        WHERE routes.id = rp.routeid )
+    WHERE id=52; 
+
+
+
+    SELECT route.id AS routeid, route.name AS name, ST_AsGeoJson(ST_MakeLine(routepoint.coords ORDER BY routepoint.pointnumber ASC)) AS route FROM routes as route, routepoints as routepoint WHERE route.id=?

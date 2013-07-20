@@ -58,31 +58,31 @@ class GPXImporter
       if ($child->nodeName == $nodename) {
         $children[] = $child;
       }
-		}
+    }
     return $children;
   }
   
 
   protected function parsePointTags($node) {
-		$tags = array();
-		if ($node->hasChildNodes()) {
-			foreach ($node->childNodes as $child) {
-			  switch ($child->nodeName) {
-			  	case "ele":
-						$tags["altitude"] = $child->nodeValue;
-			  		break;
+    $tags = array();
+    if ($node->hasChildNodes()) {
+      foreach ($node->childNodes as $child) {
+        switch ($child->nodeName) {
+          case "ele":
+            $tags["altitude"] = $child->nodeValue;
+            break;
 
-			  	case "time":
-						$tags["time"] = $child->nodeValue;
-			  		break;
+          case "time":
+            $tags["time"] = $child->nodeValue;
+            break;
 
-			  	default:
-			  	  break;
-				}
-			}
-		}
-		return $tags;
-	}
+          default:
+            break;
+        }
+      }
+    }
+    return $tags;
+  }
   
 
   protected function parseTracks() {
@@ -90,17 +90,17 @@ class GPXImporter
 
     $trk_elements = $this->xmlobj->getElementsByTagName('trk');
     foreach ($trk_elements as $trk) {
-			$track = new Route();
+      $track = new Route();
       foreach ($this->childElements($trk, 'trkseg') as $trkseg) {
         foreach ($this->childElements($trkseg, 'trkpt') as $trkpt) {
           $track->addRoutePoint(
             $trkpt->attributes->getNamedItem("lon")->nodeValue,
-					  $trkpt->attributes->getNamedItem("lat")->nodeValue,
+            $trkpt->attributes->getNamedItem("lat")->nodeValue,
             $this->parsePointTags($trkpt)
-					);
-		    }
+          );
+        }
       }
-			$tracks[] = $track;
+      $tracks[] = $track;
     }
     return $tracks;
   }
@@ -109,7 +109,7 @@ class GPXImporter
     $routes = array();
     $rte_elements = $this->xmlobj->getElementsByTagName('rte');
     foreach ($rte_elements as $rte) {
-			$route = new Route();
+      $route = new Route();
 
       foreach ($this->childElements($rte, 'rtept') as $rtept) {
         $route->addRoutePoint(
