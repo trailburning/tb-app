@@ -4,7 +4,7 @@
  * Inspired from code Copyright (c) Patrick Hayes under BSD License
  */
 
-require_once 'importers/route.php';
+require_once 'route.php';
 
 class GPXImporter
 {
