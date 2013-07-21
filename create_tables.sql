@@ -3,9 +3,17 @@ CREATE EXTENSION IF NOT EXISTS HSTORE;
 
 --DROP TABLE routepoints;
 --DROP TABLE routes;
-CREATE TABLE  IF NOT EXISTS routes(
+--DROP TABLE gpxfiles;
+
+CREATE TABLE IF NOT EXISTS gpxfiles (
   id SERIAL PRIMARY KEY,
-  name varchar(15),
+  path varchar(50)
+);
+
+CREATE TABLE IF NOT EXISTS routes(
+  id SERIAL PRIMARY KEY,
+  gpxfileid SERIAL REFERENCES gpxfiles(id),
+  name varchar(20),
   center GEOMETRY
 );
 
@@ -18,18 +26,3 @@ CREATE TABLE IF NOT EXISTS routepoints (
 );
 
 
-INSERT INTO routes (name) VALUES ('Ultraks');
-
-
-
-
-UPDATE routes
-    SET center = (
-        SELECT  ST_AsBinary(ST_Centroid(ST_MakeLine(rp.coords ORDER BY rp.pointnumber ASC)))
-        FROM routepoints rp
-        WHERE routes.id = rp.routeid )
-    WHERE id=52; 
-
-
-
-    SELECT route.id AS routeid, route.name AS name, ST_AsGeoJson(ST_MakeLine(routepoint.coords ORDER BY routepoint.pointnumber ASC)) AS route FROM routes as route, routepoints as routepoint WHERE route.id=?

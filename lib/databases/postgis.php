@@ -3,6 +3,9 @@
 namespace TB;
 
 require_once 'iDatabase.php';
+require_once 'ApiException.php';
+
+use TB;
 
 class Postgis 
   extends \PDO 
@@ -10,7 +13,12 @@ class Postgis
 
 
   function __construct($dsn, $username="", $password="", $driver_options=array()) {
+    try {
       parent::__construct($dsn,$username,$password, $driver_options);
+    }
+    catch (PDOException $e) {
+      throw (new ApiException("Failed to establish connection to Database", 500));
+    }
   }
 
 
@@ -26,22 +34,38 @@ class Postgis
     $success = $pq->execute(array($routeid));
     if (!$success) {
       $this->rollBack();
-      throw (new tbApiException("Failed to insert the track into the database - Problem calculating centroid", 500));
+      throw (new ApiException("Failed to insert the track into the database - Problem calculating centroid", 500));
     }
 
     $this->commit();
   }
 
-  function importRoute($route) {
+  function importGpxFile($path) {
+    $this->beginTransaction();
+    $q = "INSERT INTO gpxfiles (path) VALUES (?)";
+    $pq = $this->prepare($q);
+    $success = $pq->execute(array($path));
+    if (!$success) {
+      $this->rollBack();
+      throw (new ApiException("Failed to insert GPX data into the database", 500));
+    }
+
+    $gpxfileid = intval($this->lastInsertId("gpxfiles_id_seq"));
+    $this->commit();
+
+    return $gpxfileid;
+  }
+
+  function importRoute($gpxfileid, $route) {
     $routeid = 0;
     $this->beginTransaction();
 
-    $q = "INSERT INTO routes (name) VALUES (?)";
+    $q = "INSERT INTO routes (name, gpxfileid) VALUES (?, ?)";
     $pq = $this->prepare($q);
-    $success = $pq->execute(array("random"));
+    $success = $pq->execute(array("random", $gpxfileid));
     if (!$success) {
       $this->rollBack();
-      throw (new tbApiException("Failed to insert the track into the database", 500));
+      throw (new ApiException("Failed to insert the route into the database", 500));
     }
 
     $routeid = intval($this->lastInsertId("routes_id_seq"));
@@ -73,7 +97,7 @@ class Postgis
       ));
       if (!$success) {
         $this->rollBack();
-        throw (new tbApiException("Failed to insert the track into the database", 500));
+        throw (new ApiException("Failed to insert routepoints into the database", 500));
       }
     }
     $this->commit();
@@ -95,7 +119,7 @@ class Postgis
     $pq = $this->prepare($q);
     $success = $pq->execute(array($routeid));
     if (!$success) {
-      throw (new tbApiException("Failed to fetch route from Database", 500));
+      throw (new ApiException("Failed to fetch route from Database", 500));
     }
     return json_encode($pq->fetchAll());
   }
