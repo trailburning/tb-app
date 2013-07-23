@@ -3,7 +3,7 @@
 require_once 'lib/init.php';  // Set error level, include_paths, etc.
 require_once 'ApiException.php';
 require_once 'ExceptionHandling.php';
-// Autoload auf 3rd-party dependancies installed by composer
+// Autoload of 3rd-party dependancies installed by composer
 require_once 'vendor/autoload.php';
 
 \Slim\Slim::registerAutoloader();
@@ -11,8 +11,6 @@ $slim = new \Slim\Slim();
 // Debug needs to be set to false for our custom exception handlers to be called
 $slim->config(array('log.enable' => true,'debug' => false)); 
 $slim->error(function (\Exception $e) { \TB\handleException($e);} ); 
-$slim->error(function (\TB\ApiException $e) { \TB\handleApiException($e);} ); 
-
 
 $slim->get('/v1/route/import/gpx', function () {
   echo '<form action="/v1/route/import/gpx" method="post" enctype="multipart/form-data"><input type="file" name="gpxfile"><input type="submit"></form>';
@@ -31,7 +29,6 @@ $slim->post('/v1/route/import/gpx', function () {
 
   if (!array_key_exists("gpxfile", $_FILES)) 
     throw (new \TB\ApiException("Gpxfile variable not set", 400));
-
   if ($_FILES['gpxfile']['error'] != 0) 
     throw (new \TB\ApiException("An error happened uploading the GPX file", 400));
 
@@ -49,7 +46,6 @@ $slim->post('/v1/route/import/gpx', function () {
     'key'    => $aws_config['AWSAccessKeyId'],
     'secret' => $aws_config['AWSSecretKey']
     ));
-
   $result = $aws_client->putObject(array(
       'Bucket' => 'trailburning-gpx',
       'Key'    =>  $gpx_filename,
@@ -57,15 +53,17 @@ $slim->post('/v1/route/import/gpx', function () {
   ));
 
   $gpxfileid = $db->importGpxFile('s3://trailburning-gpx/'.$gpx_filename);
-
   $importedRoutesIds = array();
   foreach ($routes as $route){
     $importedRoutesIds[] = $db->importRoute($gpxfileid, $route);
   }
 
-  throw (new \TB\ApiException('{message: "GPX successfully imported", routeids:'.json_encode($importedRoutesIds).'}', 200));
+  $slim = \Slim\Slim::getInstance();
+  $res = $slim->response();
+  $res['Content-Type'] = 'application/json';
+  $res->status(200);
+  $res->body('{message: "GPX successfully imported", routeids:'.json_encode($importedRoutesIds).'}');
 });
-
 
 $slim->get('/v1/route/:id', function ($routeid) {
   require_once 'importers/GPX.php';
@@ -85,6 +83,7 @@ $slim->get('/v1/route/:id/pictures/new', function ($routeid) {
 });
 
 $slim->post('/v1/route/:id/pictures/new', function ($routeid) {
+  require_once 'Picture.php';
   require_once 'databases/postgis.php';
 
   global $api_root, $conf_path;
@@ -95,22 +94,39 @@ $slim->post('/v1/route/:id/pictures/new', function ($routeid) {
   $res = $slim->response();
   $res['Content-Type'] = 'application/json';
 
-  //    print_r ($_FILES['pictures']);
   if (!array_key_exists('pictures', $_FILES)) 
     throw (new \TB\ApiException("Picture variable not set", 400));
 
-  if ($_FILES['pictures']['error'] != 0) 
-    throw (new \TB\ApiException("An error happened uploading the picture", 400));
 
   for ($i=0; $i<count($_FILES['pictures']['name']); $i++) {
+
+    if ($_FILES['pictures']['error'][$i] != 0)
+      throw (new \TB\ApiException("An error happened uploading the picture", 400));    
+
     $picture_filename = $_FILES["pictures"]["name"][$i];
     $picture_filename = preg_replace('/[^\w\-~_\.]+/u', '-', $picture_filename);
     $picture_targetpath  = $api_root.'/tmp/upload/pictures/'.$picture_filename;
     move_uploaded_file($_FILES["pictures"]["tmp_name"][$i], $picture_targetpath);
-    $exiftags = exif_read_data($picture_targetpath);
+
+    $aws_client = \Aws\S3\S3Client::factory(array(
+      'key'    => $aws_config['AWSAccessKeyId'],
+      'secret' => $aws_config['AWSSecretKey']
+      ));
+    $result = $aws_client->putObject(array(
+        'Bucket' => 'trailburning-media',
+        'Key'    =>  $picture_filename,
+        'Body'   => file_get_contents($picture_targetpath)
+    ));
+
+    $pic = new \TB\Picture($picture_filename, $picture_targetpath);
+
   }
 
-  throw (new \TB\ApiException($jsonroute, 200));
+  $slim = \Slim\Slim::getInstance();
+  $res = $slim->response();
+  $res['Content-Type'] = 'application/json';
+  $res->status(200);
+  $res->body("");
 });
 
 

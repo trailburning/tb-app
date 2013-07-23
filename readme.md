@@ -2,7 +2,14 @@
 
 ## Installation notes
 
-Composer is used for library dependancy management. To download/update all third-party libraries, this needs to be run:
+You will need the following packages:
++ php5-pgsql
++ php5-curl
+
+Mod_rewrite needs to be activated.
+
+Composer is used for library dependancy management. 
+First download composer.phar from http://getcomposer.org/ to the root directory of the project. Then to download/update all third-party libraries, run:
 
 ```bash
 php composer.phar update
