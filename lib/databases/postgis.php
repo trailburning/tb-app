@@ -3,6 +3,7 @@
 namespace TB;
 
 require_once 'iDatabase.php';
+require_once 'Route.php';
 require_once 'ApiException.php';
 
 use TB;
@@ -12,7 +13,7 @@ class Postgis
   implements \TB\iDatabase {
 
 
-  function __construct($dsn, $username="", $password="", $driver_options=array()) {
+  public function __construct($dsn, $username="", $password="", $driver_options=array()) {
     try {
       parent::__construct($dsn,$username,$password, $driver_options);
     }
@@ -22,7 +23,7 @@ class Postgis
   }
 
 
-  function updateRouteCentroid($routeid) {
+  private function updateRouteCentroid($routeid) {
     $this->beginTransaction();
     $q = "UPDATE routes 
           SET center = (
@@ -40,7 +41,7 @@ class Postgis
     $this->commit();
   }
 
-  function importGpxFile($path) {
+  public function importGpxFile($path) {
     $this->beginTransaction();
     $q = "INSERT INTO gpxfiles (path) VALUES (?)";
     $pq = $this->prepare($q);
@@ -56,7 +57,7 @@ class Postgis
     return $gpxfileid;
   }
 
-  function importRoute($gpxfileid, $route) {
+  public function importRoute($gpxfileid, $route) {
     $routeid = 0;
     $this->beginTransaction();
 
@@ -107,8 +108,35 @@ class Postgis
   }
 
 
+  public function exportRoute($routeid) {
+    $route = new Route();
 
-  function exportRoute($routeid, $format) {
+    $this->beginTransaction();
+    $q = "SELECT r.name AS name, 
+                 ST_AsText(rp.coords) AS rpcoords,
+                 rp.tags as rptags
+          FROM routes r, routepoints rp
+          WHERE r.id=? AND rp.routeid=r.id
+          GROUP BY r.id, rp.coords, rp.tags";
+    $pq = $this->prepare($q);
+    $success = $pq->execute(array($routeid));
+    if (!$success) {
+      throw (new ApiException("Failed to fetch route from Database", 500));
+    }
+    
+    while ($row = $pq->fetch(\PDO::FETCH_ASSOC)) {
+      $coords = explode(" ", substr(trim($row['rpcoords']),6,-1)); //Strips POINT( and trailing )
+      $route->addRoutePoint(
+        $coords[0], 
+        $coords[1], 
+        json_decode('{' . str_replace('"=>"', '":"', $row['rptags']) . '}', true)
+      );
+    }
+
+    return $route;
+  }
+
+  public function exportRouteAs($routeid, $format) {
     $this->beginTransaction();
     $q = "SELECT r.id AS routeid, 
                  r.name AS name, 
@@ -122,6 +150,55 @@ class Postgis
       throw (new ApiException("Failed to fetch route from Database", 500));
     }
     return json_encode($pq->fetchAll());
+  }
+
+  public function attachMediaToRoute($routeid, $mediaid, $pointnumber=0) {
+    $q = "INSERT INTO routes_medias (routeid, mediaid, pointnumber) VALUES (?, ?, ?)";
+    $pq = $this->prepare($q);
+    $success = $pq->execute(array(
+      $routeid,
+      $mediaid, 
+      $pointnumber
+    ));
+
+    if (!$success) {
+      throw (new ApiException("Failed to link media to route", 500));
+    }
+    $this->commit();
+  }
+
+  public function importPicture($routeid, $picture) {
+    $this->beginTransaction();
+
+    if ($picture->long == NULL || $picture->lat == NULL) {
+      $picture->long = 0;
+      $picture->lat = 0;
+    }
+
+    $pcoordswkt = "POINT($picture->long $picture->lat)";
+    // Build hstore text from associative array
+    $tags = "";
+    $tagnum = 0;
+    foreach ($picture->tags as $tagname => $tagvalue) {
+      if ($tagnum++ > 0) $tags .= ",";
+      $tags .= '"'.$tagname.'" => "'.$tagvalue.'"';
+    }
+
+    $q = "INSERT INTO media (coords, tags) VALUES (?, ?)";
+    $pq = $this->prepare($q);
+    $success = $pq->execute(array(
+      $pcoordswkt, 
+      $tags
+    ));
+    if (!$success) {
+      throw (new ApiException("Failed to insert media into database", 500));
+    }
+
+    $pictureid = intval($this->lastInsertId("media_id_seq"));
+
+    $this->attachMediaToRoute($routeid, $pictureid);
+
+    return $pictureid;
   }
 }
 

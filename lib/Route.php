@@ -1,7 +1,9 @@
 <?php
 
+namespace TB;
+
 class RoutePoint {
-  public $lat, $lon;
+  public $lat, $long;
   public $tags;
 
   public function __construct($long, $lat, $tags) {
@@ -20,11 +22,12 @@ class RoutePoint {
 }
 
 class Route {
-  public $tags;
-  public $routepoints;
-  public $centroid;
+  protected $name;
+  protected $tags;
+  protected $routepoints;
+  protected $centroid;
 
-  public function __construct($tags = NULL) {
+  public function __construct($tags = array()) {
     $this->tags = $tags;
     $this->routepoints = array();
   }
@@ -43,6 +46,24 @@ class Route {
 
   public function getRoutePoints() {
     return $this->routepoints;
+  }
+
+  public function toJSON() {
+    $route = '{';
+    $route .= '"name": "'.$this->name.'",';
+    $route .= '"centroid": "'.$this->centroid.'",';
+    $route .= '"tags": [';
+    foreach ($this->tags as $tagname => $tagvalue) {
+      $route .= '"'.$tagname.'": "'.$tagvalue.'"';
+    }
+    $route .= '],';
+    $route .= '"routepoints" =[';
+    foreach ($this->routepoints as $rp) {
+      $route .= '['.$rp->long.','.$rp->lat.']';
+    }
+    $route .= ']}';
+
+    return $route;
   }
 }
 

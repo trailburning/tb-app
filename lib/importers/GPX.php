@@ -30,14 +30,14 @@ class GPXImporter
     
     $this->xmlobj = $xmlobj;
     try {
-      $geom = $this->parseGPXFeatures();
+      $routes = $this->parseGPXFeatures();
     } catch(InvalidText $e) {
         throw new Exception("Cannot Read Geometry From GPX: ". $text);
     } catch(Exception $e) {
         throw $e;
     }
 
-    return $geom;
+    return $routes;
   }
   
   protected function parseGPXFeatures() {
@@ -90,7 +90,7 @@ class GPXImporter
 
     $trk_elements = $this->xmlobj->getElementsByTagName('trk');
     foreach ($trk_elements as $trk) {
-      $track = new Route();
+      $track = new \TB\Route();
       foreach ($this->childElements($trk, 'trkseg') as $trkseg) {
         foreach ($this->childElements($trkseg, 'trkpt') as $trkpt) {
           $track->addRoutePoint(

@@ -74,8 +74,9 @@ $slim->get('/v1/route/:id', function ($routeid) {
 
   $db = new \TB\Postgis($db_config['driver'].':host='.$db_config['host'].';dbname='.$db_config['db'], $db_config['user'], $db_config['password'], array(PDO::ATTR_PERSISTENT => true, PDO::ERRMODE_EXCEPTION => true));
 
-  $jsonroute = $db->exportRoute($routeid, "json");
-  throw (new \TB\ApiException($jsonroute, 200));
+  $route = $db->exportRoute($routeid);
+
+  throw (new \TB\ApiException($route->ToJSON(), 200));
 });
 
 $slim->get('/v1/route/:id/pictures/new', function ($routeid) {
@@ -97,6 +98,7 @@ $slim->post('/v1/route/:id/pictures/new', function ($routeid) {
   if (!array_key_exists('pictures', $_FILES)) 
     throw (new \TB\ApiException("Picture variable not set", 400));
 
+  $picturesIds = array();
 
   for ($i=0; $i<count($_FILES['pictures']['name']); $i++) {
 
@@ -119,14 +121,15 @@ $slim->post('/v1/route/:id/pictures/new', function ($routeid) {
     ));
 
     $pic = new \TB\Picture($picture_filename, $picture_targetpath);
-
+    $db = new \TB\Postgis($db_config['driver'].':host='.$db_config['host'].';dbname='.$db_config['db'], $db_config['user'], $db_config['password'], array(PDO::ATTR_PERSISTENT => true, PDO::ERRMODE_EXCEPTION => true));
+    $picturesIds[] = $db->importPicture($routeid, $pic);
   }
 
   $slim = \Slim\Slim::getInstance();
   $res = $slim->response();
   $res['Content-Type'] = 'application/json';
   $res->status(200);
-  $res->body("");
+  $res->body("{picturesIds: ".json_encode($picturesIds)."}");
 });
 
 
