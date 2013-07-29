@@ -57,7 +57,7 @@ class Postgis
     return $gpxfileid;
   }
 
-  public function importRoute($gpxfileid, $route) {
+  public function writeRoute($gpxfileid, $route) {
     $routeid = 0;
     $this->beginTransaction();
 
@@ -108,16 +108,34 @@ class Postgis
   }
 
 
-  public function exportRoute($routeid) {
+  public function readRoute($routeid) {
     $route = new Route();
 
     $this->beginTransaction();
-    $q = "SELECT r.name AS name, 
-                 ST_AsText(rp.coords) AS rpcoords,
-                 rp.tags as rptags
+    $q = "SELECT r.name AS name,
+                 ST_AsText(ST_Centroid(ST_MakeLine(rp.coords ORDER BY rp.pointnumber ASC))) as centroid,
+                 ST_AsText(Box2D(ST_MakeLine(rp.coords ORDER BY rp.pointnumber ASC))) as bbox
           FROM routes r, routepoints rp
           WHERE r.id=? AND rp.routeid=r.id
-          GROUP BY r.id, rp.coords, rp.tags";
+          GROUP BY name ";
+    $pq = $this->prepare($q);
+    $success = $pq->execute(array($routeid));
+    if (!$success) {
+      throw (new ApiException("Failed to fetch route from Database", 500));
+    }
+    if ($row = $pq->fetch(\PDO::FETCH_ASSOC)) {
+      $route->setName($row['name']);
+      $route->setBBox($row['bbox']);
+      $route->setCentroid($row['centroid']);
+    }
+    $this->commit();
+
+    $this->beginTransaction();
+    $q = "SELECT ST_AsText(rp.coords) AS rpcoords,
+                 rp.tags as rptags
+          FROM routepoints rp
+          WHERE rp.routeid=?
+          GROUP BY rp.coords, rp.tags";
     $pq = $this->prepare($q);
     $success = $pq->execute(array($routeid));
     if (!$success) {
@@ -133,6 +151,7 @@ class Postgis
       );
     }
 
+    $this->commit();
     return $route;
   }
 

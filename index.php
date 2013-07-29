@@ -55,7 +55,7 @@ $slim->post('/v1/route/import/gpx', function () {
   $gpxfileid = $db->importGpxFile('s3://trailburning-gpx/'.$gpx_filename);
   $importedRoutesIds = array();
   foreach ($routes as $route){
-    $importedRoutesIds[] = $db->importRoute($gpxfileid, $route);
+    $importedRoutesIds[] = $db->writeRoute($gpxfileid, $route);
   }
 
   $slim = \Slim\Slim::getInstance();
@@ -72,11 +72,19 @@ $slim->get('/v1/route/:id', function ($routeid) {
   global $api_root, $conf_path;
   $db_config = Spyc::YAMLLoad($conf_path.'database.yaml');
 
-  $db = new \TB\Postgis($db_config['driver'].':host='.$db_config['host'].';dbname='.$db_config['db'], $db_config['user'], $db_config['password'], array(PDO::ATTR_PERSISTENT => true, PDO::ERRMODE_EXCEPTION => true));
+  $db = new \TB\Postgis(
+    $db_config['driver'].':host='.$db_config['host'].';dbname='.$db_config['db'], 
+    $db_config['user'], 
+    $db_config['password'], 
+    array(PDO::ATTR_PERSISTENT => true, PDO::ERRMODE_EXCEPTION => true)
+  );
 
-  $route = $db->exportRoute($routeid);
-
-  throw (new \TB\ApiException($route->ToJSON(), 200));
+  $route = $db->readRoute($routeid);
+  $slim = \Slim\Slim::getInstance();
+  $res = $slim->response();
+  $res['Content-Type'] = 'application/json';
+  $res->status(200);
+  $res->body('{message: "Success", route:'.$route->ToJSON().'}');
 });
 
 $slim->get('/v1/route/:id/pictures/new', function ($routeid) {

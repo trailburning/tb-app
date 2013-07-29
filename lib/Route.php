@@ -25,11 +25,24 @@ class Route {
   protected $name;
   protected $tags;
   protected $routepoints;
+  protected $bbox;
   protected $centroid;
 
-  public function __construct($tags = array()) {
-    $this->tags = $tags;
+  public function __construct() {
     $this->routepoints = array();
+    $this->tags = array();
+  }
+
+  public function setCentroid($centroid) {
+    $this->centroid = $centroid;
+  }
+
+  public function setName($name) {
+    $this->name = $name;
+  }
+
+  public function setBBox($bbox) {
+    $this->bbox = $bbox;
   }
 
   public function setTag($key, $value) {
@@ -52,14 +65,27 @@ class Route {
     $route = '{';
     $route .= '"name": "'.$this->name.'",';
     $route .= '"centroid": "'.$this->centroid.'",';
+    $route .= '"bbox": "'.$this->bbox.'",';
     $route .= '"tags": [';
+    $i=0;
     foreach ($this->tags as $tagname => $tagvalue) {
+      if ($i++ != 0) $route.=',';
       $route .= '"'.$tagname.'": "'.$tagvalue.'"';
     }
     $route .= '],';
     $route .= '"routepoints" =[';
+    $i=0;
     foreach ($this->routepoints as $rp) {
-      $route .= '['.$rp->long.','.$rp->lat.']';
+      if ($i++ != 0) $route.=',';
+      $coords = $rp->getCoords();
+      $route .= '{"coords" = ['.$coords[0].','.$coords[1].'], "tags" = {';
+      $rptags = $rp->getTags();
+      $j=0;
+      foreach ($rptags as $rptag => $rptagvalue) {
+        if ($j++ != 0) $route.=',';
+        $route .= '"'.$rptag.'" => "'.$rptagvalue.'"';
+      }
+      $route .= '}}';
     }
     $route .= ']}';
 

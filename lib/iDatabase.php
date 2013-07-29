@@ -5,8 +5,8 @@ namespace TB;
 interface iDatabase {
 
   public function __construct($dsn, $username="", $password="", $driver_options=array());
-  public function importRoute($gpxfileid, $route);
-  public function exportRoute($routeid);
+  public function writeRoute($gpxfileid, $route);
+  public function readRoute($routeid);
 }
 
 ?>
