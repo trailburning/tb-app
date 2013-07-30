@@ -4,7 +4,6 @@
     "aws/aws-sdk-php": "*",
     "slim/slim": "*",
     "apache/log4php": "*",
-    "lespoilus/spyc": "dev-master",
     "phpunit/phpunit": "*"
    }
 }

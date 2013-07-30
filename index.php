@@ -22,8 +22,6 @@ $slim->post('/v1/route/import/gpx', function () {
   require_once 'databases/postgis.php';
 
   global $api_root, $conf_path;
-  //$db_config = Spyc::YAMLLoad($conf_path.'database.yaml');
-  //$aws_config = Spyc::YAMLLoad($conf_path.'aws.yaml');
 
   $slim = \Slim\Slim::getInstance();
 
@@ -34,14 +32,11 @@ $slim->post('/v1/route/import/gpx', function () {
 
   $gpx_filename = $_FILES["gpxfile"]["name"];
   $gpx_filename = preg_replace('/[^\w\-~_\.]+/u', '-', $gpx_filename);
-  //$gpx_targetpath  = $api_root.'/tmp/'.$gpx_filename;
-  $gpx_targetpath  = $_FILES["gpxfile"]["tmp_name"];
-  //move_uploaded_file($_FILES["gpxfile"]["tmp_name"], $gpx_targetpath);
+  $gpx_tmp_name  = $_FILES["gpxfile"]["tmp_name"];
 
   $gpximporter = new GPXImporter();
-  $routes = $gpximporter->parse(file_get_contents($gpx_targetpath), "gpx");
+  $routes = $gpximporter->parse(file_get_contents($gpx_tmp_name), "gpx");
   
-  //$db = new \TB\Postgis($db_config['driver'].':host='.$db_config['host'].';dbname='.$db_config['db'], $db_config['user'], $db_config['password'], array(PDO::ATTR_PERSISTENT => true, PDO::ERRMODE_EXCEPTION => true));
   $db = new \TB\Postgis(
     $_SERVER['DB_DRIVER'].':host='.$_SERVER['DB_HOST'].'; port='.$_SERVER['DB_PORT'].';dbname='.$_SERVER['DB_DATABASE'], 
     $_SERVER['DB_USER'], 
@@ -56,7 +51,7 @@ $slim->post('/v1/route/import/gpx', function () {
   $result = $aws_client->putObject(array(
       'Bucket' => 'trailburning-gpx',
       'Key'    =>  $gpx_filename,
-      'Body'   => file_get_contents($gpx_targetpath)
+      'Body'   => file_get_contents($gpx_tmp_name)
   ));
 */
   $gpxfileid = $db->importGpxFile('s3://trailburning-gpx/'.$gpx_filename);
@@ -77,7 +72,6 @@ $slim->get('/v1/route/:id', function ($routeid) {
   require_once 'databases/postgis.php';
   
   global $api_root, $conf_path;
-  //$db_config = Spyc::YAMLLoad($conf_path.'database.yaml');
 
   $db = new \TB\Postgis(
     $_SERVER['DB_DRIVER'].':host='.$_SERVER['DB_HOST'].'; port='.$_SERVER['DB_PORT'].';dbname='.$_SERVER['DB_DATABASE'], 
@@ -85,14 +79,7 @@ $slim->get('/v1/route/:id', function ($routeid) {
     $_SERVER['DB_PASSWORD'], 
     array(PDO::ATTR_PERSISTENT => true, PDO::ERRMODE_EXCEPTION => true)
   );
-/*
-  $db = new \TB\Postgis(
-    $db_config['driver'].':host='.$db_config['host'].';dbname='.$db_config['db'], 
-    $db_config['user'], 
-    $db_config['password'], 
-    array(PDO::ATTR_PERSISTENT => true, PDO::ERRMODE_EXCEPTION => true)
-  );
-*/
+
   $route = $db->readRoute($routeid);
   $slim = \Slim\Slim::getInstance();
   $res = $slim->response();
@@ -110,8 +97,6 @@ $slim->post('/v1/route/:id/pictures/new', function ($routeid) {
   require_once 'databases/postgis.php';
 
   global $api_root, $conf_path;
-  //$db_config = Spyc::YAMLLoad($conf_path.'database.yaml');
-  //$aws_config = Spyc::YAMLLoad($conf_path.'aws.yaml');
 
   $slim = \Slim\Slim::getInstance();
   $res = $slim->response();
@@ -129,8 +114,7 @@ $slim->post('/v1/route/:id/pictures/new', function ($routeid) {
 
     $picture_filename = $_FILES["pictures"]["name"][$i];
     $picture_filename = preg_replace('/[^\w\-~_\.]+/u', '-', $picture_filename);
-    $picture_targetpath  = $api_root.'/tmp/'.$picture_filename;
-    move_uploaded_file($_FILES["pictures"]["tmp_name"][$i], $picture_targetpath);
+    $picture_tmp_name  =$_FILES["pictures"]["tmp_name"][$i]; 
     /*
     $aws_client = \Aws\S3\S3Client::factory(array(
       'key'    => $aws_config['AWSAccessKeyId'],
@@ -139,11 +123,10 @@ $slim->post('/v1/route/:id/pictures/new', function ($routeid) {
     $result = $aws_client->putObject(array(
         'Bucket' => 'trailburning-media',
         'Key'    =>  $picture_filename,
-        'Body'   => file_get_contents($picture_targetpath)
+        'Body'   => file_get_contents($picture_tmp_name)
     ));
 */
-    $pic = new \TB\Picture($picture_filename, $picture_targetpath);
-   // $db = new \TB\Postgis($db_config['driver'].':host='.$db_config['host'].';dbname='.$db_config['db'], $db_config['user'], $db_config['password'], array(PDO::ATTR_PERSISTENT => true, PDO::ERRMODE_EXCEPTION => true));
+    $pic = new \TB\Picture($picture_filename, $picture_tmp_name);
 
     $db = new \TB\Postgis(
       $_SERVER['DB_DRIVER'].':host='.$_SERVER['DB_HOST'].'; port='.$_SERVER['DB_PORT'].';dbname='.$_SERVER['DB_DATABASE'], 
@@ -161,8 +144,6 @@ $slim->post('/v1/route/:id/pictures/new', function ($routeid) {
   $res->body("{picturesIds: ".json_encode($picturesIds)."}");
 });
 
-
 $slim->run();
-
 
 ?>
