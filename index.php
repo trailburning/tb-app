@@ -22,8 +22,8 @@ $slim->post('/v1/route/import/gpx', function () {
   require_once 'databases/postgis.php';
 
   global $api_root, $conf_path;
-  $db_config = Spyc::YAMLLoad($conf_path.'database.yaml');
-  $aws_config = Spyc::YAMLLoad($conf_path.'aws.yaml');
+  //$db_config = Spyc::YAMLLoad($conf_path.'database.yaml');
+  //$aws_config = Spyc::YAMLLoad($conf_path.'aws.yaml');
 
   $slim = \Slim\Slim::getInstance();
 
@@ -40,8 +40,14 @@ $slim->post('/v1/route/import/gpx', function () {
   $gpximporter = new GPXImporter();
   $routes = $gpximporter->parse(file_get_contents($gpx_targetpath), "gpx");
   
-  $db = new \TB\Postgis($db_config['driver'].':host='.$db_config['host'].';dbname='.$db_config['db'], $db_config['user'], $db_config['password'], array(PDO::ATTR_PERSISTENT => true, PDO::ERRMODE_EXCEPTION => true));
-
+  //$db = new \TB\Postgis($db_config['driver'].':host='.$db_config['host'].';dbname='.$db_config['db'], $db_config['user'], $db_config['password'], array(PDO::ATTR_PERSISTENT => true, PDO::ERRMODE_EXCEPTION => true));
+  $db = new \TB\Postgis(
+    $_SERVER['DB_DRIVER'].':host='.$_SERVER['DB_HOST'].';dbname='.$_SERVER['DB_DATABASE'], 
+    $_SERVER['DB_USER'], 
+    $_SERVER['DB_PASSWORD'], 
+    array(PDO::ATTR_PERSISTENT => true, PDO::ERRMODE_EXCEPTION => true)
+  );
+/*
   $aws_client = \Aws\S3\S3Client::factory(array(
     'key'    => $aws_config['AWSAccessKeyId'],
     'secret' => $aws_config['AWSSecretKey']
@@ -51,7 +57,7 @@ $slim->post('/v1/route/import/gpx', function () {
       'Key'    =>  $gpx_filename,
       'Body'   => file_get_contents($gpx_targetpath)
   ));
-
+*/
   $gpxfileid = $db->importGpxFile('s3://trailburning-gpx/'.$gpx_filename);
   $importedRoutesIds = array();
   foreach ($routes as $route){
@@ -70,15 +76,22 @@ $slim->get('/v1/route/:id', function ($routeid) {
   require_once 'databases/postgis.php';
   
   global $api_root, $conf_path;
-  $db_config = Spyc::YAMLLoad($conf_path.'database.yaml');
+  //$db_config = Spyc::YAMLLoad($conf_path.'database.yaml');
 
+  $db = new \TB\Postgis(
+    $_SERVER['DB_DRIVER'].':host='.$_SERVER['DB_HOST'].';dbname='.$_SERVER['DB_DATABASE'], 
+    $_SERVER['DB_USER'], 
+    $_SERVER['DB_PASSWORD'], 
+    array(PDO::ATTR_PERSISTENT => true, PDO::ERRMODE_EXCEPTION => true)
+  );
+/*
   $db = new \TB\Postgis(
     $db_config['driver'].':host='.$db_config['host'].';dbname='.$db_config['db'], 
     $db_config['user'], 
     $db_config['password'], 
     array(PDO::ATTR_PERSISTENT => true, PDO::ERRMODE_EXCEPTION => true)
   );
-
+*/
   $route = $db->readRoute($routeid);
   $slim = \Slim\Slim::getInstance();
   $res = $slim->response();
@@ -96,8 +109,8 @@ $slim->post('/v1/route/:id/pictures/new', function ($routeid) {
   require_once 'databases/postgis.php';
 
   global $api_root, $conf_path;
-  $db_config = Spyc::YAMLLoad($conf_path.'database.yaml');
-  $aws_config = Spyc::YAMLLoad($conf_path.'aws.yaml');
+  //$db_config = Spyc::YAMLLoad($conf_path.'database.yaml');
+  //$aws_config = Spyc::YAMLLoad($conf_path.'aws.yaml');
 
   $slim = \Slim\Slim::getInstance();
   $res = $slim->response();
@@ -117,7 +130,7 @@ $slim->post('/v1/route/:id/pictures/new', function ($routeid) {
     $picture_filename = preg_replace('/[^\w\-~_\.]+/u', '-', $picture_filename);
     $picture_targetpath  = $api_root.'/tmp/upload/pictures/'.$picture_filename;
     move_uploaded_file($_FILES["pictures"]["tmp_name"][$i], $picture_targetpath);
-
+    /*
     $aws_client = \Aws\S3\S3Client::factory(array(
       'key'    => $aws_config['AWSAccessKeyId'],
       'secret' => $aws_config['AWSSecretKey']
@@ -127,9 +140,16 @@ $slim->post('/v1/route/:id/pictures/new', function ($routeid) {
         'Key'    =>  $picture_filename,
         'Body'   => file_get_contents($picture_targetpath)
     ));
-
+*/
     $pic = new \TB\Picture($picture_filename, $picture_targetpath);
-    $db = new \TB\Postgis($db_config['driver'].':host='.$db_config['host'].';dbname='.$db_config['db'], $db_config['user'], $db_config['password'], array(PDO::ATTR_PERSISTENT => true, PDO::ERRMODE_EXCEPTION => true));
+   // $db = new \TB\Postgis($db_config['driver'].':host='.$db_config['host'].';dbname='.$db_config['db'], $db_config['user'], $db_config['password'], array(PDO::ATTR_PERSISTENT => true, PDO::ERRMODE_EXCEPTION => true));
+
+    $db = new \TB\Postgis(
+      $_SERVER['DB_DRIVER'].':host='.$_SERVER['DB_HOST'].';dbname='.$_SERVER['DB_DATABASE'], 
+      $_SERVER['DB_USER'], 
+      $_SERVER['DB_PASSWORD'], 
+      array(PDO::ATTR_PERSISTENT => true, PDO::ERRMODE_EXCEPTION => true)
+    );
     $picturesIds[] = $db->importPicture($routeid, $pic);
   }
 

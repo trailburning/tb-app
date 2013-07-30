@@ -26,7 +26,7 @@ class Postgis
   private function updateRouteCentroid($routeid) {
     $this->beginTransaction();
     $q = "UPDATE routes 
-          SET center = (
+          SET centroid = (
               SELECT  ST_AsBinary(ST_Centroid(ST_MakeLine(rp.coords ORDER BY rp.pointnumber ASC)))
               FROM routepoints rp
               WHERE routes.id = rp.routeid )
