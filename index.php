@@ -34,7 +34,7 @@ $slim->post('/v1/route/import/gpx', function () {
 
   $gpx_filename = $_FILES["gpxfile"]["name"];
   $gpx_filename = preg_replace('/[^\w\-~_\.]+/u', '-', $gpx_filename);
-  $gpx_targetpath  = $api_root.'/tmp/upload/gpx/'.$gpx_filename;
+  $gpx_targetpath  = $api_root.'/tmp/'.$gpx_filename;
   move_uploaded_file($_FILES["gpxfile"]["tmp_name"], $gpx_targetpath);
 
   $gpximporter = new GPXImporter();
@@ -128,7 +128,7 @@ $slim->post('/v1/route/:id/pictures/new', function ($routeid) {
 
     $picture_filename = $_FILES["pictures"]["name"][$i];
     $picture_filename = preg_replace('/[^\w\-~_\.]+/u', '-', $picture_filename);
-    $picture_targetpath  = $api_root.'/tmp/upload/pictures/'.$picture_filename;
+    $picture_targetpath  = $api_root.'/tmp/'.$picture_filename;
     move_uploaded_file($_FILES["pictures"]["tmp_name"][$i], $picture_targetpath);
     /*
     $aws_client = \Aws\S3\S3Client::factory(array(
