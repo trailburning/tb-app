@@ -43,7 +43,7 @@ $slim->post('/v1/route/import/gpx', function () {
   
   //$db = new \TB\Postgis($db_config['driver'].':host='.$db_config['host'].';dbname='.$db_config['db'], $db_config['user'], $db_config['password'], array(PDO::ATTR_PERSISTENT => true, PDO::ERRMODE_EXCEPTION => true));
   $db = new \TB\Postgis(
-    $_SERVER['DB_DRIVER'].':host='.$_SERVER['DB_HOST'].';dbname='.$_SERVER['DB_DATABASE'], 
+    $_SERVER['DB_DRIVER'].':host='.$_SERVER['DB_HOST'].'; port='.$_SERVER['DB_PORT'].';dbname='.$_SERVER['DB_DATABASE'], 
     $_SERVER['DB_USER'], 
     $_SERVER['DB_PASSWORD'], 
     array(PDO::ATTR_PERSISTENT => true, PDO::ERRMODE_EXCEPTION => true)
@@ -80,7 +80,7 @@ $slim->get('/v1/route/:id', function ($routeid) {
   //$db_config = Spyc::YAMLLoad($conf_path.'database.yaml');
 
   $db = new \TB\Postgis(
-    $_SERVER['DB_DRIVER'].':host='.$_SERVER['DB_HOST'].';dbname='.$_SERVER['DB_DATABASE'], 
+    $_SERVER['DB_DRIVER'].':host='.$_SERVER['DB_HOST'].'; port='.$_SERVER['DB_PORT'].';dbname='.$_SERVER['DB_DATABASE'], 
     $_SERVER['DB_USER'], 
     $_SERVER['DB_PASSWORD'], 
     array(PDO::ATTR_PERSISTENT => true, PDO::ERRMODE_EXCEPTION => true)
@@ -146,7 +146,7 @@ $slim->post('/v1/route/:id/pictures/new', function ($routeid) {
    // $db = new \TB\Postgis($db_config['driver'].':host='.$db_config['host'].';dbname='.$db_config['db'], $db_config['user'], $db_config['password'], array(PDO::ATTR_PERSISTENT => true, PDO::ERRMODE_EXCEPTION => true));
 
     $db = new \TB\Postgis(
-      $_SERVER['DB_DRIVER'].':host='.$_SERVER['DB_HOST'].';dbname='.$_SERVER['DB_DATABASE'], 
+      $_SERVER['DB_DRIVER'].':host='.$_SERVER['DB_HOST'].'; port='.$_SERVER['DB_PORT'].';dbname='.$_SERVER['DB_DATABASE'], 
       $_SERVER['DB_USER'], 
       $_SERVER['DB_PASSWORD'], 
       array(PDO::ATTR_PERSISTENT => true, PDO::ERRMODE_EXCEPTION => true)
