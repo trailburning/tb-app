@@ -34,8 +34,9 @@ $slim->post('/v1/route/import/gpx', function () {
 
   $gpx_filename = $_FILES["gpxfile"]["name"];
   $gpx_filename = preg_replace('/[^\w\-~_\.]+/u', '-', $gpx_filename);
-  $gpx_targetpath  = $api_root.'/tmp/'.$gpx_filename;
-  move_uploaded_file($_FILES["gpxfile"]["tmp_name"], $gpx_targetpath);
+  //$gpx_targetpath  = $api_root.'/tmp/'.$gpx_filename;
+  $gpx_targetpath  = $_FILES["gpxfile"]["tmp_name"];
+  //move_uploaded_file($_FILES["gpxfile"]["tmp_name"], $gpx_targetpath);
 
   $gpximporter = new GPXImporter();
   $routes = $gpximporter->parse(file_get_contents($gpx_targetpath), "gpx");
