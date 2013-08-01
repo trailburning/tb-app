@@ -12,7 +12,6 @@ class Postgis
   extends \PDO 
   implements \TB\iDatabase {
 
-
   public function __construct($dsn, $username="", $password="", $driver_options=array()) {
     try {
       parent::__construct($dsn,$username,$password, $driver_options);
@@ -21,7 +20,6 @@ class Postgis
       throw (new ApiException("Failed to establish connection to Database", 500));
     }
   }
-
 
   private function updateRouteCentroid($routeid) {
     $this->beginTransaction();
@@ -155,7 +153,7 @@ class Postgis
     return $route;
   }
 
-  public function exportRouteAs($routeid, $format) {
+  public function readRouteAsJSON($routeid, $format) {
     $this->beginTransaction();
     $q = "SELECT r.id AS routeid, 
                  r.name AS name, 

@@ -6,6 +6,7 @@ You will need the following packages:
 + php5-pgsql
 + php5-curl
 
+
 Mod_rewrite needs to be activated.
 
 Composer is used for library dependancy management. 
