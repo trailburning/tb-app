@@ -5,6 +5,7 @@
  */
 
 require_once 'Route.php';
+require_once 'RoutePoint.php';
 
 class GPXImporter
 {
@@ -73,7 +74,7 @@ class GPXImporter
             break;
 
           case "time":
-            $tags["time"] = $child->nodeValue;
+            $tags['datetime'] = strtotime($child->nodeValue);
             break;
 
           default:

@@ -4,6 +4,7 @@ namespace TB;
 
 require_once 'iDatabase.php';
 require_once 'Route.php';
+require_once 'RoutePoint.php';
 require_once 'ApiException.php';
 
 use TB;
@@ -124,7 +125,8 @@ class Postgis
     if ($row = $pq->fetch(\PDO::FETCH_ASSOC)) {
       $route->setName($row['name']);
       $route->setBBox($row['bbox']);
-      $route->setCentroid($row['centroid']);
+      $c = explode(" ", substr(trim($row['centroid']),6,-1));
+      $route->setCentroid($c[0], $c[1]); 
     }
     $this->commit();
 
@@ -133,7 +135,9 @@ class Postgis
                  rp.tags as rptags
           FROM routepoints rp
           WHERE rp.routeid=?
-          GROUP BY rp.coords, rp.tags";
+          GROUP BY rp.pointnumber,rp.coords, rp.tags
+          ORDER BY rp.pointnumber ASC
+          ";
     $pq = $this->prepare($q);
     $success = $pq->execute(array($routeid));
     if (!$success) {
@@ -207,15 +211,34 @@ class Postgis
       $pcoordswkt, 
       $tags
     ));
-    if (!$success) {
-      throw (new ApiException("Failed to insert media into database", 500));
-    }
+    /*if (!$success) {
+      print_r($this->errorInfo());
+      throw (new ApiException("Failed to insert media into database".$this->errorInfo(), 500));
+    }*/
 
     $pictureid = intval($this->lastInsertId("media_id_seq"));
 
     $this->attachMediaToRoute($routeid, $pictureid);
 
     return $pictureid;
+  }
+
+  public function getTimezone($long, $lat) {
+    $this->beginTransaction();
+    $q = "SELECT tzid FROM tz_world_mp WHERE ST_Contains(geom, ST_MakePoint(?,?));";
+    $pq = $this->prepare($q);
+    $success = $pq->execute(array($long, $lat));
+    if (!$success) 
+      $r = null;
+
+    if ($row = $pq->fetch(\PDO::FETCH_ASSOC))
+      $r = $row['tzid'];
+    else 
+      $r = null;
+
+    $this->commit();
+
+    return $r;
   }
 }
 

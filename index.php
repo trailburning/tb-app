@@ -64,7 +64,7 @@ $slim->post('/v1/route/import/gpx', function () {
   $res = $slim->response();
   $res['Content-Type'] = 'application/json';
   $res->status(200);
-  $res->body('{message: "GPX successfully imported", routeids:'.json_encode($importedRoutesIds).'}');
+  $res->body('{"message": "GPX successfully imported", "routeids":'.json_encode($importedRoutesIds).'}');
 });
 
 $slim->get('/v1/route/:id', function ($routeid) {
@@ -85,7 +85,7 @@ $slim->get('/v1/route/:id', function ($routeid) {
   $res = $slim->response();
   $res['Content-Type'] = 'application/json';
   $res->status(200);
-  $res->body('{message: "Success", route:'.$route->ToJSON().'}');
+  $res->body('{"message": "Success", "route":'.$route->ToJSON().'}');
 });
 
 $slim->get('/v1/route/:id/pictures/new', function ($routeid) {
@@ -134,6 +134,16 @@ $slim->post('/v1/route/:id/pictures/new', function ($routeid) {
       $_SERVER['DB_PASSWORD'], 
       array(PDO::ATTR_PERSISTENT => true, PDO::ERRMODE_EXCEPTION => true)
     );
+
+    $r = $db->readRoute($routeid);
+    $r_centroid = $r->getCentroid();
+    if (($tz = $db->getTimezone($r_centroid[0], $r_centroid[1])) == NULL)
+      throw Exception("Error getting timezone");
+    $dtz = new DateTimeZone($tz);
+    $offset = $dtz->getOffset(DateTime::createFromFormat('U', $r->routepoints[0]->tags['datetime']));
+    $pic->tags["datetime"] = intval($pic->tags["datetime"]) - $offset;
+    var_dump ($r->getNearestPointByTime($pic->tags['datetime']));
+
     $picturesIds[] = $db->importPicture($routeid, $pic);
   }
 
@@ -141,7 +151,7 @@ $slim->post('/v1/route/:id/pictures/new', function ($routeid) {
   $res = $slim->response();
   $res['Content-Type'] = 'application/json';
   $res->status(200);
-  $res->body("{picturesIds: ".json_encode($picturesIds)."}");
+  $res->body('{"picturesIds": '.json_encode($picturesIds).'}');
 });
 
 $slim->run();
