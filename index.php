@@ -1,6 +1,6 @@
 <?php
 
-require_once 'lib/init.php';  // Set error level, include_paths, etc.
+require_once 'init.php';  // Set error level, include_paths, etc.
 require_once 'ApiException.php';
 require_once 'ExceptionHandling.php';
 // Autoload of 3rd-party dependancies installed by composer
