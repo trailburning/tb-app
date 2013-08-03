@@ -8,7 +8,7 @@ class RouteTest extends PHPUnit_Framework_TestCase {
   protected $route;
 
   protected function setUp() {
-    $this->route= new \TB\Route();
+    $this->route = new \TB\Route();
   }
 
   public function testsetTag() {
