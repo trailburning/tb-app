@@ -6,8 +6,12 @@ require_once 'ExceptionHandling.php';
 // Autoload of 3rd-party dependancies installed by composer
 require_once 'vendor/autoload.php';
 
+require_once $api_root.'templates/ApiReplyView.php';
+
 \Slim\Slim::registerAutoloader();
-$slim = new \Slim\Slim();
+$slim = new \Slim\Slim(array(
+  'view' => new ApiReplyView()
+));
 // Debug needs to be set to false for our custom exception handlers to be called
 $slim->config(array('log.enable' => true,'debug' => false)); 
 $slim->error(function (\Exception $e) { \TB\handleException($e);} ); 
