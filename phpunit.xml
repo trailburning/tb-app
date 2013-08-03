@@ -9,7 +9,7 @@
          processIsolation="false"
          stopOnFailure="false"
          syntaxCheck="false"
-         bootstrap="lib/init.php"
+         bootstrap="init.php"
 >
     <testsuites>
         <testsuite name="TB test Suite">
