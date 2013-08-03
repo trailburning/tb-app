@@ -35,7 +35,7 @@ $slim->get('/v1/route/import/gpx', function () {
   return;
 });
 
-$slim->post('/v1/route/import/gpx', function () {
+$slim->post('/v1/route/import/gpx', function () use ($db) {
   require_once 'importers/GPX.php';
 
   global $api_root, $conf_path;
@@ -78,7 +78,7 @@ $slim->post('/v1/route/import/gpx', function () {
   $res->body('{"message": "GPX successfully imported", "routeids":'.json_encode($importedRoutesIds).'}');
 });
 
-$slim->get('/v1/route/:id', function ($routeid) {
+$slim->get('/v1/route/:id', function ($routeid) use ($db) {
   require_once 'importers/GPX.php';
   
   global $api_root, $conf_path;
@@ -95,7 +95,7 @@ $slim->get('/v1/route/:id/pictures/new', function ($routeid) {
   echo '<form action="/v1/route/'.$routeid.'/pictures/new" method="post" enctype="multipart/form-data"><input type="file" name="pictures[]" multiple><input type="submit"></form>';
 });
 
-$slim->post('/v1/route/:id/pictures/new', function ($routeid) {
+$slim->post('/v1/route/:id/pictures/new', function ($routeid) use ($db) {
   require_once 'Picture.php';
 
   global $api_root, $conf_path;
