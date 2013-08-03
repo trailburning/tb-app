@@ -7,14 +7,23 @@ require_once 'ApiException.php';
 require_once 'ExceptionHandling.php';
 require_once 'ApiReplyView.php';
 
+require_once 'databases/postgis.php';
+
 \Slim\Slim::registerAutoloader();
 $slim = new \Slim\Slim(array(
   'view' => new ApiReplyView()
 ));
+
 // Debug needs to be set to false for our custom exception handlers to be called
 $slim->config(array('log.enable' => true,'debug' => false)); 
 $slim->error(function (\Exception $e) { \TB\handleException($e);} ); 
 
+$db = new \TB\Postgis(
+  $_SERVER['DB_DRIVER'].':host='.$_SERVER['DB_HOST'].'; port='.$_SERVER['DB_PORT'].';dbname='.$_SERVER['DB_DATABASE'], 
+  $_SERVER['DB_USER'], 
+  $_SERVER['DB_PASSWORD'], 
+  array(PDO::ATTR_PERSISTENT => true, PDO::ERRMODE_EXCEPTION => true)
+);
 
 $slim->get('/v1/view1', function () use ($slim) {
    $slim->render('ApiReplyView.php', array('value' => 'test'), 200);
@@ -28,7 +37,6 @@ $slim->get('/v1/route/import/gpx', function () {
 
 $slim->post('/v1/route/import/gpx', function () {
   require_once 'importers/GPX.php';
-  require_once 'databases/postgis.php';
 
   global $api_root, $conf_path;
 
@@ -46,12 +54,6 @@ $slim->post('/v1/route/import/gpx', function () {
   $gpximporter = new GPXImporter();
   $routes = $gpximporter->parse(file_get_contents($gpx_tmp_name), "gpx");
   
-  $db = new \TB\Postgis(
-    $_SERVER['DB_DRIVER'].':host='.$_SERVER['DB_HOST'].'; port='.$_SERVER['DB_PORT'].';dbname='.$_SERVER['DB_DATABASE'], 
-    $_SERVER['DB_USER'], 
-    $_SERVER['DB_PASSWORD'], 
-    array(PDO::ATTR_PERSISTENT => true, PDO::ERRMODE_EXCEPTION => true)
-  );
 /*
   $aws_client = \Aws\S3\S3Client::factory(array(
     'key'    => $aws_config['AWSAccessKeyId'],
@@ -78,16 +80,8 @@ $slim->post('/v1/route/import/gpx', function () {
 
 $slim->get('/v1/route/:id', function ($routeid) {
   require_once 'importers/GPX.php';
-  require_once 'databases/postgis.php';
   
   global $api_root, $conf_path;
-
-  $db = new \TB\Postgis(
-    $_SERVER['DB_DRIVER'].':host='.$_SERVER['DB_HOST'].'; port='.$_SERVER['DB_PORT'].';dbname='.$_SERVER['DB_DATABASE'], 
-    $_SERVER['DB_USER'], 
-    $_SERVER['DB_PASSWORD'], 
-    array(PDO::ATTR_PERSISTENT => true, PDO::ERRMODE_EXCEPTION => true)
-  );
 
   $route = $db->readRoute($routeid);
   $slim = \Slim\Slim::getInstance();
@@ -103,7 +97,6 @@ $slim->get('/v1/route/:id/pictures/new', function ($routeid) {
 
 $slim->post('/v1/route/:id/pictures/new', function ($routeid) {
   require_once 'Picture.php';
-  require_once 'databases/postgis.php';
 
   global $api_root, $conf_path;
 
@@ -136,13 +129,6 @@ $slim->post('/v1/route/:id/pictures/new', function ($routeid) {
     ));
 */
     $pic = new \TB\Picture($picture_filename, $picture_tmp_name);
-
-    $db = new \TB\Postgis(
-      $_SERVER['DB_DRIVER'].':host='.$_SERVER['DB_HOST'].'; port='.$_SERVER['DB_PORT'].';dbname='.$_SERVER['DB_DATABASE'], 
-      $_SERVER['DB_USER'], 
-      $_SERVER['DB_PASSWORD'], 
-      array(PDO::ATTR_PERSISTENT => true, PDO::ERRMODE_EXCEPTION => true)
-    );
 
     $r = $db->readRoute($routeid);
     $r_centroid = $r->getCentroid();
