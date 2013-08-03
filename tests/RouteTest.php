@@ -6,6 +6,7 @@ require_once 'RoutePoint.php';
 class RouteTest extends PHPUnit_Framework_TestCase {
   protected $route;
 
+
   protected function setUp() {
     $this->route= new \TB\Route();
   }
