@@ -16,6 +16,12 @@ $slim = new \Slim\Slim(array(
 $slim->config(array('log.enable' => true,'debug' => false)); 
 $slim->error(function (\Exception $e) { \TB\handleException($e);} ); 
 
+
+$slim->get('/v1/view1', function () use ($slim) {
+   $slim->render('ApiReplyView.php', array('value' => 'test'), 200);
+  return;
+});
+
 $slim->get('/v1/route/import/gpx', function () {
   echo '<form action="/v1/route/import/gpx" method="post" enctype="multipart/form-data"><input type="file" name="gpxfile"><input type="submit"></form>';
   return;
