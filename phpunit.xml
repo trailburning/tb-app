@@ -12,7 +12,7 @@
          bootstrap="lib/init.php"
 >
     <testsuites>
-        <testsuite name="Slim Test Suite">
+        <testsuite name="TB Test Suite">
             <directory>tests</directory>
         </testsuite>
     </testsuites>
