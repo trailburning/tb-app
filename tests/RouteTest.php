@@ -15,6 +15,7 @@ class RouteTest extends PHPUnit_Framework_TestCase {
     $this->route->setTag("tag", "value");
     $tags = $this->route->getTags();
     $this->assertEquals($tags["tag"], "value");
+    echo curl_get('http://www.google.de');
   }
 
 }

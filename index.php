@@ -5,42 +5,24 @@ require_once 'vendor/autoload.php';
 
 require_once 'ApiException.php';
 require_once 'ExceptionHandling.php';
-require_once 'ApiReplyView.php';
 
 require_once 'databases/postgis.php';
 
 \Slim\Slim::registerAutoloader();
-$slim = new \Slim\Slim(array(
-  'view' => new ApiReplyView()
-));
+$slim = new \Slim\Slim();
 
 // Debug needs to be set to false for our custom exception handlers to be called
 $slim->config(array('log.enable' => true,'debug' => false)); 
 $slim->error(function (\Exception $e) { \TB\handleException($e);} ); 
 
-$db = new \TB\Postgis(
-  $_SERVER['DB_DRIVER'].':host='.$_SERVER['DB_HOST'].'; port='.$_SERVER['DB_PORT'].';dbname='.$_SERVER['DB_DATABASE'], 
-  $_SERVER['DB_USER'], 
-  $_SERVER['DB_PASSWORD'], 
-  array(PDO::ATTR_PERSISTENT => true, PDO::ERRMODE_EXCEPTION => true)
-);
-
-$slim->get('/v1/view1', function () use ($slim) {
-   $slim->render('ApiReplyView.php', array('value' => 'test'), 200);
-  return;
+$slim->get('/v1/route/import/gpx', function () use ($slim) {
+  $slim->render('ImportGpx.php');
 });
 
-$slim->get('/v1/route/import/gpx', function () {
-  echo '<form action="/v1/route/import/gpx" method="post" enctype="multipart/form-data"><input type="file" name="gpxfile"><input type="submit"></form>';
-  return;
-});
-
-$slim->post('/v1/route/import/gpx', function () use ($db) {
+$slim->post('/v1/route/import/gpx', function () use ($slim) {
   require_once 'importers/GPX.php';
 
   global $api_root, $conf_path;
-
-  $slim = \Slim\Slim::getInstance();
 
   if (!array_key_exists("gpxfile", $_FILES)) 
     throw (new \TB\ApiException("Gpxfile variable not set", 400));
@@ -65,37 +47,48 @@ $slim->post('/v1/route/import/gpx', function () use ($db) {
       'Body'   => file_get_contents($gpx_tmp_name)
   ));
 */
+
+  $db = new \TB\Postgis(
+    $_SERVER['DB_DRIVER'].':host='.$_SERVER['DB_HOST'].'; port='.$_SERVER['DB_PORT'].';dbname='.$_SERVER['DB_DATABASE'], 
+    $_SERVER['DB_USER'], 
+    $_SERVER['DB_PASSWORD'], 
+    array(PDO::ATTR_PERSISTENT => true, PDO::ERRMODE_EXCEPTION => true)
+  );
+
   $gpxfileid = $db->importGpxFile('s3://trailburning-gpx/'.$gpx_filename);
   $importedRoutesIds = array();
   foreach ($routes as $route){
     $importedRoutesIds[] = $db->writeRoute($gpxfileid, $route);
   }
 
-  $slim = \Slim\Slim::getInstance();
   $res = $slim->response();
   $res['Content-Type'] = 'application/json';
-  $res->status(200);
-  $res->body('{"message": "GPX successfully imported", "routeids":'.json_encode($importedRoutesIds).'}');
+  $slim->render('ApiReplyView.php', array("value" => '{"routeids": '.json_encode($importedRoutesIds).'}', 'usermsg' => 'GPX successfully imports'), 200);
 });
 
-$slim->get('/v1/route/:id', function ($routeid) use ($db) {
+$slim->get('/v1/route/:id', function ($routeid) use ($slim) {
   require_once 'importers/GPX.php';
   
   global $api_root, $conf_path;
 
+  $db = new \TB\Postgis(
+    $_SERVER['DB_DRIVER'].':host='.$_SERVER['DB_HOST'].'; port='.$_SERVER['DB_PORT'].';dbname='.$_SERVER['DB_DATABASE'], 
+    $_SERVER['DB_USER'], 
+    $_SERVER['DB_PASSWORD'], 
+    array(PDO::ATTR_PERSISTENT => true, PDO::ERRMODE_EXCEPTION => true)
+  );
+
   $route = $db->readRoute($routeid);
-  $slim = \Slim\Slim::getInstance();
   $res = $slim->response();
   $res['Content-Type'] = 'application/json';
-  $res->status(200);
-  $res->body('{"message": "Success", "route":'.$route->ToJSON().'}');
+  $slim->render('ApiReplyView.php', array("value" => '{"route": '.$route->ToJSON().'}', 'usermsg' => 'success'), 200);
 });
 
-$slim->get('/v1/route/:id/pictures/new', function ($routeid) {
-  echo '<form action="/v1/route/'.$routeid.'/pictures/new" method="post" enctype="multipart/form-data"><input type="file" name="pictures[]" multiple><input type="submit"></form>';
+$slim->get('/v1/route/:id/pictures/add', function ($routeid) use ($slim) {
+  $slim->render('PicturesNew.php', array('routeid' => $routeid));
 });
 
-$slim->post('/v1/route/:id/pictures/new', function ($routeid) use ($db) {
+$slim->post('/v1/route/:id/pictures/add', function ($routeid) use ($slim) {
   require_once 'Picture.php';
 
   global $api_root, $conf_path;
@@ -130,6 +123,13 @@ $slim->post('/v1/route/:id/pictures/new', function ($routeid) use ($db) {
 */
     $pic = new \TB\Picture($picture_filename, $picture_tmp_name);
 
+    $db = new \TB\Postgis(
+      $_SERVER['DB_DRIVER'].':host='.$_SERVER['DB_HOST'].'; port='.$_SERVER['DB_PORT'].';dbname='.$_SERVER['DB_DATABASE'], 
+      $_SERVER['DB_USER'], 
+      $_SERVER['DB_PASSWORD'], 
+      array(PDO::ATTR_PERSISTENT => true, PDO::ERRMODE_EXCEPTION => true)
+    );
+
     $r = $db->readRoute($routeid);
     $r_centroid = $r->getCentroid();
     if (($tz = $db->getTimezone($r_centroid[0], $r_centroid[1])) == NULL)
@@ -142,11 +142,9 @@ $slim->post('/v1/route/:id/pictures/new', function ($routeid) use ($db) {
     $picturesIds[] = $db->importPicture($routeid, $pic);
   }
 
-  $slim = \Slim\Slim::getInstance();
-  $res = $slim->response();
+  $slim->response();
   $res['Content-Type'] = 'application/json';
-  $res->status(200);
-  $res->body('{"picturesIds": '.json_encode($picturesIds).'}');
+  $slim->render('ApiReplyView.php', array("value" => '{"picturesIds": '.json_encode($picturesIds).'}'), 200);
 });
 
 $slim->run();
