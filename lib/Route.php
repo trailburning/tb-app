@@ -33,9 +33,6 @@ class Route {
     if (sizeof($this->routepoints) < 2)
       throw new \Exception("Route is less than 2 points.");
 
-    echo \DateTime::createFromFormat('U', $unixtimestamp)->Format('%c')."\n";
-    echo \DateTime::createFromFormat('U', $this->routepoints[0]->tags['datetime'])->Format('%c')."\n";
-    echo \DateTime::createFromFormat('U', end($this->routepoints)->tags['datetime'])->Format('%c')."\n";
     if ($unixtimestamp < $this->routepoints[0]->tags['datetime'] || $unixtimestamp > end($this->routepoints)->tags['datetime'])
       throw new \Exception("Datetime not in range");
 

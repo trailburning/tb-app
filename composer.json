@@ -4,6 +4,7 @@
     "aws/aws-sdk-php": "*",
     "slim/slim": "*",
     "apache/log4php": "*",
+    "codeception/codeception": "@stable",
     "phpunit/phpunit": "*"
    }
 }

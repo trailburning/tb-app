@@ -36,3 +36,8 @@ Returns GPX file, currently only as JSON. Will output in format according to "Ac
 
 Returns:
 + Currently, id, name, and an array of points [lat, lon]. This is not final.
+
+
+# Codeception testing
+
++ Run ./vendor/bin/codecept run
