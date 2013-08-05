@@ -3,7 +3,7 @@
 namespace TB;
 
 class RoutePoint {
-  public $lat, $long;
+  public $long, $lat;
   public $tags;
 
   public function __construct($long, $lat, $tags) {

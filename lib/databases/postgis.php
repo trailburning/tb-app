@@ -171,15 +171,39 @@ class Postgis
       throw (new ApiException("Failed to fetch route from Database", 500));
     }
     return json_encode($pq->fetchAll());
+    $this->commit();
   }
 
-  public function attachMediaToRoute($routeid, $mediaid, $pointnumber=0) {
-    $q = "INSERT INTO routes_medias (routeid, mediaid, pointnumber) VALUES (?, ?, ?)";
+  public function attachMediaToRoute($routeid, $media, $linear_position=0) {
+
+    if ($linear_position == 0) {
+      $this->beginTransaction();
+      $q = "SELECT ST_Line_Locate_Point(
+              ST_MakeLine(rp.coords ORDER BY rp.pointnumber ASC),
+              ST_MakePoint(?,?)
+            ) AS linear_position
+            FROM routepoints as rp
+            where rp.routeid=?
+      ";
+      $pq = $this->prepare($q);
+
+      $success = $pq->execute(array(
+        $media->coords[0], 
+        $media->coords[1], 
+        $routeid
+      ));
+      if ($row = $pq->fetch(\PDO::FETCH_ASSOC))
+        $linear_position = $row['linear_position'];
+      $this->commit();
+    }
+
+    $this->beginTransaction();
+    $q = "INSERT INTO routes_medias (routeid, mediaid, linear_position) VALUES (?, ?, ?)";
     $pq = $this->prepare($q);
     $success = $pq->execute(array(
       $routeid,
-      $mediaid, 
-      $pointnumber
+      $media->getId(), 
+      $linear_position
     ));
 
     if (!$success) {
@@ -191,12 +215,12 @@ class Postgis
   public function importPicture($routeid, $picture) {
     $this->beginTransaction();
 
-    if ($picture->long == NULL || $picture->lat == NULL) {
-      $picture->long = 0;
-      $picture->lat = 0;
+    if (sizeof($picture->coords) < 2) {
+      $picture->coords[0] = 0;
+      $picture->coords[1] = 0;
     }
 
-    $pcoordswkt = "POINT($picture->long $picture->lat)";
+    $pcoordswkt = 'POINT('.$picture->coords[0].' '.$picture->coords[1].')';
     // Build hstore text from associative array
     $tags = "";
     $tagnum = 0;
@@ -218,7 +242,7 @@ class Postgis
 
     $pictureid = intval($this->lastInsertId("media_id_seq"));
 
-    $this->attachMediaToRoute($routeid, $pictureid);
+    $this->commit();
 
     return $pictureid;
   }

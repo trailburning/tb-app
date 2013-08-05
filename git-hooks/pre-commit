@@ -1,0 +1,3 @@
+#!/bin/sh
+phpunit || return 1
+return 0

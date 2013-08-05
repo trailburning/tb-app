@@ -63,7 +63,11 @@ $slim->post('/v1/route/import/gpx', function () use ($slim) {
 
   $res = $slim->response();
   $res['Content-Type'] = 'application/json';
-  $slim->render('ApiReplyView.php', array("value" => '{"routeids": '.json_encode($importedRoutesIds).'}', 'usermsg' => 'GPX successfully imports'), 200);
+  $slim->render(
+    'ApiReplyView.php', 
+    array("value" => '{"routeids": '.json_encode($importedRoutesIds).'}', 'usermsg' => 'GPX successfully imports'), 
+    200
+  );
 });
 
 $slim->get('/v1/route/:id', function ($routeid) use ($slim) {
@@ -81,7 +85,11 @@ $slim->get('/v1/route/:id', function ($routeid) use ($slim) {
   $route = $db->readRoute($routeid);
   $res = $slim->response();
   $res['Content-Type'] = 'application/json';
-  $slim->render('ApiReplyView.php', array("value" => '{"route": '.$route->ToJSON().'}', 'usermsg' => 'success'), 200);
+  $slim->render(
+    'ApiReplyView.php', 
+    array("value" => '{"route": '.$route->ToJSON().'}', 'usermsg' => 'success'), 
+    200
+  );
 });
 
 $slim->get('/v1/route/:id/pictures/add', function ($routeid) use ($slim) {
@@ -101,6 +109,22 @@ $slim->post('/v1/route/:id/pictures/add', function ($routeid) use ($slim) {
     throw (new \TB\ApiException("Picture variable not set", 400));
 
   $picturesIds = array();
+
+  $db = new \TB\Postgis(
+    $_SERVER['DB_DRIVER'].':host='.$_SERVER['DB_HOST'].'; port='.$_SERVER['DB_PORT'].';dbname='.$_SERVER['DB_DATABASE'], 
+    $_SERVER['DB_USER'], 
+    $_SERVER['DB_PASSWORD'], 
+    array(PDO::ATTR_PERSISTENT => true, PDO::ERRMODE_EXCEPTION => true)
+  );
+
+  $r = $db->readRoute($routeid);
+  $r_centroid = $r->getCentroid();
+
+  if (($tz = $db->getTimezone($r_centroid[0], $r_centroid[1])) == NULL)
+    throw new Exception("Error getting timezone");
+
+  $dtz = new DateTimeZone($tz);
+  $offset = $dtz->getOffset(DateTime::createFromFormat('U', $r->routepoints[0]->tags['datetime']));
 
   for ($i=0; $i<count($_FILES['pictures']['name']); $i++) {
 
@@ -122,31 +146,24 @@ $slim->post('/v1/route/:id/pictures/add', function ($routeid) use ($slim) {
     ));
 */
     $pic = new \TB\Picture($picture_filename, $picture_tmp_name);
-
-    $db = new \TB\Postgis(
-      $_SERVER['DB_DRIVER'].':host='.$_SERVER['DB_HOST'].'; port='.$_SERVER['DB_PORT'].';dbname='.$_SERVER['DB_DATABASE'], 
-      $_SERVER['DB_USER'], 
-      $_SERVER['DB_PASSWORD'], 
-      array(PDO::ATTR_PERSISTENT => true, PDO::ERRMODE_EXCEPTION => true)
-    );
-
-    $r = $db->readRoute($routeid);
-    $r_centroid = $r->getCentroid();
-    if (($tz = $db->getTimezone($r_centroid[0], $r_centroid[1])) == NULL)
-      throw Exception("Error getting timezone");
-    $dtz = new DateTimeZone($tz);
-    $offset = $dtz->getOffset(DateTime::createFromFormat('U', $r->routepoints[0]->tags['datetime']));
     $pic->tags["datetime"] = intval($pic->tags["datetime"]) - $offset;
-    var_dump ($r->getNearestPointByTime($pic->tags['datetime']));
 
-    $picturesIds[] = $db->importPicture($routeid, $pic);
+    $rp = $r->getNearestPointByTime($pic->tags['datetime']);
+    $pic->setCoords($rp->long, $rp->lat);
+
+    $pic->setId($db->importPicture($routeid, $pic));
+    $picturesIds[] = $pic->getId();
+    $db->attachMediaToRoute($routeid, $pic);
   }
 
   $slim->response();
   $res['Content-Type'] = 'application/json';
-  $slim->render('ApiReplyView.php', array("value" => '{"picturesIds": '.json_encode($picturesIds).'}'), 200);
+  $slim->render(
+    'ApiReplyView.php', 
+    array("value" => '{"picturesIds": '.json_encode($picturesIds).'}'), 
+    200
+  );
 });
 
 $slim->run();
-
 ?>

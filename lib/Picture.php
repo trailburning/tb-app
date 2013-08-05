@@ -7,8 +7,7 @@ require_once 'Media.php';
 class Picture extends Media {
 
   public function __construct($filename, $tmp_path) {
-    $this->long     = NULL;
-    $this->lat      = NULL;
+    $this->coords     = array();
     $this->filename = $filename;
     $this->tmp_path = $tmp_path;
     $this->tags     = array();
@@ -32,6 +31,14 @@ class Picture extends Media {
     if (array_key_exists('COMPUTED', $exiftags) && array_key_exists('Width', $exiftags['COMPUTED'])) $this->tags['width'] = $exiftags['COMPUTED']['Width']; 
     if (array_key_exists('COMPUTED', $exiftags) && array_key_exists('Height', $exiftags['COMPUTED'])) $this->tags['height'] = $exiftags['COMPUTED']['Height']; 
   }
+
+  public function setCoords($long, $lat) {
+    $this->coords[0] = $long;
+    $this->coords[1] = $lat;
+  }
+
+  public function setId($id) { $this->id = $id ; }
+  public function getId() { return $this->id ; }
 }
 
 ?>
