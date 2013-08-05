@@ -5,7 +5,8 @@
     "slim/slim": "*",
     "apache/log4php": "*",
     "codeception/codeception": "@stable",
-    "phpunit/phpunit": "*"
+    "phpunit/phpunit": "*",
+    "sami/sami": "1.0.*@dev"
    }
 }
 
