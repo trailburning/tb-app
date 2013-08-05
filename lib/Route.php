@@ -14,9 +14,10 @@ class Route {
     $this->tags = array();
   }
 
-  public function setCentroid($long, $lat) { $this->centroid[0] = $long; $this->centroid[1]=$lat; }
+  public function setCentroid($long, $lat) { $this->centroid['long'] = $long; $this->centroid['lat']=$lat; }
   public function getCentroid() { return $this->centroid; }
   public function setName($name) { $this->name = $name; }
+  public function getName() { return $this->name; }
   public function setBBox($bbox) { $this->bbox = $bbox; }
   public function setTag($key, $value) { $this->tags[$key] = $value; }
   public function getTags() { return $this->tags; }
@@ -45,7 +46,7 @@ class Route {
   public function toJSON() {
     $route = '{';
     $route .= '"name": "'.$this->name.'",';
-    $route .= '"centroid": ['.$this->centroid[0].', '.$this->centroid[1].'],';
+    $route .= '"centroid": ['.$this->centroid['long'].', '.$this->centroid['lat'].'],';
     $route .= '"bbox": "'.$this->bbox.'",';
     $route .= '"tags": [';
     $i=0;
@@ -59,7 +60,7 @@ class Route {
     foreach ($this->routepoints as $rp) {
       if ($i++ != 0) $route.=',';
       $coords = $rp->getCoords();
-      $route .= '{"coords" : ['.$coords[0].','.$coords[1].'], "tags" : {';
+      $route .= '{"coords" : ['.$coords['long'].','.$coords['lat'].'], "tags" : {';
       $rptags = $rp->getTags();
       $j=0;
       foreach ($rptags as $rptag => $rptagvalue) {

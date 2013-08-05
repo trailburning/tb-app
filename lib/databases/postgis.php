@@ -79,7 +79,7 @@ class Postgis
       $pointnumber++;
       $rpcoords = $routepoint->getCoords();
       $rptags = $routepoint->getTags();
-      $rpcoordswkt = "POINT($rpcoords[0] $rpcoords[1])";
+      $rpcoordswkt = 'POINT('.$rpcoords['long'].' '.$rpcoords['lat'].')';
 
       // Build hstore text from associative array
       $tags = "";
@@ -105,7 +105,6 @@ class Postgis
 
     return $routeid;
   }
-
 
   public function readRoute($routeid) {
     $route = new Route();
@@ -188,8 +187,8 @@ class Postgis
       $pq = $this->prepare($q);
 
       $success = $pq->execute(array(
-        $media->coords[0], 
-        $media->coords[1], 
+        $media->coords['long'], 
+        $media->coords['lat'], 
         $routeid
       ));
       if ($row = $pq->fetch(\PDO::FETCH_ASSOC))
@@ -216,11 +215,11 @@ class Postgis
     $this->beginTransaction();
 
     if (sizeof($picture->coords) < 2) {
-      $picture->coords[0] = 0;
-      $picture->coords[1] = 0;
+      $picture->coords['long'] = 0;
+      $picture->coords['lat'] = 0;
     }
 
-    $pcoordswkt = 'POINT('.$picture->coords[0].' '.$picture->coords[1].')';
+    $pcoordswkt = 'POINT('.$picture->coords['long'].' '.$picture->coords['lat'].')';
     // Build hstore text from associative array
     $tags = "";
     $tagnum = 0;
@@ -235,10 +234,6 @@ class Postgis
       $pcoordswkt, 
       $tags
     ));
-    /*if (!$success) {
-      print_r($this->errorInfo());
-      throw (new ApiException("Failed to insert media into database".$this->errorInfo(), 500));
-    }*/
 
     $pictureid = intval($this->lastInsertId("media_id_seq"));
 

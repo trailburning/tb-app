@@ -120,7 +120,7 @@ $slim->post('/v1/route/:id/pictures/add', function ($routeid) use ($slim) {
   $r = $db->readRoute($routeid);
   $r_centroid = $r->getCentroid();
 
-  if (($tz = $db->getTimezone($r_centroid[0], $r_centroid[1])) == NULL)
+  if (($tz = $db->getTimezone($r_centroid['long'], $r_centroid['lat'])) == NULL)
     throw new Exception("Error getting timezone");
 
   $dtz = new DateTimeZone($tz);
@@ -146,10 +146,11 @@ $slim->post('/v1/route/:id/pictures/add', function ($routeid) use ($slim) {
     ));
 */
     $pic = new \TB\Picture($picture_filename, $picture_tmp_name);
+    $pic->readMetadata();
     $pic->tags["datetime"] = intval($pic->tags["datetime"]) - $offset;
 
     $rp = $r->getNearestPointByTime($pic->tags['datetime']);
-    $pic->setCoords($rp->long, $rp->lat);
+    $pic->setCoords($rp->coords['long'], $rp->coords['lat']);
 
     $pic->setId($db->importPicture($routeid, $pic));
     $picturesIds[] = $pic->getId();

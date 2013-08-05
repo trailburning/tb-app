@@ -32,13 +32,6 @@ class Picture extends Media {
     if (array_key_exists('COMPUTED', $exiftags) && array_key_exists('Height', $exiftags['COMPUTED'])) $this->tags['height'] = $exiftags['COMPUTED']['Height']; 
   }
 
-  public function setCoords($long, $lat) {
-    $this->coords[0] = $long;
-    $this->coords[1] = $lat;
-  }
-
-  public function setId($id) { $this->id = $id ; }
-  public function getId() { return $this->id ; }
 }
 
 ?>

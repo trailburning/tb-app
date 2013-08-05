@@ -3,12 +3,12 @@
 namespace TB;
 
 class RoutePoint {
-  public $long, $lat;
+  public $coords;
   public $tags;
 
   public function __construct($long, $lat, $tags) {
-    $this->long = $long;
-    $this->lat = $lat;
+    $this->coords['long'] = $long;
+    $this->coords['lat'] = $lat;
     $this->tags = $tags;
   }
 
@@ -17,7 +17,7 @@ class RoutePoint {
   }
 
   public function getCoords() {
-    return array($this->long, $this->lat);
+    return $this->coords;
   }
 }
 
