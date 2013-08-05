@@ -92,6 +92,25 @@ $slim->get('/v1/route/:id', function ($routeid) use ($slim) {
   );
 });
 
+
+$slim->get('/v1/route/:id/pictures', function ($routeid) use ($slim) {
+  $db = new \TB\Postgis(
+    $_SERVER['DB_DRIVER'].':host='.$_SERVER['DB_HOST'].'; port='.$_SERVER['DB_PORT'].';dbname='.$_SERVER['DB_DATABASE'], 
+    $_SERVER['DB_USER'], 
+    $_SERVER['DB_PASSWORD'], 
+    array(PDO::ATTR_PERSISTENT => true, PDO::ERRMODE_EXCEPTION => true)
+  );
+
+  $medias = $db->getRouteMedia($routeid);
+  $res = $slim->response();
+  $res['Content-Type'] = 'application/json';
+  $slim->render(
+    'ApiReplyView.php', 
+    array("value" => json_encode($medias), 'usermsg' => 'success'), 
+    200
+  );
+});
+
 $slim->get('/v1/route/:id/pictures/add', function ($routeid) use ($slim) {
   $slim->render('PicturesNew.php', array('routeid' => $routeid));
 });

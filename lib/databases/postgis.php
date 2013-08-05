@@ -4,6 +4,7 @@ namespace TB;
 
 require_once 'iDatabase.php';
 require_once 'Route.php';
+require_once 'Picture.php';
 require_once 'RoutePoint.php';
 require_once 'ApiException.php';
 
@@ -62,7 +63,7 @@ class Postgis
 
     $q = "INSERT INTO routes (name, gpxfileid) VALUES (?, ?)";
     $pq = $this->prepare($q);
-    $success = $pq->execute(array("random", $gpxfileid));
+    $success = $pq->execute(array($route->getName(), $gpxfileid));
     if (!$success) {
       $this->rollBack();
       throw (new ApiException("Failed to insert the route into the database", 500));
@@ -154,6 +155,35 @@ class Postgis
 
     $this->commit();
     return $route;
+  }
+
+  public function getRouteMedia($routeid) {
+    $this->beginTransaction();
+    $q = "SELECT m.id AS id,
+                 ST_AsText(m.coords) as coords, 
+                 m.tags AS tags
+          FROM media m, 
+               routes_medias rm
+          WHERE rm.mediaid = m.id AND rm.routeid=?";
+    $pq = $this->prepare($q);
+    $success = $pq->execute(array($routeid));
+    if (!$success) {
+      throw (new ApiException("Failed to fetch route from Database", 500));
+    }
+    $medias = array();
+    while ($row = $pq->fetch(\PDO::FETCH_ASSOC)) {
+      $pic = new Picture();
+      $pic->setId($row['id']);
+      $coords = explode(" ", substr(trim($row['coords']),6,-1)); //Strips POINT( and trailing )
+      $pic->setCoords($coords[0], $coords[1]);
+      $tags = json_decode('{' . str_replace('"=>"', '":"', $row['tags']) . '}', true);
+      foreach ($tags as $tag => $v) {
+        $pic->setTag($tag, $v);
+      }
+      $medias[] = $pic;
+    }
+    $this->commit();
+    return $medias;
   }
 
   public function readRouteAsJSON($routeid, $format) {

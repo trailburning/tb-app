@@ -92,6 +92,8 @@ class GPXImporter
     $trk_elements = $this->xmlobj->getElementsByTagName('trk');
     foreach ($trk_elements as $trk) {
       $track = new \TB\Route();
+      $names = $trk->getElementsByTagName('name');
+      foreach ($names as $name) $track->setName($name->nodeValue);
       foreach ($this->childElements($trk, 'trkseg') as $trkseg) {
         foreach ($this->childElements($trkseg, 'trkpt') as $trkpt) {
           $track->addRoutePoint(

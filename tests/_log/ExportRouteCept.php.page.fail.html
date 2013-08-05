@@ -1,0 +1,13 @@
+exception 'ErrorException' with message 'Undefined index: long' in /var/www/trailburning/lib/databases/postgis.php:83
+Stack trace:
+#0 /var/www/trailburning/lib/databases/postgis.php(83): Slim\Slim::handleErrors(8, 'Undefined index...', '/var/www/trailb...', 83, Array)
+#1 /var/www/trailburning/index.php(61): TB\Postgis->writeRoute(23, Object(TB\Route))
+#2 [internal function]: {closure}()
+#3 /var/www/trailburning/vendor/slim/slim/Slim/Router.php(172): call_user_func_array(Object(Closure), Array)
+#4 /var/www/trailburning/vendor/slim/slim/Slim/Slim.php(1222): Slim\Router->dispatch(Object(Slim\Route))
+#5 /var/www/trailburning/vendor/slim/slim/Slim/Middleware/Flash.php(86): Slim\Slim->call()
+#6 /var/www/trailburning/vendor/slim/slim/Slim/Middleware/MethodOverride.php(94): Slim\Middleware\Flash->call()
+#7 /var/www/trailburning/vendor/slim/slim/Slim/Middleware/PrettyExceptions.php(67): Slim\Middleware\MethodOverride->call()
+#8 /var/www/trailburning/vendor/slim/slim/Slim/Slim.php(1174): Slim\Middleware\PrettyExceptions->call()
+#9 /var/www/trailburning/index.php(188): Slim\Slim->run()
+#10 {main}
