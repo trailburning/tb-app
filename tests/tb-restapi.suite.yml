@@ -3,7 +3,7 @@ modules:
   enabled: [PhpBrowser, REST, ApiHelper]
   config:
     PhpBrowser:
-      url: http://192.168.122.5/
+      url: http://tb-restapi.herokuapp.com/
     REST:
-      url: http://192.168.122.5/
+      url: http://tb-restapi.herokuapp.com/
 

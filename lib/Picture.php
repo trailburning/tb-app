@@ -19,18 +19,18 @@ class Picture extends Media {
   public function readMetadata() {
     $exiftags = exif_read_data($this->tmp_path);
 
-    if (array_key_exists('FileSize', $exiftags)) $this->tags['filesize'] = $exiftags['FileSize']; 
-    if (array_key_exists('DateTime', $exiftags)) 
+    if (isset($exiftags['FileSize'])) $this->tags['filesize'] = $exiftags['FileSize']; 
+    if (isset($exiftags['DateTime'])) 
       $t = $exiftags['DateTime']; 
-    if (array_key_exists('DateTimeOriginal', $exiftags)) 
+    if (isset($exiftags['DateTimeOriginal'])) 
       $t = $exiftags['DateTimeOriginal']; 
 
     $this->tags['datetime'] = intval(strtotime($t));
     if ($this->tags['datetime'] == FALSE) 
       throw new \Exception("Error parsing image Datetime");
 
-    if (array_key_exists('COMPUTED', $exiftags) && array_key_exists('Width', $exiftags['COMPUTED'])) $this->tags['width'] = $exiftags['COMPUTED']['Width']; 
-    if (array_key_exists('COMPUTED', $exiftags) && array_key_exists('Height', $exiftags['COMPUTED'])) $this->tags['height'] = $exiftags['COMPUTED']['Height']; 
+    if (isset($exiftags['COMPUTED']) && isset($exiftags['COMPUTED']['Width'])) $this->tags['width'] = $exiftags['COMPUTED']['Width']; 
+    if (isset($exiftags['COMPUTED']) && isset($exiftags['COMPUTED']['Height'])) $this->tags['height'] = $exiftags['COMPUTED']['Height']; 
   }
 
 }
