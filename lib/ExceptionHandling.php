@@ -2,20 +2,22 @@
 
 namespace TB;
 
-function handleException(\Exception $e) {
+function handleException($e) {
   $slim = \Slim\Slim::getInstance();
   $res = $slim->response();
   $res['Content-Type'] = 'application/json';
-  $res->status(500);
-  $res->body($e);
-}
-
-function handleApiException(\TB\ApiException $e) {
-  $slim = \Slim\Slim::getInstance();
-  $res = $slim->response();
-  $res['Content-Type'] = 'application/json';
-  $res->status($e->getCode());
-  $res->body($e);
+ 
+  try {
+    throw $e;
+  }
+  catch (\TB\ApiException $e) {
+    $res->status($e->getCode());
+    $res->body($e);
+  }
+  catch (\Exception $e) {
+    $res->status(500);
+    $res->body('{"message": '.json_encode($e));
+  }
 }
 
 ?>

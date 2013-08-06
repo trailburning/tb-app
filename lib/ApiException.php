@@ -11,7 +11,7 @@ class ApiException extends \Exception {
   }
 
   public function __toString() {
-    return '{message: "'.$this->message.'"}';
+    return '{"message" : "'.$this->message.'"}';
   }
 }
 

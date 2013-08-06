@@ -119,14 +119,16 @@ class Postgis
           GROUP BY name ";
     $pq = $this->prepare($q);
     $success = $pq->execute(array($routeid));
-    if (!$success) {
+    if (!$success) 
       throw (new ApiException("Failed to fetch route from Database", 500));
-    }
+    
     if ($row = $pq->fetch(\PDO::FETCH_ASSOC)) {
       $route->setName($row['name']);
       $route->setBBox($row['bbox']);
       $c = explode(" ", substr(trim($row['centroid']),6,-1));
       $route->setCentroid($c[0], $c[1]); 
+    } else {
+      throw (new ApiException("Route does not exist", 404));
     }
     $this->commit();
 
@@ -167,9 +169,9 @@ class Postgis
           WHERE rm.mediaid = m.id AND rm.routeid=?";
     $pq = $this->prepare($q);
     $success = $pq->execute(array($routeid));
-    if (!$success) {
-      throw (new ApiException("Failed to fetch route from Database", 500));
-    }
+    if (!$success) 
+      throw (new ApiException("Failed to retrieve pictures from the database", 500));
+    
     $medias = array();
     while ($row = $pq->fetch(\PDO::FETCH_ASSOC)) {
       $pic = new Picture();
