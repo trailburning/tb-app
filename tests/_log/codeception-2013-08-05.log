@@ -1,3 +1,0 @@
-[2013-08-05 12:51:01] Codeception.ALERT: Argument 1 passed to Codeception\AbstractGuy::__construct() must be an instance of Codeception\Scenario, string given, called in /var/www/trailburning/tests/tb-restapi/RouteFunctionsCest.php on line 10 and defined [] []
-[2013-08-05 12:51:01] Codeception.INFO: # ERROR # [] []
-[2013-08-05 12:51:01] Codeception.INFO: PASSED [] []
