@@ -41,7 +41,6 @@ $slim->post('/v1/route/import/gpx', function () use ($slim) {
     'key'    => $aws_config['AWSAccessKeyId'],
     'secret' => $aws_config['AWSSecretKey']
     ));
-
   $result = $aws_client->putObject(array(
       'Bucket' => 'trailburning-gpx',
       'Key'    =>  $gpx_filename,
