@@ -1,0 +1,3 @@
+[submodule "doc/wiki"]
+	path = doc/wiki
+	url = git@github.com:trailburning/tb-restapi.wiki.git
