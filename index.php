@@ -33,8 +33,12 @@ $slim->post('/v1/route/import/gpx', function () use ($slim) {
   $gpx_tmp_name  = $_FILES["gpxfile"]["tmp_name"];
 
   $gpximporter = new GPXImporter();
-  $routes = $gpximporter->parse(file_get_contents($gpx_tmp_name), "gpx");
-  
+  try {
+    $routes = $gpximporter->parse(file_get_contents($gpx_tmp_name), "gpx");
+  } 
+  catch (Exception $e) {
+    throw (new \TB\ApiException("Problem parsing GPX file - not a valid GPX file?", 400));
+  }
 /*
   $aws_client = \Aws\S3\S3Client::factory(array(
     'key'    => $aws_config['AWSAccessKeyId'],
@@ -92,8 +96,30 @@ $slim->get('/v1/route/:id', function ($routeid) use ($slim) {
   );
 });
 
+$slim->get('/v1/route/:id/delete', function ($routeid) use ($slim) {
+  global $api_root, $conf_path;
+
+  $db = new \TB\Postgis(
+    $_SERVER['DB_DRIVER'].':host='.$_SERVER['DB_HOST'].'; port='.$_SERVER['DB_PORT'].';dbname='.$_SERVER['DB_DATABASE'], 
+    $_SERVER['DB_USER'], 
+    $_SERVER['DB_PASSWORD'], 
+    array(PDO::ATTR_PERSISTENT => true, PDO::ERRMODE_EXCEPTION => true)
+  );
+
+  $route = $db->deleteRoute($routeid);
+  $res = $slim->response();
+  $res['Content-Type'] = 'application/json';
+  $slim->render(
+    'ApiReplyView.php', 
+    array("value" => '{"route": '.$route->ToJSON().'}', 'usermsg' => 'success'), 
+    200
+  );
+});
 
 $slim->get('/v1/route/:id/pictures', function ($routeid) use ($slim) {
+  $res = $slim->response();
+  $res['Content-Type'] = 'application/json';
+
   $db = new \TB\Postgis(
     $_SERVER['DB_DRIVER'].':host='.$_SERVER['DB_HOST'].'; port='.$_SERVER['DB_PORT'].';dbname='.$_SERVER['DB_DATABASE'], 
     $_SERVER['DB_USER'], 
@@ -102,8 +128,6 @@ $slim->get('/v1/route/:id/pictures', function ($routeid) use ($slim) {
   );
 
   $medias = $db->getRouteMedia($routeid);
-  $res = $slim->response();
-  $res['Content-Type'] = 'application/json';
   $slim->render(
     'ApiReplyView.php', 
     array("value" => json_encode($medias), 'usermsg' => 'success'), 

@@ -159,6 +159,19 @@ class Postgis
     return $route;
   }
 
+  public function deleteRoute($routeid) {
+    $this->beginTransaction();
+    $q = "DELETE FROM media as m,
+          WHERE m.routeid = ?";
+    $pq = $this->prepare($q);
+    $success = $pq->execute(array($routeid));
+    if (!$success) 
+      throw (new ApiException("Failed to retrieve pictures from the database", 500));
+
+
+
+  }
+
   public function getRouteMedia($routeid) {
     $this->beginTransaction();
     $q = "SELECT m.id AS id,

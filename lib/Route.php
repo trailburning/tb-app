@@ -35,7 +35,7 @@ class Route {
       throw new \Exception("Route is less than 2 points.");
 
     if ($unixtimestamp < $this->routepoints[0]->tags['datetime'] || $unixtimestamp > end($this->routepoints)->tags['datetime'])
-      throw new \Exception("Datetime not in range");
+      throw new \TB\ApiException("One picture doesn't seem to have been taken during the trail", 400);
 
     foreach ($this->routepoints as $rp) {
       if ($rp->tags['datetime'] > $unixtimestamp )
