@@ -7,4 +7,5 @@ composer.lock
 *.swp
 tests/_data/*
 tests/_log/*
-doc/*
+doc/sami
+doc/cache
