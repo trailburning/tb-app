@@ -161,15 +161,16 @@ class Postgis
 
   public function deleteRoute($routeid) {
     $this->beginTransaction();
-    $q = "DELETE FROM media as m,
-          WHERE m.routeid = ?";
+    $q = "DELETE FROM routes WHERE routes.id = ?";
     $pq = $this->prepare($q);
     $success = $pq->execute(array($routeid));
     if (!$success) 
-      throw (new ApiException("Failed to retrieve pictures from the database", 500));
+      throw (new ApiException("Failed to delete route $routeid", 500));
 
-
-
+    if ($pq->rowCount() < 1)
+      throw (new ApiException("Failed to delete non existing route $routeid", 404));
+  
+    $this->commit();
   }
 
   public function getRouteMedia($routeid) {

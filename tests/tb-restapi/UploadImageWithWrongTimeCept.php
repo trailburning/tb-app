@@ -12,3 +12,7 @@ $firstrouteid = $routeids[0];
 $I->SendPost('/v1/route/'.$firstrouteid.'/pictures/add', array(), array('pictures' => array('tests/_data/yann.jpg')));
 $I->seeResponseCodeIs(400);
 $I->seeResponseIsJson();
+
+$I->SendGet('/v1/route/'.$firstrouteid.'/delete');
+$I->seeResponseCodeIs(200);
+$I->seeResponseIsJson();

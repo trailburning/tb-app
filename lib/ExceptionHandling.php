@@ -12,7 +12,7 @@ function handleException($e) {
   }
   catch (\TB\ApiException $e) {
     $res->status($e->getCode());
-    $res->body('{"message": "An exception as occured", "value": '.json_encode($e->__toString()).'}');
+    $res->body($e);
   }
   catch (\Exception $e) {
     $res->status(500);

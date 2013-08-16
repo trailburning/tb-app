@@ -111,7 +111,7 @@ $slim->get('/v1/route/:id/delete', function ($routeid) use ($slim) {
   $res['Content-Type'] = 'application/json';
   $slim->render(
     'ApiReplyView.php', 
-    array("value" => '{"route": '.$route->ToJSON().'}', 'usermsg' => 'success'), 
+    array("value" => $routeid, 'usermsg' => 'success'), 
     200
   );
 });
