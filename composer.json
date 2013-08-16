@@ -1,6 +1,6 @@
 {
   "require": {
-    "slim/slim": "*",
+    "slim/slim": "*"
    }
 }
 
