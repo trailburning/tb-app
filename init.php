@@ -13,6 +13,9 @@ $include_path .= PATH_SEPARATOR.$api_root.'/vendor/';
 $include_path .= PATH_SEPARATOR.$api_root.'/templates/';
 set_include_path($include_path);
 
+// Allow third party sites to make AJAX calls to this API
+header("Access-Control-Allow-Origin: *");
+
 // Strtotime should read datetime without timezone info as relative to UTC, and not current
 // server timezone
 date_default_timezone_set('UTC');
