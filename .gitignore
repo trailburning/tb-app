@@ -4,6 +4,7 @@ tmp/*
 vendor/*
 composer.phar
 composer.lock
+composer-dev.lock
 *.swp
 tests/_data/*
 tests/_log/*
