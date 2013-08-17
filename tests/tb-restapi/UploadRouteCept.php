@@ -17,6 +17,6 @@ $I->SendPost('/v1/route/'.$firstrouteid.'/pictures/add', array(), array('picture
 $I->seeResponseCodeIs(200);
 $I->seeResponseIsJson();
 
-$I->SendGet('/v1/route/'.$firstrouteid.'/delete');
+$I->SendDELETE('/v1/route/'.$firstrouteid);
 $I->seeResponseCodeIs(200);
 $I->seeResponseIsJson();

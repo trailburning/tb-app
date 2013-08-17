@@ -96,7 +96,7 @@ $slim->get('/v1/route/:id', function ($routeid) use ($slim) {
   );
 });
 
-$slim->get('/v1/route/:id/delete', function ($routeid) use ($slim) {
+$slim->delete('/v1/route/:id', function ($routeid) use ($slim) {
   global $api_root, $conf_path;
 
   $db = new \TB\Postgis(
