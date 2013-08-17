@@ -14,11 +14,11 @@ $slim = new \Slim\Slim();
 $slim->config(array('log.enable' => true,'debug' => false)); 
 $slim->error(function (\Exception $e) { \TB\handleException($e);} ); 
 
-$slim->get('/v1/route/import/gpx', function () use ($slim) {
+$slim->get('/v1/import/gpx', function () use ($slim) {
   $slim->render('ImportGpx.php');
 });
 
-$slim->post('/v1/route/import/gpx', function () use ($slim) {
+$slim->post('/v1/import/gpx', function () use ($slim) {
   require_once 'importers/GPX.php';
 
   global $api_root, $conf_path;

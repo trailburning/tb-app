@@ -3,7 +3,7 @@ use \ApiGuy;
 
 $I = new ApiGuy($scenario);
 $I->wantTo('Upload a GPX track, export the first route, attach pictures to it and delete it');
-$I->SendPost('/v1/route/import/gpx', array(), array('gpxfile' => 'tests/_data/gruenewald/activity_317669633.gpx'));
+$I->SendPost('/v1/import/gpx', array(), array('gpxfile' => 'tests/_data/gruenewald/activity_317669633.gpx'));
 $I->seeResponseCodeIs(200);
 $I->seeResponseIsJson();
 $routeids = $I->grabDataFromJsonResponse('value.routeids');
