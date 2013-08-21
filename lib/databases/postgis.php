@@ -23,11 +23,28 @@ class Postgis
     }
   }
 
+  private function updateRouteLength($routeid) {
+    $this->beginTransaction();
+    $q = "UPDATE routes 
+          SET centroid = (
+              SELECT  ST_SetSRID(ST_Centroid(ST_MakeLine(rp.coords ORDER BY rp.pointnumber ASC)), 4326)
+              FROM routepoints rp
+              WHERE routes.id = rp.routeid )
+          WHERE id=?;";
+    $pq = $this->prepare($q);
+    $success = $pq->execute(array($routeid));
+    if (!$success) {
+      $this->rollBack();
+      throw (new ApiException("Failed to insert the track into the database - Problem calculating centroid", 500));
+    }
+
+    $this->commit();
+  }
   private function updateRouteCentroid($routeid) {
     $this->beginTransaction();
     $q = "UPDATE routes 
           SET centroid = (
-              SELECT  ST_AsBinary(ST_Centroid(ST_MakeLine(rp.coords ORDER BY rp.pointnumber ASC)))
+              SELECT  ST_SetSRID(ST_Centroid(ST_MakeLine(rp.coords ORDER BY rp.pointnumber ASC)), 4326)
               FROM routepoints rp
               WHERE routes.id = rp.routeid )
           WHERE id=?;";
@@ -71,7 +88,7 @@ class Postgis
 
     $routeid = intval($this->lastInsertId("routes_id_seq"));
 
-    $q = "INSERT INTO routepoints (routeid, pointnumber, coords, tags) VALUES (?, ?, ?, ?)";
+    $q = "INSERT INTO routepoints (routeid, pointnumber, coords, tags) VALUES (?, ?, ST_SetSRID(ST_MakePoint(?, ?), 4326), ?)";
     $pq = $this->prepare($q);
 
     $routepts = $route->getRoutePoints();
@@ -80,7 +97,7 @@ class Postgis
       $pointnumber++;
       $rpcoords = $routepoint->getCoords();
       $rptags = $routepoint->getTags();
-      $rpcoordswkt = 'POINT('.$rpcoords['long'].' '.$rpcoords['lat'].')';
+      $rpcoordswkt = 'ST_SetSRID(ST_MakePoint('.$rpcoords['long'].', '.$rpcoords['lat'].'), 4326)';
 
       // Build hstore text from associative array
       $tags = "";
@@ -93,12 +110,13 @@ class Postgis
       $success = $pq->execute(array(
         $routeid, 
         $pointnumber,
-        $rpcoordswkt,
-        $tags,
+        $rpcoords['long'],
+        $rpcoords['lat'], 
+        $tags
       ));
       if (!$success) {
-        $this->rollBack();
-        throw (new ApiException("Failed to insert routepoints into the database", 500));
+        print_r($pq->errorInfo());
+        throw (new ApiException("Failed to insert routepoints into the database".$rpcoordswkt, 500));
       }
     }
     $this->commit();
@@ -265,7 +283,6 @@ class Postgis
       $picture->coords['lat'] = 0;
     }
 
-    $pcoordswkt = 'POINT('.$picture->coords['long'].' '.$picture->coords['lat'].')';
     // Build hstore text from associative array
     $tags = "";
     $tagnum = 0;
@@ -274,10 +291,11 @@ class Postgis
       $tags .= '"'.$tagname.'" => "'.$tagvalue.'"';
     }
 
-    $q = "INSERT INTO media (coords, tags) VALUES (?, ?)";
+    $q = "INSERT INTO media (coords, tags) VALUES (ST_SetSRID(ST_MakePoint(?, ?), 4326), ?)";
     $pq = $this->prepare($q);
     $success = $pq->execute(array(
-      $pcoordswkt, 
+      $picture->coords['long'],
+      $picture->coords['lat'],
       $tags
     ));
 

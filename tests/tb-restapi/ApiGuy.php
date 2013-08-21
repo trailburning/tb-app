@@ -1912,6 +1912,104 @@ class ApiGuy extends \Codeception\AbstractGuy
      * Documentation taken from corresponding module.
      * ----------------------------------------------
      *
+     * Checks that page title contains text.
+     *
+     * ``` php
+     * <?php
+     * $I->seeInTitle('Blog - Post #1');
+     * ?>
+     * ```
+     *
+     * @param $title
+     * @return mixed
+    * Conditional Assertion: Test won't be stopped on fail
+     * @see Codeception\Util\Mink::seeInTitle()
+     * @return \Codeception\Maybe
+     */
+    public function canSeeInTitle($title) {
+        $this->scenario->addStep(new \Codeception\Step\ConditionalAssertion('seeInTitle', func_get_args()));
+        if ($this->scenario->running()) {
+            $result = $this->scenario->runStep();
+            return new Maybe($result);
+        }
+        return new Maybe();
+    }
+    /**
+     * This method is generated.
+     * Documentation taken from corresponding module.
+     * ----------------------------------------------
+     *
+     * Checks that page title contains text.
+     *
+     * ``` php
+     * <?php
+     * $I->seeInTitle('Blog - Post #1');
+     * ?>
+     * ```
+     *
+     * @param $title
+     * @return mixed
+     * @see Codeception\Util\Mink::seeInTitle()
+     * @return \Codeception\Maybe
+     */
+    public function seeInTitle($title) {
+        $this->scenario->addStep(new \Codeception\Step\Assertion('seeInTitle', func_get_args()));
+        if ($this->scenario->running()) {
+            $result = $this->scenario->runStep();
+            return new Maybe($result);
+        }
+        return new Maybe();
+    }
+
+ 
+    /**
+     * This method is generated.
+     * Documentation taken from corresponding module.
+     * ----------------------------------------------
+     *
+     * Checks that page title does not contain text.
+     *
+     * @param $title
+     * @return mixed
+    * Conditional Assertion: Test won't be stopped on fail
+     * @see Codeception\Util\Mink::dontSeeInTitle()
+     * @return \Codeception\Maybe
+     */
+    public function cantSeeInTitle($title) {
+        $this->scenario->addStep(new \Codeception\Step\ConditionalAssertion('dontSeeInTitle', func_get_args()));
+        if ($this->scenario->running()) {
+            $result = $this->scenario->runStep();
+            return new Maybe($result);
+        }
+        return new Maybe();
+    }
+    /**
+     * This method is generated.
+     * Documentation taken from corresponding module.
+     * ----------------------------------------------
+     *
+     * Checks that page title does not contain text.
+     *
+     * @param $title
+     * @return mixed
+     * @see Codeception\Util\Mink::dontSeeInTitle()
+     * @return \Codeception\Maybe
+     */
+    public function dontSeeInTitle($title) {
+        $this->scenario->addStep(new \Codeception\Step\Assertion('dontSeeInTitle', func_get_args()));
+        if ($this->scenario->running()) {
+            $result = $this->scenario->runStep();
+            return new Maybe($result);
+        }
+        return new Maybe();
+    }
+
+ 
+    /**
+     * This method is generated.
+     * Documentation taken from corresponding module.
+     * ----------------------------------------------
+     *
      * Sets HTTP header
      *
      * @param $name
