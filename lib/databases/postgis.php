@@ -25,21 +25,24 @@ class Postgis
 
   private function updateRouteLength($routeid) {
     $this->beginTransaction();
+
     $q = "UPDATE routes 
-          SET centroid = (
-              SELECT  ST_SetSRID(ST_Centroid(ST_MakeLine(rp.coords ORDER BY rp.pointnumber ASC)), 4326)
-              FROM routepoints rp
-              WHERE routes.id = rp.routeid )
-          WHERE id=?;";
+          SET length = (
+            SELECT ST_Length(ST_MakeLine(rp.coords ORDER BY rp.pointnumber ASC)::geography)
+            FROM routepoints AS rp 
+            WHERE rp.routeid = routes.id
+          )
+          WHERE routes.id=?;";
     $pq = $this->prepare($q);
     $success = $pq->execute(array($routeid));
     if (!$success) {
       $this->rollBack();
-      throw (new ApiException("Failed to insert the track into the database - Problem calculating centroid", 500));
+      throw (new ApiException("Failed to insert the track into the database - Problem calculating length", 500));
     }
 
     $this->commit();
   }
+
   private function updateRouteCentroid($routeid) {
     $this->beginTransaction();
     $q = "UPDATE routes 
@@ -121,6 +124,7 @@ class Postgis
     }
     $this->commit();
     $this->updateRouteCentroid($routeid);
+    $this->updateRouteLength($routeid);
 
     return $routeid;
   }
@@ -129,12 +133,13 @@ class Postgis
     $route = new Route();
 
     $this->beginTransaction();
-    $q = "SELECT r.name AS name,
+    $q = "SELECT r.name AS name, 
+                 r.length as length,
                  ST_AsText(ST_Centroid(ST_MakeLine(rp.coords ORDER BY rp.pointnumber ASC))) as centroid,
                  ST_AsText(Box2D(ST_MakeLine(rp.coords ORDER BY rp.pointnumber ASC))) as bbox
           FROM routes r, routepoints rp
           WHERE r.id=? AND rp.routeid=r.id
-          GROUP BY name ";
+          GROUP BY name, length ";
     $pq = $this->prepare($q);
     $success = $pq->execute(array($routeid));
     if (!$success) 
@@ -143,6 +148,7 @@ class Postgis
     if ($row = $pq->fetch(\PDO::FETCH_ASSOC)) {
       $route->setName($row['name']);
       $route->setBBox($row['bbox']);
+      $route->setLength($row['length']);
       $c = explode(" ", substr(trim($row['centroid']),6,-1));
       $route->setCentroid($c[0], $c[1]); 
     } else {

@@ -8,6 +8,7 @@ class Route {
   public $routepoints;
   protected $bbox;
   protected $centroid; //[$long, $lat]
+  protected $length;
 
   public function __construct() {
     $this->routepoints = array();
@@ -16,6 +17,8 @@ class Route {
 
   public function setCentroid($long, $lat) { $this->centroid['long'] = $long; $this->centroid['lat']=$lat; }
   public function getCentroid() { return $this->centroid; }
+  public function setLength($length) { $this->length = $length; }
+  public function getLength() { return $this->length; }
   public function setName($name) { $this->name = $name; }
   public function getName() { return $this->name; }
   public function setBBox($bbox) { $this->bbox = $bbox; }
@@ -46,6 +49,7 @@ class Route {
   public function toJSON() {
     $route = '{';
     $route .= '"name": "'.$this->name.'",';
+    $route .= '"length": "'.$this->length.'",';
     $route .= '"centroid": ['.$this->centroid['long'].', '.$this->centroid['lat'].'],';
     $route .= '"bbox": "'.$this->bbox.'",';
     $route .= '"tags": [';
