@@ -13,6 +13,7 @@ $slim = new \Slim\Slim();
 // Debug needs to be set to false for our custom exception handlers to be called
 $slim->config(array('log.enable' => true,'debug' => false)); 
 $slim->error(function (\Exception $e) { \TB\handleException($e);} ); 
+$slim->log->setEnabled(true);
 
 $slim->get('/v1/import/gpx', function () use ($slim) {
   $slim->render('ImportGpx.php');
@@ -41,8 +42,8 @@ $slim->post('/v1/import/gpx', function () use ($slim) {
   }
 /*
   $aws_client = \Aws\S3\S3Client::factory(array(
-    'key'    => $aws_config['AWSAccessKeyId'],
-    'secret' => $aws_config['AWSSecretKey']
+    'key'    => $_SERVER['AWS_ACCESSKEY'],
+    'secret' => $_SERVER['AWS_SECRETKEY']
     ));
 
   $result = $aws_client->putObject(array(
@@ -179,9 +180,9 @@ $slim->post('/v1/route/:id/pictures/add', function ($routeid) use ($slim) {
     $picture_tmp_name  =$_FILES["pictures"]["tmp_name"][$i]; 
     /*
     $aws_client = \Aws\S3\S3Client::factory(array(
-      'key'    => $aws_config['AWSAccessKeyId'],
-      'secret' => $aws_config['AWSSecretKey']
-      ));
+      'key'    => $_SERVER['AWS_ACCESSKEY'],
+      'secret' => $_SERVER['AWS_SECRETKEY']
+    ));
     $result = $aws_client->putObject(array(
         'Bucket' => 'trailburning-media',
         'Key'    =>  $picture_filename,
