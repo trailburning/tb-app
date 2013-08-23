@@ -11,6 +11,7 @@ class Picture extends Media {
     $this->filename = $filename;
     $this->tmp_path = $tmp_path;
     $this->tags     = array();
+    $this->versions = array();
   }
 
   public function setTag($key, $value) { $this->tags[$key] = $value; }

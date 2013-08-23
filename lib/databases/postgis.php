@@ -197,35 +197,6 @@ class Postgis
     $this->commit();
   }
 
-  public function getRouteMedia($routeid) {
-    $this->beginTransaction();
-    $q = "SELECT m.id AS id,
-                 ST_AsText(m.coords) as coords, 
-                 m.tags AS tags
-          FROM media m, 
-               routes_medias rm
-          WHERE rm.mediaid = m.id AND rm.routeid=?";
-    $pq = $this->prepare($q);
-    $success = $pq->execute(array($routeid));
-    if (!$success) 
-      throw (new ApiException("Failed to retrieve pictures from the database", 500));
-    
-    $medias = array();
-    while ($row = $pq->fetch(\PDO::FETCH_ASSOC)) {
-      $pic = new Picture();
-      $pic->setId($row['id']);
-      $coords = explode(" ", substr(trim($row['coords']),6,-1)); //Strips POINT( and trailing )
-      $pic->setCoords($coords[0], $coords[1]);
-      $tags = json_decode('{' . str_replace('"=>"', '":"', $row['tags']) . '}', true);
-      foreach ($tags as $tag => $v) {
-        $pic->setTag($tag, $v);
-      }
-      $medias[] = $pic;
-    }
-    $this->commit();
-    return $medias;
-  }
-
   public function readRouteAsJSON($routeid, $format) {
     $this->beginTransaction();
     $q = "SELECT r.id AS routeid, 
@@ -241,6 +212,48 @@ class Postgis
     }
     return json_encode($pq->fetchAll());
     $this->commit();
+  }
+
+
+  public function getRouteMedia($routeid) {
+    $this->beginTransaction();
+    $q = "SELECT mv.mediaid AS id,
+                 ST_AsText(m.coords) AS coords,
+                 m.tags as tags,
+                 mv.path AS path,
+                 mv.mediasize AS size
+          FROM  media m,
+                routes_medias rm, 
+                mediaversions mv
+          WHERE m.id = rm.mediaid
+            AND rm.mediaid = mv.mediaid
+            AND rm.routeid=?
+          GROUP BY mv.mediaid, mv.path, mv.mediasize, m.coords, m.tags;";
+    $pq = $this->prepare($q);
+    $success = $pq->execute(array($routeid));
+    if (!$success) 
+      throw (new ApiException("Failed to retrieve pictures from the database", 500));
+    
+    $medias = array();
+    while ($row = $pq->fetch(\PDO::FETCH_ASSOC)) {
+      if (!isset($medias[$row['id']])) {
+        $pic = new Picture();
+        $pic->setId($row['id']);
+        $coords = explode(" ", substr(trim($row['coords']),6,-1)); //Strips POINT( and trailing )
+        $pic->setCoords($coords[0], $coords[1]);
+        $tags = json_decode('{' . str_replace('"=>"', '":"', $row['tags']) . '}', true);
+        foreach ($tags as $tag => $v) {
+          $pic->setTag($tag, $v);
+        }
+        $pic->addVersion($row['size'], $row['path']);;
+        $medias[$row['id']] = $pic;
+      }
+      else {
+        $medias[$row['id']]->addVersion($row['size'], $row['path']);;
+      }
+    }
+    $this->commit();
+    return $medias;
   }
 
   public function attachMediaToRoute($routeid, $media, $linear_position=0) {
@@ -315,7 +328,7 @@ class Postgis
     $success = $pq->execute(array(
       $pictureid,
       0, // ORIGINAL
-      sha1_file($picture->tmp_path)
+      'trailburning-media/'.sha1_file($picture->tmp_path).'.jpg'
     ));
     if (!$success) {
       throw (new ApiException("Failed to upload version of media", 500));
