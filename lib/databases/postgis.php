@@ -281,7 +281,7 @@ class Postgis
     $this->commit();
   }
 
-  public function importPicture($routeid, $picture) {
+  public function importPicture($picture) {
     $this->beginTransaction();
 
     if (sizeof($picture->coords) < 2) {
@@ -304,9 +304,22 @@ class Postgis
       $picture->coords['lat'],
       $tags
     ));
+    if (!$success) {
+      throw (new ApiException("Failed to insert media in db", 500));
+    }
 
     $pictureid = intval($this->lastInsertId("media_id_seq"));
 
+    $q = "INSERT INTO mediaversions (mediaid, mediasize, path) VALUES (?,?,?)";
+    $pq = $this->prepare($q);
+    $success = $pq->execute(array(
+      $pictureid,
+      0, // ORIGINAL
+      sha1_file($picture->tmp_path)
+    ));
+    if (!$success) {
+      throw (new ApiException("Failed to upload version of media", 500));
+    }
     $this->commit();
 
     return $pictureid;

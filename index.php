@@ -13,7 +13,7 @@ $slim = new \Slim\Slim();
 // Debug needs to be set to false for our custom exception handlers to be called
 $slim->config(array('log.enable' => true,'debug' => false)); 
 $slim->error(function (\Exception $e) { \TB\handleException($e);} ); 
-$slim->log->setEnabled(true);
+//$slim->log->setEnabled(true);
 
 $slim->get('/v1/import/gpx', function () use ($slim) {
   $slim->render('ImportGpx.php');
@@ -40,7 +40,7 @@ $slim->post('/v1/import/gpx', function () use ($slim) {
   catch (Exception $e) {
     throw (new \TB\ApiException("Problem parsing GPX file - not a valid GPX file?", 400));
   }
-/*
+
   $aws_client = \Aws\S3\S3Client::factory(array(
     'key'    => $_SERVER['AWS_ACCESSKEY'],
     'secret' => $_SERVER['AWS_SECRETKEY']
@@ -48,10 +48,9 @@ $slim->post('/v1/import/gpx', function () use ($slim) {
 
   $result = $aws_client->putObject(array(
       'Bucket' => 'trailburning-gpx',
-      'Key'    =>  $gpx_filename,
+      'Key'    => sha1_file($gpx_tmp_name).'.gpx',
       'Body'   => file_get_contents($gpx_tmp_name)
   ));
-*/
 
   $db = new \TB\Postgis(
     $_SERVER['DB_DRIVER'].':host='.$_SERVER['DB_HOST'].'; port='.$_SERVER['DB_PORT'].';dbname='.$_SERVER['DB_DATABASE'], 
@@ -60,7 +59,7 @@ $slim->post('/v1/import/gpx', function () use ($slim) {
     array(PDO::ATTR_PERSISTENT => true, PDO::ERRMODE_EXCEPTION => true)
   );
 
-  $gpxfileid = $db->importGpxFile('s3://trailburning-gpx/'.$gpx_filename);
+  $gpxfileid = $db->importGpxFile('s3://trailburning-gpx/'.$gpx_tmp_name);
   $importedRoutesIds = array();
   foreach ($routes as $route){
     $importedRoutesIds[] = $db->writeRoute($gpxfileid, $route);
@@ -178,17 +177,18 @@ $slim->post('/v1/route/:id/pictures/add', function ($routeid) use ($slim) {
     $picture_filename = $_FILES["pictures"]["name"][$i];
     $picture_filename = preg_replace('/[^\w\-~_\.]+/u', '-', $picture_filename);
     $picture_tmp_name  =$_FILES["pictures"]["tmp_name"][$i]; 
-    /*
+    
     $aws_client = \Aws\S3\S3Client::factory(array(
       'key'    => $_SERVER['AWS_ACCESSKEY'],
       'secret' => $_SERVER['AWS_SECRETKEY']
     ));
     $result = $aws_client->putObject(array(
         'Bucket' => 'trailburning-media',
-        'Key'    =>  $picture_filename,
-        'Body'   => file_get_contents($picture_tmp_name)
+        'Key'    => sha1_file($picture_tmp_name).'.jpg',
+        'Body'   => file_get_contents($picture_tmp_name),
+        'ACL'    => 'public-read'
     ));
-*/
+
     $pic = new \TB\Picture($picture_filename, $picture_tmp_name);
     $pic->readMetadata();
     $pic->tags["datetime"] = intval($pic->tags["datetime"]) - $offset;
@@ -196,7 +196,7 @@ $slim->post('/v1/route/:id/pictures/add', function ($routeid) use ($slim) {
     $rp = $r->getNearestPointByTime($pic->tags['datetime']);
     $pic->setCoords($rp->coords['long'], $rp->coords['lat']);
 
-    $pic->setId($db->importPicture($routeid, $pic));
+    $pic->setId($db->importPicture($pic));
     $picturesIds[] = $pic->getId();
     $db->attachMediaToRoute($routeid, $pic);
   }
