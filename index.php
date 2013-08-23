@@ -59,7 +59,7 @@ $slim->post('/v1/import/gpx', function () use ($slim) {
     array(PDO::ATTR_PERSISTENT => true, PDO::ERRMODE_EXCEPTION => true)
   );
 
-  $gpxfileid = $db->importGpxFile('s3://trailburning-gpx/'.$gpx_tmp_name);
+  $gpxfileid = $db->importGpxFile('/trailburning-gpx/'.$gpx_tmp_name);
   $importedRoutesIds = array();
   foreach ($routes as $route){
     $importedRoutesIds[] = $db->writeRoute($gpxfileid, $route);
