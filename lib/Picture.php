@@ -7,15 +7,8 @@ require_once 'Media.php';
 class Picture extends Media {
 
   public function __construct($filename="", $tmp_path="") {
-    $this->coords     = array();
-    $this->filename = $filename;
-    $this->tmp_path = $tmp_path;
-    $this->tags     = array();
-    $this->versions = array();
+    parent::__construct($filename, $tmp_path);
   }
-
-  public function setTag($key, $value) { $this->tags[$key] = $value; }
-  public function getTags() { return $this->tags; }
 
   public function readMetadata() {
     $exiftags = exif_read_data($this->tmp_path);
