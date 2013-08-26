@@ -3,6 +3,7 @@
 namespace TB;
 
 class Route {
+  protected $gpx_file_id; // ID of gpx file this route has been imported from (optional)
   protected $name;
   protected $tags;
   public $routepoints;
@@ -15,6 +16,8 @@ class Route {
     $this->tags = array();
   }
 
+  public function setGpxFileId($id) { $this->gpx_file_id = $id; }
+  public function getGpxFileId() { return $this->gpx_file_id; }
   public function setCentroid($long, $lat) { $this->centroid['long'] = $long; $this->centroid['lat']=$lat; }
   public function getCentroid() { return $this->centroid; }
   public function setLength($length) { $this->length = $length; }

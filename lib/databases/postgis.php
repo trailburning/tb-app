@@ -77,13 +77,13 @@ class Postgis
     return $gpxfileid;
   }
 
-  public function writeRoute($gpxfileid, $route) {
+  public function writeRoute($route) {
     $routeid = 0;
     $this->beginTransaction();
 
     $q = "INSERT INTO routes (name, gpx_file_id) VALUES (?, ?)";
     $pq = $this->prepare($q);
-    $success = $pq->execute(array($route->getName(), $gpxfileid));
+    $success = $pq->execute(array($route->getName(), $route->getGpxFileId()));
     if (!$success) {
       $this->rollBack();
       throw (new ApiException("Failed to insert the route into the database", 500));

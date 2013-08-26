@@ -3,14 +3,15 @@
 namespace TB;
 
 abstract class Media {
-  protected $id;
-  protected $coords; /* ["long" => , "lat" => ]  */
+  private $id;
+  private $coords; /* ["long" => , "lat" => ]  */
   protected $filename;
   protected $tmp_path;
   protected $metadata;
   protected $versions;
 
-  abstract public function readMetadata();
+  abstract protected function readMetadata();
+  abstract protected function verifyFileType();
 
   public function __construct() {
     $this->coords   = array();

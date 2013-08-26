@@ -12,7 +12,7 @@ class JpegMedia extends Media {
 
   public function verifyFileType() {
     if (filesize($this->tmp_path) < 11 || exif_imagetype ($this->tmp_path) != 2) {
-      throw new \TB\ApiException("File with jpeg extension is not a valid jpeg file", 400);
+      throw new \TB\ApiException("Uploaded file with jpeg extension is not a valid jpeg file", 400);
     } 
   }
 
@@ -25,14 +25,13 @@ class JpegMedia extends Media {
     if (isset($exiftags['DateTimeOriginal'])) 
       $t = $exiftags['DateTimeOriginal']; 
 
-    $this->tags['datetime'] = intval(strtotime($t));
-    if ($this->tags['datetime'] == FALSE) 
-      throw new \Exception("Error parsing image Datetime");
+    $this->setTag('datetime',intval(strtotime($t)));
+    if ($this->getTag('datetime') == FALSE) 
+      throw new \TB\ApiException("Error parsing image Datetime", 400);
 
-    if (isset($exiftags['COMPUTED']) && isset($exiftags['COMPUTED']['Width'])) $this->tags['width'] = $exiftags['COMPUTED']['Width']; 
-    if (isset($exiftags['COMPUTED']) && isset($exiftags['COMPUTED']['Height'])) $this->tags['height'] = $exiftags['COMPUTED']['Height']; 
+    if (isset($exiftags['COMPUTED']) && isset($exiftags['COMPUTED']['Width'])) $this->setTag('width', $exiftags['COMPUTED']['Width']); 
+    if (isset($exiftags['COMPUTED']) && isset($exiftags['COMPUTED']['Height'])) $this->setTag('height', $exiftags['COMPUTED']['Height']); 
   }
-
 }
 
 ?>

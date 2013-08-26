@@ -31,12 +31,26 @@ $slim->post('/v1/import/gpx', function () use ($slim, $api_root, $conf_path) {
   $gpx_filename = preg_replace('/[^\w\-~_\.]+/u', '-', $gpx_filename);
   $gpx_tmp_path  = $_FILES["gpxfile"]["tmp_name"];
 
-  $gpximporter = new GPXImporter();
+  $importer = new GPXImporter();
   try {
-    $routes = $gpximporter->parse(file_get_contents($gpx_tmp_path), "gpx");
+    $routes = $importer->parse(file_get_contents($gpx_tmp_path));
   } 
   catch (Exception $e) {
     throw (new \TB\ApiException("Problem parsing GPX file - not a valid GPX file?", 400));
+  }
+
+  $db = new \TB\Postgis(
+    $_SERVER['DB_DRIVER'].':host='.$_SERVER['DB_HOST'].'; port='.$_SERVER['DB_PORT'].';dbname='.$_SERVER['DB_DATABASE'], 
+    $_SERVER['DB_USER'], 
+    $_SERVER['DB_PASSWORD'], 
+    array(PDO::ATTR_PERSISTENT => true, PDO::ERRMODE_EXCEPTION => true)
+  );
+
+  $gpx_file_id = $db->importGpxFile('/trailburning-gpx/'.$gpx_tmp_path);
+  $importedRoutesIds = array();
+  foreach ($routes as $route){
+    $route->setGpxFileId($gpx_file_id);
+    $importedRoutesIds[] = $db->writeRoute($route);
   }
 
   $aws_client = \Aws\S3\S3Client::factory(array(
@@ -49,19 +63,6 @@ $slim->post('/v1/import/gpx', function () use ($slim, $api_root, $conf_path) {
       'Key'    => sha1_file($gpx_tmp_path).'.gpx',
       'Body'   => file_get_contents($gpx_tmp_path)
   ));
-
-  $db = new \TB\Postgis(
-    $_SERVER['DB_DRIVER'].':host='.$_SERVER['DB_HOST'].'; port='.$_SERVER['DB_PORT'].';dbname='.$_SERVER['DB_DATABASE'], 
-    $_SERVER['DB_USER'], 
-    $_SERVER['DB_PASSWORD'], 
-    array(PDO::ATTR_PERSISTENT => true, PDO::ERRMODE_EXCEPTION => true)
-  );
-
-  $gpxfileid = $db->importGpxFile('/trailburning-gpx/'.$gpx_tmp_path);
-  $importedRoutesIds = array();
-  foreach ($routes as $route){
-    $importedRoutesIds[] = $db->writeRoute($gpxfileid, $route);
-  }
 
   $res = $slim->response();
   $res['Content-Type'] = 'application/json';

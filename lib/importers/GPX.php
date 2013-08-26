@@ -13,7 +13,7 @@ class GPXImporter
   private $nss = ''; // Name-space string. eg 'georss:'
 
   /**
-   * Parses GPX file - returns array of routes
+   * Parses GPX data - returns array of routes
    * @param string $gpx A GPX string
    * @return Routes array
    */
