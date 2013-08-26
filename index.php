@@ -138,7 +138,7 @@ $slim->get('/v1/route/:id/pictures/add', function ($routeid) use ($slim) {
 });
 
 $slim->post('/v1/route/:id/pictures/add', function ($routeid) use ($slim) {
-  require_once 'Picture.php';
+  require_once 'JpegMedia.php';
 
   global $api_root, $conf_path;
 
@@ -174,7 +174,7 @@ $slim->post('/v1/route/:id/pictures/add', function ($routeid) use ($slim) {
     $picture_filename = preg_replace('/[^\w\-~_\.]+/u', '-', $_FILES["pictures"]["name"][$i]);
     $picture_tmp_path  =$_FILES["pictures"]["tmp_name"][$i]; 
     
-    $media = new \TB\Picture();
+    $media = new \TB\JpegMedia();
     $media->fromFile($picture_filename, $picture_tmp_path);
     $media->setTag("datetime", intval($media->getTag('datetime')) - $offset);
 

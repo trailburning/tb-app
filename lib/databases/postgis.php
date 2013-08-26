@@ -4,7 +4,7 @@ namespace TB;
 
 require_once 'iDatabase.php';
 require_once 'Route.php';
-require_once 'Picture.php';
+require_once 'JpegMedia.php';
 require_once 'RoutePoint.php';
 require_once 'ApiException.php';
 
@@ -237,7 +237,7 @@ class Postgis
     $medias = array();
     while ($row = $pq->fetch(\PDO::FETCH_ASSOC)) {
       if (!isset($medias[$row['id']])) {
-        $pic = new Picture();
+        $pic = new JpegMedia();
         $pic->setId($row['id']);
         $coords = explode(" ", substr(trim($row['coords']),6,-1)); //Strips POINT( and trailing )
         $pic->setCoords($coords[0], $coords[1]);
