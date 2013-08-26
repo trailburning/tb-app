@@ -172,7 +172,7 @@ $slim->post('/v1/route/:id/pictures/add', function ($routeid) use ($slim) {
       throw (new \TB\ApiException("An error happened uploading the picture", 400));    
 
     $picture_filename = preg_replace('/[^\w\-~_\.]+/u', '-', $_FILES["pictures"]["name"][$i]);
-    $picture_tmp_name  =$_FILES["pictures"]["tmp_name"][$i]; 
+    $picture_tmp_path  =$_FILES["pictures"]["tmp_name"][$i]; 
     
     $aws_client = \Aws\S3\S3Client::factory(array(
       'key'    => $_SERVER['AWS_ACCESSKEY'],
@@ -180,14 +180,14 @@ $slim->post('/v1/route/:id/pictures/add', function ($routeid) use ($slim) {
     ));
     $result = $aws_client->putObject(array(
         'Bucket' => 'trailburning-media',
-        'Key'    => sha1_file($picture_tmp_name).'.jpg',
-        'Body'   => file_get_contents($picture_tmp_name),
+        'Key'    => sha1_file($picture_tmp_path).'.jpg',
+        'Body'   => file_get_contents($picture_tmp_path),
         'ACL'    => 'public-read'
     ));
 
-    $media = new \TB\Picture($picture_filename, $picture_tmp_name);
-    $media->readMetadata();
-    $media->setTag("datetime", intval($media->tags["datetime"]) - $offset);
+    $media = new \TB\Picture();
+    $media->fromFile($picture_filename, $picture_tmp_path);
+    $media->setTag("datetime", intval($media->getTag('datetime')) - $offset);
 
     $rp = $r->getNearestPointByTime($media->tags['datetime']);
     $media->setCoords($rp->coords['long'], $rp->coords['lat']);

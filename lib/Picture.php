@@ -10,6 +10,7 @@ class Picture extends Media {
     parent::__construct($filename, $tmp_path);
   }
 
+
   public function readMetadata() {
     $exiftags = exif_read_data($this->tmp_path);
 
