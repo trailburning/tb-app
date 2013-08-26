@@ -13,7 +13,7 @@ abstract class Media {
   abstract public function readMetadata();
 
   public function __construct() {
-    $this->coords     = array();
+    $this->coords   = array();
     $this->filename = '';
     $this->tmp_path = '';
     $this->tags     = array();
@@ -23,6 +23,7 @@ abstract class Media {
   public function fromFile($filename="", $tmp_path="") {
     $this->filename = $filename;
     $this->tmp_path = $tmp_path;
+    $this->verifyFileType();
     $this->readMetaData();
   }
 
@@ -44,9 +45,9 @@ abstract class Media {
   public function getId() { return $this->id ; }
   public function setTag($key, $value) { $this->tags[$key] = $value; }
   public function getTags() { return $this->tags; }
-  public function getTag($tag) { 
+  public function getTag($tag) {
     if (array_key_exists($tag, $this->tags))
-      return $this->tags[$tag]; 
+      return $this->tags[$tag];
     else
       return null;
   }

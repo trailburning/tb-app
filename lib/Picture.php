@@ -6,10 +6,15 @@ require_once 'Media.php';
 
 class Picture extends Media {
 
-  public function __construct($filename="", $tmp_path="") {
-    parent::__construct($filename, $tmp_path);
+  public function __construct() {
+    parent::__construct();
   }
 
+  public function verifyFileType() {
+    if (filesize($this->tmp_path) < 11 || exif_imagetype ($this->tmp_path) != 2) {
+      throw new \TB\ApiException("File with jpeg extension is not a valid jpeg file", 400);
+    } 
+  }
 
   public function readMetadata() {
     $exiftags = exif_read_data($this->tmp_path);
