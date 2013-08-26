@@ -269,9 +269,11 @@ class Postgis
       ";
       $pq = $this->prepare($q);
 
+      $coords = $media->getCoords();
+
       $success = $pq->execute(array(
-        $media->coords['long'], 
-        $media->coords['lat'], 
+        $coords['long'], 
+        $coords['lat'], 
         $routeid
       ));
       if ($row = $pq->fetch(\PDO::FETCH_ASSOC))
@@ -297,15 +299,18 @@ class Postgis
   public function importPicture($picture) {
     $this->beginTransaction();
 
-    if (sizeof($picture->coords) < 2) {
-      $picture->coords['long'] = 0;
-      $picture->coords['lat'] = 0;
+    $coords = $picture->getCoords();
+
+    if (sizeof($coords) < 2) {
+      $coords['long'] = 0;
+      $coords['lat'] = 0;
     }
 
     // Build hstore text from associative array
     $tags = "";
     $tagnum = 0;
-    foreach ($picture->tags as $tagname => $tagvalue) {
+    $picture_tags = $picture->getTags();
+    foreach ($picture_tags as $tagname => $tagvalue) {
       if ($tagnum++ > 0) $tags .= ",";
       $tags .= '"'.$tagname.'" => "'.$tagvalue.'"';
     }
@@ -313,8 +318,8 @@ class Postgis
     $q = "INSERT INTO medias (coords, tags) VALUES (ST_SetSRID(ST_MakePoint(?, ?), 4326), ?)";
     $pq = $this->prepare($q);
     $success = $pq->execute(array(
-      $picture->coords['long'],
-      $picture->coords['lat'],
+      $coords['long'],
+      $coords['lat'],
       $tags
     ));
     if (!$success) {
@@ -328,7 +333,7 @@ class Postgis
     $success = $pq->execute(array(
       $pictureid,
       0, // ORIGINAL
-      'trailburning-media/'.sha1_file($picture->tmp_path).'.jpg'
+      'trailburning-media/'.sha1_file($picture->getTmpPath()).'.jpg'
     ));
     if (!$success) {
       throw (new ApiException("Failed to upload version of media", 500));

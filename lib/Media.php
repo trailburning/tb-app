@@ -3,11 +3,12 @@
 namespace TB;
 
 abstract class Media {
-  public $id;
-  public $coords; /* ["long" => , "lat" => ]  */
-  public $tmp_path;
-  public $metadata;
-  public $versions;
+  protected $id;
+  protected $coords; /* ["long" => , "lat" => ]  */
+  protected $filename;
+  protected $tmp_path;
+  protected $metadata;
+  protected $versions;
 
   abstract public function readMetadata();
 
@@ -29,11 +30,16 @@ abstract class Media {
     $this->coords["long"] = floatval($long);
     $this->coords["lat"] = floatval($lat);
   }
+  public function getCoords() {return $this->coords;}
 
   public function addVersion($size, $path) {
     $this->versions[] = array('size' => $size, 'path' => $path);
   }
 
+  public function setTmpPath($tmp_path) { $this->tmp_path = $tmp_path ; }
+  public function getTmpPath() { return $this->tmp_path ; }
+  public function setFilename($filename) { $this->filename = $filename ; }
+  public function getFilename() { return $this->filename ; }
   public function setId($id) { $this->id = $id ; }
   public function getId() { return $this->id ; }
   public function setTag($key, $value) { $this->tags[$key] = $value; }
