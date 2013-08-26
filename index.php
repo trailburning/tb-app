@@ -149,7 +149,7 @@ $slim->post('/v1/route/:id/pictures/add', function ($routeid) use ($slim) {
   if (!array_key_exists('pictures', $_FILES)) 
     throw (new \TB\ApiException("Picture variable not set", 400));
 
-  $picturesIds = array();
+  $mediasIds = array();
 
   $db = new \TB\Postgis(
     $_SERVER['DB_DRIVER'].':host='.$_SERVER['DB_HOST'].'; port='.$_SERVER['DB_PORT'].';dbname='.$_SERVER['DB_DATABASE'], 
@@ -168,12 +168,10 @@ $slim->post('/v1/route/:id/pictures/add', function ($routeid) use ($slim) {
   $offset = $dtz->getOffset(DateTime::createFromFormat('U', $r->routepoints[0]->tags['datetime']));
 
   for ($i=0; $i<count($_FILES['pictures']['name']); $i++) {
-
     if ($_FILES['pictures']['error'][$i] != 0)
       throw (new \TB\ApiException("An error happened uploading the picture", 400));    
 
-    $picture_filename = $_FILES["pictures"]["name"][$i];
-    $picture_filename = preg_replace('/[^\w\-~_\.]+/u', '-', $picture_filename);
+    $picture_filename = preg_replace('/[^\w\-~_\.]+/u', '-', $_FILES["pictures"]["name"][$i]);
     $picture_tmp_name  =$_FILES["pictures"]["tmp_name"][$i]; 
     
     $aws_client = \Aws\S3\S3Client::factory(array(
@@ -187,23 +185,23 @@ $slim->post('/v1/route/:id/pictures/add', function ($routeid) use ($slim) {
         'ACL'    => 'public-read'
     ));
 
-    $pic = new \TB\Picture($picture_filename, $picture_tmp_name);
-    $pic->readMetadata();
-    $pic->setTag("datetime", intval($pic->tags["datetime"]) - $offset);
+    $media = new \TB\Picture($picture_filename, $picture_tmp_name);
+    $media->readMetadata();
+    $media->setTag("datetime", intval($media->tags["datetime"]) - $offset);
 
-    $rp = $r->getNearestPointByTime($pic->tags['datetime']);
-    $pic->setCoords($rp->coords['long'], $rp->coords['lat']);
+    $rp = $r->getNearestPointByTime($media->tags['datetime']);
+    $media->setCoords($rp->coords['long'], $rp->coords['lat']);
 
-    $pic->setId($db->importPicture($pic));
-    $picturesIds[] = $pic->getId();
-    $db->attachMediaToRoute($routeid, $pic);
+    $media->setId($db->importPicture($media));
+    $mediasIds[] = $media->getId();
+    $db->attachMediaToRoute($routeid, $media);
   }
 
   $slim->response();
   $res['Content-Type'] = 'application/json';
   $slim->render(
     'ApiReplyView.php', 
-    array("value" => '{"picturesIds": '.json_encode($picturesIds).'}'), 
+    array("value" => '{"picturesIds": '.json_encode($mediasIds).'}'), 
     200
   );
 });

@@ -4,10 +4,12 @@ namespace TB;
 
 abstract class Media {
   public $id;
-  public $coords; // [$long, $lat]
+  public $coords; /* ["long" => , "lat" => ]  */
   public $tmp_path;
   public $metadata;
   public $versions;
+
+  abstract public function readMetadata();
 
   public function __construct($filename="", $tmp_path="") {
     $this->coords     = array();
@@ -30,7 +32,5 @@ abstract class Media {
   public function getId() { return $this->id ; }
   public function setTag($key, $value) { $this->tags[$key] = $value; }
   public function getTags() { return $this->tags; }
-
-  abstract public function readMetadata();
 }
 ?>
