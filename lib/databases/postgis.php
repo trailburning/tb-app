@@ -28,9 +28,9 @@ class Postgis
 
     $q = "UPDATE routes 
           SET length = (
-            SELECT ST_Length(ST_MakeLine(rp.coords ORDER BY rp.pointnumber ASC)::geography)
-            FROM routepoints AS rp 
-            WHERE rp.routeid = routes.id
+            SELECT ST_Length(ST_MakeLine(rp.coords ORDER BY rp.point_number ASC)::geography)
+            FROM route_points AS rp 
+            WHERE rp.route_id = routes.id
           )
           WHERE routes.id=?;";
     $pq = $this->prepare($q);
@@ -47,9 +47,9 @@ class Postgis
     $this->beginTransaction();
     $q = "UPDATE routes 
           SET centroid = (
-              SELECT  ST_SetSRID(ST_Centroid(ST_MakeLine(rp.coords ORDER BY rp.pointnumber ASC)), 4326)
-              FROM routepoints rp
-              WHERE routes.id = rp.routeid )
+              SELECT ST_SetSRID(ST_Centroid(ST_MakeLine(rp.coords ORDER BY rp.point_number ASC)), 4326)
+              FROM route_points rp
+              WHERE routes.id = rp.route_id )
           WHERE id=?;";
     $pq = $this->prepare($q);
     $success = $pq->execute(array($routeid));
@@ -63,7 +63,7 @@ class Postgis
 
   public function importGpxFile($path) {
     $this->beginTransaction();
-    $q = "INSERT INTO gpxfiles (path) VALUES (?)";
+    $q = "INSERT INTO gpx_files (path) VALUES (?)";
     $pq = $this->prepare($q);
     $success = $pq->execute(array($path));
     if (!$success) {
@@ -71,7 +71,7 @@ class Postgis
       throw (new ApiException("Failed to insert GPX data into the database", 500));
     }
 
-    $gpxfileid = intval($this->lastInsertId("gpxfiles_id_seq"));
+    $gpxfileid = intval($this->lastInsertId("gpx_files_id_seq"));
     $this->commit();
 
     return $gpxfileid;
@@ -81,7 +81,7 @@ class Postgis
     $routeid = 0;
     $this->beginTransaction();
 
-    $q = "INSERT INTO routes (name, gpxfileid) VALUES (?, ?)";
+    $q = "INSERT INTO routes (name, gpx_file_id) VALUES (?, ?)";
     $pq = $this->prepare($q);
     $success = $pq->execute(array($route->getName(), $gpxfileid));
     if (!$success) {
@@ -91,7 +91,7 @@ class Postgis
 
     $routeid = intval($this->lastInsertId("routes_id_seq"));
 
-    $q = "INSERT INTO routepoints (routeid, pointnumber, coords, tags) VALUES (?, ?, ST_SetSRID(ST_MakePoint(?, ?), 4326), ?)";
+    $q = "INSERT INTO route_points (route_id, point_number, coords, tags) VALUES (?, ?, ST_SetSRID(ST_MakePoint(?, ?), 4326), ?)";
     $pq = $this->prepare($q);
 
     $routepts = $route->getRoutePoints();
@@ -135,10 +135,10 @@ class Postgis
     $this->beginTransaction();
     $q = "SELECT r.name AS name, 
                  r.length as length,
-                 ST_AsText(ST_Centroid(ST_MakeLine(rp.coords ORDER BY rp.pointnumber ASC))) as centroid,
-                 ST_AsText(Box2D(ST_MakeLine(rp.coords ORDER BY rp.pointnumber ASC))) as bbox
-          FROM routes r, routepoints rp
-          WHERE r.id=? AND rp.routeid=r.id
+                 ST_AsText(ST_Centroid(ST_MakeLine(rp.coords ORDER BY rp.point_number ASC))) as centroid,
+                 ST_AsText(Box2D(ST_MakeLine(rp.coords ORDER BY rp.point_number ASC))) as bbox
+          FROM routes r, route_points rp
+          WHERE r.id=? AND rp.route_id=r.id
           GROUP BY name, length ";
     $pq = $this->prepare($q);
     $success = $pq->execute(array($routeid));
@@ -159,10 +159,10 @@ class Postgis
     $this->beginTransaction();
     $q = "SELECT ST_AsText(rp.coords) AS rpcoords,
                  rp.tags as rptags
-          FROM routepoints rp
-          WHERE rp.routeid=?
-          GROUP BY rp.pointnumber,rp.coords, rp.tags
-          ORDER BY rp.pointnumber ASC
+          FROM route_points rp
+          WHERE rp.route_id=?
+          GROUP BY rp.point_number, rp.coords, rp.tags
+          ORDER BY rp.point_number ASC
           ";
     $pq = $this->prepare($q);
     $success = $pq->execute(array($routeid));
@@ -199,11 +199,11 @@ class Postgis
 
   public function readRouteAsJSON($routeid, $format) {
     $this->beginTransaction();
-    $q = "SELECT r.id AS routeid, 
-                 r.name AS name, 
-                 ST_AsGeoJson(ST_MakeLine(rp.coords ORDER BY rp.pointnumber ASC)) AS line 
-          FROM routes r, routepoints rp
-          WHERE r.id=? AND rp.routeid=r.id
+    $q = "SELECT r.id AS route_id,
+                 r.name AS name,
+                 ST_AsGeoJson(ST_MakeLine(rp.coords ORDER BY rp.point_number ASC)) AS line 
+          FROM routes r, route_points rp
+          WHERE r.id=? AND rp.route_id=r.id
           GROUP BY r.id";
     $pq = $this->prepare($q);
     $success = $pq->execute(array($routeid));
@@ -217,18 +217,18 @@ class Postgis
 
   public function getRouteMedia($routeid) {
     $this->beginTransaction();
-    $q = "SELECT mv.mediaid AS id,
+    $q = "SELECT mv.media_id AS id,
                  ST_AsText(m.coords) AS coords,
                  m.tags as tags,
                  mv.path AS path,
-                 mv.mediasize AS size
-          FROM  media m,
-                routes_medias rm, 
-                mediaversions mv
-          WHERE m.id = rm.mediaid
-            AND rm.mediaid = mv.mediaid
-            AND rm.routeid=?
-          GROUP BY mv.mediaid, mv.path, mv.mediasize, m.coords, m.tags;";
+                 mv.version_size AS size
+          FROM  medias m,
+                route_medias rm, 
+                media_versions mv
+          WHERE m.id = rm.media_id
+            AND rm.media_id = mv.media_id
+            AND rm.route_id=?
+          GROUP BY mv.media_id, mv.path, mv.media_size, m.coords, m.tags;";
     $pq = $this->prepare($q);
     $success = $pq->execute(array($routeid));
     if (!$success) 
@@ -261,11 +261,11 @@ class Postgis
     if ($linear_position == 0) {
       $this->beginTransaction();
       $q = "SELECT ST_Line_Locate_Point(
-              ST_MakeLine(rp.coords ORDER BY rp.pointnumber ASC),
+              ST_MakeLine(rp.coords ORDER BY rp.point_number ASC),
               ST_MakePoint(?,?)
             ) AS linear_position
-            FROM routepoints as rp
-            where rp.routeid=?
+            FROM route_points as rp
+            where rp.route_id=?
       ";
       $pq = $this->prepare($q);
 
@@ -280,7 +280,7 @@ class Postgis
     }
 
     $this->beginTransaction();
-    $q = "INSERT INTO routes_medias (routeid, mediaid, linear_position) VALUES (?, ?, ?)";
+    $q = "INSERT INTO route_medias (route_id, media_id, linear_position) VALUES (?, ?, ?)";
     $pq = $this->prepare($q);
     $success = $pq->execute(array(
       $routeid,
@@ -310,7 +310,7 @@ class Postgis
       $tags .= '"'.$tagname.'" => "'.$tagvalue.'"';
     }
 
-    $q = "INSERT INTO media (coords, tags) VALUES (ST_SetSRID(ST_MakePoint(?, ?), 4326), ?)";
+    $q = "INSERT INTO medias (coords, tags) VALUES (ST_SetSRID(ST_MakePoint(?, ?), 4326), ?)";
     $pq = $this->prepare($q);
     $success = $pq->execute(array(
       $picture->coords['long'],
@@ -321,9 +321,9 @@ class Postgis
       throw (new ApiException("Failed to insert media in db", 500));
     }
 
-    $pictureid = intval($this->lastInsertId("media_id_seq"));
+    $pictureid = intval($this->lastInsertId("medias_id_seq"));
 
-    $q = "INSERT INTO mediaversions (mediaid, mediasize, path) VALUES (?,?,?)";
+    $q = "INSERT INTO media_versions (media_id, version_size, path) VALUES (?,?,?)";
     $pq = $this->prepare($q);
     $success = $pq->execute(array(
       $pictureid,
