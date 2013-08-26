@@ -19,10 +19,8 @@ $slim->get('/v1/import/gpx', function () use ($slim) {
   $slim->render('ImportGpx.php');
 });
 
-$slim->post('/v1/import/gpx', function () use ($slim) {
+$slim->post('/v1/import/gpx', function () use ($slim, $api_root, $conf_path) {
   require_once 'importers/GPX.php';
-
-  global $api_root, $conf_path;
 
   if (!array_key_exists("gpxfile", $_FILES)) 
     throw (new \TB\ApiException("Gpxfile variable not set", 400));
@@ -31,11 +29,11 @@ $slim->post('/v1/import/gpx', function () use ($slim) {
 
   $gpx_filename = $_FILES["gpxfile"]["name"];
   $gpx_filename = preg_replace('/[^\w\-~_\.]+/u', '-', $gpx_filename);
-  $gpx_tmp_name  = $_FILES["gpxfile"]["tmp_name"];
+  $gpx_tmp_path  = $_FILES["gpxfile"]["tmp_name"];
 
   $gpximporter = new GPXImporter();
   try {
-    $routes = $gpximporter->parse(file_get_contents($gpx_tmp_name), "gpx");
+    $routes = $gpximporter->parse(file_get_contents($gpx_tmp_path), "gpx");
   } 
   catch (Exception $e) {
     throw (new \TB\ApiException("Problem parsing GPX file - not a valid GPX file?", 400));
@@ -48,8 +46,8 @@ $slim->post('/v1/import/gpx', function () use ($slim) {
 
   $result = $aws_client->putObject(array(
       'Bucket' => 'trailburning-gpx',
-      'Key'    => sha1_file($gpx_tmp_name).'.gpx',
-      'Body'   => file_get_contents($gpx_tmp_name)
+      'Key'    => sha1_file($gpx_tmp_path).'.gpx',
+      'Body'   => file_get_contents($gpx_tmp_path)
   ));
 
   $db = new \TB\Postgis(
@@ -59,7 +57,7 @@ $slim->post('/v1/import/gpx', function () use ($slim) {
     array(PDO::ATTR_PERSISTENT => true, PDO::ERRMODE_EXCEPTION => true)
   );
 
-  $gpxfileid = $db->importGpxFile('/trailburning-gpx/'.$gpx_tmp_name);
+  $gpxfileid = $db->importGpxFile('/trailburning-gpx/'.$gpx_tmp_path);
   $importedRoutesIds = array();
   foreach ($routes as $route){
     $importedRoutesIds[] = $db->writeRoute($gpxfileid, $route);
@@ -191,7 +189,7 @@ $slim->post('/v1/route/:id/pictures/add', function ($routeid) use ($slim) {
 
     $pic = new \TB\Picture($picture_filename, $picture_tmp_name);
     $pic->readMetadata();
-    $pic->tags["datetime"] = intval($pic->tags["datetime"]) - $offset;
+    $pic->setTag("datetime", intval($pic->tags["datetime"]) - $offset);
 
     $rp = $r->getNearestPointByTime($pic->tags['datetime']);
     $pic->setCoords($rp->coords['long'], $rp->coords['lat']);

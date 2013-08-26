@@ -2,7 +2,7 @@
 
 namespace TB;
 
-class Media {
+abstract class Media {
   public $id;
   public $coords; // [$long, $lat]
   public $tmp_path;
@@ -31,7 +31,6 @@ class Media {
   public function setTag($key, $value) { $this->tags[$key] = $value; }
   public function getTags() { return $this->tags; }
 
+  abstract public function readMetadata();
 }
-
-
 ?>
