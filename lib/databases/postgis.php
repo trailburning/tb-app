@@ -324,6 +324,7 @@ class Postgis
       $tags
     ));
     if (!$success) {
+      $this->rollBack();
       throw (new ApiException("Failed to insert media in db", 500));
     }
 
@@ -337,6 +338,7 @@ class Postgis
       'trailburning-media/'.sha1_file($picture->getTmpPath()).'.jpg'
     ));
     if (!$success) {
+      $this->rollBack();
       throw (new ApiException("Failed to upload version of media", 500));
     }
     $this->commit();
@@ -349,8 +351,10 @@ class Postgis
     $q = "SELECT tzid FROM tz_world_mp WHERE ST_Contains(geom, ST_MakePoint(?,?));";
     $pq = $this->prepare($q);
     $success = $pq->execute(array($long, $lat));
-    if (!$success) 
+    if (!$success) {
+      $this->rollBack();
       $r = null;
+    }
 
     if ($row = $pq->fetch(\PDO::FETCH_ASSOC))
       $r = $row['tzid'];
@@ -369,7 +373,6 @@ class Postgis
       if ($n++ > 0) $hstore .= ",";
       $hstore .= '"'.$k.'" => "'.$v.'"';
     }
-
     return $hstore;
   }
 }

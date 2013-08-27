@@ -13,7 +13,7 @@ $I->SendGet('/v1/route/'.$firstrouteid);
 $I->seeResponseCodeIs(200);
 $I->seeResponseIsJson();
 
-$I->SendPost('/v1/route/'.$firstrouteid.'/pictures/add', array(), array('pictures' => array('tests/_data/gruenewald/P5250773.jpg', 'tests/_data/gruenewald/P5250783.jpg')));
+$I->SendPost('/v1/route/'.$firstrouteid.'/medias/add', array(), array('medias' => array('tests/_data/gruenewald/P5250773.jpg', 'tests/_data/gruenewald/P5250783.jpg')));
 $I->seeResponseCodeIs(200);
 $I->seeResponseIsJson();
 

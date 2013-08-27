@@ -9,7 +9,7 @@ $I->seeResponseIsJson();
 $routeids = $I->grabDataFromJsonResponse('value.routeids');
 $firstrouteid = $routeids[0];
 
-$I->SendPost('/v1/route/'.$firstrouteid.'/pictures/add', array(), array('pictures' => array('tests/_data/badinput/gpx.jpg')));
+$I->SendPost('/v1/route/'.$firstrouteid.'/medias/add', array(), array('medias' => array('tests/_data/badinput/gpx.jpg')));
 $I->seeResponseCodeIs(400);
 $I->seeResponseIsJson();
 $I->seeResponseContains('not a valid jpeg file');
