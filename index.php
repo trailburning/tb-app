@@ -11,9 +11,9 @@ require_once 'databases/postgis.php';
 $slim = new \Slim\Slim();
 
 // Debug needs to be set to false for our custom exception handlers to be called
-$slim->config(array('log.enable' => true,'debug' => false)); 
+$slim->config(array('log.enable' => true, 'debug' => false)); 
 $slim->error(function (\Exception $e) { \TB\handleException($e);} ); 
-//$slim->log->setEnabled(true);
+$slim->log->setLevel(\Slim\Log::DEBUG);
 
 $slim->get('/v1/import/gpx', function () use ($slim) {
   $slim->render('ImportGpx.php');
@@ -27,9 +27,8 @@ $slim->post('/v1/import/gpx', function () use ($slim) {
   if ($_FILES['gpxfile']['error'] != 0) 
     throw (new \TB\ApiException("An error happened uploading the GPX file", 400));
 
-  $gpx_filename = $_FILES["gpxfile"]["name"];
-  $gpx_filename = preg_replace('/[^\w\-~_\.]+/u', '-', $gpx_filename);
-  $gpx_tmp_path  = $_FILES["gpxfile"]["tmp_name"];
+  $gpx_filename = preg_replace('/[^\w\-~_\.]+/u', '-', $_FILES["gpxfile"]["name"]);
+  $gpx_tmp_path = $_FILES["gpxfile"]["tmp_name"];
 
   $importer = new GPXImporter();
   try {
@@ -59,9 +58,9 @@ $slim->post('/v1/import/gpx', function () use ($slim) {
     ));
 
   $result = $aws_client->putObject(array(
-      'Bucket' => 'trailburning-gpx',
-      'Key'    => sha1_file($gpx_tmp_path).'.gpx',
-      'Body'   => file_get_contents($gpx_tmp_path)
+    'Bucket' => 'trailburning-gpx',
+    'Key'    => sha1_file($gpx_tmp_path).'.gpx',
+    'Body'   => file_get_contents($gpx_tmp_path)
   ));
 
   $res = $slim->response();
@@ -159,7 +158,7 @@ $slim->post('/v1/route/:id/medias/add', function ($route_id) use ($slim) {
   $medias_ids = array();
   for ($i=0; $i<count($_FILES['medias']['name']); $i++) {
     if ($_FILES['medias']['error'][$i] != 0)
-      throw (new \TB\ApiException("An error happened uploading the media", 400));    
+      throw (new \TB\ApiException("An error happened uploading the medias", 400));    
 
     $media_filename = preg_replace('/[^\w\-~_\.]+/u', '-', $_FILES["medias"]["name"][$i]);
     switch (strtolower(pathinfo($media_filename, PATHINFO_EXTENSION))) {
