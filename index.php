@@ -19,7 +19,7 @@ $slim->get('/v1/import/gpx', function () use ($slim) {
   $slim->render('ImportGpx.php');
 });
 
-$slim->post('/v1/import/gpx', function () use ($slim, $api_root, $conf_path) {
+$slim->post('/v1/import/gpx', function () use ($slim) {
   require_once 'importers/GPX.php';
 
   if (!array_key_exists("gpxfile", $_FILES)) 
@@ -76,8 +76,6 @@ $slim->post('/v1/import/gpx', function () use ($slim, $api_root, $conf_path) {
 $slim->get('/v1/route/:id', function ($route_id) use ($slim) {
   require_once 'importers/GPX.php';
   
-  global $api_root, $conf_path;
-
   $db = new \TB\Postgis(
     $_SERVER['DB_DRIVER'].':host='.$_SERVER['DB_HOST'].'; port='.$_SERVER['DB_PORT'].';dbname='.$_SERVER['DB_DATABASE'], 
     $_SERVER['DB_USER'], 
@@ -95,7 +93,7 @@ $slim->get('/v1/route/:id', function ($route_id) use ($slim) {
   );
 });
 
-$slim->delete('/v1/route/:id', function ($route_id) use ($slim, $api_root, $conf_path) {
+$slim->delete('/v1/route/:id', function ($route_id) use ($slim) {
   $db = new \TB\Postgis(
     $_SERVER['DB_DRIVER'].':host='.$_SERVER['DB_HOST'].'; port='.$_SERVER['DB_PORT'].';dbname='.$_SERVER['DB_DATABASE'], 
     $_SERVER['DB_USER'], 
@@ -136,12 +134,11 @@ $slim->get('/v1/route/:id/medias/add', function ($route_id) use ($slim) {
   $slim->render('MediasNew.php', array('routeid' => $route_id));
 });
 
-$slim->post('/v1/route/:id/medias/add', function ($route_id) use ($slim, $api_root, $conf_path) {
+$slim->post('/v1/route/:id/medias/add', function ($route_id) use ($slim) {
   require_once 'JpegMedia.php';
 
   if (!array_key_exists('medias', $_FILES)) 
     throw (new \TB\ApiException("Medias variable not set", 400));
-
 
   $db = new \TB\Postgis(
     $_SERVER['DB_DRIVER'].':host='.$_SERVER['DB_HOST'].'; port='.$_SERVER['DB_PORT'].';dbname='.$_SERVER['DB_DATABASE'], 
@@ -151,8 +148,8 @@ $slim->post('/v1/route/:id/medias/add', function ($route_id) use ($slim, $api_ro
   );
 
   $r = $db->readRoute($route_id);
-  $r_centroid = $r->getCentroid();
 
+  $r_centroid = $r->getCentroid();
   if (($tz = $db->getTimezone($r_centroid['long'], $r_centroid['lat'])) == NULL)
     throw new Exception("Error getting timezone");
 
@@ -162,13 +159,23 @@ $slim->post('/v1/route/:id/medias/add', function ($route_id) use ($slim, $api_ro
   $medias_ids = array();
   for ($i=0; $i<count($_FILES['medias']['name']); $i++) {
     if ($_FILES['medias']['error'][$i] != 0)
-      throw (new \TB\ApiException("An error happened uploading the picture", 400));    
+      throw (new \TB\ApiException("An error happened uploading the media", 400));    
 
-    $picture_filename = preg_replace('/[^\w\-~_\.]+/u', '-', $_FILES["medias"]["name"][$i]);
-    $picture_tmp_path  =$_FILES["medias"]["tmp_name"][$i]; 
+    $media_filename = preg_replace('/[^\w\-~_\.]+/u', '-', $_FILES["medias"]["name"][$i]);
+    switch (strtolower(pathinfo($media_filename, PATHINFO_EXTENSION))) {
+      case "jpg":
+      case "jpeg":
+        $media = new \TB\JpegMedia();
+        break;
+
+      default:
+        throw (new \TB\ApiException("Tried to upload file with non recognised extension", 400));    
+        break;
+    }
+
+    $media_tmp_path  =$_FILES["medias"]["tmp_name"][$i]; 
     
-    $media = new \TB\JpegMedia();
-    $media->fromFile($picture_filename, $picture_tmp_path);
+    $media->fromFile($media_filename, $media_tmp_path);
     $media->setTag("datetime", intval($media->getTag('datetime')) - $offset);
 
     $rp = $r->getNearestPointByTime($media->tags['datetime']);
@@ -184,8 +191,8 @@ $slim->post('/v1/route/:id/medias/add', function ($route_id) use ($slim, $api_ro
     ));
     $result = $aws_client->putObject(array(
         'Bucket' => 'trailburning-media',
-        'Key'    => sha1_file($picture_tmp_path).'.jpg',
-        'Body'   => file_get_contents($picture_tmp_path),
+        'Key'    => sha1_file($media_tmp_path).'.jpg',
+        'Body'   => file_get_contents($media_tmp_path),
         'ACL'    => 'public-read'
     ));
   }

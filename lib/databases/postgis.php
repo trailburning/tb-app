@@ -257,7 +257,6 @@ class Postgis
   }
 
   public function attachMediaToRoute($route_id, $media, $linear_position=0) {
-
     if ($linear_position == 0) {
       $this->beginTransaction();
       $q = "SELECT ST_Line_Locate_Point(
