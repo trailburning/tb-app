@@ -68,12 +68,12 @@ $slim->post('/v1/import/gpx', function () use ($slim, $api_root, $conf_path) {
   $res['Content-Type'] = 'application/json';
   $slim->render(
     'ApiReplyView.php', 
-    array("value" => '{"routeids": '.json_encode($importedRoutesIds).'}', 'usermsg' => 'GPX successfully imports'), 
+    array("value" => '{"route_ids": '.json_encode($importedRoutesIds).'}', 'usermsg' => 'GPX successfully imports'), 
     200
   );
 });
 
-$slim->get('/v1/route/:id', function ($routeid) use ($slim) {
+$slim->get('/v1/route/:id', function ($route_id) use ($slim) {
   require_once 'importers/GPX.php';
   
   global $api_root, $conf_path;
@@ -85,7 +85,7 @@ $slim->get('/v1/route/:id', function ($routeid) use ($slim) {
     array(PDO::ATTR_PERSISTENT => true, PDO::ERRMODE_EXCEPTION => true)
   );
 
-  $route = $db->readRoute($routeid);
+  $route = $db->readRoute($route_id);
   $res = $slim->response();
   $res['Content-Type'] = 'application/json';
   $slim->render(
@@ -95,9 +95,7 @@ $slim->get('/v1/route/:id', function ($routeid) use ($slim) {
   );
 });
 
-$slim->delete('/v1/route/:id', function ($routeid) use ($slim) {
-  global $api_root, $conf_path;
-
+$slim->delete('/v1/route/:id', function ($route_id) use ($slim, $api_root, $conf_path) {
   $db = new \TB\Postgis(
     $_SERVER['DB_DRIVER'].':host='.$_SERVER['DB_HOST'].'; port='.$_SERVER['DB_PORT'].';dbname='.$_SERVER['DB_DATABASE'], 
     $_SERVER['DB_USER'], 
@@ -105,17 +103,17 @@ $slim->delete('/v1/route/:id', function ($routeid) use ($slim) {
     array(PDO::ATTR_PERSISTENT => true, PDO::ERRMODE_EXCEPTION => true)
   );
 
-  $route = $db->deleteRoute($routeid);
+  $route = $db->deleteRoute($route_id);
   $res = $slim->response();
   $res['Content-Type'] = 'application/json';
   $slim->render(
     'ApiReplyView.php', 
-    array("value" => $routeid, 'usermsg' => 'success'), 
+    array("value" => $route_id, 'usermsg' => 'success'), 
     200
   );
 });
 
-$slim->get('/v1/route/:id/medias', function ($routeid) use ($slim) {
+$slim->get('/v1/route/:id/medias', function ($route_id) use ($slim) {
   $db = new \TB\Postgis(
     $_SERVER['DB_DRIVER'].':host='.$_SERVER['DB_HOST'].'; port='.$_SERVER['DB_PORT'].';dbname='.$_SERVER['DB_DATABASE'], 
     $_SERVER['DB_USER'], 
@@ -123,7 +121,7 @@ $slim->get('/v1/route/:id/medias', function ($routeid) use ($slim) {
     array(PDO::ATTR_PERSISTENT => true, PDO::ERRMODE_EXCEPTION => true)
   );
 
-  $medias = $db->getRouteMedia($routeid);
+  $medias = $db->getRouteMedia($route_id);
 
   $res = $slim->response();
   $res['Content-Type'] = 'application/json';
@@ -134,17 +132,16 @@ $slim->get('/v1/route/:id/medias', function ($routeid) use ($slim) {
   );
 });
 
-$slim->get('/v1/route/:id/medias/add', function ($routeid) use ($slim) {
-  $slim->render('MediasNew.php', array('routeid' => $routeid));
+$slim->get('/v1/route/:id/medias/add', function ($route_id) use ($slim) {
+  $slim->render('MediasNew.php', array('routeid' => $route_id));
 });
 
-$slim->post('/v1/route/:id/medias/add', function ($routeid) use ($slim, $api_root, $conf_path) {
+$slim->post('/v1/route/:id/medias/add', function ($route_id) use ($slim, $api_root, $conf_path) {
   require_once 'JpegMedia.php';
 
   if (!array_key_exists('medias', $_FILES)) 
     throw (new \TB\ApiException("Medias variable not set", 400));
 
-  $medias_Ids = array();
 
   $db = new \TB\Postgis(
     $_SERVER['DB_DRIVER'].':host='.$_SERVER['DB_HOST'].'; port='.$_SERVER['DB_PORT'].';dbname='.$_SERVER['DB_DATABASE'], 
@@ -153,7 +150,7 @@ $slim->post('/v1/route/:id/medias/add', function ($routeid) use ($slim, $api_roo
     array(PDO::ATTR_PERSISTENT => true, PDO::ERRMODE_EXCEPTION => true)
   );
 
-  $r = $db->readRoute($routeid);
+  $r = $db->readRoute($route_id);
   $r_centroid = $r->getCentroid();
 
   if (($tz = $db->getTimezone($r_centroid['long'], $r_centroid['lat'])) == NULL)
@@ -162,6 +159,7 @@ $slim->post('/v1/route/:id/medias/add', function ($routeid) use ($slim, $api_roo
   $dtz = new DateTimeZone($tz);
   $offset = $dtz->getOffset(DateTime::createFromFormat('U', $r->route_points[0]->tags['datetime']));
 
+  $medias_ids = array();
   for ($i=0; $i<count($_FILES['medias']['name']); $i++) {
     if ($_FILES['medias']['error'][$i] != 0)
       throw (new \TB\ApiException("An error happened uploading the picture", 400));    
@@ -177,8 +175,8 @@ $slim->post('/v1/route/:id/medias/add', function ($routeid) use ($slim, $api_roo
     $media->setCoords($rp->coords['long'], $rp->coords['lat']);
 
     $media->setId($db->importPicture($media));
-    $medias_Ids[] = $media->getId();
-    $db->attachMediaToRoute($routeid, $media);
+    $medias_ids[] = $media->getId();
+    $db->attachMediaToRoute($route_id, $media);
 
     $aws_client = \Aws\S3\S3Client::factory(array(
       'key'    => $_SERVER['AWS_ACCESSKEY'],
@@ -196,7 +194,7 @@ $slim->post('/v1/route/:id/medias/add', function ($routeid) use ($slim, $api_roo
   $res['Content-Type'] = 'application/json';
   $slim->render(
     'ApiReplyView.php', 
-    array("value" => '{"mediasIds": '.json_encode($medias_Ids).'}'), 
+    array("value" => '{"medias_ids": '.json_encode($medias_ids).'}'), 
     200
   );
 });
