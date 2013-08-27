@@ -17,6 +17,10 @@ $I->SendPost('/v1/route/'.$first_route_id.'/medias/add', array(), array('medias'
 $I->seeResponseCodeIs(200);
 $I->seeResponseIsJson();
 
+$I->SendGet('/v1/route/'.$first_route_id.'/medias');
+$I->seeResponseCodeIs(200);
+$I->seeResponseIsJson();
+
 $I->SendDELETE('/v1/route/'.$first_route_id);
 $I->seeResponseCodeIs(200);
 $I->seeResponseIsJson();
