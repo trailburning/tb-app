@@ -226,7 +226,7 @@ class Postgis
           WHERE m.id = rm.media_id
             AND rm.media_id = mv.media_id
             AND rm.route_id=?
-          GROUP BY mv.media_id, mv.path, mv.media_size, m.coords, m.tags;";
+          GROUP BY mv.media_id, mv.path, mv.version_size, m.coords, m.tags;";
     $pq = $this->prepare($q);
     $success = $pq->execute(array($route_id));
     if (!$success) {
@@ -269,7 +269,6 @@ class Postgis
       $pq = $this->prepare($q);
 
       $coords = $media->getCoords();
-
       $success = $pq->execute(array(
         $coords['long'], 
         $coords['lat'], 
