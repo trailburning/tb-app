@@ -3,12 +3,12 @@
 namespace TB;
 
 abstract class Media {
-  private $id;
-  private $coords; /* ["long" => , "lat" => ]  */
-  protected $filename;
-  protected $tmp_path;
-  protected $metadata;
-  protected $versions;
+  public $id;
+  public $coords; /* ["long" => , "lat" => ]  */
+  public $filename;
+  public $tmp_path;
+  public $metadata;
+  public $versions;
 
   abstract protected function readMetadata();
   abstract protected function verifyFileType();
