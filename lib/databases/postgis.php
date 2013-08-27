@@ -102,13 +102,7 @@ class Postgis
       $rptags = $routepoint->getTags();
       $rpcoordswkt = 'ST_SetSRID(ST_MakePoint('.$rpcoords['long'].', '.$rpcoords['lat'].'), 4326)';
 
-      // Build hstore text from associative array
-      $tags = "";
-      $tagnum = 0;
-      foreach ($rptags as $tagname => $tagvalue) {
-        if ($tagnum++ > 0) $tags .= ",";
-        $tags .= '"'.$tagname.'" => "'.$tagvalue.'"';
-      }
+      $tags = \TB\Postgis::hstoreFromMap($rptags);
 
       $success = $pq->execute(array(
         $route_id, 
@@ -290,6 +284,7 @@ class Postgis
 
       if ($row = $pq->fetch(\PDO::FETCH_ASSOC))
         $linear_position = $row['linear_position'];
+
       $this->commit();
     }
 
@@ -319,14 +314,7 @@ class Postgis
       $coords['lat'] = 0;
     }
 
-    // Build hstore text from associative array
-    $tags = "";
-    $tagnum = 0;
-    $picture_tags = $picture->getTags();
-    foreach ($picture_tags as $tagname => $tagvalue) {
-      if ($tagnum++ > 0) $tags .= ",";
-      $tags .= '"'.$tagname.'" => "'.$tagvalue.'"';
-    }
+    $tags = \TB\Postgis::hstoreFromMap($picture->getTags());
 
     $q = "INSERT INTO medias (coords, tags) VALUES (ST_SetSRID(ST_MakePoint(?, ?), 4326), ?)";
     $pq = $this->prepare($q);
@@ -372,6 +360,17 @@ class Postgis
     $this->commit();
 
     return $r;
+  }
+
+  protected static function hstoreFromMap($map) {
+    $hstore = "";
+    $n = 0;
+    foreach ($map as $k => $v) {
+      if ($n++ > 0) $hstore .= ",";
+      $hstore .= '"'.$k.'" => "'.$v.'"';
+    }
+
+    return $hstore;
   }
 }
 
