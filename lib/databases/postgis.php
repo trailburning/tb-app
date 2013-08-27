@@ -23,7 +23,7 @@ class Postgis
     }
   }
 
-  private function updateRouteLength($routeid) {
+  private function updateRouteLength($route_id) {
     $this->beginTransaction();
 
     $q = "UPDATE routes 
@@ -34,7 +34,7 @@ class Postgis
           )
           WHERE routes.id=?;";
     $pq = $this->prepare($q);
-    $success = $pq->execute(array($routeid));
+    $success = $pq->execute(array($route_id));
     if (!$success) {
       $this->rollBack();
       throw (new ApiException("Failed to insert the track into the database - Problem calculating length", 500));
@@ -43,7 +43,7 @@ class Postgis
     $this->commit();
   }
 
-  private function updateRouteCentroid($routeid) {
+  private function updateRouteCentroid($route_id) {
     $this->beginTransaction();
     $q = "UPDATE routes 
           SET centroid = (
@@ -52,7 +52,7 @@ class Postgis
               WHERE routes.id = rp.route_id )
           WHERE id=?;";
     $pq = $this->prepare($q);
-    $success = $pq->execute(array($routeid));
+    $success = $pq->execute(array($route_id));
     if (!$success) {
       $this->rollBack();
       throw (new ApiException("Failed to insert the track into the database - Problem calculating centroid", 500));
@@ -78,7 +78,7 @@ class Postgis
   }
 
   public function writeRoute($route) {
-    $routeid = 0;
+    $route_id = 0;
     $this->beginTransaction();
 
     $q = "INSERT INTO routes (name, gpx_file_id) VALUES (?, ?)";
@@ -89,7 +89,7 @@ class Postgis
       throw (new ApiException("Failed to insert the route into the database", 500));
     }
 
-    $routeid = intval($this->lastInsertId("routes_id_seq"));
+    $route_id = intval($this->lastInsertId("routes_id_seq"));
 
     $q = "INSERT INTO route_points (route_id, point_number, coords, tags) VALUES (?, ?, ST_SetSRID(ST_MakePoint(?, ?), 4326), ?)";
     $pq = $this->prepare($q);
@@ -111,25 +111,25 @@ class Postgis
       }
 
       $success = $pq->execute(array(
-        $routeid, 
+        $route_id, 
         $pointnumber,
         $rpcoords['long'],
         $rpcoords['lat'], 
         $tags
       ));
       if (!$success) {
-        print_r($pq->errorInfo());
+        $this->rollBack();
         throw (new ApiException("Failed to insert routepoints into the database".$rpcoordswkt, 500));
       }
     }
     $this->commit();
-    $this->updateRouteCentroid($routeid);
-    $this->updateRouteLength($routeid);
+    $this->updateRouteCentroid($route_id);
+    $this->updateRouteLength($route_id);
 
-    return $routeid;
+    return $route_id;
   }
 
-  public function readRoute($routeid) {
+  public function readRoute($route_id) {
     $route = new Route();
 
     $this->beginTransaction();
@@ -141,10 +141,13 @@ class Postgis
           WHERE r.id=? AND rp.route_id=r.id
           GROUP BY name, length ";
     $pq = $this->prepare($q);
-    $success = $pq->execute(array($routeid));
-    if (!$success) 
+    $success = $pq->execute(array($route_id));
+    if (!$success) {
+      $this->rollBack();
       throw (new ApiException("Failed to fetch route from Database", 500));
-    
+    }
+    $this->commit();
+
     if ($row = $pq->fetch(\PDO::FETCH_ASSOC)) {
       $route->setName($row['name']);
       $route->setBBox($row['bbox']);
@@ -154,7 +157,6 @@ class Postgis
     } else {
       throw (new ApiException("Route does not exist", 404));
     }
-    $this->commit();
 
     $this->beginTransaction();
     $q = "SELECT ST_AsText(rp.coords) AS rpcoords,
@@ -165,10 +167,12 @@ class Postgis
           ORDER BY rp.point_number ASC
           ";
     $pq = $this->prepare($q);
-    $success = $pq->execute(array($routeid));
+    $success = $pq->execute(array($route_id));
     if (!$success) {
+      $this->rollBack();
       throw (new ApiException("Failed to fetch route from Database", 500));
     }
+    $this->commit();
     
     while ($row = $pq->fetch(\PDO::FETCH_ASSOC)) {
       $coords = explode(" ", substr(trim($row['rpcoords']),6,-1)); //Strips POINT( and trailing )
@@ -179,25 +183,25 @@ class Postgis
       );
     }
 
-    $this->commit();
     return $route;
   }
 
-  public function deleteRoute($routeid) {
+  public function deleteRoute($route_id) {
     $this->beginTransaction();
     $q = "DELETE FROM routes WHERE routes.id = ?";
     $pq = $this->prepare($q);
-    $success = $pq->execute(array($routeid));
-    if (!$success) 
-      throw (new ApiException("Failed to delete route $routeid", 500));
-
+    $success = $pq->execute(array($route_id));
+    if (!$success) {
+      $this->rollBack();
+      throw (new ApiException("Failed to delete route $route_id", 500));
+    }
     if ($pq->rowCount() < 1)
-      throw (new ApiException("Failed to delete non existing route $routeid", 404));
+      throw (new ApiException("Failed to delete non existing route $route_id", 404));
   
     $this->commit();
   }
 
-  public function readRouteAsJSON($routeid, $format) {
+  public function readRouteAsJSON($route_id, $format) {
     $this->beginTransaction();
     $q = "SELECT r.id AS route_id,
                  r.name AS name,
@@ -206,7 +210,7 @@ class Postgis
           WHERE r.id=? AND rp.route_id=r.id
           GROUP BY r.id";
     $pq = $this->prepare($q);
-    $success = $pq->execute(array($routeid));
+    $success = $pq->execute(array($route_id));
     if (!$success) {
       throw (new ApiException("Failed to fetch route from Database", 500));
     }
@@ -215,7 +219,7 @@ class Postgis
   }
 
 
-  public function getRouteMedia($routeid) {
+  public function getRouteMedia($route_id) {
     $this->beginTransaction();
     $q = "SELECT mv.media_id AS id,
                  ST_AsText(m.coords) AS coords,
@@ -230,10 +234,12 @@ class Postgis
             AND rm.route_id=?
           GROUP BY mv.media_id, mv.path, mv.media_size, m.coords, m.tags;";
     $pq = $this->prepare($q);
-    $success = $pq->execute(array($routeid));
-    if (!$success) 
+    $success = $pq->execute(array($route_id));
+    if (!$success) {
+      $this->rollBack();
       throw (new ApiException("Failed to retrieve pictures from the database", 500));
-    
+    }
+
     $medias = array();
     while ($row = $pq->fetch(\PDO::FETCH_ASSOC)) {
       if (!isset($medias[$row['id']])) {
@@ -256,13 +262,13 @@ class Postgis
     return $medias;
   }
 
-  public function attachMediaToRoute($routeid, $media, $linear_position=0) {
+  public function attachMediaToRoute($route_id, $media, $linear_position=0) {
 
     if ($linear_position == 0) {
       $this->beginTransaction();
       $q = "SELECT ST_Line_Locate_Point(
               ST_MakeLine(rp.coords ORDER BY rp.point_number ASC),
-              ST_MakePoint(?,?)
+              ST_SetSRID(ST_MakePoint(?,?), 4326)
             ) AS linear_position
             FROM route_points as rp
             where rp.route_id=?
@@ -274,8 +280,14 @@ class Postgis
       $success = $pq->execute(array(
         $coords['long'], 
         $coords['lat'], 
-        $routeid
+        $route_id
       ));
+
+      if (!$success) {
+        $this->rollBack();
+        throw (new ApiException("Failed to locate image on route", 500));
+      }
+
       if ($row = $pq->fetch(\PDO::FETCH_ASSOC))
         $linear_position = $row['linear_position'];
       $this->commit();
@@ -285,12 +297,13 @@ class Postgis
     $q = "INSERT INTO route_medias (route_id, media_id, linear_position) VALUES (?, ?, ?)";
     $pq = $this->prepare($q);
     $success = $pq->execute(array(
-      $routeid,
+      $route_id,
       $media->getId(), 
       $linear_position
     ));
 
     if (!$success) {
+      $this->rollBack();
       throw (new ApiException("Failed to link media to route", 500));
     }
     $this->commit();

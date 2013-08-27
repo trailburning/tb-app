@@ -166,7 +166,7 @@ $slim->post('/v1/route/:id/pictures/add', function ($routeid) use ($slim) {
     throw new Exception("Error getting timezone");
 
   $dtz = new DateTimeZone($tz);
-  $offset = $dtz->getOffset(DateTime::createFromFormat('U', $r->routepoints[0]->tags['datetime']));
+  $offset = $dtz->getOffset(DateTime::createFromFormat('U', $r->route_points[0]->tags['datetime']));
 
   for ($i=0; $i<count($_FILES['pictures']['name']); $i++) {
     if ($_FILES['pictures']['error'][$i] != 0)

@@ -6,13 +6,13 @@ class Route {
   protected $gpx_file_id; // ID of gpx file this route has been imported from (optional)
   protected $name;
   protected $tags;
-  public $routepoints;
+  public $route_points;
   protected $bbox;
   protected $centroid; //[$long, $lat]
   protected $length;
 
   public function __construct() {
-    $this->routepoints = array();
+    $this->route_points = array();
     $this->tags = array();
   }
 
@@ -29,21 +29,21 @@ class Route {
   public function getTags() { return $this->tags; }
 
   public function addRoutePoint($long, $lat, $tags) {
-    $this->routepoints[] = new RoutePoint($long, $lat, $tags);
+    $this->route_points[] = new RoutePoint($long, $lat, $tags);
   }
 
   public function getRoutePoints() {
-    return $this->routepoints;
+    return $this->route_points;
   }
 
   public function getNearestPointBytime($unixtimestamp) {
-    if (sizeof($this->routepoints) < 2)
+    if (sizeof($this->route_points) < 2)
       throw new \Exception("Route is less than 2 points.");
 
-    if ($unixtimestamp < $this->routepoints[0]->tags['datetime'] || $unixtimestamp > end($this->routepoints)->tags['datetime'])
+    if ($unixtimestamp < $this->route_points[0]->tags['datetime'] || $unixtimestamp > end($this->route_points)->tags['datetime'])
       throw new \TB\ApiException("One picture doesn't seem to have been taken during the trail", 400);
 
-    foreach ($this->routepoints as $rp) {
+    foreach ($this->route_points as $rp) {
       if ($rp->tags['datetime'] > $unixtimestamp )
         return $rp; 
     }
@@ -57,22 +57,22 @@ class Route {
     $route .= '"bbox": "'.$this->bbox.'",';
     $route .= '"tags": [';
     $i=0;
-    foreach ($this->tags as $tagname => $tagvalue) {
+    foreach ($this->tags as $tag_name => $tag_value) {
       if ($i++ != 0) $route.=',';
-      $route .= '"'.$tagname.'": "'.$tagvalue.'"';
+      $route .= '"'.$tag_name.'": "'.$tag_value.'"';
     }
     $route .= '],';
-    $route .= '"routepoints" : [';
+    $route .= '"route_points" : [';
     $i=0;
-    foreach ($this->routepoints as $rp) {
+    foreach ($this->route_points as $rp) {
       if ($i++ != 0) $route.=',';
       $coords = $rp->getCoords();
       $route .= '{"coords" : ['.$coords['long'].','.$coords['lat'].'], "tags" : {';
-      $rptags = $rp->getTags();
+      $rp_tags = $rp->getTags();
       $j=0;
-      foreach ($rptags as $rptag => $rptagvalue) {
+      foreach ($rp_tags as $rp_tag => $rp_tag_value) {
         if ($j++ != 0) $route.=',';
-        $route .= '"'.$rptag.'" : "'.$rptagvalue.'"';
+        $route .= '"'.$rp_tag.'" : "'.$rp_tag_value.'"';
       }
       $route .= '}}';
     }
