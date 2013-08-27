@@ -20,6 +20,10 @@ $I->seeResponseIsJson();
 $I->SendGet('/v1/route/'.$first_route_id.'/medias');
 $I->seeResponseCodeIs(200);
 $I->seeResponseIsJson();
+$I->seeResponseContains('success');
+$I->seeResponseContains('coords');
+$I->seeResponseContains('versions');
+$I->seeResponseContains('filesize');
 
 $I->SendDELETE('/v1/route/'.$first_route_id);
 $I->seeResponseCodeIs(200);

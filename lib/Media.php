@@ -7,7 +7,7 @@ abstract class Media {
   public $coords; /* ["long" => , "lat" => ]  */
   public $filename;
   public $tmp_path;
-  public $metadata;
+  public $tags;
   public $versions;
 
   abstract protected function readMetadata();
