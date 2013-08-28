@@ -205,5 +205,10 @@ $slim->post('/v1/route/:id/medias/add', function ($route_id) use ($slim) {
   );
 });
 
+// return HTTP 200 for HTTP OPTIONS requests
+$app->map('/:x+', function($x) {
+      http_response_code(200);
+})->via('OPTIONS');
+
 $slim->run();
 ?>
