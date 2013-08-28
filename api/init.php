@@ -5,7 +5,7 @@ error_reporting(E_ALL);
 $_SERVER['DOCUMENT_ROOT'] = '/app';
 
 // Assigning ./ as root for phpunit
-$api_root = isset($_SERVER["DOCUMENT_ROOT"])?'./api':$_SERVER["DOCUMENT_ROOT"].'/api';
+$api_root = '/app/api';
 $conf_path = $api_root.'/config/';
 
 $include_path = get_include_path();
