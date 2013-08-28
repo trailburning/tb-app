@@ -37,7 +37,7 @@ SELECT AddGeometryColumn('medias', 'coords', 4326, 'POINT', 2 );
 
 CREATE TABLE IF NOT EXISTS media_versions (
   id serial PRIMARY KEY,
-  media_id SERIAL REFERENCES media(id) ON DELETE CASCADE NOT NULL,
+  media_id SERIAL REFERENCES medias(id) ON DELETE CASCADE NOT NULL,
   version_size SMALLINT,
   path VARCHAR(100)
 );
@@ -48,6 +48,6 @@ CREATE TABLE IF NOT EXISTS route_medias (
   linear_position FLOAT
 );
 
-CREATE RULE delete_route_medias AS ON DELETE TO routes_medias do (
-  DELETE FROM media where medias.id=old.media_id
+CREATE RULE delete_route_medias AS ON DELETE TO route_medias do (
+  DELETE FROM medias where medias.id=old.media_id
 );
