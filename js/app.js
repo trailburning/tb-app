@@ -1,7 +1,7 @@
 var app = app || {};
 
-//var RESTAPI_BASEURL = 'http://tb-restapi.herokuapp.com/';
-var RESTAPI_BASEURL = 'http://localhost:8888/';
+var RESTAPI_BASEURL = 'http://trailburning.herokuapp.com/api/';
+//var RESTAPI_BASEURL = 'http://localhost:8888/';
 
 define([
   'underscore', 
