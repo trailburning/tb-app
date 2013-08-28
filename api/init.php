@@ -2,6 +2,8 @@
 ini_set('display_errors','1');
 error_reporting(E_ALL);
 
+$_SERVER['DOCUMENT_ROOT'] = '/app';
+
 // Assigning ./ as root for phpunit
 $api_root = isset($_SERVER["DOCUMENT_ROOT"])?'./api':$_SERVER["DOCUMENT_ROOT"].'/api';
 $conf_path = $api_root.'/config/';
