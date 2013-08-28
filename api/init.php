@@ -3,7 +3,7 @@ ini_set('display_errors','1');
 error_reporting(E_ALL);
 
 // Assigning ./ as root for phpunit
-$api_root = isset($_SERVER["DOCUMENT_ROOT"])?'.':$_SERVER["DOCUMENT_ROOT"];;
+$api_root = isset($_SERVER["DOCUMENT_ROOT"])?'./api':$_SERVER["DOCUMENT_ROOT"].'/api';
 $conf_path = $api_root.'/config/';
 
 $include_path = get_include_path();
