@@ -4,7 +4,7 @@ error_reporting(E_ALL);
 
 die ("toto:".$_SERVER['DOCUMENT_ROOT']);
 
-if (array_key_exists('DOCUMENT_ROOT', $_SERVER)) {
+if (array_key_exists('DOCUMENT_ROOT', $_SERVER))
   $api_root = $_SERVER['DOCUMENT_ROOT'].'/api/';
 else
   $api_root = '/app/api';
