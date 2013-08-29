@@ -326,14 +326,15 @@ class Postgis
       throw (new ApiException("Failed to insert media in db", 500));
     }
 
-    $pictureid = intval($this->lastInsertId("medias_id_seq"));
+    $picture_id = intval($this->lastInsertId("medias_id_seq"));
+    $picture_s3_path = 'trailburning-media/'.sha1_file($picture->getTmpPath()).'.jpg';
 
     $q = "INSERT INTO media_versions (media_id, version_size, path) VALUES (?,?,?)";
     $pq = $this->prepare($q);
     $success = $pq->execute(array(
-      $pictureid,
+      $picture_id,
       0, // ORIGINAL
-      'trailburning-media/'.sha1_file($picture->getTmpPath()).'.jpg'
+      $picture_s3_path
     ));
     if (!$success) {
       $this->rollBack();
@@ -341,7 +342,10 @@ class Postgis
     }
     $this->commit();
 
-    return $pictureid;
+    $picture->setId($picture_id);
+    $picture->addVersion(0, $picture_s3_path);
+
+    return $picture_id;
   }
 
   public function getTimezone($long, $lat) {

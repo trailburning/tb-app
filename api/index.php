@@ -155,7 +155,7 @@ $slim->post('/v1/route/:id/medias/add', function ($route_id) use ($slim) {
   $dtz = new DateTimeZone($tz);
   $offset = $dtz->getOffset(DateTime::createFromFormat('U', $r->route_points[0]->tags['datetime']));
 
-  $medias_ids = array();
+  $medias = array();
   for ($i=0; $i<count($_FILES['medias']['name']); $i++) {
     if ($_FILES['medias']['error'][$i] != 0)
       throw (new \TB\ApiException("An error happened uploading the medias", 400));    
@@ -182,8 +182,7 @@ $slim->post('/v1/route/:id/medias/add', function ($route_id) use ($slim) {
     if ($rp->getTag('altitude') != null) 
       $media->setTag('altitude', $rp->getTag('altitude'));
 
-    $media->setId($db->importPicture($media));
-    $medias_ids[] = $media->getId();
+    $db->importPicture($media);
     $db->attachMediaToRoute($route_id, $media);
 
     $aws_client = \Aws\S3\S3Client::factory(array(
@@ -196,13 +195,15 @@ $slim->post('/v1/route/:id/medias/add', function ($route_id) use ($slim) {
         'Body'   => file_get_contents($media_tmp_path),
         'ACL'    => 'public-read'
     ));
+
+    $medias[] = $media;
   }
 
   $slim->response();
   $res['Content-Type'] = 'application/json';
   $slim->render(
     'ApiReplyView.php', 
-    array("value" => '{"medias_ids": '.json_encode($medias_ids).'}'), 
+    array("value" => json_encode($medias), 'usermsg' => 'success'), 
     200
   );
 });
