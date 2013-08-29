@@ -20,8 +20,8 @@ define([
     this.trailView.render();   
         
     // get trail    
-//    trailModel.set('id', 8);
-//    this.trailView.getTrail();
+    trailModel.set('id', 6);
+    this.trailView.getTrail();
     
     $(window).resize(function() {
       handleResize(); 

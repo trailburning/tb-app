@@ -34,6 +34,15 @@ border-width:1px;
   background-color: transparent; 
 }
 
+#map .leaflet-popup-content-wrapper {
+  border-radius: 0px;
+}
+
+#map .leaflet-popup-content {
+  margin: 4px;
+  width: 90px;
+}
+
 /* TRAIL MEDIA UPLOAD */
 /******************************************/
 #trailmediauploadview {

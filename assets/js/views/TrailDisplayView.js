@@ -38,13 +38,26 @@ define([
       });
 
       var polyline_options = {
-        color: '#000',
-        opacity: 0.9,
-        weight: 2
-      };          
+        color: '#44B6FC',
+        opacity: 1,
+        weight: 4,
+        clickable: false
+      };         
       this.polyline = L.polyline(this.arrLineCordinates, polyline_options).addTo(this.map);          
       this.map.fitBounds(this.polyline.getBounds(), {padding: [20, 20]});         
-            
+                        
+      var nHalfWay = Math.round(this.arrLineCordinates.length / 2);                        
+                        
+      var popup_options = {
+        autoPan: false,
+        closeButton: false
+      };                
+/*      
+      var popup = L.popup(popup_options)
+      .setLatLng(self.arrLineCordinates[nHalfWay])
+      .setContent('<img src="assets/images/trail4.jpg" width="90">')
+      .openOn(this.map);            
+*/            
       return this;
     },    
     test: function(){
