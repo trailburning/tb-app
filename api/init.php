@@ -2,7 +2,7 @@
 ini_set('display_errors','1');
 error_reporting(E_ALL);
 
-die ($_SERVER['DOCUMENT_ROOT']);
+die ("toto:".$_SERVER['DOCUMENT_ROOT']);
 
 if (array_key_exists('DOCUMENT_ROOT', $_SERVER) {
   $api_root = $_SERVER['DOCUMENT_ROOT'].'/api/';
