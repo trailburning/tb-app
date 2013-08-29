@@ -2,11 +2,10 @@
 ini_set('display_errors','1');
 error_reporting(E_ALL);
 
-$_SERVER['DOCUMENT_ROOT'] = '/app';
-
-// Assigning ./ as root for phpunit
-$api_root = '/app/api';
-$conf_path = $api_root.'/config/';
+if (array_key_exists('DOCUMENT_ROOT', $_SERVER))
+  $api_root = $_SERVER['DOCUMENT_ROOT'].'/api';
+else
+  $api_root = './api';
 
 $include_path = get_include_path();
 $include_path .= PATH_SEPARATOR.$api_root.'/lib/';

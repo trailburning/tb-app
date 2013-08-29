@@ -40,12 +40,15 @@ class Route {
     if (sizeof($this->route_points) < 2)
       throw new \Exception("Route is less than 2 points.");
 
-    if ($unixtimestamp < $this->route_points[0]->tags['datetime'] || $unixtimestamp > end($this->route_points)->tags['datetime'])
-      throw new \TB\ApiException("One picture doesn't seem to have been taken during the trail", 400);
-
-    foreach ($this->route_points as $rp) {
-      if ($rp->tags['datetime'] > $unixtimestamp )
-        return $rp; 
+    if ($unixtimestamp < $this->route_points[0]->tags['datetime'])
+      return $this->route_points[0];
+    else if ($unixtimestamp > end($this->route_points)->tags['datetime'])
+      return end($this->route_points);
+    else {
+      foreach ($this->route_points as $rp) {
+        if ($rp->tags['datetime'] > $unixtimestamp )
+          return $rp; 
+      }
     }
   }
 

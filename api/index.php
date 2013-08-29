@@ -179,6 +179,8 @@ $slim->post('/v1/route/:id/medias/add', function ($route_id) use ($slim) {
 
     $rp = $r->getNearestPointByTime($media->tags['datetime']);
     $media->setCoords($rp->coords['long'], $rp->coords['lat']);
+    if ($rp->getTag('altitude') != null) 
+      $media->setTag('altitude', $rp->getTag('altitude'));
 
     $media->setId($db->importPicture($media));
     $medias_ids[] = $media->getId();
