@@ -2,12 +2,10 @@
 ini_set('display_errors','1');
 error_reporting(E_ALL);
 
-die ("toto:".$_SERVER['DOCUMENT_ROOT']);
-
 if (array_key_exists('DOCUMENT_ROOT', $_SERVER))
-  $api_root = $_SERVER['DOCUMENT_ROOT'].'/api/';
+  $api_root = $_SERVER['DOCUMENT_ROOT'].'/api';
 else
-  $api_root = '/app/api';
+  $api_root = './api';
 
 $include_path = get_include_path();
 $include_path .= PATH_SEPARATOR.$api_root.'/lib/';
