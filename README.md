@@ -1,5 +1,4 @@
 tb-webapp
 =========
 
-Trailburning website
-
+Documentation here: https://github.com/trailburning/tb-app/wiki
