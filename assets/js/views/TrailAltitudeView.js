@@ -31,19 +31,20 @@ define([
       $(this.el).html(this.template(attribs));
 
       this.elCanvas = $('#graph', this.el);
-      this.elLineGraph = $('.linegraph', this.el);
-      this.elCanvas.width = this.elLineGraph.width();
-      this.elCanvas.height = this.elLineGraph.height(); 
-      
+                  
       this.canvas = this.elCanvas[0];
-      this.context = this.canvas.getContext('2d');      
-      
-//      this.nCanvasWidth = this.canvas.width;
-//      this.nCanvasHeight = this.canvas.height; // draw from 1 not 0
-      this.nCanvasWidth = this.elLineGraph.width();
-      this.nCanvasHeight = this.elLineGraph.height(); // draw from 1 not 0
 
-      this.context.clearRect(0,0,200,200);
+      this.nCanvasWidth = ($(this.el).width() * 90) / 100;
+      this.nCanvasHeight = ($(this.el).height() * 60) / 100;;
+      this.elCanvas.css('top', ($(this.el).height() * 40) / 100);
+      this.elCanvas.css('left', ($(this.el).width() * 5) / 100);
+
+      this.elCanvas.attr('width', this.nCanvasWidth);
+      this.elCanvas.attr('height', this.nCanvasHeight);
+      this.elCanvas.width = this.nCanvasWidth;
+      this.elCanvas.height = this.nCanvasHeight; 
+      
+      this.context = this.canvas.getContext('2d');      
 
       this.nDrawWidth = this.nCanvasWidth;
       this.nDrawHeight = this.nCanvasHeight;

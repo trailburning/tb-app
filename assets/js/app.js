@@ -29,7 +29,7 @@ define([
       $('.image').resizeToParent();
             
       self.trailMapView.update();
-//      self.trailAltitudeView.update();
+      self.trailAltitudeView.update();
 
       $('.image').show();
     }        

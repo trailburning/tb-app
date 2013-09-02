@@ -117,11 +117,10 @@ border-width:1px;
   height: 370px;
 }
 
-.trailaltitude_panel .linegraph {
-  margin-top: 100px;
-  margin-left: 60px;
-  width: 730px;
-  height: 270px;
+#graph {
+  position: relative;
+  top: 0px;
+  left: 0px;
 }
 
 .othertrails_panel {
@@ -147,6 +146,9 @@ border-width:1px;
   .trailplayer_panel .imageContainer {
     width: 790px;
   }
+  .trailaltitude_panel {
+    width: 850px;
+  }  
 }
  
 /* Portrait tablet to landscape and desktop */
@@ -171,6 +173,9 @@ border-width:1px;
   .trailplayer_panel .imageContainer {
     width: 490px;
   }
+  .trailaltitude_panel {
+    width: 710px;
+  }  
 }
  
 /* Landscape phone to portrait tablet */
@@ -194,6 +199,9 @@ border-width:1px;
   }  
   .trailplayer_panel .imageContainer {
     width: 390px;
+  }  
+  .trailaltitude_panel {
+    width: 610px;
   }  
 }
  
@@ -219,6 +227,9 @@ border-width:1px;
   .trailplayer_panel .imageContainer {
     width: 450px;
   }
+  .trailaltitude_panel {
+    width: 450px;
+  }  
 }
 
 .image {
