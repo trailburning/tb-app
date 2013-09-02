@@ -1,7 +1,7 @@
 body {  
   margin: 0;
   padding: 0;
-  background: #fff;
+  background: #F0F0F0;
   font-weight: normal;
   font-size: 16px;
   line-height: 1.3em;
@@ -17,68 +17,214 @@ border-width:1px;
 */  
 }
 
-/* CONTENT */
+#appview .panel {
+  float: left;
+  margin: 10px;
+  overflow: hidden;
+  background-color: #FFF;
+  border: none;
+  *zoom: 1;
+  -webkit-box-shadow: 2px 4px 5px 0px rgba(0, 0, 0, 0.3);
+     -moz-box-shadow: 2px 4px 5px 0px rgba(0, 0, 0, 0.3);
+          box-shadow: 2px 4px 5px 0px rgba(0, 0, 0, 0.3);  
+}
+
+/* HEADER */
 /******************************************/
-#contentview {
+#headerview {
+/*  
+border-style:solid;
+border-width:1px;
+*/  
+  height: 76px;
+}
+
+/* PRIMARY */
+/******************************************/
+#primaryview {
+/*  
+border-style:solid;
+border-width:1px;
+*/  
+  width: 100%;
+  background: #F8F8F8;
+}
+
+/* SECONDARY */
+/******************************************/
+#secondaryview {
 /*  
 border-style:solid;
 border-width:1px;
 */  
 }
 
-/* MAP */
+/* FOOTER */
 /******************************************/
-#map { 
+#footerview {
+/*  
+border-style:solid;
+border-width:1px;
+*/  
+}
+
+/* PANELS */
+/******************************************/
+.detail1_container {
+  float: left;
+  width: 320px;
+}
+
+.trailnotes_panel {
+  width: 300px;
+  height: 364px;
+}
+
+.minitrailplayer_panel {
+  padding: 5px;
+  width: 290px;
+  height: 290px;
+}
+
+.minitrailplayer_panel #map {
   width:100%; 
   height:100%;
   background-color: transparent; 
 }
 
-#map .leaflet-popup-content-wrapper {
-  border-radius: 0px;
+.trailplayer_panel {
+  width: 600px;
+  height: 684px;
 }
 
-#map .leaflet-popup-content {
-  margin: 4px;
-  width: 90px;
-}
-
-/* TRAIL MEDIA UPLOAD */
-/******************************************/
-#trailmediauploadview {
-}
-
-#bigContainer {
-  float: left;
-  width: 70%;
-  height: 400px;
+.trailplayer_panel .imageContainer {
+  margin-top: 5px;
+  margin-left: 5px;
+  width: 590px;
+  height: 674px;
   overflow: hidden;
 }
 
-#sideContainer {
-  float: left;
-  width: 30%;
-  height: 400px;
-  overflow: hidden;
+.trailstats_panel {
+  padding: 5px;
+  width: 370px;
+  height: 370px;
 }
 
-#smallContainer {
-  float: left;
-  width: 100%;
-  height: 50%;
-  overflow: hidden;
+.trailaltitude_panel {
+  padding: 5px;
+  width: 850px;
+  height: 370px;
 }
 
-#traildisplayview {
-  float: left;
-  width: 100%;
-  height: 50%;  
+.trailaltitude_panel .linegraph {
+  margin-top: 100px;
+  margin-left: 60px;
+  width: 730px;
+  height: 270px;
+}
+
+.othertrails_panel {
+  padding: 5px;
+  width: 510px;
+  height: 370px;
+}
+
+.trailgear_panel {
+  padding: 5px;
+  width: 930px;
+  height: 370px;  
+}
+
+/* Large desktop */
+@media (min-width: 1200px) {
+  #primaryview {
+    min-width: 1200px;
+  }
+  .trailplayer_panel {
+    width: 800px;
+  }  
+  .trailplayer_panel .imageContainer {
+    width: 790px;
+  }
+}
+ 
+/* Portrait tablet to landscape and desktop */
+@media (min-width: 768px) and (max-width: 979px) {
+  #primaryview {
+    min-width: 979px;
+  }
+  .detail1_container {
+    width: 220px;
+  }  
+  .trailnotes_panel {
+    width: 200px;
+    height: 364px;
+  }  
+  .minitrailplayer_panel {
+    width: 190px;
+    height: 290px;
+  }  
+  .trailplayer_panel {
+    width: 500px;
+  }  
+  .trailplayer_panel .imageContainer {
+    width: 490px;
+  }
+}
+ 
+/* Landscape phone to portrait tablet */
+@media (max-width: 767px) {
+  #primaryview {
+    min-width: 767px;
+  }
+  .detail1_container {
+    width: 220px;
+  }  
+  .trailnotes_panel {
+    width: 200px;
+    height: 364px;
+  }  
+  .minitrailplayer_panel {
+    width: 190px;
+    height: 290px;
+  }  
+  .trailplayer_panel {
+    width: 400px;
+  }  
+  .trailplayer_panel .imageContainer {
+    width: 390px;
+  }  
+}
+ 
+/* Landscape phones and down */
+@media (max-width: 480px) {
+  #primaryview {
+    min-width: 480px;
+  }
+  .detail1_container {
+    width: 460px;
+  }
+  .trailnotes_panel {
+    width: 460px;
+    height: 364px;
+  }
+  .minitrailplayer_panel {
+    width: 450px;
+    height: 290px;
+  }  
+  .trailplayer_panel {
+    width: 460px;
+  }  
+  .trailplayer_panel .imageContainer {
+    width: 450px;
+  }
 }
 
 .image {
-  position: relative;
+  display: none;  
 }
 
-img.image {
+img {
   max-width: none;
 }

@@ -1,71 +1,59 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<meta name="viewport" content="width=1024" />
-<title>Trailburning</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trailburning Beta</title>
 
 <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="assets/css/bootstrap-responsive.min.css" rel="stylesheet">
 <link href="assets/css/main.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 
-
 <div id="appview">    
-  <div id="headerview">    
-  </div>
-  <div id="contentview">    
-    <div id="trailview">
-      
-      <div id="trailmediaview">
-        <div id="bigContainer" class="imageContainer">
-          <img src="assets/images/trail3.jpg" class="image" />
-        </div>
-        <div id="sideContainer">
-          <div id="smallContainer" class="imageContainer">
-            <img src="assets/images/trail4.jpg" class="image" />
-          </div>
-          <div id="traildisplayview">
-          </div>
-        </div>      
-      </div>      
-      
-      <div id="trailuploadview"></div>      
-      <div id="trailmediauploadview"></div>      
-      <div id="trailuploadprogressview"></div>      
-                  
-    </div>          
-  </div>
-  <div id="footerview">    
-  </div>
+  <div id="headerview">
+  </div>    
+  <div id="primaryview" class="test clearfix">    
+    <div class="detail1_container">
+      <div class="panel trailnotes_panel">
+        <img src="http://www.trailburning.com/staging/tb-app/assets/tmp/profile.jpg">
+      </div>
+      <div id="trailmapview" class="panel minitrailplayer_panel">
+      </div>
+    </div>  
+    <div class="panel trailplayer_panel">
+      <div class="imageContainer"><img src="http://www.trailburning.com/staging/tb-app/assets/tmp/trail3.jpg" class="image" /></div>
+    </div>
+    <div id="trailaltitudeview" class="panel trailaltitude_panel">            
+    </div>
+    <div class="panel trailstats_panel">
+      <img src="http://www.trailburning.com/staging/tb-app/assets/tmp/detail.jpg">      
+    </div>
+  </div>    
+  <div id="secondaryview">
+    <div class="panel othertrails_panel">
+      <img src="http://www.trailburning.com/staging/tb-app/assets/tmp/othertrails.jpg">
+    </div>
+    <div class="panel trailgear_panel">
+      <img src="http://www.trailburning.com/staging/tb-app/assets/tmp/gear.jpg">      
+    </div>    
+  </div>    
+  <div id="footerview">
+  </div>    
 </div>
 
-
-<script type="text/template" id="trailUploadViewTemplate">
-  <div class="form-inline">
-    <form id="myForm">      
-      <input type="file" name="gpxfile" multiple>        
-      <input type="button" class="btn btn-large btn-primary upload" value="Upload GPX">
-    </form>        
-  </div>        
-</script>
-
-<script type="text/template" id="trailMediaUploadViewTemplate">   
-  <div class="form-inline">
-    <form id="myMediaForm">
-      <input type="file" name="medias[]" multiple>      
-      <input type="button" class="btn btn-large btn-primary upload" value="Upload Media">
-    </form>        
-  </div>        
-</script>
-
-<script type="text/template" id="trailUploadProgressViewTemplate">   
-  <div class="percent"></div>
-</script>
-
-<script type="text/template" id="trailDisplayViewTemplate">
+<script type="text/template" id="trailMapViewTemplate">
   <div id='map'></div>
+</script>
+
+<script type="text/template" id="traiAltitudeViewTemplate">
+  <div class="linegraph">
+      
+  <canvas id="graph" width="730" height="270"></canvas>
+  
+  </div>
 </script>
 
 <script src="assets/js/libs/jquery-1.8.3.min.js"></script>

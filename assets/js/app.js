@@ -1,14 +1,15 @@
 var app = app || {};
 
 var RESTAPI_BASEURL = 'http://trailburning.herokuapp.com/api/';
-//var RESTAPI_BASEURL = 'http://localhost:8888/';
+//var RESTAPI_BASEURL = 'http://localhost:8888/api/';
 
 define([
   'underscore', 
   'backbone',
   'models/TrailModel',
-  'views/TrailView'
-], function(_, Backbone, TrailModel, TrailView){
+  'views/TrailMapView',
+  'views/TrailAltitudeView'  
+], function(_, Backbone, TrailModel, TrailMapView, TrailAltitudeView){
   app.dispatcher = _.clone(Backbone.Events);
   
   var initialize = function() {
@@ -16,29 +17,34 @@ define([
     
     var trailModel = new TrailModel();
 
-    this.trailView = new TrailView({ el: '#trailview', model: trailModel });
-    this.trailView.render();   
-        
-    // get trail    
-    trailModel.set('id', 6);
-    this.trailView.getTrail();
+    this.trailMapView = new TrailMapView({ el: '#trailmapview', model: trailModel });
+    this.trailAltitudeView = new TrailAltitudeView({ el: '#trailaltitudeview', model: trailModel });
     
     $(window).resize(function() {
       handleResize(); 
     });    
-    handleResize();    
+    handleResize();        
     
     function handleResize() {      
-      var nWidth = ($(window).width() * 80) / 100;
-      var nHeight = Math.round(nWidth / 1.333);  
-      
-      $('#bigContainer').height(nHeight);
-      $('#sideContainer').height(nHeight);
-      
       $('.image').resizeToParent();
-      
-      self.trailView.test();
-    }    
+            
+      self.trailMapView.update();
+//      self.trailAltitudeView.update();
+
+      $('.image').show();
+    }        
+    
+    // get trail    
+//    trailModel.set('id', 6);    
+    trailModel.set('id', 14);    
+    console.log('Fetch ID:'+trailModel.get('id'));            
+    trailModel.fetch({
+      success: function () {
+        console.log('Fetched');
+        self.trailMapView.render();
+        self.trailAltitudeView.render();
+      }      
+    });    
   };
     
   return { 
