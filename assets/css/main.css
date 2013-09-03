@@ -117,10 +117,27 @@ border-width:1px;
   height: 370px;
 }
 
+.trailaltitude_panel .profile {
+  position: absolute;
+}
+
+.trailaltitude_panel .profile .marker {
+  z-index: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;  
+  width: 20px;
+  height: 20px;
+  background: url(../icons/marker_profile_inactive.png) no-repeat top left;
+}
+
 #graph {
   position: relative;
   top: 0px;
   left: 0px;
+/*  
+  background: #cc0000;
+*/  
 }
 
 .othertrails_panel {
@@ -139,12 +156,6 @@ border-width:1px;
 @media (min-width: 1200px) {
   #primaryview {
     min-width: 1200px;
-  }
-  .trailplayer_panel {
-    width: 800px;
-  }  
-  .trailplayer_panel .imageContainer {
-    width: 790px;
   }
   .trailaltitude_panel {
     width: 850px;
@@ -167,12 +178,6 @@ border-width:1px;
     width: 190px;
     height: 290px;
   }  
-  .trailplayer_panel {
-    width: 500px;
-  }  
-  .trailplayer_panel .imageContainer {
-    width: 490px;
-  }
   .trailaltitude_panel {
     width: 710px;
   }  
@@ -193,13 +198,7 @@ border-width:1px;
   .minitrailplayer_panel {
     width: 190px;
     height: 290px;
-  }  
-  .trailplayer_panel {
-    width: 400px;
-  }  
-  .trailplayer_panel .imageContainer {
-    width: 390px;
-  }  
+  }
   .trailaltitude_panel {
     width: 610px;
   }  
@@ -220,12 +219,6 @@ border-width:1px;
   .minitrailplayer_panel {
     width: 450px;
     height: 290px;
-  }  
-  .trailplayer_panel {
-    width: 460px;
-  }  
-  .trailplayer_panel .imageContainer {
-    width: 450px;
   }
   .trailaltitude_panel {
     width: 450px;
