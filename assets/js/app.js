@@ -55,7 +55,7 @@ define([
     }
     
     // get trail    
-//    this.trailModel.set('id', 2);    
+//    this.trailModel.set('id', 11);    
     this.trailModel.set('id', 15);    
     console.log('Fetch ID:'+this.trailModel.get('id'));            
     this.trailModel.fetch({

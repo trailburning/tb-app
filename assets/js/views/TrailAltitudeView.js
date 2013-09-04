@@ -20,13 +20,11 @@ define([
       this.objTrailMarginRect.left = 50;
       this.objTrailMarginRect.right = 50;
       this.objTrailMarginRect.top = 20;
-      this.objTrailMarginRect.bottom = 20;
+      this.objTrailMarginRect.bottom = 60;
       
-      this.objBackgroundMarginRect = new Object();
-      this.objBackgroundMarginRect.left = 50;
-      this.objBackgroundMarginRect.right = 50;
-      this.objBackgroundMarginRect.top = 20;
-      this.objBackgroundMarginRect.bottom = 60;
+      this.objBackgroundMargin = new Object();
+      this.objBackgroundMargin.top = 20;
+      this.objBackgroundMargin.bottom = 60;
       
       CanvasRenderingContext2D.prototype.dashedVerticalLine = function(nX, nY1, nY2, nDashStrokeHeight) {
         if (nDashStrokeHeight == undefined) nDashStrokeHeight = 2;
@@ -72,8 +70,6 @@ define([
       this.elCanvas.attr('height', this.nCanvasHeight);
       this.elCanvas.width = this.nCanvasWidth;
       this.elCanvas.height = this.nCanvasHeight; 
-      this.nDrawWidth = this.nCanvasWidth;
-      this.nDrawHeight = this.nCanvasHeight;
             
       var data = this.model.get('value');
       var jsonPoints = data.route.route_points;
@@ -81,6 +77,9 @@ define([
 
       this.nCanvasDrawWidth = $(this.el).width() - (this.objTrailMarginRect.left + this.objTrailMarginRect.right);
       this.nCanvasDrawHeight = $(this.el).height() - (this.objTrailMarginRect.top + this.objTrailMarginRect.bottom);
+
+      this.nDrawWidth = this.nCanvasDrawWidth;
+      this.nDrawHeight = this.nCanvasDrawHeight;
       
       // find highest/lowest points
       if (jsonPoints.length) {
@@ -126,16 +125,31 @@ define([
     },    
     renderBackground: function(fTrailLengthMetres) {
       this.context.beginPath();
+
+      this.context.fillStyle = 'rgba(68,182,252,1)';
+      this.context.font = '16px Arial';
+      this.context.textAlign = 'center';
       
+      var nMarkerDistance = 1;
+      if (fTrailLengthMetres > 20000) {
+        nMarkerDistance = 2;
+      }
       var nMarkers = fTrailLengthMetres / 1000;
       var nMarkerWidth = this.nDrawWidth / nMarkers;
 
-      var nX = this.objBackgroundMarginRect.left;
+      var nXOffset = (this.nCanvasDrawWidth - this.nDrawWidth) / 2;
+
+      var nX = nXOffset + this.objTrailMarginRect.left;
+      var strMarker = 'km';
       for (var nMarker=0; nMarker <= nMarkers; nMarker++) {
-        this.context.dashedVerticalLine(Math.round(nX), this.objBackgroundMarginRect.top, this.nCanvasHeight - this.objBackgroundMarginRect.bottom, 2);
+        if (!(nMarker % nMarkerDistance)) {
+          this.context.dashedVerticalLine(Math.round(nX), this.objBackgroundMargin.top, this.nCanvasHeight - this.objBackgroundMargin.bottom, 2);
+          this.context.fillText(strMarker, Math.round(nX), this.nCanvasHeight - this.objBackgroundMargin.bottom + 26);
+          strMarker = (nMarker + nMarkerDistance);
+        }
         nX += nMarkerWidth;
       }
-      
+              
       this.context.lineWidth = 1;
       this.context.strokeStyle = 'rgba(68,182,252,1)';
       this.context.stroke();
@@ -157,9 +171,10 @@ define([
       this.context.beginPath();
       // draw first point
       if (jsonPoints.length) {        
+        nX = nXOffset + this.objTrailMarginRect.left;
         nYPercent = ((jsonPoints[0].tags.altitude - this.fLowAlt) / this.fAltRange) * 100;
         nY = nYOffset + this.objTrailMarginRect.top + Math.round((self.nDrawHeight-2) - ((nYPercent * (self.nDrawHeight-2)) / 100));
-        self.context.moveTo(this.objTrailMarginRect.left, nY);
+        self.context.moveTo(nX, nY);
       }
       
       var nStartX = 0;  
@@ -179,7 +194,7 @@ define([
       
       // draw last point
       if (jsonPoints.length) {     
-        this.context.lineTo(self.objTrailMarginRect.left + self.nDrawWidth, nY);
+        this.context.lineTo(nXOffset + self.objTrailMarginRect.left + self.nDrawWidth, nY);
       }        
       this.context.lineWidth = 4;
       this.context.strokeStyle = 'rgba(68,182,252,1)';
@@ -219,28 +234,6 @@ define([
             self.arrMediaPoints.push(elMarker);
         }
       });     
-    },
-    addMediaMarker2: function(nLat, nLng) {
-      var jsonPoints = this.model.get('value').route.route_points;
-      
-      var self = this;
-      var bFound = false;
-      
-      var nXOffset = (this.nCanvasDrawWidth - this.nDrawWidth) / 2;
-      var nYOffset = (this.nCanvasDrawHeight - this.nDrawHeight) / 2;
-      
-      $.each(jsonPoints, function(key, point) {
-        if (nLat == point.coords[1] && nLng == point.coords[0]) {
-          var nX = nXOffset + self.objTrailMarginRect.left + Math.round(key / self.fXFactor);
-          var nYPercent = ((point.tags.altitude - Math.round(self.fLowAlt)) / self.fAltRange) * 100;
-          var nY = nYOffset + self.objTrailMarginRect.top + Math.round((self.nDrawHeight-2) - ((nYPercent * (self.nDrawHeight-2)) / 100));
-          self.addMediaMarkerXY(nX, nY);
-          bFound = true;        
-        }
-      });
-      if (!bFound) {
-        this.addMediaMarkerXY(0, 0);
-      }
     },
     addMediaMarkerXY: function(nX, nY) {
       nX -= 10;
