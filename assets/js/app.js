@@ -49,9 +49,9 @@ define([
     function handleMedia() {
       var data = self.mediaModel.get('value');      
       $.each(data, function(key, point) {
-        console.log('t:'+point.coords.lat+' : '+point.coords.long);
         self.trailAltitudeView.addMediaMarker(point.coords.lat, point.coords.long);        
       });
+      self.trailAltitudeView.renderMarkers();
     }
     
     // get trail    

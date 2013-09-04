@@ -7,11 +7,14 @@ define([
     initialize: function(){
       this.template = _.template($('#traiAltitudeViewTemplate').text());        
             
+      this.bRendered = false;      
+
       this.HeightToWidthFactor = 4;      
       this.fXFactor = 0;
       this.jsonTrail = null;
       this.fLowAlt = 0;
       this.fHighAlt = 0;
+      this.arrMediaPoints = new Array();
       
       this.objTrailMarginRect = new Object();
       this.objTrailMarginRect.left = 50;
@@ -54,42 +57,28 @@ define([
 
       var self = this;
                 
-      var attribs = this.model.toJSON();
-      $(this.el).html(this.template(attribs));
-
-      this.elCanvas = $('#graph', this.el);
-                  
-      this.canvas = this.elCanvas[0];
-
+      if (!this.bRendered) {
+        var attribs = this.model.toJSON();
+        $(this.el).html(this.template(attribs));
+  
+        this.elCanvas = $('#graph', this.el);
+        this.canvas = this.elCanvas[0];
+        this.context = this.canvas.getContext('2d');      
+      }
+                
       this.nCanvasWidth = $(this.el).width();
       this.nCanvasHeight = $(this.el).height();
-
       this.elCanvas.attr('width', this.nCanvasWidth);
       this.elCanvas.attr('height', this.nCanvasHeight);
       this.elCanvas.width = this.nCanvasWidth;
       this.elCanvas.height = this.nCanvasHeight; 
-      
-      this.context = this.canvas.getContext('2d');      
-
       this.nDrawWidth = this.nCanvasWidth;
       this.nDrawHeight = this.nCanvasHeight;
             
       var data = this.model.get('value');
-      
-      this.updateValues(data.route.route_points, Number(data.route.length));      
-      this.renderBackground(Number(data.route.length));                  
-      this.renderTrail(data.route.route_points, Number(data.route.length));
+      var jsonPoints = data.route.route_points;
+      var fTrailLengthMetres = Number(data.route.length);
 
-      return this;
-    },
-    update: function() {
-      if (this.jsonTrail) {
-        this.render();      
-      }
-    },    
-    updateValues: function(jsonPoints, fTrailLengthMetres) {
-      var self = this;
-      
       this.nCanvasDrawWidth = $(this.el).width() - (this.objTrailMarginRect.left + this.objTrailMarginRect.right);
       this.nCanvasDrawHeight = $(this.el).height() - (this.objTrailMarginRect.top + this.objTrailMarginRect.bottom);
       
@@ -121,6 +110,19 @@ define([
         this.nDrawHeight = Math.round(this.nDrawHeight * this.nCanvasDrawWidth / this.nDrawWidth);
         this.nDrawWidth = this.nCanvasDrawWidth;
       }  
+
+      this.renderBackground(fTrailLengthMetres);                  
+      this.renderTrail(jsonPoints, fTrailLengthMetres);
+      this.renderMarkers();
+
+      this.bRendered = true;
+
+      return this;
+    },
+    update: function() {
+      if (this.jsonTrail) {
+        this.render();      
+      }
     },    
     renderBackground: function(fTrailLengthMetres) {
       this.context.beginPath();
@@ -156,7 +158,7 @@ define([
       // draw first point
       if (jsonPoints.length) {        
         nYPercent = ((jsonPoints[0].tags.altitude - this.fLowAlt) / this.fAltRange) * 100;
-        nY = this.objTrailMarginRect.top + nYOffset + Math.round((self.nDrawHeight-2) - ((nYPercent * (self.nDrawHeight-2)) / 100));
+        nY = nYOffset + this.objTrailMarginRect.top + Math.round((self.nDrawHeight-2) - ((nYPercent * (self.nDrawHeight-2)) / 100));
         self.context.moveTo(this.objTrailMarginRect.left, nY);
       }
       
@@ -183,7 +185,42 @@ define([
       this.context.strokeStyle = 'rgba(68,182,252,1)';
       this.context.stroke();      
     },
+    renderMarkers: function() {
+      var nXOffset = (this.nCanvasDrawWidth - this.nDrawWidth) / 2;
+      var nYOffset = (this.nCanvasDrawHeight - this.nDrawHeight) / 2;
+      
+      var elMarker, nX, nY, nYPercent;
+      
+      for (var nMarker=0; nMarker < this.arrMediaPoints.length; nMarker++) {
+        elMarker = this.arrMediaPoints[nMarker];
+            
+        nX = nXOffset + this.objTrailMarginRect.left + Math.round(elMarker.pos / this.fXFactor);
+        nYPercent = ((elMarker.alt - Math.round(this.fLowAlt)) / this.fAltRange) * 100;
+        nY = nYOffset + this.objTrailMarginRect.top + Math.round((this.nDrawHeight-2) - ((nYPercent * (this.nDrawHeight-2)) / 100));
+              
+        nX -= 10;
+        nY -= 10;
+      
+        elMarker.css('left', nX);
+        elMarker.css('top', nY);        
+      }
+    },
     addMediaMarker: function(nLat, nLng) {
+      var jsonPoints = this.model.get('value').route.route_points;
+      
+      var elProfile = $('.profile', this.el);
+      var self = this;
+      $.each(jsonPoints, function(key, point) {
+        if (nLat == point.coords[1] && nLng == point.coords[0]) {
+            var elMarker = $('<div class="marker"></div>');
+            elMarker.pos = key;
+            elMarker.alt = point.tags.altitude;
+            elProfile.append(elMarker);
+            self.arrMediaPoints.push(elMarker);
+        }
+      });     
+    },
+    addMediaMarker2: function(nLat, nLng) {
       var jsonPoints = this.model.get('value').route.route_points;
       
       var self = this;
@@ -214,7 +251,7 @@ define([
       elProfile.append(elMarker);
 
       elMarker.css('left', nX);
-      elMarker.css('top', nY);      
+      elMarker.css('top', nY);
     }
     
   });
