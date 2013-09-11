@@ -32,14 +32,13 @@ define([
     handleResize();        
     
     function handleResize() {
-      var nDetailContainerWidth = $('.detail1_container').width();
-      var nPlayerPanelWidth = $(window).width() - nDetailContainerWidth - 20;
-      if (nPlayerPanelWidth < 620) {
-        nPlayerPanelWidth = 620;
+      var nTrailPlayerLeftWidth = $('#trailplayer .left').width();
+      var nPlayerPanelWidth = $(window).width() - nTrailPlayerLeftWidth;
+      if (nPlayerPanelWidth < (1024 - nTrailPlayerLeftWidth)) {
+        nPlayerPanelWidth = (1024 - nTrailPlayerLeftWidth);
       } 
       
-      $('.trailplayer_panel').width(nPlayerPanelWidth);
-      $('.trailplayer_panel .imageContainer').width(nPlayerPanelWidth - 10);      
+      $('#trailplayer .image_container').width(nPlayerPanelWidth);
       $('.image').resizeToParent();
             
       self.trailMapView.update();
