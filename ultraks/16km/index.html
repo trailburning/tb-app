@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trailburning Beta</title>
+
+<link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="assets/css/bootstrap-responsive.min.css" rel="stylesheet">
+<link href='http://api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.css' rel='stylesheet' />
+<link href="assets/css/main.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+<div id="appview">      
+  <div id="headerview">
+  </div>    
+  <div id="primaryview" class="test clearfix">    
+    <div class="detail1_container">
+      <div class="panel trailnotes_panel">
+        <img src="http://www.trailburning.com/staging/tb-app/assets/tmp/profile.jpg">
+      </div>
+      <div id="trailmapview" class="panel minitrailplayer_panel">
+      </div>
+    </div>  
+    <div class="panel trailplayer_panel">
+      <div class="imageContainer"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/test1.jpg" class="image" /></div>
+    </div>
+    <div id="trailaltitudeview" class="panel trailaltitude_panel">            
+    </div>
+    <div class="panel trailstats_panel">
+      <img src="http://www.trailburning.com/staging/tb-app/assets/tmp/detail.jpg">      
+    </div>
+  </div>    
+  <div id="secondaryview">
+    <div class="panel othertrails_panel">
+      <img src="http://www.trailburning.com/staging/tb-app/assets/tmp/othertrails.jpg">
+    </div>
+    <div class="panel trailgear_panel">
+      <img src="http://www.trailburning.com/staging/tb-app/assets/tmp/gear.jpg">      
+    </div>    
+  </div>    
+  <div id="footerview">
+  </div>    
+</div>
+
+<script type="text/template" id="trailMapViewTemplate">
+  <div id='map'></div>
+</script>
+
+<script type="text/template" id="traiAltitudeViewTemplate">
+  <div class="profile">
+  <canvas id="graph"></canvas>
+  </div>
+</script>
+
+<script src="assets/js/libs/jquery-1.8.3.min.js"></script>
+<script src="assets/js/libs/bootstrap.min.js"></script>
+<script src="assets/js/libs/bootstrap-filestyle.min.js"> </script>
+
+<script src='http://api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.js'></script>
+<!--[if lte IE 8]>
+  <link href='http://api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.ie.css' rel='stylesheet' >
+<![endif]-->
+
+<script src="assets/js/libs/jquery.resizeimagetoparent.min.js"></script>
+
+<script src="assets/js/libs/jquery.ui.widget.js"></script>
+<script src="assets/js/libs/jquery.iframe-transport.js"></script>
+<script src="assets/js/libs/jquery.fileupload.js"></script>
+
+<script data-main="assets/js/main" src="assets/js/libs/require.js"></script>
+
+</body>
+</html>
