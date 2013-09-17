@@ -8,7 +8,12 @@ define([
       this.template = _.template($('#trailMapViewTemplate').text());        
             
       this.polyline = null;
-      this.arrLineCordinates = [];      
+      this.arrLineCordinates = [];
+      
+      var self = this;      
+      $(window).resize(function() {
+        self.render();        
+      });                
     },            
     render: function(){
       console.log('TrailMapView:render');
@@ -19,6 +24,12 @@ define([
 
       if (!this.model.get('id')) {
         return;
+      }
+
+      // already rendered?  Just update
+      if (this.polyline) {
+        this.map.fitBounds(this.polyline.getBounds(), {padding: [20, 20]});
+        return;         
       }
 
       var self = this;
@@ -49,14 +60,7 @@ define([
       this.map.fitBounds(this.polyline.getBounds(), {padding: [20, 20]});         
                         
       return this;
-    },    
-    update: function(){
-      console.log('TrailMapView:update');
-      
-      if (this.polyline) {
-        this.map.fitBounds(this.polyline.getBounds(), {padding: [20, 20]});         
-      }
-    }        
+    }    
   });
 
   return TrailMapView;

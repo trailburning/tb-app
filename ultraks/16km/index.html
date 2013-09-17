@@ -22,14 +22,17 @@
       <img src="assets/img/header/tb_logo.gif">
     </div>    
     <div class="right">
+      <form>
       <div class="discover">
         <input type="text" name="discover">
+        <input type="submit" class="search-btn">        
       </div>
+      </form>
       <div class="links">
         <div class="link"><a href="">Discover</a></div>
         <div class="link"><a href="">News</a></div>
       </div>
-      <div class="signin"><a href="http://www.trailburning.com" class="btn btn-large btn-tb">Sign in</a></div>
+      <div class="signin"><a href="http://www.trailburning.com" class="btn btn-large btn-tb-action">Sign in</a></div>
     </div>
   </div>    
   <div id="trailplayer">
@@ -42,33 +45,119 @@
         </div>        
       </div>      
       <div id="trailmapview" class="trailmap">
-      </div>      
+      </div>
+      <div class="trailview_toggle">
+        <button class="viewmap-btn btn btn-tb">View map</button>
+      </div>
     </div>
     <div class="right">
-      <div class="image_container"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/test1.jpg" class="image" /></div>      
+      <div id="trailplayer_slides">      
+        <div class="image_container"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/test1.jpg" class="image" /></div>
+      </div>      
+      <div id="trailplayer_map">
+        <div class="map_container">
+          <div id='map_large'></div>
+        </div>
+      </div>      
       <div class="trail_title">
-        <span class="title1">Matterhorn Ultraks</span>
-        <span class="title2">2013</span>
+        <h1 class="title_shadow">Matterhorn Ultraks</h1>
+        <h2 class="title_shadow">2013</h2>
       </div>      
     </div>
     <div class="trans-line"></div>
   </div>
   <div id="bigbar">
+    <div class="crumb_lead"></div>
+    <div class="crumbs">
+    <a href="">Events</a> / <a href="">Matterhorn Ultraks</a> / <a href="">16k Race</a>
+    </div>
+    <div class="share">    
+    <!-- AddThis Button BEGIN -->
+    <a class="addthis_button btn btn-tb-action" href="http://www.addthis.com/bookmark.php?v=300&amp;pubid=mallbeury">Share</a>
+    <script type="text/javascript">var addthis_config = {"data_track_addressbar":true};</script>
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=mallbeury"></script>
+    <!-- AddThis Button END -->            
+    </div>
   </div>
-          
-  <div class="panels clearfix">                    
-    <div id="trailaltitudeview" class="panel trailaltitude_panel">            
-    </div>
-    <div class="panel trailstats_panel">
-      <img src="http://www.trailburning.com/staging/tb-app/assets/tmp/detail.jpg">      
-    </div>
-    <div class="panel othertrails_panel">
-      <img src="http://www.trailburning.com/staging/tb-app/assets/tmp/othertrails.jpg">
-    </div>
-    <div class="panel trailgear_panel">
-      <img src="http://www.trailburning.com/staging/tb-app/assets/tmp/gear.jpg">      
-    </div>
-    
+  <div class="panelcontent">                    
+    <div class="panels clearfix">                    
+      <div id="trailaltitudeview" class="panel trailaltitude_panel">            
+      </div>
+      <div class="panel trailstats_panel">
+        <div class="content">
+          <div class="weather">
+            <div class="icon sunny"></div>
+            <h2>Sunny now</h2>
+          </div>
+          <div class="terrain">
+            <h1>1’100 m</h1>
+            <h2>D+ / 1100m D-</h2>
+          </div>          
+          <div class="length">
+            <h1>16 km</h1>
+            <h2>Length</h2>
+          </div>
+        </div>
+      </div>
+      <div class="panel othertrails_panel">
+        <div class="content">
+          <div class="title">You may also like</div>
+          <div class="trails">
+            <div class="image_container"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/test6.jpg" class="image" /></div>      
+            <div class="trail_title">
+              <h1 class="title_shadow">Matterhorn Ultraks 2012</h1>
+              <h2 class="title_shadow">by <strong>Matt Allbeury</strong></h2>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel trailgear_panel">
+        <div class="content">
+          <div class="title">Get ready for the trail</div>
+          <div class="gear_list">
+            <div class="gear">
+              <div class="photo"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/gear1.jpg" /></div>
+              <h1>Blue raincoat</h1>
+              <h2>Quechua</h2>
+            </div>
+            <div class="gear">
+              <div class="photo"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/gear2.jpg" /></div>
+              <h1>Trail shoes</h1>
+              <h2>Salomon</h2>
+            </div>
+            <div class="gear">
+              <div class="photo"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/gear3.jpg" /></div>
+              <h1>10 L backpack</h1>
+              <h2>Salomon</h2>
+            </div>            
+          </div>
+        </div>                              
+      </div>
+      <div class="blank_2col_panel"></div>      
+      <div class="panel promote_panel">
+        <div class="content">
+          <div class="title">Discover</div>
+          <div class="photo">
+            <div class="image_container"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/test5.jpg" class="image" /></div>      
+          </div>
+        </div>
+      </div>
+      <div class="panel promote_panel">
+        <div class="content">
+          <div class="title">Walk</div>
+          <div class="photo">
+            <div class="image_container"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/test3.jpg" class="image" /></div>
+            <div class="promote_title">
+              <h1 class="title_shadow">Air New Zealand’s</h1>
+              <h2 class="title_shadow">Great Walks</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      
+    </div>    
     <div class="trans-line"></div>    
   </div>    
   
@@ -94,9 +183,7 @@
 </script>
 
 <script type="text/template" id="traiAltitudeViewTemplate">
-  <div class="profile">
-  <canvas id="graph"></canvas>
-  </div>
+  <div class="profile"><canvas id="graph"></canvas></div>
 </script>
 
 <script src="assets/js/libs/jquery-1.8.3.min.js"></script>

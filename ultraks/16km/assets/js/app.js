@@ -25,11 +25,21 @@ define([
     this.trailAltitudeView = new TrailAltitudeView({ el: '#trailaltitudeview', model: this.trailModel });
 
     this.userProfileMap = null;
+
+    // mla - move into view
+    this.polyline = null;
+    this.arrLineCordinates = [];
     
     $(window).resize(function() {
       handleResize(); 
     });    
     handleResize();        
+    
+    $('.viewmap-btn').click(function(evt){
+      $('#map_large').show();                
+      $('#trailplayer_slides').hide();
+      handleResize();      
+    });    
     
     function handleResize() {
       var nTrailPlayerLeftWidth = $('#trailplayer .left').width();
@@ -39,11 +49,9 @@ define([
       } 
       
       $('#trailplayer .image_container').width(nPlayerPanelWidth);
+      $('#trailplayer .map_container').width(nPlayerPanelWidth);
+      
       $('.image').resizeToParent();
-            
-      self.trailMapView.update();
-      self.trailAltitudeView.update();
-
       $('.image').show();
     }        
         
@@ -55,12 +63,37 @@ define([
       self.trailAltitudeView.renderMarkers();
     }
     
+    function handleTrail() {      
+      var map = L.mapbox.map('map_large', 'mallbeury.map-omeomj70', {dragging: false, touchZoom: false, scrollWheelZoom:false, doubleClickZoom:false, boxZoom:false, tap:false, zoomControl:false, zoomAnimation:false, attributionControl:false});
+
+      var data = self.trailModel.get('value');      
+      $.each(data.route.route_points, function(key, point) {
+        self.arrLineCordinates.push([Number(point.coords[1]), Number(point.coords[0])]);        
+      });
+
+      var polyline_options = {
+        color: '#44B6FC',
+        opacity: 1,
+        weight: 4,
+        clickable: false
+      };         
+      self.polyline = L.polyline(self.arrLineCordinates, polyline_options).addTo(map);          
+      map.fitBounds(self.polyline.getBounds(), {padding: [20, 20]});
+      
+      $('#map_large').hide();                      
+    }
+    
     // get trail    
-    this.trailModel.set('id', 15);    
+    this.trailModel.set('id', 14);    
     console.log('Fetch ID:'+this.trailModel.get('id'));            
     this.trailModel.fetch({
       success: function () {
         console.log('Fetched');
+        
+        $('#trailplayer .trailview_toggle').show();
+        
+        handleTrail();
+        
         self.trailMapView.render();
         self.trailAltitudeView.render();
         

@@ -40,7 +40,12 @@ define([
           
           nCurrY += nDashHeight;
         }
-      };      
+      }; 
+
+      var self = this;      
+      $(window).resize(function() {
+        self.render();        
+      });    
     },            
     render: function(fScale){
       console.log('TrailAltitudeView:render');
@@ -59,10 +64,16 @@ define([
         var attribs = this.model.toJSON();
         $(this.el).html(this.template(attribs));
   
-        this.elCanvas = $('#graph', this.el);
+        this.elCanvas = $('canvas', this.el);
         this.canvas = this.elCanvas[0];
         this.context = this.canvas.getContext('2d');      
       }
+                
+      // has the view changed sized?
+      if (this.nCanvasWidth == $(this.el).width() &&
+          this.nCanvasHeight == $(this.el).height()) {
+        return;
+      }                
                 
       this.nCanvasWidth = $(this.el).width();
       this.nCanvasHeight = $(this.el).height();
@@ -118,11 +129,6 @@ define([
 
       return this;
     },
-    update: function() {
-      if (this.jsonTrail) {
-        this.render();      
-      }
-    },    
     renderBackground: function(fTrailLengthMetres) {
       this.context.beginPath();
 
