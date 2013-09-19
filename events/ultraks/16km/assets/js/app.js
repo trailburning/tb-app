@@ -44,8 +44,8 @@ define([
     function handleResize() {
       var nTrailPlayerLeftWidth = $('#trailplayer .left').width();
       var nPlayerPanelWidth = $(window).width() - nTrailPlayerLeftWidth;
-      if (nPlayerPanelWidth < (1024 - nTrailPlayerLeftWidth)) {
-        nPlayerPanelWidth = (1024 - nTrailPlayerLeftWidth);
+      if (nPlayerPanelWidth < (1292 - nTrailPlayerLeftWidth)) {
+        nPlayerPanelWidth = (1292 - nTrailPlayerLeftWidth);
       } 
       
       $('#trailplayer .image_container').width(nPlayerPanelWidth);
