@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trailburning Beta</title>
+
+<link href='http://fonts.googleapis.com/css?family=Signika:400,300,700' rel='stylesheet' type='text/css'>
+
+<link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="assets/css/bootstrap-responsive.min.css" rel="stylesheet">
+<link href="http://api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.css" rel="stylesheet">
+<link href="assets/css/common_ui.css" rel="stylesheet" type="text/css">
+<link href="assets/css/main.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+<div id="appview">      
+  <div id="headerview">
+    <div class="left">
+      <img src="assets/img/header/tb_logo.gif">
+    </div>    
+    <div class="right">
+      <form>
+      <div class="discover">
+        <input type="text" name="discover">
+        <input type="submit" class="search-btn">        
+      </div>
+      </form>
+      <div class="links">
+        <div class="link"><a href="">Discover</a></div>
+        <div class="link"><a href="">News</a></div>
+      </div>
+      <div class="signin"><a href="http://www.trailburning.com" class="btn btn-large btn-tb-action">Sign in</a></div>
+    </div>
+  </div>    
+  
+  <div id="event_header">
+    <div class="image_container"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/test1.jpg" class="image" /></div>
+    <div class="event_title">
+      <h1 class="title_shadow">Matterhorn Ultraks</h1>
+      <h2 class="title_shadow">Switzerland</h2>
+    </div>      
+    <div class="trans-line"></div>      
+  </div>
+
+  <div id="bigbar">
+    <div class="crumb_lead"></div>    
+    <div class="crumbs">
+    <a href="../../events">Events</a> / <a href="../../events/ultraks">Matterhorn Ultraks</a>
+    </div>
+    <div class="share">    
+    <!-- AddThis Button BEGIN -->
+    <a class="addthis_button btn btn-tb-action" href="http://www.addthis.com/bookmark.php?v=300&amp;pubid=mallbeury">Share</a>
+    <script type="text/javascript">var addthis_config = {"data_track_addressbar":true};</script>
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=mallbeury"></script>
+    <!-- AddThis Button END -->            
+    </div>
+    <div class="logos">
+      <a href="http://www.ultraks.com" target="_blank"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/events/ultraks/logo_ultraks.png" border="0"></a>
+      <a href="http://www.scott-sports.com" target="_blank"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/events/ultraks/logo_scott.png" border="0"></a>
+      <a href="http://www.peakperformance.com" target="_blank"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/events/ultraks/logo_peakperformance.png" border="0"></a>
+      <a href="http://www.zermatt.ch" target="_blank"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/events/ultraks/logo_zermatt.png" border="0"></a>
+    </div>
+  </div>
+  
+  <div class="panelcontent">                    
+    <div class="panels clearfix">           
+      <div class="left">        
+        <div class="panel event_detail_panel">
+          <div class="content">
+            <div class="title">Run the Matterhorn<br/> Ultraks</div>
+            <h1>Matterhorn Ultraks combines Ski Touring and Trail Running; both competitions will take place against the stunning backdrop of the Matterhorn in Zermatt in 2013.</h1>
+            <p>          
+            Our goal with Matterhorn Ultraks is twofold: to create a race that will enter into sporting legend, while also responding to the increasing popularity of both disciplines and giving newcomers the opportunity to have a go. 
+            <br/><br/>
+            The wintertime SkiTour, hosted in a magical Alpine landscape, will test the most talented competitors (porterage, glacier safety, crossing ridges that are seldom travelled and much more), while also allowing the less experienced to perform at a level they are comfortable with on courses that are marked out and made safe for the event.          
+            </p>
+            <div class="join"><a href="http://www.ultraks.com" target="_blank" class="btn btn-large btn-tb-action">Participate</a></div>
+          </div>
+        </div>
+        <div class="panel event_region_panel">
+          <div class="content">
+            <div class="title">About Zermatt</div>
+            <div class="photo"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/events/ultraks/zermatt.jpg"></div>
+            <div class="detail">
+            <h1>Valais | Switzerland</h1>            
+            On the Italian border of the canton of Valais in the west of Switzerland, at the end of the 30 km-long Nikolaital, lies Zermatt, the village at the foot of the Matterhorn, the most photographed mountain in the world.
+            </div>
+          </div>
+        </div>
+      </div>
+        
+      <div class="right">
+        <div class="panel event_location_panel">
+          <div class="content">
+            <div id="event_location_map" class="event_location_map"></div>
+          </div>
+        </div>
+        <div class="event_trails_container">
+          <div class="panel event_trail">
+            <div class="title">16K Race</div>
+            <div class="detail">
+              <div class="terrain">
+                <h1>1’100 m</h1>
+                <h2>D+ / 1’100m D-</h2>
+              </div>          
+              <div class="length">
+                <h1>16 km</h1>
+                <h2>Length</h2>
+              </div>
+            </div>
+            <div class="more"><a class="btn btn-tb" href="16km">More</a></div>
+          </div>
+          <div class="panel event_trail">
+            <div class="title">30K Race</div>
+            <div class="detail level2">
+              <div class="terrain">
+                <h1>2’000 m</h1>
+                <h2>D+ / 2’000m D-</h2>
+              </div>          
+              <div class="length">
+                <h1>30 km</h1>
+                <h2>Length</h2>
+              </div>
+            </div>
+            <div class="more"><a class="btn btn-tb" href="16km">More</a></div>
+          </div>
+          <div class="panel event_trail">
+            <div class="title">46K Race</div>
+            <div class="detail level3">
+              <div class="terrain">
+                <h1>3’600 m</h1>
+                <h2>D+ / 3’600m D-</h2>
+              </div>          
+              <div class="length">
+                <h1>46 km</h1>
+                <h2>Length</h2>
+              </div>
+            </div>
+            <div class="more"><a class="btn btn-tb" href="16km">More</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div id="footerview">
+    <div class="left">
+      <div class="copyright">Copyright © 2013, Augmented Media Projects Ltd</div>    
+      <div class="links">
+        <div class="link"><a href="">About</a></div>
+        <div class="link"><a href="">Press Kit</a></div>
+      </div>
+    </div>
+    <div class="right">
+      <div class="social email"><a href="mailto:?subject=Get ready for a new trail experience!&body=Thought you might be interested in this - trailburning.com" class="button btnEmail">Email</a></div>
+      <div class="social facebook"><a href="http://www.facebook.com/share.php?u=www.trailburning.com" target="_blank" class="button btnFacebook">Facebook</a></div>
+      <div class="social twitter"><a href="http://twitter.com/share?text=Get ready for a new trail experience!" target="_blank" class="button btnTwitter">Twitter</a></div>
+      <div class="social googleplus"><a href="https://plus.google.com/share?url=www.trailburning.com" target="_blank" class="button btnGooglePlus">Google+</a></div>          
+    </div>
+  </div>          
+</div>
+
+<script type="text/template" id="trailMapViewTemplate">
+  <div id='map'></div>
+</script>
+
+<script type="text/template" id="traiAltitudeViewTemplate">
+  <div class="profile"><canvas id="graph"></canvas></div>
+</script>
+
+<script src="assets/js/libs/jquery-1.8.3.min.js"></script>
+<script src="assets/js/libs/bootstrap.min.js"></script>
+<script src="assets/js/libs/bootstrap-filestyle.min.js"> </script>
+
+<script src='http://api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.js'></script>
+<!--[if lte IE 8]>
+  <link href='http://api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.ie.css' rel='stylesheet' >
+<![endif]-->
+
+<script src="assets/js/libs/jquery.resizeimagetoparent.min.js"></script>
+
+<script src="assets/js/libs/jquery.ui.widget.js"></script>
+<script src="assets/js/libs/jquery.iframe-transport.js"></script>
+<script src="assets/js/libs/jquery.fileupload.js"></script>
+
+<script data-main="assets/js/main" src="assets/js/libs/require.js"></script>
+
+</body>
+</html>
