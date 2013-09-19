@@ -32,8 +32,6 @@ border-width:1px;
 border-style:solid;
 border-width:1px;
 */  
-  z-index: 200;
-  position: relative;
   width: 100%;
   height: 88px;  
   background: #FFF;
@@ -113,8 +111,6 @@ border-width:1px;
 border-style:solid;
 border-width:1px;
 */  
-  z-index: 200;
-  position: relative;
   width: 100%;
   height: 120px;  
   background: #000;
@@ -201,58 +197,119 @@ border-width:1px;
   background: url("../img/footer/btn_googleplus.png") no-repeat top left;
 }
 
-/* PROFILE HEADER */
+/* TRAIL PLAYER */
 /******************************************/
-#profile_header {
-  z-index: 100;
+#trailplayer {
   position: relative;
   width: 100%;
-  height: 538px;
+  height: 712px;
   overflow: overflow;
 }
 
-#profile_header #profile_map {
-  position: relative;
-  width: 100%; 
-  height: 538px;
-}
-
-#profile_map {
-  position: relative;
-  width:100%; 
-  height:538px;
-}
-
-#profile_map .leaflet-control-container {
-  width: 100%;
-  height: 100%;  
-}
-
-#profile_map .leaflet-top {
-  width: 100%;
-  height: 100%;  
-}
-
-#profile_map .leaflet-overlay {
-  position: relative;
-  z-index: 5;
-  margin: 0px;
-  width: 880px;
-  height: 538px;  
-  background: url(../img/above_map.png) no-repeat top left;
-  background-size: 880px 538px;
-}
-
-#profile_header .profile_title {
-  z-index: 1000;
+#trailplayer .left {
   position: absolute;
-  top: 62px;
-  left: 58px;
+  top: 0px;
+  left: 0px;
+  width: 328px;
+  height: 100%;
+  background: #F0F0F0;
+  background: #F0F0F0 url(../img/trailplayer/detail_back.gif) repeat-y top right;  
+}
+
+#trailplayer .trailprofile {
+  height: 374px;  
+  margin: 26px 54px 0px 54px;
+  font-weight: 300;
+  overflow: hidden;
+}
+
+#trailplayer .trailprofile .avatar {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  width: 113px;
+}
+
+#trailplayer .trailprofile .title {
+  margin-top: 32px;
+  text-align: center;
+  font-size: 24px;
   color: #44b6f7;
 }
 
-#profile_header .profile_title h1 {
-  display: inline-block;
+#trailplayer .trailprofile .text {
+  margin-top: 16px;
+  height: 164px;
+  text-align: justify;
+  overflow: hidden;
+}
+
+#trailplayer .trailprofile .title strong {  
+  font-weight: 700;
+}
+
+#trailplayer .trailmap {
+  width: 318px;
+  height: 250px;
+}
+
+#trailplayer .trailmap #map {
+  width:100%; 
+  height:100%;
+  background-color: transparent; 
+}
+
+#trailplayer .trailview_toggle {
+  display: none;  
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+#trailplayer .trailview_toggle .btn {
+  padding: 6px 40px;
+  font-size: 22px;  
+}
+
+#trailplayer .right {
+  position: absolute;
+  top: 0px;
+  left: 328px;
+}
+
+#trailplayer .right #trailplayer_slides {
+}
+
+#trailplayer .right .image_container {
+  width: 600px;
+  height: 712px;
+  overflow: hidden;
+}
+/*
+#trailplayer .right #trailplayer_map {
+}
+
+#trailplayer .right .map_container {
+  width: 600px;
+  height: 712px;
+  overflow: hidden;
+}
+
+#trailplayer .right #trailplayer_map #map_large {
+  width:100%; 
+  height:100%;
+  background-color: transparent; 
+}
+*/
+#trailplayer .right .trail_title {
+  position: absolute;
+  top: 20px;
+  left: 38px;
+  color: #44b6f7;
+}
+
+#trailplayer .right .trail_title h1 {
+  display: block;
   margin: 0px;
   padding: 5px 10px 5px 10px;
   font-weight: normal;
@@ -261,7 +318,7 @@ border-width:1px;
   background-color: #FFF;
 }
 
-#profile_header .profile_title h2 {
+#trailplayer .right .trail_title h2 {
   display: inline-block;
   margin: 13px 0px 0px 0px;
   padding: 5px 10px 5px 10px;  
@@ -269,10 +326,6 @@ border-width:1px;
   font-size: 56px;
   line-height: 1em;
   background-color: #FFF;
-}
-
-#profile_header .profile_title .avatar {
-  margin: 54px 0px 0px 4px;  
 }
 
 /* BIG BAR */
@@ -312,19 +365,8 @@ border-width:1px;
   text-decoration: none;    
 }
 
-#bigbar .logos {
-  float: right;
-  margin-top: 7px;  
-}
-
-#bigbar .logos a {
-  margin-left: 20px;
-  margin-right: 20px;  
-}
-
 #bigbar .share {
   float: right;
-  margin-left: 25px;
   margin-right: 25px;
   line-height: 58px;
 }
@@ -343,58 +385,141 @@ border-width:1px;
   width: 1294px;
 }
 
-.panels .left {
-  float: left;
-  width: 630px;
-}
-
-.panels .right {
-  float: left;
-  width: 662px;
-}
-
-/* PROFILE DETAIL PANEL */
+/* TRAIL ALTITUDE PANEL */
 /******************************************/
-.profile_detail_panel {
-  width: 630px;
+.trailaltitude_panel {
+  width: 960px;
+  height: 380px;
 }
 
-.profile_detail_panel .content {  
-  margin: 34px 78px 34px 32px;
-  font-size: 14px;
-  font-weight: 300;
-  line-height: 1.3em;  
-  color: #000000;
+.trailaltitude_panel .profile {
+  position: absolute;
 }
 
-.profile_detail_panel .content .title {
-  font-size: 48px;
-  font-weight: 400;
+.trailaltitude_panel .profile .marker {
+  z-index: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;  
+  width: 23px;
+  height: 24px;
+  background: url(../icons/marker_profile_inactive.png) no-repeat top left;
+}
+
+/* TRAIL STATS PANEL */
+/******************************************/
+.trailstats_panel {
+  margin-left: 32px;
+  width: 300px;
+  height: 380px;
+}
+
+.trailstats_panel .content {  
+  margin: 50px 36px 0px 36px;
   line-height: 1em;
   color: #44B6F7;
 }
 
-.profile_detail_panel .content h1 {
-  margin: 24px 0px 22px 0px;
+.trailstats_panel .content h1 {
+  margin: 0px;
   padding: 0px;
-  font-size: 22px;
-  line-height: 1.3em;
+  font-size: 56px;
+  line-height: 1em;
   font-weight: 400;
-  color: #979797;
 }
 
-.profile_detail_panel .content .join {  
-  margin-top: 24px;
+.trailstats_panel .content h2 {
+  margin: 0px;
+  padding: 0px 0px 0px 2px;
+  font-size: 18px;
+  line-height: 1.8em;
+  font-weight: 300;
 }
 
-.profile_detail_panel .content .join .btn {  
-  font-size: 24px;
+.trailstats_panel .icon {
+  margin-bottom: 4px;
+  width: 53px;
+  height: 53px;
+}
+
+.trailstats_panel .sunny {
+  background: url(../icons/weather/sunny.png) no-repeat top left;
+}
+
+.trailstats_panel .content .terrain {
+  margin-top: 13px;
+}
+
+.trailstats_panel .content .length {
+  margin-top: 13px;
+}
+
+/* OTHER TRAILS PANEL */
+/******************************************/
+.othertrails_panel {
+  margin: 32px 0px 0px 0px;
+  width: 630px;
+  height: 380px;
+}
+
+.othertrails_panel .content .title {
+  margin-left: 22px;
+  height: 88px;
+  font-size: 48px;
+  font-weight: 400;
+  line-height: 88px;
+  color: #44B6F7;
+}
+
+.othertrails_panel .content .trails {
+  position: relative;
+  height: 250px;
+}
+
+.othertrails_panel .content .trails .image_container {
+  width: 100%;
+  height: 250px;
+  overflow: hidden;
+}
+
+.othertrails_panel .content .trail_title {
+  position: absolute;
+  top: 30px;
+  left: 26px;
+  color: #FFFFFF;
+}
+
+.othertrails_panel .content .trail_title h1 {
+  display: block;
+  margin: 0px;
+  padding: 5px 10px 5px 10px;
+  font-size: 30px;
+  line-height: 1em;
+  font-weight: 400;
+  border: none;
+  background-color: #000;  
+  background: rgba(0, 0, 0, 0.6);  
+}
+
+.othertrails_panel .content .trail_title h2 {
+  display: inline-block;
+  margin: 4px 0px 0px 0px;
+  padding: 5px 10px 5px 10px;
+  font-size: 30px;
+  line-height: 1em;
+  font-weight: 400;
+  background-color: #000;  
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.othertrails_panel .content .trail_title strong {
+  font-weight: 700;  
 }
 
 /* TRAIL GEAR PANEL */
 /******************************************/
 .trailgear_panel {
-  margin-top: 32px;
+  margin: 32px 0px 0px 32px;
   width: 630px;
   height: 380px;
 }
@@ -438,14 +563,15 @@ border-width:1px;
   font-weight: 700;
 }
 
-/* TOP TRAILS PANEL */
+/* PROMOTE PANEL */
 /******************************************/
-.tops_trails_panel {
-  margin-left: 32px;
-  width: 630px;
+.promote_panel {
+  margin: 32px 0px 0px 32px;
+  width: 299px;
+  height: 380px;
 }
 
-.tops_trails_panel .title {
+.promote_panel .content .title {
   margin-left: 22px;
   height: 88px;
   font-size: 48px;
@@ -454,45 +580,43 @@ border-width:1px;
   color: #44B6F7;
 }
 
-.tops_trails_panel .top_trail {
+.promote_panel .content .photo {
   position: relative;
-  height: 280px;
 }
 
-.tops_trails_panel .top_trail .image_container {
-  width: 100%;
+.promote_panel .content .photo .image_container {
+  width: 380px;
   height: 250px;
   overflow: hidden;
 }
 
-.tops_trails_panel .trail_title {
+.promote_panel .content .photo .promote_title {
   position: absolute;
-  top: 30px;
-  left: 26px;
+  bottom: 18px;
+  left: 12px;
   color: #FFFFFF;
 }
 
-.tops_trails_panel .trail_title h1 {
+.promote_panel .content .photo .promote_title h1 {
   display: block;
   margin: 0px;
   padding: 5px 10px 5px 10px;
-  font-size: 30px;
-  line-height: 1em;
   font-weight: 400;
-  border: none;
+  font-size: 30px;
+  line-height: 1em;  
   background-color: #000;  
   background: rgba(0, 0, 0, 0.6);  
 }
 
-.tops_trails_panel .trail_title h2 {
+.promote_panel .content .photo .promote_title h2 {
   display: inline-block;
-  margin: 4px 0px 0px 0px;
-  padding: 5px 10px 5px 10px;
+  margin: 8px 0px 0px 0px;
+  padding: 5px 10px 5px 10px;  
+  font-weight: 400;
   font-size: 30px;
   line-height: 1em;
-  font-weight: 400;
   background-color: #000;  
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.6);  
 }
 
 /* RESPONSIVE */
@@ -500,18 +624,38 @@ border-width:1px;
 
 /* Large desktop */
 @media (min-width: 1200px) {
+/*  
+  .trailaltitude_panel {
+    width: 850px;
+  }
+*/    
 }
  
 /* Portrait tablet to landscape and desktop */
 @media (min-width: 768px) and (max-width: 979px) {
+/*  
+  .trailaltitude_panel {
+    width: 710px;
+  }
+*/    
 }
  
 /* Landscape phone to portrait tablet */
 @media (max-width: 767px) {
+/*  
+  .trailaltitude_panel {
+    width: 610px;
+  }
+*/    
 }
  
 /* Landscape phones and down */
 @media (max-width: 480px) {
+/*  
+  .trailaltitude_panel {
+    width: 450px;
+  }
+*/    
 }
 
 .image {
@@ -521,3 +665,4 @@ border-width:1px;
 img {
   max-width: none;
 }
+

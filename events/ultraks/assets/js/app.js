@@ -25,7 +25,7 @@ define([
       var fLat = 46.021073;
       var fLng = 7.747937;
       
-      var map = L.mapbox.map('event_location_map', 'mallbeury.map-omeomj70', {dragging: false, touchZoom: false, scrollWheelZoom:false, doubleClickZoom:false, boxZoom:false, tap:false, zoomControl:false, zoomAnimation:false, attributionControl:false});
+      var map = L.mapbox.map('event_location_map', 'mallbeury.map-kply0zpa', {dragging: false, touchZoom: false, scrollWheelZoom:false, doubleClickZoom:false, boxZoom:false, tap:false, zoomControl:false, zoomAnimation:false, attributionControl:false});
 
       var CustomIcon = L.Icon.extend({
           options: {
@@ -39,7 +39,6 @@ define([
 
       var latlng = new L.LatLng(fLat, fLng);
       map.setView(latlng, 7);
-
     }
                     
     builtEventMap();

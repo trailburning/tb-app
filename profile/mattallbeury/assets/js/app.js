@@ -62,6 +62,9 @@ define([
       arrMarkers.push([55.55927837267518, -3.536434667184949]);                   
       L.marker(arrMarkers[arrMarkers.length-1], {icon: greenIcon}).addTo(this.userProfileMap);
 
+      arrMarkers.push([52.5080060, 13.2574370]);                   
+      L.marker(arrMarkers[arrMarkers.length-1], {icon: greenIcon}).addTo(this.userProfileMap);
+
 //      arrMarkers.push([-34.95064677670598, 138.66099251434207]);                   
 //      L.marker(arrMarkers[arrMarkers.length-1], {icon: greenIcon}).addTo(this.userProfileMap);
       
