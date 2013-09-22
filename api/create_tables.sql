@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS routes (
   gpx_file_id SERIAL REFERENCES gpx_files(id) ON DELETE CASCADE,
   name VARCHAR(50),
   length INTEGER
+  tags HSTORE      -- elevation, speed, date/time...
 );
 SELECT AddGeometryColumn('routes', 'centroid', 4326, 'POINT', 2 );
 

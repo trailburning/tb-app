@@ -36,6 +36,30 @@ class Route {
     return $this->route_points;
   }
 
+  public function calculateAscentDescent() {
+    $last_rp_altitude = 0;
+    $asc = 0;
+    $desc = 0;
+
+    foreach ($this->route_points as $rp) {
+      $rp_altitude = $rp->getTag('altitude');
+      
+      if ($last_rp_altitude != 0) {
+        if ($rp_altitude > $last_rp_altitude)
+          $asc += $rp_altitude-$last_rp_altitude;
+        else
+          $desc += $last_rp_altitude-$rp_altitude;
+      }
+
+      $last_rp_altitude = $rp_altitude;
+    }
+
+    $this->tags['ascent'] = $asc;
+    $this->tags['descent'] = $desc;
+
+    return 0;
+  }
+
   public function getNearestPointBytime($unixtimestamp) {
     if (sizeof($this->route_points) < 2)
       throw new \Exception("Route is less than 2 points.");
@@ -58,13 +82,13 @@ class Route {
     $route .= '"length": "'.$this->length.'",';
     $route .= '"centroid": ['.$this->centroid['long'].', '.$this->centroid['lat'].'],';
     $route .= '"bbox": "'.$this->bbox.'",';
-    $route .= '"tags": [';
+    $route .= '"tags": {';
     $i=0;
     foreach ($this->tags as $tag_name => $tag_value) {
       if ($i++ != 0) $route.=',';
       $route .= '"'.$tag_name.'": "'.$tag_value.'"';
     }
-    $route .= '],';
+    $route .= '},';
     $route .= '"route_points" : [';
     $i=0;
     foreach ($this->route_points as $rp) {

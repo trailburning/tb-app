@@ -79,11 +79,13 @@ class Postgis
 
   public function writeRoute($route) {
     $route_id = 0;
+    $route->calculateAscentDescent();
+    $tags = \TB\Postgis::hstoreFromMap($route->getTags());
+    
     $this->beginTransaction();
-
-    $q = "INSERT INTO routes (name, gpx_file_id) VALUES (?, ?)";
+    $q = "INSERT INTO routes (name, gpx_file_id, tags) VALUES (?, ?, ?)";
     $pq = $this->prepare($q);
-    $success = $pq->execute(array($route->getName(), $route->getGpxFileId()));
+    $success = $pq->execute(array($route->getName(), $route->getGpxFileId(), $tags));
     if (!$success) {
       $this->rollBack();
       throw (new ApiException("Failed to insert the route into the database", 500));
@@ -129,11 +131,12 @@ class Postgis
     $this->beginTransaction();
     $q = "SELECT r.name AS name, 
                  r.length as length,
+                 r.tags as rtags,
                  ST_AsText(ST_Centroid(ST_MakeLine(rp.coords ORDER BY rp.point_number ASC))) as centroid,
                  ST_AsText(Box2D(ST_MakeLine(rp.coords ORDER BY rp.point_number ASC))) as bbox
           FROM routes r, route_points rp
           WHERE r.id=? AND rp.route_id=r.id
-          GROUP BY name, length ";
+          GROUP BY name, length, r.tags";
     $pq = $this->prepare($q);
     $success = $pq->execute(array($route_id));
     if (!$success) {
@@ -148,6 +151,10 @@ class Postgis
       $route->setLength($row['length']);
       $c = explode(" ", substr(trim($row['centroid']),6,-1));
       $route->setCentroid($c[0], $c[1]); 
+      $t = json_decode('{' . str_replace('"=>"', '":"', $row['rtags']) . '}', true);
+      foreach ($t as $tag => $v) {
+        $route->setTag($tag, $v);
+      }
     } else {
       throw (new ApiException("Route does not exist", 404));
     }
