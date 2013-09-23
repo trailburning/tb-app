@@ -84,6 +84,7 @@ define([
         nPlayerPanelWidth = (1292 - nTrailPlayerLeftWidth);
       } 
 
+      $('#trailplayer').width(nPlayerPanelWidth);
       switch (self.nTrailView) {
         case SLIDE_VIEW:
           $('#trailplayer .image_container').width(nPlayerPanelWidth);
@@ -106,9 +107,23 @@ define([
         self.trailAltitudeView.addMediaMarker(point.coords.lat, point.coords.long);        
       });
       self.trailAltitudeView.renderMarkers();
+      
+      self.trailMiniMapView.addMarkers(data);
+      self.trailMapView.addMarkers(data);
+      
+      switch (self.nTrailView) {
+        case SLIDE_VIEW:
+          self.trailMiniMapView.renderMarkers();
+          break;
+           
+        case MAP_VIEW:
+          self.trailMapView.renderMarkers();
+          break;
+      }      
     }
     
     // get trail    
+//    this.trailModel.set('id', 17);    
     this.trailModel.set('id', 14);    
     console.log('Fetch ID:'+this.trailModel.get('id'));            
     this.trailModel.fetch({
@@ -118,7 +133,7 @@ define([
         self.trailMiniMapView.render();
         self.trailAltitudeView.render();
         self.trailSlideView.render();
-        
+
         handleResize();
                 
         self.mediaModel.url = RESTAPI_BASEURL + 'v1/route/'+self.trailModel.get('id')+'/medias';

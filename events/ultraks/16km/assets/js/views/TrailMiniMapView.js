@@ -10,6 +10,7 @@ define([
       this.bRendered = false;
       this.polyline = null;
       this.arrLineCordinates = [];
+      this.jsonMarkers = null;
       
       var self = this;      
       $(window).resize(function() {
@@ -22,6 +23,40 @@ define([
     hide: function(){
       $(this.el).hide();
     },
+    addMarkers: function(jsonMarkers){
+      this.jsonMarkers = jsonMarkers;
+    },        
+    renderMarkers: function(){
+      if (!this.jsonMarkers) {
+        return;
+      }
+
+      var self = this;
+      
+      // icons      
+      var MediaIcon = L.Icon.extend({
+          options: {
+              iconSize:     [23, 24],
+              iconAnchor:   [11, 11],
+              popupAnchor:  [11, 11]
+          }
+      });      
+      var mediaIcon = new MediaIcon({iconUrl: 'https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/icons/marker_inactive.png'});
+
+      $.each(this.jsonMarkers, function(key, point) {
+        L.marker([point.coords.lat, point.coords.long], {icon: mediaIcon}).addTo(self.map);      
+      });
+      
+      var LocationIcon = L.Icon.extend({
+          options: {
+              iconSize:     [36, 47],
+              iconAnchor:   [16, 44],
+              popupAnchor:  [16, 44]
+          }
+      });      
+      var startIcon = new LocationIcon({iconUrl: 'https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/icons/location.png'});
+      L.marker(this.arrLineCordinates[0], {icon: startIcon}).addTo(this.map);            
+    },        
     render: function(){
       console.log('TrailMiniMapView:render');
         
@@ -70,6 +105,8 @@ define([
       };         
       this.polyline = L.polyline(this.arrLineCordinates, polyline_options).addTo(this.map);          
       this.map.fitBounds(this.polyline.getBounds(), {padding: [20, 20]});         
+
+      this.renderMarkers();
                       
       // show btn                      
       $('.trailview_toggle', $(this.el)).show();
