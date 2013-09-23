@@ -44,25 +44,20 @@
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget magna ac nibh consequat accumsan. Mauris viverra nunc sed hendrerit pulvinar. Sed interdum, leo id placerat molestie, sem magna scelerisque lorem, sit amet blandit odio diam vitae nisl. Nunc acaugue mauris.
         </div>        
       </div>      
-      <div id="trailmapview" class="trailmap">
-      </div>
-      <div class="trailview_toggle">
-        <button class="viewmap-btn btn btn-tb">View map</button>
+      <div id="trail_miniviews">        
+        <div id="trail_minimap_view" class="trail_minimap"></div>
+        <div id="trail_minislide_view" class="trail_minislide"></div>
       </div>
     </div>
-    <div class="right">
-      <div id="trailplayer_slides">      
-        <div class="image_container"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/test7.jpg" class="image" /></div>
-      </div>      
-      <div id="trailplayer_map">
-        <div class="map_container">
-          <div id='map_large'></div>
-        </div>
-      </div>      
-      <div class="trail_title">
-        <h1 class="title_shadow">Matterhorn Ultraks</h1>
-        <h2 class="title_shadow">16K Race</h2>
-      </div>      
+    <div class="right">      
+      <div id="trail_views">        
+        <div id="trail_slide_view"></div>      
+        <div id="trail_map_view"></div>      
+        <div class="trail_title">
+          <h1 class="title_shadow">Matterhorn Ultraks</h1>
+          <h2 class="title_shadow">16K Race</h2>
+        </div>      
+      </div>
     </div>
     <div class="trans-line"></div>
   </div>
@@ -175,8 +170,30 @@
   </div>          
 </div>
 
+<script type="text/template" id="trailMiniMapViewTemplate">
+  <div id='minimap'></div>
+  <div class="trailview_toggle">
+    <button class="btn btn-tb">View map</button>
+  </div>
+</script>
+
+<script type="text/template" id="trailMiniSlideViewTemplate">
+  <div id='minislide'><img src="assets/img/trailplayer/minislide.gif">
+    
+  </div>
+  <div class="trailview_toggle">
+    <button class="btn btn-tb">View pictures</button>
+  </div>
+</script>
+
+<script type="text/template" id="trailSlideViewTemplate">
+  <div class="image_container"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/test7.jpg" class="image" /></div>
+</script>
+
 <script type="text/template" id="trailMapViewTemplate">
-  <div id='map'></div>
+  <div class="map_container">
+    <div id='map_large'></div>
+  </div>
 </script>
 
 <script type="text/template" id="traiAltitudeViewTemplate">
