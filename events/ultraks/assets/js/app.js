@@ -18,7 +18,6 @@ define([
     
     function handleResize() {
       $('.image').resizeToParent();      
-      $('.image').show();
     }
     
     function builtEventMap() {  

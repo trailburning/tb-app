@@ -98,7 +98,6 @@ define([
       }
       
       $('.image').resizeToParent();
-      $('.image').show();
     }        
         
     function handleMedia() {
