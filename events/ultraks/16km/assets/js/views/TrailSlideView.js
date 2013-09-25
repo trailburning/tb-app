@@ -3,6 +3,10 @@ define([
   'backbone',
   'views/TrailSlidePhotoView'
 ], function(_, Backbone, TrailSlidePhotoView){
+  var SLIDESHOW_INIT = 0;
+  var SLIDESHOW_PLAYING = 1;
+  var SLIDESHOW_STOPPED = 0;
+  
   var HOLD_SLIDE = 8000;
 
   var TrailSlideView = Backbone.View.extend({
@@ -12,6 +16,7 @@ define([
       app.dispatcher.on("TrailSlidePhotoView:imageready", this.onSlidePhotoReady, this);
             
       this.bRendered = false;
+      this.nSlideShowState = SLIDESHOW_INIT;
       this.arrSlidePhotos = [];
       this.nCurrSlide = -1;
       this.nPanelWidth = 0;
@@ -25,6 +30,18 @@ define([
     hide: function(){
       $(this.el).hide();
     },
+    startSlideShow: function(){    
+      this.nSlideShowState = SLIDESHOW_PLAYING;
+          
+      this.nextSlide();
+    },
+    stopSlideShow: function(){    
+      this.nSlideShowState = SLIDESHOW_STOPPED;
+      
+      if (this.slideTimer) {
+        clearTimeout(this.slideTimer);
+      }
+    },    
     nextSlide: function(){    
       var nSlide = this.nCurrSlide; 
       if (nSlide < this.arrSlidePhotos.length-1) {
@@ -53,6 +70,10 @@ define([
       photoView.render(this.nPanelWidth);            
       $('.image', photoView.el).resizeToParent();
     },    
+    addMedia: function(mediaModel){
+      var photoView = new TrailSlidePhotoView({ model: mediaModel });
+      this.arrSlidePhotos.push(photoView);
+    },
     render: function(nPanelWidth){
       console.log('TrailSlideView:render');
         
@@ -76,14 +97,10 @@ define([
       var attribs = this.model.toJSON();
       $(this.el).html(this.template(attribs));
                 
-      var jsonMarkers = this.model.get('value');
-
-      $.each(jsonMarkers, function(key, marker) {
-        var photoModel = new Backbone.Model(marker);
-        var photoView = new TrailSlidePhotoView({ model: photoModel });
-        self.arrSlidePhotos.push(photoView);
-        $('.photos_container', this.el).append(photoView.el);                
-      });
+      for (var nMedia=0; nMedia < this.arrSlidePhotos.length; nMedia++) {
+        var photoView = this.arrSlidePhotos[nMedia];
+        $('.photos_container', this.el).append(photoView.el);                        
+      }
             
       this.bRendered = true;
                         
@@ -104,11 +121,14 @@ define([
         if (this.slideTimer) {
           clearTimeout(this.slideTimer);
         }
-        this.slideTimer = setTimeout(function() {
-          self.bWaitingForSlide = true;
-          self.nextSlide();          
-          self.checkSlideState();
-        }, HOLD_SLIDE);
+        
+        if (this.nSlideShowState == SLIDESHOW_PLAYING) {
+          this.slideTimer = setTimeout(function() {
+            self.bWaitingForSlide = true;
+            self.nextSlide();          
+            self.checkSlideState();
+          }, HOLD_SLIDE);
+        }
       }
     },    
     onSlidePhotoReady: function(trailSlidePhotoView){

@@ -10,8 +10,8 @@ define([
       this.bRendered = false;
       this.polyline = null;
       this.arrLineCordinates = [];
-      this.arrMarkers = [];
-      this.jsonMarkers = null;
+//      this.arrMarkers = [];
+      this.arrMediaPoints = [];
       
       var self = this;
       
@@ -45,27 +45,30 @@ define([
       $(this.el).hide();
     },
     setActiveMarker: function(nMarker){
-      var marker = this.arrMarkers[nMarker];
-      marker.setIcon(this.mediaActiveIcon);
-      marker.setZIndexOffset(100);
+//      var marker = this.arrMarkers[nMarker];
+//      marker.setIcon(this.mediaActiveIcon);
+//      marker.setZIndexOffset(100);
     },    
-    addMarkers: function(jsonMarkers){
-      this.jsonMarkers = jsonMarkers;
-    },        
+    addMedia: function(mediaModel){
+      this.arrMediaPoints.push(mediaModel);
+    },
     renderMarkers: function(){
-      if (!this.jsonMarkers) {
+      if (!this.arrMediaPoints.length) {
         return;
       }
 
       var self = this;
+      var mediaPoint = null;
       var marker = null;
 
-      $.each(this.jsonMarkers, function(key, point) {
-        marker = L.marker([point.coords.lat, point.coords.long], {icon: self.mediaInactiveIcon}).on('click', onClick).addTo(self.map);;
+      for (var nMedia=0; nMedia < this.arrMediaPoints.length; nMedia++) {
+        mediaPoint = this.arrMediaPoints[nMedia];
+        marker = L.marker([mediaPoint.get('coords').lat, mediaPoint.get('coords').long], {icon: self.mediaInactiveIcon}).on('click', onClick).addTo(self.map);;
         function onClick(e) {
+          // fire event
+          app.dispatcher.trigger("TrailMiniMapView:mediaclick", self);                        
         }         
-        self.arrMarkers.push(marker);
-      });
+      }
       
       L.marker(this.arrLineCordinates[0], {icon: this.locationIcon}).addTo(this.map);            
     },        
@@ -83,7 +86,7 @@ define([
       // already rendered?  Just update
       if (this.bRendered) {
         this.map.invalidateSize();
-        this.map.fitBounds(this.polyline.getBounds(), {padding: [20, 20]});
+        this.map.fitBounds(this.polyline.getBounds(), {paddingTopLeft: [10, 30], paddingBottomRight: [10, 10]});
         return;         
       }        
 
@@ -117,7 +120,7 @@ define([
         clickable: false
       };         
       this.polyline = L.polyline(this.arrLineCordinates, polyline_options).addTo(this.map);          
-      this.map.fitBounds(this.polyline.getBounds(), {padding: [20, 20]});         
+      this.map.fitBounds(this.polyline.getBounds(), {paddingTopLeft: [10, 30], paddingBottomRight: [10, 10]});         
 
       this.renderMarkers();
                       

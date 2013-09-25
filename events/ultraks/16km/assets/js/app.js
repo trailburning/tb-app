@@ -25,6 +25,7 @@ define([
     var self = this;
     
     app.dispatcher.on("TrailMiniMapView:viewbtnclick", onTrailMiniMapViewBtnClick, this);
+    app.dispatcher.on("TrailMiniMapView:mediaclick", onTrailMiniMapMediaClick, this);
     app.dispatcher.on("TrailMiniSlideView:viewbtnclick", onTrailMiniSlideViewBtnClick, this);
     
     this.nTrailView = SLIDE_VIEW;
@@ -49,6 +50,12 @@ define([
     $(window).resize(function() {
       handleResize(); 
     });    
+
+    function onTrailMiniMapMediaClick() {
+      self.trailSlideView.stopSlideShow();
+      // mla - test
+      self.trailSlideView.gotoSlide(0);
+    }
 
     function onTrailMiniMapViewBtnClick() {
       self.nTrailView = MAP_VIEW;
@@ -98,15 +105,20 @@ define([
     }        
         
     function handleMedia() {
-      var data = self.mediaModel.get('value');
-      
-      $.each(data, function(key, point) {
-        self.trailAltitudeView.addMediaMarker(point.coords.lat, point.coords.long);        
+      var jsonMedia = self.mediaModel.get('value');
+  
+      console.log(jsonMedia);    
+      $.each(jsonMedia, function(key, media) {
+        var mediaModel = new Backbone.Model(media);
+        self.trailMiniMapView.addMedia(mediaModel);
+        self.trailSlideView.addMedia(mediaModel);
+        
+        self.trailAltitudeView.addMediaMarker(media.coords.lat, media.coords.long);        
       });
       self.trailAltitudeView.renderMarkers();
       
-      self.trailMiniMapView.addMarkers(data);
-      self.trailMapView.addMarkers(data);
+//      self.trailMiniMapView.addMarkers(jsonMedia);
+      self.trailMapView.addMarkers(jsonMedia);
       
       switch (self.nTrailView) {
         case SLIDE_VIEW:
@@ -119,7 +131,7 @@ define([
       }      
       handleResize();      
       
-      self.trailSlideView.nextSlide();
+      self.trailSlideView.startSlideShow();
     }
     
     // get trail    
