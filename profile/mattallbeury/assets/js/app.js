@@ -48,7 +48,7 @@ define([
       overlay.addTo(this.userProfileMap);
       
       var greenIcon = L.icon({
-          iconUrl: 'assets/icons/marker_inactive.png',
+          iconUrl: 'https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/icons/marker_inactive.png',
           iconSize:     [23, 24],
           iconAnchor:   [10, 10]
       });

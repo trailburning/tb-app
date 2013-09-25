@@ -35,7 +35,7 @@ define([
     this.trailMiniMapView = new TrailMiniMapView({ el: '#trail_minimap_view', model: this.trailModel });
     this.trailMiniSlideView = new TrailMiniSlideView({ el: '#trail_minislide_view', model: this.trailModel });
 
-    this.trailSlideView = new TrailSlideView({ el: '#trail_slide_view', model: this.trailModel });
+    this.trailSlideView = new TrailSlideView({ el: '#trail_slide_view', model: this.mediaModel });
     this.trailMapView = new TrailMapView({ el: '#trail_map_view', model: this.trailModel });
     
     this.trailAltitudeView = new TrailAltitudeView({ el: '#trailaltitudeview', model: this.trailModel });
@@ -49,7 +49,6 @@ define([
     $(window).resize(function() {
       handleResize(); 
     });    
-    handleResize();        
 
     function onTrailMiniMapViewBtnClick() {
       self.nTrailView = MAP_VIEW;
@@ -87,21 +86,20 @@ define([
       $('#trailplayer').width(nPlayerPanelWidth);
       switch (self.nTrailView) {
         case SLIDE_VIEW:
-          $('#trailplayer .image_container').width(nPlayerPanelWidth);
-          self.trailSlideView.render();
+          self.trailSlideView.render(nPlayerPanelWidth);
           break;
            
         case MAP_VIEW:
           $('#trailplayer .map_container').width(nPlayerPanelWidth);
           self.trailMapView.render();
           break;
-      }
-      
+      }      
       $('.image').resizeToParent();
     }        
         
     function handleMedia() {
-      var data = self.mediaModel.get('value');      
+      var data = self.mediaModel.get('value');
+      
       $.each(data, function(key, point) {
         self.trailAltitudeView.addMediaMarker(point.coords.lat, point.coords.long);        
       });
@@ -119,26 +117,27 @@ define([
           self.trailMapView.renderMarkers();
           break;
       }      
+      handleResize();      
+      
+      self.trailSlideView.nextSlide();
     }
     
     // get trail    
-//    this.trailModel.set('id', 17);    
-    this.trailModel.set('id', 14);    
+    this.trailModel.set('id', 17);    
+//    this.trailModel.set('id', 14);    
     console.log('Fetch ID:'+this.trailModel.get('id'));            
     this.trailModel.fetch({
       success: function () {
         console.log('Fetched');
-                
+                               
         self.trailMiniMapView.render();
         self.trailAltitudeView.render();
-        self.trailSlideView.render();
 
-        handleResize();
-                
         self.mediaModel.url = RESTAPI_BASEURL + 'v1/route/'+self.trailModel.get('id')+'/medias';
         self.mediaModel.fetch({
           success: function () {
             console.log('Fetched media');
+              
             handleMedia(self.mediaModel);
           }
         });        
