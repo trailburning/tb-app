@@ -7,6 +7,16 @@ define([
   app.dispatcher = _.clone(Backbone.Events);
   
   var initialize = function() {
+    var self = this;
+    
+    $(window).resize(function() {
+      handleResize(); 
+    });    
+    handleResize();        
+    
+    function handleResize() {
+      $('.image').resizeToParent();      
+    }
   };
     
   return { 

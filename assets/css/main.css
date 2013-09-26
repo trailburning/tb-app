@@ -1,11 +1,18 @@
 body {  
   margin: 0;
   padding: 0;
-  background: #FFF;
+  background: #F0F0F0;
+  font-family: 'Signika', sans-serif;
   font-weight: normal;
   font-size: 16px;
   line-height: 1.3em;
   color: #444444;    
+}
+
+form {
+  margin: 0px;
+  padding: 0px;
+  display: inline;  
 }
 
 /* APP */
@@ -15,11 +22,444 @@ body {
 border-style:solid;
 border-width:1px;
 */  
+  min-width: 1144px;
 }
 
-#logo_panel {
-  width: 136px;
-  margin-top: 200px;
-  margin-left: auto;
-  margin-right: auto;  
+/* HEADER */
+/******************************************/
+#headerview {
+/*  
+border-style:solid;
+border-width:1px;
+*/  
+  z-index: 200;
+  position: relative;
+  width: 100%;
+  height: 63px;  
+  background: #FFF;
+}
+
+#headerview .left {
+  float: left;
+  margin: 8px 0px 0px 40px;
+}
+
+#headerview .right {
+  float: right;
+  margin: 12px 22px 0px 0px;
+}
+
+#headerview .right .discover {
+  float: left;
+  margin: 5px 0px 0px 0px;
+}
+
+#headerview .right .discover .search-btn {
+  margin: 0;
+  padding: 0;  
+  width: 18px;
+  height: 18px;
+  border: none;
+  font-size: 0;
+  background: url("../img/header/search.gif") no-repeat top left;  
+}
+
+#headerview .right .discover input[type="text"] {
+  margin: 0px 6px 0px 0px;
+  background-color: #F0F0F0;
+}
+
+#headerview .right .links {
+  float: left;
+  margin-top: 14px;
+  line-height: 1em;
+}
+
+#headerview .right .link {
+  float: left;
+  margin: 0px 19px 0px 19px;
+  color: #44b6f7;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+#headerview .right .link a, 
+#headerview .right .link a:link, 
+#headerview .right .link a:visited {
+  color: #44b6f7;
+  text-decoration: none;
+}
+
+#headerview .right .link a:hover, 
+#headerview .right .link a:active {
+  color: #979797;
+  text-decoration: none;    
+}
+
+#headerview .right .signin {  
+  float: left;
+  margin-left: 19px;
+}
+
+#headerview .right .signin .btn {  
+}
+
+/* FOOTER */
+/******************************************/
+#footerview {
+/*  
+border-style:solid;
+border-width:1px;
+*/  
+  z-index: 200;
+  position: relative;
+  width: 100%;
+  height: 120px;  
+  background: #000;
+}
+
+#footerview .left {
+  float: left;
+  margin: 30px 0px 0px 40px;
+}
+
+#footerview .left .copyright {
+  font-size: 14px;
+  line-height: 1em;
+  color: #979797;
+}
+
+#footerview .left .links {
+  margin-top: 22px;
+}
+
+#footerview .left .link {
+  float: left;
+  margin-right: 34px;
+  font-size: 14px;
+  line-height: 1em;
+  font-weight: 700;  
+  color: #979797;
+  text-transform: uppercase;
+}
+
+#footerview .left .link a, 
+#footerview .left .link a:link, 
+#footerview .left .link a:visited {
+  color: #979797;
+  text-decoration: none;
+}
+
+#footerview .left .link a:hover, 
+#footerview .left .link a:active {
+  color: #FFFFFF;
+  text-decoration: none;    
+}
+
+#footerview .right {
+  float: right;
+  margin: 32px 48px 0px 0px;
+}
+
+#footerview .right .social {
+  float: left;
+  margin: 0px 10px 0px 10px;
+}
+
+#footerview a.button {
+  float:left; 
+  display:block;
+  line-height:20px; 
+  text-indent: -10000px;  
+  background-repeat:no-repeat;
+  background-position:top center;
+  overflow: hidden;   
+  text-decoration: none;
+  width:72px;
+  height:64px;
+}
+
+#footerview a.button:hover {
+  background-position: 0 -64px;
+}
+
+#footerview .btnEmail {
+  background: url("../img/footer/btn_email.png") no-repeat top left;
+}
+
+#footerview .btnFacebook {
+  background: url("../img/footer/btn_facebook.png") no-repeat top left;
+}
+
+#footerview .btnTwitter {
+  background: url("../img/footer/btn_twitter.png") no-repeat top left;
+}
+
+#footerview .btnGooglePlus {
+  background: url("../img/footer/btn_googleplus.png") no-repeat top left;
+}
+
+/* HOME HEADER */
+/******************************************/
+#home_header {
+  z-index: 100;
+  position: relative;
+  width: 100%;
+  height: 486px;
+  overflow: overflow;
+}
+
+#home_header .image_container {
+  width: 100%;
+  height: 486px;
+  overflow: hidden;
+}
+
+#home_header .event_title {
+  position: absolute;
+  top: 39px;
+  left: 32px;
+}
+
+/* BIG BAR */
+/******************************************/
+#bigbar {
+  width: 100%;
+  height: 60px;
+  background: #000;  
+}
+
+#bigbar .crumb_lead {
+  float: left;
+  margin: 16px 0px 0px 40px;
+  width: 20px;
+  height: 25px;
+  background: url("../img/crumb_lead.gif") no-repeat top left;    
+}
+
+#bigbar .crumbs {
+  float: left;
+  margin: 0px 0px 0px 18px;
+  font-size: 22px;
+  line-height: 58px;
+  color: #7C7C7C;
+}
+
+#bigbar .crumbs a, 
+#bigbar .crumbs a:link, 
+#bigbar .crumbs a:visited {
+  color: #7C7C7C;
+  text-decoration: none;
+}
+
+#bigbar .crumbs a:hover, 
+#bigbar .crumbs a:active {
+  color: #FFFFFF;
+  text-decoration: none;    
+}
+
+#bigbar .share {
+  float: right;
+  margin-left: 25px;
+  margin-right: 22px;
+  line-height: 58px;
+}
+
+/* PANELS */
+/******************************************/
+.panelcontent {
+  position: relative;
+  margin: 0px auto 88px auto;
+  width: 1144px;
+}
+
+.panel_intro {
+  padding-top: 46px;
+  text-align: center;
+}
+
+.panel_intro .desc {
+  margin: 24px auto 0px auto;
+  width: 570px;
+  text-align: center;
+}
+
+.panels {
+  padding-top: 26px;
+}
+
+/* TRAIL CARD PANEL */
+/******************************************/
+.trail_card_panel {
+  width: 260px;
+  margin: 13px 13px 13px 13px;
+  line-height: 1em;
+  color: #FFFFFF;
+}
+
+.trail_card_panel .title {
+  margin-left: 22px;
+  height: 74px;
+  color: #44B6F7;
+}
+
+.trail_card_panel .title h3 {
+  line-height: 74px;
+}
+
+.trail_card_panel .photo {
+  position: relative;
+}
+
+.trail_card_panel .photo .image_container {
+  width: 260px;
+  height: 220px;
+  overflow: hidden;
+}
+
+.trail_card_panel .photo .card_title {
+  position: absolute;
+  bottom: 14px;
+  left: 14px;
+  color: #FFFFFF;
+}
+
+.trail_card_panel .photo .card_title h1 {
+  display: inline-block;
+  margin: 0px;
+  padding: 5px 10px 5px 5px;
+  font-weight: 400;
+  font-size: 26px;
+  line-height: 1em;  
+  background-color: #000;  
+  background: rgba(0, 0, 0, 0.6);  
+}
+
+.trail_card_panel .photo .card_title h2 {
+  display: inline-block;
+  margin: 8px 0px 0px 0px;
+  padding: 5px 10px 5px 5px;  
+  font-weight: 400;
+  font-size: 26px;
+  line-height: 1em;
+  background-color: #000;  
+  background: rgba(0, 0, 0, 0.6);  
+}
+
+.trail_card_panel .summary {
+  height: 64px;
+  margin: 12px 0px 0px 14px;
+  font-size: 16px;
+  color: #44B6F7;
+}
+
+.trail_card_panel .summary strong {
+  font-weight: 700;
+}
+
+.trail_card_panel .summary .avatar {
+  float: left;  
+}
+
+.trail_card_panel .summary .detail {
+  float: left;  
+  margin-top: 10px;
+  margin-left: 6px;
+}
+
+.trail_card_panel .summary .stars {
+  margin-top: 6px;
+}
+
+/* GUIDE */
+/******************************************/
+.guidecontent {
+  width: 100%;
+  height: 884px;
+  background: #FFF;
+}
+
+.guidecontent .sticker {
+  position: relative;
+  margin: 0px auto 0px auto;
+  width: 162px;
+}
+
+.guidecontent .sticker img {
+  position: absolute;
+  top: -56px;
+}
+
+.guidecontent .content {
+  padding-top: 122px;
+  margin: 0px auto 0px auto;
+  width: 1144px;
+}
+
+.guidecontent .content .title {
+  font-size: 50px;
+  line-height: 1em;
+  color: #44B6F7;
+  text-align: center;  
+}
+
+.guidecontent .content .desc {
+  margin: 0px auto 0px auto;
+  width: 500px;
+  margin-top: 15px;
+  text-align: center;    
+}
+
+.guidecontent .guide_items {
+  margin-top: 58px;
+  margin-left: 2px;  
+  width: 100%;
+  height: 420px;  
+  background: url("../img/guide_back.png") no-repeat 364px 120px;    
+}
+
+.guidecontent .guide_item {
+  float: left;
+  margin: 0px 55px 0px 55px;
+  width: 270px;
+  font-size: 50px;
+  line-height: 1em;
+  color: #44B6F7;
+  text-align: center;  
+}
+
+.guidecontent .guide_item .title {
+  margin-top: 10px;
+}
+
+.guidecontent .guide_item h4 {
+  margin-top: 18px;
+}
+
+/* RESPONSIVE */
+/******************************************/
+
+/* Large desktop */
+@media (min-width: 1200px) {
+}
+ 
+/* Portrait tablet to landscape and desktop */
+@media (min-width: 768px) and (max-width: 979px) {
+}
+ 
+/* Landscape phone to portrait tablet */
+@media (max-width: 767px) {
+}
+ 
+/* Landscape phones and down */
+@media (max-width: 480px) {
+}
+
+.image {
+  display: none;  
+}
+
+img {
+  max-width: none;
 }

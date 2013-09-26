@@ -6,16 +6,206 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Trailburning Beta</title>
 
+<link href='http://fonts.googleapis.com/css?family=Signika:400,300,700' rel='stylesheet' type='text/css'>
+
 <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 <link href="assets/css/bootstrap-responsive.min.css" rel="stylesheet">
+<link href="http://api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.css" rel="stylesheet">
+<link href="assets/css/common_ui.css" rel="stylesheet" type="text/css">
 <link href="assets/css/main.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 
-<div id="appview">    
+<div id="appview">      
+  <div id="headerview">
+    <div class="left">
+      <img src="assets/img/header/tb_logo.gif">
+    </div>    
+    <div class="right">
+      <form>
+      <div class="discover">
+        <input type="text" name="discover">
+        <input type="submit" class="search-btn">        
+      </div>
+      </form>
+      <div class="links">
+        <div class="link"><a href="">Discover</a></div>
+        <div class="link"><a href="">News</a></div>
+      </div>
+      <div class="signin">
+        <a href="http://www.trailburning.com" class="btn btn-tb-action btn-tb-large">Join</a>
+      </div>
+    </div>
+  </div>    
 
-  <div id="logo_panel"><a href="http://www.trailburning.com"><img src="assets/img/tb_logo.jpg" border="0"></a></div>  
-
+  <div id="home_header">  
+    <div class="image_container"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/test3.jpg" class="image" /></div>
+    <div class="event_title">
+      <h1 class="tb">I'm #trailburning</h1>
+      <br/>
+      <h2 class="tb">Today</h2>
+    </div>      
+    <div class="trans-line"></div>      
+  </div>    
+  
+  <div id="bigbar">
+    <div class="crumb_lead"></div>    
+    <div class="crumbs">
+    <a href="events/ultraks">Home</a>
+    </div>
+    <div class="share">    
+    <!-- AddThis Button BEGIN -->
+    <a class="addthis_button btn btn-tb-action" href="http://www.addthis.com/bookmark.php?v=300&amp;pubid=mallbeury">Share</a>
+    <script type="text/javascript">var addthis_config = {"data_track_addressbar":true};</script>
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=mallbeury"></script>
+    <!-- AddThis Button END -->            
+    </div>
+  </div>
+  
+  <div class="panelcontent">                    
+    <div class="panel_intro">           
+      <h1 class="tb">Introducing Trail Cards</h1>
+      <div class="desc"><h4 class="tb">Finally… GPS data is actually interesting. Each Trail Card presents a unique trail adventure – designed for discovery, made to share and created by trailers and hikers.</h4></div>      
+    </div>
+    <div class="panels clearfix">           
+      <div class="panel trail_card_panel">
+        <div class="title"><h3 class="tb">Walk</h3></div>
+        <div class="photo">
+          <div class="image_container"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/test3.jpg" class="image" /></div>
+          <div class="card_title">
+            <h1>Berlin</h1>
+            <h2>Grunewald Forest</h2>
+          </div>
+        </div>
+        <div class="summary">
+          <div class="avatar"><img src="assets/img/avatar_54.png"></div>
+          <div class="detail">
+            by <strong>Matt Allbeury</strong>
+            <div class="stars">
+              <div class="star_full"></div>
+              <div class="star_full"></div>
+              <div class="star_full"></div>
+              <div class="star"></div>
+              <div class="star"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel trail_card_panel">
+        <div class="title"><h3 class="tb">Run</h3></div>
+        <div class="photo">
+          <div class="image_container"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/test7.jpg" class="image" /></div>
+          <div class="card_title">
+            <h1>Matterhorn Ultraks</h1>
+            <br/>
+            <h2>Trail Event</h2>
+          </div>
+        </div>
+        <div class="summary">
+          <div class="avatar"><img src="assets/img/avatar_54.png"></div>
+          <div class="detail">
+            by <strong>Matt Allbeury</strong>
+            <div class="stars">
+              <div class="star_full"></div>
+              <div class="star_full"></div>
+              <div class="star_full"></div>
+              <div class="star_full"></div>
+              <div class="star_full"></div>
+            </div>
+          </div>
+        </div>
+      </div>      
+      <div class="panel trail_card_panel">
+        <div class="title"><h3 class="tb">Walk</h3></div>
+        <div class="photo">
+          <div class="image_container"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/test5.jpg" class="image" /></div>
+          <div class="card_title">
+            <h1>Coulter Fell</h1>
+            <h2>Scottish Borders</h2>
+          </div>
+        </div>
+        <div class="summary">
+          <div class="avatar"><img src="assets/img/avatar_54.png"></div>
+          <div class="detail">
+            by <strong>Matt Allbeury</strong>
+            <div class="stars">
+              <div class="star_full"></div>
+              <div class="star_full"></div>
+              <div class="star_full"></div>
+              <div class="star_half"></div>
+              <div class="star"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel trail_card_panel">
+        <div class="title"><h3 class="tb">Hike</h3></div>
+        <div class="photo">
+          <div class="image_container"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/test1.jpg" class="image" /></div>
+          <div class="card_title">
+            <h1>Switzerland</h1>
+            <br/>
+            <h2>Strelepass</h2>
+          </div>
+        </div>
+        <div class="summary">
+          <div class="avatar"><img src="assets/img/avatar_54.png"></div>
+          <div class="detail">
+            by <strong>Matt Allbeury</strong>
+            <div class="stars">
+              <div class="star_full"></div>
+              <div class="star_full"></div>
+              <div class="star_full"></div>
+              <div class="star_half"></div>
+              <div class="star"></div>
+            </div>
+          </div>
+        </div>
+      </div>      
+      <div class="trans-line"></div>          
+    </div>
+  </div>
+  
+  <div class="guidecontent">      
+    <div class="sticker"><img src="assets/img/sticker_coming_soon.png" /></div>      
+    <div class="content">      
+      <div class="title">Create your own Trail Cards</div>
+      <div class="desc"><h4 class="tb">Capture every trail you run, race you’re in and mountain you climb and transform the locations and photos into your folio of Trail Cards to inspire the Trailburning community.</h4></div>  
+      <div class="guide_items">
+        <div class="guide_item">
+          <img src="assets/img/guide_record.png">
+          <div class="title">Record</div>
+          <h4 class="tb">Capture trails with a GPS enabled device and a camera.</h4>
+        </div>                  
+        <div class="guide_item">
+          <img src="assets/img/guide_share.png">
+          <div class="title">Share</div>
+          <h4 class="tb">Create a Trail Card and present your experience.</h4>
+        </div>                  
+        <div class="guide_item">
+          <img src="assets/img/guide_inspire.png">
+          <div class="title">Inspire</div>
+          <h4 class="tb">Be an inspiration while getting inspired by the Trailburning community.</h4>
+        </div>                  
+      </div>                  
+    </div>                  
+  </div>
+  
+  <div id="footerview">
+    <div class="left">
+      <div class="copyright">Copyright © 2013, Augmented Media Projects Ltd</div>    
+      <div class="links">
+        <div class="link"><a href="">About</a></div>
+        <div class="link"><a href="">Press Kit</a></div>
+      </div>
+    </div>
+    <div class="right">
+      <div class="social email"><a href="mailto:?subject=Get ready for a new trail experience!&body=Thought you might be interested in this - trailburning.com" class="button btnEmail">Email</a></div>
+      <div class="social facebook"><a href="http://www.facebook.com/share.php?u=www.trailburning.com" target="_blank" class="button btnFacebook">Facebook</a></div>
+      <div class="social twitter"><a href="http://twitter.com/share?text=Get ready for a new trail experience!" target="_blank" class="button btnTwitter">Twitter</a></div>
+      <div class="social googleplus"><a href="https://plus.google.com/share?url=www.trailburning.com" target="_blank" class="button btnGooglePlus">Google+</a></div>          
+    </div>
+  </div>          
 </div>
 
 <script src="assets/js/libs/jquery-1.8.3.min.js"></script>
@@ -23,12 +213,11 @@
 <script src="assets/js/libs/bootstrap-filestyle.min.js"> </script>
 
 <script src='http://api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.js'></script>
-<link href='http://api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.css' rel='stylesheet' />
 <!--[if lte IE 8]>
   <link href='http://api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.ie.css' rel='stylesheet' >
 <![endif]-->
 
-<script src="assets/js/libs/jquery.resizeimagetoparent.min.js"></script>
+<script src="assets/js/libs/jquery.resizeimagetoparent.js"></script>
 
 <script src="assets/js/libs/jquery.ui.widget.js"></script>
 <script src="assets/js/libs/jquery.iframe-transport.js"></script>
