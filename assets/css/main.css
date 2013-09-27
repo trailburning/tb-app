@@ -50,7 +50,7 @@ border-width:1px;
 }
 
 #headerview .right .discover {
-  float: left;
+  float: right;
   margin: 5px 0px 0px 0px;
 }
 
@@ -70,7 +70,7 @@ border-width:1px;
 }
 
 #headerview .right .links {
-  float: left;
+  float: right;
   margin-top: 14px;
   line-height: 1em;
 }
@@ -98,7 +98,7 @@ border-width:1px;
 }
 
 #headerview .right .signin {  
-  float: left;
+  float: right;
   margin-left: 19px;
 }
 
@@ -215,6 +215,7 @@ border-width:1px;
   height: 486px;
   overflow: hidden;
 }
+
 
 #home_header .event_title {
   position: absolute;
@@ -374,44 +375,44 @@ border-width:1px;
 
 /* GUIDE */
 /******************************************/
-.guidecontent {
+.guide_content {
   width: 100%;
   height: 884px;
   background: #FFF;
 }
 
-.guidecontent .sticker {
+.guide_content .sticker {
   position: relative;
   margin: 0px auto 0px auto;
   width: 162px;
 }
 
-.guidecontent .sticker img {
+.guide_content .sticker img {
   position: absolute;
   top: -56px;
 }
 
-.guidecontent .content {
+.guide_content .content {
   padding-top: 122px;
   margin: 0px auto 0px auto;
   width: 1144px;
 }
 
-.guidecontent .content .title {
+.guide_content .content .title {
   font-size: 50px;
   line-height: 1em;
   color: #44B6F7;
   text-align: center;  
 }
 
-.guidecontent .content .desc {
+.guide_content .content .desc {
   margin: 0px auto 0px auto;
   width: 500px;
   margin-top: 15px;
   text-align: center;    
 }
 
-.guidecontent .guide_items {
+.guide_content .guide_items {
   margin-top: 58px;
   margin-left: 2px;  
   width: 100%;
@@ -419,7 +420,7 @@ border-width:1px;
   background: url("../img/guide_back.png") no-repeat 364px 120px;    
 }
 
-.guidecontent .guide_item {
+.guide_content .guide_item {
   float: left;
   margin: 0px 55px 0px 55px;
   width: 270px;
@@ -429,12 +430,39 @@ border-width:1px;
   text-align: center;  
 }
 
-.guidecontent .guide_item .title {
+.guide_content .guide_item .title {
   margin-top: 10px;
 }
 
-.guidecontent .guide_item h4 {
+.guide_content .guide_item h4 {
   margin-top: 18px;
+}
+
+/* FOOTER PROMOTE */
+/******************************************/
+.footer_promote {
+  z-index: 100;
+  position: relative;
+  width: 100%;
+  height: 682px;
+  overflow: overflow;
+}
+
+.footer_promote .image_container {
+  width: 100%;
+  height: 682px;
+  overflow: hidden;
+}
+
+.footer_promote .promote_title {
+  position: absolute;
+  top: 138px;
+  width: 100%;
+  text-align: center;
+}
+
+.footer_promote .signin {
+  margin-top: 32px;
 }
 
 /* RESPONSIVE */

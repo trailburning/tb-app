@@ -61,14 +61,20 @@
   *background-color: #003bb3;
 }
 
-.btn-tb-mega {
-  padding: 11px 15px;
-  font-size: 26px;  
-}
-
 .btn-tb-large {
   padding: 8px 15px;
   font-size: 22px;  
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;  
+}
+
+.btn-tb-mega {
+  padding: 11px 15px;
+  font-size: 26px;  
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;  
 }
 
 /* TB TITLES */
@@ -145,6 +151,13 @@ h4.tb {
 
 /* TB CANDY */
 /******************************************/
+.tb-fade {
+  opacity: 0;
+  transition: opacity 2s ease-in-out;
+  -moz-transition: opacity 2s ease-in-out;
+  -webkit-transition: opacity 2s ease-in-out;
+}
+
 .star {
   float: left;
   width: 13px;
