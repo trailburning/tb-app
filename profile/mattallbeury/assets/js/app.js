@@ -47,25 +47,35 @@ define([
       var overlay = L.control.command();
       overlay.addTo(this.userProfileMap);
       
-      var greenIcon = L.icon({
+      var trailIcon = L.icon({
           iconUrl: 'https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/icons/marker_inactive.png',
           iconSize:     [23, 24],
           iconAnchor:   [10, 10]
       });
       
+      var LocationIcon = L.Icon.extend({
+          options: {
+              iconSize:     [36, 47],
+              iconAnchor:   [16, 44],
+              popupAnchor:  [16, 44]
+          }
+      });      
+      var locationIcon = new LocationIcon({iconUrl: 'https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/icons/location.png'});
+      
       var arrMarkers = [];
           
       arrMarkers.push([46.776910834014416, 9.673530561849475]);                   
-      L.marker(arrMarkers[arrMarkers.length-1], {icon: greenIcon}).addTo(this.userProfileMap);
+      L.marker(arrMarkers[arrMarkers.length-1], {icon: trailIcon}).addTo(this.userProfileMap);
 
       arrMarkers.push([55.55927837267518, -3.536434667184949]);                   
-      L.marker(arrMarkers[arrMarkers.length-1], {icon: greenIcon}).addTo(this.userProfileMap);
+      L.marker(arrMarkers[arrMarkers.length-1], {icon: trailIcon}).addTo(this.userProfileMap);
 
       arrMarkers.push([52.5080060, 13.2574370]);                   
-      L.marker(arrMarkers[arrMarkers.length-1], {icon: greenIcon}).addTo(this.userProfileMap);
+//      L.marker(arrMarkers[arrMarkers.length-1], {icon: trailIcon}).addTo(this.userProfileMap);
+      L.marker(arrMarkers[arrMarkers.length-1], {icon: locationIcon}).addTo(this.userProfileMap);
 
 //      arrMarkers.push([-34.95064677670598, 138.66099251434207]);                   
-//      L.marker(arrMarkers[arrMarkers.length-1], {icon: greenIcon}).addTo(this.userProfileMap);
+//      L.marker(arrMarkers[arrMarkers.length-1], {icon: trailIcon}).addTo(this.userProfileMap);
       
       var bounds = new L.LatLngBounds(arrMarkers);
       bounds = bounds.pad(0.05);

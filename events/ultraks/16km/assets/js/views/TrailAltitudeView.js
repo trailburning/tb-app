@@ -15,6 +15,7 @@ define([
       this.fLowAlt = 0;
       this.fHighAlt = 0;
       this.arrMediaPoints = new Array();
+      this.currElMarker = null;
       
       this.objTrailMarginRect = new Object();
       this.objTrailMarginRect.left = 50;
@@ -47,6 +48,16 @@ define([
         self.render();        
       });    
     },            
+    gotoMedia: function(nMedia){
+      // restpre previous
+      if (this.currElMarker) {
+        this.currElMarker.removeClass('marker_active');        
+      }
+      var elMarker = this.arrMediaPoints[nMedia];
+      elMarker.addClass('marker_active');
+      
+      this.currElMarker = elMarker;
+    },    
     render: function(fScale){
       console.log('TrailAltitudeView:render');
         
@@ -240,17 +251,6 @@ define([
             self.arrMediaPoints.push(elMarker);
         }
       });     
-    },
-    addMediaMarkerXY: function(nX, nY) {
-      nX -= 10;
-      nY -= 10;
-      
-      var elMarker = $('<div class="marker"></div>');
-      var elProfile = $('.profile', this.el);
-      elProfile.append(elMarker);
-
-      elMarker.css('left', nX);
-      elMarker.css('top', nY);
     }
     
   });

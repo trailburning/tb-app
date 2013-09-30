@@ -14,8 +14,31 @@ define([
       this.map = null;
       this.polyline = null;
       this.arrLineCordinates = [];
-      this.jsonMarkers = null;
+      this.arrMediaPoints = [];
+      this.arrMarkers = [];
+      this.currMarker = null;
       this.nMapView = MAP_STREET_VIEW;
+      
+      var self = this;
+      
+      var MediaIcon = L.Icon.extend({
+          options: {
+              iconSize:     [23, 24],
+              iconAnchor:   [11, 11],
+              popupAnchor:  [11, 11]
+          }
+      });      
+      this.mediaInactiveIcon = new MediaIcon({iconUrl: 'https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/icons/marker_inactive.png'});
+      this.mediaActiveIcon = new MediaIcon({iconUrl: 'https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/icons/marker_active.png'});
+            
+      var LocationIcon = L.Icon.extend({
+          options: {
+              iconSize:     [36, 47],
+              iconAnchor:   [16, 44],
+              popupAnchor:  [16, 44]
+          }
+      });      
+      this.locationIcon = new LocationIcon({iconUrl: 'https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/icons/location.png'});      
     },            
     show: function(){
       $(this.el).show();
@@ -73,39 +96,41 @@ define([
       });
 
     },
-    addMarkers: function(jsonMarkers){
-      this.jsonMarkers = jsonMarkers;
-    },        
+    gotoMedia: function(nMedia){
+      var marker;
+      // retore previous
+      if (this.currMarker) {
+        this.currMarker.setIcon(this.mediaInactiveIcon);
+        this.currMarker.setZIndexOffset(100);
+      }
+      marker = this.arrMarkers[nMedia];
+      marker.setIcon(this.mediaActiveIcon);
+      marker.setZIndexOffset(200);
+      
+      this.currMarker = marker;
+    },
+    addMedia: function(mediaModel){
+      this.arrMediaPoints.push(mediaModel);
+    },
     renderMarkers: function(){
-      if (!this.jsonMarkers) {
+      if (!this.arrMediaPoints.length) {
         return;
       }
 
       var self = this;
-      
-      // icons      
-      var MediaIcon = L.Icon.extend({
-          options: {
-              iconSize:     [23, 24],
-              iconAnchor:   [11, 11],
-              popupAnchor:  [11, 11]
-          }
-      });      
-      var mediaIcon = new MediaIcon({iconUrl: 'https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/icons/marker_inactive.png'});
+      var mediaPoint = null;
+      var marker = null;
 
-      $.each(this.jsonMarkers, function(key, point) {
-        L.marker([point.coords.lat, point.coords.long], {icon: mediaIcon}).addTo(self.map);      
-      });
-      
-      var LocationIcon = L.Icon.extend({
-          options: {
-              iconSize:     [36, 47],
-              iconAnchor:   [16, 44],
-              popupAnchor:  [16, 44]
-          }
-      });      
-      var startIcon = new LocationIcon({iconUrl: 'https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/icons/location.png'});
-      L.marker(this.arrLineCordinates[0], {icon: startIcon}).addTo(this.map);            
+      for (var nMedia=0; nMedia < this.arrMediaPoints.length; nMedia++) {
+        mediaPoint = this.arrMediaPoints[nMedia];
+        marker = L.marker([mediaPoint.get('coords').lat, mediaPoint.get('coords').long], {icon: self.mediaInactiveIcon}).on('click', onClick).addTo(self.map);;
+        this.arrMarkers.push(marker);
+        function onClick(e) {
+          // fire event
+          app.dispatcher.trigger("TrailMapView:mediaclick", self);                        
+        }         
+      }
+      L.marker(this.arrLineCordinates[0], {icon: this.locationIcon}).addTo(this.map);            
     },        
     render: function(){
       console.log('TrailMapView:render');
@@ -149,7 +174,8 @@ define([
       this.polyline = L.polyline(self.arrLineCordinates, polyline_options).addTo(this.map);          
       this.map.fitBounds(self.polyline.getBounds(), {padding: [30, 30]});
                
-      this.buildBtns();                        
+      this.buildBtns();           
+      
       this.renderMarkers();                        
                         
       this.bRendered = true;

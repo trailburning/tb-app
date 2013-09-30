@@ -22,26 +22,27 @@
       <img src="assets/img/header/tb_logo.gif">
     </div>    
     <div class="right">
-      <form>
-      <div class="discover">
-        <input type="text" name="discover">
-        <input type="submit" class="search-btn">        
-      </div>
-      </form>
+      <div class="signin"><a href="http://www.trailburning.com" class="btn btn-tb-action btn-tb-large">Join</a></div>
       <div class="links">
         <div class="link"><a href="">Discover</a></div>
         <div class="link"><a href="">News</a></div>
       </div>
-      <div class="signin"><a href="http://www.trailburning.com" class="btn btn-large btn-tb-action">Sign in</a></div>
+      <div class="discover">
+        <form>
+        <input type="text" name="discover">
+        <input type="submit" class="search-btn">        
+        </form>
+      </div>
     </div>
   </div>    
+
   <div id="trailplayer">
     <div class="left">
       <div class="trailprofile">
         <div class="avatar"><a href="../../../profile/mattallbeury"><img src="assets/img/trailplayer/avatar.png" border="0"></a></div>
         <div class="title">by <strong>Matt Allbeury</strong></div>
         <div class="text">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget magna ac nibh consequat accumsan. Mauris viverra nunc sed hendrerit pulvinar. Sed interdum, leo id placerat molestie, sem magna scelerisque lorem, sit amet blandit odio diam vitae nisl. Nunc acaugue mauris.
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget magna ac nibh consequat accumsan.
         </div>        
       </div>      
       <div id="trail_miniviews">        
@@ -56,16 +57,17 @@
         <div class="trail_title">
           <h1 class="title_shadow">Matterhorn Ultraks</h1>
           <br/>
-          <h2 class="title_shadow">16K Race</h2>
+          <h1 class="title_shadow">16K Race</h1>
         </div>      
       </div>
     </div>
     <div class="trans-line"></div>
   </div>
+  
   <div id="bigbar">
-    <div class="crumb_lead"></div>
+    <div class="crumb_lead"><a href="../../../index.html"><img src="assets/img/crumb_lead.gif" border="0"></a></div>    
     <div class="crumbs">
-    <a href="../../../events">Events</a> / <a href="../../../events/ultraks">Matterhorn Ultraks</a> / <a href="../../../events/ultraks/16km">16k Race</a>
+    <a href="../../../index.html">Events</a> / <a href="../../../events/ultraks">Matterhorn Ultraks</a> / <a href="../../../events/ultraks/16km">16k Race</a>
     </div>
     <div class="share">    
     <!-- AddThis Button BEGIN -->
@@ -75,6 +77,7 @@
     <!-- AddThis Button END -->            
     </div>
   </div>
+
   <div class="panelcontent">                    
     <div class="panels clearfix">                    
       <div id="trailaltitudeview" class="panel trailaltitude_panel">            
@@ -145,7 +148,8 @@
             <div class="image_container"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/test3.jpg" class="image" /></div>
             <div class="promote_title">
               <h1 class="title_shadow">Air New Zealand’s</h1>
-              <h2 class="title_shadow">Great Walks</h2>
+              <br />
+              <h1 class="title_shadow">Great Walks</h1>
             </div>
           </div>
         </div>
@@ -173,9 +177,7 @@
 
 <script type="text/template" id="trailMiniMapViewTemplate">
   <div id='minimap'></div>
-  <div class="trailview_toggle">
-    <button class="btn btn-tb">View map</button>
-  </div>
+  <div class="trailview_toggle"><button class="btn btn-tb">View map</button></div>
 </script>
 
 <script type="text/template" id="trailMiniSlideViewTemplate">
@@ -192,7 +194,7 @@
 </script>
 
 <script type="text/template" id="trailSlidePhotoViewTemplate">
-  <div class="image_container"><img src="https://s3-eu-west-1.amazonaws.com/<%= versionLargePath%>" class="image" /></div>
+  <div class="image_container"><img src="http://d2ams8x29ebomh.cloudfront.net/convert?resize=1024x768&shape=preserve&source=https://s3-eu-west-1.amazonaws.com/<%= versionLargePath%>" class="image" /></div>
 </script>
 
 <script type="text/template" id="trailMapViewTemplate">

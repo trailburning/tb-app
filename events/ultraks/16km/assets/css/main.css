@@ -22,7 +22,7 @@ form {
 border-style:solid;
 border-width:1px;
 */  
-  min-width: 1292px;
+  min-width: 1160px;
 }
 
 /* HEADER */
@@ -32,24 +32,26 @@ border-width:1px;
 border-style:solid;
 border-width:1px;
 */  
+  z-index: 200;
+  position: relative;
   width: 100%;
-  height: 88px;  
+  height: 63px;  
   background: #FFF;
 }
 
 #headerview .left {
   float: left;
-  margin: 10px 0px 0px 72px;
+  margin: 8px 0px 0px 40px;
 }
 
 #headerview .right {
   float: right;
-  margin: 25px 48px 0px 0px;
+  margin: 12px 22px 0px 0px;
 }
 
 #headerview .right .discover {
-  float: left;
-  margin: 10px 10px 0px 0px;
+  float: right;
+  margin: 5px 0px 0px 0px;
 }
 
 #headerview .right .discover .search-btn {
@@ -68,9 +70,9 @@ border-width:1px;
 }
 
 #headerview .right .links {
-  float: left;
-  margin-top: 8px;
-  line-height: 36px;
+  float: right;
+  margin-top: 14px;
+  line-height: 1em;
 }
 
 #headerview .right .link {
@@ -96,12 +98,11 @@ border-width:1px;
 }
 
 #headerview .right .signin {  
-  float: left;
+  float: right;
   margin-left: 19px;
 }
 
 #headerview .right .signin .btn {  
-  font-size: 24px;
 }
 
 /* FOOTER */
@@ -111,6 +112,8 @@ border-width:1px;
 border-style:solid;
 border-width:1px;
 */  
+  z-index: 200;
+  position: relative;
   width: 100%;
   height: 120px;  
   background: #000;
@@ -118,7 +121,7 @@ border-width:1px;
 
 #footerview .left {
   float: left;
-  margin: 30px 0px 0px 56px;
+  margin: 30px 0px 0px 40px;
 }
 
 #footerview .left .copyright {
@@ -202,7 +205,7 @@ border-width:1px;
 #trailplayer {
   position: relative;
   width: 100%;
-  height: 538px;
+  height: 486px;
   overflow: overflow;
 }
 
@@ -210,15 +213,17 @@ border-width:1px;
   position: absolute;
   top: 0px;
   left: 0px;
-  width: 328px;
+  width: 258px;
   height: 100%;
   background: #F0F0F0;
   background: #F0F0F0 url(../img/trailplayer/detail_back.gif) repeat-y top right;  
 }
 
 #trailplayer .trailprofile {
+/* 
   height: 293px;  
-  margin: 18px 54px 0px 54px;
+*/  
+  margin: 16px 0px 0px 0px;
   font-weight: 300;
   overflow: hidden;
 }
@@ -231,21 +236,23 @@ border-width:1px;
 }
 
 #trailplayer .trailprofile .avatar img {
-  width: 61px;
-  height: 60;
+  width: 82px;
+  height: 81px;
 }
 
 #trailplayer .trailprofile .title {
-  margin-top: 22px;
+  margin-top: 12px;
   text-align: center;
-  font-size: 22px;
+  font-size: 18px;
   color: #44b6f7;
 }
 
 #trailplayer .trailprofile .text {
-  margin-top: 16px;
-  height: 162px;
-  font-size: 15px;
+  margin: 6px auto 0px auto;
+  width: 172px;
+  height: 88px;
+  font-size: 14px;
+  font-weight: 300;
   text-align: justify;
   overflow: hidden;
 }
@@ -253,7 +260,6 @@ border-width:1px;
 #trailplayer .trailprofile .title strong {  
   font-weight: 700;
 }
-
 
 /* TRAIL MINI VIEWS */
 /******************************************/
@@ -270,8 +276,8 @@ border-width:1px;
 }
 
 #trailplayer .trail_minimap #minimap {
-  width: 318px;
-  height: 165px;
+  width: 258px;
+  height: 206px;
   background-color: transparent; 
 }
 
@@ -284,7 +290,6 @@ border-width:1px;
 
 #trailplayer .trail_minimap .trailview_toggle .btn {
   padding: 6px 40px;
-  font-size: 22px;  
 }
 
 /* TRAIL MINI SLIDE */
@@ -296,12 +301,11 @@ border-width:1px;
 }
 
 #trailplayer .trail_minislide #minislide {
-  margin-top: 10px;
   margin-left: auto;
   margin-right: auto;
   text-align: center;
-  width: 318px;
-  height: 155px;
+  width: 258px;
+  height: 206px;
 }
 
 #trailplayer .trail_minislide .trailview_toggle {
@@ -312,28 +316,33 @@ border-width:1px;
 
 #trailplayer .trail_minislide .trailview_toggle .btn {
   padding: 6px 40px;
-  font-size: 22px;  
 }
 
 #trailplayer .right {
   position: absolute;
   top: 0px;
-  left: 328px;
+  left: 258px;
 }
 
 #trailplayer #trail_views {
   position: relative;
   width: 100%;
-  height: 538px;  
+  height: 486px;  
 }
 
 /* TRAIL SLIDE VIEW */
 /******************************************/
 #trail_slide_view {
+  position: absolute;
+  top: 0px;
+  left: 0px;
 }
 
 #trail_slide_view .photos_container {  
-  position: relative;
+  position: relative;  
+  width: 200px;
+  height: 486px;
+  overflow: hidden;
 }
 
 #trail_slide_view .image_container {
@@ -341,7 +350,7 @@ border-width:1px;
   top: 0px;
   left: 0px;  
   width: 100%;
-  height: 538px;  
+  height: 486px;  
   overflow: hidden;  
   opacity: 0;
   transition: opacity 2s ease-in-out;
@@ -352,12 +361,15 @@ border-width:1px;
 /* TRAIL MAP VIEW */
 /******************************************/
 #trail_map_view {
+  position: absolute;
+  top: 0px;
+  left: 0px;
 }
 
 #trail_map_view .map_container {
   position: relative;
   width: 100%;
-  height: 538px;
+  height: 486px;
   overflow: hidden;
 }
 
@@ -384,29 +396,19 @@ border-width:1px;
 /******************************************/
 #trailplayer .right .trail_title {
   position: absolute;
-  top: 20px;
-  left: 38px;
+  top: 13px;
+  left: 20px;
   width: 600px;
   color: #44b6f7;
 }
 
 #trailplayer .right .trail_title h1 {
   display: inline-block;
-  margin: 0px;
+  margin: 13px 0px 0px 0px;
   padding: 5px 10px 5px 10px;
   font-weight: normal;
-  font-size: 56px;
+  font-size: 50px;
   line-height: 1em;  
-  background-color: #FFF;
-}
-
-#trailplayer .right .trail_title h2 {
-  display: inline-block;
-  margin: 13px 0px 0px 0px;
-  padding: 5px 10px 5px 10px;  
-  font-weight: normal;
-  font-size: 56px;
-  line-height: 1em;
   background-color: #FFF;
 }
 
@@ -420,10 +422,9 @@ border-width:1px;
 
 #bigbar .crumb_lead {
   float: left;
-  margin: 16px 0px 0px 58px;
+  margin: 16px 0px 0px 40px;
   width: 20px;
   height: 25px;
-  background: url("../img/crumb_lead.gif") no-repeat top left;    
 }
 
 #bigbar .crumbs {
@@ -447,8 +448,19 @@ border-width:1px;
   text-decoration: none;    
 }
 
+#bigbar .logos {
+  float: right;
+  margin-top: 7px;  
+}
+
+#bigbar .logos a {
+  margin-left: 20px;
+  margin-right: 20px;  
+}
+
 #bigbar .share {
   float: right;
+  margin-left: 25px;
   margin-right: 25px;
   line-height: 58px;
 }
@@ -462,16 +474,17 @@ border-width:1px;
 }
 
 .panels {
-  padding-top: 46px;
+  padding-top: 36px;
   margin: 0px auto 0px auto;
-  width: 1294px;
+  width: 1160px;
 }
 
 /* TRAIL ALTITUDE PANEL */
 /******************************************/
 .trailaltitude_panel {
-  width: 960px;
-  height: 380px;
+  margin-left: 24px;
+  width: 828px;
+  height: 336px;
 }
 
 .trailaltitude_panel .profile {
@@ -488,16 +501,20 @@ border-width:1px;
   background: url(https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/icons/marker_inactive.png) no-repeat top left;
 }
 
+.trailaltitude_panel .profile .marker_active {
+  background: url(https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/icons/marker_active.png) no-repeat top left;
+}
+
 /* TRAIL STATS PANEL */
 /******************************************/
 .trailstats_panel {
-  margin-left: 32px;
-  width: 300px;
-  height: 380px;
+  margin-left: 24px;
+  width: 260px;
+  height: 336px;
 }
 
-.trailstats_panel .content {  
-  margin: 50px 36px 0px 36px;
+.trailstats_panel .content {
+  margin: 42px 28px 0px 28px;
   line-height: 1em;
   color: #44B6F7;
 }
@@ -505,7 +522,7 @@ border-width:1px;
 .trailstats_panel .content h1 {
   margin: 0px;
   padding: 0px;
-  font-size: 56px;
+  font-size: 50px;
   line-height: 1em;
   font-weight: 400;
 }
@@ -513,7 +530,7 @@ border-width:1px;
 .trailstats_panel .content h2 {
   margin: 0px;
   padding: 0px 0px 0px 2px;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 1.8em;
   font-weight: 300;
 }
@@ -539,35 +556,35 @@ border-width:1px;
 /* OTHER TRAILS PANEL */
 /******************************************/
 .othertrails_panel {
-  margin: 32px 0px 0px 0px;
-  width: 630px;
-  height: 380px;
+  margin: 24px 0px 0px 24px;
+  width: 544px;
+  height: 336px;
 }
 
 .othertrails_panel .content .title {
   margin-left: 22px;
-  height: 88px;
-  font-size: 48px;
+  height: 78px;
+  font-size: 42px;
   font-weight: 400;
-  line-height: 88px;
+  line-height: 78px;
   color: #44B6F7;
 }
 
 .othertrails_panel .content .trails {
   position: relative;
-  height: 250px;
+  height: 220px;
 }
 
 .othertrails_panel .content .trails .image_container {
   width: 100%;
-  height: 250px;
+  height: 220px;
   overflow: hidden;
 }
 
 .othertrails_panel .content .trail_title {
   position: absolute;
-  top: 30px;
-  left: 26px;
+  top: 26px;
+  left: 22px;
   color: #FFFFFF;
 }
 
@@ -575,7 +592,7 @@ border-width:1px;
   display: block;
   margin: 0px;
   padding: 5px 10px 5px 10px;
-  font-size: 30px;
+  font-size: 26px;
   line-height: 1em;
   font-weight: 400;
   border: none;
@@ -587,7 +604,7 @@ border-width:1px;
   display: inline-block;
   margin: 4px 0px 0px 0px;
   padding: 5px 10px 5px 10px;
-  font-size: 30px;
+  font-size: 26px;
   line-height: 1em;
   font-weight: 400;
   background-color: #000;  
@@ -601,38 +618,38 @@ border-width:1px;
 /* TRAIL GEAR PANEL */
 /******************************************/
 .trailgear_panel {
-  margin: 32px 0px 0px 32px;
-  width: 630px;
-  height: 380px;
+  margin: 24px 0px 0px 24px;
+  width: 544px;
+  height: 336px;
 }
 
 .trailgear_panel .content .title {
   margin-left: 22px;
-  height: 88px;
-  font-size: 48px;
+  height: 78px;
+  font-size: 42px;
   font-weight: 400;
-  line-height: 88px;
+  line-height: 78px;
   color: #44B6F7;
 }
 
 .trailgear_panel .content .gear_list {
   width: 100%;
-  height: 292px;
+  height: 258px;
   overflow: hidden;
 }
 
 .trailgear_panel .content .gear_list .gear {
   float: left;
-  margin: 0px 5px 0px 5px;
-  width: 200px;
+  margin: 0px 4px 0px 4px;
+  width: 172px;
   color: #44B6F7;
   text-align: center;
 }
 
 .trailgear_panel .content .gear_list .gear h1 {
-  margin: 0px;
+  margin: 4px 0px 0px 0px;
   padding: 0px;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 1.3em;
   font-weight: 300;
 }
@@ -640,7 +657,7 @@ border-width:1px;
 .trailgear_panel .content .gear_list .gear h2 {
   margin: 0px;
   padding: 0px;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 1.3em;
   font-weight: 700;
 }
@@ -648,17 +665,17 @@ border-width:1px;
 /* PROMOTE PANEL */
 /******************************************/
 .promote_panel {
-  margin: 32px 0px 0px 32px;
-  width: 299px;
-  height: 380px;
+  margin: 24px 0px 0px 24px;
+  width: 260px;
+  height: 336px;
 }
 
 .promote_panel .content .title {
   margin-left: 22px;
-  height: 88px;
-  font-size: 48px;
+  height: 78px;
+  font-size: 42px;
   font-weight: 400;
-  line-height: 88px;
+  line-height: 78px;
   color: #44B6F7;
 }
 
@@ -667,36 +684,25 @@ border-width:1px;
 }
 
 .promote_panel .content .photo .image_container {
-  width: 380px;
-  height: 250px;
+  width: 260px;
+  height: 218px;
   overflow: hidden;
 }
 
 .promote_panel .content .photo .promote_title {
   position: absolute;
-  bottom: 18px;
-  left: 12px;
+  bottom: 14px;
+  left: 16px;
   color: #FFFFFF;
 }
 
 .promote_panel .content .photo .promote_title h1 {
-  display: block;
-  margin: 0px;
-  padding: 5px 10px 5px 10px;
-  font-weight: 400;
-  font-size: 30px;
-  line-height: 1em;  
-  background-color: #000;  
-  background: rgba(0, 0, 0, 0.6);  
-}
-
-.promote_panel .content .photo .promote_title h2 {
   display: inline-block;
   margin: 8px 0px 0px 0px;
-  padding: 5px 10px 5px 10px;  
+  padding: 5px 10px 5px 10px;
   font-weight: 400;
-  font-size: 30px;
-  line-height: 1em;
+  font-size: 26px;
+  line-height: 1em;  
   background-color: #000;  
   background: rgba(0, 0, 0, 0.6);  
 }
@@ -747,4 +753,3 @@ border-width:1px;
 img {
   max-width: none;
 }
-

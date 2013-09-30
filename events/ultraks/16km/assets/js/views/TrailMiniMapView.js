@@ -10,8 +10,9 @@ define([
       this.bRendered = false;
       this.polyline = null;
       this.arrLineCordinates = [];
-//      this.arrMarkers = [];
       this.arrMediaPoints = [];
+      this.arrMarkers = [];
+      this.currMarker = null;
       
       var self = this;
       
@@ -44,11 +45,19 @@ define([
     hide: function(){
       $(this.el).hide();
     },
-    setActiveMarker: function(nMarker){
-//      var marker = this.arrMarkers[nMarker];
-//      marker.setIcon(this.mediaActiveIcon);
-//      marker.setZIndexOffset(100);
-    },    
+    gotoMedia: function(nMedia){
+      var marker;
+      // retore previous
+      if (this.currMarker) {
+        this.currMarker.setIcon(this.mediaInactiveIcon);
+        this.currMarker.setZIndexOffset(100);
+      }
+      marker = this.arrMarkers[nMedia];
+      marker.setIcon(this.mediaActiveIcon);
+      marker.setZIndexOffset(200);
+      
+      this.currMarker = marker;
+    },
     addMedia: function(mediaModel){
       this.arrMediaPoints.push(mediaModel);
     },
@@ -64,12 +73,12 @@ define([
       for (var nMedia=0; nMedia < this.arrMediaPoints.length; nMedia++) {
         mediaPoint = this.arrMediaPoints[nMedia];
         marker = L.marker([mediaPoint.get('coords').lat, mediaPoint.get('coords').long], {icon: self.mediaInactiveIcon}).on('click', onClick).addTo(self.map);;
+        this.arrMarkers.push(marker);
         function onClick(e) {
           // fire event
           app.dispatcher.trigger("TrailMiniMapView:mediaclick", self);                        
         }         
       }
-      
       L.marker(this.arrLineCordinates[0], {icon: this.locationIcon}).addTo(this.map);            
     },        
     render: function(){
@@ -96,7 +105,6 @@ define([
       $(this.el).html(this.template(attribs));
       
       $('.btn', $(this.el)).click(function(evt){
-//        self.setActiveMarker(0);
         // fire event
         app.dispatcher.trigger("TrailMiniMapView:viewbtnclick", self);                
       });

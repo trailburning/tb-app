@@ -81,28 +81,12 @@
 /******************************************/
 h1.tb {
   display: inline-block;
-  margin: 0px;
+  margin: 16px 0px 0px 0px;
   padding: 5px 10px 5px 10px;
   font-weight: normal;
   font-size: 70px;
   line-height: 1em;
   color: #44B6F7;  
-  background-color: #FFF;
-  border: none;
-  *zoom: 1;
-  -webkit-box-shadow: 2px 4px 5px 0px rgba(0, 0, 0, 0.1);
-     -moz-box-shadow: 2px 4px 5px 0px rgba(0, 0, 0, 0.1);
-          box-shadow: 2px 2px 1px 0px rgba(0, 0, 0, 0.1);    
-}
-
-h2.tb {
-  display: inline-block;
-  margin: 16px 0px 0px 0px;
-  padding: 5px 10px 5px 10px;  
-  font-weight: normal;
-  font-size: 70px;
-  line-height: 1em;
-  color: #44B6F7;
   background-color: #FFF;
   border: none;
   *zoom: 1;
@@ -144,9 +128,9 @@ h4.tb {
 
 .blank_2col_panel {
   float: left;  
-  margin: 32px 0px 0px 0px;
-  width: 630px;
-  height: 380px;
+  margin: 24px 0px 0px 0px;
+  width: 568px;
+  height: 336px;
 }
 
 /* TB CANDY */

@@ -10,12 +10,12 @@ define([
       this.bRendered = false;
     },            
     show: function(){
-      console.log('SHOW:'+this.model.cid);
+      console.log('TrailSlidePhotoView:show:'+this.model.cid);
       $(this.el).show();
       $('.image_container', $(this.el)).css({ opacity: 1 });
     },
     hide: function(){
-      console.log('HIDE:'+this.model.cid);
+      console.log('TrailSlidePhotoView:hide:'+this.model.cid);
       $('.image_container', $(this.el)).css({ opacity: 0 });
     },
     render: function(nPanelWidth){

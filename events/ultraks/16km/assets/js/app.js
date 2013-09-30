@@ -18,8 +18,17 @@ define([
 ], function(_, Backbone, TrailModel, TrailMediaModel, TrailMiniMapView, TrailMiniSlideView, TrailSlideView, TrailMapView, TrailAltitudeView){
   app.dispatcher = _.clone(Backbone.Events);
   
+  var MIN_WIDTH = 1160;
+  
   var SLIDE_VIEW = 0;
   var MAP_VIEW = 1;
+
+//  var HOLD_SLIDE = 8000;
+  var HOLD_SLIDE = 8000;
+
+  var SLIDESHOW_INIT = 0;
+  var SLIDESHOW_PLAYING = 1;
+  var SLIDESHOW_STOPPED = 0;
   
   var initialize = function() {
     var self = this;
@@ -27,8 +36,13 @@ define([
     app.dispatcher.on("TrailMiniMapView:viewbtnclick", onTrailMiniMapViewBtnClick, this);
     app.dispatcher.on("TrailMiniMapView:mediaclick", onTrailMiniMapMediaClick, this);
     app.dispatcher.on("TrailMiniSlideView:viewbtnclick", onTrailMiniSlideViewBtnClick, this);
+    app.dispatcher.on("TrailSlideView:slideview", onTrailSlideViewSlideView, this);
     
     this.nTrailView = SLIDE_VIEW;
+    this.nSlideShowState = SLIDESHOW_INIT;
+    this.slideTimer = null;
+    this.nCurrSlide = -1;
+    this.mediaCollection = new Backbone.Collection();
     
     this.trailModel = new TrailModel();
     this.mediaModel = new TrailMediaModel();
@@ -42,19 +56,49 @@ define([
     this.trailAltitudeView = new TrailAltitudeView({ el: '#trailaltitudeview', model: this.trailModel });
 
     this.userProfileMap = null;
-
-    // mla - move into view
-    this.polyline = null;
-    this.arrLineCordinates = [];
     
     $(window).resize(function() {
       handleResize(); 
     });    
 
+    function startSlideShow() {    
+      self.nSlideShowState = SLIDESHOW_PLAYING;
+          
+      nextSlide();
+    }
+    
+    function stopSlideShow() {    
+      self.nSlideShowState = SLIDESHOW_STOPPED;
+      
+      if (self.slideTimer) {
+        clearTimeout(self.slideTimer);
+      }
+    }    
+
+    function nextSlide(){    
+      var nSlide = self.nCurrSlide; 
+      if (nSlide < self.mediaCollection.length-1) {
+        nSlide++;                               
+      }
+      else {
+        nSlide = 0;
+      }
+      gotoMedia(nSlide);
+    }    
+
+    function gotoMedia(nSlide){    
+      self.trailSlideView.gotoSlide(nSlide);
+      self.trailMiniMapView.gotoMedia(nSlide);
+      self.trailMapView.gotoMedia(nSlide);
+      self.trailAltitudeView.gotoMedia(nSlide);
+      
+      self.nCurrSlide = nSlide;      
+    }
+
     function onTrailMiniMapMediaClick() {
-      self.trailSlideView.stopSlideShow();
+      stopSlideShow();
       // mla - test
-      self.trailSlideView.gotoSlide(0);
+      gotoMedia(0);
     }
 
     function onTrailMiniMapViewBtnClick() {
@@ -82,12 +126,31 @@ define([
       self.trailSlideView.render();
       handleResize();      
     }
+    
+    function onTrailSlideViewSlideView() {
+      // start timer
+      if (self.slideTimer) {
+        clearTimeout(self.slideTimer);
+      }
+      
+      if (self.nSlideShowState == SLIDESHOW_PLAYING) {
+        self.slideTimer = setTimeout(function() {
+          onShowNextSlide();
+        }, HOLD_SLIDE);
+      }
+    }    
 
+    function onShowNextSlide() {
+      console.log('onShowNextSlide');
+      
+      nextSlide();          
+    }
+    
     function handleResize() {
       var nTrailPlayerLeftWidth = $('#trailplayer .left').width();
       var nPlayerPanelWidth = $(window).width() - nTrailPlayerLeftWidth;
-      if (nPlayerPanelWidth < (1292 - nTrailPlayerLeftWidth)) {
-        nPlayerPanelWidth = (1292 - nTrailPlayerLeftWidth);
+      if (nPlayerPanelWidth < (MIN_WIDTH - nTrailPlayerLeftWidth)) {
+        nPlayerPanelWidth = (MIN_WIDTH - nTrailPlayerLeftWidth);
       } 
 
       $('#trailplayer').width(nPlayerPanelWidth);
@@ -106,36 +169,27 @@ define([
         
     function handleMedia() {
       var jsonMedia = self.mediaModel.get('value');
-  
-      console.log(jsonMedia);    
       $.each(jsonMedia, function(key, media) {
-        var mediaModel = new Backbone.Model(media);
+        var mediaModel = new Backbone.Model(media);        
+        self.mediaCollection.add(mediaModel);      
+                
         self.trailMiniMapView.addMedia(mediaModel);
+        self.trailMapView.addMedia(mediaModel);
         self.trailSlideView.addMedia(mediaModel);
         
         self.trailAltitudeView.addMediaMarker(media.coords.lat, media.coords.long);        
       });
       self.trailAltitudeView.renderMarkers();
-      
-//      self.trailMiniMapView.addMarkers(jsonMedia);
-      self.trailMapView.addMarkers(jsonMedia);
-      
-      switch (self.nTrailView) {
-        case SLIDE_VIEW:
-          self.trailMiniMapView.renderMarkers();
-          break;
-           
-        case MAP_VIEW:
-          self.trailMapView.renderMarkers();
-          break;
-      }      
+      self.trailMiniMapView.renderMarkers();          
+      self.trailMapView.renderMarkers();
+          
       handleResize();      
-      
-      self.trailSlideView.startSlideShow();
+      startSlideShow();
     }
     
     // get trail    
-    this.trailModel.set('id', 17);    
+    this.trailModel.set('id', 17);
+//    this.trailModel.set('id', 30);            
 //    this.trailModel.set('id', 14);    
     console.log('Fetch ID:'+this.trailModel.get('id'));            
     this.trailModel.fetch({
@@ -143,6 +197,7 @@ define([
         console.log('Fetched');
                                
         self.trailMiniMapView.render();
+        self.trailMapView.render();
         self.trailAltitudeView.render();
 
         self.mediaModel.url = RESTAPI_BASEURL + 'v1/route/'+self.trailModel.get('id')+'/medias';

@@ -22,7 +22,7 @@ form {
 border-style:solid;
 border-width:1px;
 */  
-  min-width: 1292px;
+  min-width: 1160px;
 }
 
 /* HEADER */
@@ -35,23 +35,23 @@ border-width:1px;
   z-index: 200;
   position: relative;
   width: 100%;
-  height: 88px;  
+  height: 63px;  
   background: #FFF;
 }
 
 #headerview .left {
   float: left;
-  margin: 10px 0px 0px 72px;
+  margin: 8px 0px 0px 40px;
 }
 
 #headerview .right {
   float: right;
-  margin: 25px 48px 0px 0px;
+  margin: 12px 22px 0px 0px;
 }
 
 #headerview .right .discover {
-  float: left;
-  margin: 10px 10px 0px 0px;
+  float: right;
+  margin: 5px 0px 0px 0px;
 }
 
 #headerview .right .discover .search-btn {
@@ -70,9 +70,9 @@ border-width:1px;
 }
 
 #headerview .right .links {
-  float: left;
-  margin-top: 8px;
-  line-height: 36px;
+  float: right;
+  margin-top: 14px;
+  line-height: 1em;
 }
 
 #headerview .right .link {
@@ -98,12 +98,11 @@ border-width:1px;
 }
 
 #headerview .right .signin {  
-  float: left;
+  float: right;
   margin-left: 19px;
 }
 
 #headerview .right .signin .btn {  
-  font-size: 24px;
 }
 
 /* FOOTER */
@@ -122,7 +121,7 @@ border-width:1px;
 
 #footerview .left {
   float: left;
-  margin: 30px 0px 0px 56px;
+  margin: 30px 0px 0px 40px;
 }
 
 #footerview .left .copyright {
@@ -207,20 +206,20 @@ border-width:1px;
   z-index: 100;
   position: relative;
   width: 100%;
-  height: 538px;
+  height: 486px;
   overflow: overflow;
 }
 
 #profile_header #profile_map {
   position: relative;
   width: 100%; 
-  height: 538px;
+  height: 486px;
 }
 
 #profile_map {
   position: relative;
   width:100%; 
-  height:538px;
+  height: 486px;
 }
 
 #profile_map .leaflet-control-container {
@@ -238,7 +237,7 @@ border-width:1px;
   z-index: 5;
   margin: 0px;
   width: 880px;
-  height: 538px;  
+  height: 486px;
   background: url(../img/above_map.png) no-repeat top left;
   background-size: 880px 538px;
 }
@@ -246,33 +245,13 @@ border-width:1px;
 #profile_header .profile_title {
   z-index: 1000;
   position: absolute;
-  top: 62px;
-  left: 58px;
+  top: 25px;
+  left: 32px;
   color: #44b6f7;
 }
 
-#profile_header .profile_title h1 {
-  display: inline-block;
-  margin: 0px;
-  padding: 5px 10px 5px 10px;
-  font-weight: normal;
-  font-size: 56px;
-  line-height: 1em;  
-  background-color: #FFF;
-}
-
-#profile_header .profile_title h2 {
-  display: inline-block;
-  margin: 13px 0px 0px 0px;
-  padding: 5px 10px 5px 10px;  
-  font-weight: normal;
-  font-size: 56px;
-  line-height: 1em;
-  background-color: #FFF;
-}
-
 #profile_header .profile_title .avatar {
-  margin: 54px 0px 0px 4px;  
+  margin: 38px 0px 0px 4px;  
 }
 
 /* BIG BAR */
@@ -285,10 +264,9 @@ border-width:1px;
 
 #bigbar .crumb_lead {
   float: left;
-  margin: 16px 0px 0px 58px;
+  margin: 16px 0px 0px 40px;
   width: 20px;
   height: 25px;
-  background: url("../img/crumb_lead.gif") no-repeat top left;    
 }
 
 #bigbar .crumbs {
@@ -312,20 +290,10 @@ border-width:1px;
   text-decoration: none;    
 }
 
-#bigbar .logos {
-  float: right;
-  margin-top: 7px;  
-}
-
-#bigbar .logos a {
-  margin-left: 20px;
-  margin-right: 20px;  
-}
-
 #bigbar .share {
   float: right;
   margin-left: 25px;
-  margin-right: 25px;
+  margin-right: 22px;
   line-height: 58px;
 }
 
@@ -340,27 +308,27 @@ border-width:1px;
 .panels {
   padding-top: 46px;
   margin: 0px auto 0px auto;
-  width: 1294px;
+  width: 1112px;
 }
 
 .panels .left {
   float: left;
-  width: 630px;
+  width: 544px;
 }
 
 .panels .right {
   float: left;
-  width: 662px;
+  width: 568px;
 }
 
 /* PROFILE DETAIL PANEL */
 /******************************************/
 .profile_detail_panel {
-  width: 630px;
+  width: 544px;
 }
 
-.profile_detail_panel .content {  
-  margin: 34px 78px 34px 32px;
+.profile_detail_panel .content {
+  margin: 34px 72px 28px 24px;
   font-size: 14px;
   font-weight: 300;
   line-height: 1.3em;  
@@ -368,7 +336,7 @@ border-width:1px;
 }
 
 .profile_detail_panel .content .title {
-  font-size: 48px;
+  font-size: 42px;
   font-weight: 400;
   line-height: 1em;
   color: #44B6F7;
@@ -387,45 +355,41 @@ border-width:1px;
   margin-top: 24px;
 }
 
-.profile_detail_panel .content .join .btn {  
-  font-size: 24px;
-}
-
 /* TRAIL GEAR PANEL */
 /******************************************/
 .trailgear_panel {
-  margin-top: 32px;
-  width: 630px;
-  height: 380px;
+  margin-top: 24px;
+  width: 544px;
+  height: 336px;
 }
 
 .trailgear_panel .content .title {
   margin-left: 22px;
-  height: 88px;
-  font-size: 48px;
+  height: 78px;
+  font-size: 42px;
   font-weight: 400;
-  line-height: 88px;
+  line-height: 78px;
   color: #44B6F7;
 }
 
 .trailgear_panel .content .gear_list {
   width: 100%;
-  height: 292px;
+  height: 258px;
   overflow: hidden;
 }
 
 .trailgear_panel .content .gear_list .gear {
   float: left;
-  margin: 0px 5px 0px 5px;
-  width: 200px;
+  margin: 0px 4px 0px 4px;
+  width: 172px;
   color: #44B6F7;
   text-align: center;
 }
 
 .trailgear_panel .content .gear_list .gear h1 {
-  margin: 0px;
+  margin: 4px 0px 0px 0px;
   padding: 0px;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 1.3em;
   font-weight: 300;
 }
@@ -433,7 +397,7 @@ border-width:1px;
 .trailgear_panel .content .gear_list .gear h2 {
   margin: 0px;
   padding: 0px;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 1.3em;
   font-weight: 700;
 }
@@ -441,58 +405,47 @@ border-width:1px;
 /* TOP TRAILS PANEL */
 /******************************************/
 .tops_trails_panel {
-  margin-left: 32px;
-  width: 630px;
+  margin-left: 24px;
+  width: 544px;
 }
 
 .tops_trails_panel .title {
   margin-left: 22px;
-  height: 88px;
-  font-size: 48px;
+  height: 78px;
+  font-size: 42px;
   font-weight: 400;
-  line-height: 88px;
+  line-height: 78px;
   color: #44B6F7;
 }
 
 .tops_trails_panel .top_trail {
   position: relative;
-  height: 280px;
+  height: 246px;
 }
 
 .tops_trails_panel .top_trail .image_container {
   width: 100%;
-  height: 250px;
+  height: 220px;
   overflow: hidden;
 }
 
 .tops_trails_panel .trail_title {
   position: absolute;
-  top: 30px;
-  left: 26px;
+  top: 22px;
+  left: 24px;
   color: #FFFFFF;
 }
 
 .tops_trails_panel .trail_title h1 {
-  display: block;
-  margin: 0px;
+  display: inline-block;
+  margin: 4px 0px 0px 0px;
   padding: 5px 10px 5px 10px;
-  font-size: 30px;
+  font-size: 26px;
   line-height: 1em;
   font-weight: 400;
   border: none;
   background-color: #000;  
   background: rgba(0, 0, 0, 0.6);  
-}
-
-.tops_trails_panel .trail_title h2 {
-  display: inline-block;
-  margin: 4px 0px 0px 0px;
-  padding: 5px 10px 5px 10px;
-  font-size: 30px;
-  line-height: 1em;
-  font-weight: 400;
-  background-color: #000;  
-  background: rgba(0, 0, 0, 0.6);
 }
 
 /* RESPONSIVE */

@@ -16,7 +16,6 @@ define([
     
     // register for image ready      
     $('.tb-fade img', this.el).load(function() {
-      console.log('L:'+$(this).attr('class'));
       $(this).parent().css({ opacity: 1 });
     });
     // force ie to run the load function if the image is cached
