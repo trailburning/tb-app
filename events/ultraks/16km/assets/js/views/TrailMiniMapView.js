@@ -74,12 +74,13 @@ define([
         mediaPoint = this.arrMediaPoints[nMedia];
         marker = L.marker([mediaPoint.get('coords').lat, mediaPoint.get('coords').long], {icon: self.mediaInactiveIcon}).on('click', onClick).addTo(self.map);;
         this.arrMarkers.push(marker);
-        function onClick(e) {
-          // fire event
-          app.dispatcher.trigger("TrailMiniMapView:mediaclick", self);                        
-        }         
       }
       L.marker(this.arrLineCordinates[0], {icon: this.locationIcon}).addTo(this.map);            
+      
+      function onClick(e) {
+        // fire event
+        app.dispatcher.trigger("TrailMiniMapView:mediaclick", self);                        
+      }         
     },        
     render: function(){
       console.log('TrailMiniMapView:render');

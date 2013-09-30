@@ -181,8 +181,8 @@
 </script>
 
 <script type="text/template" id="trailMiniSlideViewTemplate">
-  <div id='minislide'><img src="assets/img/trailplayer/minislide.gif">
-    
+  <div id='minislide'>
+    <div class="photos_container"></div>
   </div>
   <div class="trailview_toggle">
     <button class="btn btn-tb">View pictures</button>
@@ -194,7 +194,7 @@
 </script>
 
 <script type="text/template" id="trailSlidePhotoViewTemplate">
-  <div class="image_container"><img src="http://d2ams8x29ebomh.cloudfront.net/convert?resize=1024x768&shape=preserve&source=https://s3-eu-west-1.amazonaws.com/<%= versionLargePath%>" class="image" /></div>
+  <div class="image_container"><img src="https://s3-eu-west-1.amazonaws.com/<%= versionLargePath%>" class="image" /></div>
 </script>
 
 <script type="text/template" id="trailMapViewTemplate">

@@ -301,11 +301,41 @@ border-width:1px;
 }
 
 #trailplayer .trail_minislide #minislide {
+  margin-top: 10px;
   margin-left: auto;
   margin-right: auto;
   text-align: center;
   width: 258px;
-  height: 206px;
+  height: 196px;
+}
+
+#trailplayer .trail_minislide #minislide .photos_container {  
+  position: relative;  
+  width: 245px;
+  height: 163px;  
+  border-left-style: solid;
+  border-left-width: 7px;
+  border-left-color: #FFF;
+  border-top-style: solid;
+  border-top-width: 7px;
+  border-top-color: #FFF;
+  border-bottom-style: solid;
+  border-bottom-width: 7px;
+  border-bottom-color: #FFF;  
+  overflow: hidden;
+}
+
+#trailplayer .trail_minislide #minislide .image_container {
+  position: absolute;
+  top: 0px;
+  left: 0px;  
+  width: 245px;
+  height: 163px;  
+  overflow: hidden;  
+  opacity: 0;
+  transition: opacity 2s ease-in-out;
+  -moz-transition: opacity 2s ease-in-out;
+  -webkit-transition: opacity 2s ease-in-out;
 }
 
 #trailplayer .trail_minislide .trailview_toggle {

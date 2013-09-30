@@ -23,7 +23,6 @@ define([
   var SLIDE_VIEW = 0;
   var MAP_VIEW = 1;
 
-//  var HOLD_SLIDE = 8000;
   var HOLD_SLIDE = 8000;
 
   var SLIDESHOW_INIT = 0;
@@ -86,10 +85,13 @@ define([
       gotoMedia(nSlide);
     }    
 
-    function gotoMedia(nSlide){    
+    function gotoMedia(nSlide){
+      self.trailMiniSlideView.gotoSlide(nSlide);    
       self.trailSlideView.gotoSlide(nSlide);
+      
       self.trailMiniMapView.gotoMedia(nSlide);
       self.trailMapView.gotoMedia(nSlide);
+      
       self.trailAltitudeView.gotoMedia(nSlide);
       
       self.nCurrSlide = nSlide;      
@@ -111,6 +113,7 @@ define([
       self.trailSlideView.hide();
       self.trailMapView.show();
       self.trailMapView.render();
+      
       handleResize();      
     }
 
@@ -124,6 +127,7 @@ define([
       self.trailMapView.hide();
       self.trailSlideView.show();
       self.trailSlideView.render();
+      
       handleResize();      
     }
     
@@ -161,6 +165,7 @@ define([
            
         case MAP_VIEW:
           $('#trailplayer .map_container').width(nPlayerPanelWidth);
+          self.trailMiniSlideView.render();
           self.trailMapView.render();
           break;
       }      
@@ -175,6 +180,8 @@ define([
                 
         self.trailMiniMapView.addMedia(mediaModel);
         self.trailMapView.addMedia(mediaModel);
+        
+        self.trailMiniSlideView.addMedia(mediaModel);
         self.trailSlideView.addMedia(mediaModel);
         
         self.trailAltitudeView.addMediaMarker(media.coords.lat, media.coords.long);        
