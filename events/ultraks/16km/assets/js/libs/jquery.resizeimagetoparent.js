@@ -18,40 +18,47 @@ jQuery.fn.resizeToParent = function(options) {
     var obj = jQuery(this);
 
     obj.hide();
+
     // bind to load of image
     obj.load(function() {
       // dimensions of the parent
       var parentWidth = obj.parents(o.parent).width();
       var parentHeight = obj.parents(o.parent).height();
-
-      // dimensions of the image
-      var imageWidth = obj.width();
-      var imageHeight = obj.height();
-
-      // step 1 - calculate the percentage difference between image width and container width
-      var diff = imageWidth / parentWidth;
-
-      // step 2 - if height divided by difference is smaller than container height, resize by height. otherwise resize by width
-      if ((imageHeight / diff) < parentHeight) {
-       obj.css({'width': 'auto', 'height': parentHeight});
-
-       // set image variables to new dimensions
-       imageWidth = imageWidth / (imageHeight / parentHeight);
-       imageHeight = parentHeight;
+  
+      // has our container changed size?
+      if (obj.attr('data-parent-width') != parentWidth ||
+          obj.attr('data-parent-height') != parentHeight) {
+        // dimensions of the image
+        var imageWidth = obj.width();
+        var imageHeight = obj.height();
+  
+        // step 1 - calculate the percentage difference between image width and container width
+        var diff = imageWidth / parentWidth;
+        // step 2 - if height divided by difference is smaller than container height, resize by height. otherwise resize by width
+        if ((imageHeight / diff) < parentHeight) {
+         obj.css({'width': 'auto', 'height': parentHeight});
+  
+         // set image variables to new dimensions
+         imageWidth = imageWidth / (imageHeight / parentHeight);
+         imageHeight = parentHeight;
+        }
+        else {
+         obj.css({'height': 'auto', 'width': parentWidth});
+  
+         // set image variables to new dimensions
+         imageWidth = parentWidth;
+         imageHeight = imageHeight / diff;
+        }
+  
+        // step 3 - center image in container
+        var leftOffset = (imageWidth - parentWidth) / -2;
+        var topOffset = (imageHeight - parentHeight) / -2;
+  
+        obj.css({'margin-left': leftOffset, 'margin-top': topOffset});
       }
-      else {
-       obj.css({'height': 'auto', 'width': parentWidth});
-
-       // set image variables to new dimensions
-       imageWidth = parentWidth;
-       imageHeight = imageHeight / diff;
-      }
-
-      // step 3 - center image in container
-      var leftOffset = (imageWidth - parentWidth) / -2;
-      var topOffset = (imageHeight - parentHeight) / -2;
-
-      obj.css({'margin-left': leftOffset, 'margin-top': topOffset});
+      // store parent dimension
+      obj.attr('data-parent-width', parentWidth);
+      obj.attr('data-parent-height', parentHeight);
       
       obj.show();
     });
