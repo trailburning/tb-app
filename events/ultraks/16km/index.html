@@ -194,7 +194,11 @@
 </script>
 
 <script type="text/template" id="trailSlidePhotoViewTemplate">
-  <div class="image_container"><img src="https://s3-eu-west-1.amazonaws.com/<%= versionLargePath%>" class="image" /></div>
+  <div class="slide_container">
+    <div class="image_container">
+      <img src="https://s3-eu-west-1.amazonaws.com/<%= versionLargePath%>" class="image" />
+    </div>
+  </div>
 </script>
 
 <script type="text/template" id="trailMapViewTemplate">
@@ -209,7 +213,10 @@
 </script>
 
 <script type="text/template" id="traiAltitudeViewTemplate">
-  <div class="profile"><canvas id="graph"></canvas></div>
+  <div class="profile">
+    <canvas id="graph"></canvas>    
+    <div class="photos_container"></div>
+  </div>
 </script>
 
 <script src="assets/js/libs/jquery-1.8.3.min.js"></script>

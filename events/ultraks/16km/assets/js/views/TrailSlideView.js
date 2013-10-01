@@ -24,8 +24,6 @@ define([
       $(this.el).hide();
     },
     gotoSlide: function(nSlide){
-      console.log('TrailSlideView:gotoSlide:'+nSlide+' : '+this.nCurrSlide);
-      
       this.bSlideReady = false;     
       this.bWaitingForSlide = true;
        
@@ -48,8 +46,6 @@ define([
       this.arrSlidePhotos.push(photoView);
     },
     render: function(nPanelWidth){
-      console.log('TrailSlideView:render');
-        
       this.nPanelWidth = nPanelWidth;
         
       if (!this.model) {
@@ -85,8 +81,6 @@ define([
       return this;
     },
     checkSlideState: function(){
-      console.log('TrailSlideView:checkSlideState:'+this.bSlideReady+' : '+this.bWaitingForSlide);
-      
       var self = this;
       
       if (this.bSlideReady && this.bWaitingForSlide) {
@@ -100,9 +94,13 @@ define([
       }
     },    
     onSlidePhotoReady: function(trailSlidePhotoView){
+      var nCurrCID = trailSlidePhotoView.model.cid;
+      
       var photoView = this.arrSlidePhotos[this.nCurrSlide];
-//      console.log('ready:'+photoView.model.cid+' : '+trailSlidePhotoView.model.cid);
-      if (photoView.model.cid == trailSlidePhotoView.model.cid) {
+      if (photoView) {
+        nCurrCID = photoView.model.cid;
+      }
+      if (nCurrCID == trailSlidePhotoView.model.cid) {
         this.bSlideReady = true;
         this.checkSlideState();
       }      

@@ -134,8 +134,6 @@ define([
       }         
     },        
     render: function(){
-      console.log('TrailMapView:render');
-        
       if (!this.model) {
         return;
       }

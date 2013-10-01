@@ -1,13 +1,20 @@
 define([
   'underscore', 
-  'backbone'
-], function(_, Backbone){
+  'backbone',
+  'views/TrailSlidePhotoView'
+], function(_, Backbone, TrailSlidePhotoView){
 
   var TrailAltitudeView = Backbone.View.extend({
     initialize: function(){
       this.template = _.template($('#traiAltitudeViewTemplate').text());        
             
+      app.dispatcher.on("TrailSlidePhotoView:imageready", this.onSlidePhotoReady, this);
+            
       this.bRendered = false;      
+      this.arrSlidePhotos = [];
+      this.nCurrSlide = -1;
+      this.bSlideReady = false;
+      this.bWaitingForSlide = false;
 
       this.HeightToWidthFactor = 4;      
       this.fXFactor = 0;
@@ -57,7 +64,50 @@ define([
       elMarker.addClass('marker_active');
       
       this.currElMarker = elMarker;
+      
+      this.bSlideReady = false;     
+      this.bWaitingForSlide = true;
+       
+      var photoView = null;      
+      // hide curr photo
+      if (this.nCurrSlide >= 0) {
+        photoView = this.arrSlidePhotos[this.nCurrSlide];      
+        photoView.hide();        
+      }
+      this.nCurrSlide = nMedia;
+      
+      photoView = this.arrSlidePhotos[this.nCurrSlide];
+      photoView.render($(this.el).width);    
+  
+      // position slide
+      var elSlideContainer = $('.slide_container', $(photoView.el));
+      
+      var nX = elMarker.position().left - ((elSlideContainer.width()+4) / 2) + (elMarker.width() / 2);
+      var nY = elMarker.position().top - (elSlideContainer.height()+4) - 20;
+      
+      elSlideContainer.css('left', nX);
+      elSlideContainer.css('top', nY);        
+                    
+      $('.image', photoView.el).resizeToParent();
+      
+      this.checkSlideState();            
     },    
+    addMedia: function(mediaModel){
+      var photoView = new TrailSlidePhotoView({ model: mediaModel });
+      this.arrSlidePhotos.push(photoView);
+      
+      var jsonPoints = this.model.get('value').route.route_points;
+      
+      var self = this;
+      $.each(jsonPoints, function(key, point) {
+        if (mediaModel.get('coords').lat == point.coords[1] && mediaModel.get('coords').long == point.coords[0]) {
+            var elMarker = $('<div class="marker"></div>');
+            elMarker.pos = key;
+            elMarker.alt = point.tags.altitude;
+            self.arrMediaPoints.push(elMarker);
+        }
+      });           
+    },        
     render: function(fScale){
       console.log('TrailAltitudeView:render');
         
@@ -77,7 +127,7 @@ define([
   
         this.elCanvas = $('canvas', this.el);
         this.canvas = this.elCanvas[0];
-        this.context = this.canvas.getContext('2d');      
+        this.context = this.canvas.getContext('2d');
       }
                 
       // has the view changed sized?
@@ -135,6 +185,12 @@ define([
       this.renderBackground(fTrailLengthMetres);                  
       this.renderTrail(jsonPoints, fTrailLengthMetres);
       this.renderMarkers();
+
+      // update container width
+      for (var nMedia=0; nMedia < this.arrSlidePhotos.length; nMedia++) {
+        var photoView = this.arrSlidePhotos[nMedia];
+        $('.photos_container', this.el).append(photoView.el);
+      }
 
       this.bRendered = true;
 
@@ -218,6 +274,8 @@ define([
       this.context.stroke();      
     },
     renderMarkers: function() {
+      var elProfile = $('.profile', this.el);
+            
       var nXOffset = (this.nCanvasDrawWidth - this.nDrawWidth) / 2;
       var nYOffset = (this.nCanvasDrawHeight - this.nDrawHeight) / 2;
       
@@ -225,6 +283,11 @@ define([
       
       for (var nMarker=0; nMarker < this.arrMediaPoints.length; nMarker++) {
         elMarker = this.arrMediaPoints[nMarker];
+      
+        if (!this.bRendered) {
+          // append marker
+          elProfile.append(elMarker);        
+        }
             
         nX = nXOffset + this.objTrailMarginRect.left + Math.round(elMarker.pos / this.fXFactor);
         nYPercent = ((elMarker.alt - Math.round(this.fLowAlt)) / this.fAltRange) * 100;
@@ -237,22 +300,23 @@ define([
         elMarker.css('top', nY);        
       }
     },
-    addMediaMarker: function(nLat, nLng) {
-      var jsonPoints = this.model.get('value').route.route_points;
-      
-      var elProfile = $('.profile', this.el);
+    checkSlideState: function(){
       var self = this;
-      $.each(jsonPoints, function(key, point) {
-        if (nLat == point.coords[1] && nLng == point.coords[0]) {
-            var elMarker = $('<div class="marker"></div>');
-            elMarker.pos = key;
-            elMarker.alt = point.tags.altitude;
-            elProfile.append(elMarker);
-            self.arrMediaPoints.push(elMarker);
-        }
-      });     
-    }
-    
+
+      if (this.bSlideReady && this.bWaitingForSlide) {
+        this.bWaitingForSlide = false;
+        
+        var photoView = this.arrSlidePhotos[this.nCurrSlide];        
+        photoView.show();
+      }
+    },
+    onSlidePhotoReady: function(trailSlidePhotoView){
+      var photoView = this.arrSlidePhotos[this.nCurrSlide];
+      if (photoView.model.cid == trailSlidePhotoView.model.cid) {
+        this.bSlideReady = true;
+        this.checkSlideState();
+      }      
+    }            
   });
 
   return TrailAltitudeView;

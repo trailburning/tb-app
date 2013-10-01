@@ -83,8 +83,6 @@ define([
       }         
     },        
     render: function(){
-      console.log('TrailMiniMapView:render');
-        
       if (!this.model) {
         return;
       }

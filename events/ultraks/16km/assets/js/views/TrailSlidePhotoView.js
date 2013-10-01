@@ -10,17 +10,13 @@ define([
       this.bRendered = false;
     },            
     show: function(){
-      console.log('TrailSlidePhotoView:show:'+this.model.cid);
       $(this.el).show();
-      $('.image_container', $(this.el)).css({ opacity: 1 });
+      $('.slide_container, .image_container', $(this.el)).css({ opacity: 1 });
     },
     hide: function(){
-      console.log('TrailSlidePhotoView:hide:'+this.model.cid);
-      $('.image_container', $(this.el)).css({ opacity: 0 });
+      $('.slide_container, .image_container', $(this.el)).css({ opacity: 0 });
     },
     render: function(nPanelWidth){
-      console.log('TrailSlidePhotoView:render');
-      
       var self = this;
       
       if (this.bRendered) {

@@ -3,7 +3,8 @@ var app = app || {};
 var RESTAPI_BASEURL = 'http://trailburning.herokuapp.com/api/';
 //var RESTAPI_BASEURL = 'http://localhost:8888/api/';
 
-//https://s3-eu-west-1.amazonaws.com/trailburning-media/af86ca5c0885dfda4a174aa5ed08a33d408087e0.jpg
+// weather
+// http://api.openweathermap.org/data/2.5/weather?q=Berlin,Germany&units=metric
 
 define([
   'underscore', 
@@ -169,6 +170,8 @@ define([
           self.trailMapView.render();
           break;
       }      
+      self.trailAltitudeView.render();
+      
       $('.image').resizeToParent();
     }        
         
@@ -184,7 +187,7 @@ define([
         self.trailMiniSlideView.addMedia(mediaModel);
         self.trailSlideView.addMedia(mediaModel);
         
-        self.trailAltitudeView.addMediaMarker(media.coords.lat, media.coords.long);        
+        self.trailAltitudeView.addMedia(mediaModel);
       });
       self.trailAltitudeView.renderMarkers();
       self.trailMiniMapView.renderMarkers();          
@@ -205,7 +208,6 @@ define([
                                
         self.trailMiniMapView.render();
         self.trailMapView.render();
-        self.trailAltitudeView.render();
 
         self.mediaModel.url = RESTAPI_BASEURL + 'v1/route/'+self.trailModel.get('id')+'/medias';
         self.mediaModel.fetch({
