@@ -153,19 +153,20 @@ define([
     
     function handleResize() {
       var nTrailPlayerLeftWidth = $('#trailplayer .left').width();
-      var nPlayerPanelWidth = $(window).width() - nTrailPlayerLeftWidth;
-      if (nPlayerPanelWidth < (MIN_WIDTH - nTrailPlayerLeftWidth)) {
-        nPlayerPanelWidth = (MIN_WIDTH - nTrailPlayerLeftWidth);
-      } 
+      var nTrailPlayerRightWidth = $(window).width() - nTrailPlayerLeftWidth;
 
-      $('#trailplayer').width(nPlayerPanelWidth);
+      if (nTrailPlayerRightWidth < (MIN_WIDTH - nTrailPlayerLeftWidth)) {
+        nTrailPlayerRightWidth = (MIN_WIDTH - nTrailPlayerLeftWidth);
+      } 
+      $('#trailplayer .right').width(nTrailPlayerRightWidth);
+      
       switch (self.nTrailView) {
         case SLIDE_VIEW:
-          self.trailSlideView.render(nPlayerPanelWidth);
+          self.trailSlideView.render(nTrailPlayerRightWidth);
           break;
            
         case MAP_VIEW:
-          $('#trailplayer .map_container').width(nPlayerPanelWidth);
+          $('#trailplayer .map_container').width(nTrailPlayerRightWidth);
           self.trailMiniSlideView.render();
           self.trailMapView.render();
           break;

@@ -1,20 +1,3 @@
-body {  
-  margin: 0;
-  padding: 0;
-  background: #F0F0F0;
-  font-family: 'Signika', sans-serif;
-  font-weight: normal;
-  font-size: 16px;
-  line-height: 1.3em;
-  color: #444444;    
-}
-
-form {
-  margin: 0px;
-  padding: 0px;
-  display: inline;  
-}
-
 /* APP */
 /******************************************/
 #appview {
@@ -25,194 +8,19 @@ border-width:1px;
   min-width: 1160px;
 }
 
-/* HEADER */
-/******************************************/
-#headerview {
-/*  
-border-style:solid;
-border-width:1px;
-*/  
-  z-index: 200;
-  position: relative;
-  width: 100%;
-  height: 63px;  
-  background: #FFF;
-}
-
-#headerview .left {
-  float: left;
-  margin: 8px 0px 0px 40px;
-}
-
-#headerview .right {
-  float: right;
-  margin: 12px 22px 0px 0px;
-}
-
-#headerview .right .discover {
-  float: right;
-  margin: 5px 0px 0px 0px;
-}
-
-#headerview .right .discover .search-btn {
-  margin: 0;
-  padding: 0;  
-  width: 18px;
-  height: 18px;
-  border: none;
-  font-size: 0;
-  background: url("../img/header/search.gif") no-repeat top left;  
-}
-
-#headerview .right .discover input[type="text"] {
-  margin: 0px 6px 0px 0px;
-  background-color: #F0F0F0;
-}
-
-#headerview .right .links {
-  float: right;
-  margin-top: 14px;
-  line-height: 1em;
-}
-
-#headerview .right .link {
-  float: left;
-  margin: 0px 19px 0px 19px;
-  color: #44b6f7;
-  font-size: 14px;
-  font-weight: 700;
-  text-transform: uppercase;
-}
-
-#headerview .right .link a, 
-#headerview .right .link a:link, 
-#headerview .right .link a:visited {
-  color: #44b6f7;
-  text-decoration: none;
-}
-
-#headerview .right .link a:hover, 
-#headerview .right .link a:active {
-  color: #979797;
-  text-decoration: none;    
-}
-
-#headerview .right .signin {  
-  float: right;
-  margin-left: 19px;
-}
-
-#headerview .right .signin .btn {  
-}
-
-/* FOOTER */
-/******************************************/
-#footerview {
-/*  
-border-style:solid;
-border-width:1px;
-*/  
-  z-index: 200;
-  position: relative;
-  width: 100%;
-  height: 120px;  
-  background: #000;
-}
-
-#footerview .left {
-  float: left;
-  margin: 30px 0px 0px 40px;
-}
-
-#footerview .left .copyright {
-  font-size: 14px;
-  line-height: 1em;
-  color: #979797;
-}
-
-#footerview .left .links {
-  margin-top: 22px;
-}
-
-#footerview .left .link {
-  float: left;
-  margin-right: 34px;
-  font-size: 14px;
-  line-height: 1em;
-  font-weight: 700;  
-  color: #979797;
-  text-transform: uppercase;
-}
-
-#footerview .left .link a, 
-#footerview .left .link a:link, 
-#footerview .left .link a:visited {
-  color: #979797;
-  text-decoration: none;
-}
-
-#footerview .left .link a:hover, 
-#footerview .left .link a:active {
-  color: #FFFFFF;
-  text-decoration: none;    
-}
-
-#footerview .right {
-  float: right;
-  margin: 32px 48px 0px 0px;
-}
-
-#footerview .right .social {
-  float: left;
-  margin: 0px 10px 0px 10px;
-}
-
-#footerview a.button {
-  float:left; 
-  display:block;
-  line-height:20px; 
-  text-indent: -10000px;  
-  background-repeat:no-repeat;
-  background-position:top center;
-  overflow: hidden;   
-  text-decoration: none;
-  width:72px;
-  height:64px;
-}
-
-#footerview a.button:hover {
-  background-position: 0 -64px;
-}
-
-#footerview .btnEmail {
-  background: url("../img/footer/btn_email.png") no-repeat top left;
-}
-
-#footerview .btnFacebook {
-  background: url("../img/footer/btn_facebook.png") no-repeat top left;
-}
-
-#footerview .btnTwitter {
-  background: url("../img/footer/btn_twitter.png") no-repeat top left;
-}
-
-#footerview .btnGooglePlus {
-  background: url("../img/footer/btn_googleplus.png") no-repeat top left;
-}
-
 /* HOME HEADER */
 /******************************************/
 #home_header {
   z-index: 100;
   position: relative;
   width: 100%;
-  height: 486px;
+  height: 564px;
   overflow: overflow;
 }
 
 #home_header .image_container {
   width: 100%;
-  height: 486px;
+  height: 564px;
   overflow: hidden;
 }
 
@@ -222,59 +30,27 @@ border-width:1px;
   left: 32px;
 }
 
-/* BIG BAR */
-/******************************************/
-#bigbar {
-  width: 100%;
-  height: 60px;
-  background: #000;  
+#home_header .share_bar {
+  position: relative;
+  margin: 0px auto 0px auto;
+  width: 1112px;
 }
 
-#bigbar .crumb_lead {
-  float: left;
-  margin: 16px 0px 0px 40px;
-  width: 20px;
-  height: 25px;
-}
-
-#bigbar .crumbs {
-  float: left;
-  margin: 0px 0px 0px 18px;
-  font-size: 22px;
-  line-height: 58px;
-  color: #7C7C7C;
-}
-
-#bigbar .crumbs a, 
-#bigbar .crumbs a:link, 
-#bigbar .crumbs a:visited {
-  color: #7C7C7C;
-  text-decoration: none;
-}
-
-#bigbar .crumbs a:hover, 
-#bigbar .crumbs a:active {
-  color: #FFFFFF;
-  text-decoration: none;    
-}
-
-#bigbar .share {
+#home_header .share_bar .share {
   float: right;
-  margin-left: 25px;
-  margin-right: 22px;
-  line-height: 58px;
+  margin-top: -60px;
 }
 
 /* PANELS */
 /******************************************/
-.panelcontent {
+.panel_content {
   position: relative;
-  margin: 0px auto 88px auto;
+  margin: 0px auto 80px auto;
   width: 1144px;
 }
 
 .panel_intro {
-  padding-top: 46px;
+  padding-top: 30px;
   text-align: center;
 }
 
@@ -310,7 +86,7 @@ border-width:1px;
 .trail_card_panel .photo {
   position: relative;
 }
-
+  
 .trail_card_panel .photo .image_container {
   width: 260px;
   height: 220px;
@@ -344,6 +120,10 @@ border-width:1px;
 
 .trail_card_panel .summary strong {
   font-weight: 700;
+}
+
+.trail_card_panel .summary .sponsor {
+  float: left;  
 }
 
 .trail_card_panel .summary .avatar {
@@ -432,7 +212,7 @@ border-width:1px;
   position: relative;
   width: 100%;
   height: 682px;
-  overflow: overflow;
+  overflow: overflow;  
 }
 
 .footer_promote .image_container {
@@ -448,8 +228,15 @@ border-width:1px;
   text-align: center;
 }
 
+.footer_promote .desc {
+  margin-top: 18px;
+  font-size: 22px;
+  color: #FFF;
+  text-shadow: 1px 1px #000000;  
+}
+
 .footer_promote .signin {
-  margin-top: 32px;
+  margin-top: 18px;
 }
 
 /* RESPONSIVE */
