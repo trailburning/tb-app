@@ -304,6 +304,7 @@ border-width:1px;
   left: 5px;
   width: 148px;
   height: 112px;
+  overflow: hidden;
 }
 
 .trailaltitude_panel .profile .slide_container:after,
