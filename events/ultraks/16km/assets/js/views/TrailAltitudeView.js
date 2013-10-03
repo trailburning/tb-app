@@ -311,8 +311,12 @@ define([
       }
     },
     onSlidePhotoReady: function(trailSlidePhotoView){
+      var nCurrCID = trailSlidePhotoView.model.cid;      
       var photoView = this.arrSlidePhotos[this.nCurrSlide];
-      if (photoView.model.cid == trailSlidePhotoView.model.cid) {
+      if (photoView) {
+        nCurrCID = photoView.model.cid;
+      }
+      if (nCurrCID == trailSlidePhotoView.model.cid) {
         this.bSlideReady = true;
         this.checkSlideState();
       }      

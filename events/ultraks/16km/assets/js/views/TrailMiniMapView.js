@@ -94,7 +94,7 @@ define([
       // already rendered?  Just update
       if (this.bRendered) {
         this.map.invalidateSize();
-        this.map.fitBounds(this.polyline.getBounds(), {paddingTopLeft: [10, 30], paddingBottomRight: [10, 10]});
+        this.map.fitBounds(this.polyline.getBounds(), {paddingTopLeft: [20, 30], paddingBottomRight: [30, 20]});
         return;         
       }        
 
@@ -127,7 +127,7 @@ define([
         clickable: false
       };         
       this.polyline = L.polyline(this.arrLineCordinates, polyline_options).addTo(this.map);          
-      this.map.fitBounds(this.polyline.getBounds(), {paddingTopLeft: [10, 30], paddingBottomRight: [10, 10]});         
+      this.map.fitBounds(this.polyline.getBounds(), {paddingTopLeft: [20, 30], paddingBottomRight: [30, 20]});         
 
       this.renderMarkers();
                       

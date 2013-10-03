@@ -94,8 +94,7 @@ define([
       }
     },    
     onSlidePhotoReady: function(trailSlidePhotoView){
-      var nCurrCID = trailSlidePhotoView.model.cid;
-      
+      var nCurrCID = trailSlidePhotoView.model.cid;      
       var photoView = this.arrSlidePhotos[this.nCurrSlide];
       if (photoView) {
         nCurrCID = photoView.model.cid;

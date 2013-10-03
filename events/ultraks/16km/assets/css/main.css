@@ -13,8 +13,9 @@ border-width:1px;
 #trailplayer {
   position: relative;
   width: 100%;
-  height: 486px;
+  height: 600px;
   overflow: overflow;
+  background: url(../img/trans_line.png) repeat-x bottom left;
 }
 
 #trailplayer .left {
@@ -23,11 +24,11 @@ border-width:1px;
   left: 0px;
   width: 258px;
   height: 100%;
-  background: #FFF url(../img/trans_line.png) repeat-x bottom left;    
+  background: #FFF url(../img/trans_line.png) repeat-x bottom left;
 }
 
 #trailplayer .trailprofile {
-  margin: 16px 0px 0px 0px;
+  margin: 32px 0px 0px 0px;
   font-weight: 300;
   overflow: hidden;
 }
@@ -37,11 +38,6 @@ border-width:1px;
   margin-right: auto;
   text-align: center;
   width: 113px;
-}
-
-#trailplayer .trailprofile .avatar img {
-  width: 82px;
-  height: 81px;
 }
 
 #trailplayer .trailprofile .title {
@@ -75,13 +71,14 @@ border-width:1px;
 /******************************************/
 #trailplayer .trail_minimap {
   position: absolute;
+  margin: 0px 5px 0px 5px;
   top: 0px;
   left: 0px;
 }
 
 #trailplayer .trail_minimap #minimap {
-  width: 258px;
-  height: 206px;
+  width: 248px;
+  height: 274px;
   background-color: transparent; 
 }
 
@@ -105,18 +102,18 @@ border-width:1px;
 }
 
 #trailplayer .trail_minislide #minislide {
-  margin-top: 10px;
   margin-left: auto;
   margin-right: auto;
   text-align: center;
   width: 258px;
-  height: 196px;
+  height: 274px;
 }
 
 #trailplayer .trail_minislide #minislide .photos_container {  
-  position: relative;  
+  position: absolute;
+  top: 40px;
   width: 245px;
-  height: 163px;  
+  height: 163px;
   border-left-style: solid;
   border-left-width: 7px;
   border-left-color: #FFF;
@@ -157,7 +154,7 @@ border-width:1px;
 #trailplayer #trail_views {
   position: relative;
   width: 100%;
-  height: 486px;  
+  height: 600px;  
 }
 
 .event_logo {
@@ -177,7 +174,7 @@ border-width:1px;
 #trail_slide_view .photos_container {  
   position: relative;  
   width: 200px;
-  height: 486px;
+  height: 600px;  
   overflow: hidden;
 }
 
@@ -186,7 +183,7 @@ border-width:1px;
   top: 0px;
   left: 0px;  
   width: 100%;
-  height: 486px;  
+  height: 600px;  
   overflow: hidden;  
 }
 
@@ -201,7 +198,7 @@ border-width:1px;
 #trail_map_view .map_container {
   position: relative;
   width: 100%;
-  height: 486px;
+  height: 600px;
   overflow: hidden;
 }
 

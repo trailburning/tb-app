@@ -199,9 +199,9 @@ define([
     }
     
     // get trail    
-    this.trailModel.set('id', 17);
-//    this.trailModel.set('id', 30);            
-//    this.trailModel.set('id', 14);    
+//    this.trailModel.set('id', 32);
+//    this.trailModel.set('id', 30);    
+    this.trailModel.set('id', 17);            
     console.log('Fetch ID:'+this.trailModel.get('id'));            
     this.trailModel.fetch({
       success: function () {
