@@ -145,13 +145,6 @@ h4.tb {
           box-shadow: 2px 2px 1px 0px rgba(0, 0, 0, 0.1);  
 }
 
-.blank_2col_panel {
-  float: left;  
-  margin: 24px 0px 0px 0px;
-  width: 544px;
-  height: 336px;
-}
-
 /* HEADER */
 /******************************************/
 #headerview {
@@ -425,6 +418,28 @@ border-width:1px;
 
 /* TB CANDY */
 /******************************************/
+.tb-photo-btn img {  
+  filter: contrast(1);
+  -webkit-filter: contrast(1);
+  -moz-filter: contrast(1);
+  -o-filter: contrast(1);
+  -ms-filter: contrast(1);
+  -webkit-transition: all 0.25s ease-in-out;
+  -moz-transition: all 0.25s ease-in-out;
+  -o-transition: all 0.25s ease-in-out;
+  -ms-transition: all 0.25s ease-in-out;
+  transition: all 0.25s ease-in-out;
+  -webkit-transform:translate3d(0,0,0);
+}
+
+.tb-photo-btn:hover img {  
+  filter: contrast(1.5);
+  -webkit-filter: contrast(1.5);
+  -moz-filter: contrast(1.5);
+  -o-filter: contrast(1.5);
+  -ms-filter: contrast(1.5);   
+}
+
 .tb-fade {
   opacity: 0;
   transition: opacity 2s ease-in-out;

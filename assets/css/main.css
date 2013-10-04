@@ -87,28 +87,6 @@ border-width:1px;
   position: relative;
 }
 
-.trail_card_panel .photo img {  
-  filter: contrast(1);
-  -webkit-filter: contrast(1);
-  -moz-filter: contrast(1);
-  -o-filter: contrast(1);
-  -ms-filter: contrast(1);
-  -webkit-transition: all 0.25s ease-in-out;
-  -moz-transition: all 0.25s ease-in-out;
-  -o-transition: all 0.25s ease-in-out;
-  -ms-transition: all 0.25s ease-in-out;
-  transition: all 0.25s ease-in-out;
-  -webkit-transform:translate3d(0,0,0);
-}
-
-.trail_card_panel .photo:hover img {  
-  filter: contrast(1.1);
-  -webkit-filter: contrast(1.1);
-  -moz-filter: contrast(1.1);
-  -o-filter: contrast(1.1);
-  -ms-filter: contrast(1.1);   
-}
-
 .trail_card_panel .photo .image_container {
   width: 260px;
   height: 220px;
