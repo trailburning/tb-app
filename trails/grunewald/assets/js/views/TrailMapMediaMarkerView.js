@@ -3,7 +3,7 @@ define([
   'backbone'
 ], function(_, Backbone){
 
-  var TrailMapMediaView = Backbone.View.extend({
+  var TrailMapMediaMarkerView = Backbone.View.extend({
     initialize: function(){
       
       this.map = this.options.map;
@@ -36,11 +36,11 @@ define([
 
       function onClick(e) {       
         // fire event
-        app.dispatcher.trigger("TrailMapMediaView:mediaclick", self);                        
+        app.dispatcher.trigger("TrailMapMediaMarkerView:mediaclick", self);                        
       }
       return this;
     }    
   });
 
-  return TrailMapMediaView;
+  return TrailMapMediaMarkerView;
 });

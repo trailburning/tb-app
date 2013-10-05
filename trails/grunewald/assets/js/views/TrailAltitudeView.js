@@ -1,8 +1,9 @@
 define([
   'underscore', 
   'backbone',
+  'views/TrailMediaMarkerView',  
   'views/TrailSlidePhotoView'
-], function(_, Backbone, TrailSlidePhotoView){
+], function(_, Backbone, TrailMediaMarkerView, TrailSlidePhotoView){
 
   var TrailAltitudeView = Backbone.View.extend({
     initialize: function(){
@@ -56,15 +57,13 @@ define([
       });    
     },            
     gotoMedia: function(nMedia){
-      // restpre previous
-      if (this.currElMarker) {
-        this.currElMarker.removeClass('marker_active');        
+      // restore previous
+      if (this.currMediaMarker) {
+        this.currMediaMarker.setActive(false);
       }
-      var elMarker = this.arrMediaPoints[nMedia];
-      elMarker.addClass('marker_active');
-      
-      this.currElMarker = elMarker;
-      
+      this.currMediaMarker = this.arrMediaPoints[nMedia];
+      this.currMediaMarker.setActive(true);
+
       this.bSlideReady = false;     
       this.bWaitingForSlide = true;
        
@@ -85,9 +84,11 @@ define([
       // position slide
       var elSlideContainer = $('.slide_container', $(photoView.el));
       
+      var elMarker = $('.marker', this.currMediaMarker.el); 
+
       var nX = elMarker.position().left - ((elSlideContainer.width()+4) / 2) + (elMarker.width() / 2);
       var nY = elMarker.position().top - (elSlideContainer.height()+4) - 20;
-      
+
       elSlideContainer.css('left', nX);
       elSlideContainer.css('top', nY);        
                     
@@ -104,10 +105,8 @@ define([
       var self = this;
       $.each(jsonPoints, function(key, point) {
         if (mediaModel.get('coords').lat == point.coords[1] && mediaModel.get('coords').long == point.coords[0]) {
-            var elMarker = $('<div class="marker"></div>');
-            elMarker.pos = key;
-            elMarker.alt = point.tags.altitude;
-            self.arrMediaPoints.push(elMarker);
+          var trailMediaMarkerView = new TrailMediaMarkerView({ pos: key, model: mediaModel });
+          self.arrMediaPoints.push(trailMediaMarkerView);          
         }
       });           
     },        
@@ -230,7 +229,7 @@ define([
     },    
     renderTrail: function(jsonPoints, fTrailLengthMetres) {
       this.jsonTrail = jsonPoints;
-                              
+                   
       this.fXFactor = jsonPoints.length / this.nDrawWidth;
 
       var self = this;
@@ -275,30 +274,34 @@ define([
       this.context.stroke();      
     },
     renderMarkers: function() {
+      if (!this.jsonTrail) {
+        return;
+      }
+      
       var elProfile = $('.profile', this.el);
             
       var nXOffset = (this.nCanvasDrawWidth - this.nDrawWidth) / 2;
       var nYOffset = (this.nCanvasDrawHeight - this.nDrawHeight) / 2;
       
-      var elMarker, nX, nY, nYPercent;
+      var viewMediaMarkerView, nX, nY, nYPercent;
       
       for (var nMarker=0; nMarker < this.arrMediaPoints.length; nMarker++) {
-        elMarker = this.arrMediaPoints[nMarker];
-      
+        viewMediaMarkerView = this.arrMediaPoints[nMarker];
         if (!this.bRendered) {
           // append marker
-          elProfile.append(elMarker);        
+          elProfile.append(viewMediaMarkerView.render().el);
         }
-            
-        nX = nXOffset + this.objTrailMarginRect.left + Math.round(elMarker.pos / this.fXFactor);
-        nYPercent = ((elMarker.alt - Math.round(this.fLowAlt)) / this.fAltRange) * 100;
+        
+        nX = nXOffset + this.objTrailMarginRect.left + Math.round(viewMediaMarkerView.pos / this.fXFactor);
+        
+        nYPercent = ((viewMediaMarkerView.model.get('tags').altitude - Math.round(this.fLowAlt)) / this.fAltRange) * 100;
         nY = nYOffset + this.objTrailMarginRect.top + Math.round((this.nDrawHeight-2) - ((nYPercent * (this.nDrawHeight-2)) / 100));
               
         nX -= 10;
         nY -= 10;
       
-        elMarker.css('left', nX);
-        elMarker.css('top', nY);        
+        $('.marker', viewMediaMarkerView.el).css('left', nX);
+        $('.marker', viewMediaMarkerView.el).css('top', nY);
       }
     },
     checkSlideState: function(){

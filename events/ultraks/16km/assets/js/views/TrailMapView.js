@@ -1,8 +1,8 @@
 define([
   'underscore', 
   'backbone',
-  'views/TrailMapMediaView'  
-], function(_, Backbone, TrailMapMediaView){
+  'views/TrailMapMediaMarkerView'  
+], function(_, Backbone, TrailMapMediaMarkerView){
 
   var MAP_STREET_VIEW = 0;
   var MAP_SAT_VIEW = 1;
@@ -95,8 +95,8 @@ define([
       this.currMapMediaView.setActive(true);
     },
     addMedia: function(mediaModel){
-      var trailMapMediaView = new TrailMapMediaView({ map: this.map, model: mediaModel });
-      this.arrMapMediaViews.push(trailMapMediaView);
+      var trailMapMediaMarkerView = new TrailMapMediaMarkerView({ map: this.map, model: mediaModel });
+      this.arrMapMediaViews.push(trailMapMediaMarkerView);
     },
     renderMarkers: function(){
       if (!this.arrMapMediaViews.length) {

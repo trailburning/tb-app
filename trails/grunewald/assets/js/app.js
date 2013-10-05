@@ -34,7 +34,8 @@ define([
     var self = this;
     
     app.dispatcher.on("TrailMiniMapView:viewbtnclick", onTrailMiniMapViewBtnClick, this);
-    app.dispatcher.on("TrailMapMediaView:mediaclick", onTrailMapMediaClick, this);
+    app.dispatcher.on("TrailMapMediaMarkerView:mediaclick", onTrailMapMediaMarkerClick, this);
+    app.dispatcher.on("TrailMediaMarkerView:mediaclick", onTrailMediaMarkerClick, this);
     app.dispatcher.on("TrailMiniSlideView:viewbtnclick", onTrailMiniSlideViewBtnClick, this);
     app.dispatcher.on("TrailSlideView:slideview", onTrailSlideViewSlideView, this);
     
@@ -98,9 +99,17 @@ define([
       self.nCurrSlide = nSlide;      
     }
 
-    function onTrailMapMediaClick(mapMediaView) {
+    function onTrailMapMediaMarkerClick(mapMediaMarkerView) {
       // look up model in collcetion
-      var nMedia = this.mediaCollection.indexOf(mapMediaView.model);
+      var nMedia = this.mediaCollection.indexOf(mapMediaMarkerView.model);
+      
+      stopSlideShow();
+      gotoMedia(nMedia);
+    }
+
+    function onTrailMediaMarkerClick(mediaMarkerView) {
+      // look up model in collcetion
+      var nMedia = this.mediaCollection.indexOf(mediaMarkerView.model);
       
       stopSlideShow();
       gotoMedia(nMedia);

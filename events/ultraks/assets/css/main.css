@@ -176,6 +176,15 @@ border-width:1px;
   color: #FFFFFF;
 }
 
+.event_trail a, 
+.event_trail a:link, 
+.event_trail a:visited,
+.event_trail a:hover, 
+.event_trail a:active {
+  color: #FFF;
+  text-decoration: none;    
+}
+
 .event_trail .title {
   margin-left: 22px;
   height: 78px;
