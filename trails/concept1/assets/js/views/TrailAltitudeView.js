@@ -291,8 +291,8 @@ define([
         nYPercent = ((elMarker.alt - Math.round(this.fLowAlt)) / this.fAltRange) * 100;
         nY = nYOffset + this.objTrailMarginRect.top + Math.round((this.nDrawHeight-2) - ((nYPercent * (this.nDrawHeight-2)) / 100));
               
-        nX -= 10;
-        nY -= 10;
+        nX -= 8;
+        nY -= 8;
       
         elMarker.css('left', nX);
         elMarker.css('top', nY);        

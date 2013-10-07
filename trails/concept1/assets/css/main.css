@@ -198,13 +198,13 @@ border-width:1px;
   position: absolute;
   top: 0px;
   left: 0px;  
-  width: 23px;
-  height: 24px;
-  background: url(https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/icons/marker_inactive.png) no-repeat top left;
+  width: 18px;
+  height: 18px;
+  background: url(https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/icons/sm_marker_inactive.png) no-repeat top left;
 }
 
 .trailaltitude_panel .profile .marker_active {
-  background: url(https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/icons/marker_active.png) no-repeat top left;
+  background: url(https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/icons/sm_marker_active.png) no-repeat top left;
 }
 
 .trailaltitude_panel .profile .photos_container {  
@@ -306,7 +306,7 @@ border-width:1px;
 /* OTHER TRAILS PANEL */
 /******************************************/
 .othertrails_panel {
-  margin: 24px 0px 0px 0px;
+  margin: 0px 0px 0px 0px;
   width: 544px;
   height: 336px;
 }
@@ -368,7 +368,7 @@ border-width:1px;
 /* TRAIL GEAR PANEL */
 /******************************************/
 .trailgear_panel {
-  margin: 24px 0px 0px 24px;
+  margin: 0px 0px 0px 24px;
   width: 544px;
   height: 336px;
 }
