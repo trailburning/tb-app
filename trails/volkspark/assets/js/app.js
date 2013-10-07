@@ -199,7 +199,18 @@ define([
 
     function handleStats() {
       var jsonRoute = self.trailModel.get('value').route;
-            
+      
+      // get weather
+      var weather = 'http://api.openweathermap.org/data/2.5/weather?lat='+jsonRoute.route_points[0].coords[1]+'&lon='+jsonRoute.route_points[0].coords[0];
+      $.ajax({
+        dataType: "jsonp",
+        url: weather,
+        success: function(data) {
+          var elField = $('.trailstats_panel .weather_desc');
+          elField.html(data['weather'][0].description);
+        }
+      });
+                  
       var elTrailTerrain = $('.trailstats_panel .terrain');
       if (elTrailTerrain.length) {
         if (elTrailTerrain.html() == '') {
@@ -210,7 +221,7 @@ define([
       var elTrailLength = $('.trailstats_panel .length');
       if (elTrailLength.length) {
         if (elTrailLength.html() == '') {
-          elTrailLength.html('<h1>'+Math.round(jsonRoute.length/1000)+' km</h1><h2>Length</h2>');
+          elTrailLength.html('<h1>'+Math.floor(jsonRoute.length/1000)+' km</h1><h2>Length</h2>');
         }
       }
     }
