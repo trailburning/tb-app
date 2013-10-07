@@ -72,7 +72,7 @@ define([
         bSlideFull = false;
         $('#trail_slide_view .photos_container').css('top', -75);
         $('#trailplayer').height(625);
-        $('#trail_overlay').css('top', 600 - 242);
+        $('#trail_overlay').css('top', 625 - 242);
         
         $('#trail_overlay .trailstats_panel').css('top', 0);
         $('#trail_overlay .trail_minimap').css('top', 0);
