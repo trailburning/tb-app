@@ -65,8 +65,8 @@ border-width:1px;
 /******************************************/
 #trailplayer .trail_minimap {
   position: absolute;
-  top: 400px;
-  left: 216px;
+  top: 100px;
+  left: 224px;
   width: 276px;
   height: 218px;
   background: rgba(255, 255, 255, 1);    
@@ -194,9 +194,9 @@ border-width:1px;
 /******************************************/
 .trailaltitude_panel {
   position: absolute;
-  top: 600px;
-  left: 508px;
-  width: 604px;
+  top: 150px;
+  left: 524px;
+  width: 588px;
   height: 218px;
   background: rgba(255, 255, 255, 1);    
   border: none;
@@ -281,7 +281,7 @@ border-width:1px;
 /******************************************/
 .trailstats_panel {
   position: absolute;
-  top: 200px;
+  top: 50px;
   left: 0px;
   width: 200px;
   height: 218px;  
