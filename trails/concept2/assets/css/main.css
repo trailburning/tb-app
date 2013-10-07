@@ -39,7 +39,7 @@ border-width:1px;
   position: absolute;
   top: 700px;
   width: 100%;
-  height: 218px;
+  height: 242px;
   -webkit-transition: top 1s;
   -moz-transition: top 1s;
   -o-transition: top 1s;
@@ -74,8 +74,8 @@ border-width:1px;
 #trailplayer .trail_minimap {
   position: absolute;
   top: 400px;
-  left: 208px;
-  width: 292px;
+  left: 216px;
+  width: 276px;
   height: 218px;
   background: rgba(255, 255, 255, 1);    
   border: none;
@@ -93,7 +93,7 @@ border-width:1px;
 #trailplayer .trail_minimap #minimap {
   top: 4px;
   left: 4px;
-  width: 284px;
+  width: 266px;
   height: 210px;
   background-color: transparent; 
 }
@@ -292,7 +292,7 @@ border-width:1px;
   top: 200px;
   left: 0px;
   width: 200px;
-  height: 336px;  
+  height: 218px;  
   background: rgba(255, 255, 255, 1);    
   border: none;
   *zoom: 1;
