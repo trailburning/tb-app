@@ -98,14 +98,19 @@ border-width:1px;
   left: 0px;
   width: 100%;
   height: 700px;
-  overflow: hidden;  
+/*  
+  overflow: hidden;
+*/  
 }
 
 #trail_slide_view .photos_container {  
-  position: absolute;  
+  position: absolute;
+  top: -50px;  
   width: 100%;
-  height: 700px;  
-  overflow: hidden;  
+  height: 700px;
+/*  
+  overflow: hidden;
+*/  
   -webkit-transition: left 1s, right 1s, top 1s, bottom 1s;
   -moz-transition: left 1s, right 1s, top 1s, bottom 1s;
   -o-transition: left 1s, right 1s, top 1s, bottom 1s;
