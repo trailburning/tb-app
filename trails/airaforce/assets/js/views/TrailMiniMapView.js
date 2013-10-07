@@ -18,12 +18,12 @@ define([
       
       var LocationIcon = L.Icon.extend({
           options: {
-              iconSize:     [36, 47],
-              iconAnchor:   [16, 44],
-              popupAnchor:  [16, 44]
+              iconSize:     [27, 35],
+              iconAnchor:   [12, 33],
+              popupAnchor:  [12, 33]
           }
       });      
-      this.locationIcon = new LocationIcon({iconUrl: 'https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/icons/location.png'});
+      this.locationIcon = new LocationIcon({iconUrl: 'https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/icons/sm_location.png'});
             
       $(window).resize(function() {
         self.render();        
@@ -44,7 +44,7 @@ define([
       this.currMapMediaView.setActive(true);
     },
     addMedia: function(mediaModel){
-      var trailMapMediaMarkerView = new TrailMapMediaMarkerView({ map: this.map, model: mediaModel });
+      var trailMapMediaMarkerView = new TrailMapMediaMarkerView({ size: SMALL_ICONS, map: this.map, model: mediaModel });
       this.arrMapMediaViews.push(trailMapMediaMarkerView);
     },
     renderMarkers: function(){
