@@ -17,7 +17,7 @@ define([
       this.bSlideReady = false;
       this.bWaitingForSlide = false;
 
-      this.HeightToWidthFactor = 4;      
+      this.HeightToWidthFactor = 8;      
       this.fXFactor = 0;
       this.jsonTrail = null;
       this.fLowAlt = 0;
