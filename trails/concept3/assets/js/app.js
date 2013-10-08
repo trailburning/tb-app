@@ -146,16 +146,9 @@ define([
     }
     
     function handleResize() {
-      var nTrailPlayerLeftWidth = $('#trailplayer .left').width();
-      var nTrailPlayerRightWidth = $(window).width() - nTrailPlayerLeftWidth;
-
-      if (nTrailPlayerRightWidth < (MIN_WIDTH - nTrailPlayerLeftWidth)) {
-        nTrailPlayerRightWidth = (MIN_WIDTH - nTrailPlayerLeftWidth);
-      } 
-      
       switch (self.nTrailView) {
         case SLIDE_VIEW:
-          self.trailSlideView.render($(window).width());
+          self.trailSlideView.render($('#appview').width());
           break;
            
         case MAP_VIEW:

@@ -48,7 +48,9 @@ border-width:1px;
 }
 
 #trail_overlay .overlay_content {
-  width: 1112px;
+  position: relative;
+  width: 1176px;
+  height: 100%;
   margin: 0px auto 0px auto;
   overflow: hidden;  
   background: rgba(255, 255, 255, 1);    
@@ -68,15 +70,24 @@ border-width:1px;
 /* TRAIL MINI MAP */
 /******************************************/
 #trailplayer .trail_minimap {
-  float: left;
-  width: 300px;
+  position: absolute;
+  top: 400px;
+  left: 224px;
+  width: 314px;
   height: 218px;
+  background: rgba(255, 255, 255, 1);    
+  border: none;
+  -webkit-transition: top 1s;
+  -moz-transition: top 1s;
+  -o-transition: top 1s;
+  transition: top 1s;    
+  -webkit-transform:translate3d(0,0,0);            
 }
 
 #trailplayer .trail_minimap #minimap {
   top: 4px;
   left: 4px;
-  width: 292px;
+  width: 268px;
   height: 210px;
   background-color: transparent; 
 }
@@ -184,9 +195,18 @@ border-width:1px;
 /* TRAIL ALTITUDE PANEL */
 /******************************************/
 .trailaltitude_panel {
-  float: left;
-  width: 612px;
+  position: absolute;
+  top: 500px;
+  left: 556px;
+  width: 588px;
   height: 218px;
+  background: rgba(255, 255, 255, 1);    
+  border: none;
+  -webkit-transition: top 1s;
+  -moz-transition: top 1s;
+  -o-transition: top 1s;
+  transition: top 1s;    
+  -webkit-transform:translate3d(0,0,0);            
 }
 
 .trailaltitude_panel .profile {
@@ -258,9 +278,18 @@ border-width:1px;
 /* TRAIL STATS PANEL */
 /******************************************/
 .trailstats_panel {
-  float: left;
+  position: absolute;
+  top: 300px;
+  left: 0px;
   width: 200px;
-  height: 336px;
+  height: 218px;  
+  background: rgba(255, 255, 255, 1);    
+  border: none;
+  -webkit-transition: top 1s;
+  -moz-transition: top 1s;
+  -o-transition: top 1s;
+  transition: top 1s;    
+  -webkit-transform:translate3d(0,0,0);            
 }
 
 .trailstats_panel .content {

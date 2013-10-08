@@ -73,11 +73,20 @@ define([
         $('#trail_slide_view .photos_container').css('top', -50);
         $('#trailplayer').height(650);
         $('#trail_overlay').css('top', 650 - 218);
+        
+        $('#trail_overlay .trailstats_panel').css('top', 0);
+        $('#trail_overlay .trail_minimap').css('top', 0);
+        $('#trail_overlay .trailaltitude_panel').css('top', 0);        
       }
       else {
         bSlideFull = true;        
         $('#trail_slide_view .photos_container').css('top', 0);
         $('#trailplayer').height(600);
+        
+        $('#trail_overlay .trailstats_panel').css('top', 300);
+        $('#trail_overlay .trail_minimap').css('top', 400);
+        $('#trail_overlay .trailaltitude_panel').css('top', 500);
+        
         $('#trail_overlay').css('top', 700);
       }     
     }
@@ -138,16 +147,9 @@ define([
     }
     
     function handleResize() {
-      var nTrailPlayerLeftWidth = $('#trailplayer .left').width();
-      var nTrailPlayerRightWidth = $(window).width() - nTrailPlayerLeftWidth;
-
-      if (nTrailPlayerRightWidth < (MIN_WIDTH - nTrailPlayerLeftWidth)) {
-        nTrailPlayerRightWidth = (MIN_WIDTH - nTrailPlayerLeftWidth);
-      } 
-      
       switch (self.nTrailView) {
         case SLIDE_VIEW:
-          self.trailSlideView.render($(window).width());
+          self.trailSlideView.render($('#appview').width());
           break;
            
         case MAP_VIEW:
