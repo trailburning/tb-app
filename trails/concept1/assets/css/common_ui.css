@@ -142,7 +142,7 @@ h4.tb {
   *zoom: 1;
   -webkit-box-shadow: 2px 4px 5px 0px rgba(0, 0, 0, 0.1);
      -moz-box-shadow: 2px 4px 5px 0px rgba(0, 0, 0, 0.1);
-          box-shadow: 2px 2px 1px 0px rgba(0, 0, 0, 0.1);  
+          box-shadow: 2px 4px 5px 0px rgba(0, 0, 0, 0.1);  
 }
 
 .blank_2col_panel {

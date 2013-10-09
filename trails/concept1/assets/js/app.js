@@ -75,8 +75,8 @@ define([
         $('#trail_overlay').css('top', 650 - 218);
         
         $('#trail_overlay .trailstats_panel').css('top', 0);
-        $('#trail_overlay .trail_minimap').css('top', 0);
         $('#trail_overlay .trailaltitude_panel').css('top', 0);        
+        $('#trail_overlay .trail_minimap').css('top', 0);
       }
       else {
         bSlideFull = true;        
@@ -84,8 +84,8 @@ define([
         $('#trailplayer').height(600);
         
         $('#trail_overlay .trailstats_panel').css('top', 300);
-        $('#trail_overlay .trail_minimap').css('top', 400);
-        $('#trail_overlay .trailaltitude_panel').css('top', 500);
+        $('#trail_overlay .trailaltitude_panel').css('top', 400);
+        $('#trail_overlay .trail_minimap').css('top', 500);
         
         $('#trail_overlay').css('top', 700);
       }     
