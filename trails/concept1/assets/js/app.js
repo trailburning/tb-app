@@ -72,13 +72,16 @@ define([
         bSlideFull = false;
         $('#trail_slide_view .photos_container').css('top', -50);
         $('#trailplayer').height(650);
-        $('#trail_overlay').css('top', 650 - 218);
         
+        $('#trail_overlay').css('top', 650 - 218);
+
         $('#trail_overlay .trailstats_panel').css('top', 0);
         $('#trail_overlay .trailaltitude_panel').css('top', 0);        
         $('#trail_overlay .trail_minimap').css('top', 0);
-        
-        $('#trail_info').css('top', 13);        
+
+        $('#trail_info').css('top', 24);       
+        $('#trail_info .trail_avatar').css('top', 0);       
+        $('#trail_info .trail_title').css('top', 0);       
       }
       else {
         bSlideFull = true;        
@@ -91,7 +94,9 @@ define([
         
         $('#trail_overlay').css('top', 700);
         
-        $('#trail_info').css('top', -213);        
+        $('#trail_info').css('top', -300);        
+        $('#trail_info .trail_avatar').css('top', -300);       
+        $('#trail_info .trail_title').css('top', -100);       
       }     
     }
 
@@ -167,6 +172,8 @@ define([
         
     function handleTrail() {
       $('#trail_info').addClass('tb-move');
+      $('#trail_info .trail_avatar').addClass('tb-move');       
+      $('#trail_info .trail_title').addClass('tb-move');
     }
       
     function handleMedia() {

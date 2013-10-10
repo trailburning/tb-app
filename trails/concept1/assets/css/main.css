@@ -161,14 +161,24 @@ border-width:1px;
 /* TRAIL INFO */
 /******************************************/
 #trailplayer #trail_info {
-/*  
-*/  
+border-style:solid;
+border-width:1px;
+  
   position: absolute;
-  top: -213px;
-  left: 20px;
+  top: -300px;
+  left: 24px;
+}
+
+#trailplayer .trail_avatar {
+  position: absolute;
+  top: -300px;
+  left: 0px;
 }
 
 #trailplayer .trail_title {
+  position: absolute;
+  top: -100px;
+  left: 144px;
   width: 600px;
   color: #44b6f7;
 }
