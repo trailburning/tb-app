@@ -109,7 +109,9 @@ define([
       });
       
       this.map = L.mapbox.map('minimap', null, {dragging: false, touchZoom: false, scrollWheelZoom:false, doubleClickZoom:false, boxZoom:false, tap:false, zoomControl:false, zoomAnimation:false, attributionControl:false});
-      this.layer_street = L.mapbox.tileLayer('mallbeury.map-omeomj70');
+//      this.layer_street = L.mapbox.tileLayer('mallbeury.map-omeomj70');
+      this.layer_street = L.mapbox.tileLayer('mallbeury.map-kply0zpa');
+      
       this.map.addLayer(this.layer_street);
                 
       // remove previous points

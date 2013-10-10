@@ -158,12 +158,17 @@ border-width:1px;
   margin-left: 4px;
 }
 
-/* TRAIL TITLE */
+/* TRAIL INFO */
 /******************************************/
-#trailplayer .trail_title {
+#trailplayer #trail_info {
+/*  
+*/  
   position: absolute;
-  top: 13px;
+  top: -213px;
   left: 20px;
+}
+
+#trailplayer .trail_title {
   width: 600px;
   color: #44b6f7;
 }
@@ -293,7 +298,7 @@ border-width:1px;
 }
 
 .trailstats_panel .content {
-  margin: 18px 0px 0px 12px;
+  margin: 24px 0px 0px 18px;
   line-height: 1em;
   color: #44B6F7;
 }

@@ -432,6 +432,14 @@ border-width:1px;
   -webkit-transition: opacity 2s ease-in-out;
 }
 
+.tb-move {
+  -webkit-transition: top 1s;
+  -moz-transition: top 1s;
+  -o-transition: top 1s;
+  transition: top 1s;    
+  -webkit-transform:translate3d(0,0,0);              
+}
+
 .star {
   float: left;
   width: 13px;

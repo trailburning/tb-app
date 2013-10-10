@@ -77,6 +77,8 @@ define([
         $('#trail_overlay .trailstats_panel').css('top', 0);
         $('#trail_overlay .trailaltitude_panel').css('top', 0);        
         $('#trail_overlay .trail_minimap').css('top', 0);
+        
+        $('#trail_info').css('top', 13);        
       }
       else {
         bSlideFull = true;        
@@ -88,6 +90,8 @@ define([
         $('#trail_overlay .trail_minimap').css('top', 500);
         
         $('#trail_overlay').css('top', 700);
+        
+        $('#trail_info').css('top', -213);        
       }     
     }
 
@@ -161,6 +165,10 @@ define([
       $('.image').resizeToParent();
     }        
         
+    function handleTrail() {
+      $('#trail_info').addClass('tb-move');
+    }
+      
     function handleMedia() {
       var jsonMedia = self.mediaModel.get('value');
       $.each(jsonMedia, function(key, media) {
@@ -191,6 +199,8 @@ define([
                                
         self.trailMiniMapView.render();
         self.trailMapView.render();
+
+        handleTrail();
 
         self.mediaModel.url = RESTAPI_BASEURL + 'v1/route/'+self.trailModel.get('id')+'/medias';
         self.mediaModel.fetch({
