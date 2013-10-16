@@ -1,0 +1,164 @@
+/* APP */
+/******************************************/
+#appview {
+/*  
+border-style:solid;
+border-width:1px;
+*/  
+  min-width: 1160px;
+}
+
+/* DEF HEADER */
+/******************************************/
+#def_header {
+  z-index: 100;
+  position: relative;
+  width: 100%;
+  height: 486px;
+  overflow: hidden;
+}
+
+#def_header .image_container {
+  width: 100%;
+  height: 486px;
+  overflow: hidden;
+}
+
+#def_header .event_title {
+  position: absolute;
+  top: 23px;
+  left: 32px;
+  color: #44b6f7;
+}
+
+/* PANELS */
+/******************************************/
+.panel_content {
+  position: relative;
+  margin: 0px auto 80px auto;
+  width: 1112px;
+}
+
+.panel_intro {
+  clear: both;
+  padding-top: 30px;
+  text-align: center;
+}
+
+.panel_intro .desc {
+  margin: 24px auto 0px auto;
+  width: 700px;
+  text-align: center;
+}
+
+.panel_intro .desc h3 {
+  padding-top: 20px;
+}
+
+.panel_intro .desc h4 {
+  padding-top: 24px;
+}
+
+/* GUIDE */
+/******************************************/
+.guide_content {
+  width: 100%;
+  height: 728px;
+  background: #FFF;
+}
+
+.guide_content .content {
+  margin: 0px auto 0px auto;
+  padding-top: 86px;
+  width: 700px;
+}
+
+.guide_content .content h2 {
+  text-align: center;
+}
+
+.guide_content .content h4 {
+  padding-top: 30px;
+}
+
+.guide_content .content .left {
+  float: left;
+  margin-top: 48px;
+  width: 272px;
+}
+
+.guide_content .content .left img {
+  margin-left: 24px;
+}
+
+.guide_content .content .right {
+  float: left;
+  margin-top: 48px;
+  margin-left: 32px;
+  width: 396px;
+}
+
+.guide_content .content .discover {
+  margin-top: 32px;
+}
+
+/* FOOTER PROMOTE */
+/******************************************/
+.footer_promote {
+  z-index: 100;
+  position: relative;
+  width: 100%;
+  height: 682px;
+  overflow: overflow;  
+}
+
+.footer_promote .image_container {
+  width: 100%;
+  height: 682px;
+  overflow: hidden;
+}
+
+.footer_promote .promote_title {
+  position: absolute;
+  top: 122px;
+  width: 100%;
+  text-align: center;
+}
+
+.footer_promote .desc {
+  margin-top: 18px;
+  font-size: 22px;
+  color: #FFF;
+  text-shadow: 1px 1px #000000;  
+}
+
+.footer_promote .signin {
+  margin-top: 18px;
+}
+
+/* RESPONSIVE */
+/******************************************/
+
+/* Large desktop */
+@media (min-width: 1200px) {
+}
+ 
+/* Portrait tablet to landscape and desktop */
+@media (min-width: 768px) and (max-width: 979px) {
+}
+ 
+/* Landscape phone to portrait tablet */
+@media (max-width: 767px) {
+}
+ 
+/* Landscape phones and down */
+@media (max-width: 480px) {
+}
+
+.image {
+  display: none;  
+}
+
+img {
+  max-width: none;
+}

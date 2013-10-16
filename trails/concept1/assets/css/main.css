@@ -37,7 +37,7 @@ border-width:1px;
 
 #trail_overlay {
   position: absolute;
-  top: 700px;
+  top: 596px;
   width: 100%;
   height: 218px;
   -webkit-transition: left 1s, right 1s, top 1s, bottom 1s;
@@ -45,6 +45,19 @@ border-width:1px;
   -o-transition: left 1s, right 1s, top 1s, bottom 1s;
   transition: left 1s, right 1s, top 1s, bottom 1s;    
   -webkit-transform:translate3d(0,0,0);
+}
+
+#trail_overlay .overlay_pull {
+  position: relative;
+  margin: -258px auto 0px auto;
+  width: 80px;
+  height: 40px;  
+}
+
+#trail_overlay .overlay_pull img {
+  position: absolute;
+  top: 21px;
+  left: 15px;
 }
 
 #trail_overlay .overlay_content {
@@ -58,20 +71,14 @@ border-width:1px;
   *zoom: 1;
   -webkit-box-shadow: 2px -4px 5px 0px rgba(0, 0, 0, 0.1);
      -moz-box-shadow: 2px -4px 5px 0px rgba(0, 0, 0, 0.1);
-          box-shadow: 2px -4px 5px 0px rgba(0, 0, 0, 0.1);  
-}
-
-#overlay_toggle {
-  position: absolute;
-  top: 20px;
-  right: 20px;
+          box-shadow: 2px -4px 5px 0px rgba(0, 0, 0, 0.1);
 }
 
 /* TRAIL MINI MAP */
 /******************************************/
 #trailplayer .trail_minimap {
   position: absolute;
-  top: 500px;
+  top: 80px;
   left: 864px;
   width: 314px;
   height: 218px;
@@ -195,6 +202,13 @@ border-width:1px;
 
 /* PANELS */
 /******************************************/
+
+.break {
+  width: 100%;
+  height: 2px;
+  background: url(../img/trans_line.png) repeat-x top left;  
+}
+
 .panel_content {
   position: relative;
   margin: 0px auto 80px auto;
@@ -211,7 +225,7 @@ border-width:1px;
 /******************************************/
 .trailaltitude_panel {
   position: absolute;
-  top: 400px;
+  top: 60px;
   left: 224px;
   width: 588px;
   height: 218px;
@@ -294,7 +308,7 @@ border-width:1px;
 /******************************************/
 .trailstats_panel {
   position: absolute;
-  top: 300px;
+  top: 40px;
   left: 0px;
   width: 200px;
   height: 218px;  
