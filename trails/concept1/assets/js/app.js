@@ -93,7 +93,7 @@ define([
         $('#trail_overlay .trailaltitude_panel').css('top', 60);
         $('#trail_overlay .trail_minimap').css('top', 80);
         
-        $('#trail_overlay').css('top', 596);
+        $('#trail_overlay').css('top', 600);
         
         $('#trail_info').css('top', -300);        
         $('#trail_info .trail_avatar').css('top', -300);       
