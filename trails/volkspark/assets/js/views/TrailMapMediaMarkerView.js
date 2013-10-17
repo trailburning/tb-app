@@ -44,6 +44,12 @@ define([
           break;
       }
     },            
+    show: function(){
+      this.marker.setOpacity(1);
+    },
+    hide: function(){
+      this.marker.setOpacity(0);
+    },    
     setActive: function(bActive){
       if (bActive) {
         this.marker.setIcon(this.mediaActiveIcon);
@@ -58,7 +64,6 @@ define([
       var self = this;
       
       this.marker = L.marker([this.model.get('coords').lat, this.model.get('coords').long], {icon: this.mediaInactiveIcon}).on('click', onClick).addTo(this.map);;
-
       function onClick(e) {       
         // fire event
         app.dispatcher.trigger("TrailMapMediaMarkerView:mediaclick", self);                        

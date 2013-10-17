@@ -80,13 +80,10 @@ define([
                 
       var attribs = this.model.toJSON();
       $(this.el).html(this.template(attribs));
-      
-      $('.btn', $(this.el)).click(function(evt){
-        // fire event
-        app.dispatcher.trigger("TrailMiniMapView:viewbtnclick", self);                
-      });
-      
+            
       this.map = L.mapbox.map('minimap', null, {dragging: false, touchZoom: false, scrollWheelZoom:false, doubleClickZoom:false, boxZoom:false, tap:false, zoomControl:false, zoomAnimation:false, attributionControl:false});
+      this.layer_street = L.mapbox.tileLayer('mallbeury.map-kply0zpa');
+      this.map.addLayer(this.layer_street);
                 
       // remove previous points
       while (this.arrLineCordinates.length > 0) {
@@ -109,9 +106,6 @@ define([
 
       this.renderMarkers();
                       
-      // show btn                      
-      $('.trailview_toggle', $(this.el)).show();
-
       this.bRendered = true;
 
       return this;

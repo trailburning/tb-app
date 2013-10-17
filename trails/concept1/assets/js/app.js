@@ -49,12 +49,11 @@ define([
     this.trailSlideView = new TrailSlideView({ el: '#trail_slide_view', model: this.mediaModel });
     this.trailMapView = new TrailMapView({ el: '#trail_map_view', model: this.trailModel });
     
-    this.trailAltitudeView = new TrailAltitudeView({ el: '#trailaltitudeview', model: this.trailModel });
+    this.trailAltitudeView = new TrailAltitudeView({ el: '#trail_altitude_view', model: this.trailModel });
 
     this.userProfileMap = null;
 
     bSlideFull = true;
-
 
     $('#trail_overlay .overlay_pull').click(function(evt){
       toggleSlide();
@@ -71,14 +70,14 @@ define([
     function toggleSlide() {
       if (bSlideFull) {
         bSlideFull = false;
-        $('#trail_slide_view .photos_container').css('top', -50);
+        $('#trail_slide_view').css('top', -50);
         $('#trailplayer').height(650);
         
         $('#trail_overlay').css('top', 650 - 218);
 
-        $('#trail_overlay .trailstats_panel').css('top', 0);
-        $('#trail_overlay .trailaltitude_panel').css('top', 0);        
-        $('#trail_overlay .trail_minimap').css('top', 0);
+        $('#trail_stats_view').css('top', 0);
+        $('#trail_altitude_view').css('top', 0);        
+        $('#trail_minimap_view').css('top', 0);
 
         $('#trail_info').css('top', 24);       
         $('#trail_info .trail_avatar').css('top', 0);       
@@ -86,12 +85,12 @@ define([
       }
       else {
         bSlideFull = true;        
-        $('#trail_slide_view .photos_container').css('top', 0);
+        $('#trail_slide_view').css('top', 0);
         $('#trailplayer').height(600);
         
-        $('#trail_overlay .trailstats_panel').css('top', 40);
-        $('#trail_overlay .trailaltitude_panel').css('top', 60);
-        $('#trail_overlay .trail_minimap').css('top', 80);
+        $('#trail_stats_view').css('top', 40);
+        $('#trail_altitude_view').css('top', 60);
+        $('#trail_minimap_view').css('top', 80);
         
         $('#trail_overlay').css('top', 600);
         
@@ -172,9 +171,16 @@ define([
     }        
         
     function handleTrail() {
+      $('#trailplayer').addClass('tb-size');
+      $('#trail_overlay').addClass('tb-move');
       $('#trail_info').addClass('tb-move');
       $('#trail_info .trail_avatar').addClass('tb-move');       
       $('#trail_info .trail_title').addClass('tb-move');
+      $('#trail_slide_view').addClass('tb-move');
+      
+      $('#trail_stats_view').addClass('tb-move');
+      $('#trail_minimap_view').addClass('tb-move');      
+      $('#trail_altitude_view').addClass('tb-move');            
     }
       
     function handleMedia() {
@@ -199,7 +205,7 @@ define([
     }
     
     // get trail    
-    this.trailModel.set('id', 44); 
+    this.trailModel.set('id', nTrail); 
     console.log('Fetch ID:'+this.trailModel.get('id'));            
     this.trailModel.fetch({
       success: function () {
@@ -216,6 +222,7 @@ define([
             console.log('Fetched media');
               
             handleMedia(self.mediaModel);
+            toggleSlide();
           }
         });        
       }      
