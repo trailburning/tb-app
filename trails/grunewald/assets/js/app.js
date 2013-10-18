@@ -253,50 +253,12 @@ define([
       $('.image').resizeToParent();
     }        
       
-    function formatAltitude(nStr){
-      nStr += '';
-      x = nStr.split('.');
-      x1 = x[0];
-      x2 = x.length > 1 ? '.' + x[1] : '';
-      var rgx = /(\d+)(\d{3})/;
-      while (rgx.test(x1)) {
-        x1 = x1.replace(rgx, '$1' + '’' + '$2');
-      }
-      return x1 + x2;
-    }
-
-    function handleStats() {
-      var jsonRoute = self.trailModel.get('value').route;
-      
-      // get weather
-      var weather = 'http://api.openweathermap.org/data/2.5/weather?lat='+jsonRoute.route_points[0].coords[1]+'&lon='+jsonRoute.route_points[0].coords[0];
-      $.ajax({
-        dataType: "jsonp",
-        url: weather,
-        success: function(data) {
-          var elField = $('.trailstats_panel .weather_desc');
-          elField.html(data['weather'][0].description);
-        }
-      });
-                  
-      var elTrailTerrain = $('.trailstats_panel .terrain');
-      if (elTrailTerrain.length) {
-        if (elTrailTerrain.html() == '') {
-          elTrailTerrain.html('<h1>'+formatAltitude(Math.floor(jsonRoute.tags.ascent))+' m</h1><h2>D+ / '+formatAltitude(Math.floor(jsonRoute.tags.descent))+'m D-</h2>');
-        }
-      }
-      
-      var elTrailLength = $('.trailstats_panel .length');
-      if (elTrailLength.length) {
-        if (elTrailLength.html() == '') {
-          elTrailLength.html('<h1>'+Math.floor(jsonRoute.length/1000)+' km</h1><h2>Length</h2>');
-        }
-      }
-    }
-    
-    function handleTrail() {
-      $('#trail_views').addClass('tb-move');
+    function handleTrail() {      
       $('#trailplayer').addClass('tb-size');
+      
+      $('#trail_views').addClass('tb-move');
+      $('#trail_slide_view').addClass('tb-size');
+      
       $('#trail_overlay').addClass('tb-move');
       $('#trail_info').addClass('tb-move');
       $('#trail_info .trail_avatar').addClass('tb-move');       
@@ -335,7 +297,6 @@ define([
     this.trailModel.set('id', nTrail);             
     this.trailModel.fetch({
       success: function () {
-        handleStats();
         self.trailMiniMapView.render();
         self.trailMapView.render();
 
