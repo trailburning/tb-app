@@ -11,6 +11,7 @@ define([
     initialize: function(){
       this.template = _.template($('#trailMapViewTemplate').text());        
             
+      this.elCntrls = this.options.elCntrls;            
       this.bRendered = false;
       this.map = null;
       this.polyline = null;
@@ -31,15 +32,18 @@ define([
       this.locationIcon = new LocationIcon({iconUrl: 'https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/icons/location.png'});
     },            
     show: function(){
+      this.showDetail(true);      
       $(this.el).show();
+      $(this.elCntrls).show();
     },
     hide: function(){
       $(this.el).hide();
+      $(this.elCntrls).hide();
     },
     buildBtns: function(){
       var self = this;
 
-      $('.zoomin_btn', $(this.el)).click(function(evt){
+      $('.zoomin_btn', $(this.elCntrls)).click(function(evt){
         if(self.map.getZoom() < self.map.getMaxZoom()) {
           self.map.zoomIn();                  
           $('.zoomout_btn').prop('disabled', false);
@@ -48,9 +52,13 @@ define([
         if(self.map.getZoom() >= self.map.getMaxZoom()-1) {
           $('.zoomin_btn').prop('disabled', true);
         }
+                
+        if(self.map.getZoom() > 8) {
+          self.showDetail(true);
+        }
       });
 
-      $('.zoomout_btn', $(this.el)).click(function(evt){
+      $('.zoomout_btn', $(this.elCntrls)).click(function(evt){
         if(self.map.getZoom() > self.map.getMinZoom()+2) {
           self.map.zoomOut();                  
           $('.zoomin_btn').prop('disabled', false);
@@ -59,9 +67,13 @@ define([
         if(self.map.getZoom() <= self.map.getMinZoom()+3) {
           $('.zoomout_btn').prop('disabled', true);
         }
+        
+        if(self.map.getZoom() <= 10) {
+          self.showDetail(false);
+        }
       });
       
-      $('.view_btn', $(this.el)).click(function(evt){        
+      $('.view_btn', $(this.elCntrls)).click(function(evt){
         switch (self.nMapView) {
           case MAP_SAT_VIEW:
             self.nMapView = MAP_STREET_VIEW;
@@ -98,6 +110,29 @@ define([
       var trailMapMediaMarkerView = new TrailMapMediaMarkerView({ map: this.map, model: mediaModel });
       this.arrMapMediaViews.push(trailMapMediaMarkerView);
     },
+    showDetail: function(bShow){
+      if (!this.arrMapMediaViews.length) {
+        return;
+      }
+
+      if (bShow) {
+        $('.leaflet-overlay-pane').show();
+      }
+      else {
+        $('.leaflet-overlay-pane').hide();        
+      }
+
+      var trailMapMediaView = null;
+      for (var nMedia=0; nMedia < this.arrMapMediaViews.length; nMedia++) {
+        trailMapMediaView = this.arrMapMediaViews[nMedia];
+        if (bShow) {
+          trailMapMediaView.show();
+        }
+        else {
+          trailMapMediaView.hide();          
+        }
+      }
+    },    
     renderMarkers: function(){
       if (!this.arrMapMediaViews.length) {
         return;

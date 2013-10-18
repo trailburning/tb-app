@@ -111,7 +111,7 @@ h1.tb {
   *zoom: 1;
   -webkit-box-shadow: 2px 4px 5px 0px rgba(0, 0, 0, 0.1);
      -moz-box-shadow: 2px 4px 5px 0px rgba(0, 0, 0, 0.1);
-          box-shadow: 2px 2px 1px 0px rgba(0, 0, 0, 0.1);    
+          box-shadow: 2px 4px 5px 0px rgba(0, 0, 0, 0.1);    
 }
 
 h3.tb {
@@ -142,7 +142,7 @@ h4.tb {
   *zoom: 1;
   -webkit-box-shadow: 2px 4px 5px 0px rgba(0, 0, 0, 0.1);
      -moz-box-shadow: 2px 4px 5px 0px rgba(0, 0, 0, 0.1);
-          box-shadow: 2px 2px 1px 0px rgba(0, 0, 0, 0.1);  
+          box-shadow: 2px 4px 5px 0px rgba(0, 0, 0, 0.1);  
 }
 
 /* HEADER */
@@ -324,7 +324,7 @@ border-width:1px;
 /******************************************/
 #bigbar {
   width: 100%;
-  margin-top: 18px;  
+  padding-top: 18px;  
   font-size: 14px;
   line-height: 20px;
   color: #979797;
@@ -447,6 +447,22 @@ border-width:1px;
   -webkit-transition: opacity 2s ease-in-out;
 }
 
+.tb-move {
+  -webkit-transition: top 1s;
+  -moz-transition: top 1s;
+  -o-transition: top 1s;
+  transition: top 1s;    
+  -webkit-transform:translate3d(0,0,0);              
+}
+
+.tb-size {
+  -webkit-transition: height 1s;
+  -moz-transition: height 1s;
+  -o-transition: height 1s;
+  transition: height 1s;    
+  -webkit-transform:translate3d(0,0,0);
+}
+
 .star {
   float: left;
   width: 13px;
@@ -466,6 +482,12 @@ border-width:1px;
   width: 13px;
   height: 14px;
   background: url(../img/star_half.png) no-repeat top left;    
+}
+
+.line_break {
+  width: 100%;
+  height: 2px;
+  background: url(../img/trans_line.png) repeat-x top left;  
 }
 
 .trans-line {

@@ -70,11 +70,6 @@ define([
         $('.photos_container', this.el).append(photoView.el);                        
       }
 
-      $('.btn', $(this.el)).click(function(evt){
-        // fire event
-        app.dispatcher.trigger("TrailMiniSlideView:viewbtnclick", self);                
-      });
-
       this.bRendered = true;
 
       return this;

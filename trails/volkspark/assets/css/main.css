@@ -23,17 +23,12 @@ border-width:1px;
   height: 100%;  
 }
 
-.event_logo {
-  position: absolute;
-  top: 23px;
-  right: 34px;  
-}
-
 #trail_overlay {
+  z-index: 1;  
   position: absolute;
-  top: 600px;
+  top: 0px;
   width: 100%;
-  height: 218px;
+  height: 218px;  
 }
 
 #trail_overlay .overlay_pull {
@@ -111,7 +106,7 @@ border-width:1px;
   left: 234px;
   width: 688px;
   height: 218px;
-  background: rgba(255, 255, 255, 1);    
+  background: #FFF;    
   border: none;
 }
 
@@ -190,14 +185,14 @@ border-width:1px;
   height: 204px;
 }
 
-#trailplayer .trail_minislide #minislide .photos_container {  
+#minislide .photos_container {  
   position: absolute;
   width: 100%;
   height: 100%;
   overflow: hidden;
 }
 
-#trailplayer .trail_minislide #minislide .image_container {
+#minislide .image_container {
   position: absolute;
   top: 0px;
   left: 0px;  
@@ -220,7 +215,7 @@ border-width:1px;
 #trail_slide_view .photos_container {  
   position: absolute;  
   width: 100%;
-  height: 700px;  
+  height: 100%;  
   overflow: hidden;  
 }
 
@@ -229,7 +224,7 @@ border-width:1px;
   top: 0px;
   left: 0px;  
   width: 100%;
-  height: 700px;  
+  height: 100%;  
   overflow: hidden;
 }
 
@@ -245,7 +240,6 @@ border-width:1px;
   position: relative;
   width: 100%;
   height: 700px;
-  overflow: hidden;
 }
 
 #trail_map_view #map_large {
@@ -335,11 +329,45 @@ border-width:1px;
   background-position: 0 -74px;
 }
 
+/* 2COL PANELS */
+/******************************************/
+.two_col_panels {
+  clear: left;
+  width: 100%;
+}
+
+.two_col_panels .left {
+  float: left;
+  width: 544px;
+}
+
+.two_col_panels .right {
+  float: left;
+  width: 568px;
+}
+
 /* PANELS */
 /******************************************/
+.panel_container {
+  position: relative;
+  width: 100%;  
+}
+
+.panel_container .line_break {
+  z-index: 100;
+  position: absolute;
+  top: 0px;
+}
+
+.panel_content_container {
+  z-index: 100;
+  position: relative;
+  background: #F0F0F0;
+}
+
 .panel_content {
   position: relative;
-  margin: 0px auto 80px auto;
+  margin: 0px auto 164px auto;
   width: 1112px;
 }
 
@@ -349,10 +377,103 @@ border-width:1px;
   padding-top: 22px;
 }
 
+/* TRAIL DETAIL PANEL */
+/******************************************/
+.trail_detail_panel {
+  width: 544px;
+}
+
+.trail_detail_panel .content {
+  margin: 34px 72px 28px 24px;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.3em;  
+  color: #000000;
+}
+
+.trail_detail_panel .content .title {
+  font-size: 42px;
+  font-weight: 400;
+  line-height: 1em;
+  color: #44B6F7;
+}
+
+.trail_detail_panel .content h1 {
+  margin: 24px 0px 22px 0px;  
+  padding: 0px;
+  font-size: 22px;
+  line-height: 1.3em;
+  font-weight: 400;
+  color: #979797;
+}
+
+/* TRAIL WEATHER PANEL */
+/******************************************/
+.trail_weather_panel {
+  margin: 0px 0px 0px 24px;
+  width: 544px;
+}
+
+.trail_weather_panel .content {
+  margin: 34px 0px 28px 24px;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.3em;  
+  color: #44b6f7;
+}
+
+.trail_weather_panel .content .title {
+  font-size: 42px;
+  font-weight: 400;
+  line-height: 1em;
+  color: #44B6F7;
+}
+
+.trail_weather_panel .content .desc {
+  padding: 8px 0px 0px 4px;
+}
+
+.trail_weather_panel h1 {
+  margin: 0px;
+  padding: 0px;
+  font-size: 50px;
+  line-height: 1em;
+  font-weight: 400;
+}
+
+.trail_weather_panel h2 {
+  margin: 0px;
+  padding: 0px 0px 0px 2px;
+  font-size: 16px;
+  line-height: 1.8em;
+  font-weight: 300;
+}
+
+.trail_weather_panel .detail {
+  padding: 0px 0px 0px 4px;
+}
+
+.trail_weather_panel .detail .text {
+  float: left;
+  width: 302px;
+}
+
+.trail_weather_panel .detail .icon {
+  float: left;
+}
+
+.trail_weather_panel .detail .temp {
+  margin-top: 54px;
+}
+
+.trail_weather_panel .detail .wind {
+  margin-top: 22px;
+}
+
 /* OTHER TRAILS PANEL */
 /******************************************/
 .othertrails_panel {
-  margin: 0px 0px 0px 0px;
+  margin: 24px 0px 0px 0px;
   width: 544px;
   height: 336px;
 }
@@ -414,7 +535,7 @@ border-width:1px;
 /* TRAIL GEAR PANEL */
 /******************************************/
 .trailgear_panel {
-  margin: 0px 0px 0px 24px;
+  margin: 24px 0px 0px 24px;
   width: 544px;
   height: 336px;
 }

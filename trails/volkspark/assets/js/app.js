@@ -3,9 +3,6 @@ var app = app || {};
 var RESTAPI_BASEURL = 'http://trailburning.herokuapp.com/api/';
 //var RESTAPI_BASEURL = 'http://localhost:8888/api/';
 
-// weather
-// http://api.openweathermap.org/data/2.5/weather?q=Berlin,Germany&units=metric
-
 define([
   'underscore', 
   'backbone',
@@ -16,8 +13,9 @@ define([
   'views/TrailSlideView',  
   'views/TrailMapView',  
   'views/TrailStatsView',  
-  'views/TrailAltitudeView'  
-], function(_, Backbone, TrailModel, TrailMediaModel, TrailMiniMapView, TrailMiniSlideView, TrailSlideView, TrailMapView, TrailStatsView, TrailAltitudeView){
+  'views/TrailAltitudeView',
+  'views/TrailWeatherView'
+], function(_, Backbone, TrailModel, TrailMediaModel, TrailMiniMapView, TrailMiniSlideView, TrailSlideView, TrailMapView, TrailStatsView, TrailAltitudeView, TrailWeatherView){
   app.dispatcher = _.clone(Backbone.Events);
   
   var MIN_WIDTH = 1160;
@@ -40,6 +38,7 @@ define([
     
     this.nTrailView = SLIDE_VIEW;
     this.nSlideShowState = SLIDESHOW_INIT;
+    this.nPlayerHeight = 0;
     this.slideTimer = null;
     this.nCurrSlide = -1;
     this.mediaCollection = new Backbone.Collection();
@@ -54,6 +53,8 @@ define([
 
     this.trailSlideView = new TrailSlideView({ el: '#trail_slide_view', model: this.mediaModel });
     this.trailMapView = new TrailMapView({ el: '#trail_map_view', elCntrls: '#view_map_btns', model: this.trailModel });
+    
+    this.trailWeatherView = new TrailWeatherView({ el: '#trail_weather_view', model: this.trailModel });
     
     this.userProfileMap = null;
     
@@ -86,9 +87,9 @@ define([
         bSlideFull = false;
         
         $('#trail_views').css('top', -50);
-        $('#trailplayer').height(650);
+        $('#trailplayer').height(self.nPlayerHeight+50);
         
-        $('#trail_overlay').css('top', 650 - 218);
+        $('#trail_overlay').css('top', -218);
 
         $('#trail_stats_view').css('top', 0);
         $('#trail_altitude_view').css('top', 0);        
@@ -102,13 +103,13 @@ define([
         bSlideFull = true;        
 
         $('#trail_views').css('top', 0);
-        $('#trailplayer').height(600);
+        $('#trailplayer').height(self.nPlayerHeight);
         
         $('#trail_stats_view').css('top', 40);
         $('#trail_altitude_view').css('top', 60);
         $('#trail_mini_view').css('top', 80);
         
-        $('#trail_overlay').css('top', 600);
+        $('#trail_overlay').css('top', 0);
         
         $('#trail_info').css('top', -300);        
         $('#trail_info .trail_avatar').css('top', -300);       
@@ -222,6 +223,19 @@ define([
     }
     
     function handleResize() {
+      self.nPlayerHeight = Math.round($('#trailplayer').width() / 2);
+                  
+      var nExtendHeight = 100;                  
+      if (bSlideFull) {
+        $('#trailplayer').height(self.nPlayerHeight);            
+      }
+      else {
+        $('#trailplayer').height(self.nPlayerHeight + 50);            
+      }      
+      $('#trail_slide_view').height(self.nPlayerHeight+nExtendHeight);
+      $('#trail_map_view').height(self.nPlayerHeight+nExtendHeight);
+      $('#trail_map_view .map_container').height(self.nPlayerHeight+nExtendHeight);
+      
       switch (self.nTrailView) {
         case SLIDE_VIEW:
           self.trailSlideView.render($('#appview').width());
@@ -287,12 +301,12 @@ define([
       $('#trail_info').addClass('tb-move');
       $('#trail_info .trail_avatar').addClass('tb-move');       
       $('#trail_info .trail_title').addClass('tb-move');
-      
-//      $('#trail_slide_view').addClass('tb-move');
-      
+            
       $('#trail_stats_view').addClass('tb-move');
       $('#trail_altitude_view').addClass('tb-move');            
       $('#trail_mini_view').addClass('tb-move');      
+      
+      self.trailWeatherView.render();
     }
     
     function handleMedia() {

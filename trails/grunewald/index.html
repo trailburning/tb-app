@@ -38,128 +38,161 @@ var nTrail = 43;
   </div>    
 
   <div id="trailplayer">
-    <div class="left">
-      <div class="trailprofile">
-        <div class="avatar"><a href="../../profile/mattallbeury"><img src="assets/img/trailplayer/avatar.png" border="0"></a></div>
-        <div class="title">by <strong>Matt Allbeury</strong></div>
-        <div class="text">
-        The Grunewald is a forest located in the western side of Berlin on the east side of the river Havel.         
-        </div>        
-      </div>      
-      <div id="trail_miniviews">        
-        <div id="trail_minimap_view" class="trail_minimap"></div>
-        <div id="trail_minislide_view" class="trail_minislide"></div>
+    <div id="trail_views">        
+      <div id="trail_slide_view"></div>      
+      <div id="trail_map_view"></div>
+    </div>
+    <div id="trail_info">      
+      <div class="trail_avatar"><img src="assets/img/trailplayer/avatar_130.png"></div>
+      <div class="trail_title">
+        <h1>Grunewald Forest</h1>
+        <br/>
+        <h1>Berlin</h1>
+        <br/>
+        <h2>by <strong>Matt Allbeury</strong></h2>
       </div>
     </div>
-    <div class="right">      
-      <div id="trail_views">        
-        <div id="trail_slide_view"></div>      
-        <div id="trail_map_view"></div>      
-        <div class="trail_title">
-          <h1 class="title_shadow">Grunewald Forest</h1>
-          <br/>
-          <h1 class="title_shadow">Berlin</h1>
-        </div>      
-      </div>
+    <div id="view_map_btns">        
+      <div class='controls'>
+        <span class="btn btn-tb zoomin_btn">+</span>          
+        <span class="btn btn-tb zoomout_btn">-</span>
+        <span class="btn btn-tb view_btn">Satellite</span>          
+      </div>    
+    </div>    
+    <div id="view_toggle">        
+      <span class="button">Change View</span>
     </div>
     <div class="trans-line"></div>
   </div>
-  
-  <div class="panel_content">            
-    <div id="bigbar">
-      <div class="crumbs">
-        <div class="crumb_lead"><a href="../../">Home</a></div>
-        <div class="crumb_links"><a href="../../trails/grunewald">Grunewald Forest</a></div>
-      </div>
-      <div class="share">
-        <div class="link facebook"><a href="http://www.facebook.com/share.php?u=www.trailburning.com" target="_blank" class="button btnFacebook">Facebook</a></div>
-        <div class="link twitter"><a href="http://twitter.com/share?text=Get ready for a new trail experience!" target="_blank" class="button btnTwitter">Twitter</a></div>
-        <div class="link googleplus"><a href="https://plus.google.com/share?url=www.trailburning.com" target="_blank" class="button btnGooglePlus">Google+</a></div>          
-      </div>
-    </div>
-            
-    <div class="panels clearfix">                    
-      <div id="trailaltitudeview" class="panel trailaltitude_panel">            
-      </div>
-      <div class="panel trailstats_panel">
-        <div class="content">
-          <div class="weather">
-            <div class="icon sunny"></div>
-            <h2><span class="weather_desc"></span></h2>
+
+  <div class="panel_container">       
+    <div class="panel_content_container">       
+      <div class="panel_content">       
+        <div id="bigbar">
+          <div class="crumbs">
+            <div class="crumb_lead"><a href="../../">Home</a></div>
+            <div class="crumb_links"><a href="../../trails/grunewald">Grunewald Forest</a></div>
           </div>
-          <div class="terrain"></div>          
-          <div class="length"></div>
+          <div class="share">
+            <div class="link facebook"><a href="http://www.facebook.com/share.php?u=www.trailburning.com" target="_blank" class="button btnFacebook">Facebook</a></div>
+            <div class="link twitter"><a href="http://twitter.com/share?text=Get ready for a new trail experience!" target="_blank" class="button btnTwitter">Twitter</a></div>
+            <div class="link googleplus"><a href="https://plus.google.com/share?url=www.trailburning.com" target="_blank" class="button btnGooglePlus">Google+</a></div>          
+          </div>
         </div>
-      </div>
-      
-      <div class="two_col_panels">
-        <div class="left">
-          <div class="panel othertrails_panel">
-            <div class="content">
-              <div class="title">You may also like</div>
-              <div class="trails">                
-                <a href="../../trails/airaforce">
-                <div class="tb-photo-btn">                  
-                  <div class="image_container"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/airaforce.jpg" class="image" /></div>      
-                  <div class="trail_title">
-                    <h1 class="title_shadow">Aira Force, Lake District</h1>
-                    <h2 class="title_shadow">by <strong>Matt Allbeury</strong></h2>
+                
+        <div class="panels clearfix">     
+          
+          <div class="two_col_panels">
+            <div class="left">
+              
+              <div class="panel trail_detail_panel">
+                <div class="content">
+                  <div class="title">About the trail</div>
+                  <h1>The Grunewald is a forest located in the western side of Berlin on the east side of the river Havel.</h1>
+                </div>
+              </div>
+              
+              <div class="panel othertrails_panel">
+                <div class="content">
+                  <div class="title">You may also like</div>
+                  <div class="trails">
+                    <a href="../../trails/airaforce">
+                    <div class="tb-photo-btn">                  
+                      <div class="image_container"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/airaforce.jpg" class="image" /></div>      
+                      <div class="trail_title">
+                        <h1 class="title_shadow">Aira Force, Lake District</h1>
+                        <h2 class="title_shadow">by <strong>Matt Allbeury</strong></h2>
+                      </div>
+                    </div>
+                    </a>
                   </div>
                 </div>
-                </a>
               </div>
-            </div>
-          </div>
-        </div>      
-        <div class="right">          
-          <div class="panel promote_panel">
-            <div class="content">
-              <div class="title">Run</div>
-              <a href="../../events/ultraks">
-              <div class="photo tb-photo-btn">
-                <div class="image_container"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/ultraks.jpg" class="image" /></div>
-                <div class="promote_title">
-                  <h1 class="title_shadow">Matterhorn Ultraks</h1>
-                  <br />
-                  <h1 class="title_shadow">Switzerland</h1>
-                </div>
+            </div>  
+            <div class="right">
+              <div id="trail_weather_view" class="panel trail_weather_panel"></div>
+                            
+<!--              
+              <div class="panel trailgear_panel">
+                <div class="content">
+                  <div class="title">Get ready for the trail</div>
+                  <div class="gear_list">
+                    <div class="gear">
+                      <div class="photo"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/brands/peakperformance/ZipJacket.jpg" /></div>
+                      <h1>Zip Jacket</h1>
+                      <h2>Peak Performance</h2>
+                    </div>
+                    <div class="gear">
+                      <div class="photo"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/brands/peakperformance/ZipJacket_women.jpg" /></div>
+                      <h1>Womens Zip Jacket</h1>
+                      <h2>Peak Performance</h2>
+                    </div>            
+                    <div class="gear">
+                      <div class="photo"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/brands/scott/MK4plus.jpg" /></div>
+                      <h1>MK4+ Shoe</h1>
+                      <h2>Scott Sports</h2>
+                    </div>
+                  </div>
+                </div>                              
               </div>
-              </a>
-            </div>
+-->              
+            </div>  
           </div>
-        </div>      
-      </div>            
-    </div>    
-  </div>          
-  
-  <div id="footerview">
-    <div class="left">
-      <div class="copyright">Copyright © 2013, Augmented Media Projects Ltd</div>    
-      <div class="links">
-        <div class="link"><a href="">About</a></div>
-        <div class="link"><a href="">Press Kit</a></div>
+                         
+        </div>
+      </div>    
+              
+      <div id="footerview">
+        <div class="left">
+          <div class="copyright">Copyright © 2013, Augmented Media Projects Ltd</div>    
+          <div class="links">
+            <div class="link"><a href="">About</a></div>
+            <div class="link"><a href="">Press Kit</a></div>
+          </div>
+        </div>
+        <div class="right">
+          <div class="social email"><a href="mailto:?subject=Get ready for a new trail experience!&body=Thought you might be interested in this - trailburning.com" class="button btnEmail">Email</a></div>
+          <div class="social facebook"><a href="http://www.facebook.com/share.php?u=www.trailburning.com" target="_blank" class="button btnFacebook">Facebook</a></div>
+          <div class="social twitter"><a href="http://twitter.com/share?text=Get ready for a new trail experience!" target="_blank" class="button btnTwitter">Twitter</a></div>
+          <div class="social googleplus"><a href="https://plus.google.com/share?url=www.trailburning.com" target="_blank" class="button btnGooglePlus">Google+</a></div>          
+        </div>
+      </div>          
+    </div>
+
+    <div id="trail_overlay">
+      <div class="overlay_content">
+        <div id="trail_stats_view" class="trailstats_panel"></div>
+        <div id="trail_altitude_view" class="trail_altitude_panel"></div>
+        <div id="trail_mini_view">
+          <div id="trail_minimap_view" class="trail_minimap"></div>
+          <div id="trail_minislide_view" class="trail_minislide"></div>
+          <div class='border_top'></div>
+          <div class='border_left'></div>
+        </div>
+      </div>
+      <div class="overlay_pull">
+        <img src="assets/img/trailplayer/pull.png">
       </div>
     </div>
-    <div class="right">
-      <div class="social email"><a href="mailto:?subject=Get ready for a new trail experience!&body=Thought you might be interested in this - trailburning.com" class="button btnEmail">Email</a></div>
-      <div class="social facebook"><a href="http://www.facebook.com/share.php?u=www.trailburning.com" target="_blank" class="button btnFacebook">Facebook</a></div>
-      <div class="social twitter"><a href="http://twitter.com/share?text=Get ready for a new trail experience!" target="_blank" class="button btnTwitter">Twitter</a></div>
-      <div class="social googleplus"><a href="https://plus.google.com/share?url=www.trailburning.com" target="_blank" class="button btnGooglePlus">Google+</a></div>          
-    </div>
+    
+    <div class="line_break"></div>    
   </div>          
 </div>
 
+<script type="text/template" id="trailStatsViewTemplate">
+  <div class="content">
+    <div class="length"></div>
+    <div class="terrain"></div>          
+  </div>
+</script>
+
 <script type="text/template" id="trailMiniMapViewTemplate">
-  <div id='minimap'></div>
-  <div class="trailview_toggle"><button class="btn btn-tb">View map</button></div>
+  <div id='minimap'></div>  
 </script>
 
 <script type="text/template" id="trailMiniSlideViewTemplate">
   <div id='minislide'>
     <div class="photos_container"></div>
-  </div>
-  <div class="trailview_toggle">
-    <button class="btn btn-tb">View pictures</button>
   </div>
 </script>
 
@@ -168,21 +201,14 @@ var nTrail = 43;
 </script>
 
 <script type="text/template" id="trailSlidePhotoViewTemplate">
-  <div class="slide_container">
-    <div class="image_container">
-      <img src="https://s3-eu-west-1.amazonaws.com/<%= versionLargePath%>" class="image" />
-    </div>
+  <div class="image_container tb-fade">
+    <img src="https://s3-eu-west-1.amazonaws.com/<%= versionLargePath%>" class="image" />
   </div>
 </script>
 
 <script type="text/template" id="trailMapViewTemplate">
   <div class="map_container">
     <div id='map_large'></div>
-    <div class='controls'>
-      <span class="btn btn-tb zoomin_btn">+</span>          
-      <span class="btn btn-tb zoomout_btn">-</span>
-      <span class="btn btn-tb view_btn">Satellite</span>          
-    </div>    
   </div>
 </script>
 
@@ -195,6 +221,20 @@ var nTrail = 43;
 
 <script type="text/template" id="trailMediaMarkerViewTemplate">
   <div class="marker"></div>
+</script>
+
+<script type="text/template" id="trailWeatherViewTemplate">
+  <div class="content">
+    <div class="title">Today's weather</div>
+    <div class="desc"></div>
+    <div class="detail clearfix">                  
+      <div class="text">
+        <div class="temp"></div>
+        <div class="wind"></div>
+      </div>
+      <div class="icon"></div>
+    </div>
+  </div>
 </script>
 
 <script src="assets/js/libs/jquery-1.8.3.min.js"></script>

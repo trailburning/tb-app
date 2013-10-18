@@ -145,13 +145,6 @@ h4.tb {
           box-shadow: 2px 4px 5px 0px rgba(0, 0, 0, 0.1);  
 }
 
-.blank_2col_panel {
-  float: left;  
-  margin: 24px 0px 0px 0px;
-  width: 544px;
-  height: 336px;
-}
-
 /* HEADER */
 /******************************************/
 #headerview {
@@ -331,7 +324,7 @@ border-width:1px;
 /******************************************/
 #bigbar {
   width: 100%;
-  margin-top: 18px;  
+  padding-top: 18px;  
   font-size: 14px;
   line-height: 20px;
   color: #979797;

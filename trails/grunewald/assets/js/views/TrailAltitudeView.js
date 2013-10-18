@@ -1,21 +1,14 @@
 define([
   'underscore', 
   'backbone',
-  'views/TrailMediaMarkerView',  
-  'views/TrailSlidePhotoView'
-], function(_, Backbone, TrailMediaMarkerView, TrailSlidePhotoView){
+  'views/TrailMediaMarkerView'
+], function(_, Backbone, TrailMediaMarkerView){
 
   var TrailAltitudeView = Backbone.View.extend({
     initialize: function(){
       this.template = _.template($('#traiAltitudeViewTemplate').text());        
-            
-      app.dispatcher.on("TrailSlidePhotoView:imageready", this.onSlidePhotoReady, this);
-            
+                        
       this.bRendered = false;      
-      this.arrSlidePhotos = [];
-      this.nCurrSlide = -1;
-      this.bSlideReady = false;
-      this.bWaitingForSlide = false;
 
       this.HeightToWidthFactor = 8;      
       this.fXFactor = 0;
@@ -63,43 +56,8 @@ define([
       }
       this.currMediaMarker = this.arrMediaPoints[nMedia];
       this.currMediaMarker.setActive(true);
-
-      this.bSlideReady = false;     
-      this.bWaitingForSlide = true;
-       
-      var photoView = null;      
-      // hide curr photo
-      if (this.nCurrSlide >= 0) {
-        photoView = this.arrSlidePhotos[this.nCurrSlide];      
-        photoView.hide();
-
-        var elSlideContainer = $('.slide_container', $(photoView.el));
-        elSlideContainer.css({ opacity: 0 });                
-      }
-      this.nCurrSlide = nMedia;
-      
-      photoView = this.arrSlidePhotos[this.nCurrSlide];
-      photoView.render($(this.el).width);    
-  
-      // position slide
-      var elSlideContainer = $('.slide_container', $(photoView.el));
-      
-      var elMarker = $('.marker', this.currMediaMarker.el); 
-
-      var nX = elMarker.position().left - ((elSlideContainer.width()+4) / 2) + (elMarker.width() / 2);
-      var nY = elMarker.position().top - (elSlideContainer.height()+4) - 20;
-
-      elSlideContainer.css('left', nX);
-      elSlideContainer.css('top', nY);        
-                    
-      $('.image', photoView.el).resizeToParent();
-      
-      this.checkSlideState();            
     },    
     addMedia: function(mediaModel){
-      var photoView = new TrailSlidePhotoView({ model: mediaModel });
-      this.arrSlidePhotos.push(photoView);
-      
       var jsonPoints = this.model.get('value').route.route_points;
       
       var self = this;
@@ -185,12 +143,6 @@ define([
       this.renderBackground(fTrailLengthMetres);                  
       this.renderTrail(jsonPoints, fTrailLengthMetres);
       this.renderMarkers();
-
-      // update container width
-      for (var nMedia=0; nMedia < this.arrSlidePhotos.length; nMedia++) {
-        var photoView = this.arrSlidePhotos[nMedia];
-        $('.photos_container', this.el).append(photoView.el);
-      }
 
       this.bRendered = true;
 
@@ -303,30 +255,6 @@ define([
         $('.marker', viewMediaMarkerView.el).css('left', nX);
         $('.marker', viewMediaMarkerView.el).css('top', nY);
       }
-    },
-    checkSlideState: function(){
-      var self = this;
-
-      if (this.bSlideReady && this.bWaitingForSlide) {
-        this.bWaitingForSlide = false;
-                
-        var photoView = this.arrSlidePhotos[this.nCurrSlide];        
-        photoView.show();
-        
-        var elSlideContainer = $('.slide_container', $(photoView.el));
-        elSlideContainer.css({ opacity: 1 });                        
-      }
-    },
-    onSlidePhotoReady: function(trailSlidePhotoView){
-      var nCurrCID = trailSlidePhotoView.model.cid;      
-      var photoView = this.arrSlidePhotos[this.nCurrSlide];
-      if (photoView) {
-        nCurrCID = photoView.model.cid;
-      }
-      if (nCurrCID == trailSlidePhotoView.model.cid) {
-        this.bSlideReady = true;
-        this.checkSlideState();
-      }      
     }            
   });
 
