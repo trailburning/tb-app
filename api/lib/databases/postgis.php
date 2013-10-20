@@ -309,6 +309,21 @@ class Postgis
     $this->commit();
   }
 
+  public function deleteMedia($media_id) {
+    $this->beginTransaction();
+    $q = "DELETE FROM medias WHERE medias.id = ?";
+    $pq = $this->prepare($q);
+    $success = $pq->execute(array($media_id));
+    if (!$success) {
+      $this->rollBack();
+      throw (new ApiException("Failed to delete media $media_id", 500));
+    }
+    if ($pq->rowCount() < 1)
+      throw (new ApiException("Failed to delete non existing media $route_id", 404));
+  
+    $this->commit();
+  }
+
   public function importPicture($picture) {
     $this->beginTransaction();
 
