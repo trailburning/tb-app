@@ -209,11 +209,12 @@ $slim->post('/v1/route/:id/medias/add', function ($route_id) use ($slim) {
 });
 
 
-$slim->get('/v1/media/:id', function ($media_id) use ($slim) {
+/* Please note: this doesn't actually remove the file from Amazon S3 */
+$slim->delete('/v1/media/:id', function ($media_id) use ($slim) {
   $db = new \TB\Postgis(
-    $_SERVER['DB_DRIVER'].':host='.$_SERVER['DB_HOST'].'; port='.$_SERVER['DB_PORT'].';dbname='.$_SERVER['DB_DATABASE'], 
-    $_SERVER['DB_USER'], 
-    $_SERVER['DB_PASSWORD'], 
+    $_SERVER['DB_DRIVER'].':host='.$_SERVER['DB_HOST'].'; port='.$_SERVER['DB_PORT'].';dbname='.$_SERVER['DB_DATABASE'],
+    $_SERVER['DB_USER'],
+    $_SERVER['DB_PASSWORD'],
     array(PDO::ATTR_PERSISTENT => true, PDO::ERRMODE_EXCEPTION => true)
   );
 
@@ -221,8 +222,8 @@ $slim->get('/v1/media/:id', function ($media_id) use ($slim) {
   $res = $slim->response();
   $res['Content-Type'] = 'application/json';
   $slim->render(
-    'ApiReplyView.php', 
-    array("value" => $media_id, 'usermsg' => 'success'), 
+    'ApiReplyView.php',
+    array("value" => $media_id, 'usermsg' => 'success'),
     200
   );
 });
