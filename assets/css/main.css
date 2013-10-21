@@ -113,7 +113,7 @@ border-width:1px;
 
 .trail_card_panel .summary {
   height: 64px;
-  margin: 12px 0px 0px 14px;
+  margin: 4px 0px 0px 14px;
   font-size: 16px;
   color: #44B6F7;
 }
@@ -128,11 +128,12 @@ border-width:1px;
 
 .trail_card_panel .summary .avatar {
   float: left;  
+  margin-top: 4px;
 }
 
 .trail_card_panel .summary .detail {
   float: left;  
-  margin-top: 10px;
+  margin-top: 14px;
   margin-left: 6px;
 }
 

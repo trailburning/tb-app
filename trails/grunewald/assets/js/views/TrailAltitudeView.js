@@ -19,7 +19,7 @@ define([
       this.currElMarker = null;
       
       this.objTrailMarginRect = new Object();
-      this.objTrailMarginRect.left = 50;
+      this.objTrailMarginRect.left = 60;// allow space to alt title
       this.objTrailMarginRect.right = 50;
       this.objTrailMarginRect.top = 20;
       this.objTrailMarginRect.bottom = 60;
@@ -149,10 +149,12 @@ define([
       return this;
     },
     renderBackground: function(fTrailLengthMetres) {
+      var nTextHeight = 16;
+      
       this.context.beginPath();
 
       this.context.fillStyle = 'rgba(68,182,252,1)';
-      this.context.font = '16px Arial';
+      this.context.font = nTextHeight + 'px Arial';
       this.context.textAlign = 'center';
       
       var nMarkerDistance = 1;
@@ -254,7 +256,11 @@ define([
       
         $('.marker', viewMediaMarkerView.el).css('left', nX);
         $('.marker', viewMediaMarkerView.el).css('top', nY);
-      }
+        
+        $('.alt', viewMediaMarkerView.el).css('left', 0);
+        $('.alt', viewMediaMarkerView.el).width(nXOffset + this.objTrailMarginRect.left - 15);
+        $('.alt', viewMediaMarkerView.el).css('top', nY);        
+      }      
     }            
   });
 

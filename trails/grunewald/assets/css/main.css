@@ -113,6 +113,20 @@ border-width:1px;
   position: absolute;
 }
 
+.trail_altitude_panel .profile .marker_container .alt {
+/*  
+border-style:solid;
+border-width:1px;
+*/  
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  font-family: "Arial";  
+  font-size: 16px;
+  color: #44B6F7;
+  text-align: right;
+}
+
 .trail_altitude_panel .profile .marker {
   z-index: 1;
   position: absolute;

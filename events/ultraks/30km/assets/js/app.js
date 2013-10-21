@@ -24,10 +24,14 @@ define([
   var MAP_VIEW = 1;
 
   var HOLD_SLIDE = 8000;
+  var TICKLE_TIMER = 5000;
 
   var SLIDESHOW_INIT = 0;
   var SLIDESHOW_PLAYING = 1;
   var SLIDESHOW_STOPPED = 0;
+
+  var TITLE_OFF = 0;
+  var TITLE_ON = 1;
   
   var initialize = function() {
     var self = this;
@@ -37,10 +41,13 @@ define([
     app.dispatcher.on("TrailSlideView:slideview", onTrailSlideViewSlideView, this);
     
     this.nTrailView = SLIDE_VIEW;
+    this.nTitleState = TITLE_OFF;
     this.nSlideShowState = SLIDESHOW_INIT;
     this.nPlayerHeight = 0;
     this.slideTimer = null;
     this.nCurrSlide = -1;
+    this.nTickleCount = 0;
+    this.nOldTickleCount = 0;    
     this.mediaCollection = new Backbone.Collection();
     
     this.trailModel = new TrailModel();
@@ -61,10 +68,21 @@ define([
     bSlideFull = true;
     
     buildBtns();
+    updatePlayerSize();
     
     $(window).resize(function() {
       handleResize(); 
     });    
+
+    $(window).mousemove(function(evt) {
+      tickle();
+    });
+
+    function tickle() {
+      self.nTickleCount++;
+
+      showTitle();
+    }
 
     function buildBtns() {
       $('#view_toggle .button').click(function(evt){
@@ -94,10 +112,6 @@ define([
         $('#trail_stats_view').css('top', 0);
         $('#trail_altitude_view').css('top', 0);        
         $('#trail_mini_view').css('top', 0);
-
-        $('#trail_info').css('top', 24);       
-        $('#trail_info .trail_avatar').css('top', 0);       
-        $('#trail_info .trail_title').css('top', 0);       
       }
       else {
         bSlideFull = true;        
@@ -109,11 +123,7 @@ define([
         $('#trail_altitude_view').css('top', 60);
         $('#trail_mini_view').css('top', 80);
         
-        $('#trail_overlay').css('top', 0);
-        
-        $('#trail_info').css('top', -300);        
-        $('#trail_info .trail_avatar').css('top', -300);       
-        $('#trail_info .trail_title').css('top', -100);       
+        $('#trail_overlay').css('top', 0);        
       }     
     }
 
@@ -152,6 +162,51 @@ define([
       self.trailAltitudeView.gotoMedia(nSlide);
       
       self.nCurrSlide = nSlide;      
+    }
+
+    function showTitle() {
+      if (self.nTitleState != TITLE_OFF) {
+        return;
+      }    
+      self.nTitleState = TITLE_ON;
+      
+      $('#trail_info').css('top', 24);       
+      $('#trail_info .trail_avatar').css('top', 0);       
+      $('#trail_info .trail_title').css('top', 0);       
+    }
+
+    function hideTitle() {    
+      if (self.nTitleState != TITLE_ON) {
+        return;
+      }    
+      self.nTitleState = TITLE_OFF;
+      
+      $('#trail_info').css('top', -300);        
+      $('#trail_info .trail_avatar').css('top', -300);       
+      $('#trail_info .trail_title').css('top', -100);       
+    }
+
+    function updatePlayerSize() {
+      self.nPlayerHeight = Math.round($('#trailplayer').width() / 2);
+                  
+      var nExtendHeight = 100;                  
+      if (bSlideFull) {
+        $('#trailplayer').height(self.nPlayerHeight);            
+      }
+      else {
+        $('#trailplayer').height(self.nPlayerHeight + 50);            
+      }      
+      $('#trail_slide_view').height(self.nPlayerHeight+nExtendHeight);
+      $('#trail_map_view').height(self.nPlayerHeight+nExtendHeight);
+      $('#trail_map_view .map_container').height(self.nPlayerHeight+nExtendHeight);
+    }
+
+    function onTickleTimer(){
+//      console.log("onTickleTimer:"+self.nOldTickleCount+' : '+self.nTickleCount);
+      if (self.nOldTickleCount == self.nTickleCount) {
+        hideTitle();
+      }
+      self.nOldTickleCount = self.nTickleCount;         
     }
 
     function onTrailMapMediaMarkerClick(mapMediaMarkerView) {
@@ -223,18 +278,7 @@ define([
     }
     
     function handleResize() {
-      self.nPlayerHeight = Math.round($('#trailplayer').width() / 2);
-                  
-      var nExtendHeight = 100;                  
-      if (bSlideFull) {
-        $('#trailplayer').height(self.nPlayerHeight);            
-      }
-      else {
-        $('#trailplayer').height(self.nPlayerHeight + 50);            
-      }      
-      $('#trail_slide_view').height(self.nPlayerHeight+nExtendHeight);
-      $('#trail_map_view').height(self.nPlayerHeight+nExtendHeight);
-      $('#trail_map_view .map_container').height(self.nPlayerHeight+nExtendHeight);
+      updatePlayerSize();
       
       switch (self.nTrailView) {
         case SLIDE_VIEW:
@@ -268,7 +312,10 @@ define([
       $('#trail_altitude_view').addClass('tb-move');            
       $('#trail_mini_view').addClass('tb-move');      
       
-      self.trailWeatherView.render();
+      var self = this;          
+      this.nTickleTimer = setInterval(function() {
+        onTickleTimer();
+      }, TICKLE_TIMER);      
     }
     
     function handleMedia() {
@@ -284,6 +331,7 @@ define([
         self.trailSlideView.addMedia(mediaModel);
         
         self.trailAltitudeView.addMedia(mediaModel);
+        self.trailWeatherView.render();
       });
       self.trailAltitudeView.renderMarkers();
       self.trailMiniMapView.renderMarkers();          
@@ -306,7 +354,8 @@ define([
         self.mediaModel.fetch({
           success: function () {
             handleMedia(self.mediaModel);
-            toggleSlide();            
+            toggleSlide();
+            tickle();      
           }
         });        
       }      

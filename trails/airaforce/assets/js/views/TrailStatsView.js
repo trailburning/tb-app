@@ -10,6 +10,14 @@ define([
       this.bRendered = false;      
     },            
     render: function(){
+      if (!this.model) {
+        return;
+      }
+      
+      if (!this.model.get('id')) {
+        return;
+      }
+      
       function formatAltitude(nStr){
         nStr += '';
         x = nStr.split('.');
