@@ -64,9 +64,91 @@ border-width:1px;
   padding-top: 26px;
 }
 
+/* PANEL */
+/******************************************/
+.panel .summary {  
+  font-size: 16px;
+  font-weight: 300;
+  color: #666666;
+}
+
+.panel .summary strong {
+  font-weight: 700;
+}
+
+/* EVENT CARD PANEL */
+/******************************************/
+.event_card_panel {  
+  width: 260px;
+  margin: 13px 13px 13px 13px;
+  line-height: 1em;
+  color: #FFFFFF;
+}
+
+.event_card_panel .photo {
+  position: relative;
+}
+
+.event_card_panel .photo .logo {
+  position: absolute;
+  top: 0px;
+}
+
+.event_card_panel .photo .image_container {
+  width: 260px;
+  height: 294px;
+  overflow: hidden;
+}
+
+.event_card_panel .summary {  
+  height: 62px;
+  margin: 16px 0px 0px 14px;
+  line-height: 1.5em;
+}
+
+/* BIG EVENT CARD PANEL */
+/******************************************/
+.big_event_card_panel {  
+  width: 546px;
+  margin: 13px 13px 13px 13px;
+  line-height: 1em;
+  color: #FFFFFF;
+}
+
+.big_event_card_panel .photo {
+  position: relative;
+}
+
+.big_event_card_panel .photo .logo {
+  position: absolute;
+  top: 0px;
+}
+
+.big_event_card_panel .photo .image_container {
+  width: 546px;
+  height: 294px;
+  overflow: hidden;
+}
+
+.big_event_card_panel .summary {
+  height: 62px;
+  margin: 16px 0px 0px 14px;
+  line-height: 1.5em;
+}
+
+.big_event_card_panel .summary .title {
+  float: left;  
+}
+
+.big_event_card_panel .summary .detail {  
+  float: right;
+  margin-right: 24px;  
+  text-align: right;
+}
+
 /* TRAIL CARD PANEL */
 /******************************************/
-.trail_card_panel {
+.trail_card_panel {  
   width: 260px;
   margin: 13px 13px 13px 13px;
   line-height: 1em;
@@ -111,15 +193,10 @@ border-width:1px;
   background: rgba(0, 0, 0, 0.6);  
 }
 
-.trail_card_panel .summary {
-  height: 64px;
-  margin: 4px 0px 0px 14px;
-  font-size: 16px;
+.trail_card_panel .summary {  
+  height: 73px;
+  margin: 5px 0px 0px 14px;
   color: #44B6F7;
-}
-
-.trail_card_panel .summary strong {
-  font-weight: 700;
 }
 
 .trail_card_panel .summary .sponsor {
@@ -127,8 +204,8 @@ border-width:1px;
 }
 
 .trail_card_panel .summary .avatar {
-  float: left;  
-  margin-top: 4px;
+  float: left;
+  margin-top: 5px;
 }
 
 .trail_card_panel .summary .detail {
