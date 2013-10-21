@@ -34,9 +34,8 @@
       </div>
     </div>
   </div>    
-
   <div id="home_header">  
-    <div class="image_container tb-fade"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/test9.jpg" class="image" /></div>
+    <div class="image_container tb-fade"><img data-src="http://trial.resrc.it/http://assets.trailburning.com/images/test9.jpg" class="resrc image"/></div>
     <div class="event_title">
       <h1 class="tb">I'm #trailburning</h1>
       <br/>
@@ -259,5 +258,13 @@
 
 <script data-main="assets/js/main" src="assets/js/libs/require.js"></script>
 
+<script>
+resrc = {
+  options: {
+    server: "trial.resrc.it"
+  }
+};
+</script>
+<script src="//use.resrc.it"></script>  
 </body>
 </html>
