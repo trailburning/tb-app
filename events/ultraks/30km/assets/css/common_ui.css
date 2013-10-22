@@ -17,8 +17,22 @@ form {
   display: inline;  
 }
 
+a {
+  text-decoration: underline;
+  color: inherit; 
+}
+a:hover,
+a:active {
+  text-decoration: none;   
+  color: inherit; 
+}
+
 /* TB BUTTONS */
 /******************************************/
+
+a.btn {
+  text-decoration: none;     
+}
 
 /* TB BUTTONS */
 /******************************************/
@@ -164,10 +178,6 @@ h4.tb {
 /* HEADER */
 /******************************************/
 #headerview {
-/*  
-border-style:solid;
-border-width:1px;
-*/  
   z-index: 200;
   position: relative;
   width: 100%;
@@ -244,10 +254,6 @@ border-width:1px;
 /* FOOTER */
 /******************************************/
 #footerview {
-/*  
-border-style:solid;
-border-width:1px;
-*/  
   z-index: 200;
   position: relative;
   width: 100%;
