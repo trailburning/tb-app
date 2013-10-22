@@ -14,6 +14,15 @@ define([
     });    
     handleResize();        
     
+    $('#signup_form').submit(function (evt) {
+      signup();
+      return false; 
+    });
+
+    $('#submit').click(function (evt) {
+      return false;
+    });
+    
     // register for image ready      
     $('.tb-fade img', this.el).load(function() {
       $(this).parent().css({ opacity: 1 });
@@ -26,6 +35,10 @@ define([
     function handleResize() {
       $('.image').resizeToParent();      
     }
+    
+    function signup() {
+
+    }    
   };
     
   return { 

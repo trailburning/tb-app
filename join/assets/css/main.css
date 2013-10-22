@@ -35,7 +35,7 @@ border-width:1px;
 /******************************************/
 .panel_content {
   position: relative;
-  margin: 0px auto 80px auto;
+  margin: 0px auto 520px auto;
   width: 1112px;
 }
 
@@ -57,6 +57,26 @@ border-width:1px;
 
 .panel_intro .desc h4 {
   padding-top: 24px;
+}
+
+.panel_intro .signup_panel {
+  margin-top: 40px;
+}
+
+.panel_intro .signup_panel input[type="text"] {
+  margin: 0px;
+  width: 325px;
+  height: 36px;
+  line-height: 36px;
+  font-family: 'Signika', sans-serif;
+  font-weight: normal;
+  font-size: 20px;
+  color: #fff;      
+  background: #FFF;
+}
+
+.panel_intro .submit {
+  margin-top: 24px;
 }
 
 /* FOOTER PROMOTE */
