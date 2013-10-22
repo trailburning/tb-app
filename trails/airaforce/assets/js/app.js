@@ -64,7 +64,7 @@ define([
     this.trailWeatherView = new TrailWeatherView({ el: '#trail_weather_view', model: this.trailModel });
     
     this.userProfileMap = null;
-    
+
     bSlideFull = true;
     
     buildBtns();

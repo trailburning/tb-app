@@ -114,6 +114,22 @@ h1.tb {
           box-shadow: 2px 4px 5px 0px rgba(0, 0, 0, 0.1);    
 }
 
+h2.tb {
+  display: inline-block;
+  margin: 16px 0px 0px 0px;
+  padding: 5px 10px 5px 10px;
+  font-weight: normal;
+  font-size: 50px;
+  line-height: 1em;
+  color: #44B6F7;  
+  background-color: #FFF;
+  border: none;
+  *zoom: 1;
+  -webkit-box-shadow: 2px 4px 5px 0px rgba(0, 0, 0, 0.1);
+     -moz-box-shadow: 2px 4px 5px 0px rgba(0, 0, 0, 0.1);
+          box-shadow: 2px 4px 5px 0px rgba(0, 0, 0, 0.1);    
+}
+
 h3.tb {
   margin: 0px;
   padding: 0px;

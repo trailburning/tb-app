@@ -281,17 +281,7 @@ border-width:1px;
   color: #44b6f7;
 }
 
-#trailplayer .trail_title h1 {
-  display: inline-block;
-  margin: 13px 0px 0px 0px;
-  padding: 5px 10px 5px 10px;
-  font-weight: normal;
-  font-size: 50px;
-  line-height: 1em;  
-  background-color: #FFF;
-}
-
-#trailplayer .trail_title h2 {
+#trailplayer .trail_title .author {
   display: inline-block;
   margin: 13px 0px 0px 2px;
   padding: 5px 10px 5px 10px;

@@ -67,7 +67,8 @@ define([
       // update container width
       for (var nMedia=0; nMedia < this.arrSlidePhotos.length; nMedia++) {
         var photoView = this.arrSlidePhotos[nMedia];
-        $('.photos_container', this.el).append(photoView.el);                        
+        $('.photos_container', this.el).append(photoView.el);
+        photoView.render();                                          
       }
 
       this.bRendered = true;

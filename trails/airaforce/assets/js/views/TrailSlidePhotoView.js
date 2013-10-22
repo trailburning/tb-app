@@ -19,8 +19,6 @@ define([
     render: function(nPanelWidth){
       var self = this;
             
-      var nPanelHeight = 400;
-      
       if (this.bRendered) {
         $('.image_container', this.el).width(nPanelWidth);
         return;

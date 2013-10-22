@@ -73,7 +73,8 @@ define([
                 
       for (var nMedia=0; nMedia < this.arrSlidePhotos.length; nMedia++) {
         var photoView = this.arrSlidePhotos[nMedia];
-        $('.photos_container', this.el).append(photoView.el);                        
+        $('.photos_container', this.el).append(photoView.el);      
+        photoView.render(this.nPanelWidth);                  
       }
             
       this.bRendered = true;
@@ -93,12 +94,12 @@ define([
         app.dispatcher.trigger("TrailSlideView:slideview", self);                
       }
     },    
-    onSlidePhotoReady: function(trailSlidePhotoView){
+    onSlidePhotoReady: function(trailSlidePhotoView){      
       var nCurrCID = trailSlidePhotoView.model.cid;      
       var photoView = this.arrSlidePhotos[this.nCurrSlide];
       if (photoView) {
         nCurrCID = photoView.model.cid;
-      }
+      }      
       if (nCurrCID == trailSlidePhotoView.model.cid) {
         this.bSlideReady = true;
         this.checkSlideState();
