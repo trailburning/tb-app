@@ -10,15 +10,37 @@ define([
   var initialize = function() {
     var self = this;
     
-    var imgLoad = imagesLoaded('#container');
-    imgLoad.on( 'always', function(instance) {
-      console.log( imgLoad.images.length + ' images loaded' );
+    $(window).resize(function() {
+      handleResize(); 
+    });    
+    handleResize();        
+    
+    var imgLoad = imagesLoaded('.image_container');
+    imgLoad.on('always', function(instance) {
+//      console.log( imgLoad.images.length + ' images loaded' );      
+      for ( var i = 0, len = imgLoad.images.length; i < len; i++ ) {
+//        console.log(imgLoad.images[i].img.src);        
+        $(imgLoad.images[i].img).addClass('image_ready');
+      }
       
-      $('#container').css('opacity', 1);
-      $('#container img').css('opacity', 1);
+      // update pos
+      $(".imgLiquidFill").imgLiquid({
+          fill: true,
+          horizontalAlign: "center",
+          verticalAlign: "center"
+      });
     });
 
     this.trailSlideView = new TrailSlideView({ el: '#trail_slide_view', model: this.mediaModel });
+    
+    function handleResize() {
+      $(".imgLiquidFill").imgLiquid({
+          fill: true,
+          horizontalAlign: "center",
+          verticalAlign: "center"
+      });
+    }
+    
   };
     
   return { 

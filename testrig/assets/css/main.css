@@ -8,16 +8,25 @@ border-width:1px;
   min-width: 800px;
 }
 
-#container {
+#home_header .image_container {
   width: 100%;
-  opacity: 0;  
+  height: 564px;
+  overflow: hidden;
 }
 
-img {
+.imgLiquidFill {
   width: 100%;
-  opacity: 0;  
-  -webkit-transition: opacity 0.4s;
-     -moz-transition: opacity 0.4s;
-      -ms-transition: opacity 0.4s;
-          transition: opacity 0.4s;
+  height: 100%;
+}
+
+.imgLiquidanim{
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  -moz-transition: opacity 0.5s ease-in-out;
+  -webkit-transition: opacity 0.5s ease-in-out;
+  transition-delay: 0.5s;
+}
+
+.imgLiquidanim.imgLiquid_ready{
+  opacity: 1;
 }
