@@ -22,8 +22,6 @@ define([
       }
       // update pos
       $("img.scale_image_ready").imageScale();
-  
-      $('.image_container').addClass('anim');
       $('.image_container').css('opacity', 1);
     });
 
