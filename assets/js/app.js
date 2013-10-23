@@ -21,7 +21,8 @@ define([
       }
       // update pos
       $("img.scale_image_ready").imageScale();
-      // fade in
+      // fade in - delay adding class to ensure image is ready  
+      $('.fade_on_load').addClass('tb-fade-in');
       $('.image_container').css('opacity', 1);
     });
     
