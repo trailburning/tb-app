@@ -43,7 +43,7 @@ define([
         $('#signup_form .fail').show();
       }
       else {
-        $.post("http://www.trailburning.com/server/mailerproxy.php", $('#signup_form').serialize()).success(function(data) {});
+        $.post("server/mailerproxy.php", $('#signup_form').serialize()).success(function(data) {});
         $('#signup_form .fail').hide();
         $('#signup_form .success').show();
       }
