@@ -19,11 +19,16 @@
 <div id="appview">      
   <div id="home_header">  
     <div class="image_container">
-      <div class="imgLiquidFill imgLiquid imgLiquidanim">
-        <img src="http://trial.resrc.it/O=80/http://assets.trailburning.com/images/pages/hero_event_ultraks_glacier.jpg" class="resrc"/>
-      </div>
+      <img src="http://trial.resrc.it/O=80/http://assets.trailburning.com/images/pages/hero_event_ultraks_glacier.jpg" class="resrc scale" />
     </div>
   </div>
+  
+  <div class="photo tb-photo-btn">
+    <div class="image_container">
+      <img src="http://trial.resrc.it/O=80/http://assets.trailburning.com/images/grunewald.jpg" class="resrc scale" border="0" />
+    </div>
+  </div>
+  
 </div>
 
 <script type="text/template" id="trailSlideViewTemplate">
@@ -40,7 +45,7 @@
 
 <script src="assets/js/libs/imagesloaded.pkgd.min.js"></script>
 
-<script src="assets/js/libs/imgLiquid-min.js"></script>
+<script src="assets/js/libs/image-scale.min.js" type="text/javascript"></script>
 
 <script src="assets/js/libs/jquery.resizeimagetoparent.js"></script>
 
@@ -53,7 +58,10 @@
 <script>
 resrc = {
   options: {
-    server: "trial.resrc.it"
+    server: "trial.resrc.it",
+    resrcOnLoad: true,
+    resrcOnResize: true,
+    resrcOnPinch: false    
   }
 };
 </script>

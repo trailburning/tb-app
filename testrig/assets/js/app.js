@@ -15,30 +15,22 @@ define([
     });    
     handleResize();        
     
-    var imgLoad = imagesLoaded('.image_container');
+    var imgLoad = imagesLoaded('.scale');
     imgLoad.on('always', function(instance) {
-//      console.log( imgLoad.images.length + ' images loaded' );      
       for ( var i = 0, len = imgLoad.images.length; i < len; i++ ) {
-//        console.log(imgLoad.images[i].img.src);        
-        $(imgLoad.images[i].img).addClass('image_ready');
+        $(imgLoad.images[i].img).addClass('scale_image_ready');
       }
-      
       // update pos
-      $(".imgLiquidFill").imgLiquid({
-          fill: true,
-          horizontalAlign: "center",
-          verticalAlign: "center"
-      });
+      $("img.scale_image_ready").imageScale();
+  
+      $('.image_container').addClass('anim');
+      $('.image_container').css('opacity', 1);
     });
 
     this.trailSlideView = new TrailSlideView({ el: '#trail_slide_view', model: this.mediaModel });
     
     function handleResize() {
-      $(".imgLiquidFill").imgLiquid({
-          fill: true,
-          horizontalAlign: "center",
-          verticalAlign: "center"
-      });
+      $("img.scale_image_ready").imageScale();
     }
     
   };
