@@ -59,13 +59,17 @@
     <div class="panel_intro">
       <h1 class="tb">Join Trailburning</h1>
       <div class="desc">
-        <h4 class="tb">Suscribe to our newsletter and we’ll let you know as soon as you can create your own trails.</h4>
+        <h4 class="tb">Subscribe to our newsletter and we’ll let you know as soon as you can create your own trails.</h4>
         <div class="signup_panel">
-        <form id="signup_form" method="get">
+        <form id="signup_form" method="get" action="return javascript:signup();">
         <input type="text" name="form_email" id="form_email" placeholder="Email address" spellcheck="false">
         <div class="submit">
         <button type="submit" id="submit" name="submit" class="btn btn-tb-action btn-tb-large">Sign up</button>
-        </div>                
+        </div>
+        <div class="msg">
+          <span class="success"><h4 class="tb">Thank you, we will inform you when you can start creating your own trails!</h4></span>
+          <span class="fail"><h4 class="tb">Please enter a valid email address.</h4></span>
+        </div>
         </form>
         </div>
       </div>      

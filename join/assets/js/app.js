@@ -13,16 +13,12 @@ define([
       handleResize(); 
     });    
     handleResize();        
-    
+
     $('#signup_form').submit(function (evt) {
       signup();
       return false; 
     });
 
-    $('#submit').click(function (evt) {
-      return false;
-    });
-    
     // register for image ready      
     $('.tb-fade img', this.el).load(function() {
       $(this).parent().css({ opacity: 1 });
@@ -37,7 +33,21 @@ define([
     }
     
     function signup() {
-
+      var bRet = false;
+          
+      var strEmail = $('#form_email').val();
+      var atpos = strEmail.indexOf("@");
+      var dotpos = strEmail.lastIndexOf(".");
+      if (atpos<1 || dotpos<atpos+2 || dotpos+2>=strEmail.length) {
+        $('#signup_form .success').hide();
+        $('#signup_form .fail').show();
+      }
+      else {
+        $.post("http://www.trailburning.com/server/mailerproxy.php", $('#signup_form').serialize()).success(function(data) {});
+        $('#signup_form .fail').hide();
+        $('#signup_form .success').show();
+      }
+      return false;
     }    
   };
     
