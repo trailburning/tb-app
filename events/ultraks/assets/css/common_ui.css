@@ -456,6 +456,14 @@ h4.tb {
   -ms-filter: contrast(1.5);   
 }
 
+.tb-fade-in {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  -moz-transition: opacity 0.5s ease-in-out;
+  -webkit-transition: opacity 0.5s ease-in-out;
+  transition-delay: 0.5s;
+}
+
 .tb-fade {
   opacity: 0;
   transition: opacity 2s ease-in-out;

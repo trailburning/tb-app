@@ -19,17 +19,20 @@ define([
       return false; 
     });
 
-    // register for image ready      
-    $('.tb-fade img', this.el).load(function() {
-      $(this).parent().css({ opacity: 1 });
+    var imgLoad = imagesLoaded('.scale');
+    imgLoad.on('always', function(instance) {
+      for ( var i = 0, len = imgLoad.images.length; i < len; i++ ) {
+        $(imgLoad.images[i].img).addClass('scale_image_ready');
+      }
+      // update pos
+      $("img.scale_image_ready").imageScale();
+      // fade in - delay adding class to ensure image is ready  
+      $('.fade_on_load').addClass('tb-fade-in');
+      $('.image_container').css('opacity', 1);
     });
-    // force ie to run the load function if the image is cached
-    if ($('.tb-fade img', this.el).get(0).complete) {
-      $('.tb-fade img', this.el).trigger('load');
-    }
         
     function handleResize() {
-      $('.image').resizeToParent();      
+      $("img.scale_image_ready").imageScale();
     }
     
     function signup() {

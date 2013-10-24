@@ -34,7 +34,7 @@
   </div>    
 
   <div id="def_header">  
-    <div class="image_container tb-fade"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/pages/hero_bridge.jpg" class="image" /></div>
+    <div class="image_container fade_on_load"><img src="http://trial.resrc.it/http://assets.trailburning.com/images/pages/hero_bridge.jpg" class="resrc scale" /></div>    
     <div class="event_title">
       <h1 class="tb">Want to talk about</h1>
       <br/>
@@ -143,7 +143,8 @@
   <link href='http://api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.ie.css' rel='stylesheet' >
 <![endif]-->
 
-<script src="assets/js/libs/jquery.resizeimagetoparent.js"></script>
+<script src="assets/js/libs/imagesloaded.pkgd.min.js"></script>
+<script src="assets/js/libs/image-scale.min.js"></script>
 
 <script src="assets/js/libs/jquery.ui.widget.js"></script>
 <script src="assets/js/libs/jquery.iframe-transport.js"></script>
@@ -151,5 +152,16 @@
 
 <script data-main="assets/js/main" src="assets/js/libs/require.js"></script>
 
+<script>
+resrc = {
+  options: {
+    server: "trial.resrc.it",
+    resrcOnLoad: true,
+    resrcOnResize: true,
+    resrcOnPinch: false    
+  }
+};
+</script>
+<script src="//use.resrc.it"></script>
 </body>
 </html>

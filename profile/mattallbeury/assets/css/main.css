@@ -86,6 +86,13 @@ border-width:1px;
   width: 568px;
 }
 
+/* PANEL */
+/******************************************/
+.panel .image_container {
+  position: relative;
+  opacity: 0;
+}
+
 /* PROFILE DETAIL PANEL */
 /******************************************/
 .profile_detail_panel {

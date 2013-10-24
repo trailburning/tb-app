@@ -274,10 +274,9 @@ border-width:1px;
 }
 
 #trailplayer .trail_title {
-  position: absolute;
+  position: relative;
   top: -100px;
   left: 144px;
-  width: 600px;
   color: #44b6f7;
 }
 
