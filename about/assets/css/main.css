@@ -63,13 +63,13 @@ border-width:1px;
 /******************************************/
 .guide_content {
   width: 100%;
-  height: 728px;
   background: #FFF;
 }
 
 .guide_content .content {
   margin: 0px auto 0px auto;
   padding-top: 86px;
+  padding-bottom: 80px;
   width: 700px;
 }
 
