@@ -22,6 +22,7 @@ define([
       var self = this;
 
       function onImageLoaded() {
+        $('.image_container', self.el).width(nPanelWidth);                
         // update pos
         $("img.scale_image_ready", $(self.el)).imageScale();
         // fade in - delay adding class to ensure image is ready  
@@ -53,20 +54,6 @@ define([
         self.bLoaded = true;
         onImageLoaded();
       });
-
-
-      // register for image ready      
-//      $('img', this.el).load(function() {
-        // fire event
-//        app.dispatcher.trigger("TrailSlidePhotoView:imageready", self);                        
-//      });
-      // force ie to run the load function if the image is cached
-//      if ($('img', this.el).get(0).complete) {
-//        $('img', this.el).trigger('load');
-//      }
-      
-      $('.image_container', this.el).width(nPanelWidth);
-
       this.bRendered = true;
                         
       return this;

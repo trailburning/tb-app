@@ -36,7 +36,6 @@ define([
       
       photoView = this.arrSlidePhotos[this.nCurrSlide];
       photoView.render($(this.el).width);            
-      $("img.scale_image_ready", photoView.el).imageScale();
       
       this.checkSlideState();      
     },    

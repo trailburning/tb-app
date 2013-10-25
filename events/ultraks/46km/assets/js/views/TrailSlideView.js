@@ -13,7 +13,6 @@ define([
       this.bRendered = false;
       this.arrSlidePhotos = [];
       this.nCurrSlide = -1;
-      this.nPanelWidth = 0;
       this.bSlideReady = false;
       this.bWaitingForSlide = false;
     },            
@@ -34,10 +33,9 @@ define([
         photoView.hide();        
       }
       this.nCurrSlide = nSlide;
-      
+
       photoView = this.arrSlidePhotos[this.nCurrSlide];
-      photoView.render(this.nPanelWidth);            
-      $("img.scale_image_ready", photoView.el).imageScale();
+      photoView.render($('#appview').width());            
       
       this.checkSlideState();
     },    
@@ -45,9 +43,7 @@ define([
       var photoView = new TrailSlidePhotoView({ model: mediaModel, type: 0 });
       this.arrSlidePhotos.push(photoView);
     },
-    render: function(nPanelWidth){
-      this.nPanelWidth = nPanelWidth;
-        
+    render: function(){
       if (!this.model) {
         return;
       }
@@ -55,10 +51,10 @@ define([
       // already rendered?  Just update
       if (this.bRendered) {
         // update container width
-        $('.photos_container', this.el).width(nPanelWidth);        
+        $('.photos_container', this.el).width($('#appview').width());        
         if (this.nCurrSlide >= 0) {
           var photoView = this.arrSlidePhotos[this.nCurrSlide];
-          photoView.render(this.nPanelWidth);
+          photoView.render($('#appview').width());
         }
         return;         
       }        
@@ -69,8 +65,7 @@ define([
       $(this.el).html(this.template(attribs));
 
       // update container width
-      $('.photos_container', this.el).width(nPanelWidth);        
-                
+      $('.photos_container', this.el).width($('#appview').width());                        
       for (var nMedia=0; nMedia < this.arrSlidePhotos.length; nMedia++) {
         var photoView = this.arrSlidePhotos[nMedia];
         $('.photos_container', this.el).append(photoView.el);      

@@ -68,7 +68,7 @@ define([
     bSlideFull = true;
     
     buildBtns();
-    updatePlayerSize();
+    updatePlayerHeight();
     
     $('#search_form').submit(function(evt) {
       $('#search_field').val('not just yet...');
@@ -88,7 +88,7 @@ define([
     });
     
     $(window).resize(function() {
-      handleResize(); 
+      handleResize();
     });    
 
     $(window).mousemove(function(evt) {
@@ -169,7 +169,7 @@ define([
       gotoMedia(nSlide);
     }    
 
-    function gotoMedia(nSlide){
+    function gotoMedia(nSlide){            
       self.trailMiniSlideView.gotoSlide(nSlide);    
       self.trailSlideView.gotoSlide(nSlide);
       
@@ -203,7 +203,7 @@ define([
       $('#trail_info .trail_title').css('top', -100);       
     }
 
-    function updatePlayerSize() {
+    function updatePlayerHeight() {
       var nPlayerHeight = 0, nExpandHeight = 50;      
       var elPlayer = $('#trailplayer');
 
@@ -306,11 +306,14 @@ define([
     }
     
     function handleResize() {
-      updatePlayerSize();
+      updatePlayerHeight();
+      
+      // resize all slides
+      $('#trail_slide_view .image_container').width($('#appview').width());
       
       switch (self.nTrailView) {
         case SLIDE_VIEW:
-          self.trailSlideView.render($('#appview').width());
+          self.trailSlideView.render();
           self.trailMiniSlideView.render();
           break;
            
@@ -322,8 +325,6 @@ define([
       }      
       self.trailStatsView.render();
       self.trailAltitudeView.render();
-      
-      $("img.scale_image_ready").imageScale();
     }        
       
     function handleTrail() {      
