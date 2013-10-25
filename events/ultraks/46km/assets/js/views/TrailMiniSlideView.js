@@ -36,12 +36,12 @@ define([
       
       photoView = this.arrSlidePhotos[this.nCurrSlide];
       photoView.render($(this.el).width);            
-      $('.image', photoView.el).resizeToParent();
+      $("img.scale_image_ready", photoView.el).imageScale();
       
       this.checkSlideState();      
     },    
     addMedia: function(mediaModel){
-      var photoView = new TrailSlidePhotoView({ model: mediaModel });
+      var photoView = new TrailSlidePhotoView({ model: mediaModel, type: 1 });
       this.arrSlidePhotos.push(photoView);
     },    
     render: function(){
@@ -81,11 +81,15 @@ define([
       if (this.bSlideReady && this.bWaitingForSlide) {
         this.bWaitingForSlide = false;
         
-        var photoView = this.arrSlidePhotos[this.nCurrSlide];        
+        var photoView = this.arrSlidePhotos[this.nCurrSlide];
         photoView.show();
       }
     },
     onSlidePhotoReady: function(trailSlidePhotoView){
+      if (trailSlidePhotoView.nType != 1) {
+        return;
+      }
+      
       var nCurrCID = trailSlidePhotoView.model.cid;      
       var photoView = this.arrSlidePhotos[this.nCurrSlide];
       if (photoView) {

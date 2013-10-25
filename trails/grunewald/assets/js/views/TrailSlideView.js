@@ -37,12 +37,12 @@ define([
       
       photoView = this.arrSlidePhotos[this.nCurrSlide];
       photoView.render(this.nPanelWidth);            
-      $('.image', photoView.el).resizeToParent();
+      $("img.scale_image_ready", photoView.el).imageScale();
       
       this.checkSlideState();
     },    
     addMedia: function(mediaModel){
-      var photoView = new TrailSlidePhotoView({ model: mediaModel });
+      var photoView = new TrailSlidePhotoView({ model: mediaModel, type: 0 });
       this.arrSlidePhotos.push(photoView);
     },
     render: function(nPanelWidth){
@@ -94,7 +94,11 @@ define([
         app.dispatcher.trigger("TrailSlideView:slideview", self);                
       }
     },    
-    onSlidePhotoReady: function(trailSlidePhotoView){      
+    onSlidePhotoReady: function(trailSlidePhotoView){   
+      if (trailSlidePhotoView.nType != 0) {
+        return;
+      }
+         
       var nCurrCID = trailSlidePhotoView.model.cid;      
       var photoView = this.arrSlidePhotos[this.nCurrSlide];
       if (photoView) {

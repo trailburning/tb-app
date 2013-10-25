@@ -97,8 +97,8 @@ var nTrail = 33;
                   <div class="title">You may also like</div>
                   <div class="trails">
                     <a href="../../trails/grunewald">
-                    <div class="tb-photo-btn">                  
-                      <div class="image_container"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/grunewald.jpg" class="image" /></div>      
+                    <div class="tb-photo-btn">     
+                      <div class="image_container"><img src="http://trial.resrc.it/http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/grunewald.jpg" class="resrc scale" /></div>
                       <div class="trail_title">
                         <h1 class="title_shadow">Grunewald Forest, Berlin</h1>
                         <h2 class="title_shadow">by <strong>Matt Allbeury</strong></h2>
@@ -201,9 +201,9 @@ var nTrail = 33;
 </script>
 
 <script type="text/template" id="trailSlidePhotoViewTemplate">
-  <div class="image_container tb-fade">
-    <img src="https://s3-eu-west-1.amazonaws.com/<%= versionLargePath%>" class="image" />
-  </div>
+  <div class="image_container fade_on_load">
+    <img src="http://trial.resrc.it/O=90/http://s3-eu-west-1.amazonaws.com/<%= versionLargePath%>" class="resrc scale" />
+  </div>  
 </script>
 
 <script type="text/template" id="trailMapViewTemplate">
@@ -249,7 +249,8 @@ var nTrail = 33;
   <link href='http://api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.ie.css' rel='stylesheet' >
 <![endif]-->
 
-<script src="assets/js/libs/jquery.resizeimagetoparent.js"></script>
+<script src="assets/js/libs/imagesloaded.pkgd.min.js"></script>
+<script src="assets/js/libs/image-scale.min.js"></script>
 
 <script src="assets/js/libs/jquery.ui.widget.js"></script>
 <script src="assets/js/libs/jquery.iframe-transport.js"></script>
@@ -257,5 +258,16 @@ var nTrail = 33;
 
 <script data-main="assets/js/main" src="assets/js/libs/require.js"></script>
 
+<script>
+resrc = {
+  options: {
+    server: "trial.resrc.it",
+    resrcOnLoad: true,
+    resrcOnResize: true,
+    resrcOnPinch: false    
+  }
+};
+</script>
+<script src="//use.resrc.it"></script>
 </body>
 </html>
