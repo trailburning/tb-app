@@ -14,6 +14,11 @@ define([
     });    
     handleResize();        
 
+    $('#search_form').submit(function(evt) {
+      $('#search_field').val('not just yet...');
+      event.preventDefault();
+    });    
+
     $('#signup_form').submit(function (evt) {
       signup();
       return false; 

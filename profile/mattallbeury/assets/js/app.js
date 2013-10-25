@@ -17,6 +17,11 @@ define([
     buildProfileMap();
     handleResize();
     
+    $('#search_form').submit(function(evt) {
+      $('#search_field').val('not just yet...');
+      event.preventDefault();
+    });    
+    
     var imgLoad = imagesLoaded('.scale');
     imgLoad.on('always', function(instance) {
       for ( var i = 0, len = imgLoad.images.length; i < len; i++ ) {
