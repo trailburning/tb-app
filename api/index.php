@@ -45,7 +45,7 @@ $slim->post('/v1/import/gpx', function () use ($slim) {
     array(PDO::ATTR_PERSISTENT => true, PDO::ERRMODE_EXCEPTION => true)
   );
 
-  $gpx_file_id = $db->importGpxFile('/trailburning-gpx/'.$gpx_tmp_path);
+  $gpx_file_id = $db->importGpxFile($gpx_tmp_path);
   $importedRoutesIds = array();
   foreach ($routes as $route){
     $route->setGpxFileId($gpx_file_id);
