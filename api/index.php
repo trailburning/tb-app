@@ -58,8 +58,8 @@ $slim->post('/v1/import/gpx', function () use ($slim) {
     ));
 
   $result = $aws_client->putObject(array(
-    'Bucket' => 'trailburning.com',
-    'Key'    => 'gpx/'.sha1_file($gpx_tmp_path).'.gpx',
+    'Bucket' => 'trailburning-gpx',
+    'Key'    => sha1_file($gpx_tmp_path).'.gpx',
     'Body'   => file_get_contents($gpx_tmp_path)
   ));
 
@@ -190,8 +190,8 @@ $slim->post('/v1/route/:id/medias/add', function ($route_id) use ($slim) {
       'secret' => $_SERVER['AWS_SECRETKEY']
     ));
     $result = $aws_client->putObject(array(
-        'Bucket' => 'trailburning.com',
-        'Key'    => 'media/'.sha1_file($media_tmp_path).'.jpg',
+        'Bucket' => 'trailburning-media',
+        'Key'    => sha1_file($media_tmp_path).'.jpg',
         'Body'   => file_get_contents($media_tmp_path),
         'ContentType' => $media->mimetype,
         'ACL'    => 'public-read'
