@@ -349,7 +349,7 @@ class Postgis
     }
 
     $picture_id = intval($this->lastInsertId("medias_id_seq"));
-    $picture_s3_path = 'trailburning-media/'.sha1_file($picture->getTmpPath()).'.jpg';
+    $picture_s3_path = 'trailburning-com/media/'.sha1_file($picture->getTmpPath()).'.jpg';
 
     $q = "INSERT INTO media_versions (media_id, version_size, path) VALUES (?,?,?)";
     $pq = $this->prepare($q);
