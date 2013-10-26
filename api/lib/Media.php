@@ -9,6 +9,7 @@ abstract class Media {
   public $tmp_path;
   public $tags;
   public $versions;
+  public $mimetype;
 
   abstract protected function readMetadata();
   abstract protected function verifyFileType();

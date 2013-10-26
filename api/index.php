@@ -193,6 +193,7 @@ $slim->post('/v1/route/:id/medias/add', function ($route_id) use ($slim) {
         'Bucket' => 'trailburning-com',
         'Key'    => 'media/'.sha1_file($media_tmp_path).'.jpg',
         'Body'   => file_get_contents($media_tmp_path),
+        'ContentType' => $media->mimetype,
         'ACL'    => 'public-read'
     ));
 
