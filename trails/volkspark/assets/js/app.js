@@ -141,7 +141,7 @@ define([
         $('#trail_mini_view').css('top', 80);
         
         $('#trail_overlay').css('top', 0);        
-      }     
+      }           
     }
 
     function startSlideShow() {    
@@ -216,7 +216,7 @@ define([
         nPlayerHeight = (MIN_WIDTH / 2);
       }
       self.nPlayerHeight = nPlayerHeight;
-      
+
       var nExtendHeight = nExpandHeight * 2;                  
       if (bSlideFull) {
         $('#trailplayer').height(self.nPlayerHeight);            
@@ -225,7 +225,11 @@ define([
         $('#trailplayer').height(self.nPlayerHeight + nExpandHeight);            
       }      
       $('#trail_slide_view').height(self.nPlayerHeight+nExtendHeight);
+      // force height update for imageScale
+      $('#trail_slide_view .image_container').height(self.nPlayerHeight+nExtendHeight);
+
       $('#trail_map_view').height(self.nPlayerHeight+nExtendHeight);
+      // force height update for MapBox
       $('#trail_map_view .map_container').height(self.nPlayerHeight+nExtendHeight);
     }
 
@@ -253,7 +257,7 @@ define([
       gotoMedia(nMedia);
     }
 
-    function onTrailToggleViewBtnClick() {
+    function onTrailToggleViewBtnClick() {      
       switch (self.nTrailView) {
         case MAP_VIEW:
           self.nTrailView = SLIDE_VIEW;
@@ -279,13 +283,13 @@ define([
           self.trailMiniMapView.hide();
           self.trailMiniSlideView.show();
           self.trailMiniSlideView.render();
-          
           self.trailSlideView.hide();
+          
           self.trailMapView.show();
           self.trailMapView.render();
           break;
       }
-      handleResize();      
+      handleResize();
     }
 
     function onTrailSlideViewSlideView() {
@@ -308,21 +312,17 @@ define([
     function handleResize() {
       updatePlayerHeight();
       
-      // resize all slides
-      $('#trail_slide_view .image_container').width($('#appview').width());
-      
       switch (self.nTrailView) {
         case SLIDE_VIEW:
-          self.trailSlideView.render();
-          self.trailMiniSlideView.render();
           break;
            
         case MAP_VIEW:
           $('#trailplayer .map_container').width($('#appview').width());
-          self.trailMiniSlideView.render();
           self.trailMapView.render();
           break;
       }      
+      self.trailSlideView.render();
+      self.trailMiniSlideView.render();
       self.trailStatsView.render();
       self.trailAltitudeView.render();
     }        

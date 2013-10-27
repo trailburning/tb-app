@@ -22,7 +22,7 @@ define([
       var self = this;
 
       function onImageLoaded() {
-        $('.image_container', self.el).width(nPanelWidth);                
+        $('.image_container', self.el).width(nPanelWidth);
         // update pos
         $("img.scale_image_ready", $(self.el)).imageScale();
         // fade in - delay adding class to ensure image is ready  

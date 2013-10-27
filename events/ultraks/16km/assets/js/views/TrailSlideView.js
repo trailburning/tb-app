@@ -51,6 +51,7 @@ define([
       // already rendered?  Just update
       if (this.bRendered) {
         // update container width
+        $('.image_container', this.el).width($('#appview').width());
         $('.photos_container', this.el).width($('#appview').width());        
         if (this.nCurrSlide >= 0) {
           var photoView = this.arrSlidePhotos[this.nCurrSlide];
@@ -65,6 +66,7 @@ define([
       $(this.el).html(this.template(attribs));
 
       // update container width
+      $('.image_container', this.el).width($('#appview').width());
       $('.photos_container', this.el).width($('#appview').width());                        
       for (var nMedia=0; nMedia < this.arrSlidePhotos.length; nMedia++) {
         var photoView = this.arrSlidePhotos[nMedia];
