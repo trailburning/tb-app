@@ -8,6 +8,7 @@ class JpegMedia extends Media {
 
   public function __construct() {
     parent::__construct();
+    $this->mimetype = 'image/jpeg';
   }
 
   public function verifyFileType() {
