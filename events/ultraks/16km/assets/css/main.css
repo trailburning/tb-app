@@ -643,6 +643,12 @@ border-width:1px;
   background: rgba(0, 0, 0, 0.6);  
 }
 
+/* TOUCH */
+/******************************************/
+#view_map_btns .touch_btn {  
+  margin: 0px 4px 0px 4px;
+}
+
 /* RESPONSIVE */
 /******************************************/
 

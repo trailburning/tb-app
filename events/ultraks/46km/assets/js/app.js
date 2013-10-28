@@ -5,6 +5,7 @@ var RESTAPI_BASEURL = 'http://trailburning.herokuapp.com/api/';
 
 define([
   'underscore', 
+  'modernizr',
   'backbone',
   'models/TrailModel',
   'models/TrailMediaModel',
@@ -15,7 +16,7 @@ define([
   'views/TrailStatsView',  
   'views/TrailAltitudeView',
   'views/TrailWeatherView'
-], function(_, Backbone, TrailModel, TrailMediaModel, TrailMiniMapView, TrailMiniSlideView, TrailSlideView, TrailMapView, TrailStatsView, TrailAltitudeView, TrailWeatherView){
+], function(_, Modernizr, Backbone, TrailModel, TrailMediaModel, TrailMiniMapView, TrailMiniSlideView, TrailSlideView, TrailMapView, TrailStatsView, TrailAltitudeView, TrailWeatherView){
   app.dispatcher = _.clone(Backbone.Events);
   
   var MIN_HEIGHT = 540;

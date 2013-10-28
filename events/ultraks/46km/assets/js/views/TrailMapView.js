@@ -43,6 +43,12 @@ define([
     buildBtns: function(){
       var self = this;
 
+      // make btns more touch friendly
+      if (Modernizr.touch) {
+        $('.btn-tb', $(this.elCntrls)).addClass('touch_btn');
+        $('.btn-tb', $(this.elCntrls)).addClass('btn-tb-mega');
+      }      
+
       $('.zoomin_btn', $(this.elCntrls)).click(function(evt){
         if(self.map.getZoom() < self.map.getMaxZoom()) {
           self.map.zoomIn();                  
