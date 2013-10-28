@@ -47,9 +47,13 @@ define([
     this.slideTimer = null;
     this.nCurrSlide = -1;
     this.nTickleCount = 0;
-    this.nOldTickleCount = 0;    
-    this.mediaCollection = new Backbone.Collection();
-    
+    this.nOldTickleCount = 0;
+    this.userProfileMap = null;
+    this.bFirstSlide = true;
+
+    bSlideFull = true;
+        
+    this.mediaCollection = new Backbone.Collection();    
     this.trailModel = new TrailModel();
     this.mediaModel = new TrailMediaModel();
 
@@ -62,11 +66,7 @@ define([
     this.trailMapView = new TrailMapView({ el: '#trail_map_view', elCntrls: '#view_map_btns', model: this.trailModel });
     
     this.trailWeatherView = new TrailWeatherView({ el: '#trail_weather_view', model: this.trailModel });
-    
-    this.userProfileMap = null;
-
-    bSlideFull = true;
-    
+        
     buildBtns();
     updatePlayerHeight();
     
@@ -91,10 +91,6 @@ define([
       handleResize();
     });    
 
-    $(window).mousemove(function(evt) {
-      tickle();
-    });
-
     function tickle() {
       self.nTickleCount++;
 
@@ -110,17 +106,36 @@ define([
       });
 
       $('#trail_overlay .overlay_pull').click(function(evt){
-        toggleSlide();
+        toggleOverlay();
       });
       $('#trail_overlay .overlay_pull').mouseover(function(evt){
         $(evt.currentTarget).css('cursor','pointer');      
       });
     }
 
-    function toggleSlide() {
+    function toggleOverlay() {
       // add transition for effect
       $('#trailplayer').addClass('tb-size');
-      
+
+      if (self.bFirstSlide) {
+        $('#trail_overlay').addClass('delay_transition');
+        $('#trail_info').addClass('delay_transition');
+        $('#trail_info .trail_avatar').addClass('delay_transition');       
+        $('#trail_info .trail_title').addClass('delay_transition');            
+        $('#trail_stats_view').addClass('delay_transition');
+        $('#trail_altitude_view').addClass('delay_transition');            
+        $('#trail_mini_view').addClass('delay_transition');      
+      }
+      else {
+        $('#trail_overlay').removeClass('delay_transition');
+        $('#trail_info').removeClass('delay_transition');
+        $('#trail_info .trail_avatar').removeClass('delay_transition');       
+        $('#trail_info .trail_title').removeClass('delay_transition');            
+        $('#trail_stats_view').removeClass('delay_transition');
+        $('#trail_altitude_view').removeClass('delay_transition');            
+        $('#trail_mini_view').removeClass('delay_transition');      
+      }
+                        
       if (bSlideFull) {
         bSlideFull = false;
         
@@ -307,6 +322,12 @@ define([
           onShowNextSlide();
         }, HOLD_SLIDE);
       }
+      
+      if (self.bFirstSlide) {
+        // show overlay
+        toggleOverlay();
+        self.bFirstSlide = false;
+      }
     }    
 
     function onShowNextSlide() {
@@ -340,8 +361,7 @@ define([
       $('#trail_overlay').addClass('tb-move');
       $('#trail_info').addClass('tb-move');
       $('#trail_info .trail_avatar').addClass('tb-move');       
-      $('#trail_info .trail_title').addClass('tb-move');
-            
+      $('#trail_info .trail_title').addClass('tb-move');            
       $('#trail_stats_view').addClass('tb-move');
       $('#trail_altitude_view').addClass('tb-move');            
       $('#trail_mini_view').addClass('tb-move');      
@@ -349,7 +369,11 @@ define([
       var self = this;          
       this.nTickleTimer = setInterval(function() {
         onTickleTimer();
-      }, TICKLE_TIMER);      
+      }, TICKLE_TIMER);     
+      
+      $(window).mousemove(function(evt) {
+        tickle();
+      });
     }
     
     function handleMedia() {
@@ -379,21 +403,20 @@ define([
     this.trailModel.set('id', nTrail);             
     this.trailModel.fetch({
       success: function () {
+        handleTrail();
+        
         self.trailMiniMapView.render();
         self.trailMapView.render();
-
-        handleTrail();
 
         self.mediaModel.url = RESTAPI_BASEURL + 'v1/route/'+self.trailModel.get('id')+'/medias';
         self.mediaModel.fetch({
           success: function () {
             handleMedia(self.mediaModel);
-            toggleSlide();
             tickle();      
           }
         });        
       }      
-    });    
+    });
   };
     
   return { 

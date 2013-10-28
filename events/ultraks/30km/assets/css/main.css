@@ -8,6 +8,11 @@ border-width:1px;
   min-width: 1200px;
 }
 
+#appview .delay_transition {
+  transition-delay: 0.5s;
+  -webkit-transition-delay: 0.5s;  
+}
+
 /* TRAIL PLAYER */
 /******************************************/
 #trailplayer {
@@ -694,6 +699,9 @@ border-width:1px;
   }
   .trail_weather_panel {
     width: 472px;
+  }
+  .trail_weather_panel .detail .text {
+    width: 250px;
   }
   .othertrails_panel {
     width: 472px;
