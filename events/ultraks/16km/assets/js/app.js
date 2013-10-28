@@ -118,6 +118,9 @@ define([
     }
 
     function toggleSlide() {
+      // add transition for effect
+      $('#trailplayer').addClass('tb-size');
+      
       if (bSlideFull) {
         bSlideFull = false;
         
@@ -310,6 +313,9 @@ define([
     }
     
     function handleResize() {
+      // remove transition to avoid seeing grey beneath image when resizing
+      $('#trailplayer').removeClass('tb-size');
+      
       updatePlayerHeight();
       
       switch (self.nTrailView) {
@@ -328,10 +334,7 @@ define([
     }        
       
     function handleTrail() {      
-      $('#trailplayer').addClass('tb-size');
-      
       $('#trail_views').addClass('tb-move');
-      $('#trail_slide_view').addClass('tb-size');
       
       $('#trail_overlay').addClass('tb-move');
       $('#trail_info').addClass('tb-move');
