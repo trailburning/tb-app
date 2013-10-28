@@ -5,7 +5,7 @@
 border-style:solid;
 border-width:1px;
 */  
-  min-width: 1160px;
+  min-width: 1200px;
 }
 
 /* DEF HEADER */
@@ -137,20 +137,18 @@ border-width:1px;
 /* RESPONSIVE */
 /******************************************/
 
-/* Large desktop */
+/* Large devices (large desktops, 1200px and up) */
 @media (min-width: 1200px) {
 }
  
-/* Portrait tablet to landscape and desktop */
-@media (min-width: 768px) and (max-width: 979px) {
-}
- 
-/* Landscape phone to portrait tablet */
-@media (max-width: 767px) {
-}
- 
-/* Landscape phones and down */
-@media (max-width: 480px) {
+/* Medium devices (desktops, 992px and up) */
+@media (max-width: 1199px) {  
+  #appview {
+    min-width: 992px;
+  }  
+  .panel_content {
+    width: 992px;
+  }   
 }
 
 .image {

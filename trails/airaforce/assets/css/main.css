@@ -64,7 +64,7 @@ border-width:1px;
 }
 
 .trailstats_panel .content {
-  margin: 30px 0px 0px 52px;
+  margin: 30px 0px 0px 42px;
   line-height: 1em;
   color: #44B6F7;
 }
@@ -114,10 +114,6 @@ border-width:1px;
 }
 
 .trail_altitude_panel .profile .marker_container .alt {
-/*  
-border-style:solid;
-border-width:1px;
-*/  
   position: absolute;
   top: 0px;
   left: 0px;
@@ -645,38 +641,70 @@ border-width:1px;
 /* RESPONSIVE */
 /******************************************/
 
-/* Large desktop */
+/* Large devices (large desktops, 1200px and up) */
 @media (min-width: 1200px) {
-/*  
-  .trailaltitude_panel {
-    width: 850px;
-  }
-*/    
 }
  
-/* Portrait tablet to landscape and desktop */
-@media (min-width: 768px) and (max-width: 979px) {
-/*  
-  .trailaltitude_panel {
-    width: 710px;
+/* Medium devices (desktops, 992px and up) */
+@media (max-width: 1199px) {  
+  #appview {
+    min-width: 992px;
+  }    
+  #trail_overlay .overlay_content {
+    width: 992px;
   }
-*/    
-}
- 
-/* Landscape phone to portrait tablet */
-@media (max-width: 767px) {
-/*  
-  .trailaltitude_panel {
-    width: 610px;
+  #trail_stats_view {
+    position: absolute;
+    width: 194px;
   }
-*/    
-}
- 
-/* Landscape phones and down */
-@media (max-width: 480px) {
-/*  
-  .trailaltitude_panel {
-    width: 450px;
+  #trail_altitude_view {
+    left: 194px;
+    width: 570px;
   }
-*/    
+  #trail_mini_view {
+    left: 764px;
+    width: 228px;
+  }
+  #trail_mini_view .border_top {  
+    width: 222px;
+  }
+  #trail_minimap_view {
+    width: 228px;
+  }
+  #trail_minimap_view #minimap {
+    width: 222px;
+  }
+  #trail_minislide_view {
+    width: 222px;
+  }
+  #minislide .image_container {
+    width: 222px;
+  }  
+  .panel_content {
+    width: 968px;
+  }
+  .two_col_panels .left {
+    width: 472px;
+  }
+  .two_col_panels .right {
+    width: 496px;
+  }  
+  .trail_detail_panel {
+    width: 472px;
+  }
+  .trail_weather_panel {
+    width: 472px;
+  }
+  .othertrails_panel {
+    width: 472px;
+    height: 336px;
+  }
+  .trailgear_panel {
+    width: 472px;
+    height: 336px;
+  }
+  .trailgear_panel .content .gear_list .gear {
+    margin: 0px 7px 0px 7px;
+    width: 142px;
+  }
 }

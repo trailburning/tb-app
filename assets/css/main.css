@@ -329,15 +329,14 @@ border-width:1px;
 }
  
 /* Medium devices (desktops, 992px and up) */
-@media (min-width: 992px) and (max-width: 1199px) {  
+@media (max-width: 1199px) {  
   #appview {
     min-width: 992px;
   }  
   #home_header .share_bar {
-    width: 958px;
+    width: 992px;
   }
   .panel_content {
-    margin: 0px auto 95px auto;
     width: 992px;
   }   
   .panel {  
@@ -394,10 +393,6 @@ border-width:1px;
     color: #44B6F7;
     text-align: center;  
   }  
-}
- 
-/* Small devices (tablets, 768px and up) */
-@media (min-width: 768px) {
 }
 
 .image {

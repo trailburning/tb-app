@@ -18,7 +18,7 @@ define([
 ], function(_, Backbone, TrailModel, TrailMediaModel, TrailMiniMapView, TrailMiniSlideView, TrailSlideView, TrailMapView, TrailStatsView, TrailAltitudeView, TrailWeatherView){
   app.dispatcher = _.clone(Backbone.Events);
   
-  var MIN_WIDTH = 1200;
+  var MIN_HEIGHT = 540;
   
   var SLIDE_VIEW = 0;
   var MAP_VIEW = 1;
@@ -215,9 +215,10 @@ define([
       if ((nPlayerHeight+nExpandHeight+elPlayer.position().top) > $(window).height()) {  
         nPlayerHeight = $(window).height() - nExpandHeight - elPlayer.position().top; 
       }
-      if (nPlayerHeight < (MIN_WIDTH / 2)) {
-        nPlayerHeight = (MIN_WIDTH / 2);
+      if (nPlayerHeight < MIN_HEIGHT) {
+        nPlayerHeight = MIN_HEIGHT;
       }
+      
       self.nPlayerHeight = nPlayerHeight;
 
       var nExtendHeight = nExpandHeight * 2;                  

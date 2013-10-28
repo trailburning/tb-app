@@ -5,7 +5,7 @@
 border-style:solid;
 border-width:1px;
 */  
-  min-width: 1160px;
+  min-width: 1200px;
 }
 
 /* EVENT HEADER */
@@ -266,20 +266,50 @@ border-width:1px;
 /* RESPONSIVE */
 /******************************************/
 
-/* Large desktop */
+/* Large devices (large desktops, 1200px and up) */
 @media (min-width: 1200px) {
 }
  
-/* Portrait tablet to landscape and desktop */
-@media (min-width: 768px) and (max-width: 979px) {
-}
- 
-/* Landscape phone to portrait tablet */
-@media (max-width: 767px) {
-}
- 
-/* Landscape phones and down */
-@media (max-width: 480px) {
+/* Medium devices (desktops, 992px and up) */
+@media (max-width: 1199px) {  
+  #appview {
+    min-width: 992px;
+  }
+  .panel_content {
+    width: 968px;
+  }
+  .panels .left {
+    width: 472px;
+  }
+  .panels .right {
+    width: 496px;
+  }
+  .event_detail_panel {
+    width: 472px;
+  }
+  .event_region_panel {
+    width: 472px;
+  }
+  .event_trails_container {
+    width: 496px;
+  }
+  .event_trails_container .event_trail {
+    width: 224px;
+  }
+  .event_trail .title {
+    height: 78px;
+    line-height: 78px;
+  }
+  .event_trail .detail {
+    padding: 12px 0px 0px 34px;
+    height: 190px;
+  }  
+  .event_location_panel {
+    width: 472px;
+  }
+  .event_location_panel .content .event_location_map {
+    width: 450px;
+  }
 }
 
 .image {

@@ -5,7 +5,7 @@
 border-style:solid;
 border-width:1px;
 */  
-  min-width: 1160px;
+  min-width: 1200px;
 }
 
 /* PROFILE HEADER */
@@ -60,6 +60,12 @@ border-width:1px;
 
 #profile_header .profile_title .avatar {
   margin: 38px 0px 0px 4px;  
+  width: 211px;
+  height: 210px;
+}
+
+#profile_header .profile_title .avatar img {
+  width: 100%;
 }
 
 /* PANELS */
@@ -157,6 +163,9 @@ border-width:1px;
   color: #44B6F7;
   text-align: center;
 }
+.trailgear_panel .content .gear_list .gear img {
+  width: 100%;
+}
 
 .trailgear_panel .content .gear_list .gear h1 {
   margin: 4px 0px 0px 0px;
@@ -223,20 +232,51 @@ border-width:1px;
 /* RESPONSIVE */
 /******************************************/
 
-/* Large desktop */
+/* Large devices (large desktops, 1200px and up) */
 @media (min-width: 1200px) {
 }
  
-/* Portrait tablet to landscape and desktop */
-@media (min-width: 768px) and (max-width: 979px) {
-}
- 
-/* Landscape phone to portrait tablet */
-@media (max-width: 767px) {
-}
- 
-/* Landscape phones and down */
-@media (max-width: 480px) {
+/* Medium devices (desktops, 992px and up) */
+@media (max-width: 1199px) {  
+  #appview {
+    min-width: 992px;
+  }
+  #profile_map .leaflet-overlay {
+    width: 730px;
+    background-size: 730px 538px;
+  }
+  #profile_header .profile_title .avatar {
+    margin: 38px 0px 0px 4px;  
+    width: 175px;
+    height: 174px;
+  }
+  .panel_content {
+    width: 968px;
+  }
+  .panels .left {
+    width: 472px;
+  }
+  .panels .right {
+    width: 496px;
+  }
+  .profile_detail_panel {
+    width: 472px;
+  }
+  .trailgear_panel {
+    width: 472px;
+    height: 296px;
+  }
+  .trailgear_panel .content .gear_list {
+    height: 214px;
+  }
+  .trailgear_panel .content .gear_list .gear {
+    margin: 0px 7px 0px 7px;
+    width: 142px;
+  }
+  .tops_trails_panel {
+    margin-left: 24px;
+    width: 472px;
+  }    
 }
 
 .image {
