@@ -36,7 +36,13 @@ border-width:1px;
 #event_header .event_logo {
   position: absolute;
   top: 23px;
-  right: 34px;  
+  right: 34px;
+  width: 226px;  
+}
+
+#event_header .event_logo img {
+  float: right;
+  width: 100%;
 }
 
 #event_header .sponsors {
@@ -187,29 +193,18 @@ border-width:1px;
   text-decoration: none;    
 }
 
-.event_trail .title {
+.event_trail h2 {
+  color: #FFFFFF;
+}
+
+.event_trail h3 {
   margin-left: 22px;
   height: 78px;
-  font-size: 42px;
-  font-weight: 400;
   line-height: 78px;
-  color: #44B6F7;
 }
 
-.event_trail h1 {
-  margin: 0px;
-  padding: 0px;
-  font-size: 50px;
-  line-height: 1em;
-  font-weight: 400;
-}
-
-.event_trail h2 {
-  margin: 0px;
+.event_trail .desc {
   padding: 0px 0px 0px 2px;
-  font-size: 16px;
-  line-height: 1.8em;
-  font-weight: 300;
 }
 
 .event_trail .detail {
@@ -309,6 +304,67 @@ border-width:1px;
   }
   .event_location_panel .content .event_location_map {
     width: 450px;
+  }
+}
+
+/* Small devices (tablets, 768px) */
+@media (max-width: 768px) {  
+  #appview {
+    min-width: 768px;
+  }  
+  #event_header {
+    height: 426px;
+  }
+  #event_header .event_logo {
+    right: 24px;
+    width: 144px;  
+  }
+  #event_header .image_container {
+    height: 426px;
+  }
+  .panel_content {
+    width: 748px;
+  }   
+  .panels .left {
+    width: 368px;
+  }
+  .panels .right {
+    width: 380px;
+  }
+  .event_detail_panel {
+    width: 368px;
+  }
+  .event_region_panel {
+    margin-top: 12px;
+    width: 368px;
+  }
+  .event_trails_container {
+    width: 380px;
+  }  
+  .event_trails_container .event_trail {
+    margin: 12px 0px 0px 12px;
+    width: 176px;
+  }
+  .event_trail h3 {
+    margin-left: 12px;
+    height: 68px;
+    line-height: 68px;
+  }
+  .event_trail .detail {
+    padding: 12px 0px 0px 16px;
+    height: 190px;
+  }  
+  .event_trail .more { 
+    margin-right: 12px;
+    height: 52px;
+    line-height: 52px;
+  }
+  .event_location_panel {
+    margin-left: 12px;
+    width: 368px;
+  }
+  .event_location_panel .content .event_location_map {
+    width: 346px;
   }
 }
 

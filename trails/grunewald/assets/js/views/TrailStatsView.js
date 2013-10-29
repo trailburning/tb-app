@@ -43,14 +43,14 @@ define([
         var elTrailLength = $('.length', $(this.el));
         if (elTrailLength.length) {
           if (elTrailLength.html() == '') {
-            elTrailLength.html('<h1>'+Math.floor(jsonRoute.length/1000)+' km</h1><h2>Length</h2>');
+            elTrailLength.html('<h2 class="tb">'+Math.floor(jsonRoute.length/1000)+' km</h2><div class="desc">Length</div>');
           }
         }
         
         var elTrailTerrain = $('.terrain', $(this.el));
         if (elTrailTerrain.length) {
           if (elTrailTerrain.html() == '') {
-            elTrailTerrain.html('<h1>'+formatAltitude(Math.floor(jsonRoute.tags.ascent))+' m</h1><h2>D+ / '+formatAltitude(Math.floor(jsonRoute.tags.descent))+'m D-</h2>');
+            elTrailTerrain.html('<h3 class="tb">'+formatAltitude(Math.floor(jsonRoute.tags.ascent))+' m</h3><div class="desc">D+ / '+formatAltitude(Math.floor(jsonRoute.tags.descent))+'m D-</div>');
           }
         }
       }                             

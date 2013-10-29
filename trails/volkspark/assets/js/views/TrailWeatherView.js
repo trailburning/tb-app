@@ -29,12 +29,13 @@ define([
         elField = $('.temp', $(self.el));
         switch (self.nUnits) {
           case UNITS_METRIC:           
-            strText = '<h1>'+Math.round(jsonData['main'].temp)+'°</h1><h2>Celsius Temperature</h2>'
+            strText = '<h2 class="tb">'+Math.round(jsonData['main'].temp)+'°</h2><div class="desc">Celsius Temperature</div>'
             break;
           case UNITS_IMPERIAL:
-            strText = '<h1>'+Math.round(jsonData['main'].temp * 3.8)+'°</h1><h2>Fahrenheit Temperature</h2>'
+            strText = '<h2 class="tb">'+Math.round(jsonData['main'].temp * 3.8)+'°</h2><div class="desc">Fahrenheit Temperature</div>'
             break;          
         }        
+        
         elField.html(strText);
         // wind
         elField = $('.wind', $(self.el));
@@ -46,7 +47,7 @@ define([
             strText = Math.round(jsonData['wind'].speed / 0.44704) + ' mph';
             break;          
         }
-        elField.html('<h1>'+strText+'</h1><h2>Wind</h2>');
+        elField.html('<h3 class="tb">'+strText+'</h3><div class="desc">Wind</div>');
         // icon
         switch (jsonData['weather'][0].icon) {
           case '01d':

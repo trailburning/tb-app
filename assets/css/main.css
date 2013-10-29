@@ -204,7 +204,12 @@ border-width:1px;
 
 .trail_card_panel .summary .avatar {
   float: left;
+  width: 54px;
   margin-top: 5px;
+}
+
+.trail_card_panel .summary .avatar img {
+  width: 100%;
 }
 
 .trail_card_panel .summary .detail {
@@ -215,6 +220,11 @@ border-width:1px;
 
 .trail_card_panel .summary .stars {
   margin-top: 6px;
+}
+
+.trail_card_panel .summary .stars div {
+  width: 13px;
+  height: 14px;
 }
 
 /* GUIDE */
@@ -234,6 +244,7 @@ border-width:1px;
 .guide_content .sticker img {
   position: absolute;
   top: -56px;
+  width: 100%;
 }
 
 .guide_content .content {
@@ -393,6 +404,103 @@ border-width:1px;
     color: #44B6F7;
     text-align: center;  
   }  
+}
+
+/* Small devices (tablets, 768px) */
+@media (max-width: 768px) {  
+  #appview {
+    min-width: 768px;
+  }  
+  #home_header {
+    height: 360px;
+  }
+  #home_header .image_container {
+    height: 360px;
+  }
+  #home_header .share_bar {
+    width: 748px;
+  }
+  .panel_content {
+    width: 768px;
+  }   
+  .panel {  
+    width: 172px;
+    margin: 10px 10px 10px 10px;
+  }  
+  .panel .summary {  
+    font-size: 12px;
+  }
+  .panel .image_container {
+    height: 140px;
+  }
+  .event_card_panel .photo .image_container {
+    height: 188px;
+  }  
+  .event_card_panel .summary {  
+    height: 42px;
+    margin: 6px 0px 0px 10px;
+  }
+  .trail_card_panel .title {
+    margin-left: 12px;
+    height: 48px;
+  }  
+  .trail_card_panel .title h3 {
+    line-height: 48px;
+  }
+  .trail_card_panel .photo .card_title h1 {
+    font-size: 18px;
+  }
+  .trail_card_panel .summary {  
+    height: 48px;
+    margin: 0px 0px 0px 10px;
+  }    
+  .trail_card_panel .summary .detail {
+    margin-top: 6px;
+  }  
+  .trail_card_panel .summary .stars {
+    margin-top: 2px;
+  }  
+  .trail_card_panel .summary .stars div {
+    width: 9px;
+    height: 14px;
+  }
+  .trail_card_panel .summary .avatar {
+    width: 34px;
+    margin-top: 5px;
+  }
+  .guide_content {
+    height: 576px;
+  }
+  .guide_content .sticker {
+    width: 104px;
+  }
+  .guide_content .sticker img {
+    top: -36px;
+  }
+  .guide_content .content {
+    padding-top: 78px;
+    width: 768px;
+  }
+  .guide_content .content .title {
+    font-size: 32px;
+  }
+  .guide_content .guide_items {
+    margin-top: 38px;
+    background: url("../img/guide_back.png") no-repeat 254px 76px;    
+    background-size: 268px 53px;  
+  }  
+  .guide_content .guide_item {
+    margin: 0px 42px 0px 42px;
+    width: 172px;
+    color: #44B6F7;
+    text-align: center;  
+  }  
+  .footer_promote {
+    height: 442px;
+  }
+  .footer_promote .image_container {
+    height: 442px;
+  }
 }
 
 .image {

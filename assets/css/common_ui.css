@@ -106,14 +106,10 @@ a.btn {
 
 /* TB TITLES */
 /******************************************/
-h1.tb {
+.tb-title {
   display: inline-block;
   margin: 16px 0px 0px 0px;
   padding: 5px 10px 5px 10px;
-  font-weight: normal;
-  font-size: 70px;
-  line-height: 1em;
-  color: #44B6F7;  
   background-color: #FFF;
   border: none;
   *zoom: 1;
@@ -122,20 +118,18 @@ h1.tb {
           box-shadow: 2px 4px 5px 0px rgba(0, 0, 0, 0.1);    
 }
 
+h1.tb {
+  font-weight: normal;
+  font-size: 70px;
+  line-height: 1em;
+  color: #44B6F7;  
+}
+
 h2.tb {
-  display: inline-block;
-  margin: 16px 0px 0px 0px;
-  padding: 5px 10px 5px 10px;
   font-weight: normal;
   font-size: 50px;
   line-height: 1em;
   color: #44B6F7;  
-  background-color: #FFF;
-  border: none;
-  *zoom: 1;
-  -webkit-box-shadow: 2px 4px 5px 0px rgba(0, 0, 0, 0.1);
-     -moz-box-shadow: 2px 4px 5px 0px rgba(0, 0, 0, 0.1);
-          box-shadow: 2px 4px 5px 0px rgba(0, 0, 0, 0.1);    
 }
 
 h3.tb {
@@ -489,23 +483,20 @@ h4.tb {
 
 .star {
   float: left;
-  width: 13px;
-  height: 14px;
-  background: url(../img/star.png) no-repeat top left;    
+  background: url(../img/star.png) no-repeat top left;
+  background-size: 100% 100%;    
 }
 
 .star_full {
   float: left;
-  width: 13px;
-  height: 14px;
   background: url(../img/star_full.png) no-repeat top left;    
+  background-size: 100% 100%;    
 }
 
 .star_half {
   float: left;
-  width: 13px;
-  height: 14px;
   background: url(../img/star_half.png) no-repeat top left;    
+  background-size: 100% 100%;    
 }
 
 .line_break {
@@ -520,4 +511,20 @@ h4.tb {
   width: 100%;
   height: 2px;
   background: url(../img/trans_line.png) repeat-x top left;  
+}
+
+/* Small devices (tablets, 768px) */
+@media (max-width: 768px) {  
+  h1.tb {
+    font-size: 56px;
+  }
+  h2.tb {
+    font-size: 40px;
+  }
+  h3.tb {
+    font-size: 38px;
+  }  
+  h4.tb {
+    font-size: 18px;
+  }
 }
