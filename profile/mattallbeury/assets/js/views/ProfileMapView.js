@@ -9,8 +9,6 @@ define([
 
     },            
     render: function(){
-      alert('pointerEvents:'+Modernizr.testAllProps('pointerEvents'));
-      
       var self = this;
       
       this.userProfileMap = L.mapbox.map('profile_map', 'mallbeury.test', {dragging: true, touchZoom: false, scrollWheelZoom:false, doubleClickZoom:false, boxZoom:false, tap:false, zoomControl:false, zoomAnimation:false, attributionControl:false});      
@@ -38,10 +36,6 @@ define([
       var arrMarkers = [];
 
       function onClick(e) {
-        
-//      alert(Modernizr.testAllProps('pointerEvents'));
-        console.log(Modernizr.touch);
-        
       }
           
       arrMarkers.push([54.57269115373492, -2.9278992768377066]);                   
