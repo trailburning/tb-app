@@ -40,14 +40,14 @@ border-width:1px;
   height: 100%;  
 }
 
-#profile_map .leaflet-overlay {
-  position: relative;
-  z-index: 5;
-  margin: 0px;
+#profile_map_overlay {
+  position: absolute;
+  top: 0px;
   width: 880px;
   height: 486px;
   background: url(../img/above_map.png) no-repeat top left;
   background-size: 880px 538px;
+  pointer-events: none;  
 }
 
 #profile_header .profile_title {
