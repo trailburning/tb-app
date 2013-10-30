@@ -164,7 +164,9 @@ define([
       // already rendered?  Just update
       if (this.bRendered) {
         this.map.invalidateSize();
-        this.map.fitBounds(this.polyline.getBounds(), {padding: [30, 30]});
+        this.map.fitBounds(this.polyline.getBounds(), {padding: [30, 30], animate: false});
+        // increase chance of route being visible.  Ideally we should move the map to ensure all visible when overlay is present.
+        this.map.zoomOut(1, {animate: false});
         return;         
       }        
                 
