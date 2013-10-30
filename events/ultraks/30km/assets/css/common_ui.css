@@ -515,16 +515,4 @@ h4.tb {
 
 /* Small devices (tablets, 768px) */
 @media (max-width: 768px) {  
-  h1.tb {
-    font-size: 56px;
-  }
-  h2.tb {
-    font-size: 40px;
-  }
-  h3.tb {
-    font-size: 38px;
-  }  
-  h4.tb {
-    font-size: 18px;
-  }
 }
