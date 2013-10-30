@@ -18,7 +18,7 @@ define([
         $('#profile_map_overlay').show();
       }
       
-      this.userProfileMap = L.mapbox.map('profile_map', 'mallbeury.test', {dragging: true, touchZoom: false, scrollWheelZoom:false, doubleClickZoom:false, boxZoom:false, tap:false, zoomControl:false, zoomAnimation:false, attributionControl:false});      
+      this.userProfileMap = L.mapbox.map('profile_map', 'mallbeury.test', {dragging: false, touchZoom: false, scrollWheelZoom:false, doubleClickZoom:false, boxZoom:false, tap:false, zoomControl:false, zoomAnimation:false, attributionControl:false});      
       this.userProfileMap.on('zoomend', function(e) {
         if (self.userProfileMap.getZoom() > 5) {
           self.userProfileMap.setZoom(5);
