@@ -217,6 +217,7 @@ define([
           
       self.nTitleState = TITLE_ON;
       
+      $('#trail_info').removeClass('delay_transition');      
       $('#trail_info').css('top', 24);       
       $('#trail_info .trail_avatar').css('top', 0);       
       $('#trail_info .trail_title').css('top', 0);       
