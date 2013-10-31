@@ -197,13 +197,24 @@ define([
       
       self.trailAltitudeView.gotoMedia(nSlide);
       
-      self.nCurrSlide = nSlide;      
+      self.nCurrSlide = nSlide;    
+      
+      // render next slide to avoid stalling when in slide show
+      if (nSlide < self.mediaCollection.length-1) {
+        self.trailMiniSlideView.gotoSlide(nSlide+1);    
+        self.trailSlideView.render(nSlide+1);
+      }        
     }
 
     function showTitle() {
       if (self.nTitleState != TITLE_OFF) {
         return;
-      }    
+      }
+      // only show when in slide view
+      if (self.nTrailView != SLIDE_VIEW) {
+        return;
+      }      
+          
       self.nTitleState = TITLE_ON;
       
       $('#trail_info').css('top', 24);       
@@ -292,6 +303,8 @@ define([
           self.trailMapView.hide();
           self.trailSlideView.show();
           self.trailSlideView.render();
+          
+          showTitle();
           break;
           
         case SLIDE_VIEW:
@@ -307,6 +320,8 @@ define([
           
           self.trailMapView.show();
           self.trailMapView.render();
+          
+          hideTitle();
           break;
       }
       handleResize();
