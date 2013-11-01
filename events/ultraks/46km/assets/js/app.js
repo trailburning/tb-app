@@ -240,7 +240,8 @@ define([
       var nPlayerHeight = 0, nExpandHeight = 50;      
       var elPlayer = $('#trailplayer');
 
-      nPlayerHeight = Math.round(elPlayer.width() / 2);
+      nPlayerHeight = Math.round(elPlayer.width() * 0.746875);
+      
       // check height fits
       if ((nPlayerHeight+nExpandHeight+elPlayer.position().top) > $(window).height()) {  
         nPlayerHeight = $(window).height() - nExpandHeight - elPlayer.position().top; 
