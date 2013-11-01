@@ -158,6 +158,9 @@ h4.tb {
   text-shadow: 1px 1px #000000;  
 }
 
+.tb-credit a, .tb-credit a:hover, .tb-credit a:active {
+  text-decoration: none;
+}
 
 /* TB PANELS */
 /******************************************/
