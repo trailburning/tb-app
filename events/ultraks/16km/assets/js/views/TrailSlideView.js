@@ -17,12 +17,10 @@ define([
       this.bWaitingForSlide = false;
     },            
     show: function(){      
-//      $(this.el).show();
-      $(this.el).css("visibility", "visible");
+      $(this.el).show();
     },
     hide: function(){
-//      $(this.el).hide();
-      $(this.el).css("visibility", "hidden");
+      $(this.el).hide();
     },
     renderSlide: function(nSlide){
       var photoView = this.arrSlidePhotos[nSlide];

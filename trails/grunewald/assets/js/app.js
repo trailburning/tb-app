@@ -188,7 +188,7 @@ define([
       gotoMedia(nSlide);
     }    
 
-    function gotoMedia(nSlide){            
+    function gotoMedia(nSlide){      
       self.trailMiniSlideView.gotoSlide(nSlide);    
       self.trailSlideView.gotoSlide(nSlide);
       
@@ -201,9 +201,11 @@ define([
       
       // render next slide to avoid stalling when in slide show
       if (nSlide < self.mediaCollection.length-1) {
-        self.trailMiniSlideView.gotoSlide(nSlide+1);    
+        self.trailMiniSlideView.render(nSlide+1);    
         self.trailSlideView.render(nSlide+1);
       }        
+      
+      updatePlayerHeight();      
     }
 
     function showTitle() {

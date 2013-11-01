@@ -153,6 +153,12 @@ border-width:1px;
   margin-top: 18px;
 }
 
+.footer_promote .tb-credit {
+  position: absolute;
+  bottom: 12px;
+  left: 30px;
+}
+
 /* RESPONSIVE */
 /******************************************/
 
