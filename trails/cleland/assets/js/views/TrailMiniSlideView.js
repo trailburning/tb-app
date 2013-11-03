@@ -12,6 +12,7 @@ define([
       
       this.bRendered = false;        
       this.arrSlidePhotos = [];
+      this.nOldSlide = -1;
       this.nCurrSlide = -1;
       this.bSlideReady = false;
       this.bWaitingForSlide = false;
@@ -30,11 +31,7 @@ define([
       this.bSlideReady = false;     
       this.bWaitingForSlide = true;
        
-      // hide curr photo
-      if (this.nCurrSlide >= 0) {
-        var photoView = this.arrSlidePhotos[this.nCurrSlide];      
-        photoView.hide();        
-      }
+      this.nOldSlide = this.nCurrSlide;  
       this.nCurrSlide = nSlide;
       
       this.renderSlide(this.nCurrSlide);
@@ -81,7 +78,13 @@ define([
       if (this.bSlideReady && this.bWaitingForSlide) {
         this.bWaitingForSlide = false;
         
-        var photoView = this.arrSlidePhotos[this.nCurrSlide];
+        var photoView;
+        // hide old photo
+        if (this.nOldSlide >= 0) {
+          photoView = this.arrSlidePhotos[this.nOldSlide];      
+          photoView.hide();        
+        }
+        photoView = this.arrSlidePhotos[this.nCurrSlide];
         photoView.show();
       }
     },
