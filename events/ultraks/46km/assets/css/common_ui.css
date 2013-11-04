@@ -440,7 +440,7 @@ h4.tb {
 
 /* TB CANDY */
 /******************************************/
-.tb-photo-btn img {  
+.tb-photo-btn .image_container img {  
   filter: contrast(1);
   -webkit-filter: contrast(1);
   -moz-filter: contrast(1);
@@ -454,7 +454,7 @@ h4.tb {
   -webkit-transform:translate3d(0,0,0);
 }
 
-.tb-photo-btn:hover img {  
+.tb-photo-btn:hover .image_container img {  
   filter: contrast(1.5);
   -webkit-filter: contrast(1.5);
   -moz-filter: contrast(1.5);
