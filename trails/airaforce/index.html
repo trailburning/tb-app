@@ -210,13 +210,14 @@ var nTrail = 33;
 </script>
 
 <script type="text/template" id="trailSlideViewTemplate">
-  <div class="photos_container"></div>
+  <div class="photos_container"></div>  
+  <div class="loader_container">
+    <div class="loader"></div>
+  </div>  
 </script>
 
 <script type="text/template" id="trailSlidePhotoViewTemplate">
-  <div class="image_container fade_on_load">
-    <img src="http://app.resrc.it/O=80/http://s3-eu-west-1.amazonaws.com/<%= versionLargePath%>" class="resrc scale" />
-  </div>  
+  <div class="image_container fade_on_load"><img src="http://app.resrc.it/O=80/http://s3-eu-west-1.amazonaws.com/<%= versionLargePath%>" class="resrc scale" /></div>  
 </script>
 
 <script type="text/template" id="trailMapViewTemplate">
