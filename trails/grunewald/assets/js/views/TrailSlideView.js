@@ -76,7 +76,7 @@ define([
     },
     checkSlideState: function(){
       var self = this;
-      
+
       if (!this.bSlideReady && this.bWaitingForSlide) {
 //        $('#trail_slide_view .loader_container').show();
       }

@@ -51,6 +51,7 @@ define([
     this.nOldTickleCount = 0;
     this.userProfileMap = null;
     this.bFirstSlide = true;
+    this.bPlayerReady = false;
 
     bSlideFull = true;
         
@@ -95,6 +96,11 @@ define([
     $(window).resize(function() {
       handleResize();
     });    
+
+    $('#trailplayer').show();
+    $('.panel_container').show();
+    
+    updatePlayerHeight();
 
     function tickle() {
       self.nTickleCount++;
@@ -261,6 +267,8 @@ define([
       if (nPlayerHeight < MIN_HEIGHT) {
         nPlayerHeight = MIN_HEIGHT;
       }
+      // height of white bar
+      nPlayerHeight -= 8;
       
       self.nPlayerHeight = nPlayerHeight;
 
@@ -381,10 +389,13 @@ define([
           self.trailMapView.render();
           break;
       }      
-      self.trailSlideView.render();
-      self.trailMiniSlideView.render();
-      self.trailStatsView.render();
-      self.trailAltitudeView.render();
+      
+      if (self.bPlayerReady) {
+        self.trailSlideView.render();
+        self.trailMiniSlideView.render();
+        self.trailStatsView.render();
+        self.trailAltitudeView.render();
+      }
     }        
       
     function handleTrail() {      
@@ -427,10 +438,12 @@ define([
       self.trailMiniMapView.renderMarkers();          
       self.trailMapView.renderMarkers();
           
+      self.bPlayerReady = true;          
+          
       handleResize();      
       startSlideShow();
     }
-    
+
     // get trail    
     this.trailModel.set('id', nTrail);             
     this.trailModel.fetch({

@@ -43,11 +43,6 @@ define([
           nCurrY += nDashHeight;
         }
       }; 
-
-      var self = this;      
-      $(window).resize(function() {
-        self.render();        
-      });    
     },            
     gotoMedia: function(nMedia){
       // restore previous

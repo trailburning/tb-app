@@ -24,10 +24,6 @@ define([
           }
       });      
       this.locationIcon = new LocationIcon({iconUrl: 'https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/icons/sm_location.png'});
-            
-      $(window).resize(function() {
-        self.render();        
-      });                
     },            
     show: function(){
       $(this.el).show();
@@ -56,8 +52,7 @@ define([
       for (var nMedia=0; nMedia < this.arrMapMediaViews.length; nMedia++) {
         trailMapMediaView = this.arrMapMediaViews[nMedia];
         trailMapMediaView.render();
-      }
-      
+      }      
       L.marker(this.arrLineCordinates[0], {icon: this.locationIcon}).addTo(this.map);            
     },        
     render: function(){
