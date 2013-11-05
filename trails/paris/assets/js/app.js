@@ -106,6 +106,14 @@ define([
         $(evt.currentTarget).css('cursor','pointer');      
       });
 
+      $('#trail_mini_view .toggle_view_button').mouseover(function(evt){              
+        $(evt.currentTarget).css('cursor','pointer');      
+      });    
+
+      $('#trail_mini_view .toggle_view_button').click(function(evt){
+        onTrailToggleViewBtnClick();
+      });
+
       $('#trail_overlay .overlay_pull').click(function(evt){
         toggleOverlay();
       });

@@ -163,6 +163,15 @@ border-width:1px;
   border-left: 2px solid rgba(0, 0, 0, 0.1);
 }
 
+#trail_mini_view .toggle_view_button {
+  position: absolute;
+  top: 5px;
+  left: 0px;
+  width: 272px;
+  height: 204px;
+  background: url(../img/trailplayer/btn_transparent.png) repeat top left;
+}
+
 /* TRAIL MINI MAP VIEW */
 /******************************************/
 #trail_minimap_view {
@@ -666,6 +675,9 @@ border-width:1px;
     width: 228px;
   }
   #trail_mini_view .border_top {  
+    width: 222px;
+  }
+  #trail_mini_view .toggle_view {
     width: 222px;
   }
   #trail_minimap_view {
