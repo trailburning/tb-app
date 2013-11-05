@@ -45,8 +45,8 @@ border-width:1px;
 
 #trail_overlay .overlay_pull img {
   position: absolute;
-  top: 18px;
-  left: 15px;
+  top: 13px;
+  left: 4px;
 }
 
 #trail_overlay .overlay_content {
@@ -285,8 +285,12 @@ border-width:1px;
   height: 100%;
 }
 
-/* TRAIL INFO */
+/* TRAIL PLAYER */
 /******************************************/
+#trailplayer {
+  background: #DEDEDE;
+}
+
 #trailplayer #trail_info {
   position: absolute;
   top: -300px;
@@ -393,6 +397,8 @@ border-width:1px;
   z-index: 100;
   position: absolute;
   top: 0px;
+  height: 8px;
+  background: url(../img/trailplayer/trans_line.png) repeat-x top left;    
 }
 
 .panel_content_container {

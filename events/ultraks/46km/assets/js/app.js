@@ -71,6 +71,10 @@ define([
     buildBtns();
     updatePlayerHeight();
     
+    $('#search_field').focus(function(evt) {
+      $('#search_field').val('not just yet...');
+      event.preventDefault();
+    });
     $('#search_form').submit(function(evt) {
       $('#search_field').val('not just yet...');
       event.preventDefault();
@@ -151,7 +155,7 @@ define([
         $('#trail_views').css('top', -50);
         $('#trailplayer').height(self.nPlayerHeight+50);
         
-        $('#trail_overlay').css('top', -218);
+        $('#trail_overlay').css('top', -208);
 
         $('#trail_stats_view').css('top', 0);
         $('#trail_altitude_view').css('top', 0);        

@@ -14,6 +14,10 @@ define([
     });    
     handleResize();        
     
+    $('#search_field').focus(function(evt) {
+      $('#search_field').val('not just yet...');
+      event.preventDefault();
+    });
     $('#search_form').submit(function(evt) {
       $('#search_field').val('not just yet...');
       event.preventDefault();
