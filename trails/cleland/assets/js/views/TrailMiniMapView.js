@@ -101,6 +101,10 @@ define([
 
       this.renderMarkers();
                       
+      $(window).resize(function() {
+        self.render();        
+      });                
+                      
       this.bRendered = true;
 
       return this;

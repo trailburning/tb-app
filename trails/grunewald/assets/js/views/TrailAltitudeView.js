@@ -139,6 +139,10 @@ define([
       this.renderTrail(jsonPoints, fTrailLengthMetres);
       this.renderMarkers();
 
+      $(window).resize(function() {
+        self.render();        
+      });    
+
       this.bRendered = true;
 
       return this;
