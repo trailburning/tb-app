@@ -16,7 +16,7 @@ require([
 
 function trackOutboundLink(link, category, action) { 
   try { 
-  _gaq.push(['_trackEvent', category , action]); 
+    _gaq.push(['_trackEvent', category , action]); 
   } catch(err){}
    
   setTimeout(function() {
