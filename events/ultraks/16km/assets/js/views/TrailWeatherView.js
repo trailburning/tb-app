@@ -140,7 +140,9 @@ define([
             updateWeatherERR();
           }                     
         });        
-      }                             
+      }            
+      this.bRendered = true;
+                       
       return this;
     }    
   });
