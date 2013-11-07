@@ -13,13 +13,3 @@ require([
 ], function(App){
   App.initialize();
 });
-
-function trackOutboundLink(link, category, action) { 
-  try { 
-    _gaq.push(['_trackEvent', category , action]); 
-  } catch(err){}
-   
-  setTimeout(function() {
-    window.open(link.href, '_blank');    
-  }, 100);
-}
