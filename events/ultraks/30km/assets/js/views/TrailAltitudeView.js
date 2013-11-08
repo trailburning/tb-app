@@ -10,7 +10,6 @@ define([
                         
       this.bRendered = false;      
 
-      this.HeightToWidthFactor = 8;      
       this.fXFactor = 0;
       this.jsonTrail = null;
       this.fLowAlt = 0;
@@ -27,6 +26,8 @@ define([
       this.objBackgroundMargin = new Object();
       this.objBackgroundMargin.top = 20;
       this.objBackgroundMargin.bottom = 60;
+      
+      this.nMinHighAlt = 1000; // prevent low level trails from looking like mountains!
       
       CanvasRenderingContext2D.prototype.dashedVerticalLine = function(nX, nY1, nY2, nDashStrokeHeight) {
         if (nDashStrokeHeight == undefined) nDashStrokeHeight = 2;
@@ -119,21 +120,15 @@ define([
           self.fHighAlt = Number(point.tags.altitude); 
         }    
       });     
-      
+      // is trail high enough to look like it's in the mountains?
+      if (this.fHighAlt < this.nMinHighAlt) {
+        this.fHighAlt = this.fHighAlt * 2;  
+        this.fLowAlt = this.fLowAlt - 100;
+      }      
       this.fAltRange = this.fHighAlt - this.fLowAlt;
       
-      var fProfileWidthMetres = fTrailLengthMetres;
-      var fProfileHeightMetres = this.fAltRange * this.HeightToWidthFactor;
-        
-      var nRatio = Math.round(fProfileWidthMetres / fProfileHeightMetres); 
-
-      // adjust draw width
-      this.nDrawWidth = this.nDrawHeight * nRatio;
-      // scale to fit canvas        
-      if (this.nDrawWidth > this.nCanvasDrawWidth || this.nDrawHeight > this.nCanvasDrawHeight) {
-        this.nDrawHeight = Math.round(this.nDrawHeight * this.nCanvasDrawWidth / this.nDrawWidth);
-        this.nDrawWidth = this.nCanvasDrawWidth;
-      }  
+      this.nDrawHeight = Math.round(this.nDrawHeight * this.nCanvasDrawWidth / this.nDrawWidth);      
+      this.nDrawWidth = this.nCanvasDrawWidth;
 
       this.renderBackground(fTrailLengthMetres);                  
       this.renderTrail(jsonPoints, fTrailLengthMetres);
