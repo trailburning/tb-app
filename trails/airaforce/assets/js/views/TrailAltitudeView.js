@@ -18,7 +18,7 @@ define([
       this.currElMarker = null;
       
       this.objTrailMarginRect = new Object();
-      this.objTrailMarginRect.left = 60;// allow space to alt title
+      this.objTrailMarginRect.left = 70;// allow space to alt title
       this.objTrailMarginRect.right = 50;
       this.objTrailMarginRect.top = 20;
       this.objTrailMarginRect.bottom = 60;
