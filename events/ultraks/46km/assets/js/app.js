@@ -40,6 +40,8 @@ define([
     app.dispatcher.on("TrailMapMediaMarkerView:mediaclick", onTrailMapMediaMarkerClick, this);
     app.dispatcher.on("TrailMediaMarkerView:mediaclick", onTrailMediaMarkerClick, this);
     app.dispatcher.on("TrailSlideView:slideview", onTrailSlideViewSlideView, this);
+    app.dispatcher.on("TrailSlideView:clickslideprev", onTrailSlideViewSlideClickPrev, this);
+    app.dispatcher.on("TrailSlideView:clickslidenext", onTrailSlideViewSlideClickNext, this);
     
     this.nTrailView = SLIDE_VIEW;
     this.nTitleState = TITLE_OFF;
@@ -129,7 +131,7 @@ define([
       });
       $('#trail_overlay .overlay_pull').mouseover(function(evt){
         $(evt.currentTarget).css('cursor','pointer');      
-      });
+      });      
     }
 
     function toggleOverlay() {
@@ -202,6 +204,17 @@ define([
       }
       else {
         nSlide = 0;
+      }
+      gotoMedia(nSlide);
+    }    
+
+    function prevSlide(){
+      var nSlide = self.nCurrSlide; 
+      if (nSlide > 0) {
+        nSlide--;                               
+      }
+      else {
+        nSlide = self.mediaCollection.length-1;
       }
       gotoMedia(nSlide);
     }    
@@ -369,6 +382,14 @@ define([
         self.bFirstSlide = false;
       }
     }    
+
+    function onTrailSlideViewSlideClickPrev() {
+      prevSlide();         
+    }
+
+    function onTrailSlideViewSlideClickNext() {
+      nextSlide();         
+    }
 
     function onShowNextSlide() {
       nextSlide();          

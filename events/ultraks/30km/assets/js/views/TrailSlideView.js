@@ -69,22 +69,54 @@ define([
         var photoView = this.arrSlidePhotos[nMedia];
         $('.photos_container', this.el).append(photoView.el);      
       }
+      this.buildBtns();
             
       this.bRendered = true;
                         
       return this;
     },
+    buildBtns: function(){    
+      // make btns more touch friendly
+      if (Modernizr.touch) {
+        $('.slide_btns', $(this.el)).touchwipe({
+           wipeLeft: function() {
+            // fire event
+            app.dispatcher.trigger("TrailSlideView:clickslidenext", self);                
+           },
+           wipeRight: function() {
+            // fire event
+            app.dispatcher.trigger("TrailSlideView:clickslideprev", self);                              
+           },
+           wipeUp: function() { },
+           wipeDown: function() { },
+           min_move_x: 20,
+           min_move_y: 20,
+           preventDefaultEvents: false
+        });            
+      }
+      else {
+        $('.slide_btns .left', $(this.el)).click(function(evt){
+          // fire event
+          app.dispatcher.trigger("TrailSlideView:clickslideprev", self);                
+        });
+        $('.slide_btns .left', $(this.el)).mouseover(function(evt){
+          $(evt.currentTarget).css('cursor','pointer');      
+        });      
+        
+        $('.slide_btns .right', $(this.el)).click(function(evt){
+          // fire event
+          app.dispatcher.trigger("TrailSlideView:clickslidenext", self);                
+        });
+        $('.slide_btns .right', $(this.el)).mouseover(function(evt){
+          $(evt.currentTarget).css('cursor','pointer');      
+        });      
+      }
+    },
     checkSlideState: function(){
       var self = this;
 
-      if (!this.bSlideReady && this.bWaitingForSlide) {
-//        $('#trail_slide_view .loader_container').show();
-      }
-      
       if (this.bSlideReady && this.bWaitingForSlide) {
         this.bWaitingForSlide = false;
-        
-//        $('#trail_slide_view .loader_container').hide();
         
         var photoView;
         // hide old photo

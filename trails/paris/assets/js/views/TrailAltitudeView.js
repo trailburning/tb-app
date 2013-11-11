@@ -198,7 +198,7 @@ define([
         self.context.moveTo(nX, nY);
       }
       
-      var nStartX = 0;  
+      var nStartX = 0, nStartY = 0;  
       $.each(jsonPoints, function(key, point) {
         rem = key % Math.round(self.fXFactor * 4);
         if (rem == 0) {
@@ -208,10 +208,15 @@ define([
           self.context.lineTo(nX, nY);            
           if (!nStartX) {
             nStartX = nX;
+            nStartY = nY;
           }
         }
       });      
       var nEndX = nX;
+      
+      // position location
+      $('.location', (this.el)).css('left', nStartX - 13);
+      $('.location', (this.el)).css('top', nStartY - 33);
       
       // draw last point
       if (jsonPoints.length) {     
@@ -245,14 +250,14 @@ define([
         nYPercent = ((viewMediaMarkerView.model.get('tags').altitude - Math.round(this.fLowAlt)) / this.fAltRange) * 100;
         nY = nYOffset + this.objTrailMarginRect.top + Math.round((this.nDrawHeight-2) - ((nYPercent * (this.nDrawHeight-2)) / 100));
               
-        nX -= 10;
-        nY -= 10;
+        nX -= 9;
+        nY -= 9;
       
         $('.marker', viewMediaMarkerView.el).css('left', nX);
         $('.marker', viewMediaMarkerView.el).css('top', nY);
         
         $('.alt', viewMediaMarkerView.el).css('left', 0);
-        $('.alt', viewMediaMarkerView.el).width(nXOffset + this.objTrailMarginRect.left - 15);
+        $('.alt', viewMediaMarkerView.el).width(nXOffset + this.objTrailMarginRect.left - 20);
         $('.alt', viewMediaMarkerView.el).css('top', nY);        
       }      
     }            

@@ -207,10 +207,15 @@ var nTrail = 43;
   <div id='minimap'></div>  
 </script>
 
-<script type="text/template" id="trailMiniSlideViewTemplate">
-  <div id='minislide'>
-    <div class="photos_container"></div>
-  </div>
+<script type="text/template" id="trailSlideViewTemplate">
+  <div class="photos_container"></div>
+  <div class="slide_btns">
+    <div class="left"></div>
+    <div class="right"></div>
+  </div>  
+  <div class="loader_container">
+    <div class="loader"></div>
+  </div>  
 </script>
 
 <script type="text/template" id="trailSlideViewTemplate">
@@ -234,8 +239,8 @@ var nTrail = 43;
 
 <script type="text/template" id="traiAltitudeViewTemplate">
   <div class="profile">
-    <canvas id="graph"></canvas>    
-    <div class="photos_container"></div>
+    <canvas id="graph"></canvas>
+    <div class="location"></div>      
   </div>
 </script>
 
@@ -275,6 +280,7 @@ var nTrail = 43;
 <script src="assets/js/libs/jquery.ui.widget.js"></script>
 <script src="assets/js/libs/jquery.iframe-transport.js"></script>
 <script src="assets/js/libs/jquery.fileupload.js"></script>
+<script src="assets/js/libs/jquery.touchwipe.min.js"></script>
 
 <script data-main="assets/js/main" src="assets/js/libs/require.js"></script>
 
