@@ -98,7 +98,7 @@ define([
       var self = this;
       
       $('#view_toggle .button').click(function(evt){
-        self.onTrailToggleViewBtnClick();
+        self.onTrailToggleViewBtnClick(evt);
       });
       $('#view_toggle .button').mouseover(function(evt){
         self.onTrailToggleViewBtnOver(evt);
@@ -122,15 +122,22 @@ define([
       });    
 
       $('#trail_mini_view .toggle_view_button').click(function(evt){
-        self.onTrailToggleViewBtnClick();
+        self.onTrailToggleViewBtnClick(evt);
       });
 
       $('#trail_overlay .overlay_pull').click(function(evt){
+        $('#trail_overlay .overlay_pull .button').removeClass('overlay_pull_hover');                
         self.toggleOverlay();
       });
+      
       $('#trail_overlay .overlay_pull').mouseover(function(evt){
-        $(evt.currentTarget).css('cursor','pointer');      
+        $(evt.currentTarget).css('cursor','pointer');
+        $('#trail_overlay .overlay_pull .button').addClass('overlay_pull_hover');                
       });      
+      $('#trail_overlay .overlay_pull').mouseout(function(evt){
+        $('#trail_overlay .overlay_pull .button').removeClass('overlay_pull_hover');                
+      });
+            
     },
     updatePlayerHeight: function(){
       var nPlayerHeight = 0, nExpandHeight = 50;      
@@ -423,7 +430,7 @@ define([
           break;
       }
     },
-    onTrailToggleViewBtnClick: function(){
+    onTrailToggleViewBtnClick: function(evt){
       $('#view_toggle .button').removeClass('view_photo_hover');        
       $('#view_toggle .button').removeClass('view_map_hover');        
       
@@ -433,7 +440,7 @@ define([
           
           $('#view_toggle .button').addClass('view_map');
           $('#view_toggle .button').removeClass('view_photo');
-          if (!Modernizr.touch) {
+          if (!Modernizr.touch && $(evt.currentTarget).attr('id') == 'view_toggle_btn') {
             $('#view_toggle .button').addClass('view_map_hover');        
           }
           
@@ -453,7 +460,9 @@ define([
           
           $('#view_toggle .button').addClass('view_photo');
           $('#view_toggle .button').removeClass('view_map');
-          $('#view_toggle .button').addClass('view_photo_hover');        
+          if (!Modernizr.touch && $(evt.currentTarget).attr('id') == 'view_toggle_btn') {
+            $('#view_toggle .button').addClass('view_photo_hover');
+          }        
 
           this.trailMiniMapView.hide();
           this.trailMiniSlideView.show();

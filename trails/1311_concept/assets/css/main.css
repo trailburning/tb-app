@@ -44,10 +44,23 @@ border-width:1px;
   height: 40px;  
 }
 
-#trail_overlay .overlay_pull img {
+#trail_overlay .overlay_pull .button {
   position: absolute;
   top: 13px;
   left: 4px;
+  line-height:20px; 
+  text-indent: -10000px;  
+  background-repeat:no-repeat;
+  background-position:top center;
+  overflow: hidden;   
+  text-decoration: none;
+  width:72px;
+  height:27px;
+  background: url("../img/trailplayer/pull.png") no-repeat top left;
+}
+
+#trail_overlay .overlay_pull .overlay_pull_hover {
+  background-position: 0 -27px;  
 }
 
 #trail_overlay .overlay_content {

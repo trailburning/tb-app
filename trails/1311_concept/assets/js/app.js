@@ -21,11 +21,11 @@ define([
             
     $('#search_field').focus(function(evt) {
       $('#search_field').val('not just yet...');
-      event.preventDefault();
+      evt.preventDefault();
     });
     $('#search_form').submit(function(evt) {
       $('#search_field').val('not just yet...');
-      event.preventDefault();
+      evt.preventDefault();
     });    
     
     var imgLoad = imagesLoaded('.panels .scale');
