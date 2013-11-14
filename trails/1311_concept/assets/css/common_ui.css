@@ -342,6 +342,10 @@ h4.tb {
   background: url("../img/footer/btn_googleplus.png") no-repeat top left;
 }
 
+#footerview .btnPinterest {
+  background: url("../img/footer/btn_pinterest.png") no-repeat top left;
+}
+
 /* TB BIG BAR */
 /******************************************/
 #bigbar {
