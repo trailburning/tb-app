@@ -1,0 +1,112 @@
+/* APP */
+/******************************************/
+#appview {
+/*  
+border-style:solid;
+border-width:1px;
+*/  
+  min-width: 1200px;
+}
+
+/* TRAIL HEADER */
+/******************************************/
+#trail_header {
+  z-index: 100;
+  position: relative;
+  width: 100%;
+  height: 486px;
+  overflow: overflow;
+}
+
+#trail_header #trail_map_view {
+  position: relative;  
+  width: 100%; 
+  height: 486px;
+}
+
+#trail_map {
+  position: absolute;
+  top: 0px;
+  width:100%; 
+  height: 486px;
+}
+
+.leaflet-popup-content-wrapper{
+  background: #FFF;
+}
+
+.leaflet-popup-tip{
+  background: #FFF;
+}
+    
+/* PANELS */
+/******************************************/
+.panel_content {
+  position: relative;
+  margin: 0px auto 80px auto;
+  width: 1112px;
+}
+
+.panels {
+  clear: left;
+  width: 100%;
+  padding-top: 22px;
+}
+
+/* RESPONSIVE */
+/******************************************/
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+}
+ 
+/* Medium devices (desktops, 992px and up) */
+@media (max-width: 1199px) {  
+  #appview {
+    min-width: 992px;
+  }
+  #profile_map .leaflet-overlay {
+    width: 730px;
+    background-size: 730px 538px;
+  }
+  #profile_header .profile_title .avatar {
+    margin: 38px 0px 0px 4px;  
+    width: 175px;
+    height: 174px;
+  }
+  .panel_content {
+    width: 968px;
+  }
+  .panels .left {
+    width: 472px;
+  }
+  .panels .right {
+    width: 496px;
+  }
+  .profile_detail_panel {
+    width: 472px;
+  }
+  .trailgear_panel {
+    width: 472px;
+    height: 296px;
+  }
+  .trailgear_panel .content .gear_list {
+    height: 214px;
+  }
+  .trailgear_panel .content .gear_list .gear {
+    margin: 0px 7px 0px 7px;
+    width: 142px;
+  }
+  .tops_trails_panel {
+    margin-left: 24px;
+    width: 472px;
+  }    
+}
+
+.image {
+  display: none;  
+}
+
+img {
+  max-width: none;
+}

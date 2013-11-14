@@ -389,6 +389,10 @@ border-width:1px;
   right: 152px;
 }
 
+html.touch #trailplayer #view_map_btns {
+  top: 26px;
+}
+
 #trailplayer #view_player_btns {
   position: absolute;
   top: 22px;

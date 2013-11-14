@@ -33,6 +33,9 @@ define([
       this.mediaCollection = new Backbone.Collection();    
       this.mediaModel = new TrailMediaModel();
       
+      
+      app.dispatcher.on("TrailMapView:zoominclick", self.onTrailMapViewZoomInClick, this);
+      app.dispatcher.on("TrailMapView:zoomoutclick", self.onTrailMapViewZoomOutClick, this);
       app.dispatcher.on("TrailMapMediaMarkerView:mediaclick", self.onTrailMapMediaMarkerClick, this);
       app.dispatcher.on("TrailMediaMarkerView:mediaclick", self.onTrailMediaMarkerClick, this);
       app.dispatcher.on("TrailSlideView:slideview", self.onTrailSlideViewSlideView, this);
@@ -383,6 +386,12 @@ define([
         this.hideTitle();
       }
       this.nOldTickleCount = this.nTickleCount;         
+    },
+    onTrailMapViewZoomInClick: function(mapView){
+      this.stopSlideShow();
+    },
+    onTrailMapViewZoomOutClick: function(mapView){
+      this.stopSlideShow();
     },
     onTrailMapMediaMarkerClick: function(mapMediaMarkerView){
       // look up model in collcetion
