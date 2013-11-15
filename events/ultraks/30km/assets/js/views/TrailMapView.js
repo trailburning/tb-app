@@ -53,6 +53,8 @@ define([
         if(self.map.getZoom() < self.map.getMaxZoom()) {
           self.map.zoomIn();                  
           $('.zoomout_btn').prop('disabled', false);
+          // fire event
+          app.dispatcher.trigger("TrailMapView:zoominclick", self);                
         }
         
         if(self.map.getZoom() >= self.map.getMaxZoom()-1) {
@@ -68,6 +70,8 @@ define([
         if(self.map.getZoom() > self.map.getMinZoom()+2) {
           self.map.zoomOut();                  
           $('.zoomin_btn').prop('disabled', false);
+          // fire event
+          app.dispatcher.trigger("TrailMapView:zoomoutclick", self);                
         }
         
         if(self.map.getZoom() <= self.map.getMinZoom()+3) {
@@ -165,7 +169,6 @@ define([
       if (this.bRendered) {
         this.map.invalidateSize();
         this.map.fitBounds(this.polyline.getBounds(), {padding: [30, 30], animate: false});
-        // increase chance of route being visible.  Ideally we should move the map to ensure all visible when overlay is present.
         this.map.zoomOut(1, {animate: false});
         return;         
       }        

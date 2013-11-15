@@ -44,10 +44,23 @@ border-width:1px;
   height: 40px;  
 }
 
-#trail_overlay .overlay_pull img {
+#trail_overlay .overlay_pull .button {
   position: absolute;
   top: 13px;
   left: 4px;
+  line-height:20px; 
+  text-indent: -10000px;  
+  background-repeat:no-repeat;
+  background-position:top center;
+  overflow: hidden;   
+  text-decoration: none;
+  width:72px;
+  height:27px;
+  background: url("../img/trailplayer/pull.png") no-repeat top left;
+}
+
+#trail_overlay .overlay_pull .overlay_pull_hover {
+  background-position: 0 -27px;  
 }
 
 #trail_overlay .overlay_content {
@@ -373,16 +386,32 @@ border-width:1px;
   display: none;
   position: absolute;
   top: 34px;
-  right: 118px;
+  right: 152px;
+}
+
+html.touch #trailplayer #view_map_btns {
+  top: 26px;
+}
+
+#trailplayer #view_player_btns {
+  position: absolute;
+  top: 22px;
+  right: 22px;  
+}
+
+#trailplayer #slideshow_toggle {
+  position: absolute;
+  top: 0px;
+  right: 63px;  
 }
 
 #trailplayer #view_toggle {
   position: absolute;
-  top: 22px;
-  right: 22px;
+  top: 0px;
+  right: 0px;  
 }
 
-#trailplayer #view_toggle .button {
+#trailplayer #view_player_btns .button {
   float:left; 
   display:block;
   line-height:20px; 
@@ -391,17 +420,48 @@ border-width:1px;
   background-position:top center;
   overflow: hidden;   
   text-decoration: none;
-  width:73px;
-  height:74px;
+  width:53px;
+  height:54px;
+}
+
+#trailplayer #view_player_btns #view_toggle .button {
   background: url("../img/trailplayer/view_toggle.png") no-repeat top left;
 }
 
-#trailplayer #view_toggle .view_map {
+#trailplayer #view_player_btns #view_toggle .view_map {
   background-position: 0 0;  
 }
 
-#trailplayer #view_toggle .view_photo {
-  background-position: 0 -74px;
+#trailplayer #view_player_btns #view_toggle .view_map_hover {
+  background-position: -53px 0;  
+}
+
+#trailplayer #view_player_btns #view_toggle .view_photo {
+  background-position: 0 -54px;
+}
+
+#trailplayer #view_player_btns #view_toggle .view_photo_hover {
+  background-position: -53px -54px;  
+}
+
+#trailplayer #view_player_btns #slideshow_toggle .button {
+  background: url("../img/trailplayer/slideshow_toggle.png") no-repeat top left;
+}
+
+#trailplayer #view_player_btns #slideshow_toggle .slideshow_pause {
+  background-position: 0 0;  
+}
+
+#trailplayer #view_player_btns #slideshow_toggle .slideshow_pause_hover {
+  background-position: -53px 0;  
+}
+
+#trailplayer #view_player_btns #slideshow_toggle .slideshow_play {
+  background-position: 0 -54px;
+}
+
+#trailplayer #view_player_btns #slideshow_toggle .slideshow_play_hover {
+  background-position: -53px -54px;  
 }
 
 /* 2COL PANELS */

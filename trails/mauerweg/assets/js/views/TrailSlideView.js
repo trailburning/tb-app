@@ -127,8 +127,9 @@ define([
                 
         photoView = this.arrSlidePhotos[this.nCurrSlide];        
         photoView.show();
+        
         // fire event
-        app.dispatcher.trigger("TrailSlideView:slideview", self);                
+        app.dispatcher.trigger("TrailSlideView:slideview", this);                
       }
     },    
     onSlidePhotoReady: function(trailSlidePhotoView){   
