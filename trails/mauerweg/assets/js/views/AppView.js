@@ -145,12 +145,13 @@ define([
     updatePlayerHeight: function(){
       var nPlayerHeight = 0, nExpandHeight = 50;      
       var elPlayer = $('#trailplayer');
+      var nPlayerY = elPlayer.position().top;
+      var nPlayerY = 0;
 
-      nPlayerHeight = Math.round(elPlayer.width() * 0.746875);
-      
+      nPlayerHeight = Math.round(elPlayer.width() * 0.746875);      
       // check height fits
-      if ((nPlayerHeight+nExpandHeight+elPlayer.position().top) > $(window).height()) {  
-        nPlayerHeight = $(window).height() - nExpandHeight - elPlayer.position().top; 
+      if ((nPlayerHeight+nExpandHeight+nPlayerY) > $(window).height()) {  
+        nPlayerHeight = $(window).height() - nExpandHeight - nPlayerY; 
       }
       if (nPlayerHeight < MIN_HEIGHT) {
         nPlayerHeight = MIN_HEIGHT;

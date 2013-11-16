@@ -179,7 +179,8 @@ h4.tb {
 /******************************************/
 #headerview {
   z-index: 200;
-  position: relative;
+  position: fixed;
+  top: 0px;
   width: 100%;
   height: 63px;  
   background: #FFF;
@@ -249,6 +250,14 @@ h4.tb {
 }
 
 #headerview .right .signin .btn {  
+}
+
+#headerview .trans-line {
+  position: absolute;
+  top: 63px;
+  width: 100%;
+  height: 2px;
+  background: url(../img/trans_line.png) repeat-x top left;  
 }
 
 /* FOOTER */
@@ -476,9 +485,9 @@ h4.tb {
 
 .tb-fade {
   opacity: 0;
-  transition: opacity 1s ease-in-out;
-  -moz-transition: opacity 1s ease-in-out;
-  -webkit-transition: opacity 1s ease-in-out;
+  transition: opacity 2s ease-in-out;
+  -moz-transition: opacity 2s ease-in-out;
+  -webkit-transition: opacity 2s ease-in-out;
 }
 
 .tb-move {
