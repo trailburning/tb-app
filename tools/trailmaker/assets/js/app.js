@@ -24,8 +24,11 @@ define([
       $('#search_field').val('not just yet...');
       event.preventDefault();
     });    
-    
+
     var self = this;
+    
+    app.dispatcher.on("StepWelcomeView:submitclick", onStepWelcomeViewSubmitClick, this);
+    
     var nTrail = 33;
     
     this.trailModel.set('id', nTrail);             
@@ -41,8 +44,24 @@ define([
     // Step 2
     this.step2View = new Step2View({ el: '#step2_view', model: self.trailModel });
 //    $('#step2_view').show();
-//    this.step2View.render();      
+//    this.step2View.render();
+
+    $('#footerview').show();      
+    
+    function onStepWelcomeViewSubmitClick(stepWelcomeView){
+      $('#step_welcome_view').hide();
+      $('#step1_view').show();
+      this.step1View.render();
+/*
+      $('#step2_view').height($('#step_welcome_view').height());
+      $('#step_welcome_view').hide();
+      $('#step2_view').show();
+      self.step2View.render();
+*/          
+    }
   };
+    
+    
     
   return { 
     initialize: initialize

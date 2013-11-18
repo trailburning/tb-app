@@ -14,61 +14,45 @@ border-width:1px;
   position: relative;
   margin-top: 63px;
   width: 100%;
+  height: 100%;
 }
 
 /* STEP WELCOME */
 /******************************************/
 #step_welcome_view {
   display: none;
-/*  
-  position: absolute;
-*/  
   width: 100%; 
   height: 100%;
 }
 
 #step_welcome_view .panel_content {
   position: relative;
+  padding-top: 56px;
   margin: 0px auto 92px auto;
   width: 1112px;
-}
-
-#step_welcome_view .panel_intro {
-  clear: both;
-  padding-top: 56px;
   text-align: center;
 }
 
-#step_welcome_view .panel_intro .desc {
+#step_welcome_view .desc {
   margin: 24px auto 0px auto;
   width: 700px;
   text-align: center;
 }
 
-#step_welcome_view .panel_intro .steps {
+#step_welcome_view .steps {
   width: 100%;
-  margin-top: 32px;
+  margin-top: 40px;
   text-align: center;  
 }
 
-#step_welcome_view .panel_intro .steps .step {
+#step_welcome_view .steps .step {
   display: inline-block;
   margin-left: 35px;
   margin-right: 35px;
   width: 240px;
 }
 
-#step_welcome_view .panel_intro .steps .step .step_marker {
-  margin: 0px auto 30px auto;
-  width: 73px;
-  height: 73px;
-  line-height: 73px;
-  font-size: 28px;
-  color: #FFF;
-  background: url("../img/steps/step.png") no-repeat top left;
-}
-
-#step_welcome_view .panel_intro .next_step {
+#step_welcome_view .next_step {
   margin-top: 42px;
 }
 
@@ -76,20 +60,45 @@ border-width:1px;
 /******************************************/
 #step1_view {
   display: none;
-  position: absolute;
-  top: 0px;
   width: 100%; 
   height: 100%;
+}
+
+#step1_view .panel_content {
+  position: relative;
+  padding-top: 70px;
+  margin: 0px auto 92px auto;
+  width: 614px;
+  text-align: center;
+}
+
+#step1_view .panel {
+  float: none;
+}
+
+#step1_view .panel .content {
+  margin: 54px 0px 24px 0px;
+}
+
+#step1_view .step_marker_container {
+  position: absolute;
+  top: 30px;
+  width: 100%;
+  text-align: center;
+}
+
+#step1_view .desc {
+  margin: 24px auto 0px auto;
+  width: 380px;
+  text-align: center;
 }
 
 /* STEP 2 */
 /******************************************/
 #step2_view {
   display: none;
-  position: absolute;
-  top: 0px;
   width: 100%; 
-  height: 100%;
+  height: 100%;  
 }
 
 #step2_view #trail_map_view {
@@ -111,6 +120,24 @@ border-width:1px;
 
 .leaflet-popup-tip{
   background: #FFF;
+}
+
+/* GENERAL */
+/******************************************/
+.step_marker {
+  margin: 0px auto 30px auto;
+  width: 73px;
+  height: 73px;
+  line-height: 73px;
+  font-size: 28px;
+  color: #FFF;
+  background: url("../img/steps/step.png") no-repeat top left;
+}
+
+/* FOOTER */
+/******************************************/
+#footerview {
+  display: none;
 }
     
 /* RESPONSIVE */

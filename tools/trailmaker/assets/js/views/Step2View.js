@@ -34,6 +34,8 @@ define([
       });
     },
     render: function(){
+      console.log('R');
+      
       if (this.bRendered) {
         return;
       }
