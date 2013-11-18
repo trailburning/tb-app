@@ -105,14 +105,26 @@
       <div class="content">      
         <h1 class="tb">Details</h1>
         <div class="desc">
-          <h4 class="tb">Introduce yourself and give some details about your Trail Story</h4>
+          <h4 class="tb">Introduce yourself and enter some details about your trail.</h4>
         </div>
         
         <form>
-        <input type="text" name="form_name" class="form-control" placeholder="Name">
-        <input type="email" name="form_email" placeholder="Email address">
-        <input type="text" name="form_trail" placeholder="Trail name">
-        <textarea name="form_name" placeholder="Trail notes"></textarea>
+        <div class="form-group">
+          <label for="form_name"><h4 class="tb">Your name</h4></label>
+          <input type="text" name="form_name" id="form_name" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="form_email"><h4 class="tb">Email address</h4></label>
+          <input type="email" name="form_email" id="form_email">
+        </div>
+        <div class="form-group">
+          <label for="form_trail"><h4 class="tb">Trail name</h4></label>
+          <input type="text" name="form_trail" id="form_trail">
+        </div>
+        <div class="form-group">
+          <label for="form_notes"><h4 class="tb">Trail notes</h4></label>
+          <textarea name="form_notes" id="form_notes"></textarea>
+        </div>
         <div class="next_step"><span class="btn btn-tb-action btn-tb-large">Submit</span></div>
         </form>              
       </div>

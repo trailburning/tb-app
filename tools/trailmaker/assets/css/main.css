@@ -98,9 +98,17 @@ border-width:1px;
   padding-top: 18px;
 }
 
+#step1_view .form-group {
+  width: 324px;
+  margin: 14px auto 0px auto;  
+  text-align: left;
+}
+
+#step1_view .form-group label {
+}
+
 #step1_view input {
   display: block;  
-  margin: 14px auto 0px auto;
   width: 324px;
   height: 32px;
   line-height: 32px;
@@ -112,8 +120,6 @@ border-width:1px;
 #step1_view textarea {
   display: block;  
   resize: none;
-  margin: 26px auto 0px auto;
-  padding-top: 8px;
   width: 324px;
   height: 176px;
   background: #F0F0F0;
