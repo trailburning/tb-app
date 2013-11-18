@@ -8,28 +8,101 @@ border-width:1px;
   min-width: 1200px;
 }
 
-/* TRAIL HEADER */
+/* STEPS */
 /******************************************/
-#trail_header {
-  z-index: 100;
+#steps {
   position: relative;
   margin-top: 63px;
   width: 100%;
-  height: 486px;
-  overflow: overflow;
 }
 
-#trail_header #trail_map_view {
+/* STEP WELCOME */
+/******************************************/
+#step_welcome_view {
+  display: none;
+/*  
+  position: absolute;
+*/  
+  width: 100%; 
+  height: 100%;
+}
+
+#step_welcome_view .panel_content {
+  position: relative;
+  margin: 0px auto 92px auto;
+  width: 1112px;
+}
+
+#step_welcome_view .panel_intro {
+  clear: both;
+  padding-top: 56px;
+  text-align: center;
+}
+
+#step_welcome_view .panel_intro .desc {
+  margin: 24px auto 0px auto;
+  width: 700px;
+  text-align: center;
+}
+
+#step_welcome_view .panel_intro .steps {
+  width: 100%;
+  margin-top: 32px;
+  text-align: center;  
+}
+
+#step_welcome_view .panel_intro .steps .step {
+  display: inline-block;
+  margin-left: 35px;
+  margin-right: 35px;
+  width: 240px;
+}
+
+#step_welcome_view .panel_intro .steps .step .step_marker {
+  margin: 0px auto 30px auto;
+  width: 73px;
+  height: 73px;
+  line-height: 73px;
+  font-size: 28px;
+  color: #FFF;
+  background: url("../img/steps/step.png") no-repeat top left;
+}
+
+#step_welcome_view .panel_intro .next_step {
+  margin-top: 42px;
+}
+
+/* STEP 1 */
+/******************************************/
+#step1_view {
+  display: none;
+  position: absolute;
+  top: 0px;
+  width: 100%; 
+  height: 100%;
+}
+
+/* STEP 2 */
+/******************************************/
+#step2_view {
+  display: none;
+  position: absolute;
+  top: 0px;
+  width: 100%; 
+  height: 100%;
+}
+
+#step2_view #trail_map_view {
   position: relative;  
   width: 100%; 
-  height: 486px;
+  height: 100%;
 }
 
 #trail_map {
   position: absolute;
   top: 0px;
   width:100%; 
-  height: 486px;
+  height: 100%;
 }
 
 .leaflet-popup-content-wrapper{
@@ -40,20 +113,6 @@ border-width:1px;
   background: #FFF;
 }
     
-/* PANELS */
-/******************************************/
-.panel_content {
-  position: relative;
-  margin: 0px auto 80px auto;
-  width: 1112px;
-}
-
-.panels {
-  clear: left;
-  width: 100%;
-  padding-top: 22px;
-}
-
 /* RESPONSIVE */
 /******************************************/
 

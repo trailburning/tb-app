@@ -46,13 +46,10 @@
     <div class="trans-line"></div>        
   </div>    
 
-  <div id="trail_header">
-    <div id='trail_map_view'></div>  
-  </div>
-  
-  <div class="panel_content">
-    <div class="panels clearfix">           
-    </div>
+  <div id="steps">
+    <div id="step_welcome_view"></div>
+    <div id="step1_view"></div>
+    <div id="step2_view"></div>
   </div>
   
   <div id="footerview">
@@ -72,6 +69,45 @@
     </div>
   </div>          
 </div>
+
+<script type="text/template" id="stepWelcomeViewTemplate">
+  <div class="panel_content">  
+    <div class="panel_intro">  
+      <h1 class="tb tb-title">Share</h1>
+      <br />
+      <h1 class="tb tb-title">your trail</h1>      
+      <div class="desc">
+        <h4 class="tb">This page will help you to create a trail in 3 easy steps before we launch a more complete version of Trailburning.com.</h4>
+      </div>      
+
+      <div class="steps">
+        <div class="step">
+          <div class="step_marker">1</div>
+          <h2 class="tb">Details</h2>
+          <h4 class="tb">Introduce yourself and give some details about your Trail Story</h4>
+        </div>
+        <div class="step">
+          <div class="step_marker">2</div>
+          <h2 class="tb">Map</h2>
+          <h4 class="tb">Introduce yourself and give some details about your Trail Story</h4>
+        </div>
+        <div class="step">
+          <div class="step_marker">3</div>          
+          <h2 class="tb">Pictures</h2>
+          <h4 class="tb">Introduce yourself and give some details about your Trail Story</h4>
+        </div>
+      </div>
+      <div class="next_step"><span class="btn btn-tb-action btn-tb-large">Let's Go!</span></div>                
+    </div>  
+  </div>  
+</script>
+
+<script type="text/template" id="step1ViewTemplate">
+</script>
+
+<script type="text/template" id="step2ViewTemplate">
+  <div id='trail_map_view'></div>
+</script>
 
 <script type="text/template" id="trailMapViewTemplate">
   <div id='trail_map'></div>
