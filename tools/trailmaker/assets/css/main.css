@@ -93,6 +93,38 @@ border-width:1px;
   text-align: center;
 }
 
+#step1_view form {
+  display: block;  
+  padding-top: 18px;
+}
+
+#step1_view input {
+  display: block;  
+  margin: 14px auto 0px auto;
+  width: 324px;
+  height: 32px;
+  line-height: 32px;
+  background: #F0F0F0;  
+  color: #979797;
+  font-size: 22px;
+}
+
+#step1_view textarea {
+  display: block;  
+  resize: none;
+  margin: 26px auto 0px auto;
+  padding-top: 8px;
+  width: 324px;
+  height: 176px;
+  background: #F0F0F0;
+  color: #979797;
+  font-size: 22px;
+}
+
+#step1_view .next_step {
+  margin-top: 24px;
+}
+
 /* STEP 2 */
 /******************************************/
 #step2_view {
@@ -152,42 +184,9 @@ border-width:1px;
   #appview {
     min-width: 992px;
   }
-  #profile_map .leaflet-overlay {
-    width: 730px;
-    background-size: 730px 538px;
-  }
-  #profile_header .profile_title .avatar {
-    margin: 38px 0px 0px 4px;  
-    width: 175px;
-    height: 174px;
-  }
-  .panel_content {
+  #step_welcome_view .panel_content {
     width: 968px;
   }
-  .panels .left {
-    width: 472px;
-  }
-  .panels .right {
-    width: 496px;
-  }
-  .profile_detail_panel {
-    width: 472px;
-  }
-  .trailgear_panel {
-    width: 472px;
-    height: 296px;
-  }
-  .trailgear_panel .content .gear_list {
-    height: 214px;
-  }
-  .trailgear_panel .content .gear_list .gear {
-    margin: 0px 7px 0px 7px;
-    width: 142px;
-  }
-  .tops_trails_panel {
-    margin-left: 24px;
-    width: 472px;
-  }    
 }
 
 .image {
