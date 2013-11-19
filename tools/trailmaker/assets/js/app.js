@@ -28,11 +28,8 @@ define([
     var self = this;
     
     app.dispatcher.on("StepWelcomeView:submitclick", onStepWelcomeViewSubmitClick, this);
+    app.dispatcher.on("Step1View:submitclick", onStep1ViewSubmitClick, this);
     
-    var nTrail = 33;
-    
-    this.trailModel.set('id', nTrail);             
-
     // Step Welcome
     this.stepWelcomeView = new StepWelcomeView({ el: '#step_welcome_view', model: self.trailModel });
     $('#step_welcome_view').show();
@@ -43,7 +40,8 @@ define([
 //    this.step1View.render();    
     // Step 2
     this.step2View = new Step2View({ el: '#step2_view', model: self.trailModel });
-//    $('#step2_view').show();
+//    $('#step2_view').show();    
+//    $('#step2_view').height(800);    
 //    this.step2View.render();
 
     $('#footerview').show();      
@@ -52,16 +50,20 @@ define([
       $('#step_welcome_view').hide();
       $('#step1_view').show();
       this.step1View.render();
-/*
-      $('#step2_view').height($('#step_welcome_view').height());
-      $('#step_welcome_view').hide();
-      $('#step2_view').show();
-      self.step2View.render();
-*/          
+      
+      $("body").animate({scrollTop:0}, '500', 'swing');
     }
+    
+    function onStep1ViewSubmitClick(step1View){
+      $('#step2_view').height($('#step1_view').height());
+      $('#step1_view').hide();
+      $('#step2_view').show();
+      this.step2View.render();
+      
+      $("body").animate({scrollTop:0}, '500', 'swing');
+    }    
+    
   };
-    
-    
     
   return { 
     initialize: initialize

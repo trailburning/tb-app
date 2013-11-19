@@ -9,8 +9,11 @@
 
 <link href='http://fonts.googleapis.com/css?family=Signika:400,300,700' rel='stylesheet' type='text/css'>
 
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+  
 <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 <link href="assets/css/bootstrap-responsive.min.css" rel="stylesheet">
+<link href="assets/css/jquery.fileupload.css" rel="stylesheet" type="text/css">
 <link href="http://api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.css" rel="stylesheet">
 <link href="assets/css/common_ui.css" rel="stylesheet" type="text/css">
 <link href="assets/css/main.css" rel="stylesheet" type="text/css">
@@ -50,6 +53,7 @@
     <div id="step_welcome_view"></div>
     <div id="step1_view"></div>
     <div id="step2_view"></div>
+    <div id="step3_view"></div>
   </div>
   
   <div id="footerview">
@@ -106,8 +110,7 @@
         <h1 class="tb">Details</h1>
         <div class="desc">
           <h4 class="tb">Introduce yourself and enter some details about your trail.</h4>
-        </div>
-        
+        </div>        
         <form>
         <div class="form-group">
           <label for="form_name"><h4 class="tb">Your name</h4></label>
@@ -129,7 +132,6 @@
         </form>              
       </div>
     </div>
-    
     <div class="step_marker_container">
       <div class="step_marker">1</div>  
     </div>
@@ -138,6 +140,47 @@
 
 <script type="text/template" id="step2ViewTemplate">
   <div id='trail_map_view'></div>
+  <div class="panel_container">  
+    <div class="panel_content">
+      <div class="panel">
+        <div class="content">      
+          <h1 class="tb">Trail Map</h1>
+          <div id="uploadGPX_view"></div>
+          <div id="uploadGPXprogress_view"></div>          
+        </div>
+      </div>
+      <div class="step_marker_container">
+        <div class="step_marker">2</div>  
+      </div>
+    </div>    
+  </div>
+</script>
+
+<script type="text/template" id="trailUploadGPXViewTemplate">
+  <div class="desc">
+    <h4 class="tb">First get the .GPX file from your GPS tracking device, and put it on your computer.  Then upload it here.</h4>
+  </div>        
+  <form id="uploadForm">      
+  <span class="btn btn-tb-action btn-tb-large fileinput-button">
+    <i class="glyphicon glyphicon-plus"></i>
+    <span>Upload GPX File</span>
+    <!-- The file input field used as target for the file upload widget -->
+    <input type="file" id="fileupload" name="gpxfile" multiple>        
+  </span>
+  </form>        
+</script>
+
+<script type="text/template" id="trailUploadGPXProgressViewTemplate">   
+  <div class="desc">
+    <h4 class="tb">File uploading</h4>
+  </div>        
+  <div class="progress_container">
+    <div class="progressbar"></div>  
+  </div>  
+  <h4 class="tb"><span class="percent">0</span>%</h4>
+</script>
+
+<script type="text/template" id="step3ViewTemplate">
 </script>
 
 <script type="text/template" id="trailMapViewTemplate">
@@ -156,7 +199,8 @@
 <script src="assets/js/libs/imagesloaded.pkgd.min.js"></script>
 <script src="assets/js/libs/image-scale.min.js"></script>
 
-<script src="assets/js/libs/jquery.ui.widget.js"></script>
+<script src="assets/js/libs/jquery-ui-1.10.3.custom.min.js"></script>
+
 <script src="assets/js/libs/jquery.iframe-transport.js"></script>
 <script src="assets/js/libs/jquery.fileupload.js"></script>
 

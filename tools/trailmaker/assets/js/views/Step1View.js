@@ -15,8 +15,14 @@ define([
       }
       this.bRendered = true;
               
+      var self = this;              
       var attribs = this.model.toJSON();
       $(this.el).html(this.template(attribs));
+        
+      $('.btn', $(this.el)).click(function(evt) {
+        // fire event
+        app.dispatcher.trigger("Step1View:submitclick", self);                        
+      });
         
       return this;
     }

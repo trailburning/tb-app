@@ -11,6 +11,7 @@ border-width:1px;
 /* STEPS */
 /******************************************/
 #steps {
+  z-index: 100;
   position: relative;
   margin-top: 63px;
   width: 100%;
@@ -145,6 +146,86 @@ border-width:1px;
   height: 100%;
 }
 
+#step2_view .panel_container {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+}
+
+#step2_view .panel_content {
+  position: relative;
+  padding-top: 216px;
+  margin: 0px auto 92px auto;
+  width: 614px;
+  text-align: center;
+}
+
+#step2_view .panel {
+  float: none;
+}
+
+#step2_view .panel .content {
+  height: 288px;
+  margin: 54px 0px 0px 0px;
+}
+
+#step2_view .step_marker_container {
+  position: absolute;
+  top: 176px;
+  width: 100%;
+  text-align: center;
+}
+
+#step2_view .desc {
+  margin: 24px auto 0px auto;
+  width: 380px;
+  text-align: center;
+}
+
+#step2_view #uploadGPX_view .btn {
+  margin-top: 24px;  
+}
+
+#step2_view #uploadGPXprogress_view {
+  display: none;
+}
+
+#step2_view #uploadGPXprogress_view h4 {
+  margin-top: 24px;
+}
+
+#step2_view #uploadGPXprogress_view .progress_container {
+  margin: 20px auto 0px auto;
+  width: 328px;
+  height: 16px;  
+}
+
+#step2_view #uploadGPXprogress_view .ui-progressbar {
+  height: 16px;
+  background: #F0F0F0;
+  border-radius: 8px;
+}
+
+#step2_view #uploadGPXprogress_view .ui-progressbar-value {
+  background: #f83d3d;
+}
+
+#step2_view .next_step {
+  margin-top: 24px;
+}
+
+/* GENERAL */
+/******************************************/
+.step_marker {
+  margin: 0px auto 30px auto;
+  width: 73px;
+  height: 73px;
+  line-height: 73px;
+  font-size: 28px;
+  color: #FFF;
+  background: url("../img/steps/step.png") no-repeat top left;
+}
+
 #trail_map {
   position: absolute;
   top: 0px;
@@ -158,18 +239,6 @@ border-width:1px;
 
 .leaflet-popup-tip{
   background: #FFF;
-}
-
-/* GENERAL */
-/******************************************/
-.step_marker {
-  margin: 0px auto 30px auto;
-  width: 73px;
-  height: 73px;
-  line-height: 73px;
-  font-size: 28px;
-  color: #FFF;
-  background: url("../img/steps/step.png") no-repeat top left;
 }
 
 /* FOOTER */
