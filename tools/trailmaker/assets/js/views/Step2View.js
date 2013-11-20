@@ -55,16 +55,28 @@ define([
       }
       this.bRendered = true;
               
-//      this.model.id = 78;
+//      this.model.id = 82;
 //      this.model.destroy();
               
       var self = this;              
       var attribs = this.model.toJSON();
       $(this.el).html(this.template(attribs));
+      
+      // set title
+      if (this.model.get('event_name') != '') {
+        $('#trail_info', $(this.el)).show();
+        $('.event_name', $(this.el)).html(this.model.get('event_name'));
+        $('.event_name', $(this.el)).show();
+      }
+      if (this.model.get('trail_name') != '') {
+        $('#trail_info', $(this.el)).show();
+        $('.trail_name', $(this.el)).html(this.model.get('trail_name'));
+        $('.trail_name', $(this.el)).show();
+      }
         
       this.trailUploadGPXView = new TrailUploadGPXView({ el: '#uploadGPX_view', model: this.model });
       this.trailUploadGPXProgressView = new TrailUploadGPXProgressView({ el: '#uploadGPXprogress_view', model: this.model });
-      this.trailMapView = new TrailMapView({ el: '#trail_map_view', model: this.model, timezoneData: this.timezoneData });
+      this.trailMapView = new TrailMapView({ el: '#trail_map_view', elCntrls: '#view_map_btns', model: this.model, timezoneData: this.timezoneData });
 
       this.trailUploadGPXView.render();          
       this.trailMapView.render();          
@@ -77,6 +89,8 @@ define([
       this.getTrail();
       
       $('.panel_container', $(this.el)).hide();
+      $('.trail_map_overlay', $(this.el)).hide();
+      $('#view_map_btns', $(this.el)).show();
     },
     onTrailUploadGPXViewUploadProgress: function(nProgress){
       this.trailUploadGPXProgressView.render(nProgress);

@@ -32,12 +32,12 @@ define([
     
     // Step Welcome
     this.stepWelcomeView = new StepWelcomeView({ el: '#step_welcome_view', model: self.trailModel });
-    $('#step_welcome_view').show();
-    this.stepWelcomeView.render();    
+//    $('#step_welcome_view').show();
+//    this.stepWelcomeView.render();    
     // Step 1
     this.step1View = new Step1View({ el: '#step1_view', model: self.trailModel });
-//    $('#step1_view').show();
-//    this.step1View.render();    
+    $('#step1_view').show();
+    this.step1View.render();    
     // Step 2
     this.step2View = new Step2View({ el: '#step2_view', model: self.trailModel });
 //    $('#step2_view').show();    
@@ -59,6 +59,7 @@ define([
       $('#step1_view').hide();
       $('#step2_view').show();
       this.step2View.render();
+      $('#step2_view .trail_map_overlay').show();
       
       $("body").animate({scrollTop:0}, '500', 'swing');
     }    

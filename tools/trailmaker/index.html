@@ -121,6 +121,10 @@
           <input type="email" name="form_email" id="form_email">
         </div>
         <div class="form-group">
+          <label for="form_event"><h4 class="tb">Event name</h4></label>
+          <input type="text" name="form_event" id="form_event">
+        </div>
+        <div class="form-group">
           <label for="form_trail"><h4 class="tb">Trail name</h4></label>
           <input type="text" name="form_trail" id="form_trail">
         </div>
@@ -140,6 +144,23 @@
 
 <script type="text/template" id="step2ViewTemplate">
   <div id='trail_map_view'></div>
+  <div id="view_map_btns">        
+    <div class='controls'>
+      <span class="btn btn-tb zoomin_btn">+</span>          
+      <span class="btn btn-tb zoomout_btn">-</span>
+      <span class="btn btn-tb view_btn">Satellite</span>          
+    </div>    
+  </div>    
+  <div class='trail_map_overlay'></div>
+  
+  <div id="trail_info">      
+    <div class="trail_title">
+      <h2 class="tb tb-title event_name">Matterhorn Ultraks</h2>
+      <br/>
+      <h2 class="tb tb-title trail_name">16K Race</h2>
+    </div>
+  </div>
+  
   <div class="panel_container">  
     <div class="panel_content">
       <div class="panel">

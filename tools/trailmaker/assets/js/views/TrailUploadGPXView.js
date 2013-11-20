@@ -20,7 +20,14 @@ define([
       $('#fileupload').change(function(){
         $('#uploadGPX_view').hide();
         $('#uploadGPXprogress_view').show();
-        self.upload();      
+        
+        // mla test        
+        self.upload();
+
+//        self.model.set('id', 42);
+        // fire event
+//        app.dispatcher.trigger("TrailUploadGPXView:uploaded", self);                
+      
       }); 
                             
       return this;

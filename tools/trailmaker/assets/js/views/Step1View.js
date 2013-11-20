@@ -20,6 +20,13 @@ define([
       $(this.el).html(this.template(attribs));
         
       $('.btn', $(this.el)).click(function(evt) {
+        // store form        
+        self.model.set('name', $('#form_name').val());
+        self.model.set('email', $('#form_email').val());
+        self.model.set('event_name', $('#form_event').val());
+        self.model.set('trail_name', $('#form_trail').val());
+        self.model.set('trail_notes', $('#form_notes').val());
+        
         // fire event
         app.dispatcher.trigger("Step1View:submitclick", self);                        
       });
