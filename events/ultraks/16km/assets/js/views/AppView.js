@@ -32,7 +32,8 @@ define([
       
       this.mediaCollection = new Backbone.Collection();    
       this.mediaModel = new TrailMediaModel();
-            
+      
+      
       app.dispatcher.on("TrailMapView:zoominclick", self.onTrailMapViewZoomInClick, this);
       app.dispatcher.on("TrailMapView:zoomoutclick", self.onTrailMapViewZoomOutClick, this);
       app.dispatcher.on("TrailMapMediaMarkerView:mediaclick", self.onTrailMapMediaMarkerClick, this);

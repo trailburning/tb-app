@@ -52,13 +52,13 @@ define([
       $('.zoomin_btn', $(this.elCntrls)).click(function(evt){
         if(self.map.getZoom() < self.map.getMaxZoom()) {
           self.map.zoomIn();                  
-          $('.zoomout_btn').prop('disabled', false);
+          $('.zoomout_btn', $(self.elCntrls)).attr('disabled', false);
           // fire event
           app.dispatcher.trigger("TrailMapView:zoominclick", self);                
         }
         
         if(self.map.getZoom() >= self.map.getMaxZoom()-1) {
-          $('.zoomin_btn').prop('disabled', true);
+          $('.zoomin_btn', $(self.elCntrls)).attr('disabled', true);
         }
                 
         if(self.map.getZoom() > 8) {
@@ -67,15 +67,15 @@ define([
       });
 
       $('.zoomout_btn', $(this.elCntrls)).click(function(evt){
-        if(self.map.getZoom() > self.map.getMinZoom()+2) {
+        if(self.map.getZoom() > self.map.getMinZoom()+3) {
           self.map.zoomOut();                  
-          $('.zoomin_btn').prop('disabled', false);
+          $('.zoomin_btn', $(self.elCntrls)).attr('disabled', false);
           // fire event
           app.dispatcher.trigger("TrailMapView:zoomoutclick", self);                
         }
         
-        if(self.map.getZoom() <= self.map.getMinZoom()+3) {
-          $('.zoomout_btn').prop('disabled', true);
+        if(self.map.getZoom() <= self.map.getMinZoom()+4) {
+          $('.zoomout_btn', $(self.elCntrls)).attr('disabled', true);
         }
         
         if(self.map.getZoom() <= 10) {
