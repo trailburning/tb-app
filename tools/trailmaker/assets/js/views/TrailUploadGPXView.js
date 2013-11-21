@@ -12,22 +12,10 @@ define([
 
       $(this.el).html(this.template());
 
-//      $('#uploadGPX_view').hide();
-//      $('#uploadGPXprogress_view').show();
-      // fire event
-//      app.dispatcher.trigger("TrailUploadGPXView:uploadProgress", 50);                
-      
       $('#fileupload').change(function(){
         $('#uploadGPX_view').hide();
         $('#uploadGPXprogress_view').show();
-        
-        // mla test        
         self.upload();
-
-//        self.model.set('id', 42);
-        // fire event
-//        app.dispatcher.trigger("TrailUploadGPXView:uploaded", self);                
-      
       }); 
                             
       return this;
@@ -70,7 +58,6 @@ define([
       };   
       
       $('#uploadForm').upload(strURL, function(res) {
-        console.log("done",res);
         // fire event
         app.dispatcher.trigger("TrailUploadGPXView:uploaded", self);                
       },function(data) {

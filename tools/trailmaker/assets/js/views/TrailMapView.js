@@ -96,7 +96,7 @@ define([
         
         this.buildBtns();           
       }
-      
+
       if (this.model.get('id')) {
         var self = this;
         var data = this.model.get('value');      
@@ -113,7 +113,7 @@ define([
         this.polyline = L.polyline(self.arrLineCordinates, polyline_options).on('click', onClickTrail).addTo(this.map);          
         this.map.fitBounds(self.polyline.getBounds(), {padding: [30, 30]});
         
-        function onClickTrail(e) {        
+        function onClickTrail(e) {      
           var trailMapMediaMarkerView = new TrailMapMediaMarkerView({ model: self.model, map: self.map, latlng: e.latlng, timezoneData: self.timezoneData });
           trailMapMediaMarkerView.render();
           self.arrMapMediaViews.push(trailMapMediaMarkerView);        

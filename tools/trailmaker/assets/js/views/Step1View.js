@@ -19,7 +19,7 @@ define([
       var attribs = this.model.toJSON();
       $(this.el).html(this.template(attribs));
         
-      $('.btn', $(this.el)).click(function(evt) {
+      $('.submit', $(this.el)).click(function(evt) {
         // store form        
         self.model.set('name', $('#form_name').val());
         self.model.set('email', $('#form_email').val());

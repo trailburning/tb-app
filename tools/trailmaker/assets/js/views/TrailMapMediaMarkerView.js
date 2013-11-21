@@ -66,7 +66,7 @@ define([
       var self = this;
       
       this.marker = L.marker([this.latlng.lat, this.latlng.lng], {icon: this.mediaInactiveIcon, draggable:'true'}).on('click', onClick).addTo(this.map);   
-      this.marker.bindPopup('<b>Hello world!</b><br>I am a popup. <span class="btn btn-tb-action">Remove</span> <span class="btn btn-tb btn-tb-large">Update</span>');
+      this.marker.bindPopup('<div class="trail_media_popup"><h4 class="tb">Picture name:</h4><div class="form-group"><input type="text" name="form_media_name" id="form_media_name" class="form-control"></div><div><span class="btn btn-tb-action btn-tb-large">Save</span></div><a href="">delete pin</a></div>');
       
       function onClick(e) {
         // fire event

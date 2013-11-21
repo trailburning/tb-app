@@ -8,14 +8,65 @@ border-width:1px;
   min-width: 1200px;
 }
 
+/* CONTENT */
+/******************************************/
+#contentview {
+  position: relative;
+  top: 0px;    
+  height: 800px;
+}
+
+/* TRAIL MAP */
+/******************************************/
+#trail_map_view {
+  position: absolute;
+  top: 0px;
+  width: 100%; 
+  height: 100%;
+}
+
+#view_map_btns {
+  display: none;
+  position: absolute;
+  top: 34px;
+  right: 22px;
+}
+
+#trail_map_overlay {
+  display: none;
+  position: absolute;
+  top: 0px;  
+  width: 100%; 
+  height: 100%;  
+  opacity: 0.4;
+  background: #000000;  
+}
+
+#trail_info {
+  display: none;
+  position: absolute;
+  top: 24px;
+  left: 24px;
+}
+
+#trail_info .event_name {
+  visibility: hidden;
+}
+
+#trail_info .trail_name {
+  visibility: hidden;
+}
+
 /* STEPS */
 /******************************************/
 #steps {
   z-index: 100;
   position: relative;
   margin-top: 63px;
+/*  
   width: 100%;
   height: 100%;
+*/  
 }
 
 /* STEP WELCOME */
@@ -51,6 +102,10 @@ border-width:1px;
   margin-left: 35px;
   margin-right: 35px;
   width: 240px;
+}
+
+#step_welcome_view .steps .step .step_marker {
+  margin-bottom: 30px;
 }
 
 #step_welcome_view .next_step {
@@ -136,47 +191,6 @@ border-width:1px;
 /******************************************/
 #step2_view {
   display: none;
-  width: 100%; 
-  height: 100%;  
-}
-
-#step2_view #trail_map_view {
-  position: relative;  
-  width: 100%; 
-  height: 100%;
-}
-
-#step2_view #view_map_btns {
-  display: none;
-  position: absolute;
-  top: 34px;
-  right: 22px;
-}
-
-#step2_view .trail_map_overlay {
-  display: none;
-  position: absolute;
-  top: 0px;  
-  width: 100%; 
-  height: 100%;
-  
-  opacity: 0.4;
-  background: #000000;  
-}
-
-#step2_view #trail_info {
-  display: none;
-  position: absolute;
-  top: 24px;
-  left: 24px;
-}
-
-#step2_view #trail_info .event_name {
-  display: none;
-}
-
-#step2_view #trail_info .trail_name {
-  display: none;
 }
 
 #step2_view .panel_container {
@@ -202,7 +216,7 @@ border-width:1px;
   margin: 54px 0px 0px 0px;
 }
 
-#step2_view .step_marker_container {
+#step2_view .panel_container .step_marker_container {
   position: absolute;
   top: 176px;
   width: 100%;
@@ -247,10 +261,76 @@ border-width:1px;
   margin-top: 24px;
 }
 
+#step2_view .map_step_container {
+  display: none;
+  position: absolute;
+  top: 630px;
+  width: 100%;
+}
+
+#step2_view .map_step_container .content {
+  margin: 0px auto 0px auto;
+}
+
+#step2_view .map_step_container .step_marker {
+  text-align: center;  
+}
+
+#step2_view .map_step_container .next_step {
+  margin-top: 18px;
+  text-align: center;
+}
+
+/* STEP 3 */
+/******************************************/
+#step3_view {
+  display: none;
+}
+
+#step3_view .panel_container {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+}
+
+#step3_view .panel_content {
+  position: relative;
+  padding-top: 216px;
+  margin: 0px auto 92px auto;
+  width: 614px;
+  text-align: center;
+}
+
+#step3_view .panel {
+  float: none;
+}
+
+#step3_view .panel .content {
+  height: 364px;
+  margin: 54px 0px 0px 0px;
+}
+
+#step3_view .panel_container .step_marker_container {
+  position: absolute;
+  top: 176px;
+  width: 100%;
+  text-align: center;
+}
+
+#step3_view .desc {
+  margin: 24px auto 0px auto;
+  width: 486px;
+  text-align: center;
+}
+
+#step3_view .next_step {
+  margin-top: 24px;
+}
+
 /* GENERAL */
 /******************************************/
 .step_marker {
-  margin: 0px auto 30px auto;
+  margin: 0px auto 0px auto;
   width: 73px;
   height: 73px;
   line-height: 73px;
@@ -260,10 +340,32 @@ border-width:1px;
 }
 
 #trail_map {
-  position: absolute;
-  top: 0px;
   width:100%; 
   height: 100%;
+}
+
+.trail_media_popup {
+  padding-top: 8px;  
+  text-align: center;  
+}
+
+.trail_media_popup .form-group {
+  margin-top: 12px;
+}
+
+.trail_media_popup input {
+  display: block;  
+  width: 194px;
+  height: 32px;
+  line-height: 32px;
+  background: #F0F0F0;  
+  color: #979797;
+  font-size: 22px;
+}
+
+.trail_media_popup .btn {
+  margin-top: 12px;
+  margin-bottom: 12px;
 }
 
 .leaflet-popup-content-wrapper{

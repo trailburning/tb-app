@@ -20,7 +20,7 @@ define([
       var attribs = this.model.toJSON();
       $(this.el).html(this.template(attribs));
         
-      $('.btn', $(this.el)).click(function(evt) {
+      $('.submit', $(this.el)).click(function(evt) {
         // fire event
         app.dispatcher.trigger("StepWelcomeView:submitclick", self);                        
       });
