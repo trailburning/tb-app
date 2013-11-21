@@ -45,8 +45,8 @@ define([
       function onClick(e) {
       }
           
-      arrMarkers.push([54.57269115373492, -2.9278992768377066]);                   
-      L.marker(arrMarkers[arrMarkers.length-1], {icon: trailIcon, zIndexOffset: 1000}).on('click', onClick).addTo(this.userProfileMap);
+//      arrMarkers.push([54.57269115373492, -2.9278992768377066]);                   
+//      L.marker(arrMarkers[arrMarkers.length-1], {icon: trailIcon, zIndexOffset: 1000}).on('click', onClick).addTo(this.userProfileMap);
 
       arrMarkers.push([52.5080060, 13.2574370]);                   
       L.marker(arrMarkers[arrMarkers.length-1], {icon: locationIcon, zIndexOffset: 1000}).on('click', onClick).addTo(this.userProfileMap);
