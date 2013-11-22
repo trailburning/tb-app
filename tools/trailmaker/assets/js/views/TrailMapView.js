@@ -10,6 +10,10 @@ define([
   var TrailMapView = Backbone.View.extend({
     initialize: function(){
       this.template = _.template($('#trailMapViewTemplate').text());        
+
+      var self = this;
+      
+      app.dispatcher.on("TrailMapMediaMarkerView:mediaclick", self.onTrailMapMediaMarkerClick, this);
       
       this.elCntrls = this.options.elCntrls;            
       this.bRendered = false;
@@ -17,8 +21,18 @@ define([
       this.polyline = null;
       this.arrLineCordinates = [];      
       this.arrMapMediaViews = [];
+      this.currMapMediaMarkerView = null;
       this.nMapView = MAP_STREET_VIEW;      
       this.timezoneData = null;      
+      
+      var LocationIcon = L.Icon.extend({
+          options: {
+              iconSize:     [36, 47],
+              iconAnchor:   [16, 44],
+              popupAnchor:  [16, 44]
+          }
+      });      
+      this.locationIcon = new LocationIcon({iconUrl: ASSETS_BASEURL + 'images/icons/location.png'});      
     },         
     buildBtns: function(){
       var self = this;
@@ -110,7 +124,10 @@ define([
           weight: 4,
           clickable: true
         };         
-        this.polyline = L.polyline(self.arrLineCordinates, polyline_options).on('click', onClickTrail).addTo(this.map);          
+        this.polyline = L.polyline(self.arrLineCordinates, polyline_options).on('click', onClickTrail).addTo(this.map);
+        
+        L.marker(this.arrLineCordinates[0], {icon: this.locationIcon}).addTo(this.map);            
+                  
         this.map.fitBounds(self.polyline.getBounds(), {padding: [30, 30]});
         
         function onClickTrail(e) {      
@@ -120,7 +137,16 @@ define([
         }
       }
       this.bRendered = true;
-    }    
+    },
+    onTrailMapMediaMarkerClick: function(mapMediaMarkerView){
+      if (this.currMapMediaMarkerView) {
+        this.currMapMediaMarkerView.setActive(false);
+      }
+      mapMediaMarkerView.setActive(true);
+      
+      this.currMapMediaMarkerView = mapMediaMarkerView;
+    }
+        
   });
 
   return TrailMapView;

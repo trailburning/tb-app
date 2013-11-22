@@ -38,8 +38,9 @@ define([
       });
 
       // mla test        
-//      this.model.set('id', 96);
+//      this.model.set('id', 42);
 //      $('#step2_view .panel_container').hide();      
+//      $('.map_step_container', $(this.el)).show();  
       // fire event
 //      app.dispatcher.trigger("Step2View:gpxuploaded", self);                        
         

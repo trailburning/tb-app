@@ -12,7 +12,7 @@ border-width:1px;
 /******************************************/
 #contentview {
   position: relative;
-  top: 0px;    
+  top: 0px;  
   height: 800px;
 }
 
@@ -380,6 +380,12 @@ border-width:1px;
 /******************************************/
 #footerview {
   display: none;
+}
+    
+/* TOUCH */
+/******************************************/
+#view_map_btns .touch_btn {  
+  margin: 0px 4px 0px 4px;
 }
     
 /* RESPONSIVE */

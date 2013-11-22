@@ -14,7 +14,7 @@ define([
       app.dispatcher.on("Step1View:submitclick", this.onStep1ViewSubmitClick, this);
       app.dispatcher.on("Step2View:gpxuploaded", this.onStep2ViewGPXUploaded, this);
       app.dispatcher.on("Step2View:submitclick", this.onStep2ViewSubmitClick, this);
-  
+
       // Trail Map    
       this.trailMapView = new TrailMapView({ el: '#trail_map_view', elCntrls: '#view_map_btns', model: this.model });
       

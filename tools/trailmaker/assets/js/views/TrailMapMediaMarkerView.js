@@ -65,9 +65,22 @@ define([
     render: function(){
       var self = this;
       
-      this.marker = L.marker([this.latlng.lat, this.latlng.lng], {icon: this.mediaInactiveIcon, draggable:'true'}).on('click', onClick).addTo(this.map);   
-      this.marker.bindPopup('<div class="trail_media_popup"><h4 class="tb">Picture name:</h4><div class="form-group"><input type="text" name="form_media_name" id="form_media_name" class="form-control"></div><div><span class="btn btn-tb-action btn-tb-large">Save</span></div><a href="">delete pin</a></div>');
+      this.marker = L.marker([this.latlng.lat, this.latlng.lng], {icon: this.mediaInactiveIcon, draggable:'true'}).on('click', onClick).addTo(this.map);
       
+      // Create an element to hold all your text and markup
+      var container = $('<div />');      
+      // Delegate all event handling for the container itself and its contents to the container
+      container.on('click', '.deletepin_btn', function() {
+        // goodbye pin
+        self.map.removeLayer(self.marker);
+      });
+      container.on('click', '.save_btn', function() {
+        console.log('SAVE');
+      });
+      
+      container.html('<div class="trail_media_popup"><h4 class="tb">Picture name:</h4><div class="form-group"><input type="text" name="form_media_name" id="form_media_name" class="form-control"></div><div><span class="btn btn-tb-action btn-tb-large save_btn">Save</span></div><a href="javascript:void(0)" class="deletepin_btn">delete pin</a></div>');
+      this.marker.bindPopup(container[0]);      
+               
       function onClick(e) {
         // fire event
         app.dispatcher.trigger("TrailMapMediaMarkerView:mediaclick", self);                        
@@ -75,7 +88,9 @@ define([
       this.marker.on('dragend', function(event){
         self.placeMarker();
       });
-        
+      // locate point
+      this.placeMarker();
+
       return this;
     },
     placeMarker: function(){
@@ -92,8 +107,7 @@ define([
         }        
       });
       // position on closest point      
-      this.marker.setLatLng([Number(this.point.coords[1]), Number(this.point.coords[0])]);      
-      
+      this.marker.setLatLng([Number(this.point.coords[1]), Number(this.point.coords[0])]);            
       var dtDate = new Date(this.point.tags.datetime*1000); // unix timestamp to timestamp      
       // adjust based on timezone of 1st point
       dtDate.setSeconds(dtDate.getSeconds() + this.options.timezoneData.dstOffset);
