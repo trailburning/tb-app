@@ -75,7 +75,7 @@ define([
         self.map.removeLayer(self.marker);
       });
       container.on('click', '.save_btn', function() {
-        console.log('SAVE');
+        self.marker.closePopup();  
       });
       
       container.html('<div class="trail_media_popup"><h4 class="tb">Picture name:</h4><div class="form-group"><input type="text" name="form_media_name" id="form_media_name" class="form-control"></div><div><span class="btn btn-tb-action btn-tb-large save_btn">Save</span></div><a href="javascript:void(0)" class="deletepin_btn">delete pin</a></div>');
