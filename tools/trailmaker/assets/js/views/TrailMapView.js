@@ -14,13 +14,15 @@ define([
       var self = this;
       
       app.dispatcher.on("TrailMapMediaMarkerView:mediaclick", self.onTrailMapMediaMarkerClick, this);
+      app.dispatcher.on("TrailMapMediaMarkerView:removemedia", self.onTrailMapMediaMarkerRemove, this);
       
       this.elCntrls = this.options.elCntrls;            
       this.bRendered = false;
       this.map = null;
       this.polyline = null;
       this.arrLineCordinates = [];      
-      this.arrMapMediaViews = [];
+      this.arrMapMediaViews = [];      
+      this.collectionMedia = new Backbone.Collection();      
       this.currMapMediaMarkerView = null;
       this.nMapView = MAP_STREET_VIEW;      
       this.timezoneData = null;      
@@ -130,10 +132,14 @@ define([
                   
         this.map.fitBounds(self.polyline.getBounds(), {padding: [30, 30]});
         
-        function onClickTrail(e) {      
-          var trailMapMediaMarkerView = new TrailMapMediaMarkerView({ model: self.model, map: self.map, latlng: e.latlng, timezoneData: self.timezoneData });
+        function onClickTrail(e) {
+          var model = new Backbone.Model();
+          self.collectionMedia.add(model);
+                          
+          var trailMapMediaMarkerView = new TrailMapMediaMarkerView({ model: model, trailModel: self.model, map: self.map, latlng: e.latlng, timezoneData: self.timezoneData });
           trailMapMediaMarkerView.render();
           self.arrMapMediaViews.push(trailMapMediaMarkerView);        
+          
         }
       }
       this.bRendered = true;
@@ -145,8 +151,11 @@ define([
       mapMediaMarkerView.setActive(true);
       
       this.currMapMediaMarkerView = mapMediaMarkerView;
-    }
-        
+    },
+    onTrailMapMediaMarkerRemove: function(mapMediaMarkerView){
+      // remove from collection      
+      this.collectionMedia.remove(mapMediaMarkerView.model);      
+    }        
   });
 
   return TrailMapView;

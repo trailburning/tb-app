@@ -102,6 +102,25 @@ define([
       $('#view_map_btns', $(this.el)).show();
     },    
     onStep2ViewSubmitClick: function(step2View){
+      var jsonObj = {'event_name':this.model.get('event_name'), 'trail_name':this.model.get('trail_name'), 'media':this.trailMapView.collectionMedia.toJSON()};
+      var postData = JSON.stringify(jsonObj);
+      var postArray = {json:postData};
+      
+      $.ajax({
+        type: "POST",
+        dataType: "json",
+        url: 'server/sendTrail.php',
+        data: postArray,
+        error: function(data) {
+          console.log('error:'+data.responseText);      
+          console.log(data);      
+        },
+        success: function(data) {      
+          console.log('success');
+          console.log(data);
+        }
+      });  
+      
       $('#step2_view').hide();    
       $('#step3_view').show();    
       this.step3View.render();

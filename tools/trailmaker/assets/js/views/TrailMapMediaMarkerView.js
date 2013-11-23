@@ -10,6 +10,7 @@ define([
   var TrailMapMediaMarkerView = Backbone.View.extend({
     
     initialize: function(){
+      this.trailModel = this.options.trailModel;
       this.point = null;
       this.latlng = this.options.latlng;
       this.map = this.options.map;
@@ -71,23 +72,30 @@ define([
       var container = $('<div />');      
       // Delegate all event handling for the container itself and its contents to the container
       container.on('click', '.deletepin_btn', function() {
+        // fire event
+        app.dispatcher.trigger("TrailMapMediaMarkerView:removemedia", self);                        
         // goodbye pin
         self.map.removeLayer(self.marker);
       });
-      container.on('click', '.save_btn', function() {
-        self.marker.closePopup();  
+      container.on('click', '.save_btn', function() {        
+        self.model.set('name', $('#form_media_name').val());
+        
+        self.marker.closePopup();
       });
       
-      container.html('<div class="trail_media_popup"><h4 class="tb">Picture name:</h4><div class="form-group"><input type="text" name="form_media_name" id="form_media_name" class="form-control"></div><div><span class="btn btn-tb-action btn-tb-large save_btn">Save</span></div><a href="javascript:void(0)" class="deletepin_btn">delete pin</a></div>');
-      this.marker.bindPopup(container[0]);      
+      container.html('<div class="trail_media_popup"><h4 class="tb">Filename of the photo to appear at this point:</h4><div class="form-group"><input type="text" name="form_media_name" id="form_media_name" class="form-control"></div><div><span class="btn btn-tb-action btn-tb-large save_btn">Save</span></div><a href="javascript:void(0)" class="deletepin_btn">delete pin</a></div>');
+      this.marker.bindPopup(container[0]);
                
       function onClick(e) {
         // fire event
         app.dispatcher.trigger("TrailMapMediaMarkerView:mediaclick", self);                        
       }
+      this.marker.on('dragstart', function(event){
+      });
       this.marker.on('dragend', function(event){
         self.placeMarker();
       });
+            
       // locate point
       this.placeMarker();
 
@@ -98,7 +106,7 @@ define([
       
       // look for closest point      
       var nClosestDistance = 0, nDistance = 0;
-      var data = this.model.get('value');      
+      var data = this.trailModel.get('value');      
       $.each(data.route.route_points, function(key, point) {
         nDistance = self.marker.getLatLng().distanceTo([Number(point.coords[1]), Number(point.coords[0])]);
         if (nDistance < nClosestDistance || !nClosestDistance) {
@@ -113,6 +121,10 @@ define([
       dtDate.setSeconds(dtDate.getSeconds() + this.options.timezoneData.dstOffset);
       // adjust to UTC
       console.log('date:'+dtDate.toUTCString());      
+      
+      this.model.set('date', dtDate.toUTCString());
+      this.model.set('lat', Number(this.point.coords[1]));
+      this.model.set('lng', Number(this.point.coords[0]));      
     }
     
   });
