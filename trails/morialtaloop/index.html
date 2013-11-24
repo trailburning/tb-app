@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta property="og:title" content="Trailburning"/>
+<meta property="og:url" content="http://beta.trailburning.com/trails/yurrebilla"/>
+<meta property="og:image" content="http://www.trailburning.com/assets/images/social/tb_profile_icon.png"/>
+
+<title>Trailburning Beta</title>
+
+<link href='http://fonts.googleapis.com/css?family=Signika:400,300,700' rel='stylesheet' type='text/css'>
+
+<link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="assets/css/bootstrap-responsive.min.css" rel="stylesheet">
+<link href="http://api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.css" rel="stylesheet">
+<link href="assets/css/common_ui.css" rel="stylesheet" type="text/css">
+<link href="assets/css/main.css" rel="stylesheet" type="text/css">
+
+<script>
+var nTrail = 104;
+</script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-45211566-1', 'trailburning.com');
+  ga('send', 'pageview');
+
+</script>
+</head>
+<body>
+
+<div id="appview">      
+  <div id="headerview">
+    <div class="left"><a href="../../"><img src="assets/img/header/tb_logo.gif" border="0"></a></div>    
+    <div class="right">
+      <div class="signin"><a href="../../join" class="btn btn-tb-action btn-tb-large">Join</a></div>
+      <div class="links">
+        <div class="link"><a href="../../about">Discover Trailburning</a></div>        
+      </div>
+      <div class="discover">
+        <form id="search_form">
+        <input type="text" id="search_field" name="discover">
+        <input type="submit" class="search-btn">        
+        </form>
+      </div>
+    </div>
+    <div class="trans-line"></div>    
+  </div>    
+
+  <div id="trailplayer">
+    <div id="trail_views">        
+      <div id="trail_map_view"></div>
+      <div id="trail_slide_view"></div>      
+    </div>
+    <div id="trail_info">      
+      <div class="trail_avatar"><a href="../../profile/paultran"><img src="assets/img/trailplayer/avatars/avatar_pt.png" border="0"></a></div>
+      <div class="trail_title">
+        <h2 class="tb tb-title">Morialta Loop</h2>
+        <br/>
+        <h2 class="tb tb-title">South Australia</h2>
+        <br/>
+        <div class="author">by <strong>Paul Tran</strong></div>
+      </div>
+    </div>
+    <div id="view_map_btns">        
+      <div class='controls'>
+        <span class="btn btn-tb zoomin_btn">+</span>          
+        <span class="btn btn-tb zoomout_btn">-</span>
+        <span class="btn btn-tb view_btn">Satellite</span>          
+      </div>    
+    </div>    
+    <div id="view_player_btns">
+      <div id="slideshow_toggle"><span class="button"></span></div>
+      <div id="view_toggle"><span id="view_toggle_btn" class="button">Change View</span></div>
+    </div>
+  </div>
+
+  <div class="panel_container">       
+    <div class="panel_content_container">       
+      <div class="panel_content">       
+        <div id="bigbar">
+          <div class="crumbs">
+            <div class="crumb_lead"><a href="../../">Home</a></div>
+            <div class="crumb_links"><a href="../../trails/morialtaloop">Morialta Loop</a></div>
+          </div>
+          <div class="share">
+            <div class="link facebook"><a href="http://www.facebook.com/share.php?u=beta.trailburning.com/trails/yurrebilla" target="_blank" class="button btnFacebook">Facebook</a></div>
+            <div class="link twitter"><a href="http://twitter.com/share?text=Are you trailburning?" target="_blank" class="button btnTwitter">Twitter</a></div>
+            <div class="link googleplus"><a href="https://plus.google.com/share?url=beta.trailburning.com/trails/yurrebilla" target="_blank" class="button btnGooglePlus">Google+</a></div>          
+          </div>
+        </div>
+                
+        <div class="panels clearfix">     
+          
+          <div class="two_col_panels">
+            <div class="left">
+              
+              <div class="panel trail_detail_panel">
+                <div class="content">
+                  <h3 class="tb">About the trail</h3>
+                  <h4 class="tb">Enjoy the rugged ridges, gully scenery and seasonal waterfalls that make up Morialta Conservation Park. The three waterfalls along Fourth Creek are popular features of the park and are linked by an extensive network of walking trails. The views from the rock climbing zone also provide opportunities to admire Morialta Gorge and the nearby Adelaide plains.</h4>
+                </div>
+              </div>
+              
+              <div class="panel othertrails_panel">
+                <div class="content">
+                  <h3 class="tb">You may also like</h3>
+                  <div class="trails">
+                    <a href="../../trails/grunewald">
+                    <div class="tb-photo-btn">                  
+                      <div class="image_container"><img src="http://app.resrc.it/http://s3-eu-west-1.amazonaws.com/trailburning-media/72f5660f673dd97f92ed8c2b7ab1d4fc998632e5.jpg" class="resrc scale" /></div>
+                      <div class="trail_title">
+                        <h1 class="title_shadow">Yurrebilla, South Australia</h1>
+                        <h2 class="title_shadow">by <strong>Paul Tran</strong></h2>
+                      </div>
+                    </div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>  
+            <div class="right">
+              <div id="trail_weather_view" class="panel trail_weather_panel"></div>
+              
+<!--              
+              <div class="panel trailgear_panel">
+                <div class="content">
+                  <div class="title">Get ready for the trail</div>
+                  <div class="gear_list">
+                    <div class="gear">
+                      <div class="photo"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/brands/peakperformance/ZipJacket.jpg" /></div>
+                      <h1>Zip Jacket</h1>
+                      <h2>Peak Performance</h2>
+                    </div>
+                    <div class="gear">
+                      <div class="photo"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/brands/peakperformance/ZipJacket_women.jpg" /></div>
+                      <h1>Womens Zip Jacket</h1>
+                      <h2>Peak Performance</h2>
+                    </div>            
+                    <div class="gear">
+                      <div class="photo"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/brands/scott/MK4plus.jpg" /></div>
+                      <h1>MK4+ Shoe</h1>
+                      <h2>Scott Sports</h2>
+                    </div>
+                  </div>
+                </div>                              
+              </div>
+-->              
+            </div>  
+          </div>
+                         
+        </div>
+      </div>    
+              
+      <div id="footerview">
+        <div class="left">
+          <div class="copyright">Copyright © 2013, Augmented Media Projects Ltd</div>    
+          <div class="links">
+            <div class="link"><a href="../../about">About</a></div>
+            <div class="link"><a href="../../presskit">Press Kit</a></div>
+          </div>
+        </div>
+        <div class="right">
+          <div class="social email"><a href="mailto:hello@trailburning.com" class="button btnEmail">Email</a></div>
+          <div class="social facebook"><a href="http://www.facebook.com/trailburning" target="_blank" class="button btnFacebook">Facebook</a></div>
+          <div class="social twitter"><a href="http://www.twitter.com/trailburning" target="_blank" class="button btnTwitter">Twitter</a></div>
+          <div class="social googleplus"><a href="https://plus.google.com/+Trailburning/posts" target="_blank" class="button btnGooglePlus">Google+</a></div>          
+          <div class="social pinterest"><a href="https://www.pinterest.com/trailburning/" target="_blank" class="button btnPinterest">Pinterest</a></div>          
+        </div>
+      </div>          
+    </div>
+
+    <div id="trail_overlay">
+      <div class="overlay_content">
+        <div id="trail_stats_view" class="trailstats_panel"></div>
+        <div id="trail_altitude_view" class="trail_altitude_panel"></div>
+        <div id="trail_mini_view">
+          <div id="trail_minimap_view" class="trail_minimap"></div>
+          <div id="trail_minislide_view" class="trail_minislide"></div>
+          <div class='border_top'></div>
+          <div class='border_left'></div>
+          <div class='toggle_view_button'></div>          
+        </div>
+      </div>
+      <div class="overlay_pull"><span class="button"></span></div>
+    </div>
+    <div class="line_break"></div>    
+  </div>          
+</div>
+
+<script type="text/template" id="trailStatsViewTemplate">
+  <div class="content">
+    <div class="length"></div>
+    <div class="terrain"></div>          
+  </div>
+</script>
+
+<script type="text/template" id="trailMiniMapViewTemplate">
+  <div id='minimap'></div>  
+</script>
+
+<script type="text/template" id="trailMiniSlideViewTemplate">
+  <div id='minislide'>
+    <div class="photos_container"></div>
+  </div>
+</script>
+
+<script type="text/template" id="trailSlideViewTemplate">
+  <div class="photos_container"></div>
+  <div class="slide_btns">
+    <div class="left"></div>
+    <div class="right"></div>
+  </div>  
+  <div class="loader_container">
+    <div class="loader"></div>
+  </div>  
+</script>
+
+<script type="text/template" id="trailSlidePhotoViewTemplate">
+  <div class="image_container fade_on_load"><img src="http://app.resrc.it/O=80/http://s3-eu-west-1.amazonaws.com/<%= versionLargePath%>" class="resrc scale" /></div>  
+</script>
+
+<script type="text/template" id="trailMapViewTemplate">
+  <div class="map_container">
+    <div id='map_large'></div>
+  </div>
+</script>
+
+<script type="text/template" id="traiAltitudeViewTemplate">
+  <div class="profile">
+    <canvas id="graph"></canvas>
+    <div class="location"></div>      
+  </div>
+</script>
+
+<script type="text/template" id="trailMediaMarkerViewTemplate">
+  <div class="marker_container">
+    <div class="marker"></div>
+    <div class="alt"></div>  
+  </div>
+</script>
+
+<script type="text/template" id="trailWeatherViewTemplate">
+  <div class="content">
+    <h3 class="tb">Today's weather</h3>
+    <div class="desc"></div>
+    <div class="detail clearfix">                  
+      <div class="text">
+        <div class="temp"></div>
+        <div class="wind"></div>
+      </div>
+      <div class="icon"></div>
+    </div>
+  </div>
+</script>
+
+<script src="assets/js/libs/jquery-1.8.3.min.js"></script>
+<script src="assets/js/libs/bootstrap.min.js"></script>
+<script src="assets/js/libs/bootstrap-filestyle.min.js"> </script>
+
+<script src='http://api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.js'></script>
+<!--[if lte IE 8]>
+  <link href='http://api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.ie.css' rel='stylesheet' >
+<![endif]-->
+
+<script src="assets/js/libs/imagesloaded.pkgd.min.js"></script>
+<script src="assets/js/libs/image-scale.min.js"></script>
+
+<script src="assets/js/libs/jquery.ui.widget.js"></script>
+<script src="assets/js/libs/jquery.iframe-transport.js"></script>
+<script src="assets/js/libs/jquery.fileupload.js"></script>
+<script src="assets/js/libs/jquery.touchwipe.min.js"></script>
+
+<script data-main="assets/js/main" src="assets/js/libs/require.js"></script>
+
+<script>
+resrc = {
+  options: {
+    server: "app.resrc.it",
+    resrcOnLoad: true,
+    resrcOnResize: true,
+    resrcOnPinch: false    
+  }
+};
+</script>
+<script src="//use.resrc.it"></script>
+</body>
+</html>
