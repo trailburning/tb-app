@@ -28,7 +28,7 @@ define([
 //      $('#step1_view').show();
 //      this.step1View.render();    
       // Step 2
-      this.step2View = new Step2View({ el: '#step2_view', model: this.model });
+//      this.step2View = new Step2View({ el: '#step2_view', model: this.model });
 //      $('#step2_view').show();    
 //      this.step2View.render();
       // Step 3

@@ -155,6 +155,9 @@ define([
       if (fTrailLengthMetres > 20000) {
         nMarkerDistance = 2;
       }
+      if (fTrailLengthMetres > 45000) {
+        nMarkerDistance = 5;
+      }
       var nMarkers = fTrailLengthMetres / 1000;
       var nMarkerWidth = this.nDrawWidth / nMarkers;
 

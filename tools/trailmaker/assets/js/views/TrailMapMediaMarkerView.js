@@ -8,7 +8,7 @@ define([
 ], function(_, Backbone){
 
   var TrailMapMediaMarkerView = Backbone.View.extend({
-    
+    options: {placeOnTrail: true},
     initialize: function(){
       this.trailModel = this.options.trailModel;
       this.point = null;
@@ -83,9 +83,9 @@ define([
         self.marker.closePopup();
       });
       
-      container.html('<div class="trail_media_popup"><h4 class="tb">Filename of the photo to appear at this point:</h4><div class="form-group"><input type="text" name="form_media_name" id="form_media_name" class="form-control"></div><div><span class="btn btn-tb-action btn-tb-large save_btn">Save</span></div><a href="javascript:void(0)" class="deletepin_btn">delete pin</a></div>');
+      container.html('<div class="trail_media_popup"><h4 class="tb">Filename of the photo to appear at this point:</h4><div class="form-group"><input type="text" name="form_media_name" id="form_media_name" class="form-control" value="' + this.model.get('name') + '"></div><div><span class="btn btn-tb-action btn-tb-large save_btn">Save</span></div><a href="javascript:void(0)" class="deletepin_btn">delete pin</a></div>');
       this.marker.bindPopup(container[0]);
-               
+
       function onClick(e) {
         // fire event
         app.dispatcher.trigger("TrailMapMediaMarkerView:mediaclick", self);                        
@@ -96,8 +96,10 @@ define([
         self.placeMarker();
       });
             
-      // locate point
-      this.placeMarker();
+      // locate initial point
+      if (this.options.placeOnTrail) {
+        this.placeMarker();
+      }
 
       return this;
     },

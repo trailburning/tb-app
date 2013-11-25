@@ -5,19 +5,28 @@
 
 include("include/incDefine.php");
 
-error_reporting(E_ALL);
-ini_set('display_errors', '1');
-
 session_start();
 
 function addDetails($output, $body) {
   $body .= "<tr><td><strong>Event Details:</strong></td></tr>";
-  $body .= "<tr><td>Trail ID:</td><td>" . $output->id . "</td></tr>";
-  $body .= "<tr><td>Name:</td><td>" . $output->name . "</td></tr>";
-  $body .= "<tr><td>Email:</td><td>" . $output->email . "</td></tr>";
-  $body .= "<tr><td>Event Name:</td><td>" . $output->event_name . "</td></tr>";
-  $body .= "<tr><td>Trail Name:</td><td>" . $output->trail_name . "</td></tr>";
-  $body .= "<tr><td>Trail Notes:</td><td>" . $output->trail_notes . "</td></tr>";
+  if (isset($output->id)) {
+    $body .= "<tr><td>Trail ID:</td><td>" . $output->id . "</td></tr>";
+  }
+  if (isset($output->name)) {
+    $body .= "<tr><td>Name:</td><td>" . $output->name . "</td></tr>";
+  }
+  if (isset($output->email)) {  
+    $body .= "<tr><td>Email:</td><td>" . $output->email . "</td></tr>";
+  }
+  if (isset($output->event_name)) {
+    $body .= "<tr><td>Event Name:</td><td>" . $output->event_name . "</td></tr>";
+  }
+  if (isset($output->trail_name)) {
+    $body .= "<tr><td>Trail Name:</td><td>" . $output->trail_name . "</td></tr>";
+  }
+  if (isset($output->trail_notes)) {
+    $body .= "<tr><td>Trail Notes:</td><td>" . $output->trail_notes . "</td></tr>";
+  }
   $body .= "<tr><td></td></tr>";  
 }
 
