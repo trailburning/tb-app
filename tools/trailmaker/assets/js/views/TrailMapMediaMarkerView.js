@@ -114,13 +114,14 @@ define([
           self.point = point;    
         }        
       });
+      
       // position on closest point      
       this.marker.setLatLng([Number(this.point.coords[1]), Number(this.point.coords[0])]);            
       var dtDate = new Date(this.point.tags.datetime*1000); // unix timestamp to timestamp      
       // adjust based on timezone of 1st point
-      dtDate.setSeconds(dtDate.getSeconds() + this.options.timezoneData.dstOffset);
+      dtDate.setSeconds(dtDate.getSeconds() + this.options.timezoneData.dstOffset + this.options.timezoneData.rawOffset);
       // adjust to UTC
-      console.log('date:'+dtDate.toUTCString());      
+      console.log('UTC date:'+dtDate.toUTCString());
       
       this.model.set('date', dtDate.toUTCString());
       this.model.set('lat', Number(this.point.coords[1]));

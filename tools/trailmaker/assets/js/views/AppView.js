@@ -14,6 +14,7 @@ define([
       app.dispatcher.on("Step1View:submitclick", this.onStep1ViewSubmitClick, this);
       app.dispatcher.on("Step2View:gpxuploaded", this.onStep2ViewGPXUploaded, this);
       app.dispatcher.on("Step2View:submitclick", this.onStep2ViewSubmitClick, this);
+      app.dispatcher.on("Step3View:submitclick", this.onStep3ViewSubmitClick, this);
 
       // Trail Map    
       this.trailMapView = new TrailMapView({ el: '#trail_map_view', elCntrls: '#view_map_btns', model: this.model });
@@ -53,7 +54,7 @@ define([
       var firstPoint = data.route.route_points[0];
       var nTimestamp = firstPoint.tags.datetime;
       
-      var strURL = 'https://maps.googleapis.com/maps/api/timezone/json?location='+Number(firstPoint.coords[1])+','+Number(firstPoint.coords[0])+'&timestamp='+nTimestamp+'&sensor=false'; 
+      var strURL = 'https://maps.googleapis.com/maps/api/timezone/json?location='+Number(firstPoint.coords[1])+','+Number(firstPoint.coords[0])+'&timestamp='+nTimestamp+'&sensor=false';
       $.ajax({
         url: strURL,
         type: 'GET',            
@@ -101,11 +102,18 @@ define([
       $('#trail_map_overlay', $(this.el)).hide();
       $('#view_map_btns', $(this.el)).show();
     },    
-    onStep2ViewSubmitClick: function(step2View){
-      var jsonObj = {'event_name':this.model.get('event_name'), 'trail_name':this.model.get('trail_name'), 'media':this.trailMapView.collectionMedia.toJSON()};
+    onStep2ViewSubmitClick: function(step2View){      
+      this.model.set('name', 'Field 1');
+      this.model.set('email', 'Field 2');
+      this.model.set('event_name', 'Field 3');
+      this.model.set('trail_name', 'Field 4');
+      this.model.set('trail_notes', 'Field 5');
+      
+      var jsonObj = {'id':this.model.get('id'), 'name':this.model.get('name'), 'email':this.model.get('email'), 'event_name':this.model.get('event_name'), 'trail_name':this.model.get('trail_name'), 'trail_notes':this.model.get('trail_notes'), 'media':this.trailMapView.collectionMedia.toJSON()};
       var postData = JSON.stringify(jsonObj);
       var postArray = {json:postData};
       
+//      console.log(postData);      
       $.ajax({
         type: "POST",
         dataType: "json",
@@ -120,7 +128,7 @@ define([
           console.log(data);
         }
       });  
-      
+
       $('#step2_view').hide();    
       $('#step3_view').show();    
       this.step3View.render();

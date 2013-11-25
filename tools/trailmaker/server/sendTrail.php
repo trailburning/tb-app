@@ -3,26 +3,61 @@
 // index.php
 // ****************************************************************************
 
+include("include/incDefine.php");
+
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
 
 session_start();
 
+function addDetails($output, $body) {
+  $body .= "<tr><td><strong>Event Details:</strong></td></tr>";
+  $body .= "<tr><td>Trail ID:</td><td>" . $output->id . "</td></tr>";
+  $body .= "<tr><td>Name:</td><td>" . $output->name . "</td></tr>";
+  $body .= "<tr><td>Email:</td><td>" . $output->email . "</td></tr>";
+  $body .= "<tr><td>Event Name:</td><td>" . $output->event_name . "</td></tr>";
+  $body .= "<tr><td>Trail Name:</td><td>" . $output->trail_name . "</td></tr>";
+  $body .= "<tr><td>Trail Notes:</td><td>" . $output->trail_notes . "</td></tr>";
+  $body .= "<tr><td></td></tr>";  
+}
+
+function addMediaPoint($mediaPoint, $body) {
+  $body .= "<tr><td><strong>Media Point:</strong></td></tr>";
+  $body .= "<tr><td>Name:</td><td>" . $mediaPoint->name . "</td></tr>";
+  $body .= "<tr><td>Date:</td><td>" . $mediaPoint->date . "</td></tr>";
+  $body .= "<tr><td>Lat:</td><td>" . $mediaPoint->lat . "</td></tr>";
+  $body .= "<tr><td>Lng:</td><td>" . $mediaPoint->lng . "</td></tr>";  
+}
+
 if(isset($_POST["json"])){  
-  $json = stripslashes($_POST["json"]);
+  $json = stripslashes($_POST["json"]);  
+//  $json = '{"id":56,"name":"Field 1","email":"Field 2","event_name":"Field 3","trail_name":"Field 4","trail_notes":"Field 5","media":[{"date":"Sun, 01 Sep 2013 07:14:54 GMT","lat":-34.88057859242,"lng":138.72867562808,"name":"Pic1"},{"date":"Sun, 01 Sep 2013 09:55:49 GMT","lat":-34.9296467565,"lng":138.71246343479,"name":"Pic2"}]} ';   
   $output = json_decode($json);
 
-  $arr = array();  
+  // build html of fields
+  $body = "<table>";
+  addDetails($output, &$body);
+  foreach ($output->media as $key => $mediaPoint) {
+    addMediaPoint($mediaPoint, &$body);
+  }  
+  $body .= "</table>";
 
-  $arrPoints = array();
+  $strEmailFrom = EMAIL_FROM;
+  $strEmailTo = EMAIL_TO;
+  $strSubject = EMAIL_SUBJECT;
   
-  $arrPoints[0] = array();
-  $arrPoints[0]['lat'] = 1;
-  $arrPoints[0]['lng'] = 2;
+  require_once('include/class.phpmailer.php');
   
-  $arr['points'] = $arrPoints;
+  $mail = new PHPMailer(); // defaults to using php "mail()"
+  $mail->SetFrom($strEmailFrom);
+  
+  $mail->AddAddress($strEmailTo);
+  $mail->Subject = $strSubject;
+  
+  $mail->MsgHTML($body);
+  // now send
+  $mail->Send();
         
-//  echo json_encode($arr);
   echo $json;
 }
 ?>
