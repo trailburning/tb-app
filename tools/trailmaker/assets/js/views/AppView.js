@@ -103,12 +103,6 @@ define([
       $('#view_map_btns', $(this.el)).show();
     },    
     onStep2ViewSubmitClick: function(step2View){      
-      this.model.set('name', 'Field 1');
-      this.model.set('email', 'Field 2');
-      this.model.set('event_name', 'Field 3');
-      this.model.set('trail_name', 'Field 4');
-      this.model.set('trail_notes', 'Field 5');
-      
       var jsonObj = {'id':this.model.get('id'), 'name':this.model.get('name'), 'email':this.model.get('email'), 'event_name':this.model.get('event_name'), 'trail_name':this.model.get('trail_name'), 'trail_notes':this.model.get('trail_notes'), 'media':this.trailMapView.collectionMedia.toJSON()};
       var postData = JSON.stringify(jsonObj);
       var postArray = {json:postData};
@@ -117,7 +111,7 @@ define([
       $.ajax({
         type: "POST",
         dataType: "json",
-        url: 'server/sendTrail.php',
+        url: 'server/sendTrailProxy.php',
         data: postArray,
         error: function(data) {
           console.log('error:'+data.responseText);      
