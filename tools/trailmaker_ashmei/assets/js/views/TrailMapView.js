@@ -135,15 +135,16 @@ define([
           weight: 4,
           clickable: true
         };         
+        
+        function onClickTrail(e) {
+          self.addMarker(e.latlng, true, '');
+        }
         this.polyline = L.polyline(self.arrLineCordinates, polyline_options).on('click', onClickTrail).addTo(this.map);
         
         L.marker(this.arrLineCordinates[0], {icon: this.locationIcon}).addTo(this.map);            
                   
         this.map.fitBounds(self.polyline.getBounds(), {padding: [30, 30]});
         
-        function onClickTrail(e) {
-          self.addMarker(e.latlng, true, '');
-        }
       }
       
       // mla test markers
