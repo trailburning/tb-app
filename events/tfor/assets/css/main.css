@@ -341,6 +341,12 @@ border-width:1px;
   .event_trails_container {
     width: 496px;
   }
+  .event_trails_container .big_event_trail {
+    width: 472px;
+  }
+  .event_trails_container .big_event_trail .photo .image_container {
+    width: 472px;
+  }
   .event_trails_container .event_trail {
     width: 224px;
   }
