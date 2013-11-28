@@ -105,6 +105,33 @@ border-width:1px;
   overflow: hidden;
 }
 
+/* BRAND CARD PANEL */
+/******************************************/
+.brand_card_panel .photo {
+  position: relative;
+}
+
+.brand_card_panel .photo .logo {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+}
+
+.brand_card_panel .photo .image_container {
+  height: 294px;  
+}
+
+.brand_card_panel .photo .logo img {
+  width: 100%;
+}
+
+.brand_card_panel .summary {  
+  height: 62px;
+  margin: 16px 0px 0px 14px;
+  line-height: 1.5em;
+}
+
 /* EVENT CARD PANEL */
 /******************************************/
 .event_card_panel .photo {
@@ -134,7 +161,7 @@ border-width:1px;
 
 /* BIG EVENT CARD PANEL */
 /******************************************/
-.big_event_card_panel {  
+.big_event_card_panel {
   width: 546px;
   margin: 13px 13px 13px 13px;
   line-height: 1em;
@@ -374,6 +401,13 @@ border-width:1px;
   }  
   .panel .image_container {
     height: 190px;
+  }
+  .brand_card_panel .photo .image_container {
+    height: 254px;
+  }  
+  .brand_card_panel .summary {  
+    height: 54px;
+    margin: 10px 0px 0px 12px;
   }
   .event_card_panel .photo .image_container {
     height: 254px;
