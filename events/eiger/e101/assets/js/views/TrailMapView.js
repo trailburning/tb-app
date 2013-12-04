@@ -106,7 +106,6 @@ define([
             break;          
         }
       });
-
     },
     gotoMedia: function(nMedia){
       // restore previous
@@ -141,6 +140,13 @@ define([
         else {
           trailMapMediaView.hide();          
         }
+      }
+    },    
+    enablePopups: function(bEnable){
+      var trailMapMediaView = null;
+      for (var nMedia=0; nMedia < this.arrMapMediaViews.length; nMedia++) {
+        trailMapMediaView = this.arrMapMediaViews[nMedia];
+        trailMapMediaView.enablePopup(bEnable);
       }
     },    
     renderMarkers: function(){

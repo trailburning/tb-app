@@ -12,6 +12,7 @@ define([
 ], function(_, Backbone, TrailMediaModel, TrailMiniMapView, TrailMiniSlideView, TrailSlideView, TrailMapView, TrailStatsView, TrailAltitudeView, TrailWeatherView){
 
   var MIN_HEIGHT = 540;
+  var PLAYER_REDUCE_HEIGHT = 100;
   
   var SLIDE_VIEW = 0;
   var MAP_VIEW = 1;
@@ -32,8 +33,7 @@ define([
       
       this.mediaCollection = new Backbone.Collection();    
       this.mediaModel = new TrailMediaModel();
-      
-      
+            
       app.dispatcher.on("TrailMapView:zoominclick", self.onTrailMapViewZoomInClick, this);
       app.dispatcher.on("TrailMapView:zoomoutclick", self.onTrailMapViewZoomOutClick, this);
       app.dispatcher.on("TrailMapMediaMarkerView:mediaclick", self.onTrailMapMediaMarkerClick, this);
@@ -143,38 +143,38 @@ define([
             
     },
     updatePlayerHeight: function(){
-      var nPlayerHeight = 0, nExpandHeight = 50;      
-      var elPlayer = $('#trailplayer');
-      var nPlayerY = elPlayer.position().top;
-      var nPlayerY = 0;
-
-      nPlayerHeight = Math.round(elPlayer.width() * 0.746875);      
+      var nPlayerHeight = 0;      
+      var elContentView = $('#content_view');
+      var nContentY = elContentView.position().top;
+      
+      nPlayerHeight = Math.round(elContentView.width() * 0.746875);      
       // check height fits
-      if ((nPlayerHeight+nExpandHeight+nPlayerY) > $(window).height()) {  
-        nPlayerHeight = $(window).height() - nExpandHeight - nPlayerY; 
+      if ((nPlayerHeight+nContentY) > $(window).height()) {  
+        nPlayerHeight = $(window).height() - nContentY; 
       }
       if (nPlayerHeight < MIN_HEIGHT) {
         nPlayerHeight = MIN_HEIGHT;
       }
+
       // height of white bar
       nPlayerHeight -= 8;
       
       this.nPlayerHeight = nPlayerHeight;
-
-      var nExtendHeight = nExpandHeight * 2;                  
+      
       if (this.bSlideFull) {
         $('#trailplayer').height(this.nPlayerHeight);            
       }
       else {
-        $('#trailplayer').height(this.nPlayerHeight + nExpandHeight);            
+        $('#trailplayer').height(this.nPlayerHeight - PLAYER_REDUCE_HEIGHT);            
       }      
-      $('#trail_slide_view').height(this.nPlayerHeight+nExtendHeight);
-      // force height update for imageScale
-      $('#trail_slide_view .image_container').height(this.nPlayerHeight+nExtendHeight);
 
-      $('#trail_map_view').height(this.nPlayerHeight+nExtendHeight);
+      $('#trail_slide_view').height(this.nPlayerHeight);
+      // force height update for imageScale
+      $('#trail_slide_view .image_container').height(this.nPlayerHeight);
+
+      $('#trail_map_view').height(this.nPlayerHeight);
       // force height update for MapBox
-      $('#trail_map_view .map_container').height(this.nPlayerHeight+nExtendHeight);
+      $('#trail_map_view .map_container').height(this.nPlayerHeight);
     },
     handleResize: function(){
       // remove transition to avoid seeing grey beneath image when resizing
@@ -274,10 +274,12 @@ define([
       }
                         
       if (this.bSlideFull) {
-        this.bSlideFull = false;
+        this.bSlideFull = false;        
         
-        $('#trail_views').css('top', -50);
-        $('#trailplayer').height(this.nPlayerHeight+50);
+        this.trailMapView.enablePopups(false);
+        
+        $('#trail_views').css('top', -(PLAYER_REDUCE_HEIGHT/2));        
+        $('#trailplayer').height(this.nPlayerHeight - PLAYER_REDUCE_HEIGHT);
         
         $('#trail_overlay').css('top', -208);
 
@@ -287,6 +289,8 @@ define([
       }
       else {
         this.bSlideFull = true;        
+
+        this.trailMapView.enablePopups(true);
 
         $('#trail_views').css('top', 0);
         $('#trailplayer').height(this.nPlayerHeight);
@@ -450,8 +454,10 @@ define([
           
           $('#view_toggle .button').addClass('view_map');
           $('#view_toggle .button').removeClass('view_photo');
-          if (!Modernizr.touch && $(evt.currentTarget).attr('id') == 'view_toggle_btn') {
-            $('#view_toggle .button').addClass('view_map_hover');        
+          if (evt) {
+            if (!Modernizr.touch && $(evt.currentTarget).attr('id') == 'view_toggle_btn') {
+              $('#view_toggle .button').addClass('view_map_hover');        
+            }
           }
           
           this.trailMiniSlideView.hide();
@@ -470,10 +476,12 @@ define([
           
           $('#view_toggle .button').addClass('view_photo');
           $('#view_toggle .button').removeClass('view_map');
-          if (!Modernizr.touch && $(evt.currentTarget).attr('id') == 'view_toggle_btn') {
-            $('#view_toggle .button').addClass('view_photo_hover');
-          }        
-
+          if (evt) {
+            if (!Modernizr.touch && $(evt.currentTarget).attr('id') == 'view_toggle_btn') {
+              $('#view_toggle .button').addClass('view_photo_hover');
+            }        
+          }
+          
           this.trailMiniMapView.hide();
           this.trailMiniSlideView.show();
           this.trailMiniSlideView.render();
