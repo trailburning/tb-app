@@ -111,7 +111,7 @@ define([
       });
 
       $('#slideshow_toggle .button').click(function(evt){
-        self.onTrailToggleSlideshowBtnClick();
+        self.toggleSlideshow();
       });
       $('#slideshow_toggle .button').mouseover(function(evt){
         self.onTrailToggleSlideshowBtnOver(evt);      
@@ -244,6 +244,26 @@ define([
           
       this.handleResize();      
       this.startSlideShow();
+      
+      // keyboard control
+      $(document).keydown(function(e){
+        if (e.keyCode == 13) {
+          e.preventDefault();
+          self.toggleOverlay();
+        }
+        if (e.keyCode == 32) {
+          e.preventDefault();
+          self.toggleSlideshow();
+        }
+        if (e.keyCode == 37) {
+          self.stopSlideShow();
+          self.prevSlide();         
+        }
+        if (e.keyCode == 39) {
+          self.stopSlideShow();
+          self.nextSlide();         
+        }
+      });
     },
     tickle: function(){
       this.nTickleCount++;
@@ -384,6 +404,26 @@ define([
       $('#trail_info').css('top', -300);        
       $('#trail_info .trail_avatar').css('top', -300);       
       $('#trail_info .trail_title').css('top', -100);       
+    },
+    toggleSlideshow: function(){
+      $('#slideshow_toggle .button').removeClass('slideshow_pause_hover');        
+      $('#slideshow_toggle .button').removeClass('slideshow_play_hover');        
+      
+      switch (this.nSlideShowState) {
+        case SLIDESHOW_PLAYING:
+          this.stopSlideShow();
+          if (!Modernizr.touch) {
+            $('#slideshow_toggle .button').addClass('slideshow_play_hover');        
+          }
+          break;
+          
+        case SLIDESHOW_STOPPED:
+          this.startSlideShow();
+          if (!Modernizr.touch) {
+            $('#slideshow_toggle .button').addClass('slideshow_pause_hover');        
+          }
+          break;
+      }
     },
     onTickleTimer: function(){
 //      console.log("onTickleTimer:"+this.nOldTickleCount+' : '+this.nTickleCount);
@@ -527,26 +567,6 @@ define([
           break;
       }
     },
-    onTrailToggleSlideshowBtnClick: function(){
-      $('#slideshow_toggle .button').removeClass('slideshow_pause_hover');        
-      $('#slideshow_toggle .button').removeClass('slideshow_play_hover');        
-      
-      switch (this.nSlideShowState) {
-        case SLIDESHOW_PLAYING:
-          this.stopSlideShow();
-          if (!Modernizr.touch) {
-            $('#slideshow_toggle .button').addClass('slideshow_play_hover');        
-          }
-          break;
-          
-        case SLIDESHOW_STOPPED:
-          this.startSlideShow();
-          if (!Modernizr.touch) {
-            $('#slideshow_toggle .button').addClass('slideshow_pause_hover');        
-          }
-          break;
-      }
-    },
     onTrailSlideViewSlideView: function(){
       var self = this;
       
@@ -568,9 +588,11 @@ define([
       }
     },    
     onTrailSlideViewSlideClickPrev: function(){
+      this.stopSlideShow();
       this.prevSlide();         
     },
     onTrailSlideViewSlideClickNext: function(){
+      this.stopSlideShow();
       this.nextSlide();         
     },
     onShowNextSlide: function(){
