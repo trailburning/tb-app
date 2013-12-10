@@ -10,3 +10,9 @@ api/tests/_log/*
 api/doc/sami
 api/doc/cache
 *.swp
+/web/bundles/
+/app/bootstrap*
+/app/cache/*
+/app/logs/*
+/vendor/
+/app/config/parameters.yml
