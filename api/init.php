@@ -2,10 +2,7 @@
 ini_set('display_errors','1');
 error_reporting(E_ALL);
 
-if (array_key_exists('DOCUMENT_ROOT', $_SERVER))
-  $api_root = $_SERVER['DOCUMENT_ROOT'].'/api';
-else
-  $api_root = './api';
+$api_root = realpath(__DIR__);
 
 $include_path = get_include_path();
 $include_path .= PATH_SEPARATOR.$api_root.'/lib/';
@@ -20,4 +17,3 @@ header('Access-Control-Allow-Methods: GET, POST, DELETE, OPTIONS');
 // Strtotime should read datetime without timezone info as relative to UTC, and not current
 // server timezone
 date_default_timezone_set('UTC');
-?>
