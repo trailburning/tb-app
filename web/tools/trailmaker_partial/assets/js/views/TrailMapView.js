@@ -147,6 +147,7 @@ define([
       }
       
       // mla test markers
+/*      
       this.addMarker(L.latLng(63.9909, -19.0612), false, '1');
       this.addMarker(L.latLng(63.9330, -19.1684), false, '2');
       this.addMarker(L.latLng(63.8578, -19.2272 ), false, '3');      
@@ -154,7 +155,7 @@ define([
       this.addMarker(L.latLng(63.7663, -19.3741 ), false, '5');      
       this.addMarker(L.latLng(63.7018, -19.4971 ), false, '6');
       this.addMarker(L.latLng(63.6911, -19.5432 ), false, '7');                                    
-
+*/
       this.bRendered = true;
     },
     onTrailMapMediaMarkerClick: function(mapMediaMarkerView){
