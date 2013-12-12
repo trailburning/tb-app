@@ -1,5 +1,6 @@
 imports:
     - { resource: parameters.yml }
+    - { resource: parameters.php }	
     - { resource: security.yml }
 
 framework:
@@ -85,4 +86,4 @@ swiftmailer:
 services:
     rest_client:
         class:      %rest_client_class%
-        arguments:  [%rest_client_host%]
+        arguments:  [%api_host%]

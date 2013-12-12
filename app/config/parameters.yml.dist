@@ -13,4 +13,4 @@ parameters:
     locale: en
     secret: adch8U8jfzHJ86wefwewHtj668tg
     rest_client_class: Guzzle\Http\Client
-    rest_client_host: http://localhost:8888/trailburning_api
+    api_host: http://localhost:8888/trailburning_api
