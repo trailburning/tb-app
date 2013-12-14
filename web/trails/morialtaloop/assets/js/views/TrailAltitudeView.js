@@ -122,9 +122,16 @@ define([
       });     
       // is trail high enough to look like it's in the mountains?
       if (this.fHighAlt < this.nMinHighAlt) {
-        this.fHighAlt = this.fHighAlt * 2;  
-        this.fLowAlt = this.fLowAlt - 100;
+        if (this.fHighAlt) {
+          this.fHighAlt = this.fHighAlt * 2;  
+          this.fLowAlt = this.fLowAlt - 100;
+        }
+        else {
+          this.fHighAlt = 100;  
+          this.fLowAlt = 0;
+        }
       }      
+      
       this.fAltRange = this.fHighAlt - this.fLowAlt;
       
       this.nDrawHeight = Math.round(this.nDrawHeight * this.nCanvasDrawWidth / this.nDrawWidth);      
@@ -206,16 +213,17 @@ define([
       
       var nStartX = 0, nStartY = 0;  
       $.each(jsonPoints, function(key, point) {
+        nX = nXOffset + self.objTrailMarginRect.left + Math.round(key / self.fXFactor);
+        nYPercent = ((point.tags.altitude - Math.round(self.fLowAlt)) / self.fAltRange) * 100;
+        nY = nYOffset + self.objTrailMarginRect.top + Math.round((self.nDrawHeight-2) - ((nYPercent * (self.nDrawHeight-2)) / 100));
+
         rem = key % Math.round(self.fXFactor * 4);
         if (rem == 0) {
-          nX = nXOffset + self.objTrailMarginRect.left + Math.round(key / self.fXFactor);
-          nYPercent = ((point.tags.altitude - Math.round(self.fLowAlt)) / self.fAltRange) * 100;
-          nY = nYOffset + self.objTrailMarginRect.top + Math.round((self.nDrawHeight-2) - ((nYPercent * (self.nDrawHeight-2)) / 100));
           self.context.lineTo(nX, nY);            
-          if (!nStartX) {
-            nStartX = nX;
-            nStartY = nY;
-          }
+        }
+        if (!nStartX) {
+          nStartX = nX;
+          nStartY = nY;
         }
       });      
       var nEndX = nX;
