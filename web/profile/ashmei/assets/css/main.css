@@ -1,0 +1,254 @@
+/* APP */
+/******************************************/
+#appview {
+/*  
+border-style:solid;
+border-width:1px;
+*/  
+  min-width: 1200px;
+}
+
+/* BRAND HEADER */
+/******************************************/
+#brand_header {
+  z-index: 100;
+  position: relative;
+  margin-top: 63px;
+  width: 100%;
+  height: 486px;
+  overflow: overflow;
+}
+
+#brand_header .image_container {
+  position: relative;
+  opacity: 0;
+  width: 100%;
+  height: 486px;
+  overflow: hidden;
+}
+
+#brand_header .brand_logo {
+  position: absolute;
+  top: 34px;
+  left: 30px;  
+}
+
+#brand_header .tb-credit {
+  position: absolute;
+  bottom: 12px;
+  right: 30px;
+}
+
+/* PANELS */
+/******************************************/
+.panel_content {
+  position: relative;
+  margin: 0px auto 80px auto;
+  width: 1112px;
+}
+
+.panels {
+  clear: left;
+  width: 100%;
+  padding-top: 22px;
+}
+
+.panels .left {
+  float: left;
+  width: 544px;
+}
+
+.panels .right {
+  float: left;
+  width: 568px;
+}
+
+.panel .image_container {
+  position: relative;
+  opacity: 0;
+  width: 100%;
+  height: 220px;
+  overflow: hidden;
+}
+
+/* BRAND DETAIL PANEL */
+/******************************************/
+.brand_detail_panel {
+  width: 544px;  
+}
+
+.brand_detail_panel .content {
+  margin: 34px 72px 28px 24px;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.3em;  
+  color: #000000;
+}
+
+.brand_detail_panel .content h4 {
+  margin: 24px 0px 22px 0px;  
+}
+
+.brand_detail_panel .content .join {  
+  margin-top: 24px;
+}
+
+/* EVENT REGION PANEL */
+/******************************************/
+.event_region_panel {
+  margin-top: 24px;
+  width: 544px;
+}
+
+.event_region_panel .content {
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.3em;  
+  color: #000000;
+}
+
+.event_region_panel .content .title {
+  margin: 24px;
+}
+
+.event_region_panel .content .detail {
+  margin: 28px 60px 32px 26px;
+}
+
+.event_region_panel .content h4 {
+  margin: 0px 0px 26px 0px;
+  line-height: 1em;
+}  
+
+.event_region_panel .content .photo {
+  position: relative;  
+}
+
+.event_region_panel .content .photo .logo {
+  position: absolute;
+  bottom: 12px;
+  left: 20px;
+}
+
+/* EVENT CONTAINER */
+/******************************************/
+.event_container {
+  width: 568px;
+}
+
+.eventevent_container {  
+  line-height: 1em;
+  color: #FFFFFF;
+}
+
+.event_container a, 
+.event_container a:link, 
+.event_container a:visited,
+.event_container a:hover, 
+.event_container a:active {
+  color: #FFF;
+  text-decoration: none;    
+}
+
+.event_container h2 {
+  color: #FFFFFF;
+}
+
+.event_container h3 {
+  margin-left: 22px;
+  height: 78px;
+  line-height: 78px;
+}
+
+/* BIG EVENT */
+/******************************************/
+.big_event_panel {
+  margin: 0px 0px 24px 24px;
+  width: 544px;
+}
+
+.big_event_panel .photo {
+  position: relative;
+}
+
+.big_event_panel .photo .image_container {
+  width: 544px;
+  height: 294px;  
+}
+
+.big_event_panel .photo .logo {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+}
+
+.big_event_panel .details {
+  height: 78px;
+  font-size: 16px;
+  font-weight: 300;
+  color: #666666;  
+}
+
+.big_event_panel .details .detail {
+  float: left;
+  margin: 16px 0px 0px 14px;
+  line-height: 1.5em; 
+}
+
+.big_event_panel .more { 
+  float: right;
+  margin-right: 14px;
+  height: 56px;
+  line-height: 78px;
+}
+
+/* RESPONSIVE */
+/******************************************/
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+}
+ 
+/* Medium devices (desktops, 992px and up) */
+@media (max-width: 1199px) {  
+  #appview {
+    min-width: 992px;
+  }
+  .panel_content {
+    width: 968px;
+  }
+  .panels .left {
+    width: 472px;
+  }
+  .panels .right {
+    width: 496px;
+  }
+  .brand_detail_panel {
+    width: 472px;
+  }
+  .event_region_panel {
+    width: 472px;
+  }
+  .event_container {
+    width: 496px;
+  }
+  .big_event_panel {
+    width: 472px;
+  }
+  .big_event_panel .photo .image_container {
+    width: 472px;
+  }
+}
+
+/* Small devices (tablets, 768px) */
+@media (max-width: 768px) {  
+}
+
+.image {
+  display: none;  
+}
+
+img {
+  max-width: none;
+}
