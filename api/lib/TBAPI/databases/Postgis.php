@@ -1,16 +1,13 @@
 <?php 
 
-namespace TB;
+namespace TBAPI\databases;
 
-require_once 'iDatabase.php';
-require_once 'Route.php';
-require_once 'JpegMedia.php';
-require_once 'RoutePoint.php';
-require_once 'ApiException.php';
+use TBAPI\entities\Route;
+use TBAPI\entities\JpegMedia;
+use TBAPI\entities\RoutePoint;
+use TBAPI\exceptions\ApiException;
 
-use TB;
-
-class Postgis extends \PDO implements \TB\iDatabase 
+class Postgis extends \PDO
 {
 
 	public function __construct($dsn, $username="", $password="", $driver_options=array()) 
@@ -85,7 +82,7 @@ class Postgis extends \PDO implements \TB\iDatabase
 		$route_id = 0;
 		$user_id = 1;
 		$route->calculateAscentDescent();
-		$tags = \TB\Postgis::hstoreFromMap($route->getTags());
+		$tags = self::hstoreFromMap($route->getTags());
 
 		$this->beginTransaction();
 		$q = 'INSERT INTO routes (name, gpx_file_id, tags, user_id, region, slug) VALUES (?, ?, ?, ?, ?, ?)';
@@ -109,7 +106,7 @@ class Postgis extends \PDO implements \TB\iDatabase
 			$rptags = $routepoint->getTags();
 			$rpcoordswkt = 'ST_SetSRID(ST_MakePoint('.$rpcoords['long'].', '.$rpcoords['lat'].'), 4326)';
 
-			$tags = \TB\Postgis::hstoreFromMap($rptags);
+			$tags = self::hstoreFromMap($rptags);
 
 			$success = $pq->execute(array(
 			$route_id, 
@@ -391,7 +388,7 @@ class Postgis extends \PDO implements \TB\iDatabase
 			$coords['lat'] = 0;
 		}
 
-		$tags = \TB\Postgis::hstoreFromMap($picture->getTags());
+		$tags = self::hstoreFromMap($picture->getTags());
 
 		$q = "INSERT INTO medias (coords, tags) VALUES (ST_SetSRID(ST_MakePoint(?, ?), 4326), ?)";
 		$pq = $this->prepare($q);

@@ -74,7 +74,7 @@ class GPXTest extends \Codeception\TestCase\Test
 		$route = $routes[0];
 		$routePoints = $route->getRoutePoints();
 		$this->assertInternalType('array', $routePoints);
-		$this->assertEquals(2, count($routePoints));
+		$this->assertEquals(3, count($routePoints));
 		
 		$routePoint = $routePoints[0];
 		$this->assertEquals(2, count($routePoint->getTags()));
@@ -85,6 +85,11 @@ class GPXTest extends \Codeception\TestCase\Test
 		$this->assertEquals(2, count($routePoint->getTags()));
 		$this->assertEquals('59.79999923706055', $routePoint->getTags()['altitude']);
 		$this->assertEquals(1369469699, $routePoint->getTags()['datetime']);	
+
+		$routePoint = $routePoints[2];
+		$this->assertEquals(2, count($routePoint->getTags()));
+		$this->assertNull($routePoint->getTags()['altitude']);
+		$this->assertEquals(1369469703, $routePoint->getTags()['datetime']);	
 		
     }
 	
