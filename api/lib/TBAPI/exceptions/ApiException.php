@@ -1,6 +1,6 @@
 <?php
 
-namespace TB;
+namespace TBAPI\exceptions;
 
 class ApiException extends \Exception 
 {
@@ -8,7 +8,7 @@ class ApiException extends \Exception
 	private $errorCode;
 	private $debugmsg;
 	
-	public function __construct($message, $code = 0, Exception $previous = null) {
+	public function __construct($message, $code = 0, \Exception $previous = null) {
 		parent::__construct($message, $code, $previous);
 	}
 
