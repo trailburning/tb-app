@@ -4,8 +4,9 @@
  * Inspired from code Copyright (c) Patrick Hayes under BSD License
  */
 
-require_once 'Route.php';
-require_once 'RoutePoint.php';
+namespace TBAPI\importers;
+
+use TBAPI\entities\Route;
 
 class GPXImporter
 {
@@ -24,7 +25,7 @@ class GPXImporter
 		$text = preg_replace('/<!\[cdata\[(.*?)\]\]>/s','',$text);
 
 		// Load into DOMDocument
-		$xmlobj = new DOMDocument();
+		$xmlobj = new \DOMDocument();
 		@$xmlobj->loadXML($text);
 		if ($xmlobj === false) {
 			throw new Exception("Invalid GPX: ". $text);
@@ -33,9 +34,7 @@ class GPXImporter
 		$this->xmlobj = $xmlobj;
 		try {
 			$routes = $this->parseGPXFeatures();
-		} catch(InvalidText $e) {
-			throw new Exception("Cannot Read Geometry From GPX: ". $text);
-		} catch(Exception $e) {
+		} catch(\Exception $e) {
 			throw $e;
 		}
 
@@ -49,7 +48,7 @@ class GPXImporter
 		$routes = array_merge($routes, $this->parseRoutes());
 
 		if (empty($routes)) {
-			throw new Exception("Invalid / Empty GPX");
+			throw new \Exception("Invalid / Empty GPX");
 		}
 
 		return $routes; 
@@ -66,7 +65,6 @@ class GPXImporter
 		
 		return $children;
 	}
-
 
 	protected function parsePointTags($node) 
 	{
@@ -88,9 +86,13 @@ class GPXImporter
 			}
 		}
 		
+		// set altitude to null if it is empty, or doesn't exist at all
+		if (!isset($tags['altitude']) || (isset($tags['altitude']) && $tags['altitude'] === '')) {
+			$tags['altitude'] = null;
+		}
+		
 		return $tags;
 	}
-
 
 	protected function parseTracks() 
 	{
@@ -98,7 +100,7 @@ class GPXImporter
 
 		$trk_elements = $this->xmlobj->getElementsByTagName('trk');
 		foreach ($trk_elements as $trk) {
-			$track = new \TB\Route();
+			$track = new Route();
 			$names = $trk->getElementsByTagName('name');
 			foreach ($names as $name) {
 				$track->setName($name->nodeValue);

@@ -1,6 +1,6 @@
 <?php
 
-namespace TB;
+namespace TBAPI\entities;
 
 abstract class Media 
 {
