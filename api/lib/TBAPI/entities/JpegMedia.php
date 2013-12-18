@@ -1,8 +1,9 @@
 <?php
 
-namespace TB;
+namespace TBAPI\entities;
 
-require_once 'Media.php';
+use TBAPI\entities\Media;
+use TBAPI\exceptions\ApiException;
 
 class JpegMedia extends Media 
 {
@@ -16,7 +17,7 @@ class JpegMedia extends Media
 	public function verifyFileType() 
 	{
 		if (filesize($this->tmp_path) < 11 || exif_imagetype($this->tmp_path) != 2) {
-			throw new \TB\ApiException("Uploaded file with jpeg extension is not a valid jpeg file", 400);
+			throw new ApiException("Uploaded file with jpeg extension is not a valid jpeg file", 400);
 		} 
 	}
 
@@ -39,7 +40,7 @@ class JpegMedia extends Media
 		$this->setTag('datetime',intval(strtotime($t)));
 		
 		if ($this->getTag('datetime') == FALSE) {
-			throw new \TB\ApiException("Error parsing image Datetime", 400);
+			throw new ApiException("Error parsing image Datetime", 400);
 		}
 
 		if (isset($exiftags['COMPUTED']) && isset($exiftags['COMPUTED']['Width'])) {

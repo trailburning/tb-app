@@ -1,44 +1,68 @@
 <?php
+
 require_once 'init.php';
-require_once '../vendor/autoload.php';
 
-require_once 'ApiException.php';
-require_once 'ExceptionHandling.php';
-
-require_once 'databases/postgis.php';
+use TBAPI\databases\Postgis;
+use TBAPI\exceptions\ApiException;
+use TBAPI\importers\GPXImporter;
+use TBAPI\entities\JpegMedia;
+use Slim\Slim;
+use Slim\Log;
 
 function getDB()
 {
-	$db = new \TB\Postgis(
+	$db = new Postgis(
 		$_SERVER['DB_DRIVER'].':host='.$_SERVER['DB_HOST'].'; port='.$_SERVER['DB_PORT'].';dbname='.$_SERVER['DB_DATABASE'],
 		$_SERVER['DB_USER'],
 		$_SERVER['DB_PASSWORD'],
-		array(PDO::ATTR_PERSISTENT => true, PDO::ERRMODE_EXCEPTION => true)
+		array(\PDO::ATTR_PERSISTENT => true, \PDO::ERRMODE_EXCEPTION => true)
 	);
 
 	return $db;
 }
 
-\Slim\Slim::registerAutoloader();
-$slim = new \Slim\Slim();
+$slim = new Slim();
 
 // Debug needs to be set to false for our custom exception handlers to be called
 $slim->config(array('log.enable' => true, 'debug' => false)); 
-$slim->error(function (\Exception $e) { \TB\handleException($e);} ); 
-$slim->log->setLevel(\Slim\Log::DEBUG);
+$slim->error(function(\Exception $e) {
+	$slim = Slim::getInstance();
+	$res = $slim->response();
+	$res['Content-Type'] = 'application/json';
+	
+	try {
+		throw $e;
+	} catch (ApiException $e) {
+		switch (intval($e->getCode())) {
+			case 400:
+			case 404:
+				$slim->log->notice($e->__toString());
+				break;
+			case 500:
+				$slim->log->error($e->__toString());
+				break;
+		}
+		$res->status($e->getCode());
+		$res->body($e);
+	} catch (\Exception $e) {
+		$slim->getLog()->error($e->__toString());
+		$res->status(500);
+		$res->body('{"message": "An exception has occured", "value": '.json_encode($e->__toString()).'}');
+	}
+}); 
+$slim->log->setLevel(Log::DEBUG);
 
-$slim->get('/v1/import/gpx', function () use ($slim) {
+$slim->get('/v1/import/gpx', function() use ($slim) {
 	$slim->render('ImportGpx.php');
 });
 
-$slim->post('/v1/import/gpx', function () use ($slim) {
-	require_once 'importers/GPX.php';
+$slim->post('/v1/import/gpx', function() use ($slim) {
 
 	if (!array_key_exists("gpxfile", $_FILES)) {
-		throw (new \TB\ApiException("Gpxfile variable not set", 400));
+		throw (new ApiException("Gpxfile variable not set", 400));
 	}
 	if ($_FILES['gpxfile']['error'] != 0) {
-		throw (new \TB\ApiException("An error happened uploading the GPX file", 400));
+		throw (new ApiException("An error happened uploading the GPX file", 400));
 	}
 	$gpx_filename = preg_replace('/[^\w\-~_\.]+/u', '-', $_FILES["gpxfile"]["name"]);
 	$gpx_tmp_path = $_FILES["gpxfile"]["tmp_name"];
@@ -46,8 +70,8 @@ $slim->post('/v1/import/gpx', function () use ($slim) {
 	$importer = new GPXImporter();
 	try {
 		$routes = $importer->parse(file_get_contents($gpx_tmp_path));
-	} catch (Exception $e) {
-		throw (new \TB\ApiException("Problem parsing GPX file - not a valid GPX file?", 400));
+	} catch (\Exception $e) {
+		throw (new ApiException("Problem parsing GPX file - not a valid GPX file?", 400));
 	}
 
 	$db = getDB();
@@ -79,8 +103,7 @@ $slim->post('/v1/import/gpx', function () use ($slim) {
 	);
 });
 
-$slim->get('/v1/route/:id', function ($route_id) use ($slim) {
-	require_once 'importers/GPX.php';
+$slim->get('/v1/route/:id', function($route_id) use ($slim) {
 	
 	$db = getDB();
 
@@ -94,7 +117,7 @@ $slim->get('/v1/route/:id', function ($route_id) use ($slim) {
 	);
 });
 
-$slim->delete('/v1/route/:id', function ($route_id) use ($slim) {
+$slim->delete('/v1/route/:id', function($route_id) use ($slim) {
 	$db = getDB();
 
 	$route = $db->deleteRoute($route_id);
@@ -107,7 +130,7 @@ $slim->delete('/v1/route/:id', function ($route_id) use ($slim) {
 	);
 });
 
-$slim->get('/v1/route/:id/medias', function ($route_id) use ($slim) {
+$slim->get('/v1/route/:id/medias', function($route_id) use ($slim) {
 	$db = getDB();
 
 	$medias = $db->getRouteMedia($route_id);
@@ -121,15 +144,14 @@ $slim->get('/v1/route/:id/medias', function ($route_id) use ($slim) {
 	);
 });
 
-$slim->get('/v1/route/:id/medias/add', function ($route_id) use ($slim) {
+$slim->get('/v1/route/:id/medias/add', function($route_id) use ($slim) {
 	$slim->render('MediasNew.php', array('routeid' => $route_id));
 });
 
-$slim->post('/v1/route/:id/medias/add', function ($route_id) use ($slim) {
-	require_once 'JpegMedia.php';
+$slim->post('/v1/route/:id/medias/add', function($route_id) use ($slim) {
 
 	if (!array_key_exists('medias', $_FILES)) {
-		throw (new \TB\ApiException("Medias variable not set", 400));
+		throw (new ApiException("Medias variable not set", 400));
 	}
 
 	$db = getDB();
@@ -138,26 +160,26 @@ $slim->post('/v1/route/:id/medias/add', function ($route_id) use ($slim) {
 
 	$r_centroid = $r->getCentroid();
 	if (($tz = $db->getTimezone($r_centroid['long'], $r_centroid['lat'])) == NULL) {
-		throw new Exception("Error getting timezone");		
+		throw new \Exception("Error getting timezone");		
 	}
 
-	$dtz = new DateTimeZone($tz);
-	$offset = $dtz->getOffset(DateTime::createFromFormat('U', $r->route_points[0]->tags['datetime']));
+	$dtz = new \DateTimeZone($tz);
+	$offset = $dtz->getOffset(\DateTime::createFromFormat('U', $r->route_points[0]->tags['datetime']));
 
 	$medias = array();
-	for ($i=0; $i < count($_FILES['medias']['name']); $i++) {
+	for ($i = 0; $i < count($_FILES['medias']['name']); $i++) {
 		if ($_FILES['medias']['error'][$i] != 0) {
-			throw (new \TB\ApiException("An error happened uploading the medias", 400));
+			throw (new \ApiException("An error happened uploading the medias", 400));
 		}
 
 		$media_filename = preg_replace('/[^\w\-~_\.]+/u', '-', $_FILES["medias"]["name"][$i]);
 		switch (strtolower(pathinfo($media_filename, PATHINFO_EXTENSION))) {
 			case "jpg":
 			case "jpeg":
-				$media = new \TB\JpegMedia();
+				$media = new JpegMedia();
 				break;
 			default:
-				throw (new \TB\ApiException("Tried to upload file with non recognised extension", 400));		
+				throw (new ApiException("Tried to upload file with non recognised extension", 400));		
 				break;
 		}
 
@@ -201,7 +223,7 @@ $slim->post('/v1/route/:id/medias/add', function ($route_id) use ($slim) {
 
 
 /* Please note: this doesn't actually remove the file from Amazon S3 */
-$slim->delete('/v1/media/:id', function ($media_id) use ($slim) {
+$slim->delete('/v1/media/:id', function($media_id) use ($slim) {
 	$db = getDB();
 
 	$media = $db->deleteMedia($media_id);
@@ -214,8 +236,7 @@ $slim->delete('/v1/media/:id', function ($media_id) use ($slim) {
 	);
 });
 
-$slim->get('/v1/routes/user/:id', function ($route_id) use ($slim) {
-	require_once 'importers/GPX.php';
+$slim->get('/v1/routes/user/:id', function($route_id) use ($slim) {
 
 	$db = getDB();
 

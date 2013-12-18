@@ -1,6 +1,8 @@
 <?php
 
-namespace TB;
+namespace TBAPI\entities;
+
+use TBAPI\entities\RoutePoint;
 
 class Route 
 {
