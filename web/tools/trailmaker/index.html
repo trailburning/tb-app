@@ -97,27 +97,27 @@
 
 <script type="text/template" id="stepWelcomeViewTemplate">
   <div class="panel_content">  
-    <h1 class="tb tb-title">Share</h1>
+    <h1 class="tb tb-title">Make and Share</h1>
     <br />
-    <h1 class="tb tb-title">your trail</h1>      
+    <h1 class="tb tb-title">your Trail</h1>      
     <div class="desc">
-      <h4 class="tb">This page will help you to create a trail in 3 easy steps.  All you need is your trail in GPX format and some photos.</h4>
+      <h4 class="tb">Welcome to the beta version of our Trail Maker. You can start making your own trail pages – all you need is your trail in GPX format and photos to make it look great.</h4>
     </div>      
     <div class="steps">
       <div class="step">
         <div class="step_marker">1</div>
         <h2 class="tb">Details</h2>
-        <h4 class="tb">Introduce yourself and give us some details about your trail</h4>
+        <h4 class="tb">Introduce yourself and describe your trail</h4>
       </div>
       <div class="step">
         <div class="step_marker">2</div>
         <h2 class="tb">Map</h2>
-        <h4 class="tb">Upload your trail in standard GPX format</h4>
+        <h4 class="tb">Upload your trail in standard GPX (file) format</h4>
       </div>
       <div class="step">
         <div class="step_marker">3</div>          
-        <h2 class="tb">Pictures</h2>
-        <h4 class="tb">Send us the photos you wish to share with your trail</h4>
+        <h2 class="tb">Photos</h2>
+        <h4 class="tb">Just send us the photos you wish to add to your trail map</h4>
       </div>
     </div>
     <div class="next_step"><span class="btn btn-tb-action btn-tb-large submit">Let's Go!</span></div>                
@@ -130,7 +130,7 @@
       <div class="content">      
         <h1 class="tb">Details</h1>
         <div class="desc">
-          <h4 class="tb">Introduce yourself and give us some details about your trail</h4>
+          <h4 class="tb">Introduce yourself and describe<br/>your trail</h4>
         </div>        
         <form>
         <div class="form-group">
@@ -146,7 +146,7 @@
           <input type="text" name="form_event" id="form_event" class="validate[required]">
         </div>
         <div class="form-group">
-          <label for="form_trail"><h4 class="tb">Trail name</h4></label>
+          <label for="form_trail"><h4 class="tb">Name your trail</h4></label>
           <input type="text" name="form_trail" id="form_trail" class="validate[required]">
         </div>
 <!--        
@@ -183,14 +183,14 @@
   <div class="map_step_container">
     <div class="content">  
       <div class="step_marker">2</div>  
-      <div class="next_step"><span class="btn btn-tb-action btn-tb-large submit">I'm done with the map</span></div>
+      <div class="next_step"><span class="btn btn-tb-action btn-tb-large submit">Finished adding photo points</span></div>
     </div>
   </div>
 </script>
 
 <script type="text/template" id="trailUploadGPXViewTemplate">
   <div class="desc">
-    <h4 class="tb">First get your GPX file from your GPS tracking device and save it to your computer, then upload it here.</h4>
+    <h4 class="tb">Make sure you have your GPX file handy, save it to your computer from your GPX tracking device, and then upload.</h4>
   </div>        
   <form id="uploadForm">      
   <span class="btn btn-tb-action btn-tb-large fileinput-button">
@@ -204,7 +204,7 @@
 
 <script type="text/template" id="trailUploadGPXProgressViewTemplate">   
   <div class="desc">
-    <h4 class="tb">File uploading</h4>
+    <h4 class="tb">Now making GPX interesting...</h4>
   </div>        
   <div class="progress_container">
     <div class="progressbar"></div>  
@@ -217,17 +217,15 @@
     <div class="panel_content">
       <div class="panel">
         <div class="content">      
-          <h1 class="tb">Pictures</h1>
+          <h1 class="tb">Photos</h1>
           <div class="desc">
             <h4 class="tb">
-            Thanks for taking part in the Trailburning adventure. Don’t forget to send us the photos you just marked on the trail so that we can prepare your trail experience!
+			Thanks for taking part in the Trailburning adventure. Don’t forget to send us the photos you just marked on the trail, we will add the photos and build the trail experience for you to share!  
             <br /><br />
-            <a href="mailto:events@trailburning.com">events@trailburning.com</a>            
+            Send photos to: <a href="mailto:events@trailburning.com">events@trailburning.com</a>            
             </h4>
           </div> 
-<!--                 
-          <div class="next_step"><span class="btn btn-tb-action btn-tb-large submit">Send the trail</span></div>
--->          
+          <div class="next_step"><a href="../../" class="btn btn-tb-action btn-tb-large submit">Discover Trails</a></div>
         </div>
       </div>
       <div class="step_marker_container">
