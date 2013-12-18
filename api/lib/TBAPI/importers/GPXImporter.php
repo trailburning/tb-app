@@ -10,134 +10,134 @@ use TBAPI\entities\Route;
 
 class GPXImporter
 {
-	private $namespace = FALSE;
-	private $nss = ''; // Name-space string. eg 'georss:'
+    private $namespace = FALSE;
+    private $nss = ''; // Name-space string. eg 'georss:'
 
-	/**
-	 * Parses GPX data - returns array of routes
-	 * @param string $gpx A GPX string
-	 * @return Routes array
-	 */
-	public function parse($text) 
-	{
-		// Change to lower-case and strip all CDATA
-		$text = strtolower($text);
-		$text = preg_replace('/<!\[cdata\[(.*?)\]\]>/s','',$text);
+    /**
+     * Parses GPX data - returns array of routes
+     * @param string $gpx A GPX string
+     * @return Routes array
+     */
+    public function parse($text) 
+    {
+        // Change to lower-case and strip all CDATA
+        $text = strtolower($text);
+        $text = preg_replace('/<!\[cdata\[(.*?)\]\]>/s','',$text);
 
-		// Load into DOMDocument
-		$xmlobj = new \DOMDocument();
-		@$xmlobj->loadXML($text);
-		if ($xmlobj === false) {
-			throw new Exception("Invalid GPX: ". $text);
-		}
+        // Load into DOMDocument
+        $xmlobj = new \DOMDocument();
+        @$xmlobj->loadXML($text);
+        if ($xmlobj === false) {
+            throw new Exception("Invalid GPX: ". $text);
+        }
 
-		$this->xmlobj = $xmlobj;
-		try {
-			$routes = $this->parseGPXFeatures();
-		} catch(\Exception $e) {
-			throw $e;
-		}
+        $this->xmlobj = $xmlobj;
+        try {
+            $routes = $this->parseGPXFeatures();
+        } catch(\Exception $e) {
+            throw $e;
+        }
 
-		return $routes;
-	}
+        return $routes;
+    }
 
-	protected function parseGPXFeatures() 
-	{
-		$routes = array();
-		$routes = array_merge($routes, $this->parseTracks());
-		$routes = array_merge($routes, $this->parseRoutes());
+    protected function parseGPXFeatures() 
+    {
+        $routes = array();
+        $routes = array_merge($routes, $this->parseTracks());
+        $routes = array_merge($routes, $this->parseRoutes());
 
-		if (empty($routes)) {
-			throw new \Exception("Invalid / Empty GPX");
-		}
+        if (empty($routes)) {
+            throw new \Exception("Invalid / Empty GPX");
+        }
 
-		return $routes; 
-	}
+        return $routes; 
+    }
 
-	protected function childElements($xml, $nodename = '') 
-	{
-		$children = array();
-		foreach ($xml->childNodes as $child) {
-			if ($child->nodeName == $nodename) {
-				$children[] = $child;
-			}
-		}
-		
-		return $children;
-	}
+    protected function childElements($xml, $nodename = '') 
+    {
+        $children = array();
+        foreach ($xml->childNodes as $child) {
+            if ($child->nodeName == $nodename) {
+                $children[] = $child;
+            }
+        }
+        
+        return $children;
+    }
 
-	protected function parsePointTags($node) 
-	{
-		$tags = array();
-		if ($node->hasChildNodes()) {
-			foreach ($node->childNodes as $child) {
-				switch ($child->nodeName) {
-					case "ele":
-						$tags["altitude"] = $child->nodeValue;
-						break;
+    protected function parsePointTags($node) 
+    {
+        $tags = array();
+        if ($node->hasChildNodes()) {
+            foreach ($node->childNodes as $child) {
+                switch ($child->nodeName) {
+                    case "ele":
+                        $tags["altitude"] = $child->nodeValue;
+                        break;
 
-					case "time":
-						$tags['datetime'] = strtotime($child->nodeValue);
-						break;
+                    case "time":
+                        $tags['datetime'] = strtotime($child->nodeValue);
+                        break;
 
-					default:
-						break;
-				}
-			}
-		}
-		
-		// set altitude to null if it is empty, or doesn't exist at all
-		if (!isset($tags['altitude']) || (isset($tags['altitude']) && $tags['altitude'] === '')) {
-			$tags['altitude'] = null;
-		}
-		
-		return $tags;
-	}
+                    default:
+                        break;
+                }
+            }
+        }
+        
+        // set altitude to null if it is empty, or doesn't exist at all
+        if (!isset($tags['altitude']) || (isset($tags['altitude']) && $tags['altitude'] === '')) {
+            $tags['altitude'] = null;
+        }
+        
+        return $tags;
+    }
 
-	protected function parseTracks() 
-	{
-		$tracks = array();
+    protected function parseTracks() 
+    {
+        $tracks = array();
 
-		$trk_elements = $this->xmlobj->getElementsByTagName('trk');
-		foreach ($trk_elements as $trk) {
-			$track = new Route();
-			$names = $trk->getElementsByTagName('name');
-			foreach ($names as $name) {
-				$track->setName($name->nodeValue);
-			} 
-			
-			foreach ($this->childElements($trk, 'trkseg') as $trkseg) {
-				foreach ($this->childElements($trkseg, 'trkpt') as $trkpt) {
-					$track->addRoutePoint(
-						$trkpt->attributes->getNamedItem("lon")->nodeValue,
-						$trkpt->attributes->getNamedItem("lat")->nodeValue,
-						$this->parsePointTags($trkpt)
-					);
-				}
-			}
-			$tracks[] = $track;
-		}
-		
-		return $tracks;
-	}
+        $trk_elements = $this->xmlobj->getElementsByTagName('trk');
+        foreach ($trk_elements as $trk) {
+            $track = new Route();
+            $names = $trk->getElementsByTagName('name');
+            foreach ($names as $name) {
+                $track->setName($name->nodeValue);
+            } 
+            
+            foreach ($this->childElements($trk, 'trkseg') as $trkseg) {
+                foreach ($this->childElements($trkseg, 'trkpt') as $trkpt) {
+                    $track->addRoutePoint(
+                        $trkpt->attributes->getNamedItem("lon")->nodeValue,
+                        $trkpt->attributes->getNamedItem("lat")->nodeValue,
+                        $this->parsePointTags($trkpt)
+                    );
+                }
+            }
+            $tracks[] = $track;
+        }
+        
+        return $tracks;
+    }
 
-	protected function parseRoutes() 
-	{
-		$routes = array();
-		$rte_elements = $this->xmlobj->getElementsByTagName('rte');
-		foreach ($rte_elements as $rte) {
-			$route = new Route();
+    protected function parseRoutes() 
+    {
+        $routes = array();
+        $rte_elements = $this->xmlobj->getElementsByTagName('rte');
+        foreach ($rte_elements as $rte) {
+            $route = new Route();
 
-			foreach ($this->childElements($rte, 'rtept') as $rtept) {
-				$route->addRoutePoint(
-					$rtept->attributes->getNamedItem("lon")->nodeValue,
-					$rtept->attributes->getNamedItem("lat")->nodeValue,
-					$this->parsePointTags($rtept)
-				);
-			}
-			$routes[] = $route;
-		}
-		
-		return $routes;
-	}
+            foreach ($this->childElements($rte, 'rtept') as $rtept) {
+                $route->addRoutePoint(
+                    $rtept->attributes->getNamedItem("lon")->nodeValue,
+                    $rtept->attributes->getNamedItem("lat")->nodeValue,
+                    $this->parsePointTags($rtept)
+                );
+            }
+            $routes[] = $route;
+        }
+        
+        return $routes;
+    }
 }
