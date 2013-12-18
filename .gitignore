@@ -15,5 +15,5 @@ api/doc/cache
 /app/logs/*
 /vendor/
 /app/config/parameters.yml
-.tm_properties 
+*tm_properties 
 /tools/*.sql
