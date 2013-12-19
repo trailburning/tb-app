@@ -105,6 +105,13 @@ class Route
      * )
      */
     private $media;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="about", type="text", nullable=true)
+     */
+    private $about;
 
     /**
      * Constructor
@@ -363,5 +370,28 @@ class Route
     public function getSlug()
     {
         return $this->slug;
+    }
+
+    /**
+     * Set about
+     *
+     * @param string $about
+     * @return Route
+     */
+    public function setAbout($about)
+    {
+        $this->about = $about;
+
+        return $this;
+    }
+
+    /**
+     * Get about
+     *
+     * @return string 
+     */
+    public function getAbout()
+    {
+        return $this->about;
     }
 }

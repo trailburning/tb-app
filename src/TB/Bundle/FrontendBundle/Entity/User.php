@@ -243,4 +243,13 @@ class User
     {
         return $this->synopsis;
     }
+    
+    /**
+     * Get first and last name
+     */
+    public function getFullName()
+    {
+        return sprintf('%s %s', $this->getFirstName(), $this->getLastName());
+    }
+    
 }

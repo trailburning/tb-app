@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class TrailController extends Controller
 {
     /**
-     * @Route("/trail/{slug}")
+     * @Route("/trail/{slug}", name="trail")
      * @Template()
      */
     public function trailAction($slug)
