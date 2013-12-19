@@ -39,9 +39,9 @@ class Media
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\Route", mappedBy="media")
+     * @ORM\ManyToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\Route", mappedBy="medias")
      */
-    private $route;
+    private $routes;
 
     /**
      * Constructor
@@ -108,36 +108,4 @@ class Media
         return $this->id;
     }
 
-    /**
-     * Add route
-     *
-     * @param \TB\Bundle\FrontendBundle\Entity\Route $route
-     * @return Media
-     */
-    public function addRoute(\TB\Bundle\FrontendBundle\Entity\Route $route)
-    {
-        $this->route[] = $route;
-    
-        return $this;
-    }
-
-    /**
-     * Remove route
-     *
-     * @param \TB\Bundle\FrontendBundle\Entity\Route $route
-     */
-    public function removeRoute(\TB\Bundle\FrontendBundle\Entity\Route $route)
-    {
-        $this->route->removeElement($route);
-    }
-
-    /**
-     * Get route
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getRoute()
-    {
-        return $this->route;
-    }
 }

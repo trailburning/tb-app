@@ -39,9 +39,9 @@ class Media
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\Route", mappedBy="media")
+     * @ORM\ManyToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\Route", mappedBy="medias")
      */
-    private $route;
+    private $routes;
 
     /**
      * Constructor
@@ -108,36 +108,37 @@ class Media
         return $this->id;
     }
 
+
     /**
-     * Add route
+     * Add routes
      *
-     * @param \TB\Bundle\FrontendBundle\Entity\Route $route
+     * @param \TB\Bundle\FrontendBundle\Entity\Route $routes
      * @return Media
      */
-    public function addRoute(\TB\Bundle\FrontendBundle\Entity\Route $route)
+    public function addRoute(\TB\Bundle\FrontendBundle\Entity\Route $routes)
     {
-        $this->route[] = $route;
-    
+        $this->routes[] = $routes;
+
         return $this;
     }
 
     /**
-     * Remove route
+     * Remove routes
      *
-     * @param \TB\Bundle\FrontendBundle\Entity\Route $route
+     * @param \TB\Bundle\FrontendBundle\Entity\Route $routes
      */
-    public function removeRoute(\TB\Bundle\FrontendBundle\Entity\Route $route)
+    public function removeRoute(\TB\Bundle\FrontendBundle\Entity\Route $routes)
     {
-        $this->route->removeElement($route);
+        $this->routes->removeElement($routes);
     }
 
     /**
-     * Get route
+     * Get routes
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getRoute()
+    public function getRoutes()
     {
-        return $this->route;
+        return $this->routes;
     }
 }

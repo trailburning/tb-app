@@ -94,17 +94,10 @@ class Route
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\Media", inversedBy="route")
-     * @ORM\JoinTable(name="route_medias",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="route_id", referencedColumnName="id")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="media_id", referencedColumnName="id")
-     *   }
-     * )
+     * @ORM\ManyToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\Media", inversedBy="routes")
+     * @ORM\JoinTable(name="route_medias")
      */
-    private $media;
+    private $medias;
     
     /**
      * @var string
@@ -112,6 +105,20 @@ class Route
      * @ORM\Column(name="about", type="text", nullable=true)
      */
     private $about;
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\Event", mappedBy="routes")
+     */
+    private $events;
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\Editorial", mappedBy="routes")
+     */
+    private $editorial;
 
     /**
      * Constructor
@@ -293,38 +300,6 @@ class Route
         return $this->user;
     }
 
-    /**
-     * Add media
-     *
-     * @param \TB\Bundle\FrontendBundle\Entity\Media $media
-     * @return Route
-     */
-    public function addMedia(\TB\Bundle\FrontendBundle\Entity\Media $media)
-    {
-        $this->media[] = $media;
-    
-        return $this;
-    }
-
-    /**
-     * Remove media
-     *
-     * @param \TB\Bundle\FrontendBundle\Entity\Media $media
-     */
-    public function removeMedia(\TB\Bundle\FrontendBundle\Entity\Media $media)
-    {
-        $this->media->removeElement($media);
-    }
-
-    /**
-     * Get media
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getMedia()
-    {
-        return $this->media;
-    }
 
     /**
      * Set region
@@ -393,5 +368,106 @@ class Route
     public function getAbout()
     {
         return $this->about;
+    }
+
+    
+
+    /**
+     * Add events
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\Event $events
+     * @return Route
+     */
+    public function addEvent(\TB\Bundle\FrontendBundle\Entity\Event $events)
+    {
+        $this->events[] = $events;
+
+        return $this;
+    }
+
+    /**
+     * Remove events
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\Event $events
+     */
+    public function removeEvent(\TB\Bundle\FrontendBundle\Entity\Event $events)
+    {
+        $this->events->removeElement($events);
+    }
+
+    /**
+     * Get events
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEvents()
+    {
+        return $this->events;
+    }
+
+    /**
+     * Add medias
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\Media $medias
+     * @return Route
+     */
+    public function addMedia(\TB\Bundle\FrontendBundle\Entity\Media $medias)
+    {
+        $this->medias[] = $medias;
+
+        return $this;
+    }
+
+    /**
+     * Remove medias
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\Media $medias
+     */
+    public function removeMedia(\TB\Bundle\FrontendBundle\Entity\Media $medias)
+    {
+        $this->medias->removeElement($medias);
+    }
+
+    /**
+     * Get medias
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMedias()
+    {
+        return $this->medias;
+    }
+
+    /**
+     * Add editorial
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\Editorial $editorial
+     * @return Route
+     */
+    public function addEditorial(\TB\Bundle\FrontendBundle\Entity\Editorial $editorial)
+    {
+        $this->editorial[] = $editorial;
+
+        return $this;
+    }
+
+    /**
+     * Remove editorial
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\Editorial $editorial
+     */
+    public function removeEditorial(\TB\Bundle\FrontendBundle\Entity\Editorial $editorial)
+    {
+        $this->editorial->removeElement($editorial);
+    }
+
+    /**
+     * Get editorial
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEditorial()
+    {
+        return $this->editorial;
     }
 }
