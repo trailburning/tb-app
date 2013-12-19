@@ -2,7 +2,6 @@
 var RESTAPI_BASEURL = 'http://localhost:8888/trailburning_api/';
 
 if (typeof TB_APP != 'undefined') {
-    var app = 'controller/' + TB_APP;
 	require.config({
 		paths: {
 			inherit: 'libs/jquery.inherit-1.3.2',
@@ -12,7 +11,7 @@ if (typeof TB_APP != 'undefined') {
 		}
 	});
     // Load our app module and pass it to our definition function
-	require([app], function(App){
+	require(['controller/' + TB_APP], function(App){
 		App.initialize();
 	});
 }
