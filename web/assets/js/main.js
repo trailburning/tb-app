@@ -1,4 +1,8 @@
+//var RESTAPI_BASEURL = 'http://trailburning.herokuapp.com/api/';
+var RESTAPI_BASEURL = 'http://localhost:8888/trailburning_api/';
+
 if (typeof TB_APP != 'undefined') {
+    var app = 'controller/' + TB_APP;
 	require.config({
 		paths: {
 			inherit: 'libs/jquery.inherit-1.3.2',
@@ -7,10 +11,8 @@ if (typeof TB_APP != 'undefined') {
 			backbone: 'libs/backbone-min'
 		}
 	});
-	require([
-		// Load our app module and pass it to our definition function
-		TB_APP,
-	], function(App){
+    // Load our app module and pass it to our definition function
+	require([app], function(App){
 		App.initialize();
 	});
 }

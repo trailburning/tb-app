@@ -1,5 +1,11 @@
 {% extends '::base.html.twig' %}
 
+{% block stylesheets %}
+
+<link href="{{ asset('assets/css/profile.css') }}" rel="stylesheet" type="text/css">
+
+{% endblock %}
+
 {% block body %}
 
 <script>
@@ -11,10 +17,10 @@ var TB_PROFILE_LAT = {{ user.lat }};
 <div id="profile_header">
 	<div id='profile_map_view'></div>  
 	<div class="profile_title">
-	  <h1 class="tb tb-title">{{ user.firstName }}</h1>
-	  <br/>
-	  <h1 class="tb tb-title">{{ user.lastName }}</h1>      
-	  <div class='avatar'><img src="{{ asset('assets/img/avatars/' ~ user.avatar) }}" /></div>
+	    <h1 class="tb tb-title">{{ user.firstName }}</h1>
+	    <br/>
+        <h1 class="tb tb-title">{{ user.lastName }}</h1>      
+        <div class='avatar'><img src="{{ asset('assets/img/avatars/' ~ user.avatar) }}" /></div>
 	</div>
 </div>		
 
@@ -24,11 +30,11 @@ var TB_PROFILE_LAT = {{ user.lat }};
 			<div class="crumb_lead"><a href="{{ app.request.baseUrl }}/">Home</a></div>
 			<div class="crumb_links"><a href="">{{ user.firstName }} {{ user.lastName }}</a></div>
 		</div>
-      <div class="share">
-        <div class="link facebook"><a href="http://www.facebook.com/share.php?u=beta.trailburning.com/profile/{{ user.name }}" target="_blank" class="button btnFacebook">Facebook</a></div>
-        <div class="link twitter"><a href="http://twitter.com/share?text=Are you trailburning?" target="_blank" class="button btnTwitter">Twitter</a></div>
-        <div class="link googleplus"><a href="https://plus.google.com/share?url=beta.trailburning.com/profile/{{ user.avatar }}" target="_blank" class="button btnGooglePlus">Google+</a></div>          
-      </div>
+        <div class="share">
+            <div class="link facebook"><a href="http://www.facebook.com/share.php?u=beta.trailburning.com/profile/{{ user.name }}" target="_blank" class="button btnFacebook">Facebook</a></div>
+            <div class="link twitter"><a href="http://twitter.com/share?text=Are you trailburning?" target="_blank" class="button btnTwitter">Twitter</a></div>
+            <div class="link googleplus"><a href="https://plus.google.com/share?url=beta.trailburning.com/profile/{{ user.avatar }}" target="_blank" class="button btnGooglePlus">Google+</a></div>          
+        </div>
     </div>
                         
     <div class="panels clearfix">           
@@ -71,7 +77,7 @@ var TB_PROFILE_LAT = {{ user.lat }};
 				<div class="title">My Top Trails</div>
 				{% for route in routes %}
 				    <div class="top_trail">
-						<a href="{{ app.request.baseUrl }}/trails/{{ route.slug }}">
+						<a href="{{ app.request.baseUrl }}/trail/{{ route.slug }}">
 							<div class="tb-photo-btn">
 								<div class="image_container"><img src="http://app.resrc.it/O=80/http://s3-eu-west-1.amazonaws.com/{{ route.media.versions[0].path }}" class="resrc scale" border="0"/></div>
 								<div class="trail_title">
