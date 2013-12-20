@@ -18,6 +18,11 @@ define([
       var self = this;              
       var attribs = this.model.toJSON();
       $(this.el).html(this.template(attribs));
+
+      $('#form_name').val('TB Crew');
+	  $('#form_email').val('hello@trailburning.com');
+      $('#form_event').val('Grunewald');
+      $('#form_trail').val('Berlin');
         
       // validate form  
       $('form', $(this.el)).validationEngine();

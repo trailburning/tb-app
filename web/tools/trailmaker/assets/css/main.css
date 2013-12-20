@@ -13,7 +13,7 @@ border-width:1px;
 #contentview {
   position: relative;
   top: 0px;  
-  height: 800px;
+  height: 770px;
 }
 
 /* TRAIL MAP */
@@ -341,9 +341,23 @@ border-width:1px;
   height: 100%;
 }
 
-.trail_media_popup {  
+.leaflet-popup-content {
+  margin: 8px;
+  padding: 0px;	
+  width: 260px;
+  height: 220px;
+}
+
+.trail_media_popup {
+/*	  
   padding-top: 8px; 
-  width: 200px; 
+  width: 200px;
+*/
+  margin: 0px;
+  padding: 0px;	
+  width: 260px;
+  height: 220px;
+   
   text-align: center;  
 }
 

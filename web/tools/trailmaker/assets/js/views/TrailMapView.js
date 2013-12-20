@@ -148,18 +148,10 @@ define([
       
       // mla test markers
 /*      
-      this.addMarker(L.latLng(46.622476896924, 8.0464107859594), false, '1');
-      this.addMarker(L.latLng(46.658620747696, 8.0984256320652), false, '2');
-      this.addMarker(L.latLng(46.663585093091, 8.0955462694098), false, '3');
-      this.addMarker(L.latLng(46.668922259321, 8.0240646224825), false, '4');
-      this.addMarker(L.latLng(46.674453837122, 7.9973328393055), false, '5');
-      this.addMarker(L.latLng(46.673117319214, 7.9947052562556), false, '6');
-      this.addMarker(L.latLng(46.670469233088, 7.9842234778627), false, '7');
-      this.addMarker(L.latLng(46.66925091139, 7.9561153326779), false, '8');
-      this.addMarker(L.latLng(46.661542917811, 7.9188035988499), false, '9');
-      this.addMarker(L.latLng(46.655495656473, 7.9128708609304), false, '10');
-      this.addMarker(L.latLng(46.617159377251, 7.9373395232013), false, '11');
-      this.addMarker(L.latLng(46.581087491473, 7.9572291714001), false, '12');
+      this.addMarker(L.latLng(52.502096602, 13.246636391), false, '1');
+      this.addMarker(L.latLng(52.50203619, 13.246612251), false, '2');
+      this.addMarker(L.latLng(52.497475684, 13.238887489), false, '3');
+      this.addMarker(L.latLng(52.497668368, 13.239378333), false, '4');      
 */
       this.bRendered = true;
     },

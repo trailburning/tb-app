@@ -38,7 +38,7 @@ define([
       });
 
       // mla test        
-//      this.model.set('id', 122);
+//      this.model.set('id', 138);
 //      $('#step2_view .panel_container').hide();      
 //      $('.map_step_container', $(this.el)).show();  
       // fire event
