@@ -54,7 +54,7 @@ define([
 	  var nTopY = 63;
 	  var nTransitionOffY = 35;
 	  var nTransitionOnY = 100;
-	  var nScrollY = $(window).scrollTop();	  
+	  var nScrollY = ($(window).scrollTop() < 0) ? 0 : $(window).scrollTop();	  
 	  var nFactorY = 2;
 	  var bScrollUp = false;
 
@@ -62,7 +62,7 @@ define([
 	  if (nScrollY > nPrevScrollY) {
 	  	bScrollUp = true;	  	
 	  }
-	  // move bug bar
+	  // move big bar
 	  $('#big_sponsor_bar').css('top', nTopY - (nScrollY * nFactorY));
 
   	  switch (nSponsorState) {
