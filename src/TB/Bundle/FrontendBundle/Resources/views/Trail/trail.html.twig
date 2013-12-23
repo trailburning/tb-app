@@ -50,13 +50,9 @@ var TB_TRAIL_ID = {{ route.id }};
                 <div id="bigbar">
                     <div class="crumbs">
                         <div class="crumb_lead"><a href="{{ app.request.baseUrl }}/">Home</a></div>
-                        <div class="crumb_links"><a href="{{ path('trail', {'slug': route.slug}) }}">{{ route.name }}</a></div>
+                        <div class="crumb_links"><a href="{{ path('trail', {'trailSlug': route.slug}) }}">{{ route.name }}</a></div>
                     </div>
-                    <div class="share">
-                        <div class="link facebook"><a href="http://www.facebook.com/share.php?u=beta.trailburning.com/trail/yurrebilla" target="_blank" class="button btnFacebook">Facebook</a></div>
-                        <div class="link twitter"><a href="http://twitter.com/share?text=Are you trailburning?" target="_blank" class="button btnTwitter">Twitter</a></div>
-                        <div class="link googleplus"><a href="https://plus.google.com/share?url=beta.trailburning.com/trail/yurrebilla" target="_blank" class="button btnGooglePlus">Google+</a></div>          
-                    </div>
+                    {% include 'TBFrontendBundle:Default:share.html.twig' %}                     
                 </div>
 
                 <div class="panels clearfix">     
