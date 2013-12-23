@@ -9,21 +9,69 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class TrailController extends Controller
 {
     /**
-     * @Route("/trail/{slug}", name="trail")
+     * @Route("/trail/{trailSlug}", name="trail")
+     * @Route("/editorial/{editorialSlug}/trail/{trailSlug}", name="editorial_trail")
+     * @Route("/event/{eventSlug}/trail/{trailSlug}", name="event_trail")
      * @Template()
      */
-    public function trailAction($slug)
+    public function trailAction($trailSlug, $editorialSlug = null, $eventSlug = null)
     {   
-        $route = $this->getDoctrine()
+        $trail = $this->getDoctrine()
             ->getRepository('TBFrontendBundle:Route')
-            ->findOneBySlug($slug);
+            ->findOneBySlug($trailSlug);
 
-        if (!$route) {
+        if (!$trail) {
             throw $this->createNotFoundException(
-                sprintf('User %s not found', $slug)
+                sprintf('Trail %s not found', $trailSlug)
             );
         }
         
-        return array('route' => $route, 'user' => $route->getUser());
+        $editorial = null;
+        if ($editorialSlug !== null) {
+            
+            $query = $this->getDoctrine()->getManager()
+                ->createQuery('
+                    SELECT e FROM TBFrontendBundle:Editorial e
+                    JOIN e.routes r
+                    WHERE e.slug = :editorialSlug
+                    AND r.slug = :trailSlug')
+                ->setParameter('editorialSlug', $editorialSlug)
+                ->setParameter('trailSlug', $trailSlug);
+            try {
+                $editorial = $query->getSingleResult();
+            } catch (\Doctrine\ORM\NoResultException $e) {
+                throw $this->createNotFoundException(
+                    sprintf('Editorial %s not found or no relation to Trail %s', $editorialSlug, $trailSlug)
+                );
+            }
+        }
+        
+        $event = null;
+        if ($eventSlug !== null) {
+            
+            $query = $this->getDoctrine()->getManager()
+                ->createQuery('
+                    SELECT e FROM TBFrontendBundle:Event e
+                    JOIN e.routes r
+                    WHERE e.slug = :eventSlug
+                    AND r.slug = :trailSlug')
+                ->setParameter('eventSlug', $eventSlug)
+                ->setParameter('trailSlug', $trailSlug);
+            try {
+                $event = $query->getSingleResult();
+            } catch (\Doctrine\ORM\NoResultException $e) {
+                throw $this->createNotFoundException(
+                    sprintf('Event %s not found or no relation to Trail %s', $eventSlug, $trailSlug)
+                );
+            
+            }
+        }
+        
+        return array(
+            'trail' => $trail, 
+            'user' => $trail->getUser(), 
+            'editorial' => $editorial, 
+            'event' => $event
+        );
     }
 }

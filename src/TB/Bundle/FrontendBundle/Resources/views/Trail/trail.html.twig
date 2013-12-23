@@ -1,16 +1,19 @@
 {% extends '::base.html.twig' %}
 
+{% block meta %}
+{% if editorial != null or event != null %}
+<link rel="canonical" href="{{ url('trail', {'trailSlug': trail.slug}) }}"/>
+{% endif %}
+{% endblock %}
+
 {% block stylesheets %}
-
 <link href="{{ asset('assets/css/trail.css') }}" rel="stylesheet" type="text/css">
-
 {% endblock %}
 
 {% block body %}
-
 <script>
 var TB_APP = 'TrailApp';
-var TB_TRAIL_ID = {{ route.id }};
+var TB_TRAIL_ID = {{ trail.id }};
 </script>
 
 <div id="content_view">
@@ -24,9 +27,9 @@ var TB_TRAIL_ID = {{ route.id }};
                 <div class="trail_avatar"><a href="{{ path('profile', {'name': user.name}) }}"><img src="{{ asset('assets/img/avatars/' ~ user.avatar) }}" border="0"></a></div>    
             {% endif %}   
             <div class="trail_title{% if user.avatar == '' %} no_avatar{% endif %}">
-                <h2 class="tb tb-title">{{ route.name }}</h2>
+                <h2 class="tb tb-title">{{ trail.name }}</h2>
                 <br/>
-                <h2 class="tb tb-title">{{ route.region }}</h2>
+                <h2 class="tb tb-title">{{ trail.region }}</h2>
                 <br/>
                 <div class="author">by <strong>{{ user.fullName }}</strong></div>
             </div>
@@ -50,7 +53,7 @@ var TB_TRAIL_ID = {{ route.id }};
                 <div id="bigbar">
                     <div class="crumbs">
                         <div class="crumb_lead"><a href="{{ app.request.baseUrl }}/">Home</a></div>
-                        <div class="crumb_links"><a href="{{ path('trail', {'trailSlug': route.slug}) }}">{{ route.name }}</a></div>
+                        <div class="crumb_links"><a href="{{ path('trail', {'trailSlug': trail.slug}) }}">{{ trail.name }}</a></div>
                     </div>
                     {% include 'TBFrontendBundle:Default:share.html.twig' %}                     
                 </div>
@@ -61,7 +64,7 @@ var TB_TRAIL_ID = {{ route.id }};
                             <div class="panel trail_detail_panel">
                                 <div class="content">
                                     <h3 class="tb">About the trail</h3>
-                                    <h4 class="tb">{{ route.about }}</h4>
+                                    <h4 class="tb">{{ trail.about }}</h4>
                                 </div>
                             </div>
                         </div>  
@@ -89,10 +92,8 @@ var TB_TRAIL_ID = {{ route.id }};
         </div>
         <div class="line_break"></div>    
     </div>  
-            
-  </div>  
+</div>  
           
-
 
 <script type="text/template" id="trailStatsViewTemplate">
   <div class="content">
@@ -159,11 +160,4 @@ var TB_TRAIL_ID = {{ route.id }};
     </div>
   </div>
 </script>
-
-
-
-
-
-  
-
 {% endblock %}

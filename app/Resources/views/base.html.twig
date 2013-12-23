@@ -7,6 +7,7 @@
         <meta property="og:title" content="{% block og_title %}Trailburning{% endblock %}"/>
         <meta property="og:url" content="{% block og_url %}http://beta.trailburning.com{% endblock %}"/>
         <meta property="og:image" content="{% block og_image %}http://beta.trailburning.com{% endblock %}"/>
+        {% block meta %}{% endblock %}
         <title>{% block title %}Trailburning{% endblock %}</title>
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
         <link href="http://fonts.googleapis.com/css?family=Signika:400,300,700" rel="stylesheet">

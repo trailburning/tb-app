@@ -1,13 +1,10 @@
 {% extends '::base.html.twig' %}
 
 {% block stylesheets %}
-
 <link href="{{ asset('assets/css/profile.css') }}" rel="stylesheet" type="text/css">
-
 {% endblock %}
 
 {% block body %}
-
 <script>
 var TB_APP = 'ProfileApp';
 var TB_PROFILE_LONG = {{ user.long }};
@@ -90,7 +87,6 @@ var TB_PROFILE_LAT = {{ user.lat }};
 		</div>
 	</div>
 </div>
-
 {% endblock %}
 
 {% block javascripts %}
