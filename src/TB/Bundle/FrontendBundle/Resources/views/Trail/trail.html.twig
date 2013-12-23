@@ -1,10 +1,13 @@
 {% extends '::base.html.twig' %}
 
 {% block meta %}
+{# add canonical link for search engines when displaying trail in relation with editorials or events #}
 {% if editorial != null or event != null %}
 <link rel="canonical" href="{{ url('trail', {'trailSlug': trail.slug}) }}"/>
 {% endif %}
 {% endblock %}
+
+{% block title %}{{ trail.name }}{% endblock %}
 
 {% block stylesheets %}
 <link href="{{ asset('assets/css/trail.css') }}" rel="stylesheet" type="text/css">

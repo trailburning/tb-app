@@ -1,5 +1,7 @@
 {% extends '::base.html.twig' %}
 
+{% block title %}{{ user.name }}{% endblock %}
+
 {% block stylesheets %}
 <link href="{{ asset('assets/css/profile.css') }}" rel="stylesheet" type="text/css">
 {% endblock %}
