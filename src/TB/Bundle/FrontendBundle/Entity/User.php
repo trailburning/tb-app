@@ -9,9 +9,30 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="`user`")
  * @ORM\Entity
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="discr", type="string")
+ * @ORM\DiscriminatorMap({"user_profile" = "UserProfile", "brand_profile" = "BrandProfile"})
  */
 class User
 {
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="SEQUENCE")
+     * @ORM\SequenceGenerator(sequenceName="user_id_seq", allocationSize=1, initialValue=1)
+     */
+    private $id;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=50, nullable=true)
+     */
+    private $name;
+    
     /**
      * @var string
      *
@@ -29,71 +50,41 @@ class User
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=50, nullable=true)
-     */
-    private $name;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="first_name", type="string", length=50, nullable=true)
-     */
-    private $firstName;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="last_name", type="string", length=50, nullable=true)
-     */
-    private $lastName;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="avatar", type="string", length=100, nullable=true)
      */
     private $avatar;
-
-    /**
-     * @var Point
-     *
-     * @ORM\Column(name="location", type="point", columnDefinition="GEOMETRY(POINT,4326)", nullable=true)
-     */
-    private $location;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="SEQUENCE")
-     * @ORM\SequenceGenerator(sequenceName="user_id_seq", allocationSize=1, initialValue=1)
-     */
-    private $id;
-
-
-
-    /**
-     * Set about
-     *
-     * @param string $about
-     * @return User
-     */
-    public function setAbout($about)
-    {
-        $this->about = $about;
     
-        return $this;
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="Route", mappedBy="user")
+     **/
+    private $routes;
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="Event", mappedBy="user")
+     **/
+    private $events;
+    
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->routes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->events = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
-     * Get about
+     * Get id
      *
-     * @return string 
+     * @return integer 
      */
-    public function getAbout()
+    public function getId()
     {
-        return $this->about;
+        return $this->id;
     }
 
     /**
@@ -105,7 +96,7 @@ class User
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
@@ -120,105 +111,26 @@ class User
     }
 
     /**
-     * Set firstName
+     * Set about
      *
-     * @param string $firstName
+     * @param string $about
      * @return User
      */
-    public function setFirstName($firstName)
+    public function setAbout($about)
     {
-        $this->firstName = $firstName;
-    
+        $this->about = $about;
+
         return $this;
     }
 
     /**
-     * Get firstName
+     * Get about
      *
      * @return string 
      */
-    public function getFirstName()
+    public function getAbout()
     {
-        return $this->firstName;
-    }
-
-    /**
-     * Set lastName
-     *
-     * @param string $lastName
-     * @return User
-     */
-    public function setLastName($lastName)
-    {
-        $this->lastName = $lastName;
-    
-        return $this;
-    }
-
-    /**
-     * Get lastName
-     *
-     * @return string 
-     */
-    public function getLastName()
-    {
-        return $this->lastName;
-    }
-
-    /**
-     * Set avatar
-     *
-     * @param string $avatar
-     * @return User
-     */
-    public function setAvatar($avatar)
-    {
-        $this->avatar = $avatar;
-    
-        return $this;
-    }
-
-    /**
-     * Get avatar
-     *
-     * @return string 
-     */
-    public function getAvatar()
-    {
-        return $this->avatar;
-    }
-
-    /**
-     * Set location
-     *
-     * @param string $location
-     * @return User
-     */
-    public function setLocation($location)
-    {
-        $this->location = $location;
-    
-        return $this;
-    }
-
-    /**
-     * Get location
-     *
-     * @return string 
-     */
-    public function getLocation()
-    {
-        return $this->location;
-    }
-
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
+        return $this->about;
     }
 
     /**
@@ -243,13 +155,93 @@ class User
     {
         return $this->synopsis;
     }
-    
+
     /**
-     * Get first and last name
+     * Set avatar
+     *
+     * @param string $avatar
+     * @return User
      */
-    public function getFullName()
+    public function setAvatar($avatar)
     {
-        return sprintf('%s %s', $this->getFirstName(), $this->getLastName());
+        $this->avatar = $avatar;
+
+        return $this;
     }
-    
+
+    /**
+     * Get avatar
+     *
+     * @return string 
+     */
+    public function getAvatar()
+    {
+        return $this->avatar;
+    }
+
+    /**
+     * Add routes
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\Route $routes
+     * @return User
+     */
+    public function addRoute(\TB\Bundle\FrontendBundle\Entity\Route $routes)
+    {
+        $this->routes[] = $routes;
+
+        return $this;
+    }
+
+    /**
+     * Remove routes
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\Route $routes
+     */
+    public function removeRoute(\TB\Bundle\FrontendBundle\Entity\Route $routes)
+    {
+        $this->routes->removeElement($routes);
+    }
+
+    /**
+     * Get routes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRoutes()
+    {
+        return $this->routes;
+    }
+
+    /**
+     * Add events
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\Event $events
+     * @return User
+     */
+    public function addEvent(\TB\Bundle\FrontendBundle\Entity\Event $events)
+    {
+        $this->events[] = $events;
+
+        return $this;
+    }
+
+    /**
+     * Remove events
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\Event $events
+     */
+    public function removeEvent(\TB\Bundle\FrontendBundle\Entity\Event $events)
+    {
+        $this->events->removeElement($events);
+    }
+
+    /**
+     * Get events
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEvents()
+    {
+        return $this->events;
+    }
 }

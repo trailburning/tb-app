@@ -437,4 +437,37 @@ class Route
     {
         return $this->medias;
     }
+
+    /**
+     * Add editorial
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\Editorial $editorial
+     * @return Route
+     */
+    public function addEditorial(\TB\Bundle\FrontendBundle\Entity\Editorial $editorial)
+    {
+        $this->editorial[] = $editorial;
+
+        return $this;
+    }
+
+    /**
+     * Remove editorial
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\Editorial $editorial
+     */
+    public function removeEditorial(\TB\Bundle\FrontendBundle\Entity\Editorial $editorial)
+    {
+        $this->editorial->removeElement($editorial);
+    }
+
+    /**
+     * Get editorial
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEditorial()
+    {
+        return $this->editorial;
+    }
 }
