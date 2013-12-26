@@ -56,7 +56,7 @@ var TB_EVENT_MAP_ZOOM = {{ event.mapZoom }};
                     <h3 class="tb title">{{ event.subtitle }}</h3>
                     <h4 class="tb">{{ event.synopsis }}</h4>
                     <p>
-                    {{ event.about }}
+                    {{ event.about|nl2br }}
                     </p>
                     <div class="join"><a href="{{ event.link }}" onClick="trackOutboundLink(this, 'Outbound Links', '{{ event.link | url_truncate }}'); return false;" class="btn btn-tb-action btn-tb-large">Participate</a></div>
                 </div>
@@ -72,7 +72,7 @@ var TB_EVENT_MAP_ZOOM = {{ event.mapZoom }};
                     <div class="detail">
                         <h4 class="tb">{{ event.region }}</h4>            
                         <p>
-                            {{ event.regionAbout }}
+                            {{ event.regionAbout|nl2br }}
                         </p>
                     </div>
                 </div>
@@ -90,7 +90,7 @@ var TB_EVENT_MAP_ZOOM = {{ event.mapZoom }};
                 <div class="event_trails_container">      
                 {% for route in event.routes %}
                     <div class="panel event_trail">
-                        <h3 class="tb">{{ route.name }}</h3>
+                        <h3 class="tb">{{ route.shortName ? route.shortName : route.name  }}</h3>
                         <a href="{{ path('event_trail', {trailSlug: route.slug, eventSlug: event.slug}) }}">
                             <div class="detail">
                                 {% if route.tags.ascent %}

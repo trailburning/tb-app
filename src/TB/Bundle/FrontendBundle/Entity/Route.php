@@ -18,6 +18,13 @@ class Route
      * @ORM\Column(name="name", type="string", length=50, nullable=true)
      */
     private $name;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="short_name", type="string", length=50, nullable=true)
+     */
+    private $short_name;
 	
     /**
      * @var string
@@ -470,4 +477,29 @@ class Route
     {
         return $this->editorial;
     }
+
+    /**
+     * Set short_name
+     *
+     * @param string $shortName
+     * @return Route
+     */
+    public function setShortName($shortName)
+    {
+        $this->short_name = $shortName;
+
+        return $this;
+    }
+
+    /**
+     * Get short_name
+     *
+     * @return string 
+     */
+    public function getShortName()
+    {
+        return $this->short_name;
+    }
+    
+    
 }
