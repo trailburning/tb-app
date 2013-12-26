@@ -10,8 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  */
 class UserProfile extends User
-{
-    
+{    
     
     /**
      * @var string
@@ -32,7 +31,52 @@ class UserProfile extends User
      *
      * @ORM\Column(name="location", type="point", columnDefinition="GEOMETRY(POINT,4326)", nullable=true)
      */
-    private $location;
+    private $location; 
     
-    
+
+    /**
+     * Set last_name
+     *
+     * @param string $lastName
+     * @return UserProfile
+     */
+    public function setLastName($lastName)
+    {
+        $this->last_name = $lastName;
+
+        return $this;
+    }
+
+    /**
+     * Get last_name
+     *
+     * @return string 
+     */
+    public function getLastName()
+    {
+        return $this->last_name;
+    }
+
+    /**
+     * Set location
+     *
+     * @param point $location
+     * @return UserProfile
+     */
+    public function setLocation($location)
+    {
+        $this->location = $location;
+
+        return $this;
+    }
+
+    /**
+     * Get location
+     *
+     * @return point 
+     */
+    public function getLocation()
+    {
+        return $this->location;
+    }
 }

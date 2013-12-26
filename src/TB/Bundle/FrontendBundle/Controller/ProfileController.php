@@ -17,8 +17,8 @@ class ProfileController extends Controller
         
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery(
-            'SELECT u.id, u.name, u.firstName, u.lastName, u.avatar, u.synopsis, u.about, ST_AsText(u.location) AS location
-             FROM TBFrontendBundle:User u WHERE u.name=:name'
+            'SELECT u.id, u.name, u.first_name, u.last_name, u.avatar, u.synopsis, u.about, ST_AsText(u.location) AS location
+             FROM TBFrontendBundle:UserProfile u WHERE u.name=:name'
         )->setParameter('name', $name);
 
         $users = $query->getResult();

@@ -1,0 +1,99 @@
+/* APP */
+/******************************************/
+#appview {
+/*  
+border-style:solid;
+border-width:1px;
+*/  
+  min-width: 1200px;
+}
+
+/* BIG SPONSOR BAR */
+/******************************************/
+#big_sponsor_bar {
+  position: fixed;
+  top: 63px;
+  width: 100%;
+  height: 119px;
+  background: url("../img/sponsor/back_big.png") repeat-x top left;  
+}
+
+#big_sponsor_bar .sponsor_content {
+  margin: 34px auto 0px auto;
+  width: 1112px;	
+}
+
+/* SMALL SPONSOR BAR */
+/******************************************/
+#small_sponsor_bar {
+  z-index: 199;
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  height: 45px;
+  background: url("../img/sponsor/back_small.png") repeat-x top left;  
+  
+  -webkit-transition: top 1s;
+  -moz-transition: top 1s;
+  -o-transition: top 1s;
+  transition: top 1s;    
+  -webkit-transform:translate3d(0,0,0);                
+}
+
+#small_sponsor_bar .sponsor_content {
+  margin: 8px auto 0px auto;
+  width: 1112px;	
+}
+
+/* PANELS */
+/******************************************/
+.panel_content {
+  position: relative;
+  margin: 0px auto 80px auto;
+  width: 1112px;
+}
+
+.panels {
+  clear: left;
+  width: 100%;
+  padding-top: 163px;
+}
+
+/* EDITORIAL PANEL */
+/******************************************/
+.editorial_panel {
+  width: 1112px;
+}
+
+.editorial_panel .temp_content {
+	margin: 10px 0px 0px 8px;
+}
+
+/* RESPONSIVE */
+/******************************************/
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+}
+ 
+/* Medium devices (desktops, 992px and up) */
+@media (max-width: 1199px) {  
+  #appview {
+    min-width: 992px;
+  }
+  .panel_content {
+    width: 968px;
+  }
+}
+
+/* Small devices (tablets, 768px) */
+@media (max-width: 768px) {  
+}
+
+.image {
+  display: none;  
+}
+
+img {
+  max-width: none;
+}

@@ -8,9 +8,32 @@ use Doctrine\ORM\Mapping as ORM;
  * BrandProfile
  *
  * @ORM\Entity
+ * @ORM\Table(name="`user`")
  */
 class BrandProfile extends User
 {
+    
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="display_name", type="string", length=100, nullable=true)
+     */
+    private $display_name;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="abstract", type="string", length=100, nullable=true)
+     */
+    private $abstract;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="subtitle", type="string", length=100, nullable=true)
+     */
+    private $subtitle;
     
     /**
      * @var string
@@ -25,6 +48,13 @@ class BrandProfile extends User
      * @ORM\Column(name="logo", type="string", length=100, nullable=true)
      */
     private $logo;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="link", type="string", length=100, nullable=true)
+     */
+    private $link; 
     
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -118,5 +148,97 @@ class BrandProfile extends User
     public function getSponsoredEvents()
     {
         return $this->sponsoredEvents;
+    }
+
+    /**
+     * Set display_name
+     *
+     * @param string $displayName
+     * @return BrandProfile
+     */
+    public function setDisplayName($displayName)
+    {
+        $this->display_name = $displayName;
+
+        return $this;
+    }
+
+    /**
+     * Get display_name
+     *
+     * @return string 
+     */
+    public function getDisplayName()
+    {
+        return $this->display_name;
+    }
+
+    /**
+     * Set abstract
+     *
+     * @param string $abstract
+     * @return BrandProfile
+     */
+    public function setAbstract($abstract)
+    {
+        $this->abstract = $abstract;
+
+        return $this;
+    }
+
+    /**
+     * Get abstract
+     *
+     * @return string 
+     */
+    public function getAbstract()
+    {
+        return $this->abstract;
+    }
+
+    /**
+     * Set subtitle
+     *
+     * @param string $subtitle
+     * @return BrandProfile
+     */
+    public function setSubtitle($subtitle)
+    {
+        $this->subtitle = $subtitle;
+
+        return $this;
+    }
+
+    /**
+     * Get subtitle
+     *
+     * @return string 
+     */
+    public function getSubtitle()
+    {
+        return $this->subtitle;
+    }
+
+    /**
+     * Set link
+     *
+     * @param string $link
+     * @return BrandProfile
+     */
+    public function setLink($link)
+    {
+        $this->link = $link;
+
+        return $this;
+    }
+
+    /**
+     * Get link
+     *
+     * @return string 
+     */
+    public function getLink()
+    {
+        return $this->link;
     }
 }

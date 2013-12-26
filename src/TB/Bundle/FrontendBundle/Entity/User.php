@@ -7,11 +7,11 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * User
  *
- * @ORM\Table(name="`user`")
  * @ORM\Entity
+ * @ORM\Table(name="`user`")
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
- * @ORM\DiscriminatorMap({"user_profile" = "UserProfile", "brand_profile" = "BrandProfile"})
+ * @ORM\DiscriminatorMap({"user" = "UserProfile", "brand" = "BrandProfile"})
  */
 class User
 {

@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * UserProfile
  *
  * @ORM\Entity
+ * @ORM\Table(name="`user`")
  */
 class UserProfile extends User
 {    
@@ -33,28 +34,6 @@ class UserProfile extends User
      */
     private $location; 
     
-    /**
-     * Set first_name
-     *
-     * @param string $firstName
-     * @return UserProfile
-     */
-    public function setFirstName($firstName)
-    {
-        $this->first_name = $firstName;
-
-        return $this;
-    }
-
-    /**
-     * Get first_name
-     *
-     * @return string 
-     */
-    public function getFirstName()
-    {
-        return $this->first_name;
-    }
 
     /**
      * Set last_name
@@ -101,4 +80,33 @@ class UserProfile extends User
     {
         return $this->location;
     }
+
+    /**
+     * Set first_name
+     *
+     * @param string $firstName
+     * @return UserProfile
+     */
+    public function setFirstName($firstName)
+    {
+        $this->first_name = $firstName;
+
+        return $this;
+    }
+
+    /**
+     * Get first_name
+     *
+     * @return string 
+     */
+    public function getFirstName()
+    {
+        return $this->first_name;
+    }
+    
+    public function getFullName()
+    {
+        return sprintf('%s %s', $this->getFirstName(), $this->getLastName());
+    }
+    
 }
