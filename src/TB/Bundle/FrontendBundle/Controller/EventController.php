@@ -9,10 +9,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class EventController extends Controller
 {
     /**
-     * @Route("/event/:slug", name="event")
+     * @Route("/event/{slug}", name="event")
      * @Template()
      */
-    public function eventAction()
+    public function eventAction($slug)
     {
         $event = $this->getDoctrine()
             ->getRepository('TBFrontendBundle:Event')
@@ -23,6 +23,10 @@ class EventController extends Controller
                 sprintf('Event %s not found', $slug)
             );
         }
+        
+        return array(
+            'event' => $event,
+        );
     }
 
 }

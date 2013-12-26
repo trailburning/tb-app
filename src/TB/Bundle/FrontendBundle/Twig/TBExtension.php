@@ -12,6 +12,7 @@ class TBExtension extends \Twig_Extension
     {
         return array(
             new \Twig_SimpleFilter('url_truncate', array($this, 'urlTruncateFilter')),
+            new \Twig_SimpleFilter('dimension_format', array($this, 'dimensionFormatFilter')),            
         );
     }
 
@@ -21,6 +22,15 @@ class TBExtension extends \Twig_Extension
         $url = preg_replace('/www./', '', $url);
 
         return $url;
+    }
+    
+    public function dimensionFormatFilter($dimension, $unit = '', $base = 1)
+    {
+        $dimension = $dimension / $base;        
+        $dimension = round($dimension);
+        $dimension = number_format($dimension, 0, '.', '’');        
+                
+        return sprintf('%s %s', $dimension, $unit);
     }
 
     public function getName()

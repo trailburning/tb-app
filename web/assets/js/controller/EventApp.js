@@ -42,8 +42,8 @@ define([
     }
     
     function builtEventMap() {
-      var fLat = -25.256050;
-      var fLng = 130.997576;
+      var fLat = TB_EVENT_LAT;
+      var fLng = TB_EVENT_LONG;
       
       var map = L.mapbox.map('event_location_map', 'mallbeury.map-kply0zpa', {dragging: false, touchZoom: false, scrollWheelZoom:false, doubleClickZoom:false, boxZoom:false, tap:false, zoomControl:false, zoomAnimation:false, attributionControl:false});
 
@@ -58,7 +58,7 @@ define([
       L.marker([fLat, fLng], {icon: startIcon}).addTo(map);      
 
       var latlng = new L.LatLng(fLat, fLng);
-      map.setView(latlng, 4);
+      map.setView(latlng, TB_EVENT_MAP_ZOOM);
     }
                     
     builtEventMap();

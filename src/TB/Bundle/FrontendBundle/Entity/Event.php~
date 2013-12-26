@@ -115,6 +115,13 @@ class Event
     /**
      * @var string
      *
+     * @ORM\Column(name="image_credit", type="string", length=50, nullable=true)
+     */
+    private $image_credit;   
+    
+    /**
+     * @var string
+     *
      * @ORM\Column(name="link", type="string", length=255, nullable=true)
      */
     private $link;    
@@ -157,7 +164,7 @@ class Event
     /**
      * @var integer
      *
-     * @ORM\Column(name="user_id", type="integer", nullable=false)
+     * @ORM\Column(name="user_id", type="integer")
      */
     private $user_id;     
 
@@ -170,6 +177,13 @@ class Event
      * })
      */
     private $user;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="map_zoom", type="smallint", options={"default" = 3})
+     */
+    private $map_zoom;    
     
     /**
      * Constructor
@@ -657,5 +671,61 @@ class Event
     public function getUserId()
     {
         return $this->userId;
+    }
+
+    /**
+     * Add sponsors
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\BrandProfile $sponsors
+     * @return Event
+     */
+    public function addSponsor(\TB\Bundle\FrontendBundle\Entity\BrandProfile $sponsors)
+    {
+        $this->sponsors[] = $sponsors;
+
+        return $this;
+    }
+
+    /**
+     * Remove sponsors
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\BrandProfile $sponsors
+     */
+    public function removeSponsor(\TB\Bundle\FrontendBundle\Entity\BrandProfile $sponsors)
+    {
+        $this->sponsors->removeElement($sponsors);
+    }
+
+    /**
+     * Get sponsors
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSponsors()
+    {
+        return $this->sponsors;
+    }
+
+    /**
+     * Set image_credit
+     *
+     * @param string $imageCredit
+     * @return Event
+     */
+    public function setImageCredit($imageCredit)
+    {
+        $this->image_credit = $imageCredit;
+
+        return $this;
+    }
+
+    /**
+     * Get image_credit
+     *
+     * @return string 
+     */
+    public function getImageCredit()
+    {
+        return $this->image_credit;
     }
 }
