@@ -87,7 +87,7 @@ define([
           self.trailMiniMapView.render();
           self.trailMapView.render();
   
-          self.mediaModel.url = RESTAPI_BASEURL + 'v1/route/'+self.model.get('id')+'/medias';
+          self.mediaModel.url = TB_RESTAPI_BASEURL + '/v1/route/'+self.model.get('id')+'/medias';
           self.mediaModel.fetch({
             success: function () {
               self.handleMedia(self.mediaModel);
