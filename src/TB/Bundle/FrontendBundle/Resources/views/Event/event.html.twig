@@ -18,8 +18,10 @@ var TB_EVENT_MAP_ZOOM = {{ event.mapZoom }};
     <div class="image_container fade_on_load"><img src="http://app.resrc.it/O=80/http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/events/{{ event.slug }}/{{ event.image }}" class="resrc scale" /></div>
     <div class="event_title">
         <h1 class="tb tb-title">{{ event.title }}</h1>
+        {% if event.title2 %}
         <br/>
-        <h1 class="tb tb-title">{{ event.title2 }}</h1>
+        <h1 class="tb tb-title">{{ event.title2 }}</h1>    
+        {% endif %}
         <br/>
         <h1 class="tb tb-title">{{ event.date|date('d.m.y') }}</h1>
     </div>      

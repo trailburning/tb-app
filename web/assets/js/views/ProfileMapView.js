@@ -45,7 +45,7 @@ define([
       function onClick(e) {
       }
           
-      arrMarkers.push([TB_PROFILE_LONG, TB_PROFILE_LAT]);                   
+      arrMarkers.push([TB_USER_LONG, TB_USER_LAT]);                   
       L.marker(arrMarkers[arrMarkers.length-1], {icon: locationIcon, zIndexOffset: 1000}).on('click', onClick).addTo(this.userProfileMap);
 
       var bounds = new L.LatLngBounds(arrMarkers);

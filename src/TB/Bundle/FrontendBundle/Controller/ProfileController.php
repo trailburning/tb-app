@@ -14,37 +14,45 @@ class ProfileController extends Controller
      */
     public function profileAction($name)
     {
-        
-        $em = $this->getDoctrine()->getManager();
-        $query = $em->createQuery(
-            'SELECT u.id, u.name, u.first_name, u.last_name, u.avatar, u.synopsis, u.about, ST_AsText(u.location) AS location
-             FROM TBFrontendBundle:UserProfile u WHERE u.name=:name'
-        )->setParameter('name', $name);
+        $user = $this->getDoctrine()
+            ->getRepository('TBFrontendBundle:User')
+            ->findOneByName($name);
 
-        $users = $query->getResult();
-
-        if (!isset($users[0])) {
+        if (!$user) {
             throw $this->createNotFoundException(
                 sprintf('User %s not found.', $name)
             );
-        }   
-        
-        $user = $users[0];
-        $point = explode(" ", substr(trim($user['location']), 6, -1));
-        $user['long'] = $point[0];
-        $user['lat'] = $point[1];
-        
-        $client = $this->get('rest_client');
-        $request = $client->get('v1/routes/user/' . $user['id']);
-        $response = $request->send();
-        $response->getBody();
-        
-        if ($response->getStatusCode() !== 200) {
-            throw new HttpException(500, 'API error');  
         }
-        $data = $response->json();
-        $routes = $data['value']['routes'];
         
-        return array('user' => $user, 'routes' => $routes);
+        if ($user instanceof \TB\Bundle\FrontendBundle\Entity\UserProfile) {
+            $client = $this->get('rest_client');
+            $request = $client->get('v1/routes/user/' . $user->getId());
+            $response = $request->send();
+            $response->getBody();
+        
+            if ($response->getStatusCode() !== 200) {
+                throw new HttpException(500, 'API error');  
+            }
+            $data = $response->json();
+            $routes = $data['value']['routes'];
+            
+            return $this->render(
+                'TBFrontendBundle:Profile:user.html.twig',
+                array('user' => $user, 'routes' => $routes)
+            );
+        } elseif ($user instanceof \TB\Bundle\FrontendBundle\Entity\BrandProfile) {
+            
+            $events = $this->getDoctrine()
+                ->getRepository('TBFrontendBundle:Event')
+                    ->findByUser($user);
+            
+            return $this->render(
+                'TBFrontendBundle:Profile:brand.html.twig',
+                array('brand' => $user, 'events' => $events)
+            );
+        } else {
+            throw new \Exception(sprintf('Unknown User of class %s', get_class($user)));
+        }
+        
     }
 }

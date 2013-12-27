@@ -3,14 +3,14 @@
 {% block title %}{{ user.name }}{% endblock %}
 
 {% block stylesheets %}
-<link href="{{ asset('assets/css/profile.css') }}" rel="stylesheet" type="text/css">
+<link href="{{ asset('assets/css/user.css') }}" rel="stylesheet" type="text/css">
 {% endblock %}
 
 {% block body %}
 <script>
-var TB_APP = 'ProfileApp';
-var TB_PROFILE_LONG = {{ user.long }};
-var TB_PROFILE_LAT = {{ user.lat }};
+var TB_APP = 'UserApp';
+var TB_USER_LONG = {{ user.location.longitude }};
+var TB_USER_LAT = {{ user.location.latitude }};
 </script>
 
 <div id="profile_header">
@@ -38,7 +38,7 @@ var TB_PROFILE_LAT = {{ user.lat }};
 				<div class="content">
 					<div class="title">About Me</div>
 		            <h1>{{ user.synopsis }}</h1>
-		            <p>{{ user.about }}</p>
+		            <p>{{ user.about|nl2br }}</p>
 					<!--            
 					<div class="join"><a href="" target="_blank" class="btn btn-tb-action btn-tb-large">Follow me</a></div>
 					-->            

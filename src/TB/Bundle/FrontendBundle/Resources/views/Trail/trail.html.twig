@@ -33,8 +33,14 @@ var TB_TRAIL_ID = {{ trail.id }};
                 <h2 class="tb tb-title">{{ trail.name }}</h2>
                 <br/>
                 <h2 class="tb tb-title">{{ trail.region }}</h2>
-                <br/>
-                <div class="author">by <strong>{{ user.fullName }}</strong></div>
+                {% if user.id != 1 %}
+                    <br/> 
+                    {% if user is UserProfile %}
+                        <div class="author">by <strong>{{ user.firstName }} {{ user.lastName }}</strong></div>
+                    {% elseif user is BrandProfile %}
+                        <div class="author">by <strong>{{ user.fullName }}</strong></div>
+                    {% endif %}
+                {% endif %}
             </div>
         </div>
         <div id="view_map_btns">        

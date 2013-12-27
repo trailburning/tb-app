@@ -1,0 +1,64 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ brand.name }}{% endblock %}
+
+{% block stylesheets %}
+<link href="{{ asset('assets/css/brand.css') }}" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block body %}
+<script>
+var TB_APP = 'BrandApp';
+</script>
+
+<div id="brand_header">
+    <div class="image_container fade_on_load"><img src="http://app.resrc.it/O=90/http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/brands/{{ brand.name }}/{{ brand.headerImage }}" class="resrc scale" /></div>
+    <div class="brand_logo"><a href="{{ brand.link }}"  onClick="trackOutboundLink(this, 'Outbound Links', '{{ brand.link|url_truncate }}'); return false;"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/brands/{{ brand.name }}/{{ brand.avatar }}" border="0"></a></div>
+    <div class="tb-credit"></div>
+</div>
+
+<div class="panel_content">          
+    <div id="bigbar">
+        <div class="crumbs">
+			<div class="crumb_lead"><a href="{{ app.request.baseUrl }}/">Home</a></div>
+			<div class="crumb_links"><a href="{{ path('profile', {name: brand.name}) }}">{{ brand.displayName }}</a></div>
+        </div>
+        {% include 'TBFrontendBundle:Default:share.html.twig' %} 
+    </div>
+            
+    <div class="panels clearfix">           
+        <div class="left">        
+            <div class="panel brand_detail_panel">
+                <div class="content">
+                    <h3 class="tb title">{{ brand.subtitle }}</h3>
+                    <h4 class="tb">{{ brand.synopsis }}</h4>
+                    <p>{{ brand.about|nl2br }}</p>
+                    <div class="join"><a href="{{ brand.link }}" onClick="trackOutboundLink(this, 'Outbound Links', '{{ brand.link|url_truncate }}'); return false;" class="btn btn-tb-action btn-tb-large">Visit official website</a></div>
+                </div>
+            </div>
+        </div>
+      
+        <div class="right">
+        {% if events %}
+            <div class="event_container">
+            {% for event in events %}
+                <div class="panel big_event_panel">
+                    <a href="{{ path('event', {slug: event.slug}) }}">
+                        <div class="photo tb-photo-btn">
+                            <div class="image_container"><img src="http://app.resrc.it/O=80/http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/events/{{ event.slug }}/{{ event.image}}" class="resrc scale" border="0"/></div>
+                            <div class="logo"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/events/{{ event.slug }}/{{ event.logo }}"></div>              
+                        </div>
+                    </a>
+                    <div class="details">
+                    <div class="detail"><strong>{{ event.title }} {{ event.title2 }}</strong><br />Event - {{ event.date|date('d M Y') }}</div>
+                    <div class="more"><a class="btn btn-tb" href="{{ path('event', {slug: event.slug}) }}">More</a></div>
+                    </div>
+                </div>
+            {% endfor %}
+            </div>        
+        {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
