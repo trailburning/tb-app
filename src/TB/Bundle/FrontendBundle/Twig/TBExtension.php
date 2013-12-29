@@ -11,11 +11,11 @@ class TBExtension extends \Twig_Extension
     public function getTests()
     {
         return [
-            new \Twig_SimpleTest('UserProfile', function (Event $substance) { 
-                return $substance instanceof TB\Bundle\FrontendBundle\Entity\UserProfile; 
+            new \Twig_SimpleTest('UserProfile', function ($substance) { 
+                return $substance instanceof \TB\Bundle\FrontendBundle\Entity\UserProfile;
             }),
-            new \Twig_SimpleTest('BrandProfile', function (Event $substance) { 
-                return $substance instanceof TB\Bundle\FrontendBundle\Entity\BrandProfile; 
+            new \Twig_SimpleTest('BrandProfile', function ($substance) { 
+                return $substance instanceof \TB\Bundle\FrontendBundle\Entity\BrandProfile; 
             })
         ];
     }
