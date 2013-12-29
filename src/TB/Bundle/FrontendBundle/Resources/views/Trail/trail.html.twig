@@ -38,7 +38,7 @@ var TB_TRAIL_ID = {{ trail.id }};
                     {% if user is UserProfile %}
                         <div class="author">by <strong>{{ user.firstName }} {{ user.lastName }}</strong></div>
                     {% elseif user is BrandProfile %}
-                        <div class="author">by <strong>{{ user.fullName }}</strong></div>
+                        <div class="author">by <strong>{{ user.displayName }}</strong></div>
                     {% endif %}
                 {% endif %}
             </div>
@@ -60,11 +60,8 @@ var TB_TRAIL_ID = {{ trail.id }};
         <div class="panel_content_container">       
             <div class="panel_content">       
                 <div id="bigbar">
-                    <div class="crumbs">
-                        <div class="crumb_lead"><a href="{{ app.request.baseUrl }}/">Home</a></div>
-                        <div class="crumb_links"><a href="{{ path('trail', {'trailSlug': trail.slug}) }}">{{ trail.name }}</a></div>
-                    </div>
-                    {% include 'TBFrontendBundle:Default:share.html.twig' %}                     
+                    {{ include('TBFrontendBundle:Default:breadcrumb.html.twig', breadcrumb) }}
+                    {{ include('TBFrontendBundle:Default:share.html.twig') }}                     
                 </div>
 
                 <div class="panels clearfix">     

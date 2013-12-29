@@ -1,0 +1,11 @@
+<div class="crumbs">
+    <div class="crumb_lead"><a href="{{ app.request.baseUrl }}/">Home</a></div>
+    {% if breadcrumb %}
+    <div class="crumb_links">
+        {% for link in breadcrumb %}
+            <a href="{{ path(link.name, link.params) }}">{{ link.label }}</a>
+            {% if loop.last == false %}&nbsp;/&nbsp;{% endif %}
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>

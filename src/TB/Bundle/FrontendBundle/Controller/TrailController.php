@@ -16,6 +16,8 @@ class TrailController extends Controller
      */
     public function trailAction($trailSlug, $editorialSlug = null, $eventSlug = null)
     {   
+        $breadcrumb = array();
+        
         $trail = $this->getDoctrine()
             ->getRepository('TBFrontendBundle:Route')
             ->findOneBySlug($trailSlug);
@@ -44,6 +46,12 @@ class TrailController extends Controller
                     sprintf('Editorial %s not found or no relation to Trail %s', $editorialSlug, $trailSlug)
                 );
             }
+            
+            $breadcrumb[] = [
+                'name' => 'editorial_trail', 
+                'label' => $editorial->getName(), 
+                'params' => ['editorialSlug' => $editorial->getSlug(), 'trailSlug' => $trail->getSlug()],
+            ];
         }
         
         $event = null;
@@ -63,15 +71,27 @@ class TrailController extends Controller
                 throw $this->createNotFoundException(
                     sprintf('Event %s not found or no relation to Trail %s', $eventSlug, $trailSlug)
                 );
-            
             }
+            
+            $breadcrumb[] = [
+                'name' => 'event_trail',
+                'label' => trim($event->getTitle() . $event->getTitle2()), 
+                'params' => ['eventSlug' => $event->getSlug(), 'trailSlug' => $trail->getSlug()],
+            ];
         }
+        
+        $breadcrumb[] = [
+            'name' => 'trail',
+            'label' => $trail->getName(), 
+            'params' => ['trailSlug' => $trail->getSlug()],
+        ];
         
         return array(
             'trail' => $trail, 
             'user' => $trail->getUser(), 
             'editorial' => $editorial, 
-            'event' => $event
+            'event' => $event,
+            'breadcrumb' => $breadcrumb,
         );
     }
 }
