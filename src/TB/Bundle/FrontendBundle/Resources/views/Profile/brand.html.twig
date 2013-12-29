@@ -19,11 +19,8 @@ var TB_APP = 'BrandApp';
 
 <div class="panel_content">          
     <div id="bigbar">
-        <div class="crumbs">
-			<div class="crumb_lead"><a href="{{ app.request.baseUrl }}/">Home</a></div>
-			<div class="crumb_links"><a href="{{ path('profile', {name: brand.name}) }}">{{ brand.displayName }}</a></div>
-        </div>
-        {% include 'TBFrontendBundle:Default:share.html.twig' %} 
+        {{ include('TBFrontendBundle:Default:breadcrumb.html.twig', breadcrumb) }}
+        {{ include('TBFrontendBundle:Default:share.html.twig') }}
     </div>
             
     <div class="panels clearfix">           

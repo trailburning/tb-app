@@ -14,6 +14,8 @@ class ProfileController extends Controller
      */
     public function profileAction($name)
     {
+        $breadcrumb = array();
+        
         $user = $this->getDoctrine()
             ->getRepository('TBFrontendBundle:User')
             ->findOneByName($name);
@@ -36,9 +38,15 @@ class ProfileController extends Controller
             $data = $response->json();
             $routes = $data['value']['routes'];
             
+            $breadcrumb[] = [
+                'name' => 'profile',
+                'label' => $user->getFirstName() . ' ' . $user->getLastName(), 
+                'params' => ['name' => $user->getName()],
+            ];
+            
             return $this->render(
                 'TBFrontendBundle:Profile:user.html.twig',
-                array('user' => $user, 'routes' => $routes)
+                array('user' => $user, 'routes' => $routes, 'breadcrumb' => $breadcrumb)
             );
         } elseif ($user instanceof \TB\Bundle\FrontendBundle\Entity\BrandProfile) {
             
@@ -46,9 +54,15 @@ class ProfileController extends Controller
                 ->getRepository('TBFrontendBundle:Event')
                     ->findByUser($user);
             
+            $breadcrumb[] = [
+                'name' => 'profile',
+                'label' => $user->getDisplayName(), 
+                'params' => ['name' => $user->getName()],
+            ];
+            
             return $this->render(
                 'TBFrontendBundle:Profile:brand.html.twig',
-                array('brand' => $user, 'events' => $events)
+                array('brand' => $user, 'events' => $events, 'breadcrumb' => $breadcrumb)
             );
         } else {
             throw new \Exception(sprintf('Unknown User of class %s', get_class($user)));

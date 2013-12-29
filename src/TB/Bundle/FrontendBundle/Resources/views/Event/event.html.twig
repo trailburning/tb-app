@@ -1,6 +1,6 @@
 {% extends "::base.html.twig" %}
 
-{% block title %}{{ event.title }}{% endblock %}
+{% block title %}{{ event.title }} {{ event.title2 }}{% endblock %}
 
 {% block stylesheets %}
 <link href="{{ asset('assets/css/event.css') }}" rel="stylesheet" type="text/css">
@@ -44,11 +44,8 @@ var TB_EVENT_MAP_ZOOM = {{ event.mapZoom }};
 
 <div class="panel_content">          
     <div id="bigbar">
-        <div class="crumbs">
-            <div class="crumb_lead"><a href="{{ app.request.baseUrl }}/">Home</a></div>
-            <div class="crumb_links"><a href="{{ path('event', {slug: event.slug}) }}">{{ event.title }}</a></div>
-        </div>
-        {% include 'TBFrontendBundle:Default:share.html.twig' %}
+        {{ include('TBFrontendBundle:Default:breadcrumb.html.twig', breadcrumb) }}
+        {{ include('TBFrontendBundle:Default:share.html.twig') }}
     </div>
             
     <div class="panels clearfix">           

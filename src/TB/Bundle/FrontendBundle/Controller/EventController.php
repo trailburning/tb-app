@@ -14,6 +14,8 @@ class EventController extends Controller
      */
     public function eventAction($slug)
     {
+        $breadcrumb = array();
+        
         $event = $this->getDoctrine()
             ->getRepository('TBFrontendBundle:Event')
             ->findOneBySlug($slug);
@@ -24,8 +26,15 @@ class EventController extends Controller
             );
         }
         
+        $breadcrumb[] = [
+            'name' => 'event',
+            'label' => trim($event->getTitle() . ' ' . $event->getTitle2()), 
+            'params' => ['slug' => $event->getSlug()],
+        ];
+        
         return array(
             'event' => $event,
+            'breadcrumb' => $breadcrumb,
         );
     }
 

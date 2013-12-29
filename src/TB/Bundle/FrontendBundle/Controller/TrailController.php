@@ -48,9 +48,9 @@ class TrailController extends Controller
             }
             
             $breadcrumb[] = [
-                'name' => 'editorial_trail', 
+                'name' => 'editorial',
                 'label' => $editorial->getName(), 
-                'params' => ['editorialSlug' => $editorial->getSlug(), 'trailSlug' => $trail->getSlug()],
+                'params' => ['slug' => $event->getSlug()],
             ];
         }
         
@@ -74,17 +74,31 @@ class TrailController extends Controller
             }
             
             $breadcrumb[] = [
-                'name' => 'event_trail',
-                'label' => trim($event->getTitle() . $event->getTitle2()), 
-                'params' => ['eventSlug' => $event->getSlug(), 'trailSlug' => $trail->getSlug()],
+                'name' => 'event',
+                'label' => trim($event->getTitle() . ' ' . $event->getTitle2()), 
+                'params' => ['slug' => $event->getSlug()],
             ];
         }
         
-        $breadcrumb[] = [
-            'name' => 'trail',
-            'label' => $trail->getName(), 
-            'params' => ['trailSlug' => $trail->getSlug()],
-        ];
+        if ($editorialSlug !== null) {
+            $breadcrumb[] = [
+                'name' => 'editorial_trail',
+                'label' => $trail->getName(), 
+                'params' => ['trailSlug' => $trail->getSlug(), 'editorialSlug' => $editorial->getSlug()],
+            ];
+        } elseif ($eventSlug !== null) {
+            $breadcrumb[] = [
+                'name' => 'event_trail',
+                'label' => $trail->getName(), 
+                'params' => ['trailSlug' => $trail->getSlug(), 'eventSlug' => $event->getSlug()],
+            ];
+        } else {
+            $breadcrumb[] = [
+                'name' => 'trail',
+                'label' => $trail->getName(), 
+                'params' => ['trailSlug' => $trail->getSlug()],
+            ];
+        }
         
         return array(
             'trail' => $trail, 
