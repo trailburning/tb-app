@@ -73,8 +73,7 @@ class Route
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="SEQUENCE")
-     * @ORM\SequenceGenerator(sequenceName="routes_id_seq", allocationSize=1, initialValue=1)
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
@@ -98,13 +97,13 @@ class Route
      */
     private $user;
 
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\Media", inversedBy="routes")
-     * @ORM\JoinTable(name="route_medias")
-     */
-    private $medias;
+    #/**
+    # * @var \Doctrine\Common\Collections\Collection
+    # *
+    # * @ORM\ManyToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\Media", inversedBy="routes")
+    # * @ORM\JoinTable(name="route_medias")
+    # */
+    #private $medias;
     
     /**
      * @var string
@@ -126,14 +125,14 @@ class Route
      * @ORM\ManyToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\Editorial", mappedBy="routes")
      */
     private $editorial;
-
+    
     /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->media = new \Doctrine\Common\Collections\ArrayCollection();
-    }
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="RouteMedia", mappedBy="route")
+     **/
+    private $routeMedias;
+    
     
 
     /**
@@ -413,39 +412,6 @@ class Route
     }
 
     /**
-     * Add medias
-     *
-     * @param \TB\Bundle\FrontendBundle\Entity\Media $medias
-     * @return Route
-     */
-    public function addMedia(\TB\Bundle\FrontendBundle\Entity\Media $medias)
-    {
-        $this->medias[] = $medias;
-
-        return $this;
-    }
-
-    /**
-     * Remove medias
-     *
-     * @param \TB\Bundle\FrontendBundle\Entity\Media $medias
-     */
-    public function removeMedia(\TB\Bundle\FrontendBundle\Entity\Media $medias)
-    {
-        $this->medias->removeElement($medias);
-    }
-
-    /**
-     * Get medias
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getMedias()
-    {
-        return $this->medias;
-    }
-
-    /**
      * Add editorial
      *
      * @param \TB\Bundle\FrontendBundle\Entity\Editorial $editorial
@@ -502,4 +468,48 @@ class Route
     }
     
     
+
+    /**
+     * Add routeMedias
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\RouteMedia $routeMedias
+     * @return Route
+     */
+    public function addRouteMedia(\TB\Bundle\FrontendBundle\Entity\RouteMedia $routeMedias)
+    {
+        $this->routeMedias[] = $routeMedias;
+
+        return $this;
+    }
+
+    /**
+     * Remove routeMedias
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\RouteMedia $routeMedias
+     */
+    public function removeRouteMedia(\TB\Bundle\FrontendBundle\Entity\RouteMedia $routeMedias)
+    {
+        $this->routeMedias->removeElement($routeMedias);
+    }
+
+    /**
+     * Get routeMedias
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRouteMedias()
+    {
+        return $this->routeMedias;
+    }
+    
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->events = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->editorial = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->routeMedias = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
 }

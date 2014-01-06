@@ -8,7 +8,6 @@ use Doctrine\ORM\Mapping as ORM;
  * BrandProfile
  *
  * @ORM\Entity
- * @ORM\Table(name="`user`")
  */
 class BrandProfile extends User
 {

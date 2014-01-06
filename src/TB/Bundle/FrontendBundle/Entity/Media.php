@@ -31,25 +31,25 @@ class Media
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="SEQUENCE")
-     * @ORM\SequenceGenerator(sequenceName="medias_id_seq", allocationSize=1, initialValue=1)
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
+    
+    
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\Route", mappedBy="medias")
-     */
-    private $routes;
+     * @ORM\OneToMany(targetEntity="RouteMedia", mappedBy="media")
+     **/
+    private $routeMedias;
+    
 
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->route = new \Doctrine\Common\Collections\ArrayCollection();
-    }
+    #/**
+    # * @var \Doctrine\Common\Collections\Collection
+    # *
+    # * @ORM\ManyToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\Route", mappedBy="medias")
+    # */
+    #private $routes;
     
 
     /**
@@ -110,35 +110,43 @@ class Media
 
 
     /**
-     * Add routes
+     * Add routeMedias
      *
-     * @param \TB\Bundle\FrontendBundle\Entity\Route $routes
+     * @param \TB\Bundle\FrontendBundle\Entity\RouteMedia $routeMedias
      * @return Media
      */
-    public function addRoute(\TB\Bundle\FrontendBundle\Entity\Route $routes)
+    public function addRouteMedia(\TB\Bundle\FrontendBundle\Entity\RouteMedia $routeMedias)
     {
-        $this->routes[] = $routes;
+        $this->routeMedias[] = $routeMedias;
 
         return $this;
     }
 
     /**
-     * Remove routes
+     * Remove routeMedias
      *
-     * @param \TB\Bundle\FrontendBundle\Entity\Route $routes
+     * @param \TB\Bundle\FrontendBundle\Entity\RouteMedia $routeMedias
      */
-    public function removeRoute(\TB\Bundle\FrontendBundle\Entity\Route $routes)
+    public function removeRouteMedia(\TB\Bundle\FrontendBundle\Entity\RouteMedia $routeMedias)
     {
-        $this->routes->removeElement($routes);
+        $this->routeMedias->removeElement($routeMedias);
     }
 
     /**
-     * Get routes
+     * Get routeMedias
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getRoutes()
+    public function getRouteMedias()
     {
-        return $this->routes;
+        return $this->routeMedias;
     }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->routeMedias = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
 }
