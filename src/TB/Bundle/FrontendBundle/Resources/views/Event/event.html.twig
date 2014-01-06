@@ -65,13 +65,13 @@ var TB_EVENT_MAP_ZOOM = {{ event.mapZoom }};
                 <div class="content">
                     <h3 class="tb title">About Event Region</h3>
                     <div class="photo">
-                        <img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/events/{{ event.slug }}/{{ event.regionImage}}">
-                        <div class="logo"><a href="{{ event.regionLink }}" onClick="trackOutboundLink(this, 'Outbound Links', '{{ event.regionLink | url_truncate }}'); return false;" target="_blank"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/events/{{ event.slug }}/{{ event.regionLogo }}" border="0"></a></div>              
+                        <img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/events/{{ event.slug }}/{{ event.region.image}}">
+                        <div class="logo"><a href="{{ event.region.link }}" onClick="trackOutboundLink(this, 'Outbound Links', '{{ event.region.link | url_truncate }}'); return false;" target="_blank"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/events/{{ event.slug }}/{{ event.region.logo }}" border="0"></a></div>              
                     </div>            
                     <div class="detail">
-                        <h4 class="tb">{{ event.region }}</h4>            
+                        <h4 class="tb">{{ event.region.name }}</h4>            
                         <p>
-                            {{ event.regionAbout|nl2br }}
+                            {{ event.region.about|nl2br }}
                         </p>
                     </div>
                 </div>

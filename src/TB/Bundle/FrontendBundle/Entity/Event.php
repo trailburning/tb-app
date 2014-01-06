@@ -127,41 +127,6 @@ class Event
     private $link;    
     
     /**
-     * @var string
-     *
-     * @ORM\Column(name="region", type="string", length=50, nullable=true)
-     */
-    private $region;
-    
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="region_about", type="text", nullable=true)
-     */
-    private $region_about;
-    
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="region_logo", type="string", length=50, nullable=true)
-     */
-    private $region_logo;
-    
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="region_image", type="string", length=50, nullable=true)
-     */
-    private $region_image;    
-    
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="region_link", type="string", length=255, nullable=true)
-     */
-    private $region_link;   
-    
-    /**
      * @var integer
      *
      * @ORM\Column(name="user_id", type="integer")
@@ -177,6 +142,23 @@ class Event
      * })
      */
     private $user;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="region_id", type="integer", nullable=true)
+     */
+    private $regionId;     
+
+    /**
+     * @var \TB\Bundle\FrontendBundle\Entity\Region
+     *
+     * @ORM\ManyToOne(targetEntity="TB\Bundle\FrontendBundle\Entity\Region")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="region_id", referencedColumnName="id")
+     * })
+     */
+    private $region;
     
     /**
      * @var integer
@@ -750,5 +732,28 @@ class Event
     public function getMapZoom()
     {
         return $this->map_zoom;
+    }
+
+    /**
+     * Set regionId
+     *
+     * @param integer $regionId
+     * @return Event
+     */
+    public function setRegionId($regionId)
+    {
+        $this->regionId = $regionId;
+
+        return $this;
+    }
+
+    /**
+     * Get regionId
+     *
+     * @return integer 
+     */
+    public function getRegionId()
+    {
+        return $this->regionId;
     }
 }
