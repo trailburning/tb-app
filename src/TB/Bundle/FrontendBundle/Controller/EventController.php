@@ -26,6 +26,15 @@ class EventController extends Controller
             );
         }
         
+        $query = $this->getDoctrine()->getManager()
+            ->createQuery('
+                SELECT r FROM TBFrontendBundle:Route r
+                JOIN r.events e
+                WHERE e.id = :eventID
+                ORDER BY r.id   ')
+            ->setParameter('eventID', $event->getId());
+        $routes = $query->getResult();
+        
         $breadcrumb[] = [
             'name' => 'event',
             'label' => trim($event->getTitle() . ' ' . $event->getTitle2()), 
@@ -35,6 +44,7 @@ class EventController extends Controller
         return array(
             'event' => $event,
             'breadcrumb' => $breadcrumb,
+            'routes' => $routes,
         );
     }
 

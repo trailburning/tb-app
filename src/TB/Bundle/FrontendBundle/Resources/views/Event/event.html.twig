@@ -85,9 +85,9 @@ var TB_EVENT_MAP_ZOOM = {{ event.mapZoom }};
                     <div id="event_location_map" class="event_location_map"></div>
                 </div>
             </div>
-            {% if event.routes %}
+            {% if routes %}
                 <div class="event_trails_container">      
-                {% for route in event.routes %}
+                {% for route in routes %}
                     <div class="panel event_trail">
                         <h3 class="tb">{{ route.shortName ? route.shortName : route.name  }}</h3>
                         <a href="{{ path('event_trail', {trailSlug: route.slug, eventSlug: event.slug}) }}">
