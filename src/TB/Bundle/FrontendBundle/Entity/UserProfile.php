@@ -34,6 +34,10 @@ class UserProfile extends User
      */
     private $location; 
     
+    public function getTitle()
+    {
+        return sprintf('%s %s', $this->getFirstName(), $this->getLastName());
+    }
 
     /**
      * Set last_name

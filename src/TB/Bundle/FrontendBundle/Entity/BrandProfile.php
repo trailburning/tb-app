@@ -63,6 +63,10 @@ class BrandProfile extends User
      */
     private $sponsoredEvents;
     
+    public function getTitle()
+    {
+        return $this->getDisplayName();
+    }
 
     /**
      * Set header_image

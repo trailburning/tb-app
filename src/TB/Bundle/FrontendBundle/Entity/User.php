@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\DiscriminatorColumn(name="discr", type="string")
  * @ORM\DiscriminatorMap({"user" = "UserProfile", "brand" = "BrandProfile"})
  */
-class User
+abstract class User
 {
     
     /**
@@ -75,6 +75,8 @@ class User
         $this->routes = new \Doctrine\Common\Collections\ArrayCollection();
         $this->events = new \Doctrine\Common\Collections\ArrayCollection();
     }
+    
+    abstract public function getTitle();
 
     /**
      * Get id

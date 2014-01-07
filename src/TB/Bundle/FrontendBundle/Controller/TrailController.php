@@ -17,6 +17,8 @@ class TrailController extends Controller
     public function trailAction($trailSlug, $editorialSlug = null, $eventSlug = null)
     {   
         $breadcrumb = array();
+        $editorial = null;
+        $event = null;
         
         $trail = $this->getDoctrine()
             ->getRepository('TBFrontendBundle:Route')
@@ -28,7 +30,7 @@ class TrailController extends Controller
             );
         }
         
-        $editorial = null;
+        
         if ($editorialSlug !== null) {
             
             $query = $this->getDoctrine()->getManager()
@@ -36,9 +38,9 @@ class TrailController extends Controller
                     SELECT e FROM TBFrontendBundle:Editorial e
                     JOIN e.routes r
                     WHERE e.slug = :editorialSlug
-                    AND r.slug = :trailSlug')
+                    AND r.id = :trailId')
                 ->setParameter('editorialSlug', $editorialSlug)
-                ->setParameter('trailSlug', $trailSlug);
+                ->setParameter('trailId', $trail->getId());
             try {
                 $editorial = $query->getSingleResult();
             } catch (\Doctrine\ORM\NoResultException $e) {
@@ -47,24 +49,22 @@ class TrailController extends Controller
                 );
             }
             
+            // breadcrumb to editorail page
             $breadcrumb[] = [
                 'name' => 'editorial',
                 'label' => $editorial->getName(), 
                 'params' => ['slug' => $event->getSlug()],
             ];
-        }
-        
-        $event = null;
-        if ($eventSlug !== null) {
+        } elseif ($eventSlug !== null) {
             
             $query = $this->getDoctrine()->getManager()
                 ->createQuery('
                     SELECT e FROM TBFrontendBundle:Event e
                     JOIN e.routes r
                     WHERE e.slug = :eventSlug
-                    AND r.slug = :trailSlug')
+                    AND r.id = :trailId')
                 ->setParameter('eventSlug', $eventSlug)
-                ->setParameter('trailSlug', $trailSlug);
+                ->setParameter('trailId', $trail->getId());
             try {
                 $event = $query->getSingleResult();
             } catch (\Doctrine\ORM\NoResultException $e) {
@@ -73,10 +73,18 @@ class TrailController extends Controller
                 );
             }
             
+            // breadcrumb to event page
             $breadcrumb[] = [
                 'name' => 'event',
                 'label' => trim($event->getTitle() . ' ' . $event->getTitle2()), 
                 'params' => ['slug' => $event->getSlug()],
+            ];
+        } else {
+            // breadcrumb to profile page
+            $breadcrumb[] = [
+                'name' => 'profile',
+                'label' =>  $trail->getUser()->getTitle(), 
+                'params' => ['name' => $trail->getUser()->getName()],
             ];
         }
         
