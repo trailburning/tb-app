@@ -38,8 +38,7 @@ class RoutePoint
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="SEQUENCE")
-     * @ORM\SequenceGenerator(sequenceName="route_points_id_seq", allocationSize=1, initialValue=1)
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
@@ -48,7 +47,7 @@ class RoutePoint
      *
      * @ORM\ManyToOne(targetEntity="TB\Bundle\FrontendBundle\Entity\Route")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="route_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="route_id", referencedColumnName="id", onDelete="CASCADE")
      * })
      */
     private $route;

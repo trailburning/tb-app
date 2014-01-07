@@ -31,25 +31,25 @@ class Media
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="SEQUENCE")
-     * @ORM\SequenceGenerator(sequenceName="medias_id_seq", allocationSize=1, initialValue=1)
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
-
+    
+    
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\Route", mappedBy="media")
-     */
-    private $route;
+     * @ORM\OneToMany(targetEntity="RouteMedia", mappedBy="media")
+     **/
+    private $routeMedias;
+    
 
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->route = new \Doctrine\Common\Collections\ArrayCollection();
-    }
+    #/**
+    # * @var \Doctrine\Common\Collections\Collection
+    # *
+    # * @ORM\ManyToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\Route", mappedBy="medias")
+    # */
+    #private $routes;
     
 
     /**
@@ -108,36 +108,45 @@ class Media
         return $this->id;
     }
 
+
     /**
-     * Add route
+     * Add routeMedias
      *
-     * @param \TB\Bundle\FrontendBundle\Entity\Route $route
+     * @param \TB\Bundle\FrontendBundle\Entity\RouteMedia $routeMedias
      * @return Media
      */
-    public function addRoute(\TB\Bundle\FrontendBundle\Entity\Route $route)
+    public function addRouteMedia(\TB\Bundle\FrontendBundle\Entity\RouteMedia $routeMedias)
     {
-        $this->route[] = $route;
-    
+        $this->routeMedias[] = $routeMedias;
+
         return $this;
     }
 
     /**
-     * Remove route
+     * Remove routeMedias
      *
-     * @param \TB\Bundle\FrontendBundle\Entity\Route $route
+     * @param \TB\Bundle\FrontendBundle\Entity\RouteMedia $routeMedias
      */
-    public function removeRoute(\TB\Bundle\FrontendBundle\Entity\Route $route)
+    public function removeRouteMedia(\TB\Bundle\FrontendBundle\Entity\RouteMedia $routeMedias)
     {
-        $this->route->removeElement($route);
+        $this->routeMedias->removeElement($routeMedias);
     }
 
     /**
-     * Get route
+     * Get routeMedias
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getRoute()
+    public function getRouteMedias()
     {
-        return $this->route;
+        return $this->routeMedias;
     }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->routeMedias = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
 }
