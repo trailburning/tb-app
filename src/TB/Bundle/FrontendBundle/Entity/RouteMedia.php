@@ -44,7 +44,7 @@ class RouteMedia
      *
      * @ORM\ManyToOne(targetEntity="TB\Bundle\FrontendBundle\Entity\Route")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="route_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="route_id", referencedColumnName="id", onDelete="CASCADE")
      * })
      */
     private $route;

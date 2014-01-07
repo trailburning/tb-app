@@ -31,7 +31,7 @@ class MediaVersion
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
@@ -40,7 +40,7 @@ class MediaVersion
      *
      * @ORM\ManyToOne(targetEntity="TB\Bundle\FrontendBundle\Entity\Media")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="media_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="media_id", referencedColumnName="id", onDelete="CASCADE")
      * })
      */
     private $media;
