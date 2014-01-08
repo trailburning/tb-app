@@ -36,6 +36,7 @@
     ],
     "require-dev": {
         "codeception/codeception": "@stable",
+        "doctrine/doctrine-fixtures-bundle": "dev-master",
         "sami/sami": "1.0.*@dev"
     },
     "scripts": {
