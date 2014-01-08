@@ -90,7 +90,7 @@ var TB_EVENT_MAP_ZOOM = {{ event.mapZoom }};
                 {% for route in routes %}
                     <div class="panel event_trail">
                         <h3 class="tb">{{ route.shortName ? route.shortName : route.name  }}</h3>
-                        <a href="{{ path('event_trail', {trailSlug: route.slug, eventSlug: event.slug}) }}">
+                        <a href="{{ path('trail', {trailSlug: route.slug}) }}">
                             <div class="detail">
                                 {% if route.tags.ascent %}
                                     <div class="terrain">
@@ -106,7 +106,7 @@ var TB_EVENT_MAP_ZOOM = {{ event.mapZoom }};
                                 </div>
                             </div>
                         </a>
-                        <div class="more"><a class="btn btn-tb"  href="{{ path('event_trail', {trailSlug: route.slug, eventSlug: event.slug}) }}">More</a></div>
+                        <div class="more"><a class="btn btn-tb"  href="{{ path('trail', {trailSlug: route.slug}) }}">More</a></div>
                     </div>
                 {% endfor %}    
                 </div>

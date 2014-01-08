@@ -17,7 +17,7 @@ class Event
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
@@ -52,9 +52,10 @@ class Event
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\Route", inversedBy="events")
-     */
+     * @ORM\OneToMany(targetEntity="Event", mappedBy="event")
+     **/
     private $routes;
+    
     
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -167,13 +168,6 @@ class Event
      */
     private $map_zoom;    
     
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->routes = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Get id
@@ -575,40 +569,7 @@ class Event
     {
         return $this->region_link;
     }
-
-    /**
-     * Add routes
-     *
-     * @param \TB\Bundle\FrontendBundle\Entity\Route $routes
-     * @return Event
-     */
-    public function addRoute(\TB\Bundle\FrontendBundle\Entity\Route $routes)
-    {
-        $this->routes[] = $routes;
-
-        return $this;
-    }
-
-    /**
-     * Remove routes
-     *
-     * @param \TB\Bundle\FrontendBundle\Entity\Route $routes
-     */
-    public function removeRoute(\TB\Bundle\FrontendBundle\Entity\Route $routes)
-    {
-        $this->routes->removeElement($routes);
-    }
-
-    /**
-     * Get routes
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getRoutes()
-    {
-        return $this->routes;
-    }
-
+    
     /**
      * Set user
      *
@@ -732,5 +693,28 @@ class Event
     public function getMapZoom()
     {
         return $this->map_zoom;
+    }
+
+    /**
+     * Set regionId
+     *
+     * @param integer $regionId
+     * @return Event
+     */
+    public function setRegionId($regionId)
+    {
+        $this->regionId = $regionId;
+
+        return $this;
+    }
+
+    /**
+     * Get regionId
+     *
+     * @return integer 
+     */
+    public function getRegionId()
+    {
+        return $this->regionId;
     }
 }

@@ -31,7 +31,7 @@ class Media
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
     
@@ -50,6 +50,13 @@ class Media
     # * @ORM\ManyToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\Route", mappedBy="medias")
     # */
     #private $routes;
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="MediaVersion", mappedBy="media")
+     **/
+    private $versions;
     
 
     /**
@@ -141,4 +148,5 @@ class Media
     {
         return $this->routeMedias;
     }
+
 }
