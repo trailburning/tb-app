@@ -52,9 +52,10 @@ class Event
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\Route", inversedBy="events")
-     */
+     * @ORM\OneToMany(targetEntity="Event", mappedBy="event")
+     **/
     private $routes;
+    
     
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -167,13 +168,6 @@ class Event
      */
     private $map_zoom;    
     
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->routes = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Get id
@@ -575,40 +569,7 @@ class Event
     {
         return $this->region_link;
     }
-
-    /**
-     * Add routes
-     *
-     * @param \TB\Bundle\FrontendBundle\Entity\Route $routes
-     * @return Event
-     */
-    public function addRoute(\TB\Bundle\FrontendBundle\Entity\Route $routes)
-    {
-        $this->routes[] = $routes;
-
-        return $this;
-    }
-
-    /**
-     * Remove routes
-     *
-     * @param \TB\Bundle\FrontendBundle\Entity\Route $routes
-     */
-    public function removeRoute(\TB\Bundle\FrontendBundle\Entity\Route $routes)
-    {
-        $this->routes->removeElement($routes);
-    }
-
-    /**
-     * Get routes
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getRoutes()
-    {
-        return $this->routes;
-    }
-
+    
     /**
      * Set user
      *
@@ -755,5 +716,46 @@ class Event
     public function getRegionId()
     {
         return $this->regionId;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->routes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->sponsors = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add routes
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\Event $routes
+     * @return Event
+     */
+    public function addRoute(\TB\Bundle\FrontendBundle\Entity\Event $routes)
+    {
+        $this->routes[] = $routes;
+
+        return $this;
+    }
+
+    /**
+     * Remove routes
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\Event $routes
+     */
+    public function removeRoute(\TB\Bundle\FrontendBundle\Entity\Event $routes)
+    {
+        $this->routes->removeElement($routes);
+    }
+
+    /**
+     * Get routes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRoutes()
+    {
+        return $this->routes;
     }
 }

@@ -51,6 +51,13 @@ class Media
     # */
     #private $routes;
     
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="MediaVersion", mappedBy="media")
+     **/
+    private $versions;
+    
 
     /**
      * Set tags
@@ -141,12 +148,46 @@ class Media
     {
         return $this->routeMedias;
     }
+
     /**
      * Constructor
      */
     public function __construct()
     {
         $this->routeMedias = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->versions = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
+    /**
+     * Add versions
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\MediaVersion $versions
+     * @return Media
+     */
+    public function addVersion(\TB\Bundle\FrontendBundle\Entity\MediaVersion $versions)
+    {
+        $this->versions[] = $versions;
+
+        return $this;
+    }
+
+    /**
+     * Remove versions
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\MediaVersion $versions
+     */
+    public function removeVersion(\TB\Bundle\FrontendBundle\Entity\MediaVersion $versions)
+    {
+        $this->versions->removeElement($versions);
+    }
+
+    /**
+     * Get versions
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getVersions()
+    {
+        return $this->versions;
+    }
 }

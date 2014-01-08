@@ -30,9 +30,15 @@ var TB_TRAIL_ID = {{ trail.id }};
                 <div class="trail_avatar"><a href="{{ path('profile', {'name': user.name}) }}"><img src="{{ asset('assets/img/avatars/' ~ user.avatar) }}" border="0"></a></div>    
             {% endif %}   
             <div class="trail_title{% if user.avatar == '' %} no_avatar{% endif %}">
-                <h2 class="tb tb-title">{{ trail.name }}</h2>
-                <br/>
-                <h2 class="tb tb-title">{{ trail.region }}</h2>
+                {% if event %}
+                    <h2 class="tb tb-title">{{ event.title }}</h2>
+                    <br/>
+                    <h2 class="tb tb-title">{{ trail.name }}</h2>
+                {% else %}
+                    <h2 class="tb tb-title">{{ trail.name }}</h2>
+                    <br/>
+                    <h2 class="tb tb-title">{{ trail.region }}</h2>
+                {% endif %}
                 {% if user.id != 1 %}
                     <br/> 
                     {% if user is UserProfile %}
@@ -76,6 +82,25 @@ var TB_TRAIL_ID = {{ trail.id }};
                         </div>  
                         <div class="right">
                             <div id="trail_weather_view" class="panel trail_weather_panel"></div>
+                            {% if event and relatedTrails %}
+                                {% for relatedTrail in relatedTrails %}
+                                    <div class="panel promote_panel">
+                                        <div class="content">
+                                            <h3 class="tb">Run</h3>
+                                            <a href="{{ path('trail', {trailSlug: relatedTrail.slug}) }}">
+                                                <div class="photo tb-photo-btn">
+                                                    <div class="image_container"><img src="http://app.resrc.it/http://s3-eu-west-1.amazonaws.com/{{ relatedTrail.routeMedias[0].media.versions[0].path }}" class="resrc scale" /></div>
+                                                    <div class="promote_title">
+                                                        <h1 class="title_shadow">{{ event.title }}</h1>
+                                                        <br />
+                                                        <h1 class="title_shadow">{{ relatedTrail.shortName }}</h1>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
                         </div>  
                     </div>
                 </div>

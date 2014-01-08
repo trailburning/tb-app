@@ -8,10 +8,21 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 class TrailController extends Controller
 {
+    
+    /**
+     * @Route("/trails/{trailSlug}")
+     * @Route("/trails/{trailSlug}/")
+     * @Route("/events/{eventSlug}/{trailSlug}")
+     * @Route("/events/{eventSlug}/{trailSlug}/")    
+     */
+    public function legacyTrailAction($trailSlug)
+    { 
+        return $this->redirect($this->generateUrl('trail', ['trailSlug' => $trailSlug]), 301);
+    }
+    
     /**
      * @Route("/trail/{trailSlug}", name="trail")
      * @Route("/editorial/{editorialSlug}/trail/{trailSlug}", name="editorial_trail")
-     * @Route("/event/{eventSlug}/trail/{trailSlug}", name="event_trail")
      * @Template()
      */
     public function trailAction($trailSlug, $editorialSlug = null, $eventSlug = null)
@@ -19,6 +30,7 @@ class TrailController extends Controller
         $breadcrumb = array();
         $editorial = null;
         $event = null;
+        $relatedTrails = null;
         
         $trail = $this->getDoctrine()
             ->getRepository('TBFrontendBundle:Route')
@@ -30,8 +42,25 @@ class TrailController extends Controller
             );
         }
         
-        
-        if ($editorialSlug !== null) {
+        if ($trail->getEvent() !== null) {
+            $event = $trail->getEvent();
+            $query = $this->getDoctrine()->getManager()
+                ->createQuery('
+                    SELECT r FROM TBFrontendBundle:Route r
+                    WHERE r.eventId=:eventId
+                    AND r.id!=:trailId
+                    ORDER BY r.id')
+                ->setParameter('eventId', $event->getId())
+                ->setParameter('trailId', $trail->getId());
+            $relatedTrails = $query->getResult();
+            
+            // breadcrumb to event page
+            $breadcrumb[] = [
+                'name' => 'event',
+                'label' => trim($event->getTitle() . ' ' . $event->getTitle2()), 
+                'params' => ['slug' => $event->getSlug()],
+            ];
+        } elseif ($editorialSlug !== null) {
             
             $query = $this->getDoctrine()->getManager()
                 ->createQuery('
@@ -55,30 +84,6 @@ class TrailController extends Controller
                 'label' => $editorial->getName(), 
                 'params' => ['slug' => $event->getSlug()],
             ];
-        } elseif ($eventSlug !== null) {
-            
-            $query = $this->getDoctrine()->getManager()
-                ->createQuery('
-                    SELECT e FROM TBFrontendBundle:Event e
-                    JOIN e.routes r
-                    WHERE e.slug = :eventSlug
-                    AND r.id = :trailId')
-                ->setParameter('eventSlug', $eventSlug)
-                ->setParameter('trailId', $trail->getId());
-            try {
-                $event = $query->getSingleResult();
-            } catch (\Doctrine\ORM\NoResultException $e) {
-                throw $this->createNotFoundException(
-                    sprintf('Event %s not found or no relation to Trail %s', $eventSlug, $trailSlug)
-                );
-            }
-            
-            // breadcrumb to event page
-            $breadcrumb[] = [
-                'name' => 'event',
-                'label' => trim($event->getTitle() . ' ' . $event->getTitle2()), 
-                'params' => ['slug' => $event->getSlug()],
-            ];
         } else {
             // breadcrumb to profile page
             $breadcrumb[] = [
@@ -94,12 +99,6 @@ class TrailController extends Controller
                 'label' => $trail->getName(), 
                 'params' => ['trailSlug' => $trail->getSlug(), 'editorialSlug' => $editorial->getSlug()],
             ];
-        } elseif ($eventSlug !== null) {
-            $breadcrumb[] = [
-                'name' => 'event_trail',
-                'label' => $trail->getName(), 
-                'params' => ['trailSlug' => $trail->getSlug(), 'eventSlug' => $event->getSlug()],
-            ];
         } else {
             $breadcrumb[] = [
                 'name' => 'trail',
@@ -114,6 +113,7 @@ class TrailController extends Controller
             'editorial' => $editorial, 
             'event' => $event,
             'breadcrumb' => $breadcrumb,
+            'relatedTrails' => $relatedTrails,
         );
     }
 }

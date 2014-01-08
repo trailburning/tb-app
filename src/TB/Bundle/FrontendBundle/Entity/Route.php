@@ -71,6 +71,13 @@ class Route
     /**
      * @var integer
      *
+     * @ORM\Column(name="event_id", type="integer", nullable=true)
+     */
+    private $eventId;
+
+    /**
+     * @var integer
+     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -113,11 +120,14 @@ class Route
     private $about;
     
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var \TB\Bundle\FrontendBundle\Entity\Event
      *
-     * @ORM\ManyToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\Event", mappedBy="routes")
+     * @ORM\ManyToOne(targetEntity="TB\Bundle\FrontendBundle\Entity\Event")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="event_id", referencedColumnName="id")
+     * })
      */
-    private $events;
+    private $event;
     
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -132,7 +142,6 @@ class Route
      * @ORM\OneToMany(targetEntity="RouteMedia", mappedBy="route")
      **/
     private $routeMedias;
-    
     
 
     /**
@@ -376,40 +385,6 @@ class Route
         return $this->about;
     }
 
-    
-
-    /**
-     * Add events
-     *
-     * @param \TB\Bundle\FrontendBundle\Entity\Event $events
-     * @return Route
-     */
-    public function addEvent(\TB\Bundle\FrontendBundle\Entity\Event $events)
-    {
-        $this->events[] = $events;
-
-        return $this;
-    }
-
-    /**
-     * Remove events
-     *
-     * @param \TB\Bundle\FrontendBundle\Entity\Event $events
-     */
-    public function removeEvent(\TB\Bundle\FrontendBundle\Entity\Event $events)
-    {
-        $this->events->removeElement($events);
-    }
-
-    /**
-     * Get events
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getEvents()
-    {
-        return $this->events;
-    }
 
     /**
      * Add editorial
@@ -501,15 +476,60 @@ class Route
     {
         return $this->routeMedias;
     }
-    
+
+
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->events = new \Doctrine\Common\Collections\ArrayCollection();
         $this->editorial = new \Doctrine\Common\Collections\ArrayCollection();
         $this->routeMedias = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
+    /**
+     * Set eventId
+     *
+     * @param integer $eventId
+     * @return Route
+     */
+    public function setEventId($eventId)
+    {
+        $this->eventId = $eventId;
+
+        return $this;
+    }
+
+    /**
+     * Get eventId
+     *
+     * @return integer 
+     */
+    public function getEventId()
+    {
+        return $this->eventId;
+    }
+
+    /**
+     * Set event
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\Event $event
+     * @return Route
+     */
+    public function setEvent(\TB\Bundle\FrontendBundle\Entity\Event $event = null)
+    {
+        $this->event = $event;
+
+        return $this;
+    }
+
+    /**
+     * Get event
+     *
+     * @return \TB\Bundle\FrontendBundle\Entity\Event 
+     */
+    public function getEvent()
+    {
+        return $this->event;
+    }
 }
