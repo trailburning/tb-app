@@ -8,6 +8,16 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 class EventController extends Controller
 {
+    
+    /**
+     * @Route("/events/{slug}")   
+     * @Route("/events/{slug}/") 
+     */
+    public function legacyEventAction($slug)
+    { 
+        return $this->redirect($this->generateUrl('event', ['slug' => $slug]), 301);
+    }
+    
     /**
      * @Route("/event/{slug}", name="event")
      * @Template()

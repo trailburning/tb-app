@@ -10,13 +10,14 @@ class TrailController extends Controller
 {
     
     /**
-     * @Route("/trail/{trailSlug}", name="trail")
-     * @Route("/editorial/{editorialSlug}/trail/{trailSlug}", name="editorial_trail")
-     * @Template()
+     * @Route("/trails/{trailSlug}")
+     * @Route("/trails/{trailSlug}/")
+     * @Route("/events/{eventSlug}/{trailSlug}")
+     * @Route("/events/{eventSlug}/{trailSlug}/")    
      */
-    public function trailAction($trailSlug, $editorialSlug = null, $eventSlug = null)
+    public function legacyTrailAction($trailSlug)
     { 
-        
+        return $this->redirect($this->generateUrl('trail', ['trailSlug' => $trailSlug]), 301);
     }
     
     /**
