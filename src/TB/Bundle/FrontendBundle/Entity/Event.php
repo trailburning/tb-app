@@ -49,13 +49,7 @@ class Event
      */
     private $slug;
     
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\OneToMany(targetEntity="Event", mappedBy="event")
-     **/
-    private $routes;
-    
+
     
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -168,6 +162,12 @@ class Event
      */
     private $map_zoom;    
     
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="EventRoute", mappedBy="event")
+     **/
+    private $eventRoutes;
 
     /**
      * Get id
@@ -722,40 +722,41 @@ class Event
      */
     public function __construct()
     {
-        $this->routes = new \Doctrine\Common\Collections\ArrayCollection();
         $this->sponsors = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->eventRoutes = new \Doctrine\Common\Collections\ArrayCollection();        
     }
 
+
     /**
-     * Add routes
+     * Add eventRoutes
      *
-     * @param \TB\Bundle\FrontendBundle\Entity\Event $routes
+     * @param \TB\Bundle\FrontendBundle\Entity\EventRoute $eventRoutes
      * @return Event
      */
-    public function addRoute(\TB\Bundle\FrontendBundle\Entity\Event $routes)
+    public function addEventRoute(\TB\Bundle\FrontendBundle\Entity\EventRoute $eventRoutes)
     {
-        $this->routes[] = $routes;
+        $this->eventRoutes[] = $eventRoutes;
 
         return $this;
     }
 
     /**
-     * Remove routes
+     * Remove eventRoutes
      *
-     * @param \TB\Bundle\FrontendBundle\Entity\Event $routes
+     * @param \TB\Bundle\FrontendBundle\Entity\EventRoute $eventRoutes
      */
-    public function removeRoute(\TB\Bundle\FrontendBundle\Entity\Event $routes)
+    public function removeEventRoute(\TB\Bundle\FrontendBundle\Entity\EventRoute $eventRoutes)
     {
-        $this->routes->removeElement($routes);
+        $this->eventRoutes->removeElement($eventRoutes);
     }
 
     /**
-     * Get routes
+     * Get eventRoutes
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getRoutes()
+    public function getEventRoutes()
     {
-        return $this->routes;
+        return $this->eventRoutes;
     }
 }

@@ -39,7 +39,8 @@ class EventController extends Controller
         $query = $this->getDoctrine()->getManager()
             ->createQuery('
                 SELECT r FROM TBFrontendBundle:Route r
-                WHERE r.eventId=:eventId
+                JOIN r.eventRoutes e
+                WHERE e.eventId=:eventId
                 ORDER BY r.id')
             ->setParameter('eventId', $event->getId());
         $routes = $query->getResult();

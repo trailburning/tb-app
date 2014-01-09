@@ -19,7 +19,7 @@ class RouteMedia
      * @ORM\Column(name="route_id", type="integer")
      * @ORM\Id
      */
-    private $route_id;
+    private $routeId;
 
     
     /**
@@ -28,7 +28,7 @@ class RouteMedia
      * @ORM\Column(name="media_id", type="integer")
      * @ORM\Id
      */
-    private $media_id;
+    private $mediaId;
 
 
     /**
@@ -68,7 +68,7 @@ class RouteMedia
      */
     public function setRouteId($routeId)
     {
-        $this->route_id = $routeId;
+        $this->routeId = $routeId;
 
         return $this;
     }
@@ -80,7 +80,7 @@ class RouteMedia
      */
     public function getRouteId()
     {
-        return $this->route_id;
+        return $this->routeId;
     }
 
     /**
@@ -91,7 +91,7 @@ class RouteMedia
      */
     public function setMediaId($mediaId)
     {
-        $this->media_id = $mediaId;
+        $this->mediaId = $mediaId;
 
         return $this;
     }
@@ -103,7 +103,7 @@ class RouteMedia
      */
     public function getMediaId()
     {
-        return $this->media_id;
+        return $this->mediaId;
     }
 
     /**

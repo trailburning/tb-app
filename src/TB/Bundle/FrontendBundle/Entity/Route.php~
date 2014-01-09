@@ -64,16 +64,16 @@ class Route
     /**
      * @var integer
      *
-     * @ORM\Column(name="user_id", type="integer", nullable=false)
+     * @ORM\Column(name="user_id", type="integer")
      */
     private $userId;
-
+    
     /**
      * @var integer
      *
-     * @ORM\Column(name="event_id", type="integer", nullable=true)
+     * @ORM\Column(name="route_type_id", type="integer", nullable=true)
      */
-    private $eventId;
+    private $routeTypeId;
 
     /**
      * @var integer
@@ -103,6 +103,16 @@ class Route
      * })
      */
     private $user;
+
+    /**
+     * @var RouteType
+     *
+     * @ORM\ManyToOne(targetEntity="RouteType")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="route_type_id", referencedColumnName="id")
+     * })
+     */
+    private $routeType;
 
     #/**
     # * @var \Doctrine\Common\Collections\Collection
@@ -143,7 +153,12 @@ class Route
      **/
     private $routeMedias;
     
-    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="EventRoute", mappedBy="route")
+     **/
+    private $eventRoutes;
 
     /**
      * Set name
@@ -479,4 +494,59 @@ class Route
     }
 
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->editorial = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->routeMedias = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->eventRoutes = new \Doctrine\Common\Collections\ArrayCollection();        
+    }
+    
+    /**
+     * Set routeTypeId
+     *
+     * @param integer $routeTypeId
+     * @return Route
+     */
+    public function setRouteTypeId($routeTypeId)
+    {
+        $this->routeTypeId = $routeTypeId;
+
+        return $this;
+    }
+
+    /**
+     * Get routeTypeId
+     *
+     * @return integer 
+     */
+    public function getRouteTypeId()
+    {
+        return $this->routeTypeId;
+    }
+
+    /**
+     * Set routeType
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\RouteType $routeType
+     * @return Route
+     */
+    public function setRouteType(\TB\Bundle\FrontendBundle\Entity\RouteType $routeType = null)
+    {
+        $this->routeType = $routeType;
+
+        return $this;
+    }
+
+    /**
+     * Get routeType
+     *
+     * @return \TB\Bundle\FrontendBundle\Entity\RouteType 
+     */
+    public function getRouteType()
+    {
+        return $this->routeType;
+    }
 }

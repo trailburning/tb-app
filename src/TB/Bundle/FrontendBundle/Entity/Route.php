@@ -64,16 +64,16 @@ class Route
     /**
      * @var integer
      *
-     * @ORM\Column(name="user_id", type="integer", nullable=false)
+     * @ORM\Column(name="user_id", type="integer")
      */
     private $userId;
-
+    
     /**
      * @var integer
      *
-     * @ORM\Column(name="event_id", type="integer", nullable=true)
+     * @ORM\Column(name="route_type_id", type="integer", nullable=true)
      */
-    private $eventId;
+    private $routeTypeId;
 
     /**
      * @var integer
@@ -103,6 +103,16 @@ class Route
      * })
      */
     private $user;
+
+    /**
+     * @var RouteType
+     *
+     * @ORM\ManyToOne(targetEntity="RouteType")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="route_type_id", referencedColumnName="id")
+     * })
+     */
+    private $routeType;
 
     #/**
     # * @var \Doctrine\Common\Collections\Collection
@@ -143,6 +153,12 @@ class Route
      **/
     private $routeMedias;
     
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="EventRoute", mappedBy="route")
+     **/
+    private $eventRoutes;
 
     /**
      * Set name
@@ -485,29 +501,53 @@ class Route
     {
         $this->editorial = new \Doctrine\Common\Collections\ArrayCollection();
         $this->routeMedias = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->eventRoutes = new \Doctrine\Common\Collections\ArrayCollection();        
     }
-
+    
     /**
-     * Set eventId
+     * Set routeTypeId
      *
-     * @param integer $eventId
+     * @param integer $routeTypeId
      * @return Route
      */
-    public function setEventId($eventId)
+    public function setRouteTypeId($routeTypeId)
     {
-        $this->eventId = $eventId;
+        $this->routeTypeId = $routeTypeId;
 
         return $this;
     }
 
     /**
-     * Get eventId
+     * Get routeTypeId
      *
      * @return integer 
      */
-    public function getEventId()
+    public function getRouteTypeId()
     {
-        return $this->eventId;
+        return $this->routeTypeId;
+    }
+
+    /**
+     * Set routeType
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\RouteType $routeType
+     * @return Route
+     */
+    public function setRouteType(\TB\Bundle\FrontendBundle\Entity\RouteType $routeType = null)
+    {
+        $this->routeType = $routeType;
+
+        return $this;
+    }
+
+    /**
+     * Get routeType
+     *
+     * @return \TB\Bundle\FrontendBundle\Entity\RouteType 
+     */
+    public function getRouteType()
+    {
+        return $this->routeType;
     }
 
     /**
@@ -531,5 +571,38 @@ class Route
     public function getEvent()
     {
         return $this->event;
+    }
+
+    /**
+     * Add eventRoutes
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\EventRoute $eventRoutes
+     * @return Route
+     */
+    public function addEventRoute(\TB\Bundle\FrontendBundle\Entity\EventRoute $eventRoutes)
+    {
+        $this->eventRoutes[] = $eventRoutes;
+
+        return $this;
+    }
+
+    /**
+     * Remove eventRoutes
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\EventRoute $eventRoutes
+     */
+    public function removeEventRoute(\TB\Bundle\FrontendBundle\Entity\EventRoute $eventRoutes)
+    {
+        $this->eventRoutes->removeElement($eventRoutes);
+    }
+
+    /**
+     * Get eventRoutes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEventRoutes()
+    {
+        return $this->eventRoutes;
     }
 }
