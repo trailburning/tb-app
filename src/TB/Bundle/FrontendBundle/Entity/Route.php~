@@ -18,6 +18,13 @@ class Route
      * @ORM\Column(name="name", type="string", length=50, nullable=true)
      */
     private $name;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="short_name", type="string", length=50, nullable=true)
+     */
+    private $short_name;
 	
     /**
      * @var string
@@ -41,7 +48,7 @@ class Route
     private $length;
 
     /**
-     * @var point
+     * @var Point point
      *
      * @ORM\Column(name="centroid", type="point", columnDefinition="GEOMETRY(POINT,4326)", nullable=true)
      */
@@ -57,17 +64,23 @@ class Route
     /**
      * @var integer
      *
-     * @ORM\Column(name="user_id", type="integer", nullable=false)
+     * @ORM\Column(name="user_id", type="integer")
      */
     private $userId;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="route_type_id", type="integer", nullable=true)
+     */
+    private $routeTypeId;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="SEQUENCE")
-     * @ORM\SequenceGenerator(sequenceName="routes_id_seq", allocationSize=1, initialValue=1)
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
@@ -92,28 +105,60 @@ class Route
     private $user;
 
     /**
+     * @var RouteType
+     *
+     * @ORM\ManyToOne(targetEntity="RouteType")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="route_type_id", referencedColumnName="id")
+     * })
+     */
+    private $routeType;
+
+    #/**
+    # * @var \Doctrine\Common\Collections\Collection
+    # *
+    # * @ORM\ManyToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\Media", inversedBy="routes")
+    # * @ORM\JoinTable(name="route_medias")
+    # */
+    #private $medias;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="about", type="text", nullable=true)
+     */
+    private $about;
+    
+    /**
+     * @var \TB\Bundle\FrontendBundle\Entity\Event
+     *
+     * @ORM\ManyToOne(targetEntity="TB\Bundle\FrontendBundle\Entity\Event")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="event_id", referencedColumnName="id")
+     * })
+     */
+    private $event;
+    
+    /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\Media", inversedBy="route")
-     * @ORM\JoinTable(name="route_medias",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="route_id", referencedColumnName="id")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="media_id", referencedColumnName="id")
-     *   }
-     * )
+     * @ORM\ManyToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\Editorial", mappedBy="routes")
      */
-    private $media;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->media = new \Doctrine\Common\Collections\ArrayCollection();
-    }
+    private $editorial;
     
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="RouteMedia", mappedBy="route")
+     **/
+    private $routeMedias;
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="EventRoute", mappedBy="route")
+     **/
+    private $eventRoutes;
 
     /**
      * Set name
@@ -286,38 +331,6 @@ class Route
         return $this->user;
     }
 
-    /**
-     * Add media
-     *
-     * @param \TB\Bundle\FrontendBundle\Entity\Media $media
-     * @return Route
-     */
-    public function addMedia(\TB\Bundle\FrontendBundle\Entity\Media $media)
-    {
-        $this->media[] = $media;
-    
-        return $this;
-    }
-
-    /**
-     * Remove media
-     *
-     * @param \TB\Bundle\FrontendBundle\Entity\Media $media
-     */
-    public function removeMedia(\TB\Bundle\FrontendBundle\Entity\Media $media)
-    {
-        $this->media->removeElement($media);
-    }
-
-    /**
-     * Get media
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getMedia()
-    {
-        return $this->media;
-    }
 
     /**
      * Set region
@@ -340,5 +353,200 @@ class Route
     public function getRegion()
     {
         return $this->region;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Route
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+    
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string 
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * Set about
+     *
+     * @param string $about
+     * @return Route
+     */
+    public function setAbout($about)
+    {
+        $this->about = $about;
+
+        return $this;
+    }
+
+    /**
+     * Get about
+     *
+     * @return string 
+     */
+    public function getAbout()
+    {
+        return $this->about;
+    }
+
+
+    /**
+     * Add editorial
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\Editorial $editorial
+     * @return Route
+     */
+    public function addEditorial(\TB\Bundle\FrontendBundle\Entity\Editorial $editorial)
+    {
+        $this->editorial[] = $editorial;
+
+        return $this;
+    }
+
+    /**
+     * Remove editorial
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\Editorial $editorial
+     */
+    public function removeEditorial(\TB\Bundle\FrontendBundle\Entity\Editorial $editorial)
+    {
+        $this->editorial->removeElement($editorial);
+    }
+
+    /**
+     * Get editorial
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEditorial()
+    {
+        return $this->editorial;
+    }
+
+    /**
+     * Set short_name
+     *
+     * @param string $shortName
+     * @return Route
+     */
+    public function setShortName($shortName)
+    {
+        $this->short_name = $shortName;
+
+        return $this;
+    }
+
+    /**
+     * Get short_name
+     *
+     * @return string 
+     */
+    public function getShortName()
+    {
+        return $this->short_name;
+    }
+    
+    
+
+    /**
+     * Add routeMedias
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\RouteMedia $routeMedias
+     * @return Route
+     */
+    public function addRouteMedia(\TB\Bundle\FrontendBundle\Entity\RouteMedia $routeMedias)
+    {
+        $this->routeMedias[] = $routeMedias;
+
+        return $this;
+    }
+
+    /**
+     * Remove routeMedias
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\RouteMedia $routeMedias
+     */
+    public function removeRouteMedia(\TB\Bundle\FrontendBundle\Entity\RouteMedia $routeMedias)
+    {
+        $this->routeMedias->removeElement($routeMedias);
+    }
+
+    /**
+     * Get routeMedias
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRouteMedias()
+    {
+        return $this->routeMedias;
+    }
+
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->editorial = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->routeMedias = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->eventRoutes = new \Doctrine\Common\Collections\ArrayCollection();        
+    }
+    
+    /**
+     * Set routeTypeId
+     *
+     * @param integer $routeTypeId
+     * @return Route
+     */
+    public function setRouteTypeId($routeTypeId)
+    {
+        $this->routeTypeId = $routeTypeId;
+
+        return $this;
+    }
+
+    /**
+     * Get routeTypeId
+     *
+     * @return integer 
+     */
+    public function getRouteTypeId()
+    {
+        return $this->routeTypeId;
+    }
+
+    /**
+     * Set routeType
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\RouteType $routeType
+     * @return Route
+     */
+    public function setRouteType(\TB\Bundle\FrontendBundle\Entity\RouteType $routeType = null)
+    {
+        $this->routeType = $routeType;
+
+        return $this;
+    }
+
+    /**
+     * Get routeType
+     *
+     * @return \TB\Bundle\FrontendBundle\Entity\RouteType 
+     */
+    public function getRouteType()
+    {
+        return $this->routeType;
     }
 }

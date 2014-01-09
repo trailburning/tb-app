@@ -1,0 +1,194 @@
+{% extends '::base.html.twig' %}
+
+{% block meta %}
+{# add canonical link for search engines when displaying trail in relation with editorials or events #}
+{% if editorial != null or event != null %}
+<link rel="canonical" href="{{ url('trail', {'trailSlug': trail.slug}) }}"/>
+{% endif %}
+{% endblock %}
+
+{% block title %}{{ trail.name }}{% endblock %}
+
+{% block stylesheets %}
+<link href="{{ asset('assets/css/trail.css') }}" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block body %}
+<script>
+var TB_APP = 'TrailApp';
+var TB_TRAIL_ID = {{ trail.id }};
+</script>
+
+<div id="content_view">
+    <div id="trailplayer">
+        <div id="trail_views">        
+            <div id="trail_map_view"></div>
+            <div id="trail_slide_view"></div>      
+        </div>
+        <div id="trail_info">   
+            {% if user.avatar != '' %}
+                <div class="trail_avatar"><a href="{{ path('profile', {'name': user.name}) }}"><img src="{{ asset('assets/img/avatars/' ~ user.avatar) }}" border="0"></a></div>    
+            {% endif %}   
+            <div class="trail_title{% if user.avatar == '' %} no_avatar{% endif %}">
+                {% if event %}
+                    <h2 class="tb tb-title">{{ event.title }}</h2>
+                    <br/>
+                    <h2 class="tb tb-title">{{ trail.name }}</h2>
+                {% else %}
+                    <h2 class="tb tb-title">{{ trail.name }}</h2>
+                    <br/>
+                    <h2 class="tb tb-title">{{ trail.region }}</h2>
+                {% endif %}
+                {% if user.id != 1 %}
+                    <br/> 
+                    {% if user is UserProfile %}
+                        <div class="author">by <strong>{{ user.firstName }} {{ user.lastName }}</strong></div>
+                    {% elseif user is BrandProfile %}
+                        <div class="author">by <strong>{{ user.displayName }}</strong></div>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+        <div id="view_map_btns">        
+            <div class='controls'>
+                <span class="btn btn-tb zoomin_btn">+</span>          
+                <span class="btn btn-tb zoomout_btn">-</span>
+                <span class="btn btn-tb view_btn">Satellite</span>          
+            </div>    
+        </div>    
+        <div id="view_player_btns">
+            <div id="slideshow_toggle"><span class="button"></span></div>
+            <div id="view_toggle"><span id="view_toggle_btn" class="button">Change View</span></div>
+        </div>
+    </div>
+  
+    <div class="panel_container">       
+        <div class="panel_content_container">       
+            <div class="panel_content">       
+                <div id="bigbar">
+                    {{ include('TBFrontendBundle:Default:breadcrumb.html.twig', breadcrumb) }}
+                    {{ include('TBFrontendBundle:Default:share.html.twig') }}                     
+                </div>
+
+                <div class="panels clearfix">     
+                    <div class="two_col_panels">
+                        <div class="left">
+                            <div class="panel trail_detail_panel">
+                                <div class="content">
+                                    <h3 class="tb">About the trail</h3>
+                                    <h4 class="tb">{{ trail.about }}</h4>
+                                </div>
+                            </div>
+                        </div>  
+                        <div class="right">
+                            <div id="trail_weather_view" class="panel trail_weather_panel"></div>
+                            {% if event and relatedTrails %}
+                                {% for relatedTrail in relatedTrails %}
+                                    <div class="panel promote_panel">
+                                        <div class="content">
+                                            <h3 class="tb">Run</h3>
+                                            <a href="{{ path('trail', {trailSlug: relatedTrail.slug}) }}">
+                                                <div class="photo tb-photo-btn">
+                                                    <div class="image_container"><img src="http://app.resrc.it/http://s3-eu-west-1.amazonaws.com/{{ relatedTrail.routeMedias[0].media.versions[0].path }}" class="resrc scale" /></div>
+                                                    <div class="promote_title">
+                                                        <h1 class="title_shadow">{{ event.title }}</h1>
+                                                        <br />
+                                                        <h1 class="title_shadow">{{ relatedTrail.shortName }}</h1>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>  
+                    </div>
+                </div>
+            </div>    
+        </div>
+  
+        <div id="trail_overlay">
+            <div class="overlay_content">
+                <div id="trail_stats_view" class="trailstats_panel"></div>
+                    <div id="trail_altitude_view" class="trail_altitude_panel"></div>
+                    <div id="trail_mini_view">
+                    <div id="trail_minimap_view" class="trail_minimap"></div>
+                    <div id="trail_minislide_view" class="trail_minislide"></div>
+                    <div class='border_top'></div>
+                    <div class='border_left'></div>
+                    <div class='toggle_view_button'></div>          
+                </div>
+            </div>
+            <div class="overlay_pull"><span class="button"></span></div>
+        </div>
+        <div class="line_break"></div>    
+    </div>  
+</div>  
+          
+
+<script type="text/template" id="trailStatsViewTemplate">
+  <div class="content">
+    <div class="length"></div>
+    <div class="terrain"></div>          
+  </div>
+</script>
+
+<script type="text/template" id="trailMiniMapViewTemplate">
+  <div id='minimap'></div>  
+</script>
+
+<script type="text/template" id="trailMiniSlideViewTemplate">
+  <div id='minislide'>
+    <div class="photos_container"></div>
+  </div>
+</script>
+
+<script type="text/template" id="trailSlideViewTemplate">
+  <div class="photos_container"></div>
+  <div class="slide_btns">
+    <div class="left"></div>
+    <div class="right"></div>
+  </div>  
+  <div class="loader_container">
+    <div class="loader"></div>
+  </div>  
+</script>
+
+<script type="text/template" id="trailSlidePhotoViewTemplate">
+  <div class="image_container fade_on_load"><img src="http://app.resrc.it/O=80/http://s3-eu-west-1.amazonaws.com/<%= versionLargePath%>" class="resrc scale" /></div>  
+</script>
+
+<script type="text/template" id="trailMapViewTemplate">
+  <div class="map_container">
+    <div id='map_large'></div>
+  </div>
+</script>
+
+<script type="text/template" id="traiAltitudeViewTemplate">
+  <div class="profile">
+    <canvas id="graph"></canvas>
+    <div class="location"></div>      
+  </div>
+</script>
+
+<script type="text/template" id="trailMediaMarkerViewTemplate">
+  <div class="marker_container">
+    <div class="marker"></div>
+    <div class="alt"></div>  
+  </div>
+</script>
+
+<script type="text/template" id="trailWeatherViewTemplate">
+  <div class="content">
+    <h3 class="tb">Today&#39;s weather</h3>
+    <div class="desc"></div>
+    <div class="detail clearfix">                  
+      <div class="text">
+        <div class="temp"></div>
+        <div class="wind"></div>
+      </div>
+      <div class="icon"></div>
+    </div>
+  </div>
+</script>
+{% endblock %}

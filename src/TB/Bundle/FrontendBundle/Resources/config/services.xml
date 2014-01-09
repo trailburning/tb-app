@@ -17,4 +17,9 @@
         </service>
     </services>
     -->
+    <services>
+        <service id="tb.twig.tb_extension" class="TB\Bundle\FrontendBundle\Twig\TBExtension">
+            <tag name="twig.extension" />
+        </service>
+    </services>
 </container>

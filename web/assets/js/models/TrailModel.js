@@ -9,7 +9,7 @@ define([
         id: 0
       };
     },    
-    urlRoot: RESTAPI_BASEURL + 'v1/route',
+    urlRoot: TB_RESTAPI_BASEURL + '/v1/route',
     initialize: function() {            
     }
   });

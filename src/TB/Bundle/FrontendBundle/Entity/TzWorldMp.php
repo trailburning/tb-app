@@ -31,8 +31,7 @@ class TzWorldMp
      *
      * @ORM\Column(name="gid", type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="SEQUENCE")
-     * @ORM\SequenceGenerator(sequenceName="tz_world_mp_gid_seq", allocationSize=1, initialValue=1)
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $gid;
 

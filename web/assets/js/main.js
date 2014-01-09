@@ -1,3 +1,4 @@
+
 if (typeof TB_APP != 'undefined') {
 	require.config({
 		paths: {
@@ -7,10 +8,8 @@ if (typeof TB_APP != 'undefined') {
 			backbone: 'libs/backbone-min'
 		}
 	});
-	require([
-		// Load our app module and pass it to our definition function
-		TB_APP,
-	], function(App){
+    // Load our app module and pass it to our definition function
+	require(['controller/' + TB_APP], function(App){
 		App.initialize();
 	});
 }
