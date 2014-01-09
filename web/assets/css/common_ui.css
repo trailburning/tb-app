@@ -264,6 +264,7 @@ h4.tb {
 /* FOOTER */
 /******************************************/
 #footerview {
+  display: none;
   z-index: 200;
   position: relative;
   width: 100%;

@@ -75,7 +75,8 @@ define([
   
       $('#trailplayer').show();
       $('.panel_container').show();
-      
+      $('#footerview').show();
+            
       this.updatePlayerHeight();
       
       // get trail    
