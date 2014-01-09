@@ -130,16 +130,6 @@ class Route
     private $about;
     
     /**
-     * @var \TB\Bundle\FrontendBundle\Entity\Event
-     *
-     * @ORM\ManyToOne(targetEntity="TB\Bundle\FrontendBundle\Entity\Event")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="event_id", referencedColumnName="id")
-     * })
-     */
-    private $event;
-    
-    /**
      * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\ManyToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\Editorial", mappedBy="routes")
@@ -548,29 +538,6 @@ class Route
     public function getRouteType()
     {
         return $this->routeType;
-    }
-
-    /**
-     * Set event
-     *
-     * @param \TB\Bundle\FrontendBundle\Entity\Event $event
-     * @return Route
-     */
-    public function setEvent(\TB\Bundle\FrontendBundle\Entity\Event $event = null)
-    {
-        $this->event = $event;
-
-        return $this;
-    }
-
-    /**
-     * Get event
-     *
-     * @return \TB\Bundle\FrontendBundle\Entity\Event 
-     */
-    public function getEvent()
-    {
-        return $this->event;
     }
 
     /**

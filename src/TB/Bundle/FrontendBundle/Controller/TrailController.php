@@ -42,8 +42,8 @@ class TrailController extends Controller
             );
         }
         
-        if ($trail->getEvent() !== null) {
-            $event = $trail->getEvent();
+        if (count($trail->getEventRoutes()) > 0) {
+            $event = $trail->getEventRoutes()[0]->getEvent();
             $query = $this->getDoctrine()->getManager()
                 ->createQuery('
                     SELECT r FROM TBFrontendBundle:Route r
