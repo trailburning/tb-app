@@ -37,6 +37,8 @@ define([
       $('.image_container').css('opacity', 1);
     });
     
+  	$('#footerview').show();
+  	    
     function handleResize() {
       $("img.scale_image_ready").imageScale();
     }
