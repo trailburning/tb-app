@@ -49,13 +49,7 @@ class Event
      */
     private $slug;
     
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\OneToMany(targetEntity="Event", mappedBy="event")
-     **/
-    private $routes;
-    
+
     
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -168,6 +162,12 @@ class Event
      */
     private $map_zoom;    
     
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="EventRoute", mappedBy="event")
+     **/
+    private $eventRoutes;
 
     /**
      * Get id
@@ -717,4 +717,13 @@ class Event
     {
         return $this->regionId;
     }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->sponsors = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->eventRoutes = new \Doctrine\Common\Collections\ArrayCollection();        
+    }
+
 }
