@@ -86,28 +86,50 @@ var TB_EVENT_MAP_ZOOM = {{ event.mapZoom }};
                 </div>
             </div>
             {% if routes %}
-                <div class="event_trails_container">      
+                <div class="event_trails_container">
                 {% for route in routes %}
-                    <div class="panel event_trail">
-                        <h3 class="tb">{{ route.shortName ? route.shortName : route.name  }}</h3>
-                        <a href="{{ path('trail', {trailSlug: route.slug}) }}">
-                            <div class="detail">
-                                {% if route.tags.ascent %}
-                                    <div class="terrain">
-                                        <h2 class="tb">{{ route.tags.ascent|dimension_format('m') }}</h2>
-                                        {% if route.tags.descent %}
-                                        <div class="desc">D+ / {{ route.tags.descent|dimension_format('m') }} D-</div>
+                    {% if routes|length == 1 %}
+                        <div class="panel big_event_trail">
+                            <h3 class="tb">{{ route.routeType ? route.routeType.name : 'Run' }}</h3>
+                            <a href="{{ path('trail', {trailSlug: route.slug}) }}">
+                                <div class="photo tb-photo-btn">
+                                    <div class="image_container"><img src="http://app.resrc.it/http://s3-eu-west-1.amazonaws.com/{{ route.routeMedias[0].media.versions[0].path }}" class="resrc scale" border="0"/></div>
+                                    <div class="card_title">
+                                        {% if route.eventRoutes[0].date %}
+                                            <h1>{{ route.eventRoutes[0].date|date('d.m.y') }}</h1>
+                                            <br/>
                                         {% endif %}
-                                    </div>                                              
-                                {% endif %}
-                                <div class="length">
-                                    <h2 class="tb">{{ route.length|dimension_format('km', 1000) }}</h2>
-                                    <div class="desc">Length</div>
+                                        <h1>{{ route.name }}</h1>
+                                    </div>
                                 </div>
+                            </a>
+                            <div class="details">
+                                <div class="logo"><!--<img src="http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/events/tfor/trail_logo_ashmei.png" border="0"/>--></div>
+                                <div class="more"><a class="btn btn-tb" href="{{ path('trail', {trailSlug: route.slug}) }}">More</a></div>
                             </div>
-                        </a>
-                        <div class="more"><a class="btn btn-tb"  href="{{ path('trail', {trailSlug: route.slug}) }}">More</a></div>
-                    </div>
+                        </div>
+                    {% else %}
+                        <div class="panel event_trail">
+                            <h3 class="tb">{{ route.shortName ? route.shortName : route.name  }}</h3>
+                            <a href="{{ path('trail', {trailSlug: route.slug}) }}">
+                                <div class="detail">
+                                    {% if route.tags.ascent %}
+                                        <div class="terrain">
+                                            <h2 class="tb">{{ route.tags.ascent|dimension_format('m') }}</h2>
+                                            {% if route.tags.descent %}
+                                            <div class="desc">D+ / {{ route.tags.descent|dimension_format('m') }} D-</div>
+                                            {% endif %}
+                                        </div>                                              
+                                    {% endif %}
+                                    <div class="length">
+                                        <h2 class="tb">{{ route.length|dimension_format('km', 1000) }}</h2>
+                                        <div class="desc">Length</div>
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="more"><a class="btn btn-tb"  href="{{ path('trail', {trailSlug: route.slug}) }}">More</a></div>
+                        </div>
+                    {% endif %}    
                 {% endfor %}    
                 </div>
             {% endif %}

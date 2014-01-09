@@ -42,16 +42,17 @@ class TrailController extends Controller
             );
         }
         
-        if ($trail->getEvent() !== null) {
-            $event = $trail->getEvent();
+        if (count($trail->getEventRoutes()) > 0) {
+            $event = $trail->getEventRoutes()[0]->getEvent();
             $query = $this->getDoctrine()->getManager()
                 ->createQuery('
                     SELECT r FROM TBFrontendBundle:Route r
-                    WHERE r.eventId=:eventId
-                    AND r.id!=:trailId
+                    JOIN r.eventRoutes e
+                    WHERE e.eventId=:eventId
+                    AND r.id!=:routeId
                     ORDER BY r.id')
                 ->setParameter('eventId', $event->getId())
-                ->setParameter('trailId', $trail->getId());
+                ->setParameter('routeId', $trail->getId());
             $relatedTrails = $query->getResult();
             
             // breadcrumb to event page

@@ -1,0 +1,92 @@
+<?php
+
+namespace TB\Bundle\FrontendBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * EventRoute
+ *
+ * @ORM\Table()
+ * @ORM\Entity
+ */
+class EventRoute
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="event_id", type="integer")
+     * @ORM\Id
+     */
+    private $event_id;
+
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="route_id", type="integer")
+     * @ORM\Id
+     */
+    private $route_id;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date", type="date")
+     */
+    private $date;
+    
+    /**
+     * @var Event
+     *
+     * @ORM\ManyToOne(targetEntity="Event")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="event_id", referencedColumnName="id", onDelete="CASCADE")
+     * })
+     */
+    private $event;
+
+
+    /**
+     * @var Route
+     *
+     * @ORM\ManyToOne(targetEntity="Route")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="route_id", referencedColumnName="id", onDelete="CASCADE")
+     * })
+     */
+    private $route;
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set date
+     *
+     * @param \DateTime $date
+     * @return EventRoute
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    /**
+     * Get date
+     *
+     * @return \DateTime 
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+}
