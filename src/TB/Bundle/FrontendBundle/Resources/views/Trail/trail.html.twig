@@ -83,23 +83,52 @@ var TB_TRAIL_ID = {{ trail.id }};
                         <div class="right">
                             <div id="trail_weather_view" class="panel trail_weather_panel"></div>
                             {% if event and relatedTrails %}
-                                {% for relatedTrail in relatedTrails %}
-                                    <div class="panel promote_panel">
-                                        <div class="content">
-                                            <h3 class="tb">Run</h3>
-                                            <a href="{{ path('trail', {trailSlug: relatedTrail.slug}) }}">
-                                                <div class="photo tb-photo-btn">
-                                                    <div class="image_container"><img src="http://app.resrc.it/http://s3-eu-west-1.amazonaws.com/{{ relatedTrail.routeMedias[0].media.versions[0].path }}" class="resrc scale" /></div>
-                                                    <div class="promote_title">
-                                                        <h1 class="title_shadow">{{ event.title }}</h1>
-                                                        <br />
-                                                        <h1 class="title_shadow">{{ relatedTrail.shortName ? relatedTrail.shortName : relatedTrail.name  }}</h1>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
+                				<div class="event_trails_container">
+                                {% for relatedTrail in relatedTrails %}                                
+				                    {% if relatedTrails|length == 1 %}
+				                        <div class="panel big_event_trail">
+				                            <h3 class="tb">{{ relatedTrail.routeType ? relatedTrail.routeType.name : 'Run' }}</h3>
+				                            <a href="{{ path('trail', {trailSlug: relatedTrail.slug}) }}">
+				                                <div class="photo tb-photo-btn">
+				                                    <div class="image_container"><img src="http://app.resrc.it/http://s3-eu-west-1.amazonaws.com/{{ relatedTrail.routeMedias[0].media.versions[0].path }}" class="resrc scale" border="0"/></div>
+				                                    <div class="card_title">
+				                                        {% if relatedTrail.eventRoutes[0].date %}
+				                                            <h1>{{ relatedTrail.eventRoutes[0].date|date('d.m.y') }}</h1>
+				                                            <br/>
+				                                        {% endif %}
+				                                        <h1>{{ relatedTrail.name }}</h1>
+				                                    </div>
+				                                </div>
+				                            </a>
+				                            <div class="details">
+				                                <div class="logo"><!--<img src="http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/events/tfor/trail_logo_ashmei.png" border="0"/>--></div>
+				                                <div class="more"><a class="btn btn-tb" href="{{ path('trail', {trailSlug: relatedTrail.slug}) }}">More</a></div>
+				                            </div>
+				                        </div>
+				                    {% else %}                                
+				                        <div class="panel event_trail">
+				                        	<h3 class="tb">{{ relatedTrail.shortName ? relatedTrail.shortName : relatedTrail.name  }}</h3>
+				                        	<a href="{{ path('trail', {trailSlug: relatedTrail.slug}) }}">
+				                                <div class="detail">
+				                                    {% if relatedTrail.tags.ascent %}
+				                                        <div class="terrain">
+				                                            <h2 class="tb">{{ relatedTrail.tags.ascent|dimension_format('m') }}</h2>
+				                                            {% if relatedTrail.tags.descent %}
+				                                            <div class="desc">D+ / {{ relatedTrail.tags.descent|dimension_format('m') }} D-</div>
+				                                            {% endif %}
+				                                        </div>                                              
+				                                    {% endif %}
+				                                    <div class="length">
+				                                        <h2 class="tb">{{ relatedTrail.length|dimension_format('km', 1000) }}</h2>
+				                                        <div class="desc">Length</div>
+				                                    </div>
+				                                </div>
+				                            </a>
+				                            <div class="more"><a class="btn btn-tb"  href="{{ path('trail', {trailSlug: relatedTrail.slug}) }}">More</a></div>
+				                        </div>				                        
+									{% endif %}				                        
                                 {% endfor %}
+                                </div>
                             {% endif %}
                         </div>  
                     </div>
