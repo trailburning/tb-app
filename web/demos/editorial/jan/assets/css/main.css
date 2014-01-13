@@ -371,7 +371,12 @@ html.touch #small_sponsor_bar {
 }
 
 .trail_card_panel .summary .sponsor {
-  float: left;  
+  float: left;
+  height: 56px;
+}
+
+.trail_card_panel .summary .sponsor img {
+  height: 100%;
 }
 
 .trail_card_panel .summary .avatar {
