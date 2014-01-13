@@ -32,9 +32,9 @@ define([
       this.locationIcon = new LocationIcon({iconUrl: 'https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/icons/location.png'});
     },            
     show: function(){
-      this.showDetail(true);      
       $(this.el).show();
       $(this.elCntrls).show();
+      this.showDetail(true);      
     },
     hide: function(){
       $(this.el).hide();

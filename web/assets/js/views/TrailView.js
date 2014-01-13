@@ -37,6 +37,7 @@ define([
       app.dispatcher.on("TrailMapView:zoominclick", self.onTrailMapViewZoomInClick, this);
       app.dispatcher.on("TrailMapView:zoomoutclick", self.onTrailMapViewZoomOutClick, this);
       app.dispatcher.on("TrailMapMediaMarkerView:mediaclick", self.onTrailMapMediaMarkerClick, this);
+      app.dispatcher.on("TrailMapMediaMarkerView:photoclick", self.onTrailMapMediaPhotoClick, this);      
       app.dispatcher.on("TrailMediaMarkerView:mediaclick", self.onTrailMediaMarkerClick, this);
       app.dispatcher.on("TrailSlideView:slideview", self.onTrailSlideViewSlideView, this);
       app.dispatcher.on("TrailSlideView:clickslideprev", self.onTrailSlideViewSlideClickPrev, this);
@@ -248,22 +249,27 @@ define([
       
       // keyboard control
       $(document).keydown(function(e){
-        if (e.keyCode == 13) {
-          e.preventDefault();
-          self.toggleOverlay();
-        }
-        if (e.keyCode == 32) {
-          e.preventDefault();
-          self.toggleSlideshow();
-        }
-        if (e.keyCode == 37) {
-          self.stopSlideShow();
-          self.prevSlide();         
-        }
-        if (e.keyCode == 39) {
-          self.stopSlideShow();
-          self.nextSlide();         
-        }
+      	switch (e.keyCode) {
+      	  case 13: // toggle overlay
+            e.preventDefault();
+            self.toggleOverlay();
+      	    break;
+      	  case 32: // toggle slideshow
+          	e.preventDefault();
+          	self.toggleSlideshow();      	  
+      	    break;
+      	  case 37: // previos slide
+          	self.stopSlideShow();
+          	self.prevSlide();         
+      	    break;
+      	  case 39: // next slide
+          	self.stopSlideShow();
+          	self.nextSlide();         
+      	    break;
+      	  case 86: // toggle view
+          	self.onTrailToggleViewBtnClick();
+      	    break;
+      	}
       });
     },
     tickle: function(){
@@ -445,6 +451,9 @@ define([
       
       this.stopSlideShow();
       this.gotoMedia(nMedia);
+    },
+    onTrailMapMediaPhotoClick: function(mapMediaMarkerView){
+      this.onTrailToggleViewBtnClick();
     },
     onTrailMediaMarkerClick: function(mediaMarkerView){
       // look up model in collcetion
