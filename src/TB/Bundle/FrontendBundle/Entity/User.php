@@ -68,12 +68,20 @@ abstract class User
     private $events;
     
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="Editorial", mappedBy="user")
+     **/
+    private $editorials;
+    
+    /**
      * Constructor
      */
     public function __construct()
     {
         $this->routes = new \Doctrine\Common\Collections\ArrayCollection();
         $this->events = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->editorials = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     abstract public function getTitle();
@@ -244,5 +252,38 @@ abstract class User
     public function getEvents()
     {
         return $this->events;
+    }
+
+    /**
+     * Add editorials
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\Editorial $editorials
+     * @return User
+     */
+    public function addEditorial(\TB\Bundle\FrontendBundle\Entity\Editorial $editorials)
+    {
+        $this->editorials[] = $editorials;
+
+        return $this;
+    }
+
+    /**
+     * Remove editorials
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\Editorial $editorials
+     */
+    public function removeEditorial(\TB\Bundle\FrontendBundle\Entity\Editorial $editorials)
+    {
+        $this->editorials->removeElement($editorials);
+    }
+
+    /**
+     * Get editorials
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEditorials()
+    {
+        return $this->editorials;
     }
 }

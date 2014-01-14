@@ -49,8 +49,6 @@ class Event
      */
     private $slug;
     
-
-    
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
@@ -103,6 +101,13 @@ class Event
     /**
      * @var string
      *
+     * @ORM\Column(name="logo_small", type="string", length=50, nullable=true)
+     */
+    private $logoSmall;
+    
+    /**
+     * @var string
+     *
      * @ORM\Column(name="image", type="string", length=50)
      */
     private $image;   
@@ -131,7 +136,7 @@ class Event
     /**
      * @var \TB\Bundle\FrontendBundle\Entity\User
      *
-     * @ORM\ManyToOne(targetEntity="TB\Bundle\FrontendBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="TB\Bundle\FrontendBundle\Entity\User", inversedBy="events")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      * })
@@ -148,7 +153,7 @@ class Event
     /**
      * @var \TB\Bundle\FrontendBundle\Entity\Region
      *
-     * @ORM\ManyToOne(targetEntity="TB\Bundle\FrontendBundle\Entity\Region")
+     * @ORM\ManyToOne(targetEntity="TB\Bundle\FrontendBundle\Entity\Region", inversedBy="events")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="region_id", referencedColumnName="id")
      * })
@@ -726,4 +731,37 @@ class Event
         $this->eventRoutes = new \Doctrine\Common\Collections\ArrayCollection();        
     }
 
+
+    /**
+     * Add eventRoutes
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\EventRoute $eventRoutes
+     * @return Event
+     */
+    public function addEventRoute(\TB\Bundle\FrontendBundle\Entity\EventRoute $eventRoutes)
+    {
+        $this->eventRoutes[] = $eventRoutes;
+
+        return $this;
+    }
+
+    /**
+     * Remove eventRoutes
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\EventRoute $eventRoutes
+     */
+    public function removeEventRoute(\TB\Bundle\FrontendBundle\Entity\EventRoute $eventRoutes)
+    {
+        $this->eventRoutes->removeElement($eventRoutes);
+    }
+
+    /**
+     * Get eventRoutes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEventRoutes()
+    {
+        return $this->eventRoutes;
+    }
 }

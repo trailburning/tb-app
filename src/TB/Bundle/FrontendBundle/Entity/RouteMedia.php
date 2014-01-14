@@ -42,7 +42,7 @@ class RouteMedia
     /**
      * @var \TB\Bundle\FrontendBundle\Entity\Route
      *
-     * @ORM\ManyToOne(targetEntity="TB\Bundle\FrontendBundle\Entity\Route")
+     * @ORM\ManyToOne(targetEntity="TB\Bundle\FrontendBundle\Entity\Route", inversedBy="routeMedias")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="route_id", referencedColumnName="id", onDelete="CASCADE")
      * })
@@ -52,7 +52,7 @@ class RouteMedia
     /**
      * @var \TB\Bundle\FrontendBundle\Entity\Media
      *
-     * @ORM\ManyToOne(targetEntity="TB\Bundle\FrontendBundle\Entity\Media")
+     * @ORM\ManyToOne(targetEntity="TB\Bundle\FrontendBundle\Entity\Media", inversedBy="routeMedias")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="media_id", referencedColumnName="id")
      * })
