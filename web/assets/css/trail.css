@@ -13,6 +13,76 @@ border-width:1px;
   -webkit-transition-delay: 0.5s;  
 }
 
+/* SMALL SPONSOR BAR */
+/******************************************/
+#small_sponsor_bar {
+  z-index: 199;
+  position: fixed;
+  top: 63px;
+  width: 100%;
+  height: 45px;
+  background: url("../img/sponsor/back_small.png") repeat-x top left;
+}
+
+html.no-touch #small_sponsor_bar {
+  -webkit-transition: top 1s;
+  -moz-transition: top 1s;
+  -o-transition: top 1s;
+  transition: top 1s;    
+  -webkit-transform:translate3d(0,0,0);
+}
+
+html.touch #small_sponsor_bar {
+  display: none;
+  top: 63px;
+}
+
+#small_sponsor_bar .sponsor_content {
+  margin: 8px auto 0px auto;
+  width: 1112px;	
+}
+
+/* SPONSOR CONTENT */
+/******************************************/
+.sponsor_content {	
+  font-size: 14px;
+  line-height: 1em;
+  color: #FFFFFF;	
+}
+
+.sponsor_content a, 
+.sponsor_content a:link, 
+.sponsor_content a:visited {
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+.sponsor_content a:hover, 
+.sponsor_content a:active {
+  color: #979797;
+  text-decoration: none;    
+}
+
+.sponsor_content .link {
+  float: left;
+  margin-top: 10px;
+  text-transform: uppercase;
+}
+
+.sponsor_content .brand {
+  float: right;
+}
+
+.sponsor_content .strap {
+  float: left;  
+  margin-top: 10px;
+}
+
+.sponsor_content .logo {
+  float: left;
+  margin-left: 10px;
+}
+
 /* CONTENT VIEW */
 /******************************************/
 #content_view {
@@ -861,6 +931,167 @@ html.touch #trailplayer #view_map_btns {
   line-height: 56px;
 }
 
+/* EDITORIAL PANEL */
+/******************************************/
+.editorial_panel {
+  margin: 24px 0px 0px 0px;
+  width: 100%;
+}
+
+.editorial_panel .editorial_header {
+  margin: 80px 85px 0px 85px;
+  padding-bottom: 20px;
+
+}
+
+.editorial_panel .header {
+  float: left;
+}
+
+.editorial_panel .header h3 {
+  color: #6D6E71;
+  line-height: 1em;
+}
+
+.editorial_panel .line {
+  float: right;
+  width: 332px;
+  margin-top: 27px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #C1C1C1;
+}
+
+.editorial_panel .author {
+  clear: both;
+  margin-left: 2px;
+  padding-top: 12px;  
+}
+
+.editorial_panel .date {
+  font-size: 14px;	
+}
+
+/* EDITORIAL CARDS */
+/******************************************/
+.editorial_cards {
+  clear: both;
+  margin-left: 85px;
+  margin-bottom: 46px;
+}
+
+.editorial_cards .panel {
+  display: inline-block;
+  float: none;
+  text-align: left;
+  vertical-align: top;
+  width: 260px;
+  margin: 13px 13px 13px 13px;
+  line-height: 1em;
+  color: #FFFFFF;
+}  
+
+.editorial_cards .panel .summary {  
+  font-size: 16px;
+  font-weight: 300;
+  color: #666666;
+}
+
+.editorial_cards .panel .summary strong {
+  font-weight: 700;
+}
+
+.editorial_cards .panel .image_container {
+  position: relative;
+  opacity: 0;
+  width: 100%;
+  height: 220px;
+  overflow: hidden;
+}
+
+/* TRAIL CARD PANEL */
+/******************************************/
+.trail_card_sticker {
+  float: left;
+  margin: 22px 5px 0px 6px;
+  width: 305px;
+  height: 412px;
+  background: url("../img/card_sticker_back.png") no-repeat top left;
+  background-size: 100% 100%;  	
+}
+
+.trail_card_panel .title {
+  margin-left: 22px;
+  height: 74px;
+  color: #44B6F7;
+}
+
+.trail_card_panel .title h3 {
+  line-height: 74px;
+}
+
+.trail_card_panel .photo {
+  position: relative;
+}
+
+.trail_card_panel .photo .card_title {
+  position: absolute;
+  bottom: 14px;
+  left: 14px;
+  color: #FFFFFF;
+}
+
+.trail_card_panel .photo .card_title h1 {
+  display: inline-block;
+  margin: 8px 0px 0px 0px;
+  padding: 5px 10px 5px 5px;
+  font-weight: 400;
+  font-size: 26px;
+  line-height: 1em;  
+  background-color: #000;  
+  background: rgba(0, 0, 0, 0.6);  
+}
+
+.trail_card_panel .summary {  
+  height: 73px;
+  margin: 5px 0px 0px 14px;
+  color: #44B6F7;
+}
+
+.trail_card_panel .summary .sponsor {
+  float: left;
+  height: 56px;
+}
+
+.trail_card_panel .summary .sponsor img {
+  height: 100%;
+}
+
+.trail_card_panel .summary .avatar {
+  float: left;
+  width: 54px;
+  margin-top: 5px;
+}
+
+.trail_card_panel .summary .avatar img {
+  width: 100%;
+}
+
+.trail_card_panel .summary .detail {
+  float: left;  
+  margin-top: 14px;
+  margin-left: 6px;
+}
+
+.trail_card_panel .summary .stars {
+  margin-top: 6px;
+}
+
+.trail_card_panel .summary .stars div {
+  width: 13px;
+  height: 14px;
+}
+
 /* TOUCH */
 /******************************************/
 #view_map_btns .touch_btn {  
@@ -926,7 +1157,16 @@ html.touch #trailplayer #view_map_btns {
   }
   .trail_weather_panel {
     width: 472px;
+  }    
+  .event_trails_container .event_trail {
+    width: 222px;
+  }  
+  .event_trail .detail {
+  	height: 192px;
   }
+  .event_trails_container .big_event_trail {
+    width: 472px;
+  }  
   .trail_weather_panel .detail .text {
     width: 250px;
   }
@@ -954,6 +1194,32 @@ html.touch #trailplayer #view_map_btns {
     width: 220px;
     height: 174px;
   }
+  .editorial_panel .line {
+    width: 288px;
+  }  
+  .trail_card_sticker {
+    margin: 22px 5px 0px 5px;
+    width: 265px;
+    height: 358px;
+  }
+  .editorial_cards .panel {
+    width: 224px;
+    margin: 12px 10px 12px 10px;
+  }  
+  .editorial_cards .panel .image_container {
+    height: 190px;
+  }
+  .editorial_cards .trail_card_panel .title {
+    margin-left: 18px;
+    height: 64px;
+  }  
+  .editorial_cards .trail_card_panel .title h3 {
+    line-height: 64px;
+  }
+  .editorial_cards .trail_card_panel .summary {  
+    height: 64px;
+    margin: 0px 0px 0px 12px;
+  }        
 }
 
 /* Small devices (tablets, 768px) */
