@@ -78,6 +78,13 @@ class Route
     /**
      * @var integer
      *
+     * @ORM\Column(name="route_category_id", type="integer", nullable=true)
+     */
+    private $routeCategoryId;
+    
+    /**
+     * @var integer
+     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -97,7 +104,7 @@ class Route
     /**
      * @var \TB\Bundle\FrontendBundle\Entity\User
      *
-     * @ORM\ManyToOne(targetEntity="TB\Bundle\FrontendBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="TB\Bundle\FrontendBundle\Entity\User", inversedBy="routes")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      * })
@@ -107,12 +114,22 @@ class Route
     /**
      * @var RouteType
      *
-     * @ORM\ManyToOne(targetEntity="RouteType")
+     * @ORM\ManyToOne(targetEntity="RouteType", inversedBy="routes")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="route_type_id", referencedColumnName="id")
      * })
      */
     private $routeType;
+
+    /**
+     * @var RouteCategory
+     *
+     * @ORM\ManyToOne(targetEntity="RouteCategory", inversedBy="routes")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="route_category_id", referencedColumnName="id")
+     * })
+     */
+    private $routeCategory;
 
     #/**
     # * @var \Doctrine\Common\Collections\Collection
@@ -134,7 +151,7 @@ class Route
      *
      * @ORM\ManyToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\Editorial", mappedBy="routes")
      */
-    private $editorial;
+    private $editorials;
     
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -393,36 +410,36 @@ class Route
 
 
     /**
-     * Add editorial
+     * Add editorials
      *
-     * @param \TB\Bundle\FrontendBundle\Entity\Editorial $editorial
+     * @param \TB\Bundle\FrontendBundle\Entity\Editorial $editorials
      * @return Route
      */
-    public function addEditorial(\TB\Bundle\FrontendBundle\Entity\Editorial $editorial)
+    public function addEditorial(\TB\Bundle\FrontendBundle\Entity\Editorial $editorials)
     {
-        $this->editorial[] = $editorial;
+        $this->editorials[] = $editorials;
 
         return $this;
     }
 
     /**
-     * Remove editorial
+     * Remove editorials
      *
-     * @param \TB\Bundle\FrontendBundle\Entity\Editorial $editorial
+     * @param \TB\Bundle\FrontendBundle\Entity\Editorial $editorials
      */
-    public function removeEditorial(\TB\Bundle\FrontendBundle\Entity\Editorial $editorial)
+    public function removeEditorial(\TB\Bundle\FrontendBundle\Entity\Editorial $editorials)
     {
-        $this->editorial->removeElement($editorial);
+        $this->editorials->removeElement($editorials);
     }
 
     /**
-     * Get editorial
+     * Get editorials
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getEditorial()
+    public function getEditorials()
     {
-        return $this->editorial;
+        return $this->editorials;
     }
 
     /**
@@ -489,7 +506,7 @@ class Route
      */
     public function __construct()
     {
-        $this->editorial = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->editorials = new \Doctrine\Common\Collections\ArrayCollection();
         $this->routeMedias = new \Doctrine\Common\Collections\ArrayCollection();
         $this->eventRoutes = new \Doctrine\Common\Collections\ArrayCollection();        
     }
@@ -571,5 +588,51 @@ class Route
     public function getEventRoutes()
     {
         return $this->eventRoutes;
+    }
+
+    /**
+     * Set routeCategoryId
+     *
+     * @param integer $routeCategoryId
+     * @return Route
+     */
+    public function setRouteCategoryId($routeCategoryId)
+    {
+        $this->routeCategoryId = $routeCategoryId;
+
+        return $this;
+    }
+
+    /**
+     * Get routeCategoryId
+     *
+     * @return integer 
+     */
+    public function getRouteCategoryId()
+    {
+        return $this->routeCategoryId;
+    }
+
+    /**
+     * Set routeCategory
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\RouteCategory $routeCategory
+     * @return Route
+     */
+    public function setRouteCategory(\TB\Bundle\FrontendBundle\Entity\RouteCategory $routeCategory = null)
+    {
+        $this->routeCategory = $routeCategory;
+
+        return $this;
+    }
+
+    /**
+     * Get routeCategory
+     *
+     * @return \TB\Bundle\FrontendBundle\Entity\RouteCategory 
+     */
+    public function getRouteCategory()
+    {
+        return $this->routeCategory;
     }
 }

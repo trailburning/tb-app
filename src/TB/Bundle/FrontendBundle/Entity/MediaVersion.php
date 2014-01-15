@@ -38,7 +38,7 @@ class MediaVersion
     /**
      * @var \TB\Bundle\FrontendBundle\Entity\Media
      *
-     * @ORM\ManyToOne(targetEntity="TB\Bundle\FrontendBundle\Entity\Media")
+     * @ORM\ManyToOne(targetEntity="TB\Bundle\FrontendBundle\Entity\Media", inversedBy="versions")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="media_id", referencedColumnName="id", onDelete="CASCADE")
      * })

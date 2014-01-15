@@ -2,18 +2,17 @@ var app = app || {};
 
 define([
   'underscore', 
-  'backbone'
-], function(_, Backbone){
+  'modernizr',
+  'backbone',
+  'views/EditorialView'  
+], function(_, Modernizr, Backbone, AppView){
   app.dispatcher = _.clone(Backbone.Events);
-  
+    
   var initialize = function() {
     var self = this;
     
-    $(window).resize(function() {
-      handleResize(); 
-    });    
-    handleResize();        
-    
+    this.appView = new AppView({ el: '#appview' });
+        
     $('#search_field').focus(function(evt) {
       $('#search_field').val('not just yet...');
       event.preventDefault();
@@ -33,13 +32,7 @@ define([
       // fade in - delay adding class to ensure image is ready  
       $('.fade_on_load').addClass('tb-fade-in');
       $('.image_container').css('opacity', 1);
-    });
-    
-  	$('#footerview').show();
-  	    
-    function handleResize() {
-      $("img.scale_image_ready").imageScale();
-    }
+    });    
   };
     
   return { 

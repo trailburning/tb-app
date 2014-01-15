@@ -39,7 +39,7 @@ class EventRoute
     /**
      * @var Event
      *
-     * @ORM\ManyToOne(targetEntity="Event")
+     * @ORM\ManyToOne(targetEntity="Event", inversedBy="eventRoutes")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="event_id", referencedColumnName="id", onDelete="CASCADE")
      * })
@@ -50,7 +50,7 @@ class EventRoute
     /**
      * @var Route
      *
-     * @ORM\ManyToOne(targetEntity="Route")
+     * @ORM\ManyToOne(targetEntity="Route", inversedBy="eventRoutes")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="route_id", referencedColumnName="id", onDelete="CASCADE")
      * })

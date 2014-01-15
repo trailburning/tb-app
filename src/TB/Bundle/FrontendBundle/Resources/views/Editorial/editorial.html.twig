@@ -1,0 +1,154 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}{{ editorial.title }}{% endblock %}
+
+{% block stylesheets %}
+<link href="{{ asset('assets/css/editorial.css') }}" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block body %}
+<script>
+var TB_APP = 'EditorialApp';
+var TB_EDITORIAL_TRAILS = [
+    {% for route in routes %}
+        { long: {{ route.centroid.longitude }}, lat: {{ route.centroid.latitude }} },  
+    {% endfor %}
+];
+</script>
+
+<div id="big_sponsor_bar">
+	<div class="sponsor_content">
+		<div class="link"><a href=""><img src="{{ asset('assets/img/sponsor/arrow_big.png') }}">&nbsp;&nbsp;&nbsp;&nbsp;Back to editorials</a></div>
+		<div class="brand">
+			<div class="strap">This article has been brought to you by</div>
+			<div class="logo"><img src="{{ asset('assets/img/sponsor/logo_big.png') }}"></div>
+		</div>
+	</div>
+</div>
+
+<div id="small_sponsor_bar">
+	<div class="sponsor_content">
+		<div class="link"><a href=""><img src="{{ asset('assets/img/sponsor/arrow_small.png') }}">&nbsp;&nbsp;&nbsp;&nbsp;Back to editorials</a></div>
+		<div class="brand">
+			<div class="strap">This article has been brought to you by</div>
+			<div class="logo"><img src="{{ asset('assets/img/sponsor/logo_small.png') }}"></div>
+		</div>
+	</div>
+</div>
+
+<div class="panel_content">          
+	<div class="panels clearfix">               	
+		<div class="panel editorial_panel">
+	  		<div class="header clearfix">
+	  			<div class="title">{{ editorial.title|nl2br }}
+	  				<div class="details">by <strong>{{ editorial.user.title }}</strong>&nbsp;&nbsp;&nbsp;<span class="date">{{ editorial.date|date('d/m/y') }}</span></div>
+	  			</div>
+	  			<div class="avatar"><img src="{{ asset('assets/img/avatars/' ~ editorial.user.avatar ) }}"></div>      		
+	  		</div>
+	  		<div class="hero"><img src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/trailburning-media/{{ editorial.image }}"></div>
+	  		<div class="content">
+	  			<div class="content_header">
+		  			<div class="header">{{ editorial.subtitle }}</div>
+		  			<div class="line"></div>
+		  			<div class="share_bar">
+      					{{ include('TBFrontendBundle:Default:share.html.twig') }} 	  				
+		  			</div>
+	  			</div>
+	  			
+				<div id="column_wrapper">
+	  			<div class="columns">
+	  			<h1>
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus et lorem vitae tellus convallis congue. Nulla facilisi. Vivamus tempus dui in pretium commodo. 
+				</h1>
+				<p>
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus et lorem vitae tellus convallis congue. Nulla facilisi. Vivamus tempus dui in pretium commodo. Praesent sodales hendrerit mi et lobortis. Nunc eu dictum erat. Etiam justo purus, mattis et velit non, ullamcorper ultrices ante. Morbi elementum orci felis, et luctus dolor tempor vel. Donec et adipiscing lorem. 
+				</p>
+				<p>
+				Duis molestie tincidunt blandit. Maecenas et mattis odio. Praesent sodales hendrerit mi et lobortis. Nunc eu dictum erat. Etiam justo purus, mattis et velit non, ullamcorper ultrices ante. Morbi elementum orci felis, et luctus dolor tempor vel. Donec et adipiscing lorem. Duis molestie tincidunt blandit. Maecenas et mattis odio. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+				</p>
+
+				<p>
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus et lorem vitae tellus convallis congue. Nulla facilisi. Vivamus tempus dui in pretium commodo. Praesent sodales hendrerit mi et lobortis.  Nulla facilisi. Vivamus tempus dui in pretium commodo. Praesent sodales hendrerit mi et lobortis. Nunc eu dictum erat. Etiam justo purus, mattis et velit non, ullamcorper ultrices ante. Morbi elementum orci felis, et luctus dolor tempor vel. 
+				</p>
+				<p>
+				Donec et adipiscing lorem. Duis molestie tincidunt blandit. Maecenas et mattis odio. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec euismod pharetra ultrices. Suspendisse ornare in nunc id iaculis. Nullam vehicula nibh bibendum, pharetra lorem ut, blandit lectus. 
+				</p>
+				<p>
+				Maecenas fringilla leo leo, quis placerat enim volutpat nec. Ut vitae rutrum elit. Nulla facilisis ultrices tellus, at semper justo. Nunc et placerat nunc, quis porta mauris. Vestibulum blandit orci ac aliquet venenatis.
+				</p>
+
+				<p>
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus et lorem vitae tellus convallis congue. Nulla facilisi. Vivamus tempus dui in pretium commodo. Praesent sodales hendrerit mi et lobortis. Nunc eu dictum erat. Etiam justo purus, mattis et velit non, ullamcorper ultrices ante. Morbi elementum orci felis, et luctus dolor tempor vel. Donec et adipiscing lorem. Duis molestie tincidunt blandit. Maecenas et mattis odio. Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+				</p>
+				<p>
+				Vivamus et lorem vitae tellus convallis congue. Nulla facilisi. Vivamus tempus dui in pretium commodo. Praesent sodales hendrerit mi et lobortis. Nunc eu dictum erat. Etiam justo purus, mattis et velit non, ullamcorper ultrices ante. Morbi elementum orci felis, et luctus dolor tempor vel. Donec et adipiscing lorem. Duis molestie tincidunt blandit. Maecenas et mattis odio.
+				</p>
+				<p>
+				Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec euismod pharetra ultrices. Suspendisse ornare in nunc id iaculis. Nullam vehicula nibh bibendum, pharetra lorem ut, blandit lectus. Maecenas fringilla leo leo, quis placerat enim volutpat nec. Ut vitae rutrum elit. Nulla facilisis ultrices tellus, at semper justo. Nunc et placerat nunc, quis porta mauris. Vestibulum blandit orci ac aliquet venenatis.		  			
+				</p>
+	  			</div>
+	  			</div>
+	  			
+	  			<div class="map_header clearfix">
+		  			<div class="header">Discover the Trails</div>
+		  			<div class="line"></div>
+	  			</div>
+	  				
+				<div id="editorial_region_view">		  				
+					<div id="editorial_map_view" class="editorial_map"></div>		  				
+	            	<div class='border_top'></div>
+	            	<div class='border_left'></div>
+  				</div>
+  				
+                {% if routes %}
+    			    <div class="editorial_cards clearfix">  
+                        {% for route in routes %}
+                            <div class="trail_card_sticker">
+        						<div class="panel trail_card_panel">
+                					<div class="title"><h3 class="tb">{{ route.routeCategory.name }}</h3></div>
+        					        <a href="{{ path('editorial_trail', {trailSlug: route.slug, editorialSlug: editorial.slug}) }}">
+        					        <div class="photo tb-photo-btn">
+        					        	<div class="image_container"><img src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/{{ route.routeMedias[0].media.versions[0].path }}" class="resrc scale" border="0"/></div>
+        					          	<div class="card_title">
+        					            <h1>{{ route.region }}</h1>
+        					            <br />
+        					            <h1>{{ route.shortName ? route.shortName : route.name }}</h1>
+        					        	</div>
+        					       	</div>
+        					        </a>
+                                    <div class="summary">
+                                    {% if route.eventRoutes and route.eventRoutes|length() > 0 %}
+            					        <div class="sponsor"><a href="{{ path('event', {slug: route.eventRoutes[0].event.slug}) }}"><img src="http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/events/{{ route.eventRoutes[0].event.slug }}/{{ route.eventRoutes[0].event.logoSmall }}"></a></div>	       		
+                                    {% elseif route.user and route.user.name != 'admin'  %}
+        						    	<div class="avatar"><a href="{{ path('profile', {'name': route.user.name}) }}"><img src="{{ asset('assets/img/avatars/' ~ route.user.avatar) }}"></a></div>
+        						        <div class="detail">
+        						            by <strong>{{ route.user.title }}</strong>
+        						            <div class="stars">
+        						            	<div class="star_full"></div>
+        						              	<div class="star_full"></div>
+        						              	<div class="star_full"></div>
+        						              	<div class="star_half"></div>
+        						              	<div class="star"></div>
+        						           	</div>
+        						      	</div>
+                                    {% endif %}
+                                    </div>
+        					 	</div>						 	
+        				 	</div>    
+                        {% endfor %}
+    		  		</div>		  		
+  				{% endif %}  
+	  		</div>		  		
+	  	</div>
+	</div>
+</div>  
+
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/template" id="editorialMapViewTemplate">
+  <div id='map'></div>  
+</script>
+<script src="{{ asset('assets/js/libs/jquery.columnizer.js') }}"></script>
+
+{% endblock %}

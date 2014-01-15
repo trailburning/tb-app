@@ -45,7 +45,7 @@ class RoutePoint
     /**
      * @var \TB\Bundle\FrontendBundle\Entity\Route
      *
-     * @ORM\ManyToOne(targetEntity="TB\Bundle\FrontendBundle\Entity\Route")
+     * @ORM\ManyToOne(targetEntity="TB\Bundle\FrontendBundle\Entity\Route", inversedBy="routePoints")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="route_id", referencedColumnName="id", onDelete="CASCADE")
      * })
