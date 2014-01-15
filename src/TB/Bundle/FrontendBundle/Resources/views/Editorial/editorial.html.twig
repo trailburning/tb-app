@@ -43,7 +43,7 @@ var TB_EDITORIAL_TRAILS = [
 	  			<div class="title">{{ editorial.title|nl2br }}
 	  				<div class="details">by <strong>{{ editorial.user.title }}</strong>&nbsp;&nbsp;&nbsp;<span class="date">{{ editorial.date|date('d/m/y') }}</span></div>
 	  			</div>
-	  			<div class="avatar"><img src="{{ asset('assets/img/avatars/' ~ editorial.user.avatar ) }}"></div>      		
+	  			<div class="avatar"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/{{ editorial.user.name }}/{{ editorial.user.avatar }}"></div>
 	  		</div>
 	  		<div class="hero"><img src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/trailburning-media/{{ editorial.image }}"></div>
 	  		<div class="content">
@@ -118,9 +118,9 @@ var TB_EDITORIAL_TRAILS = [
         					        </a>
                                     <div class="summary">
                                     {% if route.eventRoutes and route.eventRoutes|length() > 0 %}
-            					        <div class="sponsor"><a href="{{ path('event', {slug: route.eventRoutes[0].event.slug}) }}"><img src="http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/events/{{ route.eventRoutes[0].event.slug }}/{{ route.eventRoutes[0].event.logoSmall }}"></a></div>	       		
+            					        <div class="sponsor"><a href="{{ path('event', {slug: route.eventRoutes[0].event.slug}) }}"><img src="http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/event/{{ route.eventRoutes[0].event.slug }}/{{ route.eventRoutes[0].event.logoSmall }}"></a></div>	       		
                                     {% elseif route.user and route.user.name != 'admin'  %}
-        						    	<div class="avatar"><a href="{{ path('profile', {'name': route.user.name}) }}"><img src="{{ asset('assets/img/avatars/' ~ route.user.avatar) }}"></a></div>
+        						    	<div class="avatar"><a href="{{ path('profile', {'name': route.user.name}) }}"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/{{ route.user.name }}/{{ route.user.avatar }}"></a></div>
         						        <div class="detail">
         						            by <strong>{{ route.user.title }}</strong>
         						            <div class="stars">

@@ -764,4 +764,27 @@ class Event
     {
         return $this->eventRoutes;
     }
+
+    /**
+     * Set logoSmall
+     *
+     * @param string $logoSmall
+     * @return Event
+     */
+    public function setLogoSmall($logoSmall)
+    {
+        $this->logoSmall = $logoSmall;
+
+        return $this;
+    }
+
+    /**
+     * Get logoSmall
+     *
+     * @return string 
+     */
+    public function getLogoSmall()
+    {
+        return $this->logoSmall;
+    }
 }
