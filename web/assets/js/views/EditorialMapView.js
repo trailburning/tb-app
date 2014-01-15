@@ -50,7 +50,6 @@ define([
       }
 
       _.each(TB_EDITORIAL_TRAILS, function (trail) {
-          console.log(trail);
           arrMarkers.push([trail.lat, trail.long]);                   
           L.marker(arrMarkers[arrMarkers.length-1], {icon: locationIcon, zIndexOffset: 1000}).on('click', onClick).addTo(this.map);
       }, this);
