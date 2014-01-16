@@ -87,11 +87,12 @@ html.touch #small_sponsor_bar {
 /******************************************/
 #content_view {
   position: relative;
-/*  
   top: 63px;  
-*/
-  top: 108px;
   width: 100%;
+}
+
+#content_view.sponsor_bar {
+  top: 108px;
 }
 
 /* TRAIL PLAYER */

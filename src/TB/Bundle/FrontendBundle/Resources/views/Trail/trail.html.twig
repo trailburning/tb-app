@@ -19,17 +19,23 @@ var TB_APP = 'TrailApp';
 var TB_TRAIL_ID = {{ trail.id }};
 </script>
 
-<div id="small_sponsor_bar">
-	<div class="sponsor_content">
-		<div class="link"><a href=""><img src="{{ asset('assets/img/sponsor/arrow_small.png') }}">&nbsp;&nbsp;&nbsp;&nbsp;Back to editorial</a></div>
-		<div class="brand">
-			<div class="strap">This editorial has been brought to you by</div>
-			<div class="logo"><img src="{{ asset('assets/img/sponsor/logo_small.png') }}"></div>
+{% if editorial %}
+	<div id="small_sponsor_bar">
+		<div class="sponsor_content">
+			<div class="link"><a href="{{ path('editorial', {slug: editorial.slug}) }}"><img src="{{ asset('assets/img/sponsor/arrow_small.png') }}">&nbsp;&nbsp;&nbsp;&nbsp;Back to editorial</a></div>
+			<div class="brand">
+				<div class="strap">This editorial has been brought to you by</div>
+				<div class="logo"><img src="{{ asset('assets/img/sponsor/logo_small.png') }}"></div>
+			</div>
 		</div>
 	</div>
-</div>
+{% endif %}
 
+{% if editorial %}
+<div id="content_view" class="sponsor_bar">
+{% else %}
 <div id="content_view">
+{% endif %}	
     <div id="trailplayer">
         <div id="trail_views">        
             <div id="trail_map_view"></div>
