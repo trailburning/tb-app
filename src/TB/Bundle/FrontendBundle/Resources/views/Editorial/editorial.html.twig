@@ -103,38 +103,7 @@ var TB_EDITORIAL_TRAILS = [
                 {% if routes %}
     			    <div class="editorial_cards clearfix">  
                         {% for route in routes %}
-                            <div class="trail_card_sticker">
-        						<div class="panel trail_card_panel">
-                					<div class="title"><h3 class="tb">{{ route.routeCategory.name }}</h3></div>
-        					        <a href="{{ path('editorial_trail', {trailSlug: route.slug, editorialSlug: editorial.slug}) }}">
-        					        <div class="photo tb-photo-btn">
-        					        	<div class="image_container"><img src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/{{ route.routeMedias[0].media.versions[0].path }}" class="resrc scale" border="0"/></div>
-        					          	<div class="card_title">
-        					            <h1>{{ route.shortName ? route.shortName : route.name }}</h1>
-        					            <br />
-        					            <h1>{{ route.region }}</h1>
-        					        	</div>
-        					       	</div>
-        					        </a>
-                                    <div class="summary">
-                                    {% if route.eventRoutes and route.eventRoutes|length() > 0 %}
-            					        <div class="sponsor"><a href="{{ path('event', {slug: route.eventRoutes[0].event.slug}) }}"><img src="http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/event/{{ route.eventRoutes[0].event.slug }}/{{ route.eventRoutes[0].event.logoSmall }}"></a></div>	       		
-                                    {% elseif route.user and route.user.name != 'admin'  %}
-        						    	<div class="avatar"><a href="{{ path('profile', {'name': route.user.name}) }}"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/{{ route.user.name }}/{{ route.user.avatar }}"></a></div>
-        						        <div class="detail">
-        						            by <strong>{{ route.user.title }}</strong>
-        						            <div class="stars">
-        						            	<div class="star_full"></div>
-        						              	<div class="star_full"></div>
-        						              	<div class="star_full"></div>
-        						              	<div class="star_half"></div>
-        						              	<div class="star"></div>
-        						           	</div>
-        						      	</div>
-                                    {% endif %}
-                                    </div>
-        					 	</div>						 	
-        				 	</div>    
+                             {{ include('TBFrontendBundle:Trail:editorial_trailcard.html.twig', {route: route, editorial: editorial}) }} 
                         {% endfor %}
     		  		</div>		  		
   				{% endif %}  
