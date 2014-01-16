@@ -19,6 +19,7 @@ class UserProfileData extends AbstractFixture implements FixtureInterface
 
         $manager->persist($userAdmin);
         $manager->flush();
+        
         $this->addReference('UserProfile-admin', $userAdmin);
         
         $userMatt = new UserProfile();

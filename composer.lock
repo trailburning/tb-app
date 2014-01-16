@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "af5845db5e8f9a40daa75ea9360cd6a8",
+    "hash": "808d4dcdefa60541f7f0f4f3dcd0b9c9",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -2371,6 +2371,63 @@
             "time": "2013-10-04 15:03:51"
         },
         {
+            "name": "liip/functional-test-bundle",
+            "version": "dev-master",
+            "target-dir": "Liip/FunctionalTestBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/liip/LiipFunctionalTestBundle.git",
+                "reference": "06584ef6638140ed9637bac577983237271c5244"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/liip/LiipFunctionalTestBundle/zipball/06584ef6638140ed9637bac577983237271c5244",
+                "reference": "06584ef6638140ed9637bac577983237271c5244",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/common": "2.*",
+                "php": ">=5.3.2",
+                "symfony/browser-kit": "~2.0",
+                "symfony/framework-bundle": "~2.0"
+            },
+            "suggest": {
+                "doctrine/dbal": "Required when using the fixture loading functionality with an ORM and SQLite",
+                "doctrine/doctrine-fixtures-bundle": "Required when using the fixture loading functionality",
+                "doctrine/orm": "Required when using the fixture loading functionality with an ORM and SQLite"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Liip\\FunctionalTestBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Liip AG",
+                    "homepage": "http://www.liip.ch/"
+                },
+                {
+                    "name": "Community contributions",
+                    "homepage": "https://github.com/liip/LiipFunctionalTestBundle/contributors"
+                }
+            ],
+            "description": "This bundles provides additional functional test-cases for Symfony2 applications",
+            "keywords": [
+                "Symfony2"
+            ],
+            "time": "2013-10-14 06:10:06"
+        },
+        {
             "name": "nikic/php-parser",
             "version": "v0.9.4",
             "source": {
@@ -2892,7 +2949,8 @@
         "creof/doctrine2-spatial": 20,
         "codeception/codeception": 0,
         "doctrine/doctrine-fixtures-bundle": 20,
-        "sami/sami": 20
+        "sami/sami": 20,
+        "liip/functional-test-bundle": 20
     },
     "platform": {
         "php": ">=5.3.3"

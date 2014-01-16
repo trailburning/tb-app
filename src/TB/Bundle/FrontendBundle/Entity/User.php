@@ -30,7 +30,7 @@ abstract class User
      *
      * @ORM\Column(name="name", type="string", length=50, nullable=true)
      */
-    private $name;
+    protected $name;
     
     /**
      * @var string

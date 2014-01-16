@@ -18,7 +18,7 @@ use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 
 class TestHelper extends \Codeception\Module
 {
-    protected $em;
+    public static $em = null;
     
     protected $metadatas;
     
@@ -37,12 +37,14 @@ class TestHelper extends \Codeception\Module
             throw new \Exception('Module Symfony2 is required');
         }
         
-        $kernel = $this->getModule('Symfony2')->kernel;
-        $kernel->boot();
-        $this->em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
+        if (self::$em === null) {
+            $kernel = $this->getModule('Symfony2')->kernel;
+            $kernel->boot();
+            self::$em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
+        }
         
-        $this->schemaTool = new SchemaTool($this->em);
-        $this->metadatas = $this->em->getMetadataFactory()->getAllMetadata(); 
+        $this->schemaTool = new SchemaTool(self::$em);
+        $this->metadatas = self::$em->getMetadataFactory()->getAllMetadata(); 
         
         $this->cleanup();
         $this->loadSchema();
@@ -73,25 +75,23 @@ class TestHelper extends \Codeception\Module
      * Creates all Entities defined by this Bundle Entities
      */
     protected function loadSchema() {
-        $this->schemaTool->createSchema($this->metadatas);
+        //$this->schemaTool->createSchema($this->metadatas);
     }
     
     /**
      * Deletes all tables defined by this Bundle Entities 
      */
     protected function cleanup() {
-        $this->schemaTool->dropSchema($this->metadatas);
+        //$this->schemaTool->dropSchema($this->metadatas);
     }
     
     public function loadFixtures(array $classNames, $purgeMode = null)
     {
         $container = $this->getModule('Symfony2')->kernel->getContainer();
-        
-        $em = $this->em;
 
         $executorClass = 'Doctrine\\Common\\DataFixtures\\Executor\\ORMExecutor';
-        $referenceRepository = new ProxyReferenceRepository($em);
-        $cacheDriver = $em->getMetadataFactory()->getCacheDriver();
+        $referenceRepository = new ProxyReferenceRepository(self::$em);
+        $cacheDriver = self::$em->getMetadataFactory()->getCacheDriver();
 
         if ($cacheDriver) {
             $cacheDriver->deleteAll();
@@ -103,7 +103,7 @@ class TestHelper extends \Codeception\Module
             $purger->setPurgeMode($purgeMode);
         }
 
-        $executor = new $executorClass($em/*, $purger*/);
+        $executor = new $executorClass(self::$em/*, $purger*/);
         $executor->setReferenceRepository($referenceRepository);
         //$executor->purge();
     
@@ -137,7 +137,8 @@ class TestHelper extends \Codeception\Module
     protected function loadFixtureClass($loader, $className)
     {   
         $fixture = new $className();
-
+        $fixture->load(self::$em);
+        exit;
         if ($loader->hasFixture($fixture)) {
             unset($fixture);
             return;
@@ -199,9 +200,9 @@ class TestHelper extends \Codeception\Module
                 sprintf('No Fixtures were loaded for: %s', "\n\n- ".implode("\n- ", $fixtureNames))
             );
         }
-        $purger = new ORMPurger($this->em);
+        $purger = new ORMPurger(self::$em);
         $purger->setPurgeMode(ORMPurger::PURGE_MODE_DELETE);
-        $executor = new ORMExecutor($this->em, $purger);
+        $executor = new ORMExecutor(self::$em/*, $purger*/);
         $executor->execute($fixtures, false);
     }
         

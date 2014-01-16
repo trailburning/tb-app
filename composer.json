@@ -37,7 +37,8 @@
     "require-dev": {
         "codeception/codeception": "@stable",
         "doctrine/doctrine-fixtures-bundle": "dev-master",
-        "sami/sami": "1.0.*@dev"
+        "sami/sami": "1.0.*@dev",
+        "liip/functional-test-bundle": "dev-master"
     },
     "scripts": {
         "post-install-cmd": [
