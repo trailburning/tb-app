@@ -92,49 +92,49 @@ var TB_TRAIL_ID = {{ trail.id }};
                         </div>  
                         <div class="right">
                             <div id="trail_weather_view" class="panel trail_weather_panel"></div>
-                            {% if event and relatedTrails %}
+                            {% if event and eventTrails %}
                 				<div class="event_trails_container">
-                                {% for relatedTrail in relatedTrails %}                                
-				                    {% if relatedTrails|length == 1 %}
+                                {% for eventTrail in eventTrails %}                                
+				                    {% if eventTrails|length == 1 %}
 				                        <div class="panel big_event_trail">
-				                            <h3 class="tb">{{ relatedTrail.routeType ? relatedTrail.routeType.name : 'Run' }}</h3>
-				                            <a href="{{ path('trail', {trailSlug: relatedTrail.slug}) }}">
+				                            <h3 class="tb">{{ eventTrail.routeType ? eventTrail.routeType.name : 'Run' }}</h3>
+				                            <a href="{{ path('trail', {trailSlug: eventTrail.slug}) }}">
 				                                <div class="photo tb-photo-btn">
-				                                    <div class="image_container"><img src="http://app.resrc.it/http://s3-eu-west-1.amazonaws.com/{{ relatedTrail.routeMedias[0].media.versions[0].path }}" class="resrc scale" border="0"/></div>
+				                                    <div class="image_container"><img src="http://app.resrc.it/http://s3-eu-west-1.amazonaws.com/{{ eventTrail.routeMedias[0].media.versions[0].path }}" class="resrc scale" border="0"/></div>
 				                                    <div class="card_title">
-				                                        {% if relatedTrail.eventRoutes[0].date %}
-				                                            <h1>{{ relatedTrail.eventRoutes[0].date|date('d.m.y') }}</h1>
+				                                        {% if eventTrail.eventRoutes[0].date %}
+				                                            <h1>{{ eventTrail.eventRoutes[0].date|date('d.m.y') }}</h1>
 				                                            <br/>
 				                                        {% endif %}
-				                                        <h1>{{ relatedTrail.name }}</h1>
+				                                        <h1>{{ eventTrail.name }}</h1>
 				                                    </div>
 				                                </div>
 				                            </a>
 				                            <div class="details">
 				                                <div class="logo"><!--<img src="http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/events/tfor/trail_logo_ashmei.png" border="0"/>--></div>
-				                                <div class="more"><a class="btn btn-tb" href="{{ path('trail', {trailSlug: relatedTrail.slug}) }}">More</a></div>
+				                                <div class="more"><a class="btn btn-tb" href="{{ path('trail', {trailSlug: eventTrail.slug}) }}">More</a></div>
 				                            </div>
 				                        </div>
 				                    {% else %}                                
 				                        <div class="panel event_trail">
-				                        	<h3 class="tb">{{ relatedTrail.shortName ? relatedTrail.shortName : relatedTrail.name  }}</h3>
-				                        	<a href="{{ path('trail', {trailSlug: relatedTrail.slug}) }}">
+				                        	<h3 class="tb">{{ eventTrail.shortName ? eventTrail.shortName : eventTrail.name  }}</h3>
+				                        	<a href="{{ path('trail', {trailSlug: eventTrail.slug}) }}">
 				                                <div class="detail">
-				                                    {% if relatedTrail.tags.ascent %}
+				                                    {% if eventTrail.tags.ascent %}
 				                                        <div class="terrain">
-				                                            <h2 class="tb">{{ relatedTrail.tags.ascent|dimension_format('m') }}</h2>
-				                                            {% if relatedTrail.tags.descent %}
-				                                            <div class="desc">D+ / {{ relatedTrail.tags.descent|dimension_format('m') }} D-</div>
+				                                            <h2 class="tb">{{ eventTrail.tags.ascent|dimension_format('m') }}</h2>
+				                                            {% if eventTrail.tags.descent %}
+				                                            <div class="desc">D+ / {{ eventTrail.tags.descent|dimension_format('m') }} D-</div>
 				                                            {% endif %}
 				                                        </div>                                              
 				                                    {% endif %}
 				                                    <div class="length">
-				                                        <h2 class="tb">{{ relatedTrail.length|dimension_format('km', 1000) }}</h2>
+				                                        <h2 class="tb">{{ eventTrail.length|dimension_format('km', 1000) }}</h2>
 				                                        <div class="desc">Length</div>
 				                                    </div>
 				                                </div>
 				                            </a>
-				                            <div class="more"><a class="btn btn-tb"  href="{{ path('trail', {trailSlug: relatedTrail.slug}) }}">More</a></div>
+				                            <div class="more"><a class="btn btn-tb"  href="{{ path('trail', {trailSlug: eventTrail.slug}) }}">More</a></div>
 				                        </div>				                        
 									{% endif %}				                        
                                 {% endfor %}
@@ -143,86 +143,22 @@ var TB_TRAIL_ID = {{ trail.id }};
                         </div>  
                     </div>
                     
-                	<div class="panel editorial_panel">
+                    {% if editorial and editorialTrails %}
+                        <div class="panel editorial_panel">
                 	
-		  				<div class="editorial_header">
-			  				<div class="header"><h3 class="tb">Picture perfect trails in the Alps</h3></div>
-			  				<div class="line"></div>
-			  				<div class="author"><h4 class="tb">Discover more trails from this editorial by <strong>Magdalena Zeslawska</strong>&nbsp;&nbsp;&nbsp;<span class="date">15/01/2014</span></h4></div>
-                		</div>
+    		  				<div class="editorial_header">
+    			  				<div class="header"><h3 class="tb">{{ editorial.title }}</h3></div>
+    			  				<div class="line"></div>
+    			  				<div class="author"><h4 class="tb">Discover more trails from this editorial by <strong>{{ editorial.user.title }}</strong>&nbsp;&nbsp;&nbsp;<span class="date">{{ editorial.date|date('d/m/y') }}</span></h4></div>
+                    		</div>
                 	
-				    	<div class="editorial_cards clearfix">
-				    	
-					    	<div class="trail_card_sticker">
-								<div class="panel trail_card_panel">
-		        					<div class="title"><h3 class="tb">Mountains</h3></div>
-							        <a href="../trail/30km">
-							        <div class="photo tb-photo-btn">
-							        	<div class="image_container"><img src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/events/ultraks/event_header.jpg" class="resrc scale" border="0"/></div>
-							          	<div class="card_title">
-							            <h1>30K Race</h1>
-							            <br />
-							            <h1>Valais</h1>
-							        	</div>
-							       	</div>
-							        </a>
-							        <div class="summary">
-							        	<div class="sponsor"><a href="event/ultraks"><img src="http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/events/ultraks/card_logo_ultraks.png"></a></div>
-									</div>						       		
-							 	</div>						 	
-						 	</div>
-	
-					    	<div class="trail_card_sticker">				    		
-								<div class="panel trail_card_panel">
-	        						<div class="title"><h3 class="tb">Mountains</h3></div>
-	        						<a href="../trail/e51">
-	        						<div class="photo tb-photo-btn">
-							        	<div class="image_container"><img src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/events/eiger/event_header.jpg" class="resrc scale" border="0"/></div>
-	          							<div class="card_title">
-							            <h1>E51</h1>
-							            <br />
-							            <h1>Grindelwald</h1>
-	          							</div>
-	        						</div>
-	        						</a>
-	        						<div class="summary">
-							        	<div class="sponsor"><a href="event/eiger"><img src="http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/events/eiger/card_logo_eiger.png"></a></div>
-	        						</div>
-	      						</div>				    		
-						 	</div>
-						 	
-					    	<div class="trail_card_sticker">
-								<div class="panel trail_card_panel">
-						        	<div class="title"><h3 class="tb">Mountains</h3></div>
-						        	<a href="">
-						        	<div class="photo tb-photo-btn">
-							        	<div class="image_container"><img src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/trailburning-media/74339e8b970216338f6afbedf9b8c45ca489aebb.jpg" class="resrc scale" border="0"/></div>
-						          		<div class="card_title">
-							            <h1>Haute Route</h1>
-							            <br />
-							            <h1>Haute-Savoie</h1>
-						          		</div>
-						        	</div>
-						        	</a>
-	        						<div class="summary">
-								    	<div class="avatar"><a href="profile/mattallbeury"><img src="{{ asset('assets/img/avatars/avatar_ma.png') }}"></a></div>
-								        <div class="detail">
-								        by <strong>Matt Allbeury</strong>
-								        <div class="stars">
-							            	<div class="star_full"></div>
-							              	<div class="star_full"></div>
-							              	<div class="star_full"></div>
-							              	<div class="star_half"></div>
-							              	<div class="star"></div>
-							           	</div>
-								     	</div>
-	        						</div>
-						      	</div>              				    		
-						 	</div>
-				    	
-				    	</div>  
-                    </div>
-                    
+    				    	<div class="editorial_cards clearfix">
+                                {% for editorialTrail in editorialTrails %}
+                                     {{ include('TBFrontendBundle:Trail:editorial_trailcard.html.twig', {route: editorialTrail, editorial: editorial}) }} 
+                                {% endfor %}
+    				    	</div>  
+                        </div>
+                    {% endif %}
                 </div>
             </div>    
         </div>
