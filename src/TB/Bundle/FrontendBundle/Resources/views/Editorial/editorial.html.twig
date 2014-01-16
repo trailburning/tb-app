@@ -18,7 +18,7 @@ var TB_EDITORIAL_TRAILS = [
 
 <div id="big_sponsor_bar">
 	<div class="sponsor_content">
-		<div class="link"><a href=""><img src="{{ asset('assets/img/sponsor/arrow_big.png') }}">&nbsp;&nbsp;&nbsp;&nbsp;Back to editorials</a></div>
+		<div class="link"><a href="{{ app.request.baseUrl }}/"><img src="{{ asset('assets/img/sponsor/arrow_big.png') }}">&nbsp;&nbsp;&nbsp;&nbsp;Back to editorials</a></div>
 		<div class="brand">
 			<div class="strap">This article has been brought to you by</div>
 			<div class="logo"><img src="{{ asset('assets/img/sponsor/logo_big.png') }}"></div>
@@ -28,7 +28,7 @@ var TB_EDITORIAL_TRAILS = [
 
 <div id="small_sponsor_bar">
 	<div class="sponsor_content">
-		<div class="link"><a href=""><img src="{{ asset('assets/img/sponsor/arrow_small.png') }}">&nbsp;&nbsp;&nbsp;&nbsp;Back to editorials</a></div>
+		<div class="link"><a href="{{ app.request.baseUrl }}/"><img src="{{ asset('assets/img/sponsor/arrow_small.png') }}">&nbsp;&nbsp;&nbsp;&nbsp;Back to editorials</a></div>
 		<div class="brand">
 			<div class="strap">This article has been brought to you by</div>
 			<div class="logo"><img src="{{ asset('assets/img/sponsor/logo_small.png') }}"></div>
@@ -110,9 +110,9 @@ var TB_EDITORIAL_TRAILS = [
         					        <div class="photo tb-photo-btn">
         					        	<div class="image_container"><img src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/{{ route.routeMedias[0].media.versions[0].path }}" class="resrc scale" border="0"/></div>
         					          	<div class="card_title">
-        					            <h1>{{ route.region }}</h1>
-        					            <br />
         					            <h1>{{ route.shortName ? route.shortName : route.name }}</h1>
+        					            <br />
+        					            <h1>{{ route.region }}</h1>
         					        	</div>
         					       	</div>
         					        </a>

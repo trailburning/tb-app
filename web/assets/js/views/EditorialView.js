@@ -46,6 +46,7 @@ define([
 	handleScroll: function(){
 	  var nTopY = 63;
 	  var nTransitionOffY = 35;
+	  var nTransitionOnY = 10;
 	  var nScrollY = ($(window).scrollTop() < 0) ? 0 : $(window).scrollTop();	  
 	  var nFactorY = 2;
 	  var bScrollUp = false;
@@ -64,19 +65,36 @@ define([
 			  $('#big_sponsor_bar').hide();
   	        }
 	  	    break;
+	  	    
+ 		  case STATE_SMALL_SPONSOR:
+ 		    if ((nScrollY < nTransitionOnY) && !bScrollUp) {
+ 			  this.nSponsorState = STATE_BIG_SPONSOR;
+ 			  $('#small_sponsor_bar').hide();
+			  $('#big_sponsor_bar').show();
+	  	  	}
+	  	  	break;  
 	     }	  	
 	  }
-	  else {
+	  else {	  	
 	    // move big bar
+		$('#big_sponsor_bar').css('top', nTopY - (nScrollY * nFactorY));	
+	    
   	    switch (this.nSponsorState) {
   	      case STATE_BIG_SPONSOR:
-	      	$('#big_sponsor_bar').css('top', nTopY - (nScrollY * nFactorY));	
-  	      
   	        if ((nScrollY > nTransitionOffY) && bScrollUp) {
 	  	      this.nSponsorState = STATE_SMALL_SPONSOR;
 	  		  $('#small_sponsor_bar').css('top', nTopY);
+			  $('#small_sponsor_bar').css('visibility', 'visible');
   	        }
 	  	    break;
+	  	    
+ 		  case STATE_SMALL_SPONSOR:
+ 		    if ((nScrollY < nTransitionOnY) && !bScrollUp) {
+ 			  this.nSponsorState = STATE_BIG_SPONSOR;
+ 			  $('#small_sponsor_bar').css('visibility', 'hidden');
+ 			  $('#small_sponsor_bar').css('top', 0);
+ 			}
+ 		    break;	  	    
 	     }	  	
 	  }	  
 	  this.nPrevScrollY = nScrollY;

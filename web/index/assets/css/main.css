@@ -195,6 +195,10 @@ border-width:1px;
   color: #44B6F7;
 }
 
+.editorial_card_panel .title img {
+  margin-top: 12px;
+}
+
 .editorial_card_panel .title h3 {
   line-height: 74px;
 }
