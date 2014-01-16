@@ -37,7 +37,7 @@ var TB_TRAIL_ID = {{ trail.id }};
         </div>
         <div id="trail_info">   
             {% if user.avatar != '' %}
-                <div class="trail_avatar"><a href="{{ path('profile', {'name': user.name}) }}"><img src="{{ asset('assets/img/avatars/' ~ user.avatar) }}" border="0"></a></div>    
+                <div class="trail_avatar"><a href="{{ path('profile', {'name': user.name}) }}"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/{{ user.name }}/{{ user.avatar }}" border="0"></a></div>    
             {% endif %}   
             <div class="trail_title{% if user.avatar == '' %} no_avatar{% endif %}">
                 {% if event %}

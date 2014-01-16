@@ -19,7 +19,7 @@ var TB_USER_LAT = {{ user.location.latitude }};
 	    <h1 class="tb tb-title">{{ user.firstName }}</h1>
 	    <br/>
         <h1 class="tb tb-title">{{ user.lastName }}</h1>      
-        <div class='avatar'><img src="{{ asset('assets/img/avatars/' ~ user.avatar) }}" /></div>
+        <div class='avatar'><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/{{ user.name }}/{{ user.avatar }}" /></div>
 	</div>
 </div>		
 
