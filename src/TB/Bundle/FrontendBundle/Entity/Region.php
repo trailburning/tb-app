@@ -57,6 +57,13 @@ class Region
     private $link;
     
     /**
+     * @var string
+     *
+     * @ORM\Column(name="slug", type="string", length=50)
+     */
+    private $slug;
+    
+    /**
      * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\OneToMany(targetEntity="Event", mappedBy="region")
@@ -227,5 +234,28 @@ class Region
     public function getEvents()
     {
         return $this->events;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Region
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string 
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 }

@@ -49,8 +49,6 @@ class Event
      */
     private $slug;
     
-
-    
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
@@ -103,6 +101,13 @@ class Event
     /**
      * @var string
      *
+     * @ORM\Column(name="logo_small", type="string", length=50, nullable=true)
+     */
+    private $logoSmall;
+    
+    /**
+     * @var string
+     *
      * @ORM\Column(name="image", type="string", length=50)
      */
     private $image;   
@@ -131,7 +136,7 @@ class Event
     /**
      * @var \TB\Bundle\FrontendBundle\Entity\User
      *
-     * @ORM\ManyToOne(targetEntity="TB\Bundle\FrontendBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="TB\Bundle\FrontendBundle\Entity\User", inversedBy="events")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      * })
@@ -148,7 +153,7 @@ class Event
     /**
      * @var \TB\Bundle\FrontendBundle\Entity\Region
      *
-     * @ORM\ManyToOne(targetEntity="TB\Bundle\FrontendBundle\Entity\Region")
+     * @ORM\ManyToOne(targetEntity="TB\Bundle\FrontendBundle\Entity\Region", inversedBy="events")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="region_id", referencedColumnName="id")
      * })
@@ -758,5 +763,28 @@ class Event
     public function getEventRoutes()
     {
         return $this->eventRoutes;
+    }
+
+    /**
+     * Set logoSmall
+     *
+     * @param string $logoSmall
+     * @return Event
+     */
+    public function setLogoSmall($logoSmall)
+    {
+        $this->logoSmall = $logoSmall;
+
+        return $this;
+    }
+
+    /**
+     * Get logoSmall
+     *
+     * @return string 
+     */
+    public function getLogoSmall()
+    {
+        return $this->logoSmall;
     }
 }

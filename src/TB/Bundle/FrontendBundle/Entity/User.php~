@@ -7,13 +7,13 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * User
  *
- * @ORM\Table(name="`user`")
  * @ORM\Entity
+ * @ORM\Table(name="`user`")
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
- * @ORM\DiscriminatorMap({"user_profile" = "UserProfile", "brand_profile" = "BrandProfile"})
+ * @ORM\DiscriminatorMap({"user" = "UserProfile", "brand" = "BrandProfile"})
  */
-class User
+abstract class User
 {
     
     /**
@@ -21,8 +21,7 @@ class User
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="SEQUENCE")
-     * @ORM\SequenceGenerator(sequenceName="user_id_seq", allocationSize=1, initialValue=1)
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
     
@@ -69,13 +68,23 @@ class User
     private $events;
     
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="Editorial", mappedBy="user")
+     **/
+    private $editorials;
+    
+    /**
      * Constructor
      */
     public function __construct()
     {
         $this->routes = new \Doctrine\Common\Collections\ArrayCollection();
         $this->events = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->editorials = new \Doctrine\Common\Collections\ArrayCollection();
     }
+    
+    abstract public function getTitle();
 
     /**
      * Get id

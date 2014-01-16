@@ -1,7 +1,5 @@
 var app = app || {};
 
-var RESTAPI_BASEURL = 'http://trailburning.herokuapp.com/api/';
-
 define([
   'underscore', 
   'backbone'

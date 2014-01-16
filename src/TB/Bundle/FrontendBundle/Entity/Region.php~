@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Region
  *
- * @ORM\Table()
+ * @ORM\Table(name="region")
  * @ORM\Entity
  */
 class Region
@@ -17,7 +17,7 @@ class Region
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
@@ -55,6 +55,13 @@ class Region
      * @ORM\Column(name="link", type="string", length=100)
      */
     private $link;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="slug", type="string", length=50)
+     */
+    private $slug;
     
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -187,5 +194,45 @@ class Region
     public function getLink()
     {
         return $this->link;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->events = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add events
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\Event $events
+     * @return Region
+     */
+    public function addEvent(\TB\Bundle\FrontendBundle\Entity\Event $events)
+    {
+        $this->events[] = $events;
+
+        return $this;
+    }
+
+    /**
+     * Remove events
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\Event $events
+     */
+    public function removeEvent(\TB\Bundle\FrontendBundle\Entity\Event $events)
+    {
+        $this->events->removeElement($events);
+    }
+
+    /**
+     * Get events
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEvents()
+    {
+        return $this->events;
     }
 }

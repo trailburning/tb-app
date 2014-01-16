@@ -187,6 +187,70 @@ border-width:1px;
   text-align: right;
 }
 
+/* EDITORIAL CARD PANEL */
+/******************************************/
+.editorial_card_panel .title {
+  margin-left: 22px;
+  height: 74px;
+  color: #44B6F7;
+}
+
+.editorial_card_panel .title h3 {
+  line-height: 74px;
+}
+
+.editorial_card_panel .detail_container {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  overflow: hidden;    	
+}
+
+.editorial_card_panel .detail_container .detail {
+  margin: 0px 0px 0px 22px;
+}
+
+.editorial_card_panel .detail_container .detail h3 {
+  line-height: 1.1em;
+  color: #6D6E71;
+}
+
+.editorial_card_panel a,
+.editorial_card_panel a:hover,
+.editorial_card_panel a:active {
+  text-decoration: none;   
+  color: inherit; 
+}
+
+.editorial_card_panel .summary {  
+  height: 73px;
+  margin: 5px 0px 0px 14px;
+  color: #44B6F7;
+}
+
+.editorial_card_panel .summary .avatar {
+  float: left;
+  width: 54px;
+  margin-top: 5px;
+}
+
+.editorial_card_panel .summary .avatar img {
+  width: 100%;
+}
+
+.editorial_card_panel .summary .detail {
+  float: left;  
+  margin-top: 14px;
+  margin-left: 6px;
+}
+
+.editorial_card_panel .summary .date {
+  margin-top: 6px;
+  font-size: 14px;
+  line-height: 1em;
+  color: #979797;
+}
+
 /* TRAIL CARD PANEL */
 /******************************************/
 .trail_card_panel .title {

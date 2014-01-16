@@ -42,26 +42,7 @@ class TrailController extends Controller
             );
         }
         
-        if (count($trail->getEventRoutes()) > 0) {
-            $event = $trail->getEventRoutes()[0]->getEvent();
-            $query = $this->getDoctrine()->getManager()
-                ->createQuery('
-                    SELECT r FROM TBFrontendBundle:Route r
-                    JOIN r.eventRoutes e
-                    WHERE e.eventId=:eventId
-                    AND r.id!=:routeId
-                    ORDER BY r.id')
-                ->setParameter('eventId', $event->getId())
-                ->setParameter('routeId', $trail->getId());
-            $relatedTrails = $query->getResult();
-            
-            // breadcrumb to event page
-            $breadcrumb[] = [
-                'name' => 'event',
-                'label' => trim($event->getTitle() . ' ' . $event->getTitle2()), 
-                'params' => ['slug' => $event->getSlug()],
-            ];
-        } elseif ($editorialSlug !== null) {
+        if ($editorialSlug !== null) {
             
             $query = $this->getDoctrine()->getManager()
                 ->createQuery('
@@ -82,7 +63,26 @@ class TrailController extends Controller
             // breadcrumb to editorail page
             $breadcrumb[] = [
                 'name' => 'editorial',
-                'label' => $editorial->getName(), 
+                'label' => $editorial->getTitle(), 
+                'params' => ['slug' => $editorial->getSlug()],
+            ];
+        } elseif (count($trail->getEventRoutes()) > 0) {
+            $event = $trail->getEventRoutes()[0]->getEvent();
+            $query = $this->getDoctrine()->getManager()
+                ->createQuery('
+                    SELECT r FROM TBFrontendBundle:Route r
+                    JOIN r.eventRoutes e
+                    WHERE e.eventId=:eventId
+                    AND r.id!=:routeId
+                    ORDER BY r.id')
+                ->setParameter('eventId', $event->getId())
+                ->setParameter('routeId', $trail->getId());
+            $relatedTrails = $query->getResult();
+            
+            // breadcrumb to event page
+            $breadcrumb[] = [
+                'name' => 'event',
+                'label' => trim($event->getTitle() . ' ' . $event->getTitle2()), 
                 'params' => ['slug' => $event->getSlug()],
             ];
         } else {

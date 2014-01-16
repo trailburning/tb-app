@@ -47,6 +47,9 @@ define([
       }
     },            
     show: function(){
+	  if (this.popup) {
+	    this.popup.update();    	
+	  }    	
       this.marker.setOpacity(1);
     },
     hide: function(){
@@ -107,9 +110,23 @@ define([
 
       // build popup      
       var versions = this.model.get('versions');
+      
+      // Create an element to hold all your text and markup
+      var container = $('<div class="trail_media_popup" />');      
+      // Delegate all event handling for the container itself and its contents to the container
+      container.on('click', '.photo_btn', function() {
+        // fire event
+        app.dispatcher.trigger("TrailMapMediaMarkerView:photoclick", self);                        
+      });
+      container.on('mouseover', '.photo_btn', function() {
+      	$(this).css('cursor', 'pointer');
+      });
+      
+      container.html('<div class="image_container fade_on_load tb-fade"><img src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/'+versions[0].path+'" class="resrc scale photo_btn" border="0"></div>');
+      
       this.popup = L.popup({'closeButton': false})
       .setLatLng([this.model.get('coords').lat, this.model.get('coords').long])
-      .setContent('<div class="trail_media_popup"><div class="image_container fade_on_load tb-fade"><img src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/'+versions[0].path+'" class="resrc scale"></div></div>');
+      .setContent(container[0]);
       
       return this;
     }    
