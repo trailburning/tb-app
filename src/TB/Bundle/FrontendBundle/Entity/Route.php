@@ -166,6 +166,13 @@ class Route
      * @ORM\OneToMany(targetEntity="EventRoute", mappedBy="route")
      **/
     private $eventRoutes;
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="RoutePoint", mappedBy="route")
+     **/
+    private $routePoints;
 
     /**
      * Set name
@@ -508,7 +515,8 @@ class Route
     {
         $this->editorials = new \Doctrine\Common\Collections\ArrayCollection();
         $this->routeMedias = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->eventRoutes = new \Doctrine\Common\Collections\ArrayCollection();        
+        $this->eventRoutes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->routePoints = new \Doctrine\Common\Collections\ArrayCollection();        
     }
     
     /**
@@ -634,5 +642,38 @@ class Route
     public function getRouteCategory()
     {
         return $this->routeCategory;
+    }
+
+    /**
+     * Add routePoints
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\RoutePoint $routePoints
+     * @return Route
+     */
+    public function addRoutePoint(\TB\Bundle\FrontendBundle\Entity\RoutePoint $routePoints)
+    {
+        $this->routePoints[] = $routePoints;
+
+        return $this;
+    }
+
+    /**
+     * Remove routePoints
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\RoutePoint $routePoints
+     */
+    public function removeRoutePoint(\TB\Bundle\FrontendBundle\Entity\RoutePoint $routePoints)
+    {
+        $this->routePoints->removeElement($routePoints);
+    }
+
+    /**
+     * Get routePoints
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRoutePoints()
+    {
+        return $this->routePoints;
     }
 }

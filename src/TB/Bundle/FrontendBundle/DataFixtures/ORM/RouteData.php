@@ -8,6 +8,7 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use CrEOF\Spatial\PHP\Types\Geometry\Point;
 use TB\Bundle\FrontendBundle\Entity\Route;
+use TB\Bundle\FrontendBundle\Entity\RoutePoint;
 
 class RouteData extends AbstractFixture implements FixtureInterface, DependentFixtureInterface
 {
@@ -26,6 +27,19 @@ class RouteData extends AbstractFixture implements FixtureInterface, DependentFi
         $route->setRegion('Berlin');
         $route->setSlug('grunewald');
         $route->setAbout('The Grunewald is a forest located in the western side of Berlin on the east side of the river Havel.');
+        
+        $points = [
+            [1, ['altitude' => 60.1, 'datetime' => 1376728877], [13.257437, 52.508006]],
+            [2, ['altitude' => 60.1, 'datetime' => 1376728878], [13.257438, 52.508013]],
+            [3, ['altitude' => 60.0, 'datetime' => 1376728884], [13.257321, 52.507924]],
+        ];‚
+        foreach ($points as $point {
+            $routePoint = new RoutePoint();
+            $routePoint->setPointNumber($point[0]);
+            $routePoint->setTags($point[1]);
+            $routePoint->setCoords(new Point($point[2][0], $point[2][1]));
+            $route->addRoutePoint($routePoint);
+        }
 
         $manager->persist($route);
         $manager->flush();

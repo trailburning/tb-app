@@ -52,8 +52,6 @@ class RoutePoint
      */
     private $route;
 
-
-
     /**
      * Set pointNumber
      *
