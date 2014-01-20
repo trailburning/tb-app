@@ -111,7 +111,7 @@ html.touch #small_sponsor_bar {
 /* EDITORIAL PANEL */
 /******************************************/
 .editorial_panel .header {
-  margin: 110px 90px 64px 85px;
+  margin: 52px 90px 34px 85px;
   color: #6D6E71;
 }
 
@@ -120,17 +120,6 @@ html.touch #small_sponsor_bar {
   width: 809px;
   font-size: 70px;
   line-height: 1.1em;
-}
-
-.editorial_panel .header .details {
-  margin: 12px 0px 0px 8px;
-  font-size: 22px;
-  line-height: 1em;
-  color: #979797;
-}
-
-.editorial_panel .header .details .date {
-  font-size: 14px;	
 }
 
 .editorial_panel .header .avatar {
@@ -147,26 +136,38 @@ html.touch #small_sponsor_bar {
   width: 1096px;
 }
 
-.editorial_panel .hero img {
+.editorial_panel .hero .image_container {
+  position: relative;
+  opacity: 0;
   width: 100%;
+  height: 445px;  
+  overflow: hidden;  
 }
 
 .editorial_panel .content {
-  margin: 68px 82px 0px 82px; 
+  margin: 30px 82px 0px 82px; 
   width: 948px;
 }
 
+.editorial_panel .content .content_header {
+  font-size: 22px;
+  line-height: 38px;
+  color: #979797;
+}
+
+.editorial_panel .content .content_header .date {
+  font-size: 14px;	
+}
+
 .editorial_panel .content .header {
-	float: left;
-	margin: 0px;
-	width: 472px;
-	font-size: 50px;
-	line-height: 1em;
+  float: left;  
+  margin: 8px 0px 0px 0px;
+  width: 262px;
 }
 
 .editorial_panel .content .line {
 	float: left;
-	width: 328px;
+	width: 538px;
 	margin-top: 27px;
 	border-top-style: solid;
 	border-top-width: 1px;
@@ -426,7 +427,7 @@ html.touch #small_sponsor_bar {
     width: 968px;
   }
   .editorial_panel .header {
-    margin: 96px 78px 56px 74px;
+  	margin: 45px 78px 30px 74px;
   }  
   .editorial_panel .header .title {
     width: 704px;
@@ -437,12 +438,18 @@ html.touch #small_sponsor_bar {
   .editorial_panel .hero {
 	width: 952px;
   }
+  .editorial_panel .hero .image_container {
+  	height: 387px;
+  }
   .editorial_panel .content {
-    margin: 59px 71px 0px 71px; 
+    margin: 26px 71px 0px 71px; 
     width: 826px;
   }  
+  .editorial_panel .content .header {
+    width: 258px;
+  }
   .editorial_panel .content .line {
-	width: 206px;
+	width: 420px;
   }
   .editorial_panel .content .map_header .line {
 	width: 390px;

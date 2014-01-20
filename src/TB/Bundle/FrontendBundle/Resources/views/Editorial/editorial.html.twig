@@ -40,21 +40,19 @@ var TB_EDITORIAL_TRAILS = [
 	<div class="panels clearfix">               	
 		<div class="panel editorial_panel">
 	  		<div class="header clearfix">
-	  			<div class="title">{{ editorial.title|nl2br }}
-	  				<div class="details">by <strong>{{ editorial.user.title }}</strong>&nbsp;&nbsp;&nbsp;<span class="date">{{ editorial.date|date('d/m/y') }}</span></div>
-	  			</div>
+	  			<div class="title">{{ editorial.title|nl2br }}</div>
 	  			<div class="avatar"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/{{ editorial.user.name }}/{{ editorial.user.avatar }}"></div>
 	  		</div>
-	  		<div class="hero"><img src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/trailburning-media/{{ editorial.image }}"></div>
+	  		<div class="hero">
+				<div class="image_container"><img src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/trailburning-media/{{ editorial.image }}" class="scale"></div></div>
 	  		<div class="content">
 	  			<div class="content_header">
-		  			<div class="header">{{ editorial.subtitle }}</div>
+		  			<div class="header">by <strong>{{ editorial.user.title }}</strong>&nbsp;&nbsp;&nbsp;<span class="date">{{ editorial.date|date('d/m/Y') }}</span></div>
 		  			<div class="line"></div>
 		  			<div class="share_bar">
       					{{ include('TBFrontendBundle:Default:share.html.twig') }} 	  				
 		  			</div>
-	  			</div>
-	  			
+	  			</div>	  			
 				<div id="column_wrapper">
 	  			<div class="columns">
 	  			<h1>
