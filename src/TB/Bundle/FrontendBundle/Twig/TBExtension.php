@@ -24,6 +24,7 @@ class TBExtension extends \Twig_Extension
     {
         return array(
             new \Twig_SimpleFilter('url_truncate', array($this, 'urlTruncateFilter')),
+            new \Twig_SimpleFilter('url_shareable', array($this, 'urlShareableFilter')),
             new \Twig_SimpleFilter('dimension_format', array($this, 'dimensionFormatFilter')),            
         );
     }
@@ -32,6 +33,14 @@ class TBExtension extends \Twig_Extension
     {
         $url = preg_replace('/http(s?):\/\//', '', $url);
         $url = preg_replace('/www./', '', $url);
+
+        return $url;
+    }
+    
+    public function urlShareableFilter($url)
+    {
+        $url = preg_replace('/http(s?):\/\//', '', $url);
+        $url = urlencode($url);
 
         return $url;
     }
