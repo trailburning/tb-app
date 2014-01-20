@@ -33,7 +33,6 @@ html.no-touch #small_sponsor_bar {
 }
 
 html.touch #small_sponsor_bar {
-  display: none;
   top: 63px;
 }
 
@@ -1114,6 +1113,9 @@ html.touch #trailplayer #view_map_btns {
   #appview {
     min-width: 992px;
   }    
+  #small_sponsor_bar .sponsor_content {
+    width: 968px;  
+  }  
   #trail_overlay .overlay_content {
     width: 992px;
   }
