@@ -33,9 +33,26 @@ class EditorialController extends Controller
             ->setParameter('editorialId', $editorial->getId());
         $routes = $query->getResult();
         
-        return array(
+        return [
             'editorial' => $editorial,
             'routes' => $routes,
-        );
+        ];
+    }
+    
+    /**
+     * @Route("/editorials", name="editorials")
+     * @Template()  
+    */
+    public function editorialsAction()
+    {
+        $query = $this->getDoctrine()->getManager()
+            ->createQuery('
+                SELECT e FROM TBFrontendBundle:Editorial e
+                ORDER BY e.date DESC');
+        $editorials = $query->getResult();
+        
+        return [
+            'editorials' => $editorials,
+        ];
     }
 }
