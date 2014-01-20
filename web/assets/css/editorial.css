@@ -451,6 +451,9 @@ html.touch #small_sponsor_bar {
   .editorial_panel .content .line {
 	width: 420px;
   }
+  #column_wrapper .columns {
+	margin: 37px 0px 0px 0px;
+  }  
   .editorial_panel .content .map_header .line {
 	width: 390px;
   }  
