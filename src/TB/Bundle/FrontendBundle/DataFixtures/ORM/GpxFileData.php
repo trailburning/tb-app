@@ -19,6 +19,13 @@ class GpxFileData extends AbstractFixture implements FixtureInterface
         $manager->persist($gpxFile);
         $manager->flush();
         $this->addReference('GpxFile-grunewald', $gpxFile);
+        
+        $gpxFile = new GpxFile();
+        $gpxFile->setPath('path');
+        
+        $manager->persist($gpxFile);
+        $manager->flush();
+        $this->addReference('GpxFile-ttm', $gpxFile);
     }
     
     public function getOrder()

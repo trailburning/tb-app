@@ -32,10 +32,23 @@ class RouteData extends AbstractFixture implements FixtureInterface, DependentFi
         $manager->flush();
         $this->addReference('Route-grunewald', $route);
         
+        // add RoutePoints to Route
         $points = [
             [1, ['altitude' => 60.1, 'datetime' => 1376728877], [13.257437, 52.508006]],
-            [2, ['altitude' => 60.1, 'datetime' => 1376728878], [13.257438, 52.508013]],
-            [3, ['altitude' => 60.0, 'datetime' => 1376728884], [13.257321, 52.507924]],
+            [2, ['altitude' => 70.6, 'datetime' => 1376729276], [13.257437, 52.508006]],
+            [69, ['altitude' => 64.1, 'datetime' => 1376729222], [13.249617, 52.501565]],
+            [111, ['altitude' => 87.3, 'datetime' => 1376729446], [13.248257, 52.50296]],
+            [233, ['altitude' => 47.5, 'datetime' => 1376730055], [13.227167, 52.496973]],
+            [290, ['altitude' => 51.4, 'datetime' => 1376730345], [13.231805, 52.490537]],
+            [342, ['altitude' => 52.9, 'datetime' => 1376730612], [13.233876, 52.48959]],
+            [394, ['altitude' => 58.8, 'datetime' => 1376730897], [13.221316, 52.489695]],
+            [427, ['altitude' => 69.9, 'datetime' => 1376731062], [13.213987, 52.490498]],
+            [478, ['altitude' => 61.2, 'datetime' => 1376731319], [13.203118, 52.491101]],
+            [563, ['altitude' => 31.2, 'datetime' => 1376731754], [13.193966, 52.485072]],
+            [616, ['altitude' => 30.7, 'datetime' => 1376732022], [13.192097, 52.478326]],
+            [678, ['altitude' => 31.6, 'datetime' => 1376732355], [13.196252, 52.471298]],
+            [746, ['altitude' => 74.0, 'datetime' => 1376732687], [13.196559, 52.477397]],
+            [758, ['altitude' => 76.1, 'datetime' => 1376732751], [13.196279, 52.477955]],
         ];
         foreach ($points as $point) {
             $routePoint = new RoutePoint();
@@ -46,6 +59,19 @@ class RouteData extends AbstractFixture implements FixtureInterface, DependentFi
             $manager->persist($route);
         }
         $manager->flush();
+         
+        // add Image Media to Route 
+        $medias = [
+            [['width' => 1280, 'height' => 960, 'altitude' => 60.1, 'datetime' => 1376728834, 'filesize' => 607249], 13.257437,  52.508006, 0, 'trailburning-media/cb88c97a09a59aa2452c0d0cdfdd2f4ccc211a53.jpg'],
+            [['width' => 1280, 'height' => 956, 'altitude' => 56.8, 'datetime' => 1376729041, 'filesize' => 329318], 13.252078,  52.504918, 0, 'trailburning-media/895d0ce8f7d3bb08c7d4ef128b0131eaccd67b97.jpg'],
+            [['width' => 1280, 'height' => 956, 'altitude' => 86.2, 'datetime' => 1376729419, 'filesize' => 283286], 13.248702,  52.502691, 0, 'trailburning-media/4f222c50f054b2feefd18be66edb3dcd44858493.jpg'],
+            [['width' => 1280, 'height' => 956, 'altitude' => 79.0, 'datetime' => 1376729478, 'filesize' => 413357], 13.247005,  52.503021, 0, 'trailburning-media/29d35f4e5f485b8da742f7ce6b3e96b4c8cf8691.jpg'],
+            [['width' => 1280, 'height' => 956, 'altitude' => 47.5, 'datetime' => 1376730053, 'filesize' => 341782], 13.227167,  52.496973, 0, 'trailburning-media/c9472914f7ef51f7df7025ebd85d791e48309987.jpg'],
+            [['width' => 1280, 'height' => 956, 'altitude' => 38.0, 'datetime' => 1376731875, 'filesize' => 287037], 13.194522,  52.48193, 0, 'trailburning-media/837c5c05f9b047ea7f545ad7aef9796271508066.jpg'],
+            [['width' => 1280, 'height' => 956, 'altitude' => 31.6, 'datetime' => 1376732354, 'filesize' => 193569], 13.196252,  52.471298, 0, 'trailburning-media/3d0994ca3d074920e661f5a4182a93f8c07460e5.jpg'],
+            [['width' => 1280, 'height' => 956, 'altitude' => 76.5, 'datetime' => 1376732724, 'filesize' => 279660], 13.196632,  52.47771, 0, 'trailburning-media/d7bc334a55c629e69ace79e5b64d14a6a36bec22.jpg'],
+        ];
+        
         
         $route = new Route();
         $route->setGpxfile($this->getReference('GpxFile-ttm'));
@@ -53,7 +79,7 @@ class RouteData extends AbstractFixture implements FixtureInterface, DependentFi
         $route->setLength(41309);    
         $route->setCentroid(new Point(52.508006, 13.257437, 4326));
         $route->setTags(['ascent' => 176.8, 'descent' => 187.6]);
-        $route->setUser($this->getReference('UserProfile-ashmei'));
+        $route->setUser($this->getReference('BrandProfile-ashmei'));
         $route->setRouteType($this->getReference('RouteType-marathon'));
         $route->setRouteCategory($this->getReference('RouteCategory-park'));
         $route->setRegion('Thames Festival of Running');
@@ -73,7 +99,23 @@ The scenery along the footpath; including locks, bridges, forestry and the river
         $points = [
             [1, ['altitude' => 51.9, 'datetime' => 1385535601], [-1.279091835, 51.667578027]],
             [2, ['altitude' => 55.2, 'datetime' => 1385535602], [-1.28153801, 51.66696583]],
-            [3, ['altitude' => 54.3, 'datetime' => 1385535603], [-1.282997131, 51.66603421]],
+            [3, ['altitude' => 48.2, 'datetime' => 1385535624], [-1.240167618, 51.644095676]],
+            [4, ['altitude' => 47.4, 'datetime' => 1385535642], [-1.205663681, 51.65645072]],
+            [5, ['altitude' => 46.4, 'datetime' => 1385535660], [-1.178069115, 51.64566687]],
+            [6, ['altitude' => 53.0, 'datetime' => 1385535674], [-1.162362099, 51.630778281]],
+            [7, ['altitude' => 46.5, 'datetime' => 1385535687], [-1.118459702, 51.621107402]],
+            [8, ['altitude' => 45.0, 'datetime' => 1385535695], [-1.116185188, 51.616844101]],
+            [9, ['altitude' => 46.6, 'datetime' => 1385535713], [-1.116056442, 51.593842015]],
+            [10, ['altitude' => 48.8, 'datetime' => 1385535725], [-1.120433807, 51.573975685]],
+            [11, ['altitude' => 43.4, 'datetime' => 1385535735], [-1.135754585, 51.559090248]],
+            [12, ['altitude' => 46.8, 'datetime' => 1385535746], [-1.1363554, 51.546201606]],
+            [13, ['altitude' => 45.9, 'datetime' => 1385535765], [-1.14197731, 51.516113907]],
+            [14, ['altitude' => 40.2, 'datetime' => 1385535774], [-1.125798225, 51.511894166]],
+            [15, ['altitude' => 72.5, 'datetime' => 1385535786], [-1.105885506, 51.501690393]],
+            [16, ['altitude' => 67.4, 'datetime' => 1385535792], [-1.094169617, 51.494744109]],
+            [17, ['altitude' => 43.6, 'datetime' => 1385535802], [-1.089363098, 51.485552015]],
+            [18, ['altitude' => 42.2, 'datetime' => 1385535813], [-1.108632088, 51.500995812]],
+            [19, ['altitude' => 41.1, 'datetime' => 1385535819], [-1.115927696, 51.510158083]],
         ];
         foreach ($points as $point) {
             $routePoint = new RoutePoint();
@@ -84,6 +126,8 @@ The scenery along the footpath; including locks, bridges, forestry and the river
             $manager->persist($route);
         }
         $manager->flush();
+        
+        
         
     }
     
