@@ -1,6 +1,11 @@
-{% set currentPath = url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}
+{% if url is not defined  %}
+    {% set url = url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}
+{% endif %}
+{% if text is not defined  %}
+    {% set text = 'Are you trailburning?' %}
+{% endif %}
 <div class="share">
-    <div class="link facebook"><a href="http://www.facebook.com/share.php?u={{ currentPath }}" target="_blank" class="button btnFacebook">Facebook</a></div>
-    <div class="link twitter"><a href="http://twitter.com/share?text=Are you trailburning?" target="_blank" class="button btnTwitter">Twitter</a></div>
-    <div class="link googleplus"><a href="https://plus.google.com/share?url={{ currentPath }}" target="_blank" class="button btnGooglePlus">Google+</a></div>          
+    <div class="link facebook"><a href="http://www.facebook.com/share.php?u={{ url|url_shareable }}" target="_blank" class="button btnFacebook">Facebook</a></div>
+    <div class="link twitter"><a href="http://twitter.com/share?text={{ text|url_encode }}&url={{ url|url_shareable }}" target="_blank" class="button btnTwitter">Twitter</a></div>
+    <div class="link googleplus"><a href="https://plus.google.com/share?url={{ url|url_shareable }}" target="_blank" class="button btnGooglePlus">Google+</a></div>          
 </div>
