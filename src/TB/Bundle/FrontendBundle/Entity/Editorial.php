@@ -41,13 +41,6 @@ class Editorial
      * @ORM\Column(name="title", type="string", length=50)
      */
     private $title;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="subtitle", type="string", length=50)
-     */
-    private $subtitle;
     
     /**
      * @var string
@@ -188,29 +181,6 @@ class Editorial
     public function getTitle()
     {
         return $this->title;
-    }
-
-    /**
-     * Set subtitle
-     *
-     * @param string $subtitle
-     * @return Editorial
-     */
-    public function setSubtitle($subtitle)
-    {
-        $this->subtitle = $subtitle;
-
-        return $this;
-    }
-
-    /**
-     * Get subtitle
-     *
-     * @return string 
-     */
-    public function getSubtitle()
-    {
-        return $this->subtitle;
     }
 
     /**
