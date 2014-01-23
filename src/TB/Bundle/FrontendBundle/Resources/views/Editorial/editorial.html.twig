@@ -11,7 +11,7 @@
 var TB_APP = 'EditorialApp';
 var TB_EDITORIAL_TRAILS = [
     {% for route in routes %}
-        { long: {{ route.centroid.longitude }}, lat: {{ route.centroid.latitude }} },  
+        { long: {{ route.centroid.longitude }}, lat: {{ route.centroid.latitude }}, url: "{{ path('editorial_trail', {trailSlug: route.slug, editorialSlug: editorial.slug}) }}" },          
     {% endfor %}
 ];
 </script>
@@ -44,7 +44,8 @@ var TB_EDITORIAL_TRAILS = [
 	  			<div class="avatar"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/{{ editorial.user.name }}/{{ editorial.user.avatar }}"></div>
 	  		</div>
 	  		<div class="hero">
-				<div class="image_container"><img src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/editorial/{{ editorial.slug }}/{{ editorial.image }}" class="scale"></div></div>
+				<div class="image_container fade_on_load"><img src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/editorial/{{ editorial.slug }}/{{ editorial.image }}" class="scale"></div>
+			</div>
 	  		<div class="content">
 	  			<div class="content_header">
 		  			<div class="header">by <strong>{{ editorial.user.title }}</strong>&nbsp;&nbsp;&nbsp;<span class="date">{{ editorial.date|date('d/m/Y') }}</span></div>
@@ -99,10 +100,10 @@ var TB_EDITORIAL_TRAILS = [
 		        <div class="card_title"><a href="jan/trail/e51">Eiger Ultra Trail</a></div>
 				</h4>
 				<p>
-				Also in Switzerland and located in the Grindelwald region of Switzerland, the Eiger Ultra Trail takes place in the shadow of the famous Eiger North Face.
+				Also in Switzerland and located in the Grindelwald region, the Eiger Ultra Trail takes place in the shadow of the famous North Face of the Eiger.
 				</p>
 				<p>
-				<a href="http://www.uelisteck.ch" target="_blank">Ueli Steck</a> - 'The Swiss Machine' referes to the Eiger Ultra Trail as 'harder than the North Face solo'.  Considering Ueli's speed record of the <a href="http://www.youtube.com/watch?v=OmGcRIIIxK8" target="_blank">North Face</a> that certainly says something!
+				<a href="http://www.uelisteck.ch" target="_blank">Ueli Steck</a> - 'The Swiss Machine' referes to the Eiger Ultra Trail as 'harder than the North Face solo'.  Considering Ueli's speed record of the <a href="http://www.youtube.com/watch?v=OmGcRIIIxK8" target="_blank">North Face</a> that certainly says something about the event!
 				</p>
 	  			</div>
 	  			</div>

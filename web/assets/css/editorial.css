@@ -244,7 +244,7 @@ html.touch #small_sponsor_bar {
   font-size: 14px;
   font-weight: 300;
   line-height: 1.5em;   
-  margin: 0px 0px 20px 0px;
+  margin: 0px 0px 10px 0px;
 }
 
 .editorial_panel .content .map_header {
@@ -295,6 +295,9 @@ html.touch #small_sponsor_bar {
   background-color: transparent; 
 }
 
+.leaflet-container {
+	cursor: auto;
+}
 #editorial_region_view .border_top {  
   position: absolute;
   top: 0px;

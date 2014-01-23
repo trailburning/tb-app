@@ -1,12 +1,14 @@
 define([
   'underscore', 
   'backbone',
-  'views/TrailMapMediaMarkerView'  
-], function(_, Backbone, TrailMapMediaMarkerView){
+  'views/EditorialMapMarkerView'  
+], function(_, Backbone, EditorialMapMarkerView){
 
   var EditorialMapView = Backbone.View.extend({
     initialize: function(){
       this.template = _.template($('#editorialMapViewTemplate').text());        
+
+      app.dispatcher.on("EditorialMapMarkerView:markerclick", this.onEditorialMapMarkerClick, this);
             
       this.bRendered = false;
       this.arrLineCordinates = [];
@@ -34,24 +36,13 @@ define([
       this.map = L.mapbox.map('map', null, {dragging: false, touchZoom: false, scrollWheelZoom:false, doubleClickZoom:false, boxZoom:false, tap:false, zoomControl:false, zoomAnimation:false, attributionControl:false});
       this.layer_street = L.mapbox.tileLayer('mallbeury.map-kply0zpa');
       this.map.addLayer(this.layer_street);
-          
-      var LocationIcon = L.Icon.extend({
-          options: {
-              iconSize:     [36, 47],
-              iconAnchor:   [16, 44],
-              popupAnchor:  [16, 44]
-          }
-      });      
-      var locationIcon = new LocationIcon({iconUrl: 'https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/icons/location.png'});
-                
+                          
       var arrMarkers = [];
 
-      function onClick(e) {
-      }
-
       _.each(TB_EDITORIAL_TRAILS, function (trail) {
+      	  var mapMarker = new EditorialMapMarkerView({map: self.map, lat: trail.lat, lng: trail.long, url: trail.url});
+      	  mapMarker.render();
           arrMarkers.push([trail.lat, trail.long]);                   
-          L.marker(arrMarkers[arrMarkers.length-1], {icon: locationIcon, zIndexOffset: 1000}).on('click', onClick).addTo(this.map);
       }, this);
 
       var bounds = new L.LatLngBounds(arrMarkers);
@@ -61,7 +52,10 @@ define([
       this.bRendered = true;
 
       return this;
-    }    
+    },
+    onEditorialMapMarkerClick: function(editorialMapMarkerView){
+      window.location = editorialMapMarkerView.options.url;
+	}        
   });
 
   return EditorialMapView;
