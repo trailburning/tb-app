@@ -110,6 +110,9 @@ html.touch #small_sponsor_bar {
 
 /* EDITORIAL PANEL */
 /******************************************/
+.editorial_panel {
+}
+
 .editorial_panel .header {
   margin: 52px 90px 34px 85px;
   color: #6D6E71;
@@ -162,12 +165,12 @@ html.touch #small_sponsor_bar {
 .editorial_panel .content .header {
   float: left;  
   margin: 8px 0px 0px 0px;
-  width: 262px;
+  width: 342px;
 }
 
 .editorial_panel .content .line {
 	float: left;
-	width: 538px;
+	width: 458px;
 	margin-top: 27px;
 	border-top-style: solid;
 	border-top-width: 1px;
@@ -184,7 +187,8 @@ html.touch #small_sponsor_bar {
 	float: right;
 }
 
-#column_wrapper { 
+#column_wrapper {
+	visibility: hidden; 
 	clear: both;
 	margin: 0px 0px 0px 4px;
 }
@@ -194,33 +198,53 @@ html.touch #small_sponsor_bar {
 }
 
 #column_wrapper p { 
-	margin: 0px 0px 20px 0px;
-	padding: 0px;
+	margin: 0px 0px 0px 0px;
+	padding: 10px 0px 10px 0px;
 }
 
-#column_wrapper h1 { 
-	margin: 0px 0px 20px 0px;
+#column_wrapper h4 { 
+	margin: 0px 0px 10px 0px;
 	padding: 0px;
 	font-weight: normal;
-	font-size: 22px;
 	color: #979797;
 	line-height: 1.5em;
 }
 
-#column_wrapper .first div {
+#column_wrapper .first .columns {
 	 padding-right: 42px;
 }
 
-#column_wrapper .last div {
+#column_wrapper .last .columns {
 	 padding-left: 42px;
 }
 
 .column div { 
+  padding-right: 0px;
+}
+
+.column p { 
 	text-align: justify;
-	padding-right: 0px;
-	font-size: 14px;
+	font-size: 15px;
 	font-weight: 300;
-	line-height: 1.5em; 
+	line-height: 1.5em;	 
+}
+
+#column_wrapper .columns .card_avatar {
+  float: left;
+  width: 48px;
+  margin-right: 10px;
+}
+
+#column_wrapper .columns .card_avatar img {
+  width: 100%;
+}
+
+#column_wrapper .columns .summary {
+  text-align: left;  
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.5em;   
+  margin: 0px 0px 20px 0px;
 }
 
 .editorial_panel .content .map_header {
@@ -446,13 +470,22 @@ html.touch #small_sponsor_bar {
     width: 826px;
   }  
   .editorial_panel .content .header {
-    width: 258px;
+    width: 338px;
   }
   .editorial_panel .content .line {
-	width: 420px;
+	width: 340px;
   }
   #column_wrapper .columns {
 	margin: 37px 0px 0px 0px;
+  }    
+  #column_wrapper .columns {
+	margin: 37px 0px 0px 0px;
+  }
+  #column_wrapper .columns .card_avatar {
+    width: 42px;
+  }      
+  .column p { 
+	font-size: 14px;
   }  
   .editorial_panel .content .map_header .line {
 	width: 390px;

@@ -83,8 +83,8 @@ define([
         self.marker.closePopup();
       });
       
-//      container.html('<div class="trail_media_popup"><h4 class="tb">Filename of the photo to appear at this point:</h4><div class="form-group"><input type="text" name="form_media_name" id="form_media_name" class="form-control" value="' + this.model.get('name') + '"></div><div><span class="btn btn-tb-action btn-tb-large save_btn">Save</span></div><a href="javascript:void(0)" class="deletepin_btn">delete pin</a></div>');
-      container.html('<div class="trail_media_popup"><img src="assets/img/card_hero_tb.jpg"></div>');
+      container.html('<div class="trail_media_popup"><h4 class="tb">Filename of the photo to appear at this point:</h4><div class="form-group"><input type="text" name="form_media_name" id="form_media_name" class="form-control" value="' + this.model.get('name') + '"></div><div><span class="btn btn-tb-action btn-tb-large save_btn">Save</span></div><a href="javascript:void(0)" class="deletepin_btn">delete pin</a></div>');
+//      container.html('<div class="trail_media_popup"><img src="assets/img/card_hero_tb.jpg"></div>');
       this.marker.bindPopup(container[0], {'closeButton': false});      
 
       function onClick(e) {
