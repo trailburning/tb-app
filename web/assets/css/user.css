@@ -16,7 +16,6 @@ border-width:1px;
   width: 100%;
   height: 486px;
   overflow: overflow;
-  min-width: 1200px;
 }
 
 #profile_header #profile_map_view {
@@ -241,9 +240,6 @@ border-width:1px;
  
 /* Medium devices (desktops, 992px and up) */
 @media (max-width: 1199px) {
-  #profile_header {
-    min-width: 992px;
-  }
   #profile_map .leaflet-overlay {
     width: 730px;
     background-size: 730px 538px;

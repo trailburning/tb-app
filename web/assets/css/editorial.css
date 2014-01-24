@@ -5,7 +5,6 @@
 border-style:solid;
 border-width:1px;
 */  
-  min-width: 1200px;
 }
 
 /* BIG SPONSOR BAR */
@@ -462,9 +461,6 @@ html.touch #small_sponsor_bar {
  
 /* Medium devices (desktops, 992px and up) */
 @media (max-width: 1199px) {  
-  #appview {
-    min-width: 992px;
-  }
   #big_sponsor_bar .sponsor_content {
     width: 968px;  
   }
