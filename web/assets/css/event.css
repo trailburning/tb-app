@@ -5,7 +5,6 @@
 border-style:solid;
 border-width:1px;
 */  
-  min-width: 1200px;
 }
 
 /* EVENT HEADER */
@@ -17,6 +16,7 @@ border-width:1px;
   width: 100%;
   height: 486px;
   overflow: overflow;
+  min-width: 1200px;
 }
 
 #event_header .image_container {
@@ -319,8 +319,8 @@ border-width:1px;
 }
  
 /* Medium devices (desktops, 992px and up) */
-@media (max-width: 1199px) {  
-  #appview {
+@media (max-width: 1199px) {
+  #event_header {
     min-width: 992px;
   }
   .panel_content {

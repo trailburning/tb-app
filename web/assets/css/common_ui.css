@@ -11,6 +11,30 @@ body {
   color: #444444;    
 }
 
+/* APP */
+/******************************************/
+#appview {
+  min-width: 1200px;
+}
+
+/* BIG SPONSOR BAR */
+/******************************************/
+#big_sponsor_bar {
+  min-width: 1200px;
+}
+
+/* SMALL SPONSOR BAR */
+/******************************************/
+#small_sponsor_bar {
+  min-width: 1200px;
+}
+
+/* CONTENT VIEW */
+/******************************************/
+#content_view {
+  min-width: 1200px;
+}
+
 form {
   margin: 0px;
   padding: 0px;
@@ -280,6 +304,7 @@ h4.tb {
   width: 100%;
   height: 120px;  
   background: #000;
+  min-width: 1200px;  
 }
 
 #footerview .left {
@@ -557,21 +582,30 @@ h4.tb {
 	
 /* Medium devices (desktops, 992px and up) */
 @media (max-width: 1199px) {
-  #headerview {
+  #appview {
+    min-width: 992px;
+  }    
+  #big_sponsor_bar {
     min-width: 992px;
   }
+  #small_sponsor_bar {
+    min-width: 992px;
+  }  
+  #content_view {
+    min-width: 992px;
+  }  
+  #footerview {
+    min-width: 992px;
+  }  
   h1.tb {
     font-size: 58px;
-  }
-  
+  }  
   h2.tb {
     font-size: 42px;
-  }
-  
+  }  
   h3.tb {
     font-size: 35px;
-  }
-  
+  }  
   h4.tb {
     font-size: 18px;
   }
