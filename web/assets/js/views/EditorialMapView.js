@@ -40,13 +40,14 @@ define([
       var arrMarkers = [];
 
       _.each(TB_EDITORIAL_TRAILS, function (trail) {
-      	  var mapMarker = new EditorialMapMarkerView({map: self.map, lat: trail.lat, lng: trail.long, url: trail.url});
+      	  var mapMarker = new EditorialMapMarkerView({map: self.map, trail: trail});
       	  mapMarker.render();
           arrMarkers.push([trail.lat, trail.long]);                   
       }, this);
 
       var bounds = new L.LatLngBounds(arrMarkers);
-      bounds = bounds.pad(0.05);
+//      bounds = bounds.pad(0.05);
+      bounds = bounds.pad(0.5);
       this.map.fitBounds(bounds);
 
       this.bRendered = true;
@@ -54,7 +55,7 @@ define([
       return this;
     },
     onEditorialMapMarkerClick: function(editorialMapMarkerView){
-      window.location = editorialMapMarkerView.options.url;
+      window.location = editorialMapMarkerView.options.trail.url;
 	}        
   });
 

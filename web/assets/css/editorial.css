@@ -296,7 +296,7 @@ html.touch #small_sponsor_bar {
 }
 
 .leaflet-container {
-	cursor: auto;
+  cursor: auto;
 }
 #editorial_region_view .border_top {  
   position: absolute;
@@ -312,6 +312,27 @@ html.touch #small_sponsor_bar {
   width: 2px;
   height: 100%;  
   border-left: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+#editorial_region_view .leaflet-popup-content {
+/*
+ padding: 10px 10px 15px;
+ */  
+  padding: 5px; 
+}
+
+#editorial_region_view .trail_location_popup {
+  width: 170px;	
+}
+
+#editorial_region_view .trail_location_popup .icon {
+  float: left;
+  width: 40px;	
+}
+
+#editorial_region_view .trail_location_popup .detail {
+  float: left;	
+  width: 130px;	
 }
 
 /* EDITORIAL CARDS */

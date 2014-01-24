@@ -36,7 +36,6 @@ define([
 		buildOnce : true
 	  });    
 	  
-//      $('#column_wrapper').show();
       $('#column_wrapper').css('visibility', 'visible');
       $('#footerview').show();
 	  
