@@ -28,15 +28,22 @@ define([
       
       this.editorialMapView = new EditorialMapView({ el: '#editorial_map_view' });          
       self.editorialMapView.render();
-      
-	  $('#column_wrapper').columnize({
-		columns : 3,
+
+	  $('#column_wrapper_intro').columnize({
+		columns : 2,
+		accuracy : 1,
+		lastNeverTallest: true,
+		buildOnce : true
+	  });
+  
+	  $('.card_column_wrapper').columnize({
+		columns : 2,
 		accuracy : 1,
 		lastNeverTallest: true,
 		buildOnce : true
 	  });    
-	  
-      $('#column_wrapper').css('visibility', 'visible');
+
+      $('.column_wrapper').css('visibility', 'visible');
       $('#footerview').show();
 	  
 	  this.handleResize();      

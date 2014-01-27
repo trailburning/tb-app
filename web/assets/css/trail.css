@@ -957,8 +957,8 @@ html.touch #trailplayer #view_map_btns {
 
 .editorial_panel .line {
   float: right;
-  width: 332px;
-  margin-top: 27px;
+  width: 262px;
+  margin-top: 22px;
   border-top-style: solid;
   border-top-width: 1px;
   border-top-color: #C1C1C1;
@@ -1197,7 +1197,7 @@ html.touch #trailplayer #view_map_btns {
     height: 174px;
   }
   .editorial_panel .line {
-    width: 288px;
+    width: 228px;
   }  
   .trail_card_sticker {
     margin: 22px 5px 0px 5px;

@@ -18,7 +18,7 @@ var TB_EDITORIAL_TRAILS = [
 
 <div id="big_sponsor_bar">
 	<div class="sponsor_content">
-		<div class="link"><a href="{{ app.request.baseUrl }}/editorials"><img src="{{ asset('assets/img/sponsor/arrow_big.png') }}">&nbsp;&nbsp;&nbsp;&nbsp;Back to editorials</a></div>
+		<div class="link"><a href="{{ app.request.baseUrl }}/"><img src="{{ asset('assets/img/sponsor/arrow_big.png') }}">&nbsp;&nbsp;&nbsp;&nbsp;Back to home page</a></div>
 		<div class="brand">
 			<div class="strap">This editorial has been brought to you by</div>
 			<div class="logo"><a href="{{ path('profile', {'name': 'ashmei'}) }}"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/ashmei/editorial_sponsor_logo_big.png" border="0"></a></div>
@@ -41,7 +41,7 @@ var TB_EDITORIAL_TRAILS = [
 		<div class="panel editorial_panel">
 	  		<div class="header clearfix">
 	  			<div class="title">{{ editorial.title|nl2br }}</div>
-	  			<div class="avatar"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/{{ editorial.user.name }}/{{ editorial.user.avatar }}"></div>
+	  			<div class="avatar"><a hred="{{ path('profile', {'name': editorial.user.name}) }}"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/{{ editorial.user.name }}/{{ editorial.user.avatar }}"></a></div>
 	  		</div>
 	  		<div class="hero">
 				<div class="image_container fade_on_load"><img src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/editorial/{{ editorial.slug }}/{{ editorial.image }}" class="scale"></div>
@@ -54,78 +54,131 @@ var TB_EDITORIAL_TRAILS = [
       					{{ include('TBFrontendBundle:Default:share.html.twig') }} 	  				
 		  			</div>
 	  			</div>	  			
-				<div id="column_wrapper">
+	  			
+				<div id="column_wrapper_intro" class="column_wrapper">
 	  			<div class="columns">
 	  			<h4 class="tb">
-		        <div class="card_avatar"><a href="jan/trail/chamonix"><img src="{{ asset('assets/img/guide_share.png') }}"></a></div>
-		        <div class="card_title"><a href="jan/trail/chamonix">A Trail Running Team Alpine Adventure</a></div>	  				
+	  			Trailburning #Discover is about framing a collection of trails as a package.  Trails that tell a story about a region and what inspires someone to take on a trail. 
 				</h4>
-				<p>
-				The gentle sound of distant cowbells drifts around the valley as we weave up and down through the trees on this rolling alpine trail.  It’s ‘flat’ we are told by our guide, Julia, bursting lungs and crying legs suggest otherwise…  it’s alpine flat! 
+				<p>				
+Editorialised journeys by those that trek the trails with a list of collated TrailCards depicting the trail and featuring organised trail events to help you get out there, whether it be mountains, beaches, forests or parks, each issue of #Discover will have a common thread and aims to inspire you to get out and explore.
 				</p>
 				<p>
-				There are seven of us, plus Julia, running through the Chamonix Valley, following the route of the Mont Blanc Marathon.  We started early, buzzing alarms waking us at 6am…  The trail started out easy, but quickly got steeper, passing through alpine meadows, villages, woods and over rivers.  We move quickly through the mountains, mostly climbing, but at a pace where we can talk.  The air is clean and crisp and yet despite being at over 1300 metres (4200 feet) it seems easy to breath, it is a joy to run!
+Which brings me to this first issue of #Discover - the Alps.  When the team decided to feature the Alps all I thought about was getting lost, lost in the foothills of the Alps on a hike.  Being surrounded by such a beautiful landscape I didn’t feel lost but rather considered the experience more off-piste walking. 
 				</p>
 				<p>
-				Then we start climbing for real and sweat pours from us in the increasing midday heat.  The views are on another level as Mont Blanc peeps out from behind the clouds and watches over as we run in her shadow.  Finally we run along a narrow ridge to the summit of L’Aguillette des Posettes where we stop for some much needed lunch.  What goes up must come down, a 1000 metre (3300 feet) descent, twisting and turning down the mountain, dropping over rocks, always losing height.
+After a solid two hours hiking with amazing views around every corner I was relieved to find the trail again before nightfall.  But now I find I want to get ‘lost’ again, I want to be in the moment captured by a fellow trailburner - the photo of the lake halfway up a mountain, the photo of a meadow before the forest.  
 				</p>
 				<p>
-				Eventually we reach the bottom, and in true alpine style we find a small cafe serving cake and strong coffee.  Then it’s just a matter of a 10km (6 mile) jog back to Chamonix in time for a beer, some French cuisine and a much needed bed.
-				<div class="summary">
-		        <strong>Reuben Tabner</strong>
-		        <br/>
-		        <a href="http://www.reubentabner.com" target="_blank">Trail Running Team</a>
-		        </div>
+So as a dedication to all those that want to ‘get lost’ or for those looking to get lost more often, the Trailburning #Discover team introduce a selection of trails in the Alps.
 				</p>
-				<h4 class="tb">
-		        <div class="card_avatar"><a href="jan/trail/46km"><img src="{{ asset('assets/img/guide_share.png') }}"></a></div>
-		        <div class="card_title"><a href="jan/trail/46km">Matterhorn Ultraks 46km - Race Report</a></div>
-				</h4>
-				<p>
-				What I loved about this trail was the constant change of scenery and trail condition paired with beautiful views of the Matterhorn.  
-				</p>
-				<p>
-				There is a lot of up and down packed into 46 km, you start off with a steep ascent right from the start and the trail turns technical quickly, I loved this!  You can also expect to see Marmots and herds of Zermatt’s famous Blackneck Goats.
-				</p>
-				<p>
-				If you’re looking to get into ultra running with a challenge in the vertical then this is the race for you.  The distance is optimal with plenty of refreshment stops.  Most importantly though, the scenery is breathtaking along the whole course and can’t be beat.
-				<div class="summary">
-	            <strong>Christian Langenegger</strong>
-	            <br/>
-	          	<a href="http://www.dromeus.com" target="_blank">Dromeus – Discovering the Pleasure of Running</a>
-		        </div>				
-				</p>
-				<h4 class="tb">
-		        <div class="card_avatar"><a href="jan/trail/e51"><img src="{{ asset('assets/img/guide_share.png') }}"></a></div>
-		        <div class="card_title"><a href="jan/trail/e51">Eiger Ultra Trail</a></div>
-				</h4>
-				<p>
-				Also in Switzerland and located in the Grindelwald region, the Eiger Ultra Trail takes place in the shadow of the famous North Face of the Eiger.
-				</p>
-				<p>
-				<a href="http://www.uelisteck.ch" target="_blank">Ueli Steck</a> - 'The Swiss Machine' refers to the Eiger Ultra Trail as 'harder than the North Face solo'.  Considering Ueli's speed record of the <a href="http://www.youtube.com/watch?v=OmGcRIIIxK8" target="_blank">North Face</a> that certainly says something about the event!
-				</p>
-	  			</div>
-	  			</div>
+	  			</div>	  			
+	  			</div>	  			
 	  			
-	  			<div class="map_header clearfix">
-		  			<div class="header">Discover the Trails</div>
+	  			<div id="trail_header" class="section_header clearfix">
+		  			<div class="header"><h2 class="tb">Discover the Trails</h2></div>
 		  			<div class="line"></div>
 	  			</div>
-	  				
+
+				<div class="editorial_cards clearfix">
+                {% if routes %}
+                	{% for route in routes %}
+						{% if route.id == 143 %}
+						<div class="editorial_card">
+							<div class="sticker_container">			
+							{{ include('TBFrontendBundle:Trail:editorial_trailcard.html.twig', {route: route, editorial: editorial}) }}
+							</div>
+							
+							<div class="card_column_wrapper column_wrapper">
+				  			<div class="columns">							
+				  			<h4 class="tb">The gentle sound of distant cowbells drifts around the valley as we weave up and down through the trees on this rolling alpine trail.  It’s ‘flat’ we are told by our guide, Julia, bursting lungs and crying legs suggest otherwise…  it’s alpine flat!</h4>
+							<p>
+							There are seven of us, plus Julia, running through the Chamonix Valley, following the route of the Mont Blanc Marathon.  We started early, buzzing alarms waking us at 6am…  The trail started out easy, but quickly got steeper, passing through alpine meadows, villages, woods and over rivers.  We move quickly through the mountains, mostly climbing, but at a pace where we can talk.  The air is clean and crisp and yet despite being at over 1300 metres (4200 feet) it seems easy to breath, it is a joy to run!
+							</p>
+							<p>
+							Then we start climbing for real and sweat pours from us in the increasing midday heat.  The views are on another level as Mont Blanc peeps out from behind the clouds and watches over as we run in her shadow.  Finally we run along a narrow ridge to the summit of L’Aguillette des Posettes where we stop for some much needed lunch.  What goes up must come down, a 1000 metre (3300 feet) descent, twisting and turning down the mountain, dropping over rocks, always losing height.
+							</p>
+							<p>
+							Eventually we reach the bottom, and in true alpine style we find a small cafe serving cake and strong coffee.  Then it’s just a matter of a 10km (6 mile) jog back to Chamonix in time for a beer, some French cuisine and a much needed bed.
+							<div class="summary">
+					        <strong>Reuben Tabner</strong>
+					        <br/>
+					        <a href="http://www.reubentabner.com" target="_blank">Trail Running Team</a>
+					        </div>
+							</p>
+							</div>
+							</div>
+							
+						</div>							
+			        	{% endif %}	        		
+                    {% endfor %}
+
+                	{% for route in routes %}
+						{% if route.id == 42 %}          
+						<div class="editorial_card align_right">      	
+							<div class="card_column_wrapper column_wrapper">
+				  			<div class="columns">
+							<h4 class="tb">What I loved about this trail was the constant change of scenery and trail condition paired with beautiful views of the Matterhorn.</h4>
+							<p>
+							There is a lot of up and down packed into 46 km, you start off with a steep ascent right from the start and the trail turns technical quickly, I loved this!  You can also expect to see Marmots and herds of Zermatt’s famous Blackneck Goats.
+							</p>
+							<p>
+							If you’re looking to get into ultra running with a challenge in the vertical then this is the race for you.  The distance is optimal with plenty of refreshment stops.  Most importantly though, the scenery is breathtaking along the whole course and can’t be beat.
+							</p>
+							<p>
+							Zermatt is a car-free village so you'll need tp take a train there.  Plan on coming a few days earlier to get acclimatised and stay a few days extra to take in all the natural beauty.
+							</p>
+							<p>
+							For those wanting something more relaxing, you can go skiing on the glacier, hike, paraglide or take the Glacier Express train from Zermatt to St. Moritz. 
+							<div class="summary">
+				            <strong>Christian Langenegger</strong>
+				            <br/>
+				          	<a href="http://www.dromeus.com" target="_blank">Dromeus – Discovering the Pleasure of Running</a>
+					        </div>				
+							</p>
+							</div>
+							</div>
+							<div class="sticker_container">			
+							{{ include('TBFrontendBundle:Trail:editorial_trailcard.html.twig', {route: route, editorial: editorial}) }}
+							</div>
+						</div>				
+			        	{% endif %}	        		
+                    {% endfor %}
+
+                	{% for route in routes %}
+						{% if route.id == 121 %}    
+						<div class="editorial_card">
+							<div class="sticker_container">			
+							{{ include('TBFrontendBundle:Trail:editorial_trailcard.html.twig', {route: route, editorial: editorial}) }}
+							</div>     
+							<div class="card_column_wrapper column_wrapper">
+				  			<div class="columns">
+							<h4 class="tb">Also in Switzerland and located in the Grindelwald region, the Eiger Ultra Trail race takes place in the shadow of the famous North Face of the Eiger.</h4>
+							<p>
+							Traversing the base of the North Face is both a spectacular and unforgettable experience, and with three race distances to choose from there's something for every mountain trail runner - or indeed anyone wanting to get into mountain trail running!   																
+							</p>
+							<p>
+							<a href="http://www.uelisteck.ch" target="_blank">Ueli Steck</a> - 'The Swiss Machine' refers to the Eiger Ultra Trail as 'harder than the North Face solo'.  Considering Ueli's speed record of the <a href="http://www.youtube.com/watch?v=OmGcRIIIxK8" target="_blank">North Face</a> that certainly says something about the event!
+							</p>
+				  			</div>
+				  			</div>				
+				  		</div>		       	
+			        	{% endif %}	        		
+                    {% endfor %}
+  				{% endif %}  
+  				</div>
+	  			
+	  			<div id="region_header" class="section_header clearfix">
+		  			<div class="header"><h2 class="tb">Discover the Region</h2></div>
+		  			<div class="line"></div>
+	  			</div>
+	  			
 				<div id="editorial_region_view">		  				
 					<div id="editorial_map_view" class="editorial_map"></div>		  				
 	            	<div class='border_top'></div>
 	            	<div class='border_left'></div>
   				</div>
-  				
-                {% if routes %}
-    			    <div class="editorial_cards clearfix">  
-                        {% for route in routes %}
-                             {{ include('TBFrontendBundle:Trail:editorial_trailcard.html.twig', {route: route, editorial: editorial}) }} 
-                        {% endfor %}
-    		  		</div>		  		
-  				{% endif %}  
+
 	  		</div>		  		
 	  	</div>
 	</div>

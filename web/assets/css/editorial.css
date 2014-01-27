@@ -109,9 +109,6 @@ html.touch #small_sponsor_bar {
 
 /* EDITORIAL PANEL */
 /******************************************/
-.editorial_panel {
-}
-
 .editorial_panel .header {
   margin: 52px 90px 34px 85px;
   color: #6D6E71;
@@ -147,11 +144,11 @@ html.touch #small_sponsor_bar {
 }
 
 .editorial_panel .content {
-  margin: 30px 82px 0px 82px; 
-  width: 948px;
+  margin-top: 30px;  
 }
 
 .editorial_panel .content .content_header {
+  margin-left: 82px;
   font-size: 22px;
   line-height: 38px;
   color: #979797;
@@ -164,12 +161,12 @@ html.touch #small_sponsor_bar {
 .editorial_panel .content .header {
   float: left;  
   margin: 8px 0px 0px 0px;
-  width: 342px;
+  width: 272px;
 }
 
 .editorial_panel .content .line {
 	float: left;
-	width: 458px;
+	width: 528px;
 	margin-top: 27px;
 	border-top-style: solid;
 	border-top-width: 1px;
@@ -186,22 +183,49 @@ html.touch #small_sponsor_bar {
 	float: right;
 }
 
-#column_wrapper {
-	visibility: hidden; 
+#column_wrapper_intro {
 	clear: both;
-	margin: 0px 0px 0px 4px;
+  	width: 948px;	
+  	margin-left: 82px;
+	margin-bottom: 46px;
 }
 
-#column_wrapper .columns {
+#column_wrapper_intro .first .columns {
+  padding-left: 0px;
+  padding-right: 20px;
+}
+
+#column_wrapper_intro .last .columns {
+  padding-left: 20px;
+  padding-right: 0px;
+}
+
+.sticker_container {
+  float: left;
+  width: 323px;
+}
+
+.card_column_wrapper {
+	float: left;
+	width: 646px;
+}
+
+.column_wrapper {
+	visibility: hidden;
+}
+
+.column_wrapper .columns {
+	clear: both;
 	margin: 42px 0px 0px 0px;
 }
 
-#column_wrapper p { 
+.column_wrapper p { 
 	margin: 0px 0px 0px 0px;
-	padding: 10px 0px 10px 0px;
+	padding: 0px 0px 20px 0px;
 }
 
-#column_wrapper h4 { 
+.column_wrapper h4 {
+	text-align: justify; 
 	margin: 0px 0px 10px 0px;
 	padding: 0px;
 	font-weight: normal;
@@ -209,12 +233,29 @@ html.touch #small_sponsor_bar {
 	line-height: 1.5em;
 }
 
-#column_wrapper .first .columns {
-	 padding-right: 42px;
+.first .columns {
+  padding-left: 15px;
+  padding-right: 25px;
 }
 
-#column_wrapper .last .columns {
-	 padding-left: 42px;
+.last .columns {
+  padding-left: 25px;
+  padding-right: 10px;
+}
+
+.align_right .first .columns {
+  padding-left: 20px;
+  padding-right: 20px;	
+}
+
+.align_right .last .columns {
+  padding-left: 15px;
+  padding-right: 25px;	
+}
+
+.align_right .sticker_container {
+  width: 305px;
+  margin-left: 18px;
 }
 
 .column div { 
@@ -246,20 +287,25 @@ html.touch #small_sponsor_bar {
   margin: 0px 0px 10px 0px;
 }
 
-.editorial_panel .content .map_header {
-	margin-top: 44px;
-	width: 100%;
+.editorial_panel .content .section_header {
+  clear: both;
+  width: 948px;
+  margin-left: 82px;
 }
 
-.editorial_panel .content .map_header .header {
+.editorial_panel .content .section_header .header {
 	float: left;
 	margin: 0px;
-	width: 436px;
 	font-size: 50px;
 	line-height: 1em;
 }
 
-.editorial_panel .content .map_header .line {
+.editorial_panel .content .section_header .header h2 {
+  margin: 0px;
+  color: #6D6E71;
+}
+
+.editorial_panel .content .section_header .line {
 	float: right;
 	width: 512px;
 	margin-top: 27px;
@@ -268,11 +314,27 @@ html.touch #small_sponsor_bar {
 	border-top-color: #C1C1C1;
 }
 
+#trail_header .header {
+	width: 436px;	
+}
+
+#trail_header .line {
+	width: 512px;	
+}
+
+#region_header .header {
+	width: 456px;	
+}
+
+#region_header .line {
+	width: 492px;	
+}
+
 /* EDITORIAL REGION VIEW */
 /******************************************/
 #editorial_region_view {
   position: relative;
-  margin: 40px 0px 30px 0px;
+  margin: 40px 0px 80px 82px;
   width: 948px;
   height: 378px;
 }
@@ -314,9 +376,6 @@ html.touch #small_sponsor_bar {
 }
 
 #editorial_region_view .leaflet-popup-content {
-/*
- padding: 10px 10px 15px;
- */  
   padding: 5px; 
 }
 
@@ -369,11 +428,17 @@ html.touch #small_sponsor_bar {
   overflow: hidden;
 }
 
+.editorial_card {
+  clear: both;
+  margin-left: 72px;
+  width: 969px;  
+}
+
 /* TRAIL CARD PANEL */
 /******************************************/
 .trail_card_sticker {
   float: left;
-  margin: 22px 5px 0px 6px;
+  margin: 30px 0px 0px 0px;
   width: 305px;
   height: 412px;
   background: url("../img/card_sticker_back.png") no-repeat top left;
@@ -486,14 +551,30 @@ html.touch #small_sponsor_bar {
   	height: 387px;
   }
   .editorial_panel .content {
-    margin: 26px 71px 0px 71px; 
-    width: 826px;
+    margin-top: 26px;
+  }    
+  .editorial_panel .content .content_header {
+	margin-left: 71px;
+  }
+  #column_wrapper_intro {
+  	width: 826px;	
+  	margin-left: 71px;
   }  
+  
+.editorial_panel .content .section_header {
+/*	
+  width: 826px;
+*/  
+  width: 826px;
+  margin-left: 71px;
+}
+  
+  
   .editorial_panel .content .header {
-    width: 338px;
+    width: 268px;
   }
   .editorial_panel .content .line {
-	width: 340px;
+	width: 410px;
   }
   #column_wrapper .columns {
 	margin: 37px 0px 0px 0px;
@@ -507,15 +588,41 @@ html.touch #small_sponsor_bar {
   .column p { 
 	font-size: 14px;
   }  
-  .editorial_panel .content .map_header .line {
-	width: 390px;
-  }  
+  .editorial_panel .content .section_header .line {
+	margin-top: 23px;
+  }
+  #trail_header .header {
+	width: 379px;	
+  }
+  #trail_header .line {
+	width: 445px;	
+  }
+  #region_header .header {
+	width: 397px;	
+  }
+  #region_header .line {
+	width: 428px;	
+  }
   #editorial_region_view {
+	margin: 40px 0px 80px 71px;
     width: 826px;
     height: 330px;
+  }    
+  .editorial_card {
+    margin-left: 72px;
+    width: 846px;  
+  }  
+  .card_column_wrapper {
+	width: 550px;	
   }
+  .sticker_container {
+    width: 275px;
+  }
+  .align_right .sticker_container {
+    width: 265px;
+    margin-left: 18px;
+  }  
   .trail_card_sticker {
-    margin: 22px 5px 0px 5px;
     width: 265px;
     height: 358px;
   }
