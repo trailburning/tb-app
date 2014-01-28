@@ -38,7 +38,7 @@ define([
       });
 
       // mla test - ashmei
-      this.model.set('id', 132);
+      this.model.set('id', 144);
       $('#step2_view .panel_container').hide();      
       $('.map_step_container', $(this.el)).show();  
       // fire event
