@@ -221,7 +221,7 @@ html.touch #small_sponsor_bar {
 
 .column_wrapper p { 
 	margin: 0px 0px 0px 0px;
-	padding: 0px 0px 20px 0px;
+	padding: 4px 0px 16px 0px;
 }
 
 .column_wrapper h4 {
@@ -230,7 +230,7 @@ html.touch #small_sponsor_bar {
 	padding: 0px;
 	font-weight: normal;
 	color: #979797;
-	line-height: 1.5em;
+	line-height: 1.3em;
 }
 
 .first .columns {
