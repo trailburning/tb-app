@@ -41,7 +41,7 @@ var TB_EDITORIAL_TRAILS = [
 		<div class="panel editorial_panel">
 	  		<div class="header clearfix">
 	  			<div class="title">{{ editorial.title|nl2br }}</div>
-	  			<div class="avatar"><a hred="{{ path('profile', {'name': editorial.user.name}) }}"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/{{ editorial.user.name }}/{{ editorial.user.avatar }}"></a></div>
+	  			<div class="avatar"><a href="{{ path('profile', {'name': editorial.user.name}) }}"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/{{ editorial.user.name }}/{{ editorial.user.avatar }}"></a></div>
 	  		</div>
 	  		<div class="hero">
 				<div class="image_container fade_on_load"><img src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/editorial/{{ editorial.slug }}/{{ editorial.image }}" class="scale"></div>
