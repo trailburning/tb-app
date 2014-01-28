@@ -195,7 +195,12 @@ border-width:1px;
   background: url("../img/sponsor/back_small.png") repeat-x top left;
 }
 
-.editorial_card_panel .title img {
+.editorial_card_panel .title .tb {
+  float: left;
+  margin: 6px 0px 0px 10px;
+}
+
+.editorial_card_panel .title .sponsor {
   float: right;
   margin: 8px 10px 0px 0px;
 }
