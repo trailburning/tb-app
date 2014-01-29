@@ -13,7 +13,7 @@ var TB_APP = 'BrandApp';
 
 <div id="brand_header">
     <div class="image_container fade_on_load"><img src="http://app.resrc.it/O=90/http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/{{ brand.name }}/{{ brand.headerImage }}" class="resrc scale" /></div>
-    <div class="brand_logo"><a href="{{ brand.link }}"  onClick="trackOutboundLink(this, 'Outbound Links', '{{ brand.link|url_truncate }}'); return false;"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/{{ brand.name }}/{{ brand.avatar }}" border="0"></a></div>
+    <div class="brand_logo"><a href="{{ brand.link }}" onClick="trackOutboundLink(this, 'Outbound Links', '{{ brand.link|url_truncate }}'); return false;"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/{{ brand.name }}/{{ brand.avatar }}" border="0"></a></div>
     <div class="tb-credit"></div>
 </div>
 
