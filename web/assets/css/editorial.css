@@ -158,19 +158,19 @@ html.touch #small_sponsor_bar {
   font-size: 14px;	
 }
 
-.editorial_panel .content .header {
+.editorial_panel .content .content_header .header {
   float: left;  
   margin: 8px 0px 0px 0px;
   width: 272px;
 }
 
-.editorial_panel .content .line {
+.editorial_panel .content .content_header .line {
 	float: left;
 	width: 528px;
 	margin-top: 27px;
 	border-top-style: solid;
 	border-top-width: 1px;
-	border-top-color: #C1C1C1;
+	border-top-color: #C1C1C1;	
 }
 
 .editorial_panel .content .share_bar {
@@ -244,7 +244,7 @@ html.touch #small_sponsor_bar {
 }
 
 .align_right .first .columns {
-  padding-left: 20px;
+  padding-left: 15px;
   padding-right: 20px;	
 }
 
@@ -559,21 +559,15 @@ html.touch #small_sponsor_bar {
   #column_wrapper_intro {
   	width: 826px;	
   	margin-left: 71px;
-  }  
-  
-.editorial_panel .content .section_header {
-/*	
-  width: 826px;
-*/  
-  width: 826px;
-  margin-left: 71px;
-}
-  
-  
-  .editorial_panel .content .header {
+  }    
+  .editorial_panel .content .section_header {
+    width: 826px;
+    margin-left: 71px;
+  }
+  .editorial_panel .content .content_header .header {
     width: 268px;
   }
-  .editorial_panel .content .line {
+  .editorial_panel .content .content_header .line {
 	width: 410px;
   }
   #column_wrapper .columns {
