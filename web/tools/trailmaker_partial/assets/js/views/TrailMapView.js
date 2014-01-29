@@ -138,8 +138,9 @@ define([
         
         function onClickTrail(e) {
           // use mouse point with page offset and adjust for fixed header height
-          var point = L.point(e.originalEvent.pageX, e.originalEvent.pageY - $('#headerview').height());        	
-          self.addMarker(self.map.containerPointToLatLng(point), true, '');
+//          var point = L.point(e.originalEvent.pageX, e.originalEvent.pageY - $('#headerview').height());        	
+//          self.addMarker(self.map.containerPointToLatLng(point), true, '');
+          self.addMarker(e.latlng, true, '');
         }
         this.polyline = L.polyline(self.arrLineCordinates, polyline_options).on('click', onClickTrail).addTo(this.map);
         
