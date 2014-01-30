@@ -191,18 +191,18 @@ border-width:1px;
 /******************************************/
 .editorial_card_panel .title {
   width: 100%;
-  height: 45px;
-  background: url("../img/sponsor/back_small.png") repeat-x top left;
+  height: 53px;
+  background: url("../img/sponsor/back_orange_small.png") repeat-x top left;  
 }
 
 .editorial_card_panel .title .tb {
   float: left;
-  margin: 6px 0px 0px 10px;
+  margin: 15px 0px 0px 10px;
 }
 
 .editorial_card_panel .title .sponsor {
   float: right;
-  margin: 8px 10px 0px 0px;
+  margin: 15px 10px 0px 0px;
 }
 
 .editorial_card_panel .detail_container {
@@ -212,7 +212,7 @@ border-width:1px;
 .editorial_card_panel .detail_container .detail {
   position: relative;
   margin: 0px 22px 0px 22px;
-  height: 249px;
+  height: 243px;
   overflow: hidden;    	
 }
 
@@ -505,7 +505,7 @@ border-width:1px;
     height: 254px;
   }
   .editorial_card_panel .detail_container .detail {
-    height: 209px;
+    height: 203px;
   }
   .editorial_card_panel .summary {  
     height: 64px;
