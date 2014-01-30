@@ -35,7 +35,7 @@ define([
 	handleScroll: function(){
 	  var nTopY = 63;
 	  var nTransitionOffY = 35;
-	  var nTransitionOnY = 10;
+	  var nTransitionOnY = 4;
 	  var nScrollY = ($(window).scrollTop() < 0) ? 0 : $(window).scrollTop();	  
 	  var nFactorY = 2;
 	  var bScrollUp = false;
