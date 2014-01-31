@@ -258,6 +258,161 @@ border-width:1px;
   color: #979797;
 }
 
+.editorial_card_panel .title {
+  width: 100%;
+  height: 53px;
+  background: url("../img/sponsor/back_orange_small.png") repeat-x top left;  
+}
+
+.editorial_card_panel .title .tb {
+  float: left;
+  margin: 15px 0px 0px 10px;
+}
+
+.editorial_card_panel .title .sponsor {
+  float: right;
+  margin: 15px 10px 0px 0px;
+}
+
+.editorial_card_panel .detail_container {
+  height: 294px;
+}
+
+.editorial_card_panel .detail_container .detail {
+  position: relative;
+  margin: 0px 22px 0px 22px;
+  height: 243px;
+  overflow: hidden;    	
+}
+
+.editorial_card_panel .detail_container .detail h3 {
+  position: absolute;
+  bottom: 16px;
+  line-height: 1.1em;
+  color: #6D6E71;
+}
+
+.editorial_card_panel a,
+.editorial_card_panel a:hover,
+.editorial_card_panel a:active {
+  text-decoration: none;   
+  color: inherit; 
+}
+
+.editorial_card_panel .summary {
+  height: 73px;
+  margin: 5px 0px 0px 14px;
+}
+
+.editorial_card_panel .summary .avatar {
+  float: left;
+  width: 54px;
+  margin-top: 5px;
+}
+
+.editorial_card_panel .summary .avatar img {
+  width: 100%;
+}
+
+.editorial_card_panel .summary .detail {
+  float: left;  
+  margin-top: 14px;
+  margin-left: 6px;
+}
+
+.editorial_card_panel .summary .date {
+  margin-top: 6px;
+  font-size: 14px;
+  line-height: 1em;
+  color: #979797;
+}
+
+
+
+
+
+
+.editorial_card_panel2 .title {
+  width: 100%;
+  height: 53px;
+  background: url("../img/sponsor/back_orange_small.png") repeat-x top left;  
+}
+
+.editorial_card_panel2 .title .tb {
+  float: left;
+  margin: 15px 0px 0px 10px;
+}
+
+.editorial_card_panel2 .title .sponsor {
+  float: right;
+  margin: 15px 10px 0px 0px;
+}
+
+.editorial_card_panel2 .detail_container {
+  height: 294px;
+}
+
+.editorial_card_panel2 .detail_container .detail {
+  position: relative;
+  height: 241px;
+  overflow: hidden;    	
+}
+
+.editorial_card_panel2 .detail_container .image_container {
+  height: 241px;
+}
+
+.editorial_card_panel2 .detail_container .detail .card_title {
+  position: absolute;
+  margin: 0px 22px 0px 10px;
+  bottom: 16px;	
+}
+
+.editorial_card_panel2 .detail_container .detail h3 {
+  display: inline-block;
+  color: #6D6E71;
+  font-size: 32px;
+}
+
+.editorial_card_panel2 .detail_container .detail .tb-title {
+  margin-top: 8px;
+}
+
+.editorial_card_panel2 a,
+.editorial_card_panel2 a:hover,
+.editorial_card_panel2 a:active {
+  text-decoration: none;   
+  color: inherit; 
+}
+
+.editorial_card_panel2 .summary {
+  height: 73px;
+  margin: 5px 0px 0px 14px;
+}
+
+.editorial_card_panel2 .summary .avatar {
+  float: left;
+  width: 54px;
+  margin-top: 5px;
+}
+
+.editorial_card_panel2 .summary .avatar img {
+  width: 100%;
+}
+
+.editorial_card_panel2 .summary .detail {
+  float: left;  
+  margin-top: 14px;
+  margin-left: 6px;
+}
+
+.editorial_card_panel2 .summary .date {
+  margin-top: 6px;
+  font-size: 14px;
+  line-height: 1em;
+  color: #979797;
+}
+
 /* TRAIL CARD PANEL */
 /******************************************/
 .trail_card_panel .title {
