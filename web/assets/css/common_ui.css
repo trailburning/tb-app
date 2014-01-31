@@ -17,9 +17,9 @@ body {
   min-width: 1200px;
 }
 
-/* DISCOVER */
+/* EDITORIAL */
 /******************************************/
-#discover_bar {
+#editorial_bar {
   z-index: 199;
   position: fixed;
   top: 63px;
