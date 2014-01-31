@@ -2,6 +2,8 @@
 
 {% block title %}{{ editorial.title }}{% endblock %}
 
+{% block og_image %}http://www.trailburning.com/assets/images/social/editorial/{{ editorial.slug }}.jpg{% endblock %}
+
 {% block stylesheets %}
 <link href="{{ asset('assets/css/editorial.css') }}" rel="stylesheet" type="text/css">
 {% endblock %}
