@@ -371,11 +371,12 @@ border-width:1px;
 .editorial_card_panel2 .detail_container .detail h3 {
   display: inline-block;
   color: #6D6E71;
-  font-size: 32px;
+  font-size: 36px;
 }
 
 .editorial_card_panel2 .detail_container .detail .tb-title {
   margin-top: 8px;
+  padding: 4px 8px 4px 8px;
 }
 
 .editorial_card_panel2 a,

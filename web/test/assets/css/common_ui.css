@@ -11,23 +11,6 @@ body {
   color: #444444;    
 }
 
-/* APP */
-/******************************************/
-#appview, #headerview, #footerview, #big_sponsor_bar, #small_sponsor_bar {
-  min-width: 1200px;
-}
-
-/* EDITORIAL */
-/******************************************/
-#editorial_bar {
-  z-index: 199;
-  position: fixed;
-  top: 63px;
-  width: 100%;
-  height: 8px;
-  background: url(../img/trans_orange_line.png) repeat-x top left;
-}
-
 form {
   margin: 0px;
   padding: 0px;
@@ -42,16 +25,6 @@ a:hover,
 a:active {
   text-decoration: none;   
   color: inherit; 
-}
-
-h4 a {
-  text-decoration: none;
-  color: inherit; 
-}
-h4 a:hover,
-h4 a:active {
-  text-decoration: none;   
-  color: #6D6E71; 
 }
 
 /* TB BUTTONS */
@@ -160,6 +133,8 @@ h2.tb {
 }
 
 h3.tb {
+  margin: 0px;
+  padding: 0px;
   font-size: 42px;
   font-weight: 400;
   line-height: 1em;
@@ -167,6 +142,8 @@ h3.tb {
 }
 
 h4.tb {
+  margin: 0px;
+  padding: 0px;
   font-size: 22px;
   font-weight: 400;
   line-height: 1.3em;
@@ -204,6 +181,7 @@ h4.tb {
   z-index: 200;
   position: fixed;
   top: 0px;
+  min-width: 1200px;  
   width: 100%;
   height: 63px;  
   background: #FFF;
@@ -286,7 +264,6 @@ h4.tb {
 /* FOOTER */
 /******************************************/
 #footerview {
-  display: none;
   z-index: 200;
   position: relative;
   width: 100%;
@@ -562,25 +539,23 @@ h4.tb {
   background: url(../img/trans_line.png) repeat-x top left;  
 }
 
-/* Mapbox */
-.leaflet-control.mapbox-control-info {
-  visibility: hidden;
-}
-	
 /* Medium devices (desktops, 992px and up) */
 @media (max-width: 1199px) {
-  #appview, #headerview, #footerview, #big_sponsor_bar, #small_sponsor_bar {
+  #headerview {
     min-width: 992px;
-  }    
+  }
   h1.tb {
     font-size: 58px;
-  }  
+  }
+  
   h2.tb {
     font-size: 42px;
-  }  
+  }
+  
   h3.tb {
     font-size: 35px;
-  }  
+  }
+  
   h4.tb {
     font-size: 18px;
   }
