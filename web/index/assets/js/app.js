@@ -35,6 +35,7 @@ define([
 //      $('.image_container').css('opacity', 1);
       $('.fade_on_load').css('opacity', 1);
       $('.image_container').css('visibility', 'visible');
+      console.log('images loaded');
     });
     
     function handleResize() {
