@@ -32,7 +32,9 @@ define([
       $("img.scale_image_ready").imageScale();
       // fade in - delay adding class to ensure image is ready  
       $('.fade_on_load').addClass('tb-fade-in');
-      $('.image_container').css('opacity', 1);
+//      $('.image_container').css('opacity', 1);
+      $('.fade_on_load').css('opacity', 1);
+      $('.image_container').css('visibility', 'visible');
     });
     
     function handleResize() {
