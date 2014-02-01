@@ -327,11 +327,8 @@ border-width:1px;
   color: #979797;
 }
 
-
-
-
-
-
+/* EDITORIAL CARD PANEL 2 */
+/******************************************/
 .editorial_card_panel2 .title {
   width: 100%;
   height: 53px;
@@ -666,7 +663,27 @@ border-width:1px;
   .editorial_card_panel .summary {  
     height: 64px;
     margin: 0px 0px 0px 12px;
-  }      
+  }          
+  .editorial_card_panel2 .detail_container {
+    height: 254px;
+  }
+  .editorial_card_panel2 .detail_container .detail {
+    height: 201px;
+  }
+  .editorial_card_panel2 .detail_container .image_container {
+    height: 201px;
+  }  
+  .editorial_card_panel2 .detail_container .detail h3 {
+    font-size: 32px;
+  }
+  .editorial_card_panel2 .detail_container .detail .tb-title {
+    margin-top: 7px;
+    padding: 3px 7px 3px 7px;
+  }  
+  .editorial_card_panel2 .summary {  
+    height: 64px;
+    margin: 0px 0px 0px 12px;
+  }        
   .guide_content {
     height: 786px;
   }

@@ -22,7 +22,7 @@ define([
       $('#search_field').val('not just yet...');
       event.preventDefault();
     });    
-    
+
     var imgLoad = imagesLoaded('.scale');
     imgLoad.on('always', function(instance) {
       for ( var i = 0, len = imgLoad.images.length; i < len; i++ ) {
@@ -33,6 +33,8 @@ define([
       // fade in - delay adding class to ensure image is ready  
       $('.fade_on_load').addClass('tb-fade-in');
       $('.image_container').css('opacity', 1);
+      // force update to fix blurry bug
+	  resrc.resrcAll();
     });
     
     function handleResize() {
