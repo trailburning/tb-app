@@ -11,12 +11,6 @@ body {
   color: #444444;    
 }
 
-/* APP */
-/******************************************/
-#appview, #headerview, #footerview, #big_sponsor_bar, #small_sponsor_bar {
-  min-width: 1200px;
-}
-
 /* EDITORIAL */
 /******************************************/
 #editorial_bar {
