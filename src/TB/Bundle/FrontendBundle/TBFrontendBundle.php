@@ -8,6 +8,6 @@ class TBFrontendBundle extends Bundle
 {	
 	public function boot()
 	{
-		$this->container->get('doctrine')->getEntityManager()->getConnection()->getDatabasePlatform()->registerDoctrineTypeMapping('hstore', 'hstore');
+		$this->container->get('doctrine')->getManager()->getConnection()->getDatabasePlatform()->registerDoctrineTypeMapping('hstore', 'hstore');
 	}
 }

@@ -2508,5 +2508,24 @@ class TestGuy extends \Codeception\AbstractGuy
         }
         return new Maybe();
     }
+
+ 
+    /**
+     * This method is generated.
+     * Documentation taken from corresponding module.
+     * ----------------------------------------------
+     *
+     *
+     * @see Codeception\Module\TestHelper::loadFixtures()
+     * @return \Codeception\Maybe
+     */
+    public function loadFixtures($fixtures) {
+        $this->scenario->addStep(new \Codeception\Step\Action('loadFixtures', func_get_args()));
+        if ($this->scenario->running()) {
+            $result = $this->scenario->runStep();
+            return new Maybe($result);
+        }
+        return new Maybe();
+    }
 }
 

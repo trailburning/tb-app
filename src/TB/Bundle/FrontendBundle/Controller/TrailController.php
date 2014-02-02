@@ -85,7 +85,7 @@ class TrailController extends Controller
             $eventTrails = $query->getResult();  
         } 
         
-        // BUILD THE BREADCRUMB FOR THREE DIFFERENT CASES
+        // Build the Breadcrumb for three different cases
         if ($editorial !== null) {
             // case 1: editorial is part of the url, add link to the editorial
             $breadcrumb = [[
