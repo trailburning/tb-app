@@ -131,13 +131,13 @@ class Route
      */
     private $routeCategory;
 
-    #/**
-    # * @var \Doctrine\Common\Collections\Collection
-    # *
-    # * @ORM\ManyToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\Media", inversedBy="routes")
-    # * @ORM\JoinTable(name="route_medias")
-    # */
-    #private $medias;
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\Media", inversedBy="routes")
+     * @ORM\JoinTable(name="route_medias")
+     */
+    private $medias;
     
     /**
      * @var string
@@ -153,12 +153,12 @@ class Route
      */
     private $editorials;
     
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\OneToMany(targetEntity="RouteMedia", mappedBy="route")
-     **/
-    private $routeMedias;
+    #/**
+    # * @var \Doctrine\Common\Collections\Collection
+    # *
+    # * @ORM\OneToMany(targetEntity="RouteMedia", mappedBy="route")
+    # **/
+    #private $routeMedias;
     
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -642,5 +642,38 @@ class Route
     public function getRouteCategory()
     {
         return $this->routeCategory;
+    }
+
+    /**
+     * Add routePoints
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\RoutePoint $routePoints
+     * @return Route
+     */
+    public function addRoutePoint(\TB\Bundle\FrontendBundle\Entity\RoutePoint $routePoints)
+    {
+        $this->routePoints[] = $routePoints;
+
+        return $this;
+    }
+
+    /**
+     * Remove routePoints
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\RoutePoint $routePoints
+     */
+    public function removeRoutePoint(\TB\Bundle\FrontendBundle\Entity\RoutePoint $routePoints)
+    {
+        $this->routePoints->removeElement($routePoints);
+    }
+
+    /**
+     * Get routePoints
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRoutePoints()
+    {
+        return $this->routePoints;
     }
 }

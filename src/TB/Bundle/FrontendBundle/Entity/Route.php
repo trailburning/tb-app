@@ -131,13 +131,13 @@ class Route
      */
     private $routeCategory;
 
-    #/**
-    # * @var \Doctrine\Common\Collections\Collection
-    # *
-    # * @ORM\ManyToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\Media", inversedBy="routes")
-    # * @ORM\JoinTable(name="route_medias")
-    # */
-    #private $medias;
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\Media", inversedBy="routes")
+     * @ORM\JoinTable(name="route_medias")
+     */
+    private $medias;
     
     /**
      * @var string
@@ -153,12 +153,12 @@ class Route
      */
     private $editorials;
     
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\OneToMany(targetEntity="RouteMedia", mappedBy="route")
-     **/
-    private $routeMedias;
+    #/**
+    # * @var \Doctrine\Common\Collections\Collection
+    # *
+    # * @ORM\OneToMany(targetEntity="RouteMedia", mappedBy="route")
+    # **/
+    #private $routeMedias;
     
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -514,7 +514,7 @@ class Route
     public function __construct()
     {
         $this->editorials = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->routeMedias = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->medias = new \Doctrine\Common\Collections\ArrayCollection();
         $this->eventRoutes = new \Doctrine\Common\Collections\ArrayCollection();
         $this->routePoints = new \Doctrine\Common\Collections\ArrayCollection();        
     }
@@ -675,5 +675,38 @@ class Route
     public function getRoutePoints()
     {
         return $this->routePoints;
+    }
+
+    /**
+     * Add medias
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\Media $medias
+     * @return Route
+     */
+    public function addMedia(\TB\Bundle\FrontendBundle\Entity\Media $medias)
+    {
+        $this->medias[] = $medias;
+
+        return $this;
+    }
+
+    /**
+     * Remove medias
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\Media $medias
+     */
+    public function removeMedia(\TB\Bundle\FrontendBundle\Entity\Media $medias)
+    {
+        $this->medias->removeElement($medias);
+    }
+
+    /**
+     * Get medias
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMedias()
+    {
+        return $this->medias;
     }
 }
