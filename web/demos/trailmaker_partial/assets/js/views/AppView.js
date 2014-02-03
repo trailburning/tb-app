@@ -1,18 +1,20 @@
 define([
   'underscore', 
   'backbone',
+  'models/TrailMediaModel',    
   'views/TrailMapView',
   'views/StepWelcomeView',  
   'views/Step1View',  
   'views/Step2View',
   'views/Step3View'
-], function(_, Backbone, TrailMapView, StepWelcomeView, Step1View, Step2View, Step3View){
+], function(_, Backbone, TrailMediaModel, TrailMapView, StepWelcomeView, Step1View, Step2View, Step3View){
 
   var AppView = Backbone.View.extend({
     initialize: function(){
       app.dispatcher.on("StepWelcomeView:submitclick", this.onStepWelcomeViewSubmitClick, this);
       app.dispatcher.on("Step1View:submitclick", this.onStep1ViewSubmitClick, this);
       app.dispatcher.on("Step2View:gpxuploaded", this.onStep2ViewGPXUploaded, this);
+      app.dispatcher.on("Step2View:photouploaded", this.onStep2ViewPhotoUploaded, this);
       app.dispatcher.on("Step2View:submitclick", this.onStep2ViewSubmitClick, this);
       app.dispatcher.on("Step3View:submitclick", this.onStep3ViewSubmitClick, this);
 
@@ -22,6 +24,8 @@ define([
       this.model.set('event_name', 'Event');
       this.model.set('trail_name', 'Trail');
       this.setTitles();
+
+      this.mediaModel = new TrailMediaModel();
 
       // Trail Map    
       this.trailMapView = new TrailMapView({ el: '#trail_map_view', elCntrls: '#view_map_btns', model: this.model });
@@ -67,6 +71,20 @@ define([
         }      
       });        
     },
+    getTrailMedia: function(){
+      var self = this; 
+      
+      this.mediaModel.url = RESTAPI_BASEURL + 'v1/route/'+this.model.get('id')+'/medias';
+      this.mediaModel.fetch({
+        success: function () {
+	      var data = self.mediaModel.get('value');
+	      console.log(data);
+	      $.each(data, function(key, jsonMedia) {
+			self.trailMapView.addMarker(jsonMedia, true, "");
+	      });
+        }
+      });
+    },
     getTimeZone: function(){
       var self = this;    
       
@@ -85,6 +103,7 @@ define([
           self.timezoneData = data; 
           self.trailMapView.setTimeZoneData(self.timezoneData);
           self.trailMapView.render();          
+          self.getTrailMedia();          
         },
       });
     },
@@ -112,6 +131,13 @@ define([
       
       $('#trail_map_overlay', $(this.el)).hide();
       $('#view_map_btns', $(this.el)).show();
+    },    
+    onStep2ViewPhotoUploaded: function(trailUploadPhotoView){
+  	  console.log(trailUploadPhotoView.photoData);
+  	  
+  	  var json = $.parseJSON(trailUploadPhotoView.photoData);
+	  var data = json.value[0];
+	  this.trailMapView.addMarker(data.coords.lat, data.coords.long, true, "");      
     },    
     onStep2ViewSubmitClick: function(step2View){      
       var jsonObj = {'id':this.model.get('id'), 'name':this.model.get('name'), 'email':this.model.get('email'), 'event_name':this.model.get('event_name'), 'trail_name':this.model.get('trail_name'), 'trail_notes':this.model.get('trail_notes'), 'media':this.trailMapView.collectionMedia.toJSON()};

@@ -254,6 +254,30 @@ border-width:1px;
   background: #f83d3d;
 }
 
+#step2_view #uploadPhotoprogress_view {
+  display: none;
+}
+
+#step2_view #uploadPhotoprogress_view h4 {
+  margin-top: 24px;
+}
+
+#step2_view #uploadPhotoprogress_view .progress_container {
+  margin: 20px auto 0px auto;
+  width: 328px;
+  height: 16px;  
+}
+
+#step2_view #uploadPhotoprogress_view .ui-progressbar {
+  height: 16px;
+  background: #F0F0F0;
+  border-radius: 8px;
+}
+
+#step2_view #uploadPhotoprogress_view .ui-progressbar-value {
+  background: #f83d3d;
+}
+
 #step2_view .next_step {
   margin-top: 24px;
 }
@@ -279,14 +303,15 @@ border-width:1px;
 }
 
 #step2_view .map_step_container .photo_gallery {
-  position: relative;
-  margin: 0px auto 0px auto;  
+  position: absolute;
+  bottom: 0px;
+  left: 20px;  
   width: 400px;
 }
 
 #step2_view .map_step_container .photo_gallery .panel {
   width: 400px;
-  height: 50px;
+  height: 150px;
 }
 
 /* STEP 3 */

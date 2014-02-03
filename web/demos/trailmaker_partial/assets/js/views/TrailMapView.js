@@ -98,12 +98,15 @@ define([
     setTimeZoneData: function(timezoneData){
       this.timezoneData = timezoneData;
     },
-    addMarker: function(latlng, bPlaceOnTrail, strName){
-      var model = new Backbone.Model();
+    addMarker: function(jsonMedia, bPlaceOnTrail, strName){
+      var model = new Backbone.Model(jsonMedia);
       model.set('name', strName);
       this.collectionMedia.add(model);
                       
-      var trailMapMediaMarkerView = new TrailMapMediaMarkerView({ model: model, trailModel: this.model, map: this.map, latlng: latlng, timezoneData: this.timezoneData, placeOnTrail: bPlaceOnTrail });
+	  console.log(model);
+	  console.log('t:'+model.get('id'));                      
+                      
+      var trailMapMediaMarkerView = new TrailMapMediaMarkerView({ model: model, trailModel: this.model, map: this.map, timezoneData: this.timezoneData, placeOnTrail: bPlaceOnTrail });
       trailMapMediaMarkerView.render();
       this.arrMapMediaViews.push(trailMapMediaMarkerView);        
     },
@@ -137,10 +140,7 @@ define([
         };         
         
         function onClickTrail(e) {
-          // use mouse point with page offset and adjust for fixed header height
-//          var point = L.point(e.originalEvent.pageX, e.originalEvent.pageY - $('#headerview').height());        	
-//          self.addMarker(self.map.containerPointToLatLng(point), true, '');
-          self.addMarker(e.latlng, true, '');
+          self.addMarker(e.latlng.lat, e.latlng.lng, true, '');
         }
         this.polyline = L.polyline(self.arrLineCordinates, polyline_options).on('click', onClickTrail).addTo(this.map);
         

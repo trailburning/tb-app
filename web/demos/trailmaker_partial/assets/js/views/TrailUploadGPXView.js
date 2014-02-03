@@ -12,7 +12,7 @@ define([
 
       $(this.el).html(this.template());
 
-      $('#fileupload').change(function(){
+      $('#gpxfileupload').change(function(){
         $('#uploadGPX_view').hide();
         $('#uploadGPXprogress_view').show();
         self.upload();

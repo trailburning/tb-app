@@ -12,7 +12,6 @@ define([
     initialize: function(){
       this.trailModel = this.options.trailModel;
       this.point = null;
-      this.latlng = this.options.latlng;
       this.map = this.options.map;
       this.marker = null;
       this.nSize = DEF_ICONS;
@@ -66,7 +65,11 @@ define([
     render: function(){
       var self = this;
       
-      this.marker = L.marker([this.latlng.lat, this.latlng.lng], {icon: this.mediaInactiveIcon, draggable:'true'}).on('click', onClick).addTo(this.map);
+      console.log(this.model);
+      var versions = this.model.get('versions');
+      console.log(versions);
+      
+      this.marker = L.marker([this.model.get('coords').lat, this.model.get('coords').long], {icon: this.mediaInactiveIcon, draggable:'true'}).on('click', onClick).addTo(this.map);
       
       // Create an element to hold all your text and markup
       var container = $('<div />');      

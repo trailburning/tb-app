@@ -2,8 +2,10 @@ define([
   'underscore', 
   'backbone',
   'views/TrailUploadGPXView',
-  'views/TrailUploadGPXProgressView'  
-], function(_, Backbone, TrailUploadGPXView, TrailUploadGPXProgressView){
+  'views/TrailUploadGPXProgressView',  
+  'views/TrailUploadPhotoView',
+  'views/TrailUploadPhotoProgressView'  
+], function(_, Backbone, TrailUploadGPXView, TrailUploadGPXProgressView, TrailUploadPhotoView, TrailUploadPhotoProgressView){
 
   var STATE_UPLOAD = 0;
 
@@ -13,6 +15,9 @@ define([
       
       app.dispatcher.on("TrailUploadGPXView:uploaded", this.onTrailUploadGPXViewUploaded, this);
       app.dispatcher.on("TrailUploadGPXView:uploadProgress", this.onTrailUploadGPXViewUploadProgress, this);
+      
+      app.dispatcher.on("TrailUploadPhotoView:uploaded", this.onTrailUploadPhotoViewUploaded, this);
+      app.dispatcher.on("TrailUploadPhotoView:uploadProgress", this.onTrailUploadPhotoViewUploadProgress, this);
       
       this.nState = STATE_UPLOAD;
       this.timezoneData = null;      
@@ -30,15 +35,19 @@ define([
       this.trailUploadGPXView = new TrailUploadGPXView({ el: '#uploadGPX_view', model: this.model });
       this.trailUploadGPXProgressView = new TrailUploadGPXProgressView({ el: '#uploadGPXprogress_view', model: this.model });
 
-      this.trailUploadGPXView.render();          
+      this.trailUploadPhotoView = new TrailUploadPhotoView({ el: '#uploadPhoto_view', model: this.model });
+      this.trailUploadPhotoProgressView = new TrailUploadPhotoProgressView({ el: '#uploadPhotoprogress_view', model: this.model });
 
+      this.trailUploadPhotoView.render();          
+      this.trailUploadGPXView.render();          
+      
       $('.submit', $(this.el)).click(function(evt) {
         // fire event
         app.dispatcher.trigger("Step2View:submitclick", self);                        
       });
 
-      // mla test - ashmei
-      this.model.set('id', 144);
+      // mla test
+      this.model.set('id', 145);
       $('#step2_view .panel_container').hide();      
       $('.map_step_container', $(this.el)).show();  
       // fire event
@@ -46,7 +55,7 @@ define([
         
       return this;
     },
-    onTrailUploadGPXViewUploaded: function(trailUploadView){
+    onTrailUploadGPXViewUploaded: function(trailUploadGPXView){
       console.log('onTrailUploadGPXViewUploaded : '+this.model.id);
 
       $('.panel_container', $(this.el)).hide();  
@@ -57,7 +66,17 @@ define([
     },
     onTrailUploadGPXViewUploadProgress: function(nProgress){
       this.trailUploadGPXProgressView.render(nProgress);
-    }    
+    },
+    onTrailUploadPhotoViewUploaded: function(trailUploadPhotoView){
+      console.log('onTrailUploadPhotoViewUploaded');
+      
+      // fire event
+      app.dispatcher.trigger("Step2View:photouploaded", trailUploadPhotoView);                              
+    },
+    onTrailUploadPhotoViewUploadProgress: function(nProgress){
+      this.trailUploadPhotoProgressView.render(nProgress);
+    }
+    
   });
 
   return Step2View;

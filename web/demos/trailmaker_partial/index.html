@@ -188,7 +188,10 @@
       <div class="next_step"><span class="btn btn-tb-action btn-tb-large submit">Finished adding photo points</span></div>
       
 	  <div class="photo_gallery">	  
-		<div class="panel"></div>	  	
+		<div class="panel">
+		  <div id="uploadPhoto_view"></div>
+		  <div id="uploadPhotoprogress_view"></div>
+		</div>	  	
 	  </div>
     </div>
   </div>
@@ -198,12 +201,12 @@
   <div class="desc">
     <h4 class="tb">Make sure you have your GPX file handy, save it to your computer from your GPX tracking device, and then upload.</h4>
   </div>        
-  <form id="uploadForm">      
+  <form id="uploadGPXForm">      
   <span class="btn btn-tb-action btn-tb-large fileinput-button">
     <i class="glyphicon glyphicon-plus"></i>
     <span>Upload GPX File</span>
     <!-- The file input field used as target for the file upload widget -->
-    <input type="file" id="fileupload" name="gpxfile" multiple>        
+    <input type="file" id="gpxfileupload" name="gpxfile" multiple>        
   </span>
   </form>        
 </script>
@@ -211,6 +214,27 @@
 <script type="text/template" id="trailUploadGPXProgressViewTemplate">   
   <div class="desc">
     <h4 class="tb">Now making GPX interesting...</h4>
+  </div>        
+  <div class="progress_container">
+    <div class="progressbar"></div>  
+  </div>  
+  <h4 class="tb"><span class="percent">0</span>%</h4>
+</script>
+
+<script type="text/template" id="trailUploadPhotoViewTemplate">
+  <form id="uploadPhotoForm">  	
+  <span class="btn btn-tb-action btn-tb-large fileinput-button">
+    <i class="glyphicon glyphicon-plus"></i>
+    <span>Upload Photo</span>
+    <!-- The file input field used as target for the file upload widget -->
+    <input type="file" id="photofileupload" name="medias[]" multiple>        
+  </span>
+  </form>        
+</script>
+
+<script type="text/template" id="trailUploadPhotoProgressViewTemplate">   
+  <div class="desc">
+    <h4 class="tb">Now adding photo...</h4>
   </div>        
   <div class="progress_container">
     <div class="progressbar"></div>  
@@ -226,8 +250,7 @@
           <h1 class="tb">Photos</h1>
           <div class="desc">
             <h4 class="tb">
-			Thanks for taking part in the Trailburning adventure. Don’t forget to send us the photos you just marked on the trail, we will add the photos and build the trail experience for you to share!  
-            <br /><br />
+			Thanks for taking part in the Trailburning adventure. Don’t forget to send us the photos you just marked on the trail, we will add the photos and build the trail experience for you to share!              <br /><br />
             Send photos to: <a href="mailto:events@trailburning.com">events@trailburning.com</a>            
             </h4>
           </div> 
