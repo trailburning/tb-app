@@ -98,13 +98,9 @@ define([
     setTimeZoneData: function(timezoneData){
       this.timezoneData = timezoneData;
     },
-    addMarker: function(jsonMedia, bPlaceOnTrail, strName){
+    addMarker: function(jsonMedia, bPlaceOnTrail){
       var model = new Backbone.Model(jsonMedia);
-      model.set('name', strName);
       this.collectionMedia.add(model);
-                      
-	  console.log(model);
-	  console.log('t:'+model.get('id'));                      
                       
       var trailMapMediaMarkerView = new TrailMapMediaMarkerView({ model: model, trailModel: this.model, map: this.map, timezoneData: this.timezoneData, placeOnTrail: bPlaceOnTrail });
       trailMapMediaMarkerView.render();
@@ -136,29 +132,20 @@ define([
           color: '#44B6FC',
           opacity: 1,
           weight: 4,
-          clickable: true
+          clickable: false
         };         
-        
+/*        
         function onClickTrail(e) {
           self.addMarker(e.latlng.lat, e.latlng.lng, true, '');
         }
         this.polyline = L.polyline(self.arrLineCordinates, polyline_options).on('click', onClickTrail).addTo(this.map);
-        
+*/        
+        this.polyline = L.polyline(self.arrLineCordinates, polyline_options).addTo(this.map);
         L.marker(this.arrLineCordinates[0], {icon: this.locationIcon}).addTo(this.map);            
                   
         this.map.fitBounds(self.polyline.getBounds(), {padding: [30, 30]});
       }
       
-      // mla test markers
-/*      
-      this.addMarker(L.latLng(63.9909, -19.0612), false, '1');
-      this.addMarker(L.latLng(63.9330, -19.1684), false, '2');
-      this.addMarker(L.latLng(63.8578, -19.2272 ), false, '3');      
-      this.addMarker(L.latLng(63.8221, -19.2213 ), false, '4');      
-      this.addMarker(L.latLng(63.7663, -19.3741 ), false, '5');      
-      this.addMarker(L.latLng(63.7018, -19.4971 ), false, '6');
-      this.addMarker(L.latLng(63.6911, -19.5432 ), false, '7');                                    
-*/
       this.bRendered = true;
     },
     onTrailMapMediaMarkerClick: function(mapMediaMarkerView){
@@ -171,6 +158,9 @@ define([
     },
     onTrailMapMediaMarkerRemove: function(mapMediaMarkerView){
       var self = this;
+  
+      // fire event
+      app.dispatcher.trigger("TrailMapView:removemedia", mapMediaMarkerView.model.id);                        		       
       
       // find point in arr      
       $.each(this.arrMapMediaViews, function(key, currMapMediaMarkerView) {
@@ -180,7 +170,7 @@ define([
       	}
       });    	    	
       // remove from collection      
-      this.collectionMedia.remove(mapMediaMarkerView.model);      
+      this.collectionMedia.remove(mapMediaMarkerView.model);           
     }        
   });
 

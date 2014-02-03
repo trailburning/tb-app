@@ -3,7 +3,7 @@ define([
   'backbone'
 ], function(_, Backbone){
 
-  var TrailMediaModel = Backbone.Model.extend({    
+  var TrailMediasModel = Backbone.Model.extend({    
     defaults: function() {
       return {
         id: 0
@@ -12,6 +12,6 @@ define([
     initialize: function() {            
     }
   });
-  return TrailMediaModel;
+  return TrailMediasModel;
   
 });

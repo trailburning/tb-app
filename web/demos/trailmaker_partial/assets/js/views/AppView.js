@@ -1,13 +1,13 @@
 define([
   'underscore', 
   'backbone',
-  'models/TrailMediaModel',    
+  'models/TrailMediasModel',    
   'views/TrailMapView',
   'views/StepWelcomeView',  
   'views/Step1View',  
   'views/Step2View',
   'views/Step3View'
-], function(_, Backbone, TrailMediaModel, TrailMapView, StepWelcomeView, Step1View, Step2View, Step3View){
+], function(_, Backbone, TrailMediasModel, TrailMapView, StepWelcomeView, Step1View, Step2View, Step3View){
 
   var AppView = Backbone.View.extend({
     initialize: function(){
@@ -19,13 +19,14 @@ define([
       app.dispatcher.on("Step3View:submitclick", this.onStep3ViewSubmitClick, this);
 
       // mla test
+/*      
       this.model.set('name', 'Trailburning');
       this.model.set('email', 'events@trailburning.com');
       this.model.set('event_name', 'Event');
       this.model.set('trail_name', 'Trail');
       this.setTitles();
-
-      this.mediaModel = new TrailMediaModel();
+*/
+      this.mediasModel = new TrailMediasModel();
 
       // Trail Map    
       this.trailMapView = new TrailMapView({ el: '#trail_map_view', elCntrls: '#view_map_btns', model: this.model });
@@ -74,13 +75,13 @@ define([
     getTrailMedia: function(){
       var self = this; 
       
-      this.mediaModel.url = RESTAPI_BASEURL + 'v1/route/'+this.model.get('id')+'/medias';
-      this.mediaModel.fetch({
+      this.mediasModel.url = RESTAPI_BASEURL + 'v1/route/'+this.model.get('id')+'/medias';
+      this.mediasModel.fetch({
         success: function () {
-	      var data = self.mediaModel.get('value');
+	      var data = self.mediasModel.get('value');
 	      console.log(data);
 	      $.each(data, function(key, jsonMedia) {
-			self.trailMapView.addMarker(jsonMedia, true, "");
+			self.trailMapView.addMarker(jsonMedia, true);
 	      });
         }
       });
@@ -133,18 +134,15 @@ define([
       $('#view_map_btns', $(this.el)).show();
     },    
     onStep2ViewPhotoUploaded: function(trailUploadPhotoView){
-  	  console.log(trailUploadPhotoView.photoData);
-  	  
   	  var json = $.parseJSON(trailUploadPhotoView.photoData);
 	  var data = json.value[0];
-	  this.trailMapView.addMarker(data.coords.lat, data.coords.long, true, "");      
+	  this.trailMapView.addMarker(data, true, "");      
     },    
     onStep2ViewSubmitClick: function(step2View){      
       var jsonObj = {'id':this.model.get('id'), 'name':this.model.get('name'), 'email':this.model.get('email'), 'event_name':this.model.get('event_name'), 'trail_name':this.model.get('trail_name'), 'trail_notes':this.model.get('trail_notes'), 'media':this.trailMapView.collectionMedia.toJSON()};
       var postData = JSON.stringify(jsonObj);
       var postArray = {json:postData};
       
-//      console.log(postData);      
       $.ajax({
         type: "POST",
         dataType: "json",

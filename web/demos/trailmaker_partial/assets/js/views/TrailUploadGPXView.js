@@ -57,7 +57,7 @@ define([
         });
       };   
       
-      $('#uploadForm').upload(strURL, function(res) {
+      $('#uploadGPXForm').upload(strURL, function(res) {
         // fire event
         app.dispatcher.trigger("TrailUploadGPXView:uploaded", self);                
       },function(data) {

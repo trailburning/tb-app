@@ -15,7 +15,7 @@ define([
   var initialize = function() {
     this.trailModel = new TrailModel();
             
-//    this.trailModel.id = 145;
+//    this.trailModel.id = 146;
 //    this.trailModel.destroy();
             
     $('#search_field').focus(function(evt) {

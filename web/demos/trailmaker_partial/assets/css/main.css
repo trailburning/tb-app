@@ -380,20 +380,13 @@ border-width:1px;
 .leaflet-popup-content {
   margin: 8px;
   padding: 0px;	
-  width: 260px;
-  height: 220px;
+  width: 240px;
+  height: 230px;
 }
 
 .trail_media_popup {
-/*	  
-  padding-top: 8px; 
-  width: 200px;
-*/
   margin: 0px;
-  padding: 0px;	
-  width: 260px;
-  height: 220px;
-   
+  padding: 0px;	   
   text-align: center;  
 }
 

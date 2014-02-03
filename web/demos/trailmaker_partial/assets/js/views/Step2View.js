@@ -18,6 +18,8 @@ define([
       
       app.dispatcher.on("TrailUploadPhotoView:uploaded", this.onTrailUploadPhotoViewUploaded, this);
       app.dispatcher.on("TrailUploadPhotoView:uploadProgress", this.onTrailUploadPhotoViewUploadProgress, this);
+
+      app.dispatcher.on("TrailMapView:removemedia", this.onTrailMapViewRemoveMedia, this);
       
       this.nState = STATE_UPLOAD;
       this.timezoneData = null;      
@@ -47,7 +49,7 @@ define([
       });
 
       // mla test
-      this.model.set('id', 145);
+      this.model.set('id', 147);
       $('#step2_view .panel_container').hide();      
       $('.map_step_container', $(this.el)).show();  
       // fire event
@@ -75,7 +77,20 @@ define([
     },
     onTrailUploadPhotoViewUploadProgress: function(nProgress){
       this.trailUploadPhotoProgressView.render(nProgress);
-    }
+    },
+    onTrailMapViewRemoveMedia: function(mediaID){
+      var strURL = RESTAPI_BASEURL + 'v1/media/' + mediaID;      
+      $.ajax({
+        url: strURL,
+        type: 'DELETE',            
+        complete : function(res) {
+          console.log('complete');              
+        },
+        success: function(data) {
+          console.log('msg:'+data.message);
+        },
+      });
+    }        
     
   });
 

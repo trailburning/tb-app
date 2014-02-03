@@ -13,6 +13,7 @@ define([
       this.trailModel = this.options.trailModel;
       this.point = null;
       this.map = this.options.map;
+      this.popup = null;
       this.marker = null;
       this.nSize = DEF_ICONS;
       if (this.options.size) {
@@ -65,12 +66,8 @@ define([
     render: function(){
       var self = this;
       
-      console.log(this.model);
       var versions = this.model.get('versions');
-      console.log(versions);
-      
-      this.marker = L.marker([this.model.get('coords').lat, this.model.get('coords').long], {icon: this.mediaInactiveIcon, draggable:'true'}).on('click', onClick).addTo(this.map);
-      
+
       // Create an element to hold all your text and markup
       var container = $('<div />');      
       // Delegate all event handling for the container itself and its contents to the container
@@ -78,22 +75,37 @@ define([
         // fire event
         app.dispatcher.trigger("TrailMapMediaMarkerView:removemedia", self);                        
         // goodbye pin
+        self.map.closePopup(self.popup);
         self.map.removeLayer(self.marker);
       });
-      container.on('click', '.save_btn', function() {        
-        self.model.set('name', $('#form_media_name').val());
-        
-        self.marker.closePopup();
+      container.on('click', '.save_btn', function() {
+		self.map.closePopup(self.popup);      	              	        
       });
-      
-      container.html('<div class="trail_media_popup"><h4 class="tb">Filename of the photo to appear at this point:</h4><div class="form-group"><input type="text" name="form_media_name" id="form_media_name" class="form-control" value="' + this.model.get('name') + '"></div><div><span class="btn btn-tb-action btn-tb-large save_btn">Save</span></div><a href="javascript:void(0)" class="deletepin_btn">delete pin</a></div>');
-      this.marker.bindPopup(container[0]);
+      container.html('<div class="trail_media_popup"><img src="http://app.resrc.it/O=80/http://s3-eu-west-1.amazonaws.com/'+versions[0].path+'" width="240" class="resrc"><span class="btn btn-tb-action btn-tb-large save_btn">Save</span> <a href="javascript:void(0)" class="deletepin_btn">delete pin</a></div>');
 
       function onClick(e) {
+        var popup_options = {
+          autoPan: false,
+          closeButton: false
+        };                
+        
+        self.popup = L.popup(popup_options)
+        .setLatLng([e.latlng.lat, e.latlng.lng])
+        .setContent(container[0])
+        .openOn(self.map);  
+                  
+        // force resrc
+        resrc.resrcAll();          	
+      	
         // fire event
         app.dispatcher.trigger("TrailMapMediaMarkerView:mediaclick", self);                        
       }
+      this.marker = L.marker([this.model.get('coords').lat, this.model.get('coords').long], {icon: this.mediaInactiveIcon, draggable:'true'}).on('click', onClick).addTo(this.map);
+      
       this.marker.on('dragstart', function(event){
+      	if (self.popup) {
+		  self.map.closePopup();      	              	        
+      	}
       });
       this.marker.on('dragend', function(event){
         self.placeMarker();

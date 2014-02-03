@@ -59,6 +59,8 @@ define([
             },
             success: function(data) {
               self.photoData = data;
+              
+      		  console.log('t1');              
               console.log(self.photoData);
         	  $('#uploadPhotoprogress_view').hide();      	
         	  $('#uploadPhoto_view').show();
