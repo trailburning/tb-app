@@ -71,7 +71,7 @@ class Route
     /**
      * @var integer
      *
-     * @ORM\Column(name="route_type_id", type="integer")
+     * @ORM\Column(name="route_type_id", type="integer", nullable=true)
      */
     private $routeTypeId;
 
@@ -166,6 +166,13 @@ class Route
      * @ORM\OneToMany(targetEntity="EventRoute", mappedBy="route")
      **/
     private $eventRoutes;
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="RoutePoint", mappedBy="route")
+     **/
+    private $routePoints;
 
     /**
      * Set name
@@ -509,6 +516,7 @@ class Route
         $this->editorials = new \Doctrine\Common\Collections\ArrayCollection();
         $this->routeMedias = new \Doctrine\Common\Collections\ArrayCollection();
         $this->eventRoutes = new \Doctrine\Common\Collections\ArrayCollection();        
+        $this->routePoints = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**

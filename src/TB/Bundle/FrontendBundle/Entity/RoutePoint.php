@@ -27,7 +27,7 @@ class RoutePoint
     private $tags;
 
     /**
-     * @var point
+     * @var Point point
      *
      * @ORM\Column(name="coords", type="point", columnDefinition="GEOMETRY(POINT,4326)", nullable=true)
      */
@@ -101,29 +101,6 @@ class RoutePoint
     }
 
     /**
-     * Set coords
-     *
-     * @param geometry $coords
-     * @return RoutePoint
-     */
-    public function setCoords($coords)
-    {
-        $this->coords = $coords;
-    
-        return $this;
-    }
-
-    /**
-     * Get coords
-     *
-     * @return geometry 
-     */
-    public function getCoords()
-    {
-        return $this->coords;
-    }
-
-    /**
      * Get id
      *
      * @return integer 
@@ -154,5 +131,28 @@ class RoutePoint
     public function getRoute()
     {
         return $this->route;
+    }
+
+    /**
+     * Set coords
+     *
+     * @param point $coords
+     * @return RoutePoint
+     */
+    public function setCoords($coords)
+    {
+        $this->coords = $coords;
+
+        return $this;
+    }
+
+    /**
+     * Get coords
+     *
+     * @return point 
+     */
+    public function getCoords()
+    {
+        return $this->coords;
     }
 }
