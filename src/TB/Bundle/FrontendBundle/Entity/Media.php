@@ -36,20 +36,20 @@ class Media
     private $id;
     
     
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\OneToMany(targetEntity="RouteMedia", mappedBy="media")
-     **/
-    private $routeMedias;
-    
-
     #/**
     # * @var \Doctrine\Common\Collections\Collection
     # *
-    # * @ORM\ManyToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\Route", mappedBy="medias")
-    # */
-    #private $routes;
+    # * @ORM\OneToMany(targetEntity="RouteMedia", mappedBy="media")
+    # **/
+    #private $routeMedias;
+    
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\Route", mappedBy="medias")
+     */
+    private $routes;
     
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -154,7 +154,7 @@ class Media
      */
     public function __construct()
     {
-        $this->routeMedias = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->routes = new \Doctrine\Common\Collections\ArrayCollection();
         $this->versions = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -189,5 +189,38 @@ class Media
     public function getVersions()
     {
         return $this->versions;
+    }
+
+    /**
+     * Add routes
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\Route $routes
+     * @return Media
+     */
+    public function addRoute(\TB\Bundle\FrontendBundle\Entity\Route $routes)
+    {
+        $this->routes[] = $routes;
+
+        return $this;
+    }
+
+    /**
+     * Remove routes
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\Route $routes
+     */
+    public function removeRoute(\TB\Bundle\FrontendBundle\Entity\Route $routes)
+    {
+        $this->routes->removeElement($routes);
+    }
+
+    /**
+     * Get routes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRoutes()
+    {
+        return $this->routes;
     }
 }
