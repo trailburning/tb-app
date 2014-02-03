@@ -11,12 +11,6 @@ body {
   color: #444444;    
 }
 
-/* APP */
-/******************************************/
-#appview, #headerview, #footerview, #big_sponsor_bar, #small_sponsor_bar {
-  min-width: 1200px;
-}
-
 /* EDITORIAL */
 /******************************************/
 #editorial_bar {
@@ -44,14 +38,8 @@ a:active {
   color: inherit; 
 }
 
-h4 a {
-  text-decoration: none;
-  color: inherit; 
-}
-h4 a:hover,
-h4 a:active {
-  text-decoration: none;   
-  color: #6D6E71; 
+h1, h2, h3, h4, h5, h6 {
+  margin: 0px;
 }
 
 /* TB BUTTONS */
@@ -160,8 +148,6 @@ h2.tb {
 }
 
 h3.tb {
-  margin: 0px;
-  padding: 0px;
   font-size: 42px;
   font-weight: 400;
   line-height: 1em;
@@ -169,8 +155,6 @@ h3.tb {
 }
 
 h4.tb {
-  margin: 0px;
-  padding: 0px;
   font-size: 22px;
   font-weight: 400;
   line-height: 1.3em;
