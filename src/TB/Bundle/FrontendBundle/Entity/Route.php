@@ -797,18 +797,16 @@ class Route
         }
         $route .= '}';
         
-        if (count($this->route_points) > 0) {
+        if (count($this->getRoutePoints()) > 0) {
             $route .= ',"route_points" : [';
             $i=0;
-            foreach ($this->route_points as $rp) {
+            foreach ($this->getRoutePoints() as $rp) {
                 if ($i++ != 0) {
                     $route.=',';
                 }
-                $coords = $rp->getCoords();
-                $route .= '{"coords" : ['.$coords['long'].','.$coords['lat'].'], "tags" : {';
-                $rp_tags = $rp->getTags();
+                $route .= '{"coords" : ['.$rp->getCoords()->getLongitude().','.$rp->getCoords()->getLatitude().'], "tags" : {';
                 $j=0;
-                foreach ($rp_tags as $rp_tag => $rp_tag_value) {
+                foreach ($rp->getTags() as $rp_tag => $rp_tag_value) {
                     if ($j++ != 0) {
                         $route.=',';
                     }

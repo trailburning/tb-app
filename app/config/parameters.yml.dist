@@ -16,5 +16,5 @@ parameters:
     api_host: http://localhost:8888/trailburning_api
     postgis_class: TB\Bundle\APIBundle\Util\Postgis    
     s3_client_class: Aws\S3\S3Client
-	aws_accesskey: 
-	aws_secretkey:     
+    aws_accesskey: 
+    aws_secretkey:     
