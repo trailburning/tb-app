@@ -21,7 +21,8 @@ define([
       app.dispatcher.on("TrailUploadPhotoView:uploadProgress", this.onTrailUploadPhotoViewUploadProgress, this);
 
       app.dispatcher.on("TrailMapView:removemedia", this.onTrailMapViewRemoveMedia, this);
-      
+      app.dispatcher.on("TrailMapView:movedmedia", this.onTrailMapViewMoveMedia, this);
+
       this.nState = STATE_UPLOAD;
       this.timezoneData = null;      
       this.bRendered = false;
@@ -85,7 +86,7 @@ define([
     },
     onTrailMapViewRemoveMedia: function(mediaID){
       // remove from collection
-	  this.options.mediaCollection.remove(mediaID);  	  
+	  this.options.mediaCollection.remove(mediaID);
       this.trailSlideshowView.remove(mediaID);
       
       var strURL = RESTAPI_BASEURL + 'v1/media/' + mediaID;      
@@ -99,7 +100,10 @@ define([
           console.log('msg:'+data.message);
         },
       });
-    }        
+    },
+    onTrailMapViewMoveMedia: function(){
+      this.trailSlideshowView.sort();
+    }          
     
   });
 

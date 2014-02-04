@@ -308,11 +308,11 @@ border-width:1px;
   position: absolute;
   bottom: 0px;
   left: 20px;  
-  width: 400px;
+  width: 464px;
 }
 
 #step2_view .map_step_container .photo_gallery .panel {
-  width: 400px;
+  width: 464px;
   height: 150px;
 }
 
@@ -322,15 +322,21 @@ border-width:1px;
 
 #step2_view .map_step_container .photo_gallery .panel .slideshow {
   float: left;
-  width: 200px;
+  width: 264px;
 }
 
 #step2_view .map_step_container .photo_gallery .panel .slideshow .slide {
   float: left;
   margin: 4px;
-  width: 50px;
+  width: 80px;
+  height: 60px;
+  overflow: hidden;
 }
 
+#step2_view .map_step_container .photo_gallery .panel .slideshow .slide img {
+  width: 100%;
+}
+ 
 /* STEP 3 */
 /******************************************/
 #step3_view {

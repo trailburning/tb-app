@@ -11,6 +11,7 @@ define([
     options: {placeOnTrail: true},
     initialize: function(){
       this.trailModel = this.options.trailModel;
+      this.jsonMedia = this.options.jsonMedia;
       this.point = null;
       this.map = this.options.map;
       this.popup = null;
@@ -66,8 +67,6 @@ define([
     render: function(){
       var self = this;
 
-	  console.log(this.options.jsonMedia);
-//      var versions = this.model.get('versions');
       var versions = this.options.jsonMedia.versions;
 
       // Create an element to hold all your text and markup
@@ -102,7 +101,6 @@ define([
         // fire event
         app.dispatcher.trigger("TrailMapMediaMarkerView:mediaclick", self);                        
       }
-//      this.marker = L.marker([this.model.get('coords').lat, this.model.get('coords').long], {icon: this.mediaInactiveIcon, draggable:'true'}).on('click', onClick).addTo(this.map);
       this.marker = L.marker([this.options.jsonMedia.coords.lat, this.options.jsonMedia.coords.long], {icon: this.mediaInactiveIcon, draggable:'true'}).on('click', onClick).addTo(this.map);
       
       this.marker.on('dragstart', function(event){
@@ -112,6 +110,8 @@ define([
       });
       this.marker.on('dragend', function(event){
         self.placeMarker();
+        // fire event
+        app.dispatcher.trigger("TrailMapMediaMarkerView:mediamoved", self);                        
       });
             
       // locate initial point
@@ -150,9 +150,12 @@ define([
       // adjust based on timezone of 1st point
       dtDate.setSeconds(dtDate.getSeconds() + this.options.timezoneData.dstOffset + this.options.timezoneData.rawOffset);
       // adjust to UTC            
-      this.options.jsonMedia.tags.datetime = this.point.tags.datetime; 
+      this.options.jsonMedia.tags.datetime = this.point.tags.datetime;
+      this.options.jsonMedia.tags.altitude = this.point.tags.altitude; 
       this.options.jsonMedia.coords.lat = Number(this.point.coords[1]); 
       this.options.jsonMedia.coords.long = Number(this.point.coords[0]);
+      
+      console.log(this.options.jsonMedia);
       
       console.log('UTC date:'+this.point.tags.datetime+' : '+dtDate.toUTCString());
       console.log('Distance to marker:'+(nDistanceToMarker / 1000));

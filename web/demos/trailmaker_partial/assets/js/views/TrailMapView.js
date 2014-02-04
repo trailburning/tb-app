@@ -15,6 +15,7 @@ define([
       
       app.dispatcher.on("TrailMapMediaMarkerView:mediaclick", self.onTrailMapMediaMarkerClick, this);
       app.dispatcher.on("TrailMapMediaMarkerView:removemedia", self.onTrailMapMediaMarkerRemove, this);
+      app.dispatcher.on("TrailMapMediaMarkerView:mediamoved", self.onTrailMapMediaMarkerMoved, this);
       
       this.elCntrls = this.options.elCntrls;            
       this.bRendered = false;
@@ -159,18 +160,22 @@ define([
       var self = this;
   
       // fire event
-      app.dispatcher.trigger("TrailMapView:removemedia", mapMediaMarkerView.model.id);                        		       
+      app.dispatcher.trigger("TrailMapView:removemedia", mapMediaMarkerView.jsonMedia.id);                        		       
       
       // find point in arr      
       $.each(this.arrMapMediaViews, function(key, currMapMediaMarkerView) {
-      	if (currMapMediaMarkerView.model.cid == mapMediaMarkerView.model.cid) {
+      	if (currMapMediaMarkerView.jsonMedia.id == mapMediaMarkerView.jsonMedia.id) {
       	  self.arrMapMediaViews.splice(key, 1);
       	  return false;
       	}
       });    	    	
-      // remove from collection      
-//      this.collectionMedia.remove(mapMediaMarkerView.model);           
-    }        
+    },
+    onTrailMapMediaMarkerMoved: function(mapMediaMarkerView){
+    	console.log('M');
+      // fire event
+      app.dispatcher.trigger("TrailMapView:movedmedia");                        		       
+    }    
+            
   });
 
   return TrailMapView;
