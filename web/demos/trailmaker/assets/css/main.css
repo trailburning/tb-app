@@ -1,0 +1,427 @@
+/* APP */
+/******************************************/
+#appview {
+/*  
+border-style:solid;
+border-width:1px;
+*/  
+  min-width: 1200px;
+}
+
+/* CONTENT */
+/******************************************/
+#contentview {
+  position: relative;
+  top: 0px;  
+  height: 720px;
+}
+
+/* TRAIL MAP */
+/******************************************/
+#trail_map_view {
+  position: absolute;
+  top: 0px;
+  width: 100%; 
+  height: 100%;
+}
+
+#view_map_btns {
+  display: none;
+  position: absolute;
+  top: 34px;
+  right: 22px;
+}
+
+#trail_map_overlay {
+  display: none;
+  position: absolute;
+  top: 0px;  
+  width: 100%; 
+  height: 100%;  
+  opacity: 0.4;
+  background: #000000;  
+}
+
+#trail_info {
+  display: none;
+  position: absolute;
+  top: 24px;
+  left: 24px;
+}
+
+#trail_info .event_name {
+  visibility: hidden;
+}
+
+#trail_info .trail_name {
+  visibility: hidden;
+}
+
+/* STEPS */
+/******************************************/
+#steps {
+  z-index: 100;
+  position: relative;
+  margin-top: 63px;
+}
+
+/* STEP WELCOME */
+/******************************************/
+#step_welcome_view {
+  display: none;
+  width: 100%; 
+  height: 100%;
+}
+
+#step_welcome_view .panel_content {
+  position: relative;
+  padding-top: 56px;
+  margin: 0px auto 92px auto;
+  width: 1112px;
+  text-align: center;
+}
+
+#step_welcome_view .desc {
+  margin: 24px auto 0px auto;
+  width: 700px;
+  text-align: center;
+}
+
+#step_welcome_view .steps {
+  width: 100%;
+  margin-top: 40px;
+  text-align: center;  
+}
+
+#step_welcome_view .steps .step {
+  vertical-align: top;
+  display: inline-block;
+  margin-left: 35px;
+  margin-right: 35px;
+  width: 240px;
+}
+
+#step_welcome_view .steps .step .step_marker {
+  margin-bottom: 30px;
+}
+
+#step_welcome_view .next_step {
+  margin-top: 42px;
+}
+
+/* STEP 1 */
+/******************************************/
+#step1_view {
+  display: none;
+  width: 100%; 
+  height: 100%;
+}
+
+#step1_view .panel_content {
+  position: relative;
+  padding-top: 70px;
+  margin: 0px auto 92px auto;
+  width: 614px;
+  text-align: center;
+}
+
+#step1_view .panel {
+  float: none;
+}
+
+#step1_view .panel .content {
+  margin: 54px 0px 24px 0px;
+}
+
+#step1_view .step_marker_container {
+  position: absolute;
+  top: 30px;
+  width: 100%;
+  text-align: center;
+}
+
+#step1_view .desc {
+  margin: 24px auto 0px auto;
+  width: 380px;
+  text-align: center;
+}
+
+#step1_view form {
+  display: block;  
+  padding-top: 18px;
+}
+
+#step1_view .form-group {
+  width: 324px;
+  margin: 14px auto 0px auto;  
+  text-align: left;
+}
+
+#step1_view .form-group label {
+}
+
+#step1_view input {
+  display: block;  
+  width: 324px;
+  height: 32px;
+  line-height: 32px;
+  background: #F0F0F0;  
+  color: #979797;
+  font-size: 22px;
+}
+
+#step1_view textarea {
+  display: block;  
+  resize: none;
+  width: 324px;
+  height: 176px;
+  background: #F0F0F0;
+  color: #979797;
+  font-size: 22px;
+}
+
+#step1_view .next_step {
+  margin-top: 24px;
+}
+
+/* STEP 2 */
+/******************************************/
+#step2_view {
+  display: none;
+}
+
+#step2_view .panel_container {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+}
+
+#step2_view .panel_content {
+  position: relative;
+  padding-top: 216px;
+  margin: 0px auto 92px auto;
+  width: 614px;
+  text-align: center;
+}
+
+#step2_view .panel {
+  float: none;
+}
+
+#step2_view .panel .content {
+  height: 288px;
+  margin: 54px 0px 0px 0px;
+}
+
+#step2_view .panel_container .step_marker_container {
+  position: absolute;
+  top: 176px;
+  width: 100%;
+  text-align: center;
+}
+
+#step2_view .desc {
+  margin: 24px auto 0px auto;
+  width: 380px;
+  text-align: center;
+}
+
+#step2_view #uploadGPX_view .btn {
+  margin-top: 24px;  
+}
+
+#step2_view #uploadGPXprogress_view {
+  display: none;
+}
+
+#step2_view #uploadGPXprogress_view h4 {
+  margin-top: 24px;
+}
+
+#step2_view #uploadGPXprogress_view .progress_container {
+  margin: 20px auto 0px auto;
+  width: 328px;
+  height: 16px;  
+}
+
+#step2_view #uploadGPXprogress_view .ui-progressbar {
+  height: 16px;
+  background: #F0F0F0;
+  border-radius: 8px;
+}
+
+#step2_view #uploadGPXprogress_view .ui-progressbar-value {
+  background: #f83d3d;
+}
+
+#step2_view .next_step {
+  margin-top: 24px;
+}
+
+#step2_view .map_step_container {
+  display: none;
+  position: absolute;
+  top: 630px;
+  width: 100%;
+}
+
+#step2_view .map_step_container .content {
+  margin: 0px auto 0px auto;
+}
+
+#step2_view .map_step_container .step_marker {
+  text-align: center;  
+}
+
+#step2_view .map_step_container .next_step {
+  margin-top: 18px;
+  text-align: center;
+}
+
+/* STEP 3 */
+/******************************************/
+#step3_view {
+  display: none;
+}
+
+#step3_view .panel_container {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+}
+
+#step3_view .panel_content {
+  position: relative;
+  padding-top: 216px;
+  margin: 0px auto 92px auto;
+  width: 614px;
+  text-align: center;
+}
+
+#step3_view .panel {
+  float: none;
+}
+
+#step3_view .panel .content {
+  height: 364px;
+  margin: 54px 0px 0px 0px;
+}
+
+#step3_view .panel_container .step_marker_container {
+  position: absolute;
+  top: 176px;
+  width: 100%;
+  text-align: center;
+}
+
+#step3_view .desc {
+  margin: 24px auto 0px auto;
+  width: 486px;
+  text-align: center;
+}
+
+#step3_view .next_step {
+  margin-top: 24px;
+}
+
+/* GENERAL */
+/******************************************/
+.step_marker {
+  margin: 0px auto 0px auto;
+  width: 73px;
+  height: 73px;
+  line-height: 73px;
+  font-size: 28px;
+  color: #FFF;
+  background: url("../img/steps/step.png") no-repeat top left;
+}
+
+#trail_map {
+  width:100%; 
+  height: 100%;
+}
+
+.leaflet-popup-content {
+  margin: 8px;
+  padding: 0px;	
+  width: 260px;
+  height: 220px;
+}
+
+.trail_media_popup {
+/*	  
+  padding-top: 8px; 
+  width: 200px;
+*/
+  margin: 0px;
+  padding: 0px;	
+  width: 260px;
+  height: 220px;
+   
+  text-align: center;  
+}
+
+.trail_media_popup .form-group {
+  margin-top: 12px;
+}
+
+.trail_media_popup input {
+  display: block;  
+  margin: 0px auto 0px auto;
+  width: 184px;
+  height: 32px;
+  line-height: 32px;
+  background: #F0F0F0;  
+  color: #979797;
+  font-size: 22px;
+}
+
+.trail_media_popup .btn {
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
+.leaflet-popup-content-wrapper{
+  background: #FFF;
+}
+
+.leaflet-popup-tip{
+  background: #FFF;
+}
+
+/* FOOTER */
+/******************************************/
+#footerview {
+  display: none;
+}
+    
+/* TOUCH */
+/******************************************/
+#view_map_btns .touch_btn {  
+  margin: 0px 4px 0px 4px;
+}
+    
+/* RESPONSIVE */
+/******************************************/
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+}
+ 
+/* Medium devices (desktops, 992px and up) */
+@media (max-width: 1199px) {  
+  #appview {
+    min-width: 992px;
+  }
+  #step_welcome_view .panel_content {
+    width: 968px;
+  }
+}
+
+.image {
+  display: none;  
+}
+
+img {
+  max-width: none;
+}
