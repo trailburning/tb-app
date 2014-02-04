@@ -202,29 +202,24 @@ define([
       var nYPercent = 0;
       var rem = 0;
       
-      this.context.beginPath();
-      // draw first point
-      if (jsonPoints.length) {        
-        nX = nXOffset + this.objTrailMarginRect.left;
-        nYPercent = ((jsonPoints[0].tags.altitude - this.fLowAlt) / this.fAltRange) * 100;
-        nY = nYOffset + this.objTrailMarginRect.top + Math.round((self.nDrawHeight-2) - ((nYPercent * (self.nDrawHeight-2)) / 100));
-        self.context.moveTo(nX, nY);
-      }
-      
+      this.context.beginPath();      
       var nStartX = 0, nStartY = 0;  
       $.each(jsonPoints, function(key, point) {
-        nX = nXOffset + self.objTrailMarginRect.left + Math.round(key / self.fXFactor);
-        nYPercent = ((point.tags.altitude - Math.round(self.fLowAlt)) / self.fAltRange) * 100;
-        nY = nYOffset + self.objTrailMarginRect.top + Math.round((self.nDrawHeight-2) - ((nYPercent * (self.nDrawHeight-2)) / 100));
+      	// ignore blank alt
+      	if (point.tags.altitude != '') {
+          nX = nXOffset + self.objTrailMarginRect.left + Math.round(key / self.fXFactor);
+          nYPercent = ((point.tags.altitude - Math.round(self.fLowAlt)) / self.fAltRange) * 100;
+          nY = nYOffset + self.objTrailMarginRect.top + Math.round((self.nDrawHeight-2) - ((nYPercent * (self.nDrawHeight-2)) / 100));
 
-        rem = key % Math.round(self.fXFactor * 4);
-        if (rem == 0) {
-          self.context.lineTo(nX, nY);            
-        }
-        if (!nStartX) {
-          nStartX = nX;
-          nStartY = nY;
-        }
+          rem = key % Math.round(self.fXFactor * 4);
+          if (rem == 0) {
+            self.context.lineTo(nX, nY);            
+          }
+          if (!nStartX) {
+            nStartX = nX;
+            nStartY = nY;
+          }      		
+      	}
       });      
       var nEndX = nX;
       
