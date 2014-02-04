@@ -22,7 +22,6 @@ define([
       this.polyline = null;
       this.arrLineCordinates = [];      
       this.arrMapMediaViews = [];      
-      this.collectionMedia = new Backbone.Collection();      
       this.currMapMediaMarkerView = null;
       this.nMapView = MAP_STREET_VIEW;      
       this.timezoneData = null;      
@@ -100,7 +99,6 @@ define([
     },
     addMarker: function(jsonMedia, bPlaceOnTrail){
       var model = new Backbone.Model(jsonMedia);
-      this.collectionMedia.add(model);
                       
       var trailMapMediaMarkerView = new TrailMapMediaMarkerView({ model: model, trailModel: this.model, map: this.map, timezoneData: this.timezoneData, placeOnTrail: bPlaceOnTrail });
       trailMapMediaMarkerView.render();
@@ -170,7 +168,7 @@ define([
       	}
       });    	    	
       // remove from collection      
-      this.collectionMedia.remove(mapMediaMarkerView.model);           
+//      this.collectionMedia.remove(mapMediaMarkerView.model);           
     }        
   });
 

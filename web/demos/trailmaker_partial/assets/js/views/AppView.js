@@ -27,6 +27,7 @@ define([
       this.setTitles();
 */
       this.mediasModel = new TrailMediasModel();
+      this.mediaCollection = new Backbone.Collection();
 
       // Trail Map    
       this.trailMapView = new TrailMapView({ el: '#trail_map_view', elCntrls: '#view_map_btns', model: this.model });
@@ -40,7 +41,7 @@ define([
 //      $('#step1_view').show();
 //      this.step1View.render();    
       // Step 2
-      this.step2View = new Step2View({ el: '#step2_view', model: this.model });
+      this.step2View = new Step2View({ el: '#step2_view', model: this.model, mediaCollection: this.mediaCollection });
       $('#step2_view').show();    
       this.step2View.render();
       // Step 3
@@ -79,10 +80,11 @@ define([
       this.mediasModel.fetch({
         success: function () {
 	      var data = self.mediasModel.get('value');
-	      console.log(data);
 	      $.each(data, function(key, jsonMedia) {
 			self.trailMapView.addMarker(jsonMedia, true);
+		    self.mediaCollection.add(jsonMedia);			
 	      });
+	      self.step2View.renderSlideshow();
         }
       });
     },
@@ -136,10 +138,14 @@ define([
     onStep2ViewPhotoUploaded: function(trailUploadPhotoView){
   	  var json = $.parseJSON(trailUploadPhotoView.photoData);
 	  var data = json.value[0];
-	  this.trailMapView.addMarker(data, true, "");      
+	  this.trailMapView.addMarker(data, true, "");
+	  this.mediaCollection.add(data);
+	  
+	  this.step2View.renderSlideshow();
     },    
     onStep2ViewSubmitClick: function(step2View){      
-      var jsonObj = {'id':this.model.get('id'), 'name':this.model.get('name'), 'email':this.model.get('email'), 'event_name':this.model.get('event_name'), 'trail_name':this.model.get('trail_name'), 'trail_notes':this.model.get('trail_notes'), 'media':this.trailMapView.collectionMedia.toJSON()};
+//      var jsonObj = {'id':this.model.get('id'), 'name':this.model.get('name'), 'email':this.model.get('email'), 'event_name':this.model.get('event_name'), 'trail_name':this.model.get('trail_name'), 'trail_notes':this.model.get('trail_notes'), 'media':this.trailMapView.collectionMedia.toJSON()};
+      var jsonObj = {'id':this.model.get('id'), 'name':this.model.get('name'), 'email':this.model.get('email'), 'event_name':this.model.get('event_name'), 'trail_name':this.model.get('trail_name'), 'trail_notes':this.model.get('trail_notes'), 'media':this.mediasModel.get('value')};
       var postData = JSON.stringify(jsonObj);
       var postArray = {json:postData};
       

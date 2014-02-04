@@ -67,7 +67,6 @@ define([
       var self = this;
       
       var versions = this.model.get('versions');
-
       // Create an element to hold all your text and markup
       var container = $('<div />');      
       // Delegate all event handling for the container itself and its contents to the container

@@ -302,6 +302,8 @@ border-width:1px;
   text-align: center;
 }
 
+/* PHOTO GALLERY */
+/******************************************/
 #step2_view .map_step_container .photo_gallery {
   position: absolute;
   bottom: 0px;
@@ -312,6 +314,19 @@ border-width:1px;
 #step2_view .map_step_container .photo_gallery .panel {
   width: 400px;
   height: 150px;
+}
+
+#step2_view .map_step_container .photo_gallery .panel .upload {
+  float: left;
+}
+
+#step2_view .map_step_container .photo_gallery .panel .slideshow {
+  float: left;
+}
+
+#step2_view .map_step_container .photo_gallery .panel .slideshow .slide {
+  float: left;
+  width: 40px;
 }
 
 /* STEP 3 */
