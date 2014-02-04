@@ -98,9 +98,10 @@ define([
       this.timezoneData = timezoneData;
     },
     addMarker: function(jsonMedia, bPlaceOnTrail){
-      var model = new Backbone.Model(jsonMedia);
-                      
-      var trailMapMediaMarkerView = new TrailMapMediaMarkerView({ model: model, trailModel: this.model, map: this.map, timezoneData: this.timezoneData, placeOnTrail: bPlaceOnTrail });
+//      var model = new Backbone.Model(jsonMedia);
+//      var trailMapMediaMarkerView = new TrailMapMediaMarkerView({ model: model, trailModel: this.model, map: this.map, timezoneData: this.timezoneData, placeOnTrail: bPlaceOnTrail });
+      var trailMapMediaMarkerView = new TrailMapMediaMarkerView({ jsonMedia: jsonMedia, trailModel: this.model, map: this.map, timezoneData: this.timezoneData, placeOnTrail: bPlaceOnTrail });
+
       trailMapMediaMarkerView.render();
       this.arrMapMediaViews.push(trailMapMediaMarkerView);        
     },

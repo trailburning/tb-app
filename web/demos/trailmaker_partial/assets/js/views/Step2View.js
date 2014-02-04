@@ -86,12 +86,7 @@ define([
     onTrailMapViewRemoveMedia: function(mediaID){
       // remove from collection
 	  this.options.mediaCollection.remove(mediaID);  	  
-
-	  console.log('updated');
-      this.options.mediaCollection.forEach(function(media, nIndex){
-		console.log(media);
-	  });
-      this.trailSlideshowView.render();
+      this.trailSlideshowView.remove(mediaID);
       
       var strURL = RESTAPI_BASEURL + 'v1/media/' + mediaID;      
       $.ajax({

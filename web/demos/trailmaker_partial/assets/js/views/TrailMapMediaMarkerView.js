@@ -65,8 +65,11 @@ define([
     },    
     render: function(){
       var self = this;
-      
-      var versions = this.model.get('versions');
+
+	  console.log(this.options.jsonMedia);
+//      var versions = this.model.get('versions');
+      var versions = this.options.jsonMedia.versions;
+
       // Create an element to hold all your text and markup
       var container = $('<div />');      
       // Delegate all event handling for the container itself and its contents to the container
@@ -99,7 +102,8 @@ define([
         // fire event
         app.dispatcher.trigger("TrailMapMediaMarkerView:mediaclick", self);                        
       }
-      this.marker = L.marker([this.model.get('coords').lat, this.model.get('coords').long], {icon: this.mediaInactiveIcon, draggable:'true'}).on('click', onClick).addTo(this.map);
+//      this.marker = L.marker([this.model.get('coords').lat, this.model.get('coords').long], {icon: this.mediaInactiveIcon, draggable:'true'}).on('click', onClick).addTo(this.map);
+      this.marker = L.marker([this.options.jsonMedia.coords.lat, this.options.jsonMedia.coords.long], {icon: this.mediaInactiveIcon, draggable:'true'}).on('click', onClick).addTo(this.map);
       
       this.marker.on('dragstart', function(event){
       	if (self.popup) {
@@ -146,11 +150,11 @@ define([
       // adjust based on timezone of 1st point
       dtDate.setSeconds(dtDate.getSeconds() + this.options.timezoneData.dstOffset + this.options.timezoneData.rawOffset);
       // adjust to UTC            
-      this.model.set('date', dtDate.toUTCString());
-      this.model.set('lat', Number(this.point.coords[1]));
-      this.model.set('lng', Number(this.point.coords[0]));      
+      this.options.jsonMedia.tags.datetime = this.point.tags.datetime; 
+      this.options.jsonMedia.coords.lat = Number(this.point.coords[1]); 
+      this.options.jsonMedia.coords.long = Number(this.point.coords[0]);
       
-      console.log('UTC date:'+dtDate.toUTCString());
+      console.log('UTC date:'+this.point.tags.datetime+' : '+dtDate.toUTCString());
       console.log('Distance to marker:'+(nDistanceToMarker / 1000));
     }
     

@@ -82,7 +82,7 @@ define([
 	      var data = self.mediasModel.get('value');
 	      $.each(data, function(key, jsonMedia) {
 			self.trailMapView.addMarker(jsonMedia, true);
-		    self.mediaCollection.add(jsonMedia);			
+		    self.mediaCollection.add(jsonMedia);
 	      });
 	      self.step2View.renderSlideshow();
         }

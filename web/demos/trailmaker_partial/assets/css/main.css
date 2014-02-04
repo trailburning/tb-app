@@ -322,11 +322,13 @@ border-width:1px;
 
 #step2_view .map_step_container .photo_gallery .panel .slideshow {
   float: left;
+  width: 200px;
 }
 
 #step2_view .map_step_container .photo_gallery .panel .slideshow .slide {
   float: left;
-  width: 40px;
+  margin: 4px;
+  width: 50px;
 }
 
 /* STEP 3 */
