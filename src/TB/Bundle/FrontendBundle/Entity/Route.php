@@ -479,40 +479,6 @@ class Route
         return $this->short_name;
     }
     
-    
-
-    /**
-     * Add routeMedias
-     *
-     * @param \TB\Bundle\FrontendBundle\Entity\RouteMedia $routeMedias
-     * @return Route
-     */
-    public function addRouteMedia(\TB\Bundle\FrontendBundle\Entity\RouteMedia $routeMedias)
-    {
-        $this->routeMedias[] = $routeMedias;
-
-        return $this;
-    }
-
-    /**
-     * Remove routeMedias
-     *
-     * @param \TB\Bundle\FrontendBundle\Entity\RouteMedia $routeMedias
-     */
-    public function removeRouteMedia(\TB\Bundle\FrontendBundle\Entity\RouteMedia $routeMedias)
-    {
-        $this->routeMedias->removeElement($routeMedias);
-    }
-
-    /**
-     * Get routeMedias
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getRouteMedias()
-    {
-        return $this->routeMedias;
-    }
 
 
     /**
