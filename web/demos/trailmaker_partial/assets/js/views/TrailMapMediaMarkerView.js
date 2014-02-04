@@ -86,7 +86,7 @@ define([
 
       function onClick(e) {
         var popup_options = {
-          autoPan: false,
+          autoPan: true,
           closeButton: false
         };                
         
