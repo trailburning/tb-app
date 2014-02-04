@@ -85,6 +85,13 @@ class Route
     /**
      * @var integer
      *
+     * @ORM\Column(name="gpx_file_id", type="integer")
+     */
+    private $gpxFileId;
+    
+    /**
+     * @var integer
+     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -710,4 +717,126 @@ class Route
         return $this->medias;
     }
 
+
+    /**
+     * Set gpxFileId
+     *
+     * @param integer $gpxFileId
+     * @return Route
+     */
+    public function setGpxFileId($gpxFileId)
+    {
+        $this->gpxFileId = $gpxFileId;
+
+        return $this;
+    }
+
+    /**
+     * Get gpxFileId
+     *
+     * @return integer 
+     */
+    public function getGpxFileId()
+    {
+        return $this->gpxFileId;
+    }
+    
+    public function calculateAscentDescent() 
+    {
+        $lastRpAltitude = 0;
+        $asc = 0;
+        $desc = 0;
+        
+        $tags = $this->getTags();
+
+        foreach ($this->routePoints as $routePoint) {
+            $rpTags = $routePoint->getTags();
+            if (!isset($rpTags['altitude'])) {
+                continue;
+            }
+            $rpAltitude = $rpTags['altitude'];
+            
+            if ($lastRpAltitude != 0) {
+                if ($rpAltitude > $lastRpAltitude) {
+                    $asc += $rpAltitude - $lastRpAltitude;
+                } else {
+                    $desc += $lastRpAltitude - $rpAltitude;
+                }
+            }
+
+            $lastRpAltitude = $rpAltitude;
+        }
+
+        $tags['ascent'] = $asc;
+        $tags['descent'] = $desc;
+
+        $this->setTags($tags);
+
+        return 0;
+    }
+    
+    public function toJSON() 
+    {
+        $route = '{';
+        $route .= '"name": "'.$this->getName().'",';
+        $route .= '"slug": "'.$this->getSlug().'",';     
+        $route .= '"region": "'.$this->getRegion().'",';     
+        $route .= '"length": "'.$this->getLength().'",';
+        $route .= '"centroid": ['.$this->getCentroid()->getLongitude().', '.$this->getCentroid()->getLatitude().'],';
+        if ($this->getBBox() !== null) {
+            $route .= '"bbox": "'.$this->getBBox().'",';
+        }
+
+        $route .= '"tags": {';
+        $i=0;
+        foreach ($this->getTags() as $tag_name => $tag_value) {
+            if ($i++ != 0) {
+                $route.=',';
+            }
+            $route .= '"'.$tag_name.'": "'.$tag_value.'"';
+        }
+        $route .= '}';
+        
+        if (count($this->route_points) > 0) {
+            $route .= ',"route_points" : [';
+            $i=0;
+            foreach ($this->route_points as $rp) {
+                if ($i++ != 0) {
+                    $route.=',';
+                }
+                $coords = $rp->getCoords();
+                $route .= '{"coords" : ['.$coords['long'].','.$coords['lat'].'], "tags" : {';
+                $rp_tags = $rp->getTags();
+                $j=0;
+                foreach ($rp_tags as $rp_tag => $rp_tag_value) {
+                    if ($j++ != 0) {
+                        $route.=',';
+                    }
+                    $route .= '"'.$rp_tag.'" : "'.$rp_tag_value.'"';
+                }
+                $route .= '}}';
+            }
+            $route .= ']';
+        }
+        
+        if ($this->media !== null) {
+            $route .= ',"media": ' . json_encode($this->media);
+        }
+
+        $route .= '}';
+        
+        return $route;
+    }
+    
+    private $bbox;
+    
+    public function setBBox($bbox) 
+    { 
+        $this->bbox = $bbox; 
+    }
+    
+    public function getBBox($bbox) 
+    { 
+        return $this->bbox; 
+    }
 }

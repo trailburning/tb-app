@@ -7,15 +7,19 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
 use TB\Bundle\FrontendBundle\Entity\GpxFile;
-use TB\Bundle\APIBundle\Util\GpxImporter;
+use TB\Bundle\APIBundle\Util\GpxFileImporter;
+use TB\Bundle\APIBundle\Util\ApiException;
 
 class GpxFileController extends Controller
 {
+    
     /**
      * @Route("/import/gpx", name="gpx_import")
      * @Method("GET")
-     * @Template()
      */
     public function importAction()
     {
@@ -35,53 +39,56 @@ class GpxFileController extends Controller
     /**
      * @Route("/import/gpx", name="gpx_post_import")
      * @Method("POST")
-     * @Template()
      */
-    public function postImportAction()
+    public function postImportAction(Request $request)
     {
-        if (!array_key_exists("gpxfile", $_FILES)) {
-            throw (new ApiException("Gpxfile variable not set", 400));
+        
+        if (isset($_FILES['form']['path'])) {
+            $_FILES['gpxfile'] = $_FILES['form']['path'];
+        }
+        
+        if (!array_key_exists('gpxfile', $_FILES)) {
+            throw (new ApiException('Gpxfile variable not set', 400));
         }
         if ($_FILES['gpxfile']['error'] != 0) {
-            throw (new ApiException("An error happened uploading the GPX file", 400));
+            throw (new ApiException('An error happened uploading the GPX file', 400));
         }
-        $gpx_filename = preg_replace('/[^\w\-~_\.]+/u', '-', $_FILES["gpxfile"]["name"]);
-        $gpx_tmp_path = $_FILES["gpxfile"]["tmp_name"];
+        $gpx_filename = preg_replace('/[^\w\-~_\.]+/u', '-', $_FILES['gpxfile']['name']);
+        $gpx_tmp_path = $_FILES['gpxfile']['tmp_name'];
 
-        $importer = new GPXImporter();
+        $importer = new GpxFileImporter();
         try {
             $routes = $importer->parse(file_get_contents($gpx_tmp_path));
         } catch (\Exception $e) {
-            throw (new ApiException("Problem parsing GPX file - not a valid GPX file?", 400));
+            throw (new ApiException('Problem parsing GPX file - not a valid GPX file?', 400));
         }
 
-        $db = getDB();
-
-        $gpx_file_id = $db->importGpxFile('/trailburning-gpx/'.$gpx_tmp_path);
+        $postgis = $this->get('postgis');
+        
+        $gpx_file_id = $postgis->importGpxFile('/trailburning-gpx/'.$gpx_tmp_path);
         $importedRoutesIds = array();
         foreach ($routes as $route) {
             $route->setGpxFileId($gpx_file_id);
-            $importedRoutesIds[] = $db->writeRoute($route);
+            $importedRoutesIds[] = $postgis->writeRoute($route);
         }
 
-        $aws_client = S3Client::factory(array(
-            'key'    => $_SERVER['AWS_ACCESSKEY'],
-            'secret' => $_SERVER['AWS_SECRETKEY']
+        // $s3_client = $this->get('s3_client'); service call results in an error, fix when possible
+        $s3_client = \Aws\S3\S3Client::factory(array(
+            'key'    => $this->container->getParameter('aws_accesskey'),
+            'secret' => $this->container->getParameter('aws_secretkey')
         ));
 
-        $result = $aws_client->putObject(array(
+        $result = $s3_client->putObject(array(
             'Bucket'    => 'trailburning-gpx',
             'Key'       => sha1_file($gpx_tmp_path).'.gpx',
             'Body'      => file_get_contents($gpx_tmp_path)
         ));
 
-        $res = $slim->response();
-        $res['Content-Type'] = 'application/json';
-        $slim->render(
-            'ApiReplyView.php', 
-            array("value" => '{"route_ids": '.json_encode($importedRoutesIds).'}', 'usermsg' => 'GPX successfully imports'), 
-            200
-        );
+        $output = array("value" => '{"route_ids": '.json_encode($importedRoutesIds).'}', 'usermsg' => 'GPX successfully imports');
+        $response = new Response(json_encode($output));
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
     }
     
 }

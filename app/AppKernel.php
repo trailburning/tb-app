@@ -28,7 +28,7 @@ class AppKernel extends Kernel
             $bundles[] = new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle();
         }
         
-        if (in_array($this->getEnvironment(), array('test'))) {
+        if (in_array($this->getEnvironment(), array('test', 'test_api'))) {
             $bundles[] = new Liip\FunctionalTestBundle\LiipFunctionalTestBundle();
         }
 

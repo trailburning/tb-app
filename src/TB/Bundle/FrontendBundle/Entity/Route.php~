@@ -85,6 +85,13 @@ class Route
     /**
      * @var integer
      *
+     * @ORM\Column(name="gpx_file_id", type="integer")
+     */
+    private $gpxFileId;
+    
+    /**
+     * @var integer
+     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -514,9 +521,9 @@ class Route
     public function __construct()
     {
         $this->editorials = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->routeMedias = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->eventRoutes = new \Doctrine\Common\Collections\ArrayCollection();        
-        $this->routePoints = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->medias = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->eventRoutes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->routePoints = new \Doctrine\Common\Collections\ArrayCollection();        
     }
     
     /**
@@ -676,4 +683,38 @@ class Route
     {
         return $this->routePoints;
     }
+
+    /**
+     * Add medias
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\Media $medias
+     * @return Route
+     */
+    public function addMedia(\TB\Bundle\FrontendBundle\Entity\Media $medias)
+    {
+        $this->medias[] = $medias;
+
+        return $this;
+    }
+
+    /**
+     * Remove medias
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\Media $medias
+     */
+    public function removeMedia(\TB\Bundle\FrontendBundle\Entity\Media $medias)
+    {
+        $this->medias->removeElement($medias);
+    }
+
+    /**
+     * Get medias
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMedias()
+    {
+        return $this->medias;
+    }
+
 }
