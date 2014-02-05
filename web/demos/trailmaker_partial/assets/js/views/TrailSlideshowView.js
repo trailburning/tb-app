@@ -14,6 +14,7 @@ define([
       // first time
       if (!this.bRendered) {
       	$(this.el).html(this.template());
+      	
 	    this.options.collection.forEach(function(media, nIndex){
 	      self.appendMedia(media);
 		});
