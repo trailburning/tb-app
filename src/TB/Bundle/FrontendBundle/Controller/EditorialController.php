@@ -9,7 +9,15 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class EditorialController extends Controller
 {
     /**
-     * @Route("/editorial/{slug}", name="editorial")
+     * @Route("/editorial/{slug}") 
+     */
+    public function legacyEditorialAction($slug)
+    { 
+        return $this->redirect($this->generateUrl('editorial', ['slug' => $slug]), 301);
+    }
+    
+    /**
+     * @Route("/inspire/{slug}", name="editorial")
      * @Template()
      */
     public function editorialAction($slug)
@@ -40,7 +48,15 @@ class EditorialController extends Controller
     }
     
     /**
-     * @Route("/editorials", name="editorials")
+     * @Route("/editorials") 
+     */
+    public function legacyEditorialsAction()
+    { 
+        return $this->redirect($this->generateUrl('editorials'), 301);
+    }
+    
+    /**
+     * @Route("/inspire", name="editorials")
      * @Template()  
     */
     public function editorialsAction()
