@@ -24,9 +24,11 @@ class GpxFileControllerTest extends AbstractApiTestCase
     public function testPostImport()
     {
         $gpxfile = new UploadedFile(
-            realpath(__DIR__) . '/../../DataFixtures/GpxFile/example.gpx',
+            realpath(__DIR__) . '/../../DataFixtures/GpxFiles/example.gpx',
             'example.gpx',
-            123
+            123,
+            null,
+            true
         );
         
         $client = $this->createClient();
