@@ -6,19 +6,20 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
+use Symfony\Component\HttpFoundation\Response;
+
 class RouteController extends Controller
 {
     /**
-     * @Route("/route/{id}", name="get_route")
+     * @Route("/route/{id}")
      * @Method("GET")
      */
-    public function getRouteAction($id)
+    public function getRoute($id)
     {
-        
         $postgis = $this->get('postgis');
         $route = $postgis->readRoute($id);
         
-        $output = array("value" => '{"route": '.$route->ToJSON().'}', 'usermsg' => 'success');
+        $output = array('usermsg' => 'success', "value" => json_decode('{"route": '.$route->ToJSON().'}'));
         $response = new Response(json_encode($output));
         $response->headers->set('Content-Type', 'application/json');
 
@@ -26,15 +27,15 @@ class RouteController extends Controller
     }
     
     /**
-     * @Route("/route/{id}", name="delete_route")
+     * @Route("/route/{id}")
      * @Method("DELETE")
      */
-    public function deleteRouteAction($id)
+    public function deleteRoute($id)
     {
         $postgis = $this->get('postgis');
         $route = $postgis->deleteRoute($id);
         
-        $output = array("value" => $id, 'usermsg' => 'success');
+        $output = array('usermsg' => 'success', "value" => $id);
         $response = new Response(json_encode($output));
         $response->headers->set('Content-Type', 'application/json');
 
@@ -42,15 +43,19 @@ class RouteController extends Controller
     }
     
     /**
-     * @Route("/routes/user/{userId}", name="get_routes_by_user")
+     * @Route("/routes/user/{userId}")
      * @Method("GET")
      */
     public function getRoutesByUser($userId)
     {
         $postgis = $this->get('postgis');
-        $routes = $db->readRoutes($userId, 10);
+        $routes = $postgis->readRoutes($userId, 10);
+        $json_routes = array();
+        foreach ($routes as $route) {
+            $json_routes[] = $route->toJSON();
+        }
         
-        $output = array("value" => '{"routes": ['. implode(',', $json_routes).']}', 'usermsg' => 'success');
+        $output = array('usermsg' => 'success', "value" => json_decode('{"routes": ['. implode(',', $json_routes).']}'));
         $response = new Response(json_encode($output));
         $response->headers->set('Content-Type', 'application/json');
 

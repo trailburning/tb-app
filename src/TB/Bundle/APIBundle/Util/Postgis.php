@@ -2,7 +2,10 @@
 
 namespace TB\Bundle\APIBundle\Util;
 
-use TB\Bundle\FrontendBundle\Entity\Route;
+use TB\Bundle\ApiBundle\Entity\Route;
+use TB\Bundle\FrontendBundle\Entity\RoutePoint;
+use CrEOF\Spatial\PHP\Types\Geometry\Point;
+use TB\Bundle\APIBundle\Util;
 
 class Postgis extends \PDO
 {
@@ -156,11 +159,9 @@ class Postgis extends \PDO
             $route->setBBox($row['bbox']);
             $route->setLength($row['length']);
             $c = explode(" ", substr(trim($row['centroid']),6,-1));
-            $route->setCentroid($c[0], $c[1]); 
-            $t = json_decode('{' . str_replace('"=>"', '":"', $row['rtags']) . '}', true);
-            foreach ($t as $tag => $v) {
-                $route->setTag($tag, $v);
-            }
+            $route->setCentroid(new Point($c[0], $c[1], 4326)); 
+            $tags = json_decode('{' . str_replace('"=>"', '":"', $row['rtags']) . '}', true);
+            $route->setTags($tags);
         } else {
             throw (new ApiException("Route does not exist", 404));
         }
@@ -183,11 +184,11 @@ class Postgis extends \PDO
 
         while ($row = $pq->fetch(\PDO::FETCH_ASSOC)) {
             $coords = explode(" ", substr(trim($row['rpcoords']),6,-1)); //Strips POINT( and trailing )
-            $route->addRoutePoint(
-                $coords[0], 
-                $coords[1], 
-                json_decode('{' . str_replace('"=>"', '":"', $row['rptags']) . '}', true)
-            );
+            $rp = new RoutePoint();
+            $rp->setCoords(new Point($coords[0], $coords[1], 4326));
+            $tags = json_decode('{' . str_replace('"=>"', '":"', $row['rptags']) . '}', true);
+            $rp->setTags($tags);
+            $route->addRoutePoint($rp);
         }
 
         return $route;
@@ -219,11 +220,9 @@ class Postgis extends \PDO
             $route->setSlug($row['slug']);
             $route->setRegion($row['region']);
             $route->setLength($row['length']);
-            $route->setCentroid($row['long'], $row['lat']); 
-            $t = json_decode('{' . str_replace('"=>"', '":"', $row['tags']) . '}', true);
-            foreach ($t as $tag => $v) {
-                $route->setTag($tag, $v);
-            }
+            $route->setCentroid(new Point($row['long'], $row['lat'], 4326)); 
+            $tags = json_decode('{' . str_replace('"=>"', '":"', $row['tags']) . '}', true);
+            $route->setTags($tags);
             
             $media = $this->getRouteMedia($row['id'], 1);
             if (count($media) > 0) {

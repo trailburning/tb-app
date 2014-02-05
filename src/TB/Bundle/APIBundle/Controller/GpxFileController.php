@@ -16,37 +16,13 @@ use TB\Bundle\APIBundle\Util\ApiException;
 
 class GpxFileController extends Controller
 {
-    
+        
     /**
-     * @Route("/import/gpx", name="gpx_import")
-     * @Method("GET")
-     */
-    public function importAction()
-    {
-        $gpxFile = new GpxFile();
-
-        $form = $this->createFormBuilder($gpxFile)
-            ->setAction($this->generateUrl('gpx_post_import'))
-            ->add('path', 'file')
-            ->add('Senden', 'submit')
-            ->getForm();
-
-        return $this->render('TBAPIBundle:Gpx:import.html.twig', array(
-            'form' => $form->createView(),
-        ));
-    }
-    
-    /**
-     * @Route("/import/gpx", name="gpx_post_import")
+     * @Route("/import/gpx")
      * @Method("POST")
      */
-    public function postImportAction(Request $request)
-    {
-        
-        if (isset($_FILES['form']['path'])) {
-            $_FILES['gpxfile'] = $_FILES['form']['path'];
-        }
-        
+    public function postImport(Request $request)
+    {   
         if (!array_key_exists('gpxfile', $_FILES)) {
             throw (new ApiException('Gpxfile variable not set', 400));
         }
@@ -84,7 +60,7 @@ class GpxFileController extends Controller
             'Body'      => file_get_contents($gpx_tmp_path)
         ));
 
-        $output = array("value" => '{"route_ids": '.json_encode($importedRoutesIds).'}', 'usermsg' => 'GPX successfully imports');
+        $output = array('usermsg' => 'GPX successfully imports', "value" => json_decode('{"route_ids": '.json_encode($importedRoutesIds).'}'));
         $response = new Response(json_encode($output));
         $response->headers->set('Content-Type', 'application/json');
 

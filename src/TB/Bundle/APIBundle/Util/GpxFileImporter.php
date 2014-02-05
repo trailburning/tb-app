@@ -6,7 +6,7 @@
 
 namespace TB\Bundle\APIBundle\Util;
 
-use TB\Bundle\FrontendBundle\Entity\Route;
+use TB\Bundle\APIBundle\Entity\Route;
 use TB\Bundle\FrontendBundle\Entity\RoutePoint;
 use CrEOF\Spatial\PHP\Types\Geometry\Point;
 

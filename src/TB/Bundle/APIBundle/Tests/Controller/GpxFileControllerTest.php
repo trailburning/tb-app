@@ -14,22 +14,8 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 /**
  *
  */
-class GpxFileControllerTest extends WebTestCase
+class GpxFileControllerTest extends AbstractApiTestCase
 {
-    
-    protected $environment = 'test_api';
-    
-    /**
-     * 
-     */
-    public function testImport()
-    {
-        
-        $client = $this->createClient();
-        $crawler = $client->request('GET', '/v1/import/gpx');
-        $this->assertEquals(Response::HTTP_OK,  $client->getResponse()->getStatusCode());   
-        
-    }
     
     
     /**
