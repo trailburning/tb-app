@@ -21,8 +21,16 @@ class TrailController extends Controller
     }
     
     /**
+     * @Route("/editorial/{editorialSlug}/trail/{trailSlug}")    
+     */
+    public function legacyEditorialTrailAction($trailSlug, $editorialSlug)
+    { 
+        return $this->redirect($this->generateUrl('editorial_trail', ['trailSlug' => $trailSlug, 'editorialSlug' => $editorialSlug]), 301);
+    }
+    
+    /**
      * @Route("/trail/{trailSlug}", name="trail")
-     * @Route("/editorial/{editorialSlug}/trail/{trailSlug}", name="editorial_trail")
+     * @Route("/inspire/{editorialSlug}/trail/{trailSlug}", name="editorial_trail")
      * @Template()
      */
     public function trailAction($trailSlug, $editorialSlug = null, $eventSlug = null)
