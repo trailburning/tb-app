@@ -19,5 +19,10 @@ doctrine:
     dbal:
         dbname:   %database_name%_test
         
+services:
+    postgis:
+        class:      %postgis_class%
+        arguments:  [%database_host%, %database_port%, %database_name%_test, %database_user%, %database_password%]
+        
 liip_functional_test: ~
     

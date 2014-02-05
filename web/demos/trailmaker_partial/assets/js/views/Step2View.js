@@ -52,7 +52,7 @@ define([
       });
 
       // mla test
-      this.model.set('id', 147);
+      this.model.set('id', 148);
       $('#step2_view .panel_container').hide();      
       $('.map_step_container', $(this.el)).show();  
       // fire event
@@ -101,8 +101,33 @@ define([
         },
       });
     },
-    onTrailMapViewMoveMedia: function(){
+    onTrailMapViewMoveMedia: function(mediaID){      	
+      // update gallery
       this.trailSlideshowView.sort();
+      
+      var model = this.options.mediaCollection.get(mediaID);
+      var postData = JSON.stringify(model.toJSON());
+      var postArray = {json:postData};
+
+	  console.log('onTrailMapViewMoveMedia:');
+      console.log(postData);
+      
+      var strURL = RESTAPI_BASEURL + 'v1/media/' + mediaID;      
+      $.ajax({
+        type: "PUT",
+        dataType: "json",
+        url: strURL,
+        data: postArray,
+        error: function(data) {
+          console.log('error:'+data.responseText);      
+          console.log(data);      
+        },
+        success: function(data) {      
+          console.log('success');
+          console.log(data);
+        }
+      });  
+      
     }          
     
   });
