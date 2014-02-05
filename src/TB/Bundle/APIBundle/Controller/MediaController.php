@@ -108,7 +108,7 @@ class MediaController extends Controller
     }
     
     /**
-     * @Route("/route/{id}")
+     * @Route("/media/{id}")
      * @Method("DELETE")
      */
     public function deleteMedia($id)
