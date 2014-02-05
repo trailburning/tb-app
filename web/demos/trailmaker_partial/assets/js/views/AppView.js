@@ -136,8 +136,7 @@ define([
       $('#view_map_btns', $(this.el)).show();
     },    
     onStep2ViewPhotoUploaded: function(trailUploadPhotoView){
-  	  var json = $.parseJSON(trailUploadPhotoView.photoData);
-	  var data = json.value[0];
+	  var data = trailUploadPhotoView.photoData.value[0];
 	  this.trailMapView.addMarker(data, true, "");
 	  this.mediaCollection.add(data);
 	  
