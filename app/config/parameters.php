@@ -26,4 +26,12 @@ if (isset($_SERVER['API_HOST'])) {
     $container->setParameter('api_host', $_SERVER['API_HOST']);
 }
 
+if (isset($_SERVER['AWS_ACCESSKEY'])) {
+    $container->setParameter('aws_accesskey', $_SERVER['AWS_ACCESSKEY']);
+}
+
+if (isset($_SERVER['AWS_SECRETKEY'])) {
+    $container->setParameter('aws_secretkey', $_SERVER['AWS_SECRETKEY']);
+}
+
 

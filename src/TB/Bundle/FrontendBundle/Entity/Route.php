@@ -85,6 +85,13 @@ class Route
     /**
      * @var integer
      *
+     * @ORM\Column(name="gpx_file_id", type="integer")
+     */
+    private $gpxFileId;
+    
+    /**
+     * @var integer
+     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -675,4 +682,29 @@ class Route
     {
         return $this->medias;
     }
+
+
+    /**
+     * Set gpxFileId
+     *
+     * @param integer $gpxFileId
+     * @return Route
+     */
+    public function setGpxFileId($gpxFileId)
+    {
+        $this->gpxFileId = $gpxFileId;
+
+        return $this;
+    }
+
+    /**
+     * Get gpxFileId
+     *
+     * @return integer 
+     */
+    public function getGpxFileId()
+    {
+        return $this->gpxFileId;
+    }
+    
 }

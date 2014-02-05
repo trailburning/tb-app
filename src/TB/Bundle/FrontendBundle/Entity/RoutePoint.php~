@@ -27,7 +27,7 @@ class RoutePoint
     private $tags;
 
     /**
-     * @var point
+     * @var Point point
      *
      * @ORM\Column(name="coords", type="point", columnDefinition="GEOMETRY(POINT,4326)", nullable=true)
      */
@@ -38,17 +38,16 @@ class RoutePoint
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="SEQUENCE")
-     * @ORM\SequenceGenerator(sequenceName="route_points_id_seq", allocationSize=1, initialValue=1)
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
      * @var \TB\Bundle\FrontendBundle\Entity\Route
      *
-     * @ORM\ManyToOne(targetEntity="TB\Bundle\FrontendBundle\Entity\Route")
+     * @ORM\ManyToOne(targetEntity="TB\Bundle\FrontendBundle\Entity\Route", inversedBy="routePoints")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="route_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="route_id", referencedColumnName="id", onDelete="CASCADE")
      * })
      */
     private $route;
@@ -99,29 +98,6 @@ class RoutePoint
     public function getTags()
     {
         return $this->tags;
-    }
-
-    /**
-     * Set coords
-     *
-     * @param geometry $coords
-     * @return RoutePoint
-     */
-    public function setCoords($coords)
-    {
-        $this->coords = $coords;
-    
-        return $this;
-    }
-
-    /**
-     * Get coords
-     *
-     * @return geometry 
-     */
-    public function getCoords()
-    {
-        return $this->coords;
     }
 
     /**
