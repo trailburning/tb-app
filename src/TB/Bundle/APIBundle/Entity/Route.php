@@ -45,15 +45,15 @@ class Route extends BaseRoute
     }
     
     public function getNearestPointBytime($unixtimestamp) {
-        if (sizeof($this->getRoutePoints()) < 2)
+        $routePoints = $this->getRoutePoints();
+        if ($routePoints->count() < 2)
             throw new \Exception("Route is less than 2 points.");
-
-        if ($unixtimestamp < $this->getRoutePoints()[0]->getTags()['datetime']) {
-            return $this->getRoutePoints()[0];
-        } else if ($unixtimestamp > end($this->getRoutePoints())->getTags()['datetime']) {
-            return end($this->getRoutePoints());
+        if ($unixtimestamp < $routePoints[0]->getTags()['datetime']) {
+            return $routePoints[0];
+        } else if ($unixtimestamp > $routePoints->last()->getTags()['datetime']) {
+            return $routePoints->last();
         } else {
-            foreach ($this->getRoutePoints() as $rp) {
+            foreach ($routePoints as $rp) {
                 if ($rp->getTags()['datetime'] > $unixtimestamp ) {
                     return $rp; 
                 }
