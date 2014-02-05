@@ -4,8 +4,9 @@ define([
   'views/TrailUploadGPXView',
   'views/TrailUploadGPXProgressView',  
   'views/TrailUploadPhotoView',
-  'views/TrailUploadPhotoProgressView'  
-], function(_, Backbone, TrailUploadGPXView, TrailUploadGPXProgressView, TrailUploadPhotoView, TrailUploadPhotoProgressView){
+  'views/TrailUploadPhotoProgressView',
+  'views/TrailSlideshowView'  
+], function(_, Backbone, TrailUploadGPXView, TrailUploadGPXProgressView, TrailUploadPhotoView, TrailUploadPhotoProgressView, TrailSlideshowView){
 
   var STATE_UPLOAD = 0;
 
@@ -20,7 +21,8 @@ define([
       app.dispatcher.on("TrailUploadPhotoView:uploadProgress", this.onTrailUploadPhotoViewUploadProgress, this);
 
       app.dispatcher.on("TrailMapView:removemedia", this.onTrailMapViewRemoveMedia, this);
-      
+      app.dispatcher.on("TrailMapView:movedmedia", this.onTrailMapViewMoveMedia, this);
+
       this.nState = STATE_UPLOAD;
       this.timezoneData = null;      
       this.bRendered = false;
@@ -39,9 +41,10 @@ define([
 
       this.trailUploadPhotoView = new TrailUploadPhotoView({ el: '#uploadPhoto_view', model: this.model });
       this.trailUploadPhotoProgressView = new TrailUploadPhotoProgressView({ el: '#uploadPhotoprogress_view', model: this.model });
+      this.trailSlideshowView = new TrailSlideshowView({ el: '#slideshow_view', collection: this.options.mediaCollection });
 
       this.trailUploadPhotoView.render();          
-      this.trailUploadGPXView.render();          
+      this.trailUploadGPXView.render();
       
       $('.submit', $(this.el)).click(function(evt) {
         // fire event
@@ -57,6 +60,9 @@ define([
         
       return this;
     },
+    renderSlideshow: function(){
+      this.trailSlideshowView.render();          
+	},
     onTrailUploadGPXViewUploaded: function(trailUploadGPXView){
       console.log('onTrailUploadGPXViewUploaded : '+this.model.id);
 
@@ -79,6 +85,10 @@ define([
       this.trailUploadPhotoProgressView.render(nProgress);
     },
     onTrailMapViewRemoveMedia: function(mediaID){
+      // remove from collection
+	  this.options.mediaCollection.remove(mediaID);
+      this.trailSlideshowView.remove(mediaID);
+      
       var strURL = RESTAPI_BASEURL + 'v1/media/' + mediaID;      
       $.ajax({
         url: strURL,
@@ -90,7 +100,10 @@ define([
           console.log('msg:'+data.message);
         },
       });
-    }        
+    },
+    onTrailMapViewMoveMedia: function(){
+      this.trailSlideshowView.sort();
+    }          
     
   });
 

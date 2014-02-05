@@ -15,6 +15,7 @@ define([
       
       app.dispatcher.on("TrailMapMediaMarkerView:mediaclick", self.onTrailMapMediaMarkerClick, this);
       app.dispatcher.on("TrailMapMediaMarkerView:removemedia", self.onTrailMapMediaMarkerRemove, this);
+      app.dispatcher.on("TrailMapMediaMarkerView:mediamoved", self.onTrailMapMediaMarkerMoved, this);
       
       this.elCntrls = this.options.elCntrls;            
       this.bRendered = false;
@@ -22,7 +23,6 @@ define([
       this.polyline = null;
       this.arrLineCordinates = [];      
       this.arrMapMediaViews = [];      
-      this.collectionMedia = new Backbone.Collection();      
       this.currMapMediaMarkerView = null;
       this.nMapView = MAP_STREET_VIEW;      
       this.timezoneData = null;      
@@ -99,10 +99,10 @@ define([
       this.timezoneData = timezoneData;
     },
     addMarker: function(jsonMedia, bPlaceOnTrail){
-      var model = new Backbone.Model(jsonMedia);
-      this.collectionMedia.add(model);
-                      
-      var trailMapMediaMarkerView = new TrailMapMediaMarkerView({ model: model, trailModel: this.model, map: this.map, timezoneData: this.timezoneData, placeOnTrail: bPlaceOnTrail });
+//      var model = new Backbone.Model(jsonMedia);
+//      var trailMapMediaMarkerView = new TrailMapMediaMarkerView({ model: model, trailModel: this.model, map: this.map, timezoneData: this.timezoneData, placeOnTrail: bPlaceOnTrail });
+      var trailMapMediaMarkerView = new TrailMapMediaMarkerView({ jsonMedia: jsonMedia, trailModel: this.model, map: this.map, timezoneData: this.timezoneData, placeOnTrail: bPlaceOnTrail });
+
       trailMapMediaMarkerView.render();
       this.arrMapMediaViews.push(trailMapMediaMarkerView);        
     },
@@ -160,18 +160,22 @@ define([
       var self = this;
   
       // fire event
-      app.dispatcher.trigger("TrailMapView:removemedia", mapMediaMarkerView.model.id);                        		       
+      app.dispatcher.trigger("TrailMapView:removemedia", mapMediaMarkerView.jsonMedia.id);                        		       
       
       // find point in arr      
       $.each(this.arrMapMediaViews, function(key, currMapMediaMarkerView) {
-      	if (currMapMediaMarkerView.model.cid == mapMediaMarkerView.model.cid) {
+      	if (currMapMediaMarkerView.jsonMedia.id == mapMediaMarkerView.jsonMedia.id) {
       	  self.arrMapMediaViews.splice(key, 1);
       	  return false;
       	}
       });    	    	
-      // remove from collection      
-      this.collectionMedia.remove(mapMediaMarkerView.model);           
-    }        
+    },
+    onTrailMapMediaMarkerMoved: function(mapMediaMarkerView){
+    	console.log('M');
+      // fire event
+      app.dispatcher.trigger("TrailMapView:movedmedia");                        		       
+    }    
+            
   });
 
   return TrailMapView;
