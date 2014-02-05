@@ -165,15 +165,15 @@ define([
       // find point in arr      
       $.each(this.arrMapMediaViews, function(key, currMapMediaMarkerView) {
       	if (currMapMediaMarkerView.jsonMedia.id == mapMediaMarkerView.jsonMedia.id) {
+      	  // remove
       	  self.arrMapMediaViews.splice(key, 1);
       	  return false;
       	}
       });    	    	
     },
     onTrailMapMediaMarkerMoved: function(mapMediaMarkerView){
-    	console.log('M');
       // fire event
-      app.dispatcher.trigger("TrailMapView:movedmedia");                        		       
+      app.dispatcher.trigger("TrailMapView:movedmedia", mapMediaMarkerView.jsonMedia.id);                        		       
     }    
             
   });
