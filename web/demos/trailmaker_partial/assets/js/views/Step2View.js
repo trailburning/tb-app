@@ -114,7 +114,7 @@ define([
       
       var strURL = RESTAPI_BASEURL + 'v1/media/' + mediaID;      
       $.ajax({
-        type: "POST",
+        type: "PUT",
         dataType: "json",
         url: strURL,
         data: postArray,

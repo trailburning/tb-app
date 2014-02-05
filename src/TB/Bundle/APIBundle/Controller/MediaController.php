@@ -9,6 +9,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Response;
 use TB\Bundle\APIBundle\Util\ApiException;
 use TB\Bundle\APIBundle\Util\JpegMedia;
+use TB\Bundle\FrontendBundle\Entity\Media;
+use CrEOF\Spatial\PHP\Types\Geometry\Point;
 
 class MediaController extends Controller
 {
@@ -114,7 +116,46 @@ class MediaController extends Controller
     public function deleteMedia($id)
     {
         $postgis = $this->get('postgis');
-        $route = $postgis->deleteMedia($id);
+        $postgis->deleteMedia($id);
+        
+        $output = array('usermsg' => 'success', "value" => $id);
+        $response = new Response(json_encode($output));
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
+    }
+    
+    /**
+     * @Route("/media/{id}")
+     * @Method("PUT")
+     */
+    public function putMedia($id)
+    {
+        $request = $this->getRequest();
+        if (!$request->request->has('json')) {
+            throw new ApiException('Missing JSON object in request data');
+        }
+        
+        $mediaObj = json_decode($request->request->get('json'));
+        if ($mediaObj === null) {
+            throw new ApiException('Invalid JSON data');
+        }
+        
+        
+        $media = $this->getDoctrine()
+            ->getRepository('TBFrontendBundle:Media')
+            ->findOneById($id);
+
+        if (!$media) {
+            throw new ApiException(sprintf('Media with id "%s" not found', $id));
+        }
+        
+        $media->setCoords(new Point($mediaObj->coords->long, $mediaObj->coords->lat, 4326));
+        $media->setTags($mediaObj->tags);
+        
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($media);
+        $em->flush();
         
         $output = array('usermsg' => 'success', "value" => $id);
         $response = new Response(json_encode($output));
