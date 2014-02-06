@@ -23,6 +23,7 @@ class APIExceptionListener
         } elseif ($exception instanceof ApiException) {
             $output = array('usermsg' => $exception->getMessage(), "value" => null);
             $response->setContent(json_encode($output));
+            $response->setStatusCode($exception->getCode());
             $response->headers->set('Content-Type', 'application/json');
         } else {
             $response->setContent($exception->getMessage());
