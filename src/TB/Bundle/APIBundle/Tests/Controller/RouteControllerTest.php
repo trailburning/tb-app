@@ -43,6 +43,24 @@ class RouteControllerTest extends AbstractApiTestCase
         $this->assertTrue($this->isValidJson($response));   
     }
     
+    /*public function testGetRoute404()
+    {
+        $this->loadFixtures([]);
+        // Check if Route exists
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        $route = $em
+            ->getRepository('TBFrontendBundle:Route')
+            ->findOneById();
+        if ($route) {
+            $this->fail('Route with id "1" exists in test DB');
+        }
+        
+        // Get Route from the API that does not exist
+        $client = $this->createClient();
+        $crawler = $client->request('GET', '/v1/route/1');
+        $this->assertEquals(Response::Response,  $client->getResponse()->getStatusCode());
+    }*/
+    
     /**
      * Test the DELETE /route/{id} action
      */
