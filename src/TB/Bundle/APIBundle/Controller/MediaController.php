@@ -20,6 +20,16 @@ class MediaController extends Controller
      */
     public function getRouteMedias($routeId)
     {
+        $route = $this->getDoctrine()
+            ->getRepository('TBFrontendBundle:Route')
+            ->findOneById($routeId);
+
+        if (!$route) {
+            throw $this->createNotFoundException(
+                sprintf('Route with id "%s" not found', $routeId)
+            );
+        }
+        
         $postgis = $this->get('postgis');
 
         $medias = $postgis->getRouteMedia($routeId);
@@ -39,6 +49,16 @@ class MediaController extends Controller
     {
         if (!array_key_exists('medias', $_FILES)) {
             throw (new ApiException("Medias variable not set", 400));
+        }
+        
+        $route = $this->getDoctrine()
+            ->getRepository('TBFrontendBundle:Route')
+            ->findOneById($routeId);
+
+        if (!$route) {
+            throw $this->createNotFoundException(
+                sprintf('Route with id "%s" not found', $routeId)
+            );
         }
 
         $postgis = $this->get('postgis');
@@ -115,6 +135,16 @@ class MediaController extends Controller
      */
     public function deleteMedia($id)
     {
+        $route = $this->getDoctrine()
+            ->getRepository('TBFrontendBundle:Media')
+            ->findOneById($id);
+
+        if (!$route) {
+            throw $this->createNotFoundException(
+                sprintf('Media with id "%s" not found', $id)
+            );
+        }
+        
         $postgis = $this->get('postgis');
         $postgis->deleteMedia($id);
         
@@ -133,21 +163,20 @@ class MediaController extends Controller
     {
         $request = $this->getRequest();
         if (!$request->request->has('json')) {
-            throw new ApiException('Missing JSON object in request data');
+            throw new ApiException('Missing JSON object in request data', 400);
         }
         
         $mediaObj = json_decode($request->request->get('json'));
         if ($mediaObj === null) {
-            throw new ApiException('Invalid JSON data');
+            throw new ApiException('Invalid JSON data', 400);
         }
-        
         
         $media = $this->getDoctrine()
             ->getRepository('TBFrontendBundle:Media')
             ->findOneById($id);
 
         if (!$media) {
-            throw new ApiException(sprintf('Media with id "%s" not found', $id));
+            throw new ApiException(sprintf('Media with id "%s" not found', $id), 400);
         }
         
         $media->setCoords(new Point($mediaObj->coords->long, $mediaObj->coords->lat, 4326));

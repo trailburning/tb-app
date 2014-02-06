@@ -7,6 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 use Symfony\Component\HttpFoundation\Response;
+use TB\Bundle\APIBundle\Util\ApiException;
 
 class RouteController extends Controller
 {
@@ -48,6 +49,16 @@ class RouteController extends Controller
      */
     public function getRoutesByUser($userId)
     {
+        $user = $this->getDoctrine()
+            ->getRepository('TBFrontendBundle:User')
+            ->findOneById($userId);
+
+        if (!$user) {
+            throw $this->createNotFoundException(
+                sprintf('User with id "%s" not found', $userId)
+            );
+        }
+        
         $postgis = $this->get('postgis');
         $routes = $postgis->readRoutes($userId, 10);
         $json_routes = array();
