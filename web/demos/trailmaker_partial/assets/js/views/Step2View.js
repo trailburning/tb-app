@@ -23,6 +23,8 @@ define([
       app.dispatcher.on("TrailMapView:removemedia", this.onTrailMapViewRemoveMedia, this);
       app.dispatcher.on("TrailMapView:movedmedia", this.onTrailMapViewMoveMedia, this);
 
+      app.dispatcher.on("TrailSlideshowSlideView:click", this.onTrailSlideshowSlideViewClick, this);
+
       this.nState = STATE_UPLOAD;
       this.timezoneData = null;      
       this.bRendered = false;
@@ -126,9 +128,12 @@ define([
           console.log('success');
           console.log(data);
         }
-      });  
-      
-    }          
+      });        
+    },
+    onTrailSlideshowSlideViewClick: function(trailGallerySlideView){      	
+      // fire event
+      app.dispatcher.trigger("Step2View:galleryPhotoClick", trailGallerySlideView);                              
+	}              
     
   });
 

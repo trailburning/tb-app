@@ -15,6 +15,7 @@ define([
       app.dispatcher.on("Step1View:submitclick", this.onStep1ViewSubmitClick, this);
       app.dispatcher.on("Step2View:gpxuploaded", this.onStep2ViewGPXUploaded, this);
       app.dispatcher.on("Step2View:photouploaded", this.onStep2ViewPhotoUploaded, this);
+      app.dispatcher.on("Step2View:galleryPhotoClick", this.onStep2ViewGalleryPhotoClick, this);
       app.dispatcher.on("Step2View:submitclick", this.onStep2ViewSubmitClick, this);
       app.dispatcher.on("Step3View:submitclick", this.onStep3ViewSubmitClick, this);
 
@@ -69,7 +70,8 @@ define([
       
       this.model.fetch({
         success: function () {
-          self.getTimeZone();
+          self.trailMapView.render();          
+          self.getTrailMedia();          
         }      
       });        
     },
@@ -86,28 +88,6 @@ define([
 	      });
 	      self.step2View.renderSlideshow();
         }
-      });
-    },
-    getTimeZone: function(){
-      var self = this;    
-      
-      var data = this.model.get('value');      
-      var firstPoint = data.route.route_points[0];
-      var nTimestamp = firstPoint.tags.datetime;
-      
-      var strURL = 'https://maps.googleapis.com/maps/api/timezone/json?location='+Number(firstPoint.coords[1])+','+Number(firstPoint.coords[0])+'&timestamp='+nTimestamp+'&sensor=false';
-      $.ajax({
-        url: strURL,
-        type: 'GET',            
-        cache: false,
-        contentType: false,
-        processData: false,
-        success: function(data) {
-          self.timezoneData = data; 
-          self.trailMapView.setTimeZoneData(self.timezoneData);
-          self.trailMapView.render();          
-          self.getTrailMedia();          
-        },
       });
     },
     onStepWelcomeViewSubmitClick: function(stepWelcomeView){
@@ -142,6 +122,9 @@ define([
 	  
 	  this.step2View.renderSlideshow();
     },    
+    onStep2ViewGalleryPhotoClick: function(trailGallerySlideView){
+      this.trailMapView.selectMarker(trailGallerySlideView.model.id);    
+	},    
     onStep2ViewSubmitClick: function(step2View){      
       var jsonObj = {'id':this.model.get('id'), 'name':this.model.get('name'), 'email':this.model.get('email'), 'event_name':this.model.get('event_name'), 'trail_name':this.model.get('trail_name'), 'trail_notes':this.model.get('trail_notes'), 'media':this.mediasModel.get('value')};
       var postData = JSON.stringify(jsonObj);

@@ -10,8 +10,9 @@ define([
   var TrailMapMediaMarkerView = Backbone.View.extend({
     options: {placeOnTrail: true},
     initialize: function(){
+      this.model = this.options.model;
       this.trailModel = this.options.trailModel;
-      this.jsonMedia = this.options.jsonMedia;
+//      this.jsonMedia = this.options.jsonMedia;
       this.point = null;
       this.map = this.options.map;
       this.popup = null;
@@ -64,49 +65,53 @@ define([
         this.marker.setZIndexOffset(100);
       }
     },    
+    showPopup: function(){
+      var popup_options = {
+        autoPan: true,
+        closeButton: false
+      };                
+        
+      this.popup = L.popup(popup_options)
+      .setLatLng([this.marker.getLatLng().lat, this.marker.getLatLng().lng])
+      .setContent(this.popupContainer[0])
+      .openOn(this.map);  
+                  
+      // force resrc
+      resrc.resrcAll();      
+    },    
+    hidePopup: function(){
+      if (this.popup) {
+     	this.map.closePopup(this.popup);
+      }
+    },
     render: function(){
       var self = this;
 
-      var versions = this.options.jsonMedia.versions;
-
+      var versions = this.model.get('versions');
       // Create an element to hold all your text and markup
-      var container = $('<div />');      
+      this.popupContainer = $('<div />');      
       // Delegate all event handling for the container itself and its contents to the container
-      container.on('click', '.deletepin_btn', function() {
+      this.popupContainer.on('click', '.deletepin_btn', function() {
         // fire event
         app.dispatcher.trigger("TrailMapMediaMarkerView:removemedia", self);                        
         // goodbye pin
         self.map.closePopup(self.popup);
         self.map.removeLayer(self.marker);
       });
-      container.on('click', '.save_btn', function() {
-		self.map.closePopup(self.popup);      	              	        
+      this.popupContainer.on('click', '.save_btn', function() {
+      	self.hidePopup();
       });
-      container.html('<div class="trail_media_popup"><img src="http://app.resrc.it/O=80/http://s3-eu-west-1.amazonaws.com/'+versions[0].path+'" width="240" class="resrc"><span class="btn btn-tb-action btn-tb-large save_btn">Save</span> <a href="javascript:void(0)" class="deletepin_btn">delete pin</a></div>');
+      this.popupContainer.html('<div class="trail_media_popup"><img src="http://app.resrc.it/O=80/http://s3-eu-west-1.amazonaws.com/'+versions[0].path+'" width="240" class="resrc"><span class="btn btn-tb-action btn-tb-large save_btn">Save</span> <a href="javascript:void(0)" class="deletepin_btn">delete pin</a></div>');
 
       function onClick(e) {
-        var popup_options = {
-          autoPan: true,
-          closeButton: false
-        };                
-        
-        self.popup = L.popup(popup_options)
-        .setLatLng([e.latlng.lat, e.latlng.lng])
-        .setContent(container[0])
-        .openOn(self.map);  
-                  
-        // force resrc
-        resrc.resrcAll();          	
-      	
+      	self.showPopup();      	
         // fire event
         app.dispatcher.trigger("TrailMapMediaMarkerView:mediaclick", self);                        
       }
-      this.marker = L.marker([this.options.jsonMedia.coords.lat, this.options.jsonMedia.coords.long], {icon: this.mediaInactiveIcon, draggable:'true'}).on('click', onClick).addTo(this.map);
+      this.marker = L.marker([this.model.get('coords').lat, this.model.get('coords').long], {icon: this.mediaInactiveIcon, draggable:'true'}).on('click', onClick).addTo(this.map);
       
       this.marker.on('dragstart', function(event){
-      	if (self.popup) {
-		  self.map.closePopup();      	              	        
-      	}
+      	self.hidePopup();
       });
       this.marker.on('dragend', function(event){
         self.placeMarker();
@@ -146,19 +151,11 @@ define([
       
       // position on closest point      
       this.marker.setLatLng([Number(this.point.coords[1]), Number(this.point.coords[0])]);            
-      var dtDate = new Date(this.point.tags.datetime*1000); // unix timestamp to timestamp      
-      // adjust based on timezone of 1st point
-      dtDate.setSeconds(dtDate.getSeconds() + this.options.timezoneData.dstOffset + this.options.timezoneData.rawOffset);
       // adjust to UTC            
-      this.options.jsonMedia.tags.datetime = this.point.tags.datetime;
-      this.options.jsonMedia.tags.altitude = this.point.tags.altitude; 
-      this.options.jsonMedia.coords.lat = Number(this.point.coords[1]); 
-      this.options.jsonMedia.coords.long = Number(this.point.coords[0]);
-      
-      console.log(this.options.jsonMedia);
-      
-      console.log('UTC date:'+this.point.tags.datetime+' : '+dtDate.toUTCString());
-      console.log('Distance to marker:'+(nDistanceToMarker / 1000));
+      this.model.get('tags').datetime = this.point.tags.datetime;
+      this.model.get('tags').altitude = this.point.tags.altitude;
+      this.model.get('coords').lat = Number(this.point.coords[1]);
+      this.model.get('coords').long = Number(this.point.coords[0]);
     }
     
   });
