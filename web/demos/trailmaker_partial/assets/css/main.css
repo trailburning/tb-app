@@ -308,28 +308,29 @@ border-width:1px;
   position: absolute;
   bottom: 0px;
   left: 20px;  
-  width: 464px;
+  width: 540px;
 }
 
 #step2_view .map_step_container .photo_gallery .panel {
-  width: 464px;
-  height: 150px;
+  width: 540px;
+  height: 350px;
 }
 
 #step2_view .map_step_container .photo_gallery .panel .upload {
   float: left;
+  width: 200px;
 }
 
 #step2_view .map_step_container .photo_gallery .panel .slideshow {
   float: left;
-  width: 264px;
+  width: 340px;
 }
 
 #step2_view .map_step_container .photo_gallery .panel .slideshow .slide {
   float: left;
   margin: 4px;
-  width: 80px;
-  height: 60px;
+  width: 160px;
+  height: 120px;
   overflow: hidden;
 }
 

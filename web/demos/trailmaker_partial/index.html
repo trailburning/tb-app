@@ -211,14 +211,14 @@
     <i class="glyphicon glyphicon-plus"></i>
     <span>Upload GPX File</span>
     <!-- The file input field used as target for the file upload widget -->
-    <input type="file" id="gpxfileupload" name="gpxfile" multiple>        
+    <input type="file" id="gpxfileupload" name="gpxfile">        
   </span>
   </form>        
 </script>
 
 <script type="text/template" id="trailUploadGPXProgressViewTemplate">   
   <div class="desc">
-    <h4 class="tb">Now making GPX interesting...</h4>
+    <h4 class="tb">Now making GPS interesting...</h4>
   </div>        
   <div class="progress_container">
     <div class="progressbar"></div>  
@@ -232,7 +232,7 @@
     <i class="glyphicon glyphicon-plus"></i>
     <span>Upload Photo</span>
     <!-- The file input field used as target for the file upload widget -->
-    <input type="file" id="photofileupload" name="medias[]" multiple>        
+    <input type="file" id="photofileupload" name="medias[]">        
   </span>
   </form>        
 </script>
@@ -248,6 +248,10 @@
 </script>
 
 <script type="text/template" id="slideshowViewTemplate">
+</script>
+
+<script type="text/template" id="slideshowSlideViewTemplate">
+  <img src="http://app.resrc.it/O=80/http://s3-eu-west-1.amazonaws.com/<%= versionLargePath%>" class="resrc">  	
 </script>
 
 <script type="text/template" id="step3ViewTemplate">

@@ -1,7 +1,8 @@
 define([
   'underscore', 
-  'backbone'
-], function(_, Backbone){
+  'backbone',
+  'views/TrailSlideshowSlideView'
+], function(_, Backbone, TrailSlideshowSlideView){
 
   var TrailSlideshowView = Backbone.View.extend({
     initialize: function(){
@@ -14,6 +15,7 @@ define([
       // first time
       if (!this.bRendered) {
       	$(this.el).html(this.template());
+      	
 	    this.options.collection.forEach(function(media, nIndex){
 	      self.appendMedia(media);
 		});
@@ -35,7 +37,10 @@ define([
     },
     appendMedia: function(media){
       var versions = media.get('versions');
-	  $(this.el).append('<div class="slide" data-id="'+media.id+'" data-datetime="'+media.get('tags').datetime+'"><img src="http://app.resrc.it/O=80/http://s3-eu-west-1.amazonaws.com/'+versions[0].path+'" class="resrc"></div>');
+      
+      var slide = new TrailSlideshowSlideView({model: media});
+      slide.render();
+      $(this.el).append(slide.el);      
 	},    
     remove: function(id){
 	  $('.slide', this.el).each(function(index) {
