@@ -31,7 +31,13 @@ define([
     initialize: function(){
       var self = this;
       
-      this.mediaCollection = new Backbone.Collection();    
+	  var MediaCollection = Backbone.Collection.extend({
+    	comparator: function(item) {
+    		// sort by datetime
+        	return item.get('tags').datetime;
+    	}
+	  });
+      this.mediaCollection = new MediaCollection();    
       this.mediaModel = new TrailMediaModel();
             
       app.dispatcher.on("TrailMapView:zoominclick", self.onTrailMapViewZoomInClick, this);
@@ -223,19 +229,22 @@ define([
       var self = this;
       
       var jsonMedia = this.mediaModel.get('value');
+      // add to collection
       $.each(jsonMedia, function(key, media) {
-        var mediaModel = new Backbone.Model(media);        
-        self.mediaCollection.add(mediaModel);      
-                
-        self.trailMiniMapView.addMedia(mediaModel);
-        self.trailMapView.addMedia(mediaModel);
-        
-        self.trailMiniSlideView.addMedia(mediaModel);
-        self.trailSlideView.addMedia(mediaModel);
-        
-        self.trailAltitudeView.addMedia(mediaModel);
-        self.trailWeatherView.render();
+        self.mediaCollection.add(new Backbone.Model(media));      
       });
+      // iterate collection
+ 	  this.mediaCollection.each(function(model) {
+        self.trailMiniMapView.addMedia(model);
+        self.trailMapView.addMedia(model);
+        
+        self.trailMiniSlideView.addMedia(model);
+        self.trailSlideView.addMedia(model);
+        
+        self.trailAltitudeView.addMedia(model);
+        self.trailWeatherView.render();
+      });      
+      
       this.trailAltitudeView.renderMarkers();
       this.trailMiniMapView.renderMarkers();          
       this.trailMapView.renderMarkers();
