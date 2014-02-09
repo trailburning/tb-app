@@ -1,0 +1,28 @@
+imports:
+    - { resource: config_dev.yml }
+
+framework:
+    test: ~
+    session:
+        storage_id: session.storage.filesystem
+    profiler:
+        collect: false
+
+web_profiler:
+    toolbar: false
+    intercept_redirects: false
+
+swiftmailer:
+    disable_delivery: true
+    
+doctrine:
+    dbal:
+        dbname:   %database_name%_test
+        
+services:
+    postgis:
+        class:      %postgis_class%
+        arguments:  [%database_host%, %database_port%, %database_name%_test, %database_user%, %database_password%]
+        
+liip_functional_test: ~
+    

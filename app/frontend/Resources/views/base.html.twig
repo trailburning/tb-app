@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta property="og:title" content="{% block og_title %}Trailburning{% endblock %}"/>
+        <meta property="og:url" content="{% block og_url %}http://beta.trailburning.com{% endblock %}"/>
+        <meta property="og:image" content="{% block og_image %}http://beta.trailburning.com{% endblock %}"/>
+        {% block meta %}{% endblock %}
+        <title>{% block title %}Trailburning{% endblock %}</title>
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <link href="http://fonts.googleapis.com/css?family=Signika:400,300,700" rel="stylesheet">
+        <link href="http://api.tiles.mapbox.com/mapbox.js/v1.6.0/mapbox.css" rel="stylesheet">
+        <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
+        <link href="{{ asset('assets/css/bootstrap-responsive.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('assets/css/common_ui.css') }}" rel="stylesheet" type="text/css">
+        {% block stylesheets %}{% endblock %}
+        <script>
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-45211566-1']);
+            _gaq.push(['_trackPageview']);
+            
+            (function() {
+              var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+              ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+              var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+
+            function trackOutboundLink(link, category, action) { 
+              try { _gaq.push(['_trackEvent', category , action]); } catch(err){}   
+              setTimeout(function() {window.open(link.href, '_blank');}, 100);
+            }
+            var TB_RESTAPI_BASEURL = '{{ api_host }}';
+        </script>
+    </head>
+    <body>
+        <div id="appview">      
+            <div id="headerview">
+                <div class="left">
+                    <a href="{{ app.request.baseUrl }}/"><img src="{{ asset('assets/img/header/tb_logo.gif') }}" border="0"></a>
+                </div>    
+                <div class="right">
+                    <div class="signin"><a href="{{ app.request.baseUrl }}/join" class="btn btn-tb-action btn-tb-large">Join</a></div>
+                    <div class="links">
+                        <div class="link"><a href="{{ app.request.baseUrl }}/about">Discover Trailburning</a></div>        
+                    </div>
+                    <div class="discover">
+                        <form id="search_form">
+                            <input type="text" id="search_field" name="discover">
+                            <input type="submit" class="search-btn">        
+                        </form>
+                    </div>
+                </div>
+                <div class="trans-line"></div>        
+            </div>    
+
+            {% block body %}{% endblock %}
+
+            <div id="footerview">
+                <div class="left">
+                  <div class="copyright">Copyright © 2013, Augmented Media Projects Ltd</div>    
+                  <div class="links">
+                    <div class="link"><a href="{{ app.request.baseUrl }}/about">About</a></div>
+                    <div class="link"><a href="{{ app.request.baseUrl }}/presskit">Press Kit</a></div>
+                  </div>
+                </div>
+                <div class="right">
+                    <div class="social email"><a href="mailto:hello@trailburning.com" class="button btnEmail">Email</a></div>
+                    <div class="social facebook"><a href="http://www.facebook.com/trailburning" target="_blank" class="button btnFacebook">Facebook</a></div>
+                    <div class="social twitter"><a href="http://www.twitter.com/trailburning" target="_blank" class="button btnTwitter">Twitter</a></div>
+                    <div class="social googleplus"><a href="https://plus.google.com/+Trailburning/posts" target="_blank" class="button btnGooglePlus">Google+</a></div>          
+                    <div class="social pinterest"><a href="https://www.pinterest.com/trailburning/" target="_blank" class="button btnPinterest">Pinterest</a></div>          
+                </div>
+            </div>     
+        </div>      
+
+        <script src="{{ asset('assets/js/libs/jquery-1.8.3.min.js') }}"></script>
+        <script src="{{ asset('assets/js/libs/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('assets/js/libs/bootstrap-filestyle.min.js') }}"> </script>
+
+        <script src='http://api.tiles.mapbox.com/mapbox.js/v1.6.1/mapbox.js'></script>
+
+        <script src="{{ asset('assets/js/libs/imagesloaded.pkgd.min.js') }}"></script>
+        <script src="{{ asset('assets/js/libs/image-scale.min.js') }}"></script>
+
+        <script src="{{ asset('assets/js/libs/jquery.ui.widget.js') }}"></script>
+        <script src="{{ asset('assets/js/libs/jquery.touchwipe.min.js') }}"></script>
+
+        <script data-main="{{ asset('assets/js/main') }}" src="{{ asset('assets/js/libs/require.js') }}"></script>
+        
+        {% block javascripts %}{% endblock %}
+
+        <script>
+        resrc = {
+          options: {
+            server: "app.resrc.it",
+            resrcOnLoad: true,
+            resrcOnResize: true,
+            resrcOnPinch: false    
+          }
+        };
+        </script>
+        <script src="//use.resrc.it"></script>
+    </body>
+</html>
