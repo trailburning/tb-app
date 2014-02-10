@@ -28,7 +28,6 @@ define([
       $(window).resize(function() {
         self.handleResize();
       });    
-  	  this.handleResize();
 
       // Trail Map    
       this.trailMapView = new TrailMapView({ el: '#trail_map_view', elCntrls: '#view_map_btns', model: this.model });
@@ -44,8 +43,9 @@ define([
       // Step 2
       this.step2View = new Step2View({ el: '#step2_view', model: this.model, mediaCollection: this.mediaCollection });
       $('#step2_view').show();    
-      
-      this.trailMapView.render();
+
+	  // mla test
+	  $('#trail_map_overlay').show();      
       
       this.step2View.render();
       // Step 3
@@ -53,17 +53,26 @@ define([
 //      $('#step3_view').show();    
 //      this.step3View.render();
     
+  	  this.handleResize();
+      this.trailMapView.render();
+    
       $('#footerview').show();            
     },
     handleResize: function(){
       var elContentView = $('#contentview');
       var elHeaderView = $('#headerview');
       var elFooterView = $('#headerview');
-      var nContentY = elContentView.position().top;
+      var nHeight = 0;
 	  
 	  if ($('#trail_map_view.map_large').length) {
-	  	console.log('LARGE');	  	
-	  	$('#contentview').height($(window).height() - elHeaderView.height());
+	  	console.log('LARGE');
+	  	nHeight = $(window).height() - elHeaderView.height();
+	  	
+	  	console.log('t:'+nHeight+' : '+$('#steps').height());
+		if (nHeight < $('#steps').height()) {
+		  nHeight = $('#steps').height();
+		}			  	
+	  	$('#contentview').height(nHeight);
 	  }
 	  else {
 	  	console.log('SMALL');	  	
@@ -164,6 +173,39 @@ define([
       this.trailMapView.selectMarker(trailGallerySlideView.model.id);    
 	},    
     onStep2ViewSubmitClick: function(step2View){      
+      $('#content_overlay').show();
+      
+      return;
+    	
+      var jsonObj = {'name':'trailburning', 'region':'Berlin', 'about':'A really lovely trail.', 'publish':true};
+      var postData = JSON.stringify(jsonObj);
+      var postArray = {json:postData};
+
+      var strURL = RESTAPI_BASEURL + 'v1/route/' + this.model.id;      
+      $.ajax({
+        type: "PUT",
+        dataType: "json",
+        url: strURL,
+        data: postArray,
+        error: function(data) {
+          console.log('error:'+data.responseText);      
+          console.log(data);      
+        },
+        success: function(data) {      
+          console.log('success');
+          console.log(data);
+        }
+      });  
+/*      
+name (string)
+region (string)
+about (string)
+publish (boolean)
+route_type_id (integer)
+route_category_id (integer)      
+*/
+
+/*    	
       var jsonObj = {'id':this.model.get('id'), 'name':this.model.get('name'), 'email':this.model.get('email'), 'event_name':this.model.get('event_name'), 'trail_name':this.model.get('trail_name'), 'trail_notes':this.model.get('trail_notes'), 'media':this.mediasModel.get('value')};
       var postData = JSON.stringify(jsonObj);
       var postArray = {json:postData};
@@ -189,8 +231,8 @@ define([
       $('#trail_map_overlay').show();
       
       $("body").animate({scrollTop:0}, '500', 'swing');
+*/          
     }
-    
   });
 
   return AppView;

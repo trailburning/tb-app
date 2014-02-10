@@ -69,12 +69,17 @@
       </div>
     </div>
   
-    <div id="steps">
+    <div id="steps" class="clearfix">
       <div id="step_welcome_view"></div>
       <div id="step1_view"></div>
       <div id="step2_view"></div>
       <div id="step3_view"></div>
     </div>
+    
+	<div id='content_overlay'></div>
+	
+	<div id='overlay_view'>Hello World</div>
+	    
   </div>      
   
   <div id="footerview">
@@ -183,21 +188,18 @@
     </div>    
   </div>
   <div class="map_step_container">
-    <div class="content">  
-      <div class="step_marker">2</div>  
-      <div class="next_step"><span class="btn btn-tb-action btn-tb-large submit">Finished adding photo points</span></div>
-      
+    <div class="content">        
 	  <div class="photo_gallery">	  
-		<div class="panel">
-		  <div class="upload">
+		<div class="upload">
 		  <div id="uploadPhoto_view"></div>
 		  <div id="uploadPhotoprogress_view"></div>
-		  </div>
-		  <div class="slideshow">
+		</div>
+		<div class="slideshow">
 		  <div id="slideshow_view"></div>
-		  </div>
-		</div>	  	
+		</div>
 	  </div>
+	  
+      <div class="next_step"><span class="btn btn-tb-action btn-tb-large submit">Finished adding photo points</span></div>	  
     </div>
   </div>
 </script>
