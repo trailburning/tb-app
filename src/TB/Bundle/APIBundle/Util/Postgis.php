@@ -2,14 +2,14 @@
 
 namespace TB\Bundle\APIBundle\Util;
 
-use TB\Bundle\ApiBundle\Entity\Route;
+use TB\Bundle\FrontendBundle\Entity\Route;
 use TB\Bundle\FrontendBundle\Entity\RoutePoint;
 use CrEOF\Spatial\PHP\Types\Geometry\Point;
 use TB\Bundle\APIBundle\Util;
 
 class Postgis extends \PDO
 {
-
+    
     public function __construct($host, $port, $database, $user, $password, $driver_options=array()) 
     {
         $dsn = 'pgsql:host='.$host.';port='.$port.';dbname='.$database;
@@ -18,7 +18,7 @@ class Postgis extends \PDO
             parent::__construct($dsn, $user, $password, $driver_options);
         }
         catch (PDOException $e) {
-            throw (new ApiException("Failed to establish connection to Database", 500));
+            throw (new ApiException('Failed to establish connection to Database', 500));
         }
     }
 
@@ -37,7 +37,7 @@ class Postgis extends \PDO
         $success = $pq->execute(array($route_id));
         if (!$success) {
             $this->rollBack();
-            throw (new ApiException("Failed to insert the track into the database - Problem calculating length", 500));
+            throw (new ApiException('Failed to insert the track into the database - Problem calculating length', 500));
         }
 
         $this->commit();
@@ -56,7 +56,7 @@ class Postgis extends \PDO
         $success = $pq->execute(array($route_id));
         if (!$success) {
             $this->rollBack();
-            throw (new ApiException("Failed to insert the track into the database - Problem calculating centroid", 500));
+            throw (new ApiException('Failed to insert the track into the database - Problem calculating centroid', 500));
         }
 
         $this->commit();
@@ -70,7 +70,7 @@ class Postgis extends \PDO
         $success = $pq->execute(array($path));
         if (!$success) {
             $this->rollBack();
-            throw (new ApiException("Failed to insert GPX data into the database", 500));
+            throw (new ApiException('Failed to insert GPX data into the database', 500));
         }
 
         $gpxfileid = intval($this->lastInsertId("gpx_files_id_seq"));
@@ -163,7 +163,7 @@ class Postgis extends \PDO
             $tags = json_decode('{' . str_replace('"=>"', '":"', $row['rtags']) . '}', true);
             $route->setTags($tags);
         } else {
-            throw (new ApiException("Route does not exist", 404));
+            throw (new ApiException(sprintf('Route with id "%s" does not exist', $route_id), 404));
         }
 
         $this->beginTransaction();
@@ -178,7 +178,7 @@ class Postgis extends \PDO
         $success = $pq->execute(array($route_id));
         if (!$success) {
             $this->rollBack();
-            throw (new ApiException("Failed to fetch route from Database", 500));
+            throw (new ApiException('Failed to fetch route from Database', 500));
         }
         $this->commit();
 
@@ -208,7 +208,7 @@ class Postgis extends \PDO
         $pq->bindParam('count', $count, \PDO::PARAM_INT);
         $success = $pq->execute();
         if (!$success) {
-            throw (new ApiException("Failed to fetch route from Database", 500));
+            throw (new ApiException('Failed to fetch route from Database', 500));
         }
 
         $routes = array();
@@ -243,10 +243,10 @@ class Postgis extends \PDO
         $success = $pq->execute(array($route_id));
         if (!$success) {
             $this->rollBack();
-            throw (new ApiException("Failed to delete route $route_id", 500));
+            throw (new ApiException(sprintf('Failed to delete route %s', $route_id), 500));
         }
         if ($pq->rowCount() < 1) {
-            throw (new ApiException("Failed to delete non existing route $route_id", 404));
+            throw (new ApiException(sprintf('Failed to delete non existing route with id "%s"', $route_id), 404));
         }
         $this->commit();
     }
@@ -456,5 +456,6 @@ class Postgis extends \PDO
         }
         return $hstore;
     }
+    
 }
 

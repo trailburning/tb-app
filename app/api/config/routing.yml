@@ -1,0 +1,8 @@
+tbapi:
+    resource: "@TBAPIBundle/Controller/"
+    type:     annotation
+    prefix:   /v1/
+
+
+
+

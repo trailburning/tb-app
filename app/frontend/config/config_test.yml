@@ -1,0 +1,34 @@
+imports:
+    - { resource: config_dev.yml }
+
+framework:
+    test: ~
+    session:
+        storage_id: session.storage.filesystem
+    profiler:
+        collect: false
+
+# Call API in test enviroment
+twig:
+    globals:
+        api_host: %api_host%/app_test.php
+
+web_profiler:
+    toolbar: false
+    intercept_redirects: false
+
+swiftmailer:
+    disable_delivery: true
+
+# Use Test DB in test enviroment
+doctrine:
+    dbal:
+        dbname:   %database_name%_test
+        
+liip_functional_test: ~
+    
+# Call API in test enviroment
+services:
+    rest_client:
+        class:      %rest_client_class%
+        arguments:  [%api_host%/app_test.php]        

@@ -43,6 +43,32 @@ class RouteControllerTest extends AbstractApiTestCase
         $this->assertTrue($this->isValidJson($response));   
     }
     
+    public function testGetRoute404()
+    {
+        $this->loadFixtures([]);
+        // Check if Route exists
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        $route = $em
+            ->getRepository('TBFrontendBundle:Route')
+            ->findOneById(1);
+
+        if ($route !== null) {
+            $this->fail('Route with id "1" exists in test DB');
+        }
+        
+        // Get Route from the API that does not exist
+        $client = $this->createClient();
+        $crawler = $client->request('GET', '/v1/route/1');
+        // Check HTTP Status Code
+        $this->assertEquals(Response::HTTP_NOT_FOUND,  $client->getResponse()->getStatusCode());
+        // Verify JSON Response
+        $response = $client->getResponse()->getContent();
+        $this->assertTrue($this->isValidJson($response)); 
+        // Check user message
+        $jsonObj = json_decode($response);
+        $this->assertEquals('Route with id "1" does not exist', $jsonObj->usermsg);
+    }
+    
     /**
      * Test the DELETE /route/{id} action
      */
@@ -78,8 +104,34 @@ class RouteControllerTest extends AbstractApiTestCase
         }
     }
     
+    public function testDeleteRoute404()
+    {
+        $this->loadFixtures([]);
+        // Check if Route exists
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        $route = $em
+            ->getRepository('TBFrontendBundle:Route')
+            ->findOneById(1);
+
+        if ($route !== null) {
+            $this->fail('Route with id "1" exists in test DB');
+        }
+        
+        // Delete Route from the API that does not exist
+        $client = $this->createClient();
+        $crawler = $client->request('DELETE', '/v1/route/1');
+        // Check HTTP Status Code
+        $this->assertEquals(Response::HTTP_NOT_FOUND,  $client->getResponse()->getStatusCode());
+        // Verify JSON Response
+        $response = $client->getResponse()->getContent();
+        $this->assertTrue($this->isValidJson($response)); 
+        // Check user message
+        $jsonObj = json_decode($response);
+        $this->assertEquals('Failed to delete non existing route with id "1"', $jsonObj->usermsg);
+    }
+    
     /**
-     * Test the DELETE /route/{id} action
+     * Test the GET /route/user/{id} action
      */
     public function testGetRoutesByUser()
     {
@@ -87,7 +139,7 @@ class RouteControllerTest extends AbstractApiTestCase
             'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData',
         ]);
         
-        // Get Route from DB with the slug "mattallbeury"..
+        // Get User from DB with the slug "mattallbeury"..
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         $user = $em
             ->getRepository('TBFrontendBundle:User')
@@ -97,13 +149,71 @@ class RouteControllerTest extends AbstractApiTestCase
             $this->fail('Missing User with name "mattallbeury" in test DB');
         }
         
-        
-        // Delete that Route per API
         $client = $this->createClient();
         $crawler = $client->request('GET', '/v1/routes/user/' . $user->getId());
         $this->assertEquals(Response::HTTP_OK,  $client->getResponse()->getStatusCode());  
         $response = $client->getResponse()->getContent();
         $this->assertTrue($this->isValidJson($response));
+    }
+    
+    /**
+     * 
+     */
+    public function testGetRoutesByUser404()
+    {
+        $this->loadFixtures([]);
+        
+        // Check if User exists
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        $user = $em
+            ->getRepository('TBFrontendBundle:User')
+            ->findOneById(1);
+        
+        if ($user !== null) {
+            $this->fail('User with id "1" exists in test DB');
+        }
+        
+        $client = $this->createClient();
+        $crawler = $client->request('GET', '/v1/routes/user/1');
+
+        // Check HTTP Status Code
+        $this->assertEquals(Response::HTTP_NOT_FOUND,  $client->getResponse()->getStatusCode());
+        // Verify JSON Response
+        $response = $client->getResponse()->getContent();
+        $this->assertTrue($this->isValidJson($response)); 
+        // Check user message
+        $jsonObj = json_decode($response);
+        $this->assertEquals('User with id "1" does not exist', $jsonObj->usermsg);
+    }
+    
+    /**
+     * Test the PUT /route/{id} action
+     */
+    public function testPutRoute()
+    {   
+        $this->loadFixtures([
+            'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData',
+        ]);
+        
+        // Get Route from DB with the slug "grunewald"..
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        $route = $em
+            ->getRepository('TBFrontendBundle:Route')
+            ->findOneBySlug('grunewald');
+        if (!$route) {
+            $this->fail('Missing Route with slug "grunewald" in test DB');
+        }
+        
+        // update some fields
+        $obj = new \stdClass();
+        $obj->name = 'updated name';
+        $obj->region = 'updated region';
+        $json = json_encode($obj);
+        
+        // Get same Route from API
+        $client = $this->createClient();
+        $crawler = $client->request('PUT', '/v1/route/1', array('json' => $json));
+        
     }
 
 }
