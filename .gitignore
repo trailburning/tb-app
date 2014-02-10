@@ -12,8 +12,15 @@ api/doc/cache
 /web/bundles/
 /app/bootstrap*
 /app/cache/*
+/app/api/cache/*
 /app/logs/*
+/app/frontend/cache/*
+/app/api/logs/*
+/app/frontend/logs/*
 /vendor/
 /app/config/parameters.yml
+/app/frontend/config/parameters.yml
+/app/api/config/parameters.yml
 *tm_properties 
 /tools/*.sql
+.tm_properties

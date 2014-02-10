@@ -97,6 +97,13 @@ class Route
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
+    
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="publish", type="boolean", options={"default" = false})
+     */
+    private $publish = false;
 
     /**
      * @var \TB\Bundle\FrontendBundle\Entity\GpxFile
@@ -705,6 +712,215 @@ class Route
     public function getGpxFileId()
     {
         return $this->gpxFileId;
+    }
+    
+
+    /**
+     * Set publish
+     *
+     * @param boolean $publish
+     * @return Route
+     */
+    public function setPublish($publish)
+    {
+        $this->publish = $publish;
+
+        return $this;
+    }
+
+    /**
+     * Get publish
+     *
+     * @return boolean 
+     */
+    public function getPublish()
+    {
+        return $this->publish;
+    }
+    
+    
+    
+    /**
+     * Only used by API
+     * Updates an existing Route Entity from a JSON object
+     *
+     * @param $json JSON object
+     * @throws Exception for invalid JSON object
+     */
+    public function updateFromJSON($json)
+    {
+        $routeObj = json_decode($json);
+        if ($routeObj === null) {
+            throw new \Exception('Invalid JSON data');
+        }
+        
+        $fields = [
+            'name' => 'name',
+            'region' => 'region',
+            'about' => 'about',
+            'publish' => 'publish',
+            'route_type_id' => 'routeTypeId',
+            'route_category_id' => 'routeCategoryId',
+        ];
+          
+        foreach ($fields as $apiName => $entityName) {
+            if (property_exists($routeObj, $apiName)) {
+                $method = 'set' . ucfirst($entityName);
+                $this->$method($routeObj->$apiName);
+            }
+        }  
+    }
+    
+    /**
+     * Only used by API
+     */
+    public function calculateAscentDescent() 
+    {
+        $lastRpAltitude = 0;
+        $asc = 0;
+        $desc = 0;
+        
+        $tags = $this->getTags();
+
+        foreach ($this->getRoutePoints() as $routePoint) {
+            $rpTags = $routePoint->getTags();
+            if (!isset($rpTags['altitude'])) {
+                continue;
+            }
+            $rpAltitude = $rpTags['altitude'];
+            
+            if ($lastRpAltitude != 0) {
+                if ($rpAltitude > $lastRpAltitude) {
+                    $asc += $rpAltitude - $lastRpAltitude;
+                } else {
+                    $desc += $lastRpAltitude - $rpAltitude;
+                }
+            }
+
+            $lastRpAltitude = $rpAltitude;
+        }
+
+        $tags['ascent'] = $asc;
+        $tags['descent'] = $desc;
+
+        $this->setTags($tags);
+
+        return 0;
+    }
+    
+    /**
+     * Only used by API
+     */
+    public function getNearestPointBytime($unixtimestamp) {
+        $routePoints = $this->getRoutePoints();
+        if ($routePoints->count() < 2)
+            throw new \Exception("Route is less than 2 points.");
+        if ($unixtimestamp < $routePoints[0]->getTags()['datetime']) {
+            return $routePoints[0];
+        } else if ($unixtimestamp > $routePoints->last()->getTags()['datetime']) {
+            return $routePoints->last();
+        } else {
+            foreach ($routePoints as $rp) {
+                if ($rp->getTags()['datetime'] > $unixtimestamp ) {
+                    return $rp; 
+                }
+            }
+        }
+    }
+    
+    /**
+     * Only used by API
+     */
+    public function toJSON() 
+    {
+        $route = '{';
+        $route .= '"name": "'.$this->getName().'",';
+        $route .= '"slug": "'.$this->getSlug().'",';     
+        $route .= '"region": "'.$this->getRegion().'",';     
+        $route .= '"length": "'.$this->getLength().'",';
+        $route .= '"centroid": ['.$this->getCentroid()->getLongitude().', '.$this->getCentroid()->getLatitude().'],';
+        if ($this->getBBox() !== null) {
+            $route .= '"bbox": "'.$this->getBBox().'",';
+        }
+
+        $route .= '"tags": {';
+        $i=0;
+        foreach ($this->getTags() as $tag_name => $tag_value) {
+            if ($i++ != 0) {
+                $route.=',';
+            }
+            $route .= '"'.$tag_name.'": "'.$tag_value.'"';
+        }
+        $route .= '}';
+        
+        if (count($this->getRoutePoints()) > 0) {
+            $route .= ',"route_points" : [';
+            $i=0;
+            foreach ($this->getRoutePoints() as $rp) {
+                if ($i++ != 0) {
+                    $route.=',';
+                }
+                $route .= '{"coords" : ['.$rp->getCoords()->getLongitude().','.$rp->getCoords()->getLatitude().'], "tags" : {';
+                $j=0;
+                foreach ($rp->getTags() as $rp_tag => $rp_tag_value) {
+                    if ($j++ != 0) {
+                        $route.=',';
+                    }
+                    $route .= '"'.$rp_tag.'" : "'.$rp_tag_value.'"';
+                }
+                $route .= '}}';
+            }
+            $route .= ']';
+        }
+        
+        if ($this->media !== null) {
+            $route .= ',"media": ' . json_encode($this->media);
+        }
+
+        $route .= '}';
+        
+        return $route;
+    }
+    /**
+     * Only used by API
+     */
+    private $bbox;
+    
+    /**
+     * Only used by API
+     */
+    private $media;
+    
+    /**
+     * Only used by API
+     */
+    public function setBBox($bbox) 
+    { 
+        $this->bbox = $bbox; 
+    }
+    
+    /**
+     * Only used by API
+     */
+    public function getBBox() 
+    { 
+        return $this->bbox; 
+    }
+    
+    /**
+     * Only used by API
+     */
+    public function setMedia($media) 
+    { 
+        $this->media = $media; 
+    }
+    
+    /**
+     * Only used by API
+     */
+    public function getMedia() 
+    { 
+        return $this->media; 
     }
     
 }

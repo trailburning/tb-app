@@ -1,0 +1,8 @@
+tb_frontend:
+    resource: "@TBFrontendBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+
+
+
