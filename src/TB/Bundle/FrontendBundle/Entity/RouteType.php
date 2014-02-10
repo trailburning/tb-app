@@ -107,4 +107,13 @@ class RouteType
     {
         return $this->routes;
     }
+    
+    public function toJSON()
+    {
+        $obj = new \StdClass();
+        $obj->id = $this->getId();
+        $obj->name = $this->getName();
+        
+        return json_encode($obj);
+    }
 }
