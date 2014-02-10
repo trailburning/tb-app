@@ -12,6 +12,13 @@ define([
 
       $(this.el).html(this.template());
 
+	  // mla test
+      $('#btntest').click(function(evt){
+      	evt.stopPropagation();
+        // fire event
+        app.dispatcher.trigger("TrailUploadGPXView:uploaded", self);                
+      });
+
       $('#gpxfileupload').change(function(){
         $('#uploadGPX_view').hide();
         $('#uploadGPXprogress_view').show();

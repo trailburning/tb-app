@@ -140,6 +140,8 @@ define([
       }
 
       if (this.model.get('id')) {
+        this.map.invalidateSize();
+      	
         var self = this;
         var data = this.model.get('value');      
         $.each(data.route.route_points, function(key, point) {
@@ -162,6 +164,7 @@ define([
         L.marker(this.arrLineCordinates[0], {icon: this.locationIcon}).addTo(this.map);            
                   
         this.map.fitBounds(self.polyline.getBounds(), {padding: [30, 30]});
+        console.log('RENDER');
       }
       
       this.bRendered = true;

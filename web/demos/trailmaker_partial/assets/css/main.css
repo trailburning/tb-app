@@ -12,17 +12,26 @@ border-width:1px;
 /******************************************/
 #contentview {
   position: relative;
-  top: 0px;  
-  height: 720px;
+  margin-top: 63px;    
 }
 
 /* TRAIL MAP */
 /******************************************/
 #trail_map_view {
+  width: 100%; 
+}
+
+#trail_map_view.map_large {
+/*	
+*/  
   position: absolute;
   top: 0px;
-  width: 100%; 
   height: 100%;
+}
+
+#trail_map_view.map_small {
+  position: relative;
+  height: 500px;
 }
 
 #view_map_btns {
@@ -62,7 +71,6 @@ border-width:1px;
 #steps {
   z-index: 100;
   position: relative;
-  margin-top: 63px;
 }
 
 /* STEP WELCOME */
@@ -191,9 +199,11 @@ border-width:1px;
 }
 
 #step2_view .panel_container {
+/*	
   position: absolute;
   top: 0px;
   width: 100%;
+*/  
 }
 
 #step2_view .panel_content {
@@ -284,8 +294,10 @@ border-width:1px;
 
 #step2_view .map_step_container {
   display: none;
+/*  
   position: absolute;
   top: 560px;
+*/  
   width: 100%;
 }
 
@@ -305,10 +317,6 @@ border-width:1px;
 /* PHOTO GALLERY */
 /******************************************/
 #step2_view .map_step_container .photo_gallery {
-  position: absolute;
-  bottom: 0px;
-  left: 20px;  
-  width: 540px;
 }
 
 #step2_view .map_step_container .photo_gallery .panel {

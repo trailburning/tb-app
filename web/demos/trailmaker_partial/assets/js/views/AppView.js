@@ -19,16 +19,16 @@ define([
       app.dispatcher.on("Step2View:submitclick", this.onStep2ViewSubmitClick, this);
       app.dispatcher.on("Step3View:submitclick", this.onStep3ViewSubmitClick, this);
 
-      // mla test
-/*      
-      this.model.set('name', 'Trailburning');
-      this.model.set('email', 'events@trailburning.com');
-      this.model.set('event_name', 'Event');
-      this.model.set('trail_name', 'Trail');
-      this.setTitles();
-*/
       this.mediasModel = new TrailMediasModel();
       this.mediaCollection = new Backbone.Collection();
+
+      $('#trail_map_view').addClass('map_large');
+
+      var self = this;
+      $(window).resize(function() {
+        self.handleResize();
+      });    
+  	  this.handleResize();
 
       // Trail Map    
       this.trailMapView = new TrailMapView({ el: '#trail_map_view', elCntrls: '#view_map_btns', model: this.model });
@@ -44,13 +44,36 @@ define([
       // Step 2
       this.step2View = new Step2View({ el: '#step2_view', model: this.model, mediaCollection: this.mediaCollection });
       $('#step2_view').show();    
+      
+      this.trailMapView.render();
+      
       this.step2View.render();
       // Step 3
       this.step3View = new Step3View({ el: '#step3_view', model: this.model });
 //      $('#step3_view').show();    
 //      this.step3View.render();
-  
+    
       $('#footerview').show();            
+    },
+    handleResize: function(){
+      var elContentView = $('#contentview');
+      var elHeaderView = $('#headerview');
+      var elFooterView = $('#headerview');
+      var nContentY = elContentView.position().top;
+	  
+	  if ($('#trail_map_view.map_large').length) {
+	  	console.log('LARGE');	  	
+	  	$('#contentview').height($(window).height() - elHeaderView.height());
+	  }
+	  else {
+	  	console.log('SMALL');	  	
+	    $('#contentview').height('100%');
+	  }
+//	  $('#trail_map_view.map_large').height($(window).height() - elHeaderView.height() - elFooterView.height());
+//	  $('#trail_map_view.map_large').height($(window).height() - elHeaderView.height());
+//	  $('#contentview').height($('#trail_map_view').height());
+	  
+	  console.log('t:'+elHeaderView.height()+' : '+$(window).height()+' : '+$('#trail_map_view').height());
     },
     setTitles: function(){
       // set title
@@ -110,6 +133,21 @@ define([
       $("body").animate({scrollTop:0}, '500', 'swing');
     },   
     onStep2ViewGPXUploaded: function(step2View){
+	  $('#trail_map_view').removeClass('map_large');
+	  $('#trail_map_view').addClass('map_small');
+  
+      this.handleResize();
+    	
+      // mla test
+      this.model.set('id', 148);
+    	
+//      this.model.set('id', 148);
+//      $('#step2_view .panel_container').hide();      
+//      $('.map_step_container', $(this.el)).show();  
+      // fire event
+//      app.dispatcher.trigger("Step2View:gpxuploaded", self);                        
+    	
+    	
       this.getTrail();      
       
       $('#trail_map_overlay', $(this.el)).hide();
