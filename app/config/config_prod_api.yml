@@ -1,9 +1,0 @@
-imports:
-    - { resource: config_prod.yml }
-    
-# app/config/config.yml
-services:
-    kernel.listener.your_listener_name:
-        class: TB\Bundle\APIBundle\EventListener\APIExceptionListener
-        tags:
-            - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }

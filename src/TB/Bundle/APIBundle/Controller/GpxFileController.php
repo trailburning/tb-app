@@ -10,7 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-use TB\Bundle\ApiBundle\Entity\GpxFile;
+use TB\Bundle\APIBundle\Entity\GpxFile;
 use TB\Bundle\APIBundle\Util\GpxFileImporter;
 use TB\Bundle\APIBundle\Util\ApiException;
 

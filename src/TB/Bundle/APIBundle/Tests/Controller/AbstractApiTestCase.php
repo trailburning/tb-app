@@ -29,4 +29,11 @@ abstract class AbstractApiTestCase extends WebTestCase
         }
     }
     
+    protected static function getKernelClass()
+    {
+        require_once self::getPhpUnitXmlDir() . '/api/AppKernel.php';
+
+        return 'AppKernel';
+    }
+    
 }

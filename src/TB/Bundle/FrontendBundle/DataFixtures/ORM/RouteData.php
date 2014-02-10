@@ -40,6 +40,7 @@ class RouteData extends AbstractFixture implements FixtureInterface, DependentFi
         $route->setRegion('Berlin');
         $route->setSlug('grunewald');
         $route->setAbout('The Grunewald is a forest located in the western side of Berlin on the east side of the river Havel.');
+        $route->setPublish(true);
 
         $manager->persist($route);
         $this->addReference('Route-grunewald', $route);
@@ -127,6 +128,7 @@ The terrain is stable underfoot throughout, changing from gravel paths, to side 
 The elevation along the course is flat/medium, with one single significant but short climb and decent towards the finish.
 
 The scenery along the footpath; including locks, bridges, forestry and the river running along side providing constant encouragement along the distance.');
+        $route->setPublish(true);
 
         $manager->persist($route);
         

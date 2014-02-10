@@ -97,6 +97,13 @@ class Route
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
+    
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="publish", type="boolean", options={"default" = false})
+     */
+    private $publish;
 
     /**
      * @var \TB\Bundle\FrontendBundle\Entity\GpxFile
@@ -479,40 +486,6 @@ class Route
         return $this->short_name;
     }
     
-    
-
-    /**
-     * Add routeMedias
-     *
-     * @param \TB\Bundle\FrontendBundle\Entity\RouteMedia $routeMedias
-     * @return Route
-     */
-    public function addRouteMedia(\TB\Bundle\FrontendBundle\Entity\RouteMedia $routeMedias)
-    {
-        $this->routeMedias[] = $routeMedias;
-
-        return $this;
-    }
-
-    /**
-     * Remove routeMedias
-     *
-     * @param \TB\Bundle\FrontendBundle\Entity\RouteMedia $routeMedias
-     */
-    public function removeRouteMedia(\TB\Bundle\FrontendBundle\Entity\RouteMedia $routeMedias)
-    {
-        $this->routeMedias->removeElement($routeMedias);
-    }
-
-    /**
-     * Get routeMedias
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getRouteMedias()
-    {
-        return $this->routeMedias;
-    }
 
 
     /**
@@ -717,4 +690,51 @@ class Route
         return $this->medias;
     }
 
+
+    /**
+     * Set gpxFileId
+     *
+     * @param integer $gpxFileId
+     * @return Route
+     */
+    public function setGpxFileId($gpxFileId)
+    {
+        $this->gpxFileId = $gpxFileId;
+
+        return $this;
+    }
+
+    /**
+     * Get gpxFileId
+     *
+     * @return integer 
+     */
+    public function getGpxFileId()
+    {
+        return $this->gpxFileId;
+    }
+    
+
+    /**
+     * Set publish
+     *
+     * @param boolean $publish
+     * @return Route
+     */
+    public function setPublish($publish)
+    {
+        $this->publish = $publish;
+
+        return $this;
+    }
+
+    /**
+     * Get publish
+     *
+     * @return boolean 
+     */
+    public function getPublish()
+    {
+        return $this->publish;
+    }
 }

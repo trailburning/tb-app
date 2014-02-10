@@ -2,6 +2,8 @@
 
 namespace TB\Bundle\FrontendBundle\Twig;
 
+use Symfony\Bundle\TwigBundle\Loader\FilesystemLoader;
+
 /**
 * 
 */
