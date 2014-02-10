@@ -2,19 +2,17 @@
 
 namespace TB\Bundle\APIBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 use TB\Bundle\APIBundle\Entity\GpxFile;
 use TB\Bundle\APIBundle\Util\GpxFileImporter;
 use TB\Bundle\APIBundle\Util\ApiException;
 
-class GpxFileController extends Controller
+class GpxFileController extends AbstractRestController
 {
 
     /**
@@ -78,10 +76,8 @@ class GpxFileController extends Controller
         ));
 
         $output = array('usermsg' => 'GPX successfully imports', "value" => json_decode('{"route_ids": '.json_encode($importedRoutesIds).'}'));
-        $response = new Response(json_encode($output));
-        $response->headers->set('Content-Type', 'application/json');
 
-        return $response;
+        return $this->getRestResponse($output);
     }
     
 }

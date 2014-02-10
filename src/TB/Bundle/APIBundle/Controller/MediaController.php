@@ -2,17 +2,15 @@
 
 namespace TB\Bundle\APIBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
-use Symfony\Component\HttpFoundation\Response;
 use TB\Bundle\APIBundle\Util\ApiException;
 use TB\Bundle\APIBundle\Util\JpegMedia;
 use TB\Bundle\FrontendBundle\Entity\Media;
 use CrEOF\Spatial\PHP\Types\Geometry\Point;
 
-class MediaController extends Controller
+class MediaController extends AbstractRestController
 {
     /**
      * @Route("/route/{routeId}/medias")
@@ -31,14 +29,11 @@ class MediaController extends Controller
         }
         
         $postgis = $this->get('postgis');
-
         $medias = $postgis->getRouteMedia($routeId);
         
         $output = array('usermsg' => 'success', "value" => $medias);
-        $response = new Response(json_encode($output));
-        $response->headers->set('Content-Type', 'application/json');
 
-        return $response;
+       return $this->getRestResponse($output);
     }
     
     /**
@@ -123,10 +118,8 @@ class MediaController extends Controller
         }
 
         $output = array('usermsg' => 'success', "value" => $medias);
-        $response = new Response(json_encode($output));
-        $response->headers->set('Content-Type', 'application/json');
 
-        return $response;
+       return $this->getRestResponse($output);
     }
     
     /**
@@ -149,10 +142,8 @@ class MediaController extends Controller
         $postgis->deleteMedia($id);
         
         $output = array('usermsg' => 'success', "value" => $id);
-        $response = new Response(json_encode($output));
-        $response->headers->set('Content-Type', 'application/json');
 
-        return $response;
+       return $this->getRestResponse($output);
     }
     
     /**
@@ -187,9 +178,7 @@ class MediaController extends Controller
         $em->flush();
         
         $output = array('usermsg' => 'success', "value" => $id);
-        $response = new Response(json_encode($output));
-        $response->headers->set('Content-Type', 'application/json');
 
-        return $response;
+       return $this->getRestResponse($output);
     }
 }
