@@ -10,9 +10,9 @@ define([
 
   var STATE_UPLOAD = 0;
 
-  var Step2View = Backbone.View.extend({
+  var StepRouteView = Backbone.View.extend({
     initialize: function(){
-      this.template = _.template($('#step2ViewTemplate').text());        
+      this.template = _.template($('#stepRouteViewTemplate').text());        
       
       app.dispatcher.on("TrailUploadGPXView:uploaded", this.onTrailUploadGPXViewUploaded, this);
       app.dispatcher.on("TrailUploadGPXView:uploadProgress", this.onTrailUploadGPXViewUploadProgress, this);
@@ -50,15 +50,15 @@ define([
       
       $('.submit', $(this.el)).click(function(evt) {
         // fire event
-        app.dispatcher.trigger("Step2View:submitclick", self);                        
+        app.dispatcher.trigger("StepRouteView:submitclick", self);                        
       });
 
       // mla test
 //      this.model.set('id', 148);
-//      $('#step2_view .panel_container').hide();      
+//      $('#step_route_view .panel_container').hide();      
 //      $('.map_step_container', $(this.el)).show();  
       // fire event
-//      app.dispatcher.trigger("Step2View:gpxuploaded", self);                        
+//      app.dispatcher.trigger("StepRouteView:gpxuploaded", self);                        
         
       return this;
     },
@@ -68,74 +68,14 @@ define([
     onTrailUploadGPXViewUploaded: function(trailUploadGPXView){
       console.log('onTrailUploadGPXViewUploaded : '+this.model.id);
 
-      $('.panel_container', $(this.el)).hide();  
-      $('.map_step_container', $(this.el)).show();  
-
       // fire event
-      app.dispatcher.trigger("Step2View:gpxuploaded", self);                        
+      app.dispatcher.trigger("StepRouteView:gpxuploaded", self);                        
     },
     onTrailUploadGPXViewUploadProgress: function(nProgress){
       this.trailUploadGPXProgressView.render(nProgress);
-    },
-    onTrailUploadPhotoViewUploaded: function(trailUploadPhotoView){
-      console.log('onTrailUploadPhotoViewUploaded');
-      
-      // fire event
-      app.dispatcher.trigger("Step2View:photouploaded", trailUploadPhotoView);                              
-    },
-    onTrailUploadPhotoViewUploadProgress: function(nProgress){
-      this.trailUploadPhotoProgressView.render(nProgress);
-    },
-    onTrailMapViewRemoveMedia: function(mediaID){
-      // remove from collection
-	  this.options.mediaCollection.remove(mediaID);
-      this.trailSlideshowView.remove(mediaID);
-      
-      var strURL = RESTAPI_BASEURL + 'v1/media/' + mediaID;      
-      $.ajax({
-        url: strURL,
-        type: 'DELETE',            
-        complete : function(res) {
-          console.log('complete');              
-        },
-        success: function(data) {
-          console.log('msg:'+data.message);
-        },
-      });
-    },
-    onTrailMapViewMoveMedia: function(mediaID){      	
-      // update gallery
-      this.trailSlideshowView.sort();
-      
-      var model = this.options.mediaCollection.get(mediaID);
-      var postData = JSON.stringify(model.toJSON());
-      var postArray = {json:postData};
-
-	  console.log('onTrailMapViewMoveMedia:');
-      console.log(postData);
-      
-      var strURL = RESTAPI_BASEURL + 'v1/media/' + mediaID;      
-      $.ajax({
-        type: "PUT",
-        dataType: "json",
-        url: strURL,
-        data: postArray,
-        error: function(data) {
-          console.log('error:'+data.responseText);      
-          console.log(data);      
-        },
-        success: function(data) {      
-          console.log('success');
-          console.log(data);
-        }
-      });        
-    },
-    onTrailSlideshowSlideViewClick: function(trailGallerySlideView){      	
-      // fire event
-      app.dispatcher.trigger("Step2View:galleryPhotoClick", trailGallerySlideView);                              
-	}              
+    }
     
   });
 
-  return Step2View;
+  return StepRouteView;
 });

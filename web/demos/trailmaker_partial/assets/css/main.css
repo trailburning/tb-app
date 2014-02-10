@@ -45,7 +45,7 @@ border-width:1px;
   top: 0px;  
   width: 100%; 
   height: 100%;  
-  opacity: 0.4;
+  opacity: 0.7;
   background: #000000;  
 }
 
@@ -68,12 +68,11 @@ border-width:1px;
 /******************************************/
 #overlay_view {
   display: none;
-}
-
-#overlay_view .panel_container {
+  z-index: 102;
   position: absolute;
   top: 0px;
-  width: 100%;
+  width: 100%; 
+  height: 100%;  
 }
 
 #overlay_view .panel_content {
@@ -93,7 +92,7 @@ border-width:1px;
   margin: 54px 0px 0px 0px;
 }
 
-#overlay_view .panel_container .step_marker_container {
+#overlay_view .step_marker_container {
   position: absolute;
   top: 176px;
   width: 100%;
@@ -104,6 +103,26 @@ border-width:1px;
   margin: 24px auto 0px auto;
   width: 380px;
   text-align: center;
+}
+
+#overlay_view h4 {
+  margin-top: 24px;
+}
+
+#overlay_view .progress_container {
+  margin: 20px auto 0px auto;
+  width: 328px;
+  height: 16px;  
+}
+
+#overlay_view .ui-progressbar {
+  height: 16px;
+  background: #F0F0F0;
+  border-radius: 8px;
+}
+
+#overlay_view .ui-progressbar-value {
+  background: #f83d3d;
 }
 
 /* STEPS */
@@ -157,15 +176,15 @@ border-width:1px;
   margin-top: 42px;
 }
 
-/* STEP 1 */
+/* STEP DETAIL */
 /******************************************/
-#step1_view {
+#step_detail_view {
   display: none;
   width: 100%; 
   height: 100%;
 }
 
-#step1_view .panel_content {
+#step_detail_view .panel_content {
   position: relative;
   padding-top: 70px;
   margin: 0px auto 92px auto;
@@ -173,42 +192,42 @@ border-width:1px;
   text-align: center;
 }
 
-#step1_view .panel {
+#step_detail_view .panel {
   float: none;
 }
 
-#step1_view .panel .content {
+#step_detail_view .panel .content {
   margin: 54px 0px 24px 0px;
 }
 
-#step1_view .step_marker_container {
+#step_detail_view .step_marker_container {
   position: absolute;
   top: 30px;
   width: 100%;
   text-align: center;
 }
 
-#step1_view .desc {
+#step_detail_view .desc {
   margin: 24px auto 0px auto;
   width: 380px;
   text-align: center;
 }
 
-#step1_view form {
+#step_detail_view form {
   display: block;  
   padding-top: 18px;
 }
 
-#step1_view .form-group {
+#step_detail_view .form-group {
   width: 324px;
   margin: 14px auto 0px auto;  
   text-align: left;
 }
 
-#step1_view .form-group label {
+#step_detail_view .form-group label {
 }
 
-#step1_view input {
+#step_detail_view input {
   display: block;  
   width: 324px;
   height: 32px;
@@ -218,7 +237,7 @@ border-width:1px;
   font-size: 22px;
 }
 
-#step1_view textarea {
+#step_detail_view textarea {
   display: block;  
   resize: none;
   width: 324px;
@@ -228,25 +247,17 @@ border-width:1px;
   font-size: 22px;
 }
 
-#step1_view .next_step {
+#step_detail_view .next_step {
   margin-top: 24px;
 }
 
-/* STEP 2 */
+/* STEP ROUTE */
 /******************************************/
-#step2_view {
+#step_route_view {
   display: none;
 }
 
-#step2_view .panel_container {
-/*	
-  position: absolute;
-  top: 0px;
-  width: 100%;
-*/  
-}
-
-#step2_view .panel_content {
+#step_route_view .panel_content {
   position: relative;
   padding-top: 216px;
   margin: 0px auto 92px auto;
@@ -254,105 +265,76 @@ border-width:1px;
   text-align: center;
 }
 
-#step2_view .panel {
+#step_route_view .panel {
   float: none;
 }
 
-#step2_view .panel .content {
+#step_route_view .panel .content {
   height: 288px;
   margin: 54px 0px 0px 0px;
 }
 
-#step2_view .panel_container .step_marker_container {
+#step_route_view .step_marker_container {
   position: absolute;
   top: 176px;
   width: 100%;
   text-align: center;
 }
 
-#step2_view .desc {
+#step_route_view .desc {
   margin: 24px auto 0px auto;
   width: 380px;
   text-align: center;
 }
 
-#step2_view #uploadGPX_view .btn {
+#step_route_view #uploadGPX_view .btn {
   margin-top: 24px;  
 }
 
-#step2_view #uploadGPXprogress_view {
+#step_route_view #uploadGPXprogress_view {
   display: none;
 }
 
-#step2_view #uploadGPXprogress_view h4 {
+#step_route_view #uploadGPXprogress_view h4 {
   margin-top: 24px;
 }
 
-#step2_view #uploadGPXprogress_view .progress_container {
+#step_route_view #uploadGPXprogress_view .progress_container {
   margin: 20px auto 0px auto;
   width: 328px;
   height: 16px;  
 }
 
-#step2_view #uploadGPXprogress_view .ui-progressbar {
+#step_route_view #uploadGPXprogress_view .ui-progressbar {
   height: 16px;
   background: #F0F0F0;
   border-radius: 8px;
 }
 
-#step2_view #uploadGPXprogress_view .ui-progressbar-value {
+#step_route_view #uploadGPXprogress_view .ui-progressbar-value {
   background: #f83d3d;
 }
 
-#step2_view #uploadPhotoprogress_view {
-  display: none;
-}
-
-#step2_view #uploadPhotoprogress_view h4 {
-  margin-top: 24px;
-}
-
-#step2_view #uploadPhotoprogress_view .progress_container {
-  margin: 20px auto 0px auto;
-  width: 328px;
-  height: 16px;  
-}
-
-#step2_view #uploadPhotoprogress_view .ui-progressbar {
-  height: 16px;
-  background: #F0F0F0;
-  border-radius: 8px;
-}
-
-#step2_view #uploadPhotoprogress_view .ui-progressbar-value {
-  background: #f83d3d;
-}
-
-#step2_view .next_step {
-  margin-top: 24px;
-}
-
-#step2_view .map_step_container {
-  display: none;
-  width: 100%;
-}
-
-/* PHOTO GALLERY */
+/* STEP ROUTE EDIT */
 /******************************************/
-#step2_view .map_step_container .photo_gallery {
+#step_route_edit_view {
+  display: none;
+  min-height: 400px;  
+  background: #FFF;
 }
 
-#step2_view .map_step_container .photo_gallery .upload {
+#step_route_edit_view .photo_gallery {
+}
+
+#step_route_edit_view .photo_gallery .upload {
   float: left;
   width: 200px;
 }
 
-#step2_view .map_step_container .photo_gallery .slideshow {
-  float: left;
-  width: 340px;
+#step_route_edit_view .photo_gallery .slideshow {
 }
 
-#step2_view .map_step_container .photo_gallery .slideshow .slide {
+#step_route_edit_view .photo_gallery .slideshow .slide {
   float: left;
   margin: 4px;
   width: 160px;
@@ -360,23 +342,17 @@ border-width:1px;
   overflow: hidden;
 }
 
-#step2_view .map_step_container .photo_gallery .slideshow .slide img {
+#step_route_edit_view .photo_gallery .slideshow .slide img {
   width: 100%;
 }
- 
-/* STEP 3 */
+
+/* STEP PUBLISHED */
 /******************************************/
-#step3_view {
+#step_published_view {
   display: none;
 }
 
-#step3_view .panel_container {
-  position: absolute;
-  top: 0px;
-  width: 100%;
-}
-
-#step3_view .panel_content {
+#step_published_view .panel_content {
   position: relative;
   padding-top: 216px;
   margin: 0px auto 92px auto;
@@ -384,29 +360,29 @@ border-width:1px;
   text-align: center;
 }
 
-#step3_view .panel {
+#step_published_view .panel {
   float: none;
 }
 
-#step3_view .panel .content {
+#step_published_view .panel .content {
   height: 364px;
   margin: 54px 0px 0px 0px;
 }
 
-#step3_view .panel_container .step_marker_container {
+#step_published_view .step_marker_container {
   position: absolute;
   top: 176px;
   width: 100%;
   text-align: center;
 }
 
-#step3_view .desc {
+#step_published_view .desc {
   margin: 24px auto 0px auto;
   width: 486px;
   text-align: center;
 }
 
-#step3_view .next_step {
+#step_published_view .next_step {
   margin-top: 24px;
 }
 
@@ -419,10 +395,9 @@ border-width:1px;
   top: 0px;  
   width: 100%; 
   height: 100%;  
-  opacity: 0.4;
+  opacity: 0.7;
   background: #000000;  
 }
-
 
 /* GENERAL */
 /******************************************/

@@ -3,9 +3,9 @@ define([
   'backbone'
 ], function(_, Backbone){
 
-  var Step1View = Backbone.View.extend({
+  var StepDetailView = Backbone.View.extend({
     initialize: function(){
-      this.template = _.template($('#step1ViewTemplate').text());        
+      this.template = _.template($('#stepDetailViewTemplate').text());        
       
       this.bRendered = false;
     },
@@ -31,7 +31,7 @@ define([
           self.model.set('trail_name', $('#form_trail').val());
           self.model.set('trail_notes', $('#form_notes').val());
           // fire event
-          app.dispatcher.trigger("Step1View:submitclick", self);                        
+          app.dispatcher.trigger("StepDetailView:submitclick", self);                        
         }
       });
         
@@ -39,5 +39,5 @@ define([
     }
   });
 
-  return Step1View;
+  return StepDetailView;
 });

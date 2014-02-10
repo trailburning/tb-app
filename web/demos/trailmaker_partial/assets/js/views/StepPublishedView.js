@@ -1,12 +1,11 @@
 define([
   'underscore', 
-  'backbone',
-  'views/TrailMapView'  
-], function(_, Backbone, TrailMapView){
+  'backbone'
+], function(_, Backbone){
 
-  var Step3View = Backbone.View.extend({
+  var StepPublishedView = Backbone.View.extend({
     initialize: function(){
-      this.template = _.template($('#step3ViewTemplate').text());        
+      this.template = _.template($('#stepPublishedViewTemplate').text());        
       
       this.bRendered = false;
     },
@@ -23,5 +22,5 @@ define([
     }
   });
 
-  return Step3View;
+  return StepPublishedView;
 });
