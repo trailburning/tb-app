@@ -10,7 +10,7 @@ class RouteTest extends WebTestCase
     
     protected static function getKernelClass()
     {
-        require_once self::getPhpUnitXmlDir() . '/api/AppKernel.php';
+        require_once self::getPhpUnitXmlDir() . '/frontend/AppKernel.php';
 
         return 'AppKernel';
     }

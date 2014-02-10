@@ -89,12 +89,4 @@ services:
     rest_client:
         class:      %rest_client_class%
         arguments:  [%api_host%]
-    postgis:
-        class:      %postgis_class%
-        arguments:  [%database_host%, %database_port%, %database_name%, %database_user%, %database_password%]
-    s3_client:
-        class:      %s3_client_class% 
-        factory_class:  %s3_client_class%
-        factory_method: factory
-        arguments:  [%aws_accesskey%, %aws_secretkey%]
         

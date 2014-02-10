@@ -1,6 +1,6 @@
 <?php 
 
-namespace TB\Bundle\ApiBundle\Entity;
+namespace TB\Bundle\APIBundle\Entity;
 
 use TB\Bundle\FrontendBundle\Entity\GpxFile as BaseGpxFile;
 

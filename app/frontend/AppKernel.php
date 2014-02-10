@@ -6,8 +6,14 @@ use Symfony\Component\Config\Loader\LoaderInterface;
 class AppKernel extends Kernel
 {
 
+    public function getRootDir()
+    {
+        return realpath(parent::getRootDir());
+    }
+
     public function __construct($environment, $debug)
     {
+        // All PHP date functions should read datetime without timezone info as relative to UTC, and not current server timezone
         date_default_timezone_set('UTC');
         parent::__construct($environment, $debug);
     }
@@ -24,18 +30,16 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new TB\Bundle\FrontendBundle\TBFrontendBundle(),
-            new TB\Bundle\APIBundle\TBAPIBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
-            $bundles[] = new Acme\DemoBundle\AcmeDemoBundle();
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
             $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
             $bundles[] = new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle();
         }
         
-        if (in_array($this->getEnvironment(), array('test', 'test_api'))) {
+        if (in_array($this->getEnvironment(), array('test'))) {
             $bundles[] = new Liip\FunctionalTestBundle\LiipFunctionalTestBundle();
         }
 

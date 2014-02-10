@@ -14,6 +14,13 @@ use Doctrine\Common\DataFixtures\Purger\ORMPurger;
  */
 class TrailControllerTest extends WebTestCase
 {
+    protected static function getKernelClass()
+    {
+        require_once self::getPhpUnitXmlDir() . '/frontend/AppKernel.php';
+
+        return 'AppKernel';
+    }
+    
     /**
      * Test Trail created by UserProfile, no Event, no Editorial
      */
@@ -27,9 +34,9 @@ class TrailControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/trail/grunewald');
         $this->assertEquals(Response::HTTP_OK,  $client->getResponse()->getStatusCode());   
         $this->assertGreaterThan(0,
-            $crawler->filter('h1.tb-title:contains("Grunewald")')->count());
+            $crawler->filter('h2.tb-title:contains("Grunewald")')->count());
         $this->assertGreaterThan(0,
-            $crawler->filter('h1.tb-title:contains("Berlin")')->count());
+            $crawler->filter('h2.tb-title:contains("Berlin")')->count());
         $this->assertGreaterThan(0,
             $crawler->filter('.author:contains("by Matt Allbeury")')->count());
     }
@@ -47,9 +54,9 @@ class TrailControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/trail/ttm');
         $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());   
         $this->assertGreaterThan(0,
-            $crawler->filter('h1.tb-title:contains("Thames Trail Marathon")')->count());
+            $crawler->filter('h2.tb-title:contains("Thames Trail Marathon")')->count());
         $this->assertGreaterThan(0,
-            $crawler->filter('h1.tb-title:contains("Thames Festival of Running")')->count());
+            $crawler->filter('h2.tb-title:contains("Thames Festival of Running")')->count());
         $this->assertGreaterThan(0,
             $crawler->filter('.author:contains("by ashmei")')->count());
     }
@@ -62,7 +69,7 @@ class TrailControllerTest extends WebTestCase
         $this->loadFixtures([
             'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData',
         ]);
-
+ 
         $client = $this->createClient();
         $crawler = $client->request('GET', '/trail/noneexistent');
         $this->assertEquals(Response::HTTP_NOT_FOUND, $client->getResponse()->getStatusCode());

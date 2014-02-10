@@ -8,21 +8,27 @@ framework:
     profiler:
         collect: false
 
+# Call API in test enviroment
+twig:
+    globals:
+        api_host: %api_host%/app_test.php
+
 web_profiler:
     toolbar: false
     intercept_redirects: false
 
 swiftmailer:
     disable_delivery: true
-    
+
+# Use Test DB in test enviroment
 doctrine:
     dbal:
         dbname:   %database_name%_test
         
-services:
-    postgis:
-        class:      %postgis_class%
-        arguments:  [%database_host%, %database_port%, %database_name%_test, %database_user%, %database_password%]
-        
 liip_functional_test: ~
     
+# Call API in test enviroment
+services:
+    rest_client:
+        class:      %rest_client_class%
+        arguments:  [%api_host%/app_test.php]        

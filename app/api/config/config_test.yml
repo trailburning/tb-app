@@ -15,10 +15,12 @@ web_profiler:
 swiftmailer:
     disable_delivery: true
     
+# Use Test DB in test enviroment
 doctrine:
     dbal:
         dbname:   %database_name%_test
-        
+
+# Use Test DB in test enviroment
 services:
     postgis:
         class:      %postgis_class%
