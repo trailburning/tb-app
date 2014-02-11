@@ -381,35 +381,51 @@ border-width:1px;
 }
 
 #step_route_edit_view .slideshow_container {
-  padding-top: 40px;
+  padding-top: 20px;
   width: 100%;
   height: 166px;
   overflow: hidden;  
 }
 
 #step_route_edit_view .slideshow {
-  text-align: center;  
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  width: 203px;
 }
 
 #step_route_edit_view .slideshow .slide {
-  display: inline-block;
+  position: absolute;
+  top: 0px;
+  left: 0px;
   margin: 0px;
-  width: 142px;
-  height: 115px;
+  width: 203px;
+  height: 154px;
+  overflow: hidden;  
+}
+
+#step_route_edit_view .slideshow .photo {
+  margin-left: 6px;
+  width: 191px;
+  height: 154px;
   overflow: hidden;  
   background: url("../img/gallery/photo_back.png") no-repeat top left;
   background-size: 100% 100%;  	  
 }
 
-#step_route_edit_view .slideshow .slide .image_container {
-  position: relative;
-  opacity: 0;
-  margin: 16px 0px 0px 12px;	
-  width: 122px;
-  height: 91px;
+#step_route_edit_view .slideshow .active {
+  background: url("../img/gallery/photo_back_focus.png") no-repeat top left;
 }
 
-#step_route_edit_view .slideshow .slide img {
+#step_route_edit_view .slideshow .photo .image_container {
+  position: relative;
+  opacity: 0;
+  margin: 19px 0px 0px 14px;
+  width: 168px;
+  height: 126px;
+}
+
+#step_route_edit_view .slideshow .photo img {
   width: 100%;
 }
 

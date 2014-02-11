@@ -170,6 +170,8 @@ define([
     },
     onTrailMapMediaMarkerClick: function(mapMediaMarkerView){
       this.focusMarker(mapMediaMarkerView);
+      // fire event
+      app.dispatcher.trigger("TrailMapView:mediaclick", mapMediaMarkerView.model.id);                        		       
     },
     onTrailMapMediaMarkerRemove: function(mapMediaMarkerView){
       var self = this;

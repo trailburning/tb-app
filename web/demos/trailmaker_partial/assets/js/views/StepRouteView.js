@@ -41,11 +41,6 @@ define([
       this.trailUploadGPXView = new TrailUploadGPXView({ el: '#uploadGPX_view', model: this.model });
       this.trailUploadGPXProgressView = new TrailUploadGPXProgressView({ el: '#uploadGPXprogress_view', model: this.model });
 
-      this.trailUploadPhotoView = new TrailUploadPhotoView({ el: '#uploadPhoto_view', model: this.model });
-      this.trailUploadPhotoProgressView = new TrailUploadPhotoProgressView({ el: '#uploadPhotoprogress_view', model: this.model });
-      this.trailSlideshowView = new TrailSlideshowView({ el: '#slideshow_view', collection: this.options.mediaCollection });
-
-      this.trailUploadPhotoView.render();          
       this.trailUploadGPXView.render();
       
       $('.submit', $(this.el)).click(function(evt) {

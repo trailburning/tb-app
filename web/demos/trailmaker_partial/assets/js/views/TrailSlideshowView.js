@@ -7,6 +7,10 @@ define([
   var TrailSlideshowView = Backbone.View.extend({
     initialize: function(){
       this.template = _.template($('#slideshowViewTemplate').text());
+      
+      app.dispatcher.on("TrailSlideshowSlideView:click", this.onTrailSlideshowSlideViewClick, this);
+      
+      this.nActiveID = 0;      
     },            
     render: function(){
       var self = this;
@@ -42,19 +46,84 @@ define([
       $(this.el).append(slide.el);      
 	},    
     remove: function(id){
+      var self = this;
+    	
 	  $('.slide', this.el).each(function(index) {
 	  	if ($(this).attr('data-id') == id) {
 	  	  $(this).remove();
 	  	}
 	  });
+	  // select 1st element
+	  $('.slide:first', this.el).each(function(index) {
+	    self.gotoSlide($(this).attr('data-id'));
+        // fire event
+        app.dispatcher.trigger("TrailSlideshowView:mediaclick", $(this).attr('data-id'));
+	  });
 	},
+    gotoSlide: function(mediaID){
+      bAnimate = true;          	
+      // has the active slide changed?
+	  if (this.nActiveID == mediaID) {
+	    bAnimate = false;
+	  }
+    	
+	  var elSlides = $('.slide', this.el);
+	  var nActiveSlide = 0;
+
+	  $('.photo', $(this.el)).removeClass('active');
+	  elSlides.each(function(nSlide) {
+	  	if ($(this).attr('data-id') == mediaID) {
+	  	  nActiveSlide = nSlide;
+	  	  $('.photo', this).addClass('active');
+	  	}
+	  });
+	  
+      this.moveSlides(nActiveSlide, bAnimate);
+      
+      this.nActiveID = mediaID;          	
+    },
+    moveSlides: function(nActiveSlide, bAnimate){
+	  var nWidth = 203, nX = 0;
+
+	  var elSlides = $('.slide', this.el);
+	  // position slides
+	  elSlides.each(function(nSlide) {
+	  	nX = 0;
+	  	if (nSlide < nActiveSlide) {
+	  	  nX = -(nWidth * Math.abs(nActiveSlide - nSlide));
+	  	}
+	  	else if (nSlide > nActiveSlide) {
+	  	  nX = (nWidth * Math.abs(nActiveSlide - nSlide));
+	  	}
+	  	
+	  	if (bAnimate) {
+	  	  $(this).addClass('tb-move');	  	
+	  	}
+	  	else {
+	  	  $(this).removeClass('tb-move');
+	  	}
+	  	
+	  	$(this).css('left', nX);
+	  });
+    },    
     sort: function(){
 	  // update datetime attribs    	
       this.options.collection.forEach(function(media, nIndex){
 	  	$('.slide[data-id='+media.id+']', this.el).attr('data-datetime', media.get('tags').datetime);
 	  });
+	  
+	  var elSlides = $('.slide', this.el);
 	  // sort    	    		  	 
-	  $('.slide', this.el).tsort({attr:'data-datetime'});	  
+	  elSlides.tsort({attr:'data-datetime'});	  
+	  
+	  var nActiveSlide = Math.floor(elSlides.length / 2);
+	  
+	  this.moveSlides(nActiveSlide, false);
+	},
+    onTrailSlideshowSlideViewClick: function(trailGallerySlideView){
+      this.gotoSlide(trailGallerySlideView.model.id);
+      // fire event
+      app.dispatcher.trigger("TrailSlideshowView:mediaclick", trailGallerySlideView.model.id);                          	
 	}	
     
   });

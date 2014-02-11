@@ -157,8 +157,8 @@ define([
 	  
 	  this.stepRouteEditView.renderSlideshow();
     },    
-    onStepRouteEditViewGalleryPhotoClick: function(trailGallerySlideView){
-      this.trailMapView.selectMarker(trailGallerySlideView.model.id);    
+    onStepRouteEditViewGalleryPhotoClick: function(mediaID){
+      this.trailMapView.selectMarker(mediaID);    
 	},    
     onStepRouteEditViewSubmitClick: function(step2View){      
 //      $('#content_overlay').show();

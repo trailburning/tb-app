@@ -17,10 +17,11 @@ define([
       app.dispatcher.on("TrailUploadPhotoView:uploaded", this.onTrailUploadPhotoViewUploaded, this);
       app.dispatcher.on("TrailUploadPhotoView:uploadProgress", this.onTrailUploadPhotoViewUploadProgress, this);
 
+      app.dispatcher.on("TrailMapView:mediaclick", this.onTrailMapViewMediaClick, this);
       app.dispatcher.on("TrailMapView:removemedia", this.onTrailMapViewRemoveMedia, this);
       app.dispatcher.on("TrailMapView:movedmedia", this.onTrailMapViewMoveMedia, this);
 
-      app.dispatcher.on("TrailSlideshowSlideView:click", this.onTrailSlideshowSlideViewClick, this);
+      app.dispatcher.on("TrailSlideshowView:mediaclick", this.onTrailSlideshowViewMediaClick, this);
 
       this.nState = STATE_UPLOAD;
       this.timezoneData = null;      
@@ -85,6 +86,9 @@ define([
     onTrailUploadPhotoViewUploadProgress: function(nProgress){
       this.trailUploadPhotoProgressView.render(nProgress);
     },
+    onTrailMapViewMediaClick: function(mediaID){
+      this.trailSlideshowView.gotoSlide(mediaID);
+	},    
     onTrailMapViewRemoveMedia: function(mediaID){
       // remove from collection
 	  this.options.mediaCollection.remove(mediaID);
@@ -128,11 +132,11 @@ define([
           console.log(data);
         }
       });        
-    },
-    onTrailSlideshowSlideViewClick: function(trailGallerySlideView){      	
+    },    
+    onTrailSlideshowViewMediaClick: function(mediaID){
       // fire event
-      app.dispatcher.trigger("StepRouteEditView:galleryPhotoClick", trailGallerySlideView);                              
-	}              
+      app.dispatcher.trigger("StepRouteEditView:galleryPhotoClick", mediaID);                              
+    }      	
     
   });
 
