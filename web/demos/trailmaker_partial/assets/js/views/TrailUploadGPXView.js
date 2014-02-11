@@ -12,6 +12,10 @@ define([
 
       $(this.el).html(this.template());
 
+        // fire event
+        app.dispatcher.trigger("TrailUploadGPXView:uploaded", self);                
+		return;
+
 	  // mla test
       $('#btntest').click(function(evt){
       	evt.stopPropagation();

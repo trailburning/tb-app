@@ -29,7 +29,7 @@ border-width:1px;
 
 #trail_map_view.map_small {
   position: relative;
-  height: 500px;
+  height: 452px;
 }
 
 #view_map_btns {
@@ -319,22 +319,80 @@ border-width:1px;
 /******************************************/
 #step_route_edit_view {
   display: none;
-  min-height: 400px;  
   background: #FFF;
 }
 
-#step_route_edit_view .photo_gallery {
+#step_route_edit_view .gallery_panel {
+  width: 100%;
+  height: 216px;
+  background: #FFF;
 }
 
-#step_route_edit_view .photo_gallery .upload {
-  float: left;
-  width: 200px;
+#step_route_edit_view .detail_panel {
+  width: 100%;
+  height: 376px;
+  background: #F2F2F2;
 }
 
-#step_route_edit_view .photo_gallery .slideshow {
+#step_route_edit_view .detail_panel .content {
+  padding-top: 24px;
+  margin: 0px auto 92px auto;
+  width: 614px;
+  text-align: center;
+/*  
+  margin: 54px 0px 24px 0px;
+*/  
 }
 
-#step_route_edit_view .photo_gallery .slideshow .slide {
+#step_route_edit_view .detail_panel .desc {
+  margin: 24px auto 0px auto;
+  width: 380px;
+  text-align: center;
+}
+
+#step_route_edit_view .detail_panel form {
+  display: block;  
+  padding-top: 18px;
+}
+
+#step_route_edit_view .detail_panel .form-group {
+  width: 324px;
+  margin: 14px auto 0px auto;  
+  text-align: left;
+}
+
+#step_route_edit_view .detail_panel .form-group label {
+}
+
+#step_route_edit_view .detail_panel input {
+  display: block;  
+  width: 324px;
+  height: 32px;
+  line-height: 32px;
+  background: #FFF;  
+  color: #979797;
+  font-size: 22px;
+}
+
+#step_route_edit_view .detail_panel textarea {
+  display: block;  
+  resize: none;
+  width: 324px;
+  height: 176px;
+  background: #FFF;
+  color: #979797;
+  font-size: 22px;
+}
+
+#step_route_edit_view .trailcard_panel {
+  width: 100%;
+  height: 530px;
+}
+
+#step_route_edit_view .slideshow {
+}
+
+#step_route_edit_view .slideshow .slide {
   float: left;
   margin: 4px;
   width: 160px;
@@ -342,8 +400,14 @@ border-width:1px;
   overflow: hidden;
 }
 
-#step_route_edit_view .photo_gallery .slideshow .slide img {
+#step_route_edit_view .slideshow .slide img {
   width: 100%;
+}
+
+#uploadPhoto_view {
+  position: absolute;
+  top: -62px;
+  right: 24px;	
 }
 
 /* STEP PUBLISHED */
@@ -467,6 +531,11 @@ border-width:1px;
 /******************************************/
 #view_map_btns .touch_btn {  
   margin: 0px 4px 0px 4px;
+}
+    
+/* Mapbox */
+.leaflet-control.mapbox-control-info {
+  visibility: hidden;
 }
     
 /* RESPONSIVE */

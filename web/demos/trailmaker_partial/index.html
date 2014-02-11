@@ -220,15 +220,41 @@
 </script>
 
 <script type="text/template" id="stepRouteEditViewTemplate">
-  <div class="photo_gallery clearfix">	  
-	<div class="upload">
-	  <div id="uploadPhoto_view"></div>
-	  <div id="uploadPhotoprogress_view"></div>
-	</div>
+  <div id="uploadPhoto_view"></div>
+  <div id="uploadPhotoprogress_view"></div>
+  
+  <div class="gallery_panel">
 	<div class="slideshow">
 	  <div id="slideshow_view"></div>
 	</div>
-  </div>	  
+  </div>
+
+  <div class="detail_panel clearfix">
+  	<div class="line_break"></div>
+  	
+    <div class="content">      
+      <h1 class="tb">Story</h1>
+      <div class="desc">
+        <h4 class="tb">Tell us more about your trail</h4>
+      </div>        
+      <form>
+      <div class="form-group">
+        <label for="form_event"><h4 class="tb">Name your trail</h4></label>
+        <input type="text" name="form_event" id="form_event" class="validate[required]">
+      </div>
+      <div class="form-group">
+        <label for="form_notes"><h4 class="tb">Trail notes</h4></label>
+        <textarea name="form_notes" id="form_notes"></textarea>
+      </div>      
+	  </form>
+    </div>
+  	
+  </div>
+
+  <div class="trailcard_panel">
+  	TRAIL CARD
+  </div>
+  
   <span class="btn btn-tb-action btn-tb-large submit">Publish Trail</span>	  
 </script>
 
@@ -236,7 +262,7 @@
   <form id="uploadPhotoForm">  	
   <span class="btn btn-tb-action btn-tb-large fileinput-button">
     <i class="glyphicon glyphicon-plus"></i>
-    <span>Upload Photo</span>
+    <span>Add Pictures</span>
     <!-- The file input field used as target for the file upload widget -->
 <!--    
     <input id="btntest2">

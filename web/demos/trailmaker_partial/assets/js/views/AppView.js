@@ -43,10 +43,14 @@ define([
 //      this.stepDetailView.render();    
       // Step Rpute
       this.stepRouteView = new StepRouteView({ el: '#step_route_view', model: this.model });
-      $('#step_route_view').show();    
-      this.stepRouteView.render();
+//      $('#step_route_view').show();    
+//      this.stepRouteView.render();
       // Step Route Edit
       this.stepRouteEditView = new StepRouteEditView({ el: '#step_route_edit_view', model: this.model, mediaCollection: this.mediaCollection });
+      $('#step_route_edit_view').show();    
+      
+      this.stepRouteView.render();
+      this.stepRouteEditView.render();
       // Step Published
       this.stepPublishedView = new StepPublishedView({ el: '#step_published_view', model: this.model });
 //      $('#step_published_view').show();    
