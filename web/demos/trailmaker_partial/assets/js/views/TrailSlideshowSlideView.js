@@ -19,6 +19,21 @@ define([
       	
 	    var attribs = this.model.toJSON();
 	    $(this.el).html(this.template(attribs));
+	    	    
+		// scale images when loaded
+        var elImages = $('.scale', $(this.el));	    
+	    var imgLoad = imagesLoaded(elImages);
+        imgLoad.on('always', function(instance) {
+          for ( var i = 0, len = imgLoad.images.length; i < len; i++ ) {
+            $(imgLoad.images[i].img).addClass('scale_image_ready');
+          }
+          // update pos
+          $("img.scale_image_ready", $(self.el)).imageScale();
+          // fade in - delay adding class to ensure image is ready  
+          $('.fade_on_load', $(self.el)).addClass('tb-fade-in');
+          $('.image_container', $(self.el)).css('opacity', 1);
+        });
+	    
 		// store id for reference	    
 	    $(this.el).attr("data-id", this.model.id);
 	    
@@ -27,8 +42,6 @@ define([
         });      
 	    
 	    $(this.el).click(function(evt){
-	    	console.log('id:'+self.model.id);
-	    	
           // fire event
           app.dispatcher.trigger("TrailSlideshowSlideView:click", self);                
         });      

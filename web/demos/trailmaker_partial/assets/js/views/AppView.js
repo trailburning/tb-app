@@ -47,8 +47,7 @@ define([
 //      this.stepRouteView.render();
       // Step Route Edit
       this.stepRouteEditView = new StepRouteEditView({ el: '#step_route_edit_view', model: this.model, mediaCollection: this.mediaCollection });
-      $('#step_route_edit_view').show();    
-      
+      $('#step_route_edit_view').show();          
       this.stepRouteView.render();
       this.stepRouteEditView.render();
       // Step Published
@@ -80,14 +79,14 @@ define([
     },
     setTitles: function(){
       // set title
-      if (this.model.get('event_name') != '' && this.model.get('event_name') != undefined) {
+      if (this.model.get('value').route.name != '' && this.model.get('value').route.name != undefined) {
         $('#trail_info').show();
-        $('#trail_info .event_name').html(this.model.get('event_name'));
+        $('#trail_info .event_name').html(this.model.get('value').route.name);
         $('#trail_info .event_name').css('visibility', 'visible');
       }
-      if (this.model.get('trail_name') != '' && this.model.get('trail_name') != undefined) {
+      if (this.model.get('value').route.region != '' && this.model.get('value').route.region != undefined) {
         $('#trail_info').show();
-        $('#trail_info .trail_name').html(this.model.get('trail_name'));
+        $('#trail_info .trail_name').html(this.model.get('value').route.region);
         $('#trail_info .trail_name').css('visibility', 'visible');
       }
     },
@@ -96,6 +95,7 @@ define([
       
       this.model.fetch({
         success: function () {
+      	  self.setTitles();           
           self.trailMapView.render();          
           self.getTrailMedia();          
         }      
@@ -128,8 +128,6 @@ define([
       $('#step_route_view').show();
       this.stepRouteView.render();
       $('#trail_map_overlay').show();
-            
-      this.setTitles();           
             
       this.trailMapView.render();          
       

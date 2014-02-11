@@ -380,15 +380,33 @@ border-width:1px;
   font-size: 22px;
 }
 
+#step_route_edit_view .slideshow_container {
+  padding-top: 40px;
+  width: 100%;
+  height: 166px;
+  overflow: hidden;  
+}
+
 #step_route_edit_view .slideshow {
+  text-align: center;  
 }
 
 #step_route_edit_view .slideshow .slide {
-  float: left;
-  margin: 4px;
-  width: 160px;
-  height: 120px;
-  overflow: hidden;
+  display: inline-block;
+  margin: 0px;
+  width: 142px;
+  height: 115px;
+  overflow: hidden;  
+  background: url("../img/gallery/photo_back.png") no-repeat top left;
+  background-size: 100% 100%;  	  
+}
+
+#step_route_edit_view .slideshow .slide .image_container {
+  position: relative;
+  opacity: 0;
+  margin: 16px 0px 0px 12px;	
+  width: 122px;
+  height: 91px;
 }
 
 #step_route_edit_view .slideshow .slide img {
@@ -624,21 +642,70 @@ border-width:1px;
 }
 
 #trail_map {
-  width:100%; 
+  width: 100%; 
   height: 100%;
 }
 
 .leaflet-popup-content {
-  margin: 8px;
+  margin: 0px;
   padding: 0px;	
-  width: 240px;
-  height: 230px;
+  width: 500px;
+  height: 220px;
+}
+
+.leaflet-container a.leaflet-popup-close-button {
+  font-size: 20px;
+  color: #44B6F7;
 }
 
 .trail_media_popup {
-  margin: 0px;
+  margin: 8px;
   padding: 0px;	   
   text-align: center;  
+}
+
+.trail_media_popup .btns {
+  position: absolute;
+  bottom: 32px;
+}
+
+.trail_media_popup a.button {
+  float:left; 
+  display:block;
+  line-height:24px; 
+  text-indent: -10000px;  
+  background-repeat:no-repeat;
+  background-position:top center;
+  overflow: hidden;   
+  text-decoration: none;
+  width:24px;
+  height:24px;
+}
+
+.trail_media_popup a.button:hover {
+  background-position: 0 -24px;
+}
+
+.trail_media_popup .btnDeleteMarker {
+  background: url("../img/editor/btn_delete.png") no-repeat top left;
+}
+
+.trail_media_popup .image_container {
+  float: left;
+  position: relative;
+  opacity: 0;  
+  width: 254px;
+  height: 212px;
+}
+
+.trail_media_popup .image_container img {
+  width: 100%;
+}
+  
+.trail_media_popup .detail_container {
+  float: left;
+  margin: 48px 0px 0px 24px;
+  text-align: left;
 }
 
 .trail_media_popup .form-group {

@@ -46,7 +46,7 @@ define([
         app.dispatcher.trigger("StepRouteEditView:submitclick", self);                        
       });
 
-	  // resize/scale images when loaded
+	  // scale images when loaded
       var imgLoad = imagesLoaded('.scale');
       imgLoad.on('always', function(instance) {
         for ( var i = 0, len = imgLoad.images.length; i < len; i++ ) {

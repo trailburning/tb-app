@@ -12,7 +12,6 @@ define([
     initialize: function(){
       this.model = this.options.model;
       this.trailModel = this.options.trailModel;
-//      this.jsonMedia = this.options.jsonMedia;
       this.point = null;
       this.map = this.options.map;
       this.popup = null;
@@ -68,16 +67,30 @@ define([
     showPopup: function(){
       var popup_options = {
         autoPan: true,
-        closeButton: false
+        closeButton: true,
+        maxWidth: 500
       };                
         
       this.popup = L.popup(popup_options)
       .setLatLng([this.marker.getLatLng().lat, this.marker.getLatLng().lng])
       .setContent(this.popupContainer[0])
       .openOn(this.map);  
-                  
+
+	  // scale images when loaded
+	  var elImages = $('.trail_media_popup .scale');
+	  var imgLoad = imagesLoaded(elImages);
+      imgLoad.on('always', function(instance) {
+        for ( var i = 0, len = imgLoad.images.length; i < len; i++ ) {
+          $(imgLoad.images[i].img).addClass('scale_image_ready');
+        }
+        // update pos
+        $('.trail_media_popup img.scale_image_ready').imageScale();
+        // fade in - delay adding class to ensure image is ready  
+        $('.trail_media_popup .fade_on_load').addClass('tb-fade-in');
+        $('.trail_media_popup .image_container').css('opacity', 1);
+      });
       // force resrc
-      resrc.resrcAll();      
+      resrc.resrcAll();
     },    
     hidePopup: function(){
       if (this.popup) {
@@ -91,17 +104,14 @@ define([
       // Create an element to hold all your text and markup
       this.popupContainer = $('<div />');      
       // Delegate all event handling for the container itself and its contents to the container
-      this.popupContainer.on('click', '.deletepin_btn', function() {
+      this.popupContainer.on('click', '.btnDeleteMarker', function() {
         // fire event
         app.dispatcher.trigger("TrailMapMediaMarkerView:removemedia", self);                        
         // goodbye pin
         self.map.closePopup(self.popup);
         self.map.removeLayer(self.marker);
       });
-      this.popupContainer.on('click', '.save_btn', function() {
-      	self.hidePopup();
-      });
-      this.popupContainer.html('<div class="trail_media_popup"><img src="http://app.resrc.it/O=80/http://s3-eu-west-1.amazonaws.com/'+versions[0].path+'" width="240" class="resrc"><span class="btn btn-tb-action btn-tb-large save_btn">Save</span> <a href="javascript:void(0)" class="deletepin_btn">delete pin</a></div>');
+      this.popupContainer.html('<div class="trail_media_popup"><div class="image_container"><img src="http://app.resrc.it/O=80/http://s3-eu-west-1.amazonaws.com/'+versions[0].path+'" class="resrc scale"></div><div class="detail_container"><h3 class="tb">IMG_'+this.model.id+'</h3><div class="btns"><a href="javascript:void(0)" class="btnDeleteMarker button">Delete</a></div></div></div></div>');
 
       function onClick(e) {
       	self.showPopup();      	

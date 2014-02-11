@@ -12,6 +12,7 @@ define([
 
       $(this.el).html(this.template());
 
+	  // mla test
         // fire event
         app.dispatcher.trigger("TrailUploadGPXView:uploaded", self);                
 		return;
