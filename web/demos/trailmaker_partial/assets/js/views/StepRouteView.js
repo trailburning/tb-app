@@ -66,8 +66,6 @@ define([
       this.trailSlideshowView.render();          
 	},
     onTrailUploadGPXViewUploaded: function(trailUploadGPXView){
-      console.log('onTrailUploadGPXViewUploaded : '+this.model.id);
-
       // fire event
       app.dispatcher.trigger("StepRouteView:gpxuploaded", self);                        
     },

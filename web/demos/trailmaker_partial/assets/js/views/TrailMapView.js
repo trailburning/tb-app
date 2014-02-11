@@ -164,7 +164,6 @@ define([
         L.marker(this.arrLineCordinates[0], {icon: this.locationIcon}).addTo(this.map);            
                   
         this.map.fitBounds(self.polyline.getBounds(), {padding: [30, 30]});
-        console.log('RENDER');
       }
       
       this.bRendered = true;

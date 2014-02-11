@@ -23,7 +23,6 @@ define([
 	  else {
 	    this.options.collection.forEach(function(media, nIndex){
 		  if (!$('.slide[data-id='+media.id+']', self.el).length) {
-		  	console.log('not found');
 		  	self.appendMedia(media);
 		  }
 		});	  

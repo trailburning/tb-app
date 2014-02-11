@@ -240,11 +240,15 @@
       <form>
       <div class="form-group">
         <label for="form_event"><h4 class="tb">Name your trail</h4></label>
-        <input type="text" name="form_event" id="form_event" class="validate[required]">
+        <input type="text" name="form_trail_name" id="form_trail_name" class="validate[required]">
+      </div>
+      <div class="form-group">
+        <label for="form_event"><h4 class="tb">Trail region</h4></label>
+        <input type="text" name="form_trail_region" id="form_trail_region" class="validate[required]">
       </div>
       <div class="form-group">
         <label for="form_notes"><h4 class="tb">Trail notes</h4></label>
-        <textarea name="form_notes" id="form_notes"></textarea>
+        <textarea name="form_trail_notes" id="form_trail_notes"></textarea>
       </div>      
 	  </form>
     </div>
@@ -252,10 +256,50 @@
   </div>
 
   <div class="trailcard_panel">
-  	TRAIL CARD
+
+    <div class="content clearfix">      
+      <div class="left">                  
+		<div class="trail_card_sticker">
+			<div class="panel trail_card_panel">
+				<div class="title"><h3 class="tb">Mountains</h3></div>
+		        <a href="../trail/chamonix">
+		        <div class="photo tb-photo-btn">
+		        	<div class="image_container"><img src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/trailburning-media/351f5fcad0817a6a2315ec7daaddbf6097c3c54e.jpg" class="resrc scale" border="0"/></div>
+		        	<div class="card_title">
+		            <h1>Alpine Adventure</h1>
+		            <br />
+		            <h1>Chamonix</h1>
+		        	</div>
+		       	</div>
+		        </a>
+		        <div class="summary">
+			    	<div class="avatar"><a href="../profile/reubentabner"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/reubentabner/avatar.png"></a></div>
+			        <div class="detail">
+			        by <strong>Reuben Tabner</strong>
+			        <div class="stars">
+			        	<div class="star_full"></div>
+			            <div class="star_full"></div>
+			            <div class="star_full"></div>
+			            <div class="star_half"></div>
+			            <div class="star"></div>
+			        </div>
+			        </div>
+		        </div>
+		 	</div>						 	
+		</div>		 
+      </div>
+      <div class="right">
+      <h3 class="tb">This is how your Trail Card will look</h3>      	
+      <h4 class="tb">
+	  Make sure you chose your favourite  picture on the map, by using the star icon. If you’re ok with it, then let’s share your trail!      	
+      </h4>      
+      <div class="publish"><span class="btn btn-tb-action btn-tb-large submit">Publish Trail</span></div>                
+      </div>
+    </div>
+
   </div>
   
-  <span class="btn btn-tb-action btn-tb-large submit">Publish Trail</span>	  
+  	  
 </script>
 
 <script type="text/template" id="trailUploadPhotoViewTemplate">
