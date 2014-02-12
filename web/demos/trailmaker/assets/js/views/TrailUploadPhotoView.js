@@ -15,13 +15,6 @@ define([
       var attribs = this.model.toJSON();
       $(this.el).html(this.template(attribs));
       
-	  // mla test
-      $('#btntest2').click(function(evt){
-      	evt.stopPropagation();
-        // fire event
-        app.dispatcher.trigger("TrailUploadPhotoView:upload", self);                
-      });
-      
       $('#photofileupload').change(function(){
         $('#uploadPhoto_view').hide();
         $('#uploadPhotoprogress_view').show();      	
@@ -37,11 +30,11 @@ define([
     upload: function(){
       console.log('TrailMediaUploadView:upload');
         
-      // fire event
-      app.dispatcher.trigger("TrailUploadPhotoView:upload", self);                
-        
       var self = this;
-                
+        
+      // fire event
+      app.dispatcher.trigger("TrailUploadPhotoView:upload", this);                
+                        
       var strURL = RESTAPI_BASEURL + 'v1/route/'+this.model.get('id')+'/medias/add';      
         
       $.fn.upload = function(remote,successFn,progressFn) {
