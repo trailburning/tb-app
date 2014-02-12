@@ -80,8 +80,7 @@ define([
       
       $('#uploadPhotoForm').upload(strURL, function(res) {
       },function(data) {
-        var progress = parseInt(data.loaded / data.total * 100, 10);
-        
+        var progress = parseInt(data.loaded / data.total * 100, 10);        
         console.log('p:'+progress);
         
         // fire event

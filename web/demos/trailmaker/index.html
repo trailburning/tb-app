@@ -50,8 +50,8 @@
     <div class="trans-line"></div>        
   </div>    
 
-  <div id="contentview">    
-    <div id='trail_map_view'></div>
+  <div id="contentview" class="clearfix">    
+    <div id='trail_map_view' class="clearfix"></div>
     <div id="view_map_btns">        
       <div class='controls'>
         <span class="btn btn-tb zoomin_btn">+</span>          
@@ -69,12 +69,16 @@
       </div>
     </div>
   
-    <div id="steps">
+    <div id="steps" class="clearfix">
       <div id="step_welcome_view"></div>
-      <div id="step1_view"></div>
-      <div id="step2_view"></div>
-      <div id="step3_view"></div>
+      <div id="step_detail_view"></div>
+      <div id="step_route_view"></div>
+      <div id="step_route_edit_view"></div>
+      <div id="step_published_view"></div>
     </div>
+
+	<div id='content_overlay'></div>	
+	<div id='overlay_view'></div>    
   </div>      
   
   <div id="footerview">
@@ -94,6 +98,10 @@
     </div>
   </div>
 </div>
+
+<script type="text/template" id="overlayViewTemplate">
+  <div id="overlayContent_view"></div>
+</script>
 
 <script type="text/template" id="stepWelcomeViewTemplate">
   <div class="panel_content">  
@@ -124,7 +132,7 @@
   </div>  
 </script>
 
-<script type="text/template" id="step1ViewTemplate">
+<script type="text/template" id="stepDetailViewTemplate">
   <div class="panel_content">
     <div class="panel">
       <div class="content">      
@@ -167,46 +175,38 @@
   </div>  
 </script>
 
-<script type="text/template" id="step2ViewTemplate">
-  <div class="panel_container">  
-    <div class="panel_content">
-      <div class="panel">
-        <div class="content">      
-          <h1 class="tb">Trail Map</h1>
-          <div id="uploadGPX_view"></div>
-          <div id="uploadGPXprogress_view"></div>          
-        </div>
+<script type="text/template" id="stepRouteViewTemplate">
+  <div class="panel_content">
+  	<div class="panel">
+      <div class="content">      
+        <h1 class="tb">Trail Map</h1>
+        <div id="uploadGPX_view"></div>
+        <div id="uploadGPXprogress_view"></div>
       </div>
-      <div class="step_marker_container">
-        <div class="step_marker">2</div>  
-      </div>
-    </div>    
-  </div>
-  <div class="map_step_container">
-    <div class="content">  
-      <div class="step_marker">2</div>  
-      <div class="next_step"><span class="btn btn-tb-action btn-tb-large submit">Finished adding photo points</span></div>
     </div>
-  </div>
+    <div class="step_marker_container">
+      <div class="step_marker">2</div>  
+    </div>
+  </div>    
 </script>
 
 <script type="text/template" id="trailUploadGPXViewTemplate">
   <div class="desc">
     <h4 class="tb">Make sure you have your GPX file handy, save it to your computer from your GPX tracking device, and then upload.</h4>
   </div>        
-  <form id="uploadForm">      
+  <form id="uploadGPXForm">      
   <span class="btn btn-tb-action btn-tb-large fileinput-button">
     <i class="glyphicon glyphicon-plus"></i>
     <span>Upload GPX File</span>
     <!-- The file input field used as target for the file upload widget -->
-    <input type="file" id="fileupload" name="gpxfile" multiple>        
+    <input type="file" id="gpxfileupload" name="gpxfile">
   </span>
   </form>        
 </script>
 
 <script type="text/template" id="trailUploadGPXProgressViewTemplate">   
   <div class="desc">
-    <h4 class="tb">Now making GPX interesting...</h4>
+    <h4 class="tb">Now making GPS interesting...</h4>
   </div>        
   <div class="progress_container">
     <div class="progressbar"></div>  
@@ -214,17 +214,140 @@
   <h4 class="tb"><span class="percent">0</span>%</h4>
 </script>
 
-<script type="text/template" id="step3ViewTemplate">
-  <div class="panel_container">  
-    <div class="panel_content">
-      <div class="panel">
-        <div class="content">      
-          <h1 class="tb">Photos</h1>
-          <div class="desc">
-            <h4 class="tb">
-			Thanks for taking part in the Trailburning adventure. Don’t forget to send us the photos you just marked on the trail, we will add the photos and build the trail experience for you to share!  
-            <br /><br />
-            Send photos to: <a href="mailto:events@trailburning.com">events@trailburning.com</a>            
+<script type="text/template" id="stepRouteEditViewTemplate">
+  <div id="uploadPhoto_view"></div>
+  <div id="uploadPhotoprogress_view"></div>
+  
+  <div class="gallery_panel">  	
+  	<div class="slideshow_container">
+	  <div class="slideshow">
+	    <div id="slideshow_view"></div>
+	  </div>
+	</div>
+  </div>
+
+  <div class="detail_panel clearfix">
+  	<div class="line_break"></div>
+  	
+    <div class="content">      
+      <h1 class="tb">Story</h1>
+      <div class="desc">
+        <h4 class="tb">Tell us more about your trail</h4>
+      </div>        
+      <form>
+      <div class="form-group">
+        <label for="form_event"><h4 class="tb">Name your trail</h4></label>
+        <input type="text" name="form_trail_name" id="form_trail_name" class="validate[required]" value="TB Crew Demo">
+      </div>
+      <div class="form-group">
+        <label for="form_event"><h4 class="tb">Trail region</h4></label>
+        <input type="text" name="form_trail_region" id="form_trail_region" class="validate[required]" value="Berlin">
+      </div>
+      <div class="form-group">
+        <label for="form_notes"><h4 class="tb">Trail notes</h4></label>
+        <textarea name="form_trail_notes" id="form_trail_notes">A really lovely trail.</textarea>
+      </div>      
+	  </form>
+    </div>
+  	
+  </div>
+
+  <div class="trailcard_panel">
+
+    <div class="content clearfix">      
+      <div class="left">                  
+		<div class="trail_card_sticker">
+			<div class="panel trail_card_panel">
+				<div class="title"><h3 class="tb">Park</h3></div>
+		        <a href="../../trail/demo">
+		        <div class="photo tb-photo-btn">
+		        	<div class="image_container"><img src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/trailburning-media/0a7fa1c50ef4c8829e6dbb5efb8632e5e4db5900.jpg" class="resrc scale" border="0"/></div>
+		        	<div class="card_title">
+		            <h1>TB Crew Demo</h1>
+		            <br />
+		            <h1>Berlin</h1>
+		        	</div>
+		       	</div>
+		        </a>
+		        <div class="summary">
+			    	<div class="avatar"><a href="../../profile/mattallbeury"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/mattallbeury/avatar_ma.png"></a></div>
+			        <div class="detail">
+			        by <strong>Matt Allbeury</strong>
+			        <div class="stars">
+			        	<div class="star_full"></div>
+			            <div class="star_full"></div>
+			            <div class="star_full"></div>
+			            <div class="star_half"></div>
+			            <div class="star"></div>
+			        </div>
+			        </div>
+		        </div>
+		 	</div>						 	
+		</div>		 
+      </div>
+      <div class="right">
+      <h3 class="tb">This is how your Trail Card will look</h3>      	
+      <h4 class="tb">
+	  Make sure you chose your favourite  picture on the map, by using the star icon. If you’re ok with it, then let’s share your trail!      	
+      </h4>      
+      <div class="publish"><span class="btn btn-tb-action btn-tb-large submit">Publish Trail</span></div>                
+      </div>
+    </div>
+
+  </div>
+  
+  	  
+</script>
+
+<script type="text/template" id="trailUploadPhotoViewTemplate">
+  <form id="uploadPhotoForm">  	
+  <span class="btn btn-tb-action btn-tb-large fileinput-button">
+    <i class="glyphicon glyphicon-plus"></i>
+    <span>Add Pictures</span>
+    <!-- The file input field used as target for the file upload widget -->
+    <input type="file" id="photofileupload" name="medias[]">
+  </span>
+  </form>        
+</script>
+
+<script type="text/template" id="trailUploadPhotoProgressViewTemplate">
+  <div class="panel_content">
+  	<div class="panel">
+      <div class="content">      
+      <h1 class="tb">Upload Photo</h1>
+		<div class="desc">
+		  <h4 class="tb">Now adding photo...</h4>
+		</div>        
+		<div class="progress_container">
+		  <div class="progressbar"></div>  
+		</div>  
+		<h4 class="tb"><span class="percent">0</span>%</h4>
+      </div>
+    </div>
+    <div class="step_marker_container">
+      <div class="step_marker">2</div>  
+    </div>
+  </div>    
+</script>
+
+<script type="text/template" id="slideshowViewTemplate">
+</script>
+
+<script type="text/template" id="slideshowSlideViewTemplate">
+  <div class="photo">
+  	<div class="image_container"><img src="http://app.resrc.it/O=80/http://s3-eu-west-1.amazonaws.com/<%= versionLargePath%>" class="resrc scale"></div>
+  </div>  	
+</script>
+
+<script type="text/template" id="stepPublishedViewTemplate">
+  <div class="panel_content">
+    <div class="panel">
+      <div class="content">      
+        <h1 class="tb">Photos</h1>
+        <div class="desc">
+          <h4 class="tb">
+		  Thanks for taking part in the Trailburning adventure. Don’t forget to send us the photos you just marked on the trail, we will add the photos and build the trail experience for you to share!              <br /><br />
+          Send photos to: <a href="mailto:events@trailburning.com">events@trailburning.com</a>            
             </h4>
           </div> 
           <div class="next_step"><a href="../../" class="btn btn-tb-action btn-tb-large submit">Discover Trails</a></div>
@@ -234,7 +357,6 @@
         <div class="step_marker">3</div>  
       </div>
     </div>    
-  </div>    
 </script>
 
 <script type="text/template" id="trailMapViewTemplate">
@@ -257,6 +379,8 @@
 
 <script src="assets/js/libs/jquery.iframe-transport.js"></script>
 <script src="assets/js/libs/jquery.fileupload.js"></script>
+
+<script src="assets/js/libs/jquery.tinysort.js"></script>
 
 <script data-main="assets/js/main" src="assets/js/libs/require.js"></script>
 

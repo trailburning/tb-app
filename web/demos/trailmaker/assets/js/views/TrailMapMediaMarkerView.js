@@ -10,10 +10,11 @@ define([
   var TrailMapMediaMarkerView = Backbone.View.extend({
     options: {placeOnTrail: true},
     initialize: function(){
+      this.model = this.options.model;
       this.trailModel = this.options.trailModel;
       this.point = null;
-      this.latlng = this.options.latlng;
       this.map = this.options.map;
+      this.popup = null;
       this.marker = null;
       this.nSize = DEF_ICONS;
       if (this.options.size) {
@@ -63,38 +64,69 @@ define([
         this.marker.setZIndexOffset(100);
       }
     },    
+    showPopup: function(){
+      var popup_options = {
+        autoPan: true,
+        closeButton: true,
+        maxWidth: 500
+      };                
+        
+      this.popup = L.popup(popup_options)
+      .setLatLng([this.marker.getLatLng().lat, this.marker.getLatLng().lng])
+      .setContent(this.popupContainer[0])
+      .openOn(this.map);  
+
+	  // scale images when loaded
+	  var elImages = $('.trail_media_popup .scale');
+	  var imgLoad = imagesLoaded(elImages);
+      imgLoad.on('always', function(instance) {
+        for ( var i = 0, len = imgLoad.images.length; i < len; i++ ) {
+          $(imgLoad.images[i].img).addClass('scale_image_ready');
+        }
+        // update pos
+        $('.trail_media_popup img.scale_image_ready').imageScale();
+        // fade in - delay adding class to ensure image is ready  
+        $('.trail_media_popup .fade_on_load').addClass('tb-fade-in');
+        $('.trail_media_popup .image_container').css('opacity', 1);
+      });
+      // force resrc
+      resrc.resrcAll();
+    },    
+    hidePopup: function(){
+      if (this.popup) {
+     	this.map.closePopup(this.popup);
+      }
+    },
     render: function(){
       var self = this;
-      
-      this.marker = L.marker([this.latlng.lat, this.latlng.lng], {icon: this.mediaInactiveIcon, draggable:'true'}).on('click', onClick).addTo(this.map);
-      
+
+      var versions = this.model.get('versions');
       // Create an element to hold all your text and markup
-      var container = $('<div />');      
+      this.popupContainer = $('<div />');      
       // Delegate all event handling for the container itself and its contents to the container
-      container.on('click', '.deletepin_btn', function() {
+      this.popupContainer.on('click', '.btnDeleteMarker', function() {
         // fire event
         app.dispatcher.trigger("TrailMapMediaMarkerView:removemedia", self);                        
         // goodbye pin
+        self.map.closePopup(self.popup);
         self.map.removeLayer(self.marker);
       });
-      container.on('click', '.save_btn', function() {        
-        self.model.set('name', $('#form_media_name').val());
-        
-        self.marker.closePopup();
-      });
-      
-      container.html('<div class="trail_media_popup"><h4 class="tb">Filename of the photo to appear at this point:</h4><div class="form-group"><input type="text" name="form_media_name" id="form_media_name" class="form-control" value="' + this.model.get('name') + '"></div><div><span class="btn btn-tb-action btn-tb-large save_btn">Save</span></div><a href="javascript:void(0)" class="deletepin_btn">delete pin</a></div>');
-//      container.html('<div class="trail_media_popup"><img src="assets/img/card_hero_tb.jpg"></div>');
-      this.marker.bindPopup(container[0], {'closeButton': false});      
+      this.popupContainer.html('<div class="trail_media_popup"><div class="image_container"><img src="http://app.resrc.it/O=80/http://s3-eu-west-1.amazonaws.com/'+versions[0].path+'" class="resrc scale"></div><div class="detail_container"><h3 class="tb">IMG_'+this.model.id+'</h3><div class="btns"><a href="javascript:void(0)" class="btnDeleteMarker button">Delete</a></div></div></div></div>');
 
       function onClick(e) {
+      	self.showPopup();      	
         // fire event
         app.dispatcher.trigger("TrailMapMediaMarkerView:mediaclick", self);                        
       }
+      this.marker = L.marker([this.model.get('coords').lat, this.model.get('coords').long], {icon: this.mediaInactiveIcon, draggable:'true'}).on('click', onClick).addTo(this.map);
+      
       this.marker.on('dragstart', function(event){
+      	self.hidePopup();
       });
       this.marker.on('dragend', function(event){
         self.placeMarker();
+        // fire event
+        app.dispatcher.trigger("TrailMapMediaMarkerView:mediamoved", self);                        
       });
             
       // locate initial point
@@ -108,27 +140,31 @@ define([
       var self = this;
       
       // look for closest point      
-      var nClosestDistance = 0, nDistance = 0;
-      var data = this.trailModel.get('value');      
+      var nClosestDistance = -1, nDistance = 0, nDistanceToMarker = 0, nLength = 0, latlng = null, prevLatLng = null;;
+      var data = this.trailModel.get('value');
+      
       $.each(data.route.route_points, function(key, point) {
         nDistance = self.marker.getLatLng().distanceTo([Number(point.coords[1]), Number(point.coords[0])]);
-        if (nDistance < nClosestDistance || !nClosestDistance) {
+
+        latlng = L.latLng(Number(point.coords[1]), Number(point.coords[0]));
+        if (prevLatLng) {
+          nLength += latlng.distanceTo(prevLatLng);
+        }        
+        prevLatLng = latlng;
+        
+        if (nDistance < nClosestDistance || nClosestDistance == -1) {
           nClosestDistance = nDistance;       
           self.point = point;    
+          nDistanceToMarker = nLength;
         }        
       });
-      
       // position on closest point      
       this.marker.setLatLng([Number(this.point.coords[1]), Number(this.point.coords[0])]);            
-      var dtDate = new Date(this.point.tags.datetime*1000); // unix timestamp to timestamp      
-      // adjust based on timezone of 1st point
-      dtDate.setSeconds(dtDate.getSeconds() + this.options.timezoneData.dstOffset + this.options.timezoneData.rawOffset);
-      // adjust to UTC
-      console.log('UTC date:'+dtDate.toUTCString());
-      
-      this.model.set('date', dtDate.toUTCString());
-      this.model.set('lat', Number(this.point.coords[1]));
-      this.model.set('lng', Number(this.point.coords[0]));      
+      // adjust to UTC            
+      this.model.get('tags').datetime = this.point.tags.datetime;
+      this.model.get('tags').altitude = this.point.tags.altitude;
+      this.model.get('coords').lat = Number(this.point.coords[1]);
+      this.model.get('coords').long = Number(this.point.coords[0]);
     }
     
   });
