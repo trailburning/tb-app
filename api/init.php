@@ -7,7 +7,7 @@ error_reporting(E_ALL);
 
 // Allow third party sites to make AJAX calls to this API
 header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET, POST, DELETE, OPTIONS');
+header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
 
 // Strtotime should read datetime without timezone info as relative to UTC, and not current
 // server timezone
