@@ -45,6 +45,7 @@ define([
           $.ajax({
             url: remote,
             type: 'POST',            
+            dataType: 'json',
             xhr: function() {
               var myXhr = $.ajaxSettings.xhr();
               if(myXhr.upload && progressFn) {                

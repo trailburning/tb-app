@@ -38,7 +38,8 @@ define([
           formData.append('gpxfile', $('input[type="file"]', this)[0].files[0]);    
           $.ajax({
             url: remote,
-            type: 'POST',            
+            type: 'POST',      
+            dataType: 'json',                  
             xhr: function() {
               var myXhr = $.ajaxSettings.xhr();
               if(myXhr.upload && progressFn) {                
