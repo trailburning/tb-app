@@ -1,11 +1,9 @@
 imports:
-    - { resource: "../../config/common_parameters.yml" }    
+    - { resource: "../../config/parameters.yml" }    
     - { resource: parameters.yml }
-    - { resource: parameters.php }	
-    - { resource: "../../config/common_config.yml" }
+    - { resource: "../../config/parameters.yml" }	
+    - { resource: "../../config/config.yml" }
     - { resource: security.yml }
-
-
 
 services:
     rest_client:

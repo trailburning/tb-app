@@ -58,7 +58,7 @@
     },
     "config": {
         "bin-dir": "bin",
-        "file": "app/config/common_parameters.yml"
+        "file": "app/config/parameters.yml"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
@@ -66,7 +66,7 @@
         "symfony-app-dir": "app",
         "symfony-web-dir": "web",
         "incenteev-parameters": {
-            "file": "app/config/common_parameters.yml"
+            "file": "app/config/parameters.yml"
         },
         "branch-alias": {
             "dev-master": "2.4-dev"
