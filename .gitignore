@@ -19,8 +19,6 @@ api/doc/cache
 /app/frontend/logs/*
 /vendor/
 /app/config/parameters.yml
-/app/frontend/config/parameters.yml
-/app/api/config/parameters.yml
 /app/config/common_parameters.yml
 *tm_properties 
 /tools/*.sql
