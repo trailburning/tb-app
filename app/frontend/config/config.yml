@@ -1,7 +1,7 @@
 imports:
     - { resource: "../../config/parameters.yml" }    
     - { resource: parameters.yml }
-    - { resource: "../../config/parameters.yml" }	
+    - { resource: "../../config/parameters.php" }	
     - { resource: "../../config/config.yml" }
     - { resource: security.yml }
 
