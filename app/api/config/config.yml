@@ -6,7 +6,7 @@ imports:
     - { resource: security.yml }
 
 
-# Twig Configuration 
+# Twig Configuration
 twig:
     exception_controller: 'TB\Bundle\APIBundle\Controller\ExceptionController::showAction'
 
