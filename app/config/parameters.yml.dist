@@ -1,0 +1,19 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_driver: pdo_pgsql
+    database_host: localhost
+    database_port: 5432
+    database_name: trailburning
+    database_user: 
+    database_password: 
+    mailer_transport: smtp
+    mailer_host: localhost
+    mailer_user: null
+    mailer_password: null
+    locale: en
+    rest_client_class: Guzzle\Http\Client
+    api_host: http://localhost:8888/trailburning_api
+    postgis_class: TB\Bundle\APIBundle\Util\Postgis    
+    s3_client_class: Aws\S3\S3Client
+    aws_accesskey: 
+    aws_secretkey:     

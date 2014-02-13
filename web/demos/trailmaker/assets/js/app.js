@@ -1,7 +1,12 @@
 var app = app || {};
 
 //var RESTAPI_BASEURL = 'http://trailburning.herokuapp.com/api/';
-var RESTAPI_BASEURL = 'http://localhost:8888/trailburning_api/';
+//var RESTAPI_BASEURL = 'http://localhost:8888/trailburning_api/';
+var RESTAPI_BASEURL = 'http://trailburning-staging.herokuapp.com/api/';
+
+//var nTrail = 0;
+//var nTrail = 158;
+var nTrail = 148;
 
 define([
   'underscore', 
@@ -15,7 +20,7 @@ define([
   var initialize = function() {
     this.trailModel = new TrailModel();
             
-//    this.trailModel.id = 137;
+//    this.trailModel.id = 157;
 //    this.trailModel.destroy();
             
     $('#search_field').focus(function(evt) {

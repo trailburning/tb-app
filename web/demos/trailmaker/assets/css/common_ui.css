@@ -492,10 +492,10 @@ h4.tb {
 }
 
 .tb-move {
-  -webkit-transition: top 1s;
-  -moz-transition: top 1s;
-  -o-transition: top 1s;
-  transition: top 1s;    
+  -webkit-transition: top 1s, left 1s;
+  -moz-transition: top 1s, left 1s;
+  -o-transition: top 1s, left 1s;
+  transition: top 1s, left 1s;    
   -webkit-transform:translate3d(0,0,0);              
 }
 

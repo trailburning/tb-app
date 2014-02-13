@@ -12,7 +12,14 @@ define([
 
       $(this.el).html(this.template());
 
-      $('#fileupload').change(function(){
+	  // mla test
+	  if (nTrail) {
+        // fire event
+        app.dispatcher.trigger("TrailUploadGPXView:uploaded", self);                
+		return;
+	  }
+
+      $('#gpxfileupload').change(function(){
         $('#uploadGPX_view').hide();
         $('#uploadGPXprogress_view').show();
         self.upload();
@@ -31,7 +38,8 @@ define([
           formData.append('gpxfile', $('input[type="file"]', this)[0].files[0]);    
           $.ajax({
             url: remote,
-            type: 'POST',            
+            type: 'POST',      
+            dataType: 'json',                  
             xhr: function() {
               var myXhr = $.ajaxSettings.xhr();
               if(myXhr.upload && progressFn) {                
@@ -57,7 +65,7 @@ define([
         });
       };   
       
-      $('#uploadForm').upload(strURL, function(res) {
+      $('#uploadGPXForm').upload(strURL, function(res) {
         // fire event
         app.dispatcher.trigger("TrailUploadGPXView:uploaded", self);                
       },function(data) {

@@ -1,113 +1,242 @@
 define([
   'underscore', 
   'backbone',
+  'models/TrailMediasModel',    
   'views/TrailMapView',
   'views/StepWelcomeView',  
-  'views/Step1View',  
-  'views/Step2View',
-  'views/Step3View'
-], function(_, Backbone, TrailMapView, StepWelcomeView, Step1View, Step2View, Step3View){
+  'views/StepDetailView',  
+  'views/StepRouteView',
+  'views/StepRouteEditView',
+  'views/StepPublishedView'
+], function(_, Backbone, TrailMediasModel, TrailMapView, StepWelcomeView, StepDetailView, StepRouteView, StepRouteEditView, StepPublishedView){
+
+  var TITLE_TIMER = 10000;
+
+  var TITLE_OFF = 0;
+  var TITLE_ON = 1;
 
   var AppView = Backbone.View.extend({
     initialize: function(){
       app.dispatcher.on("StepWelcomeView:submitclick", this.onStepWelcomeViewSubmitClick, this);
-      app.dispatcher.on("Step1View:submitclick", this.onStep1ViewSubmitClick, this);
-      app.dispatcher.on("Step2View:gpxuploaded", this.onStep2ViewGPXUploaded, this);
-      app.dispatcher.on("Step2View:submitclick", this.onStep2ViewSubmitClick, this);
-      app.dispatcher.on("Step3View:submitclick", this.onStep3ViewSubmitClick, this);
+      app.dispatcher.on("StepDetailView:submitclick", this.onStepDetailViewSubmitClick, this);
+      app.dispatcher.on("StepRouteView:gpxuploaded", this.onStepRouteViewGPXUploaded, this);
+      app.dispatcher.on("StepRouteEditView:photouploaded", this.onStepRouteEditViewPhotoUploaded, this);
+      app.dispatcher.on("StepRouteEditView:galleryPhotoClick", this.onStepRouteEditViewGalleryPhotoClick, this);
+      app.dispatcher.on("StepRouteEditView:submitclick", this.onStepRouteEditViewSubmitClick, this);
+      app.dispatcher.on("StepPublishedView:submitclick", this.onStepPublishedViewSubmitClick, this);
+
+      this.nTitleState = TITLE_OFF;
+      this.mediasModel = new TrailMediasModel();
+      this.mediaCollection = new Backbone.Collection();
+
+      $('#trail_map_view').addClass('map_large');
+
+      var self = this;
+      $(window).resize(function() {
+        self.handleResize();
+      });    
 
       // Trail Map    
       this.trailMapView = new TrailMapView({ el: '#trail_map_view', elCntrls: '#view_map_btns', model: this.model });
       
       // Step Welcome
       this.stepWelcomeView = new StepWelcomeView({ el: '#step_welcome_view', model: this.model });
-      $('#step_welcome_view').show();
-      this.stepWelcomeView.render();    
-      // Step 1
-      this.step1View = new Step1View({ el: '#step1_view', model: this.model });
-//      $('#step1_view').show();
-//      this.step1View.render();    
-      // Step 2
-      this.step2View = new Step2View({ el: '#step2_view', model: this.model });
-//      $('#step2_view').show();    
-//      this.step2View.render();
-      // Step 3
-      this.step3View = new Step3View({ el: '#step3_view', model: this.model });
-//      $('#step3_view').show();    
-//      this.step3View.render();
-  
+      if (!nTrail) {
+        $('#step_welcome_view').show();
+        this.stepWelcomeView.render();
+      }    
+      // Step Detail
+      this.stepDetailView = new StepDetailView({ el: '#step_detail_view', model: this.model });
+//      $('#step_detail_view').show();
+//      this.stepDetailView.render();    
+      // Step Rpute
+      this.stepRouteView = new StepRouteView({ el: '#step_route_view', model: this.model });
+//      $('#step_route_view').show();    
+//      this.stepRouteView.render();
+      // Step Route Edit
+      this.stepRouteEditView = new StepRouteEditView({ el: '#step_route_edit_view', model: this.model, mediaCollection: this.mediaCollection });
+      if (nTrail) {
+        $('#step_route_edit_view').show();          
+        this.stepRouteView.render();
+        this.stepRouteEditView.render();      	
+      }
+      // Step Published
+      this.stepPublishedView = new StepPublishedView({ el: '#step_published_view', model: this.model });
+//      $('#step_published_view').show();    
+//      this.stepPublishedView.render();
+    
+  	  this.handleResize();
+//      this.trailMapView.render();
+    
       $('#footerview').show();            
+    },
+    handleResize: function(){
+      var elContentView = $('#contentview');
+      var elHeaderView = $('#headerview');
+      var elFooterView = $('#headerview');
+      var nHeight = 0;
+	  
+	  if ($('#trail_map_view.map_large').length) {
+	  	nHeight = $(window).height() - elHeaderView.height();
+		if (nHeight < $('#steps').height()) {
+		  nHeight = $('#steps').height();
+		}			  	
+	  	$('#contentview').height(nHeight);
+	  }
+	  else {
+	    $('#contentview').height('100%');
+	  }
+    },
+    showTitle: function(){
+      if (this.nTitleState != TITLE_OFF) {
+        return;
+      }
+          
+      this.nTitleState = TITLE_ON;
+
+      $('#trail_info').addClass('tb-move');
+      $('#trail_info').css('top', 24);
+      
+      var self = this;          
+      this.nTitleTimer = setTimeout(function() {
+        self.hideTitle();
+      }, TITLE_TIMER);                  
+    },    
+    hideTitle: function(){
+      if (this.nTitleState != TITLE_ON) {
+        return;
+      }    
+      this.nTitleState = TITLE_OFF;
+      
+      $('#trail_info').css('top', -300);        
+    },
+    setTitles: function(){          	
+      // set title
+      if (this.model.get('value').route.name != '' && this.model.get('value').route.name != undefined) {
+        $('#trail_info').show();
+        $('#trail_info .event_name').html(this.model.get('value').route.name);
+        $('#trail_info .event_name').css('visibility', 'visible');
+      }
+      if (this.model.get('value').route.region != '' && this.model.get('value').route.region != undefined) {
+        $('#trail_info').show();
+        $('#trail_info .trail_name').html(this.model.get('value').route.region);
+        $('#trail_info .trail_name').css('visibility', 'visible');
+      }
     },
     getTrail: function(){
       var self = this;
       
       this.model.fetch({
         success: function () {
-          self.getTimeZone();
+      	  self.setTitles();           
+          self.trailMapView.render();          
+          self.getTrailMedia();
+          self.showTitle();          
         }      
       });        
     },
-    getTimeZone: function(){
-      var self = this;    
+    getTrailMedia: function(){
+      var self = this; 
       
-      var data = this.model.get('value');      
-      var firstPoint = data.route.route_points[0];
-      var nTimestamp = firstPoint.tags.datetime;
-      
-      var strURL = 'https://maps.googleapis.com/maps/api/timezone/json?location='+Number(firstPoint.coords[1])+','+Number(firstPoint.coords[0])+'&timestamp='+nTimestamp+'&sensor=false';
-      $.ajax({
-        url: strURL,
-        type: 'GET',            
-        cache: false,
-        contentType: false,
-        processData: false,
-        success: function(data) {
-          self.timezoneData = data; 
-          self.trailMapView.setTimeZoneData(self.timezoneData);
-          self.trailMapView.render();          
-        },
+      this.mediasModel.url = RESTAPI_BASEURL + 'v1/route/'+this.model.get('id')+'/medias';
+      this.mediasModel.fetch({
+        success: function () {
+	      var data = self.mediasModel.get('value');
+	      $.each(data, function(key, jsonMedia) {
+			self.trailMapView.addMarker(jsonMedia, true);
+		    self.mediaCollection.add(jsonMedia);
+	      });
+	      self.stepRouteEditView.renderSlideshow();
+        }
       });
     },
     onStepWelcomeViewSubmitClick: function(stepWelcomeView){
       $('#step_welcome_view').hide();
-      $('#step1_view').show();
-      this.step1View.render();
+      $('#step_detail_view').show();
+      this.stepDetailView.render();
       
       $("body").animate({scrollTop:0}, '500', 'swing');
     },
-    onStep1ViewSubmitClick: function(step1View){
-      $('#step1_view').hide();
-      $('#step2_view').show();
-      this.step2View.render();
+    onStepDetailViewSubmitClick: function(stepDetailView){
+      $('#step_detail_view').hide();
+      $('#step_route_view').show();
+      this.stepRouteView.render();
       $('#trail_map_overlay').show();
             
-      // set title
-      if (this.model.get('event_name') != '' && this.model.get('event_name') != undefined) {
-        $('#trail_info').show();
-        $('#trail_info .event_name').html(this.model.get('event_name'));
-        $('#trail_info .event_name').css('visibility', 'visible');
-      }
-      if (this.model.get('trail_name') != '' && this.model.get('trail_name') != undefined) {
-        $('#trail_info').show();
-        $('#trail_info .trail_name').html(this.model.get('trail_name'));
-        $('#trail_info .trail_name').css('visibility', 'visible');
-      }
       this.trailMapView.render();          
       
       $("body").animate({scrollTop:0}, '500', 'swing');
     },   
-    onStep2ViewGPXUploaded: function(step2View){
+    onStepRouteViewGPXUploaded: function(step2View){
+	  $('#trail_map_view').removeClass('map_large');
+	  $('#trail_map_view').addClass('map_small');
+  
+      $('#step_route_view').hide();
+      $('#step_route_edit_view').show();
+  	  this.stepRouteEditView.render();
+  
+      this.handleResize();
+    	
+      // mla test
+      if (nTrail) {
+      	this.model.set('id', nTrail);
+      }
       this.getTrail();      
       
       $('#trail_map_overlay', $(this.el)).hide();
       $('#view_map_btns', $(this.el)).show();
     },    
-    onStep2ViewSubmitClick: function(step2View){      
-      var jsonObj = {'id':this.model.get('id'), 'name':this.model.get('name'), 'email':this.model.get('email'), 'event_name':this.model.get('event_name'), 'trail_name':this.model.get('trail_name'), 'trail_notes':this.model.get('trail_notes'), 'media':this.trailMapView.collectionMedia.toJSON()};
+    onStepRouteEditViewPhotoUploaded: function(trailUploadPhotoView){
+    	console.log(trailUploadPhotoView.photoData);
+	  var data = trailUploadPhotoView.photoData.value[0];
+//	  var data = trailUploadPhotoView.photoData;
+	  this.trailMapView.addMarker(data, true, "");
+	  this.mediaCollection.add(data);
+	  
+	  this.stepRouteEditView.renderSlideshow();
+    },    
+    onStepRouteEditViewGalleryPhotoClick: function(mediaID){
+      this.trailMapView.selectMarker(mediaID);    
+	},    
+    onStepRouteEditViewSubmitClick: function(step2View){      
+//      $('#content_overlay').show();
+/*      
+      return;
+    	
+      var jsonObj = {'name':'trailburning', 'region':'Berlin', 'about':'A really lovely trail.', 'publish':true};
+      var postData = JSON.stringify(jsonObj);
+      var postArray = {json:postData};
+
+      var strURL = RESTAPI_BASEURL + 'v1/route/' + this.model.id;      
+      $.ajax({
+        type: "PUT",
+        dataType: "json",
+        url: strURL,
+        data: postArray,
+        error: function(data) {
+          console.log('error:'+data.responseText);      
+          console.log(data);      
+        },
+        success: function(data) {      
+          console.log('success');
+          console.log(data);
+        }
+      });
+*/        
+/*      
+name (string)
+region (string)
+about (string)
+publish (boolean)
+route_type_id (integer)
+route_category_id (integer)      
+*/
+
+/*    	
+      var jsonObj = {'id':this.model.get('id'), 'name':this.model.get('name'), 'email':this.model.get('email'), 'event_name':this.model.get('event_name'), 'trail_name':this.model.get('trail_name'), 'trail_notes':this.model.get('trail_notes'), 'media':this.mediasModel.get('value')};
       var postData = JSON.stringify(jsonObj);
       var postArray = {json:postData};
       
-//      console.log(postData);      
       $.ajax({
         type: "POST",
         dataType: "json",
@@ -123,14 +252,29 @@ define([
         }
       });  
 
-      $('#step2_view').hide();    
-      $('#step3_view').show();    
-      this.step3View.render();
+      $('#step_route_view').hide();    
+      $('#step_published_view').show();    
+      this.stepPublishedView.render();
       $('#trail_map_overlay').show();
       
       $("body").animate({scrollTop:0}, '500', 'swing');
+*/          
+
+	  $('#trail_map_view').removeClass('map_small');
+	  $('#trail_map_view').addClass('map_large');
+
+      $('#step_route_edit_view').hide();    
+      $('#step_published_view').show();    
+      this.stepPublishedView.render();
+      
+      $('#trail_map_overlay').show();
+      $('#view_map_btns', $(this.el)).hide();
+
+      this.handleResize();
+      this.trailMapView.render();
+      
+      $("body").animate({scrollTop:0}, '500', 'swing');
     }
-    
   });
 
   return AppView;
