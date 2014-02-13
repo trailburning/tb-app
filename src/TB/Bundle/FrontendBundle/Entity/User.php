@@ -3,17 +3,18 @@
 namespace TB\Bundle\FrontendBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use FOS\UserBundle\Model\User as BaseUser;
 
 /**
  * User
  *
  * @ORM\Entity
- * @ORM\Table(name="`user`")
+ * @ORM\Table(name="fos_user")
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
  * @ORM\DiscriminatorMap({"user" = "UserProfile", "brand" = "BrandProfile"})
  */
-abstract class User
+abstract class User extends BaseUser
 {
     
     /**
@@ -23,7 +24,7 @@ abstract class User
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
     
     /**
      * @var string

@@ -89,4 +89,8 @@ services:
     rest_client:
         class:      %rest_client_class%
         arguments:  [%api_host%]
-        
+
+fos_user:
+    db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
+    firewall_name: main
+    user_class: TB\Bundle\FrontendBundle\Entity\User 

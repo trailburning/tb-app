@@ -5,8 +5,7 @@
     "description": "The \"Symfony Standard Edition\" distribution",
     "autoload": {
         "psr-0": { 
-			"": "src/",
-			"TBAPI": "api/lib/"
+			"": "src/"
 		}
     },
     "require": {
@@ -27,7 +26,10 @@
         "creof/doctrine2-spatial": "dev-master",
         "easybib/doctrinetypes": "*",
 		"guzzle/guzzle": "v3.7.4",
-        "doctrine/doctrine-fixtures-bundle": "dev-master"
+        "doctrine/doctrine-fixtures-bundle": "dev-master",
+        "friendsofsymfony/user-bundle": "2.0.*@dev",
+        "doctrine/migrations": "dev-master",
+        "doctrine/doctrine-migrations-bundle": "dev-master"
     },
     "repositories": [
         {
@@ -36,7 +38,7 @@
         }
     ],
     "require-dev": {
-        "codeception/codeception": "@stable",
+        "phpunit/phpunit": "@stable",
         "sami/sami": "1.0.*@dev",
         "liip/functional-test-bundle": "dev-master"
     },

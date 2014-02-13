@@ -35,7 +35,7 @@ class GpxFileControllerTest extends AbstractApiTestCase
 
         $crawler = $client->request('POST', '/v1/import/gpx', array(), array('gpxfile' => $gpxfile));
         $this->assertEquals(Response::HTTP_OK,  $client->getResponse()->getStatusCode());
-        
+        $this->assertEquals('application/json',  $client->getResponse()->headers->get('Content-Type'));
     }
 
 }
