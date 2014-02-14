@@ -131,6 +131,7 @@ html.touch #small_sponsor_bar {
 }
 
 .editorial_panel .hero {
+  position: relative;
   margin: 0px 8px 0px 8px;
   width: 1096px;
 }
@@ -139,8 +140,14 @@ html.touch #small_sponsor_bar {
   position: relative;
   opacity: 0;
   width: 100%;
-  height: 336px;  
+  height: 444px;  
   overflow: hidden;  
+}
+
+.editorial_panel .tb-credit {
+  position: absolute;
+  bottom: 12px;
+  right: 30px;
 }
 
 .editorial_panel .content {
@@ -548,7 +555,7 @@ html.touch #small_sponsor_bar {
 	width: 952px;
   }
   .editorial_panel .hero .image_container {
-  	height: 292px;
+  	height: 386px;
   }
   .editorial_panel .content {
     margin-top: 26px;
