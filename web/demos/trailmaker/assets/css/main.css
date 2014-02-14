@@ -354,6 +354,22 @@ border-width:1px;
   padding-top: 18px;
 }
 
+#step_route_edit_view .detail_panel .btn-info {
+  line-height: 32px;
+  font-size: 22px;	
+  color: #979797;
+  border-color: #b9b9b3;
+  background-color: #ffffff;
+  background-image: none;
+  text-shadow: none;
+}
+
+#step_route_edit_view .detail_panel .btn-info .caret {
+  margin-top: 15px;	
+  border-top-color: #979797;
+  border-bottom-color: #979797;	
+}
+
 #step_route_edit_view .detail_panel .form-group {
   width: 324px;
   margin: 14px auto 0px auto;  
