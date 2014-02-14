@@ -12,6 +12,10 @@ class AppKernel extends Kernel
     
     public function __construct($environment, $debug)
     {
+	    // Allow third party sites to make AJAX calls to this API
+		header('Access-Control-Allow-Origin: *');
+		header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
+    	
         // All PHP date functions should read datetime without timezone info as relative to UTC, and not current server timezone
         date_default_timezone_set('UTC');
         parent::__construct($environment, $debug);
