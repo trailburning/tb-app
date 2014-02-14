@@ -41,7 +41,13 @@ define([
       this.trailSlideshowView = new TrailSlideshowView({ el: '#slideshow_view', collection: this.options.mediaCollection });
 
       this.trailUploadPhotoView.render();          
-      
+
+      $('#form_trail_name').val(this.model.get('value').route.name);
+      $('#form_trail_region').val(this.model.get('value').route.region);
+      $('#form_trail_notes').val('');
+      $('.update_details', $(this.el)).click(function(evt) {
+      });
+            
       $('.submit', $(this.el)).click(function(evt) {
         // fire event
         app.dispatcher.trigger("StepRouteEditView:submitclick", self);                        

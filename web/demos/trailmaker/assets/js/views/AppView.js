@@ -57,8 +57,8 @@ define([
       this.stepRouteEditView = new StepRouteEditView({ el: '#step_route_edit_view', model: this.model, mediaCollection: this.mediaCollection });
       if (nTrail) {
         $('#step_route_edit_view').show();          
-        this.stepRouteView.render();
-        this.stepRouteEditView.render();      	
+        self.stepRouteView.render();
+//        self.stepRouteEditView.render();      	
       }
       // Step Published
       this.stepPublishedView = new StepPublishedView({ el: '#step_published_view', model: this.model });
@@ -131,7 +131,8 @@ define([
       	  self.setTitles();           
           self.trailMapView.render();          
           self.getTrailMedia();
-          self.showTitle();          
+          self.showTitle();                 
+          self.stepRouteEditView.render();      	
         }      
       });        
     },
@@ -173,7 +174,6 @@ define([
   
       $('#step_route_view').hide();
       $('#step_route_edit_view').show();
-  	  this.stepRouteEditView.render();
   
       this.handleResize();
     	
@@ -187,9 +187,7 @@ define([
       $('#view_map_btns', $(this.el)).show();
     },    
     onStepRouteEditViewPhotoUploaded: function(trailUploadPhotoView){
-    	console.log(trailUploadPhotoView.photoData);
 	  var data = trailUploadPhotoView.photoData.value[0];
-//	  var data = trailUploadPhotoView.photoData;
 	  this.trailMapView.addMarker(data, true, "");
 	  this.mediaCollection.add(data);
 	  
