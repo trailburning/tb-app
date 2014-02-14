@@ -475,6 +475,7 @@ html.touch #small_sponsor_bar {
   top: -100px;
   left: 144px;
   color: #44b6f7;
+  white-space: nowrap;
 }
 
 #trailplayer .no_avatar {
