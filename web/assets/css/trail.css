@@ -19,7 +19,7 @@ border-width:1px;
   position: fixed;
   top: 63px;
   width: 100%;
-  height: 51px;
+  height: 43px;
   background: url("../img/sponsor/back_small.png") repeat-x top left;
 }
 
@@ -36,7 +36,7 @@ html.touch #small_sponsor_bar {
 }
 
 #small_sponsor_bar .sponsor_content {
-  margin: 14px auto 0px auto;
+  margin: 6px auto 0px auto;
   width: 1112px;	
 }
 
@@ -90,7 +90,7 @@ html.touch #small_sponsor_bar {
 }
 
 #content_view.sponsor_header {
-  top: 114px;
+  top: 106px;
 }
 
 /* TRAIL PLAYER */
