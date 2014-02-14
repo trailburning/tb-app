@@ -83,6 +83,8 @@ abstract class User extends BaseUser
         $this->routes = new \Doctrine\Common\Collections\ArrayCollection();
         $this->events = new \Doctrine\Common\Collections\ArrayCollection();
         $this->editorials = new \Doctrine\Common\Collections\ArrayCollection();
+        
+        parent::__construct();
     }
     
     abstract public function getTitle();
