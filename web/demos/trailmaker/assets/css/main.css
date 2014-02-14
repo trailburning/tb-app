@@ -383,6 +383,10 @@ border-width:1px;
   font-size: 22px;
 }
 
+#step_route_edit_view .detail_panel .update {
+	padding-top: 12px;
+}
+
 #step_route_edit_view .slideshow_container {
   padding-top: 20px;
   width: 100%;
