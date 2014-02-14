@@ -33,6 +33,8 @@ define([
       }
       this.bRendered = true;
                             
+	  var self = this;                            
+                            
       var attribs = this.model.toJSON();
       $(this.el).html(this.template(attribs));
 
@@ -45,7 +47,12 @@ define([
       $('#form_trail_name').val(this.model.get('value').route.name);
       $('#form_trail_region').val(this.model.get('value').route.region);
       $('#form_trail_notes').val('');
-      $('.update_details', $(this.el)).click(function(evt) {
+      $('.update_details', $(this.el)).click(function(evt) {      
+        self.model.get('value').route.name = $('#form_trail_name').val();
+        self.model.get('value').route.region = $('#form_trail_region').val();
+//        self.model.get('value').route.about = $('#form_trail_notes').val('');      	
+        // fire event
+        app.dispatcher.trigger("StepRouteEditView:updatedetailsclick", self);                        
       });
             
       $('.submit', $(this.el)).click(function(evt) {

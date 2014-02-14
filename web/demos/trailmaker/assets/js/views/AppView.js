@@ -22,6 +22,7 @@ define([
       app.dispatcher.on("StepRouteView:gpxuploaded", this.onStepRouteViewGPXUploaded, this);
       app.dispatcher.on("StepRouteEditView:photouploaded", this.onStepRouteEditViewPhotoUploaded, this);
       app.dispatcher.on("StepRouteEditView:galleryPhotoClick", this.onStepRouteEditViewGalleryPhotoClick, this);
+      app.dispatcher.on("StepRouteEditView:updatedetailsclick", this.onStepRouteEditViewUpdateDetailsClick, this);
       app.dispatcher.on("StepRouteEditView:submitclick", this.onStepRouteEditViewSubmitClick, this);
       app.dispatcher.on("StepPublishedView:submitclick", this.onStepPublishedViewSubmitClick, this);
 
@@ -196,12 +197,9 @@ define([
     onStepRouteEditViewGalleryPhotoClick: function(mediaID){
       this.trailMapView.selectMarker(mediaID);    
 	},    
-    onStepRouteEditViewSubmitClick: function(step2View){      
-//      $('#content_overlay').show();
-/*      
-      return;
-    	
-      var jsonObj = {'name':'trailburning', 'region':'Berlin', 'about':'A really lovely trail.', 'publish':true};
+    onStepRouteEditViewUpdateDetailsClick: function(stepRouteEditView){      
+//      var jsonObj = {'name':this.model.get('value').route.name, 'region':'Berlin', 'about':'A really lovely trail.'};
+      var jsonObj = {'name':this.model.get('value').route.name, 'region':this.model.get('value').route.region};
       var postData = JSON.stringify(jsonObj);
       var postArray = {json:postData};
 
@@ -220,25 +218,18 @@ define([
           console.log(data);
         }
       });
-*/        
-/*      
-name (string)
-region (string)
-about (string)
-publish (boolean)
-route_type_id (integer)
-route_category_id (integer)      
-*/
-
-/*    	
-      var jsonObj = {'id':this.model.get('id'), 'name':this.model.get('name'), 'email':this.model.get('email'), 'event_name':this.model.get('event_name'), 'trail_name':this.model.get('trail_name'), 'trail_notes':this.model.get('trail_notes'), 'media':this.mediasModel.get('value')};
+    
+	},    	
+    onStepRouteEditViewSubmitClick: function(stepRouteEditView){
+      var jsonObj = {'publish':true};
       var postData = JSON.stringify(jsonObj);
       var postArray = {json:postData};
-      
+
+      var strURL = RESTAPI_BASEURL + 'v1/route/' + this.model.id;      
       $.ajax({
-        type: "POST",
+        type: "PUT",
         dataType: "json",
-        url: 'server/sendTrailProxy.php',
+        url: strURL,
         data: postArray,
         error: function(data) {
           console.log('error:'+data.responseText);      
@@ -248,15 +239,16 @@ route_category_id (integer)
           console.log('success');
           console.log(data);
         }
-      });  
-
-      $('#step_route_view').hide();    
-      $('#step_published_view').show();    
-      this.stepPublishedView.render();
-      $('#trail_map_overlay').show();
-      
-      $("body").animate({scrollTop:0}, '500', 'swing');
-*/          
+      });
+    	      
+/*      
+name (string)
+region (string)
+about (string)
+publish (boolean)
+route_type_id (integer)
+route_category_id (integer)      
+*/
 
 	  $('#trail_map_view').removeClass('map_small');
 	  $('#trail_map_view').addClass('map_large');
