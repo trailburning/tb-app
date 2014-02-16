@@ -1,0 +1,61 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+{% trans_default_domain 'FOSUserBundle' %}
+{% form_theme form 'TBFrontendBundle:Form:default.html.twig' %}
+
+{% block stylesheets %}
+<link href="{{ asset('assets/css/signup.css') }}" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block fos_user_content %}
+
+{% set breadcrumb = [{'name': 'fos_user_registration_register', 'params': [], 'label': 'Join Trailburning'}] %}
+
+<script>
+var TB_APP = 'SignupApp';
+</script>
+
+<div id="def_header">  
+    <div class="image_container fade_on_load"><img src="http://app.resrc.it/http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/pages/hero_wall_forest.jpg" class="resrc scale" /></div>
+    <div class="event_title">
+        <h1 class="tb tb-title">You are</h1>
+        <br/>
+        <h1 class="tb tb-title">#trailburning</h1>
+    </div>      
+</div>  
+
+<div class="panel_content">          
+    <div id="bigbar">
+        {{ include('TBFrontendBundle:Default:breadcrumb.html.twig', breadcrumb) }}
+        {{ include('TBFrontendBundle:Default:share.html.twig') }}
+    </div>
+    
+    <div class="panel_intro">
+        <h1 class="tb tb-title">Join Trailburning</h1>
+        <div class="desc">
+            <h4 class="tb">Join to receive our newsletter and we’ll let you know when you can make your own trails.</h4>
+            <div class="signup_panel">
+                
+                <form id="signup_form" action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
+                    
+                    {# {{ form_widget(form) }}                     #}
+                    
+                    {{ form_errors(form) }}
+
+                    {{ form_row(form.email) }}
+                    {{ form_row(form.plainPassword) }}
+                    {{ form_row(form.firstName) }}
+                    {{ form_row(form.lastName) }}
+
+                    <br />
+                    
+                    <div>
+                        <button type="submit" id="signup" name="submit" class="btn btn-tb-action btn-tb-large">Sign up</button>
+                    </div>
+                    {{ form_row(form._token) }}
+                </form>
+            </div>
+        </div>      
+    </div>
+</div>  
+
+{% endblock fos_user_content %}

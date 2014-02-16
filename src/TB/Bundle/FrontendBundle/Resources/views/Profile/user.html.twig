@@ -9,8 +9,10 @@
 {% block body %}
 <script>
 var TB_APP = 'UserApp';
+{% if user.location %}
 var TB_USER_LONG = {{ user.location.longitude }};
 var TB_USER_LAT = {{ user.location.latitude }};
+{% endif %}
 </script>
 
 <div id="profile_header">

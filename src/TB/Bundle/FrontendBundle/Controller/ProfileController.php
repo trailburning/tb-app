@@ -14,6 +14,12 @@ class ProfileController extends Controller
      */
     public function profileAction($name)
     {
+        if ($name == 'admin') {
+            throw $this->createNotFoundException(
+                sprintf('The admin has no profile.')
+            );
+        }
+        
         $breadcrumb = array();
         
         $user = $this->getDoctrine()

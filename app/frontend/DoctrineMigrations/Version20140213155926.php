@@ -15,8 +15,8 @@ class Version20140213155926 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != "postgresql", "Migration can only be executed safely on 'postgresql'.");
                 
-        $this->addSql("UPDATE fos_user SET username=name, username_canonical=name, email='email@' || name, email_canonical=email, enabled=false, salt='null', password='null', locked=false, expired=false, roles='" . serialize(array('ROLE_USER')) . "', credentials_expired=false");
-        
+        $this->addSql("UPDATE fos_user SET username=name, username_canonical=name, email='email@' || name, email_canonical='email@' || name, enabled=false, salt='null', password='null', locked=false, expired=false, roles='" . serialize(array('')) . "', credentials_expired=false");
+                
         $this->addSql("UPDATE fos_user SET email='patrick@trailburning.com', email_canonical=email, enabled=true, salt='null', password='null', locked=false, expired=false, roles='" . serialize(array('ROLE_ADMIN')) . "', credentials_expired=false WHERE name='admin'");
         
         $this->addSql("UPDATE fos_user SET username=name, username_canonical=name, email='matt@trailburning.com', email_canonical=email, enabled=true, salt='null', password='null', locked=false, expired=false, roles='" . serialize(array('ROLE_USER')) . "', credentials_expired=false WHERE name='mattallbeury'");

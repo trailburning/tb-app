@@ -30,6 +30,8 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new TB\Bundle\FrontendBundle\TBFrontendBundle(),
             new TB\Bundle\APIBundle\TBAPIBundle(),
+            new FOS\UserBundle\FOSUserBundle(), 
+            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

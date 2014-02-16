@@ -1,0 +1,38 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block stylesheets %}
+<link href="{{ asset('assets/css/signup.css') }}" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block fos_user_content %}
+
+{% set breadcrumb = [{'name': 'fos_user_registration_register', 'params': [], 'label': 'Join Trailburning'}] %}
+
+<script>
+var TB_APP = 'BaseApp';
+</script>
+
+<div class="panel_content">          
+    <div id="bigbar">
+        {{ include('TBFrontendBundle:Default:breadcrumb.html.twig', breadcrumb) }}
+        {{ include('TBFrontendBundle:Default:share.html.twig') }}
+    </div>
+    
+    <div class="panel_intro">
+        <h1 class="tb tb-title">Join Trailburning</h1>
+        <div class="desc">
+            
+            <h4 class="tb">{{ 'registration.confirmed'|trans({'%username%': user.username}) }}</p></h4>
+            {% if app.session is not empty %}
+                {% set targetUrl = app.session.get('_security.' ~ app.security.token.providerKey ~ '.target_path') %}
+                {% if targetUrl is not empty %}<p><a href="{{ targetUrl }}">{{ 'registration.back'|trans }}</a></p>{% endif %}
+            {% endif %}
+
+        </div>      
+    </div>
+</div>  
+    
+    
+    
+{% endblock fos_user_content %}

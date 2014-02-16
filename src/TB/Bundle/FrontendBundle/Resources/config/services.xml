@@ -18,8 +18,17 @@
     </services>
     -->
     <services>
+        
+        <!-- Register Twig extension as service -->
         <service id="tb.twig.tb_extension" class="TB\Bundle\FrontendBundle\Twig\TBExtension">
             <tag name="twig.extension" />
         </service>
+        
+        <!-- Register custom user signup form as service -->
+        <service id="tb_user.registration.form.type" class="TB\Bundle\FrontendBundle\Form\Type\RegistrationFormType">
+            <tag name="form.type" alias="tb_user_registration" />
+            <argument>%fos_user.model.user.class%</argument>
+        </service>
+        
     </services>
 </container>
