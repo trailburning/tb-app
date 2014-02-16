@@ -21,14 +21,20 @@ define([
       app.dispatcher.on("StepDetailView:submitclick", this.onStepDetailViewSubmitClick, this);
       app.dispatcher.on("StepRouteView:gpxuploaded", this.onStepRouteViewGPXUploaded, this);
       app.dispatcher.on("StepRouteEditView:photouploaded", this.onStepRouteEditViewPhotoUploaded, this);
-      app.dispatcher.on("StepRouteEditView:galleryPhotoClick", this.onStepRouteEditViewGalleryPhotoClick, this);
+      app.dispatcher.on("StepRouteEditView:galleryphotoclick", this.onStepRouteEditViewGalleryPhotoClick, this);
       app.dispatcher.on("StepRouteEditView:updatedetailsclick", this.onStepRouteEditViewUpdateDetailsClick, this);
       app.dispatcher.on("StepRouteEditView:submitclick", this.onStepRouteEditViewSubmitClick, this);
       app.dispatcher.on("StepPublishedView:submitclick", this.onStepPublishedViewSubmitClick, this);
 
       this.nTitleState = TITLE_OFF;
       this.mediasModel = new TrailMediasModel();
-      this.mediaCollection = new Backbone.Collection();
+	  var MediaCollection = Backbone.Collection.extend({
+    	comparator: function(item) {
+    	  // sort by datetime
+          return item.get('tags').datetime;
+    	}
+	  });
+      this.mediaCollection = new MediaCollection();    
 
       $('#trail_map_view').addClass('map_large');
 
@@ -198,8 +204,7 @@ define([
       this.trailMapView.selectMarker(mediaID);    
 	},    
     onStepRouteEditViewUpdateDetailsClick: function(stepRouteEditView){      
-//      var jsonObj = {'name':this.model.get('value').route.name, 'region':'Berlin', 'about':'A really lovely trail.'};
-      var jsonObj = {'name':this.model.get('value').route.name, 'region':this.model.get('value').route.region};
+      var jsonObj = {'name':this.model.get('value').route.name, 'region':this.model.get('value').route.region, 'route_category_id':this.model.get('value').route.route_category_id};
       var postData = JSON.stringify(jsonObj);
       var postArray = {json:postData};
 
@@ -218,7 +223,6 @@ define([
           console.log(data);
         }
       });
-    
 	},    	
     onStepRouteEditViewSubmitClick: function(stepRouteEditView){
       var jsonObj = {'publish':true};

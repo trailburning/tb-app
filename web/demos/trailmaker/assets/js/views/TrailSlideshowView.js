@@ -59,6 +59,8 @@ define([
         // fire event
         app.dispatcher.trigger("TrailSlideshowView:mediaclick", $(this).attr('data-id'));
 	  });
+      // fire event
+      app.dispatcher.trigger("TrailSlideshowView:mediaupdate");                          		  	  
 	},
     gotoSlide: function(mediaID){
       bAnimate = true;          	
@@ -107,6 +109,7 @@ define([
 	  });
     },    
     sort: function(){
+      this.options.collection.sort();      
 	  // update datetime attribs    	
       this.options.collection.forEach(function(media, nIndex){
 	  	$('.slide[data-id='+media.id+']', this.el).attr('data-datetime', media.get('tags').datetime);
@@ -119,6 +122,9 @@ define([
 	  var nActiveSlide = Math.floor(elSlides.length / 2);
 	  
 	  this.moveSlides(nActiveSlide, false);
+	  
+      // fire event
+      app.dispatcher.trigger("TrailSlideshowView:mediaupdate");                          		  
 	},
     onTrailSlideshowSlideViewClick: function(trailGallerySlideView){
       this.gotoSlide(trailGallerySlideView.model.id);
