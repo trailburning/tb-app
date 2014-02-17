@@ -463,6 +463,17 @@ h4.tb {
   background: url("../icons/share/share_googleplus_red.png") no-repeat top left;
 }
 
+/* FORMS */
+/******************************************/
+form label {
+  margin: 0px;
+  padding: 0px;
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1.3em;
+  color: #979797;
+}
+
 /* TB CANDY */
 /******************************************/
 .tb-photo-btn .image_container img {  
@@ -557,9 +568,9 @@ h4.tb {
 	
 /* Medium devices (desktops, 992px and up) */
 @media (max-width: 1199px) {
-  #appview, #headerview, #footerview, #big_sponsor_bar, #small_sponsor_bar {
-    min-width: 992px;
-  }    
+  body {  
+    font-size: 14px;
+  }
   h1.tb {
     font-size: 58px;
   }  
@@ -572,6 +583,9 @@ h4.tb {
   h4.tb {
     font-size: 18px;
   }
+  form label {
+    font-size: 18px;
+  }    
 }
 
 /* Small devices (tablets, 768px) */
