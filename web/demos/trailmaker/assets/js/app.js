@@ -1,6 +1,6 @@
 var app = app || {};
 
-var RESTAPI_BASEURL = 'http://trailburning.herokuapp.com/api/';
+var RESTAPI_BASEURL = 'http://beta.trailburning.com/api/';
 //var RESTAPI_BASEURL = 'http://trailburning-staging.herokuapp.com/';
 //var RESTAPI_BASEURL = 'http://localhost:8888/trailburning_api/';
 
