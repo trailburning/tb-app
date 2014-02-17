@@ -40,6 +40,8 @@ define([
     function handleResize() {
       $("img.scale_image_ready").imageScale();
     }
+    
+    $('#footerview').show();
   };
     
   return { 
