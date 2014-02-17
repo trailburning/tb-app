@@ -180,7 +180,7 @@ define([
         },
       });
     },
-    onTrailMapViewMoveMedia: function(mediaID){      	
+    onTrailMapViewMoveMedia: function(mediaID){
       // update gallery
       this.trailSlideshowView.sort();
       

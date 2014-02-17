@@ -3,12 +3,10 @@ define([
   'backbone',
   'models/TrailMediasModel',    
   'views/TrailMapView',
-  'views/StepWelcomeView',  
-  'views/StepDetailView',  
   'views/StepRouteView',
   'views/StepRouteEditView',
   'views/StepPublishedView'
-], function(_, Backbone, TrailMediasModel, TrailMapView, StepWelcomeView, StepDetailView, StepRouteView, StepRouteEditView, StepPublishedView){
+], function(_, Backbone, TrailMediasModel, TrailMapView, StepRouteView, StepRouteEditView, StepPublishedView){
 
   var TITLE_TIMER = 10000;
 
@@ -17,8 +15,6 @@ define([
 
   var AppView = Backbone.View.extend({
     initialize: function(){
-      app.dispatcher.on("StepWelcomeView:submitclick", this.onStepWelcomeViewSubmitClick, this);
-      app.dispatcher.on("StepDetailView:submitclick", this.onStepDetailViewSubmitClick, this);
       app.dispatcher.on("StepRouteView:gpxuploaded", this.onStepRouteViewGPXUploaded, this);
       app.dispatcher.on("StepRouteEditView:photouploaded", this.onStepRouteEditViewPhotoUploaded, this);
       app.dispatcher.on("StepRouteEditView:galleryphotoclick", this.onStepRouteEditViewGalleryPhotoClick, this);
@@ -46,35 +42,25 @@ define([
       // Trail Map    
       this.trailMapView = new TrailMapView({ el: '#trail_map_view', elCntrls: '#view_map_btns', model: this.model });
       
-      // Step Welcome
-      this.stepWelcomeView = new StepWelcomeView({ el: '#step_welcome_view', model: this.model });
-      if (!nTrail) {
-        $('#step_welcome_view').show();
-        this.stepWelcomeView.render();
-      }    
-      // Step Detail
-      this.stepDetailView = new StepDetailView({ el: '#step_detail_view', model: this.model });
-//      $('#step_detail_view').show();
-//      this.stepDetailView.render();    
       // Step Rpute
       this.stepRouteView = new StepRouteView({ el: '#step_route_view', model: this.model });
-//      $('#step_route_view').show();    
-//      this.stepRouteView.render();
+      if (!nTrail) {
+        $('#step_route_view').show();    
+        this.stepRouteView.render();        
+      	$('#trail_map_overlay').show();            
+  	  	this.handleResize();
+      	this.trailMapView.render();                  
+      }
       // Step Route Edit
       this.stepRouteEditView = new StepRouteEditView({ el: '#step_route_edit_view', model: this.model, mediaCollection: this.mediaCollection });
       if (nTrail) {
         $('#step_route_edit_view').show();          
         self.stepRouteView.render();
-//        self.stepRouteEditView.render();      	
       }
       // Step Published
       this.stepPublishedView = new StepPublishedView({ el: '#step_published_view', model: this.model });
-//      $('#step_published_view').show();    
-//      this.stepPublishedView.render();
     
   	  this.handleResize();
-//      this.trailMapView.render();
-    
       $('#footerview').show();            
     },
     handleResize: function(){
@@ -158,23 +144,6 @@ define([
         }
       });
     },
-    onStepWelcomeViewSubmitClick: function(stepWelcomeView){
-      $('#step_welcome_view').hide();
-      $('#step_detail_view').show();
-      this.stepDetailView.render();
-      
-      $("body").animate({scrollTop:0}, '500', 'swing');
-    },
-    onStepDetailViewSubmitClick: function(stepDetailView){
-      $('#step_detail_view').hide();
-      $('#step_route_view').show();
-      this.stepRouteView.render();
-      $('#trail_map_overlay').show();
-            
-      this.trailMapView.render();          
-      
-      $("body").animate({scrollTop:0}, '500', 'swing');
-    },   
     onStepRouteViewGPXUploaded: function(step2View){
 	  $('#trail_map_view').removeClass('map_large');
 	  $('#trail_map_view').addClass('map_small');
