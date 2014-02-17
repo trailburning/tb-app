@@ -8,6 +8,10 @@ border-width:1px;
   min-width: 1200px;
 }
 
+.content {
+  width: 1160px;
+}
+
 /* HOME HEADER */
 /******************************************/
 #home_header {
@@ -30,8 +34,17 @@ border-width:1px;
 #home_header .event_title {
   position: absolute;
   top: 23px;
-  left: 32px;
+  left: 32px;  
 }
+
+#home_header .event_title h1 {
+  color: #6d6e71;
+}
+
+#home_header .feature_btn {
+  margin-top: 24px;	
+}
+
 #home_header .tb-credit {
   position: absolute;
   bottom: 12px;
@@ -48,7 +61,6 @@ border-width:1px;
 .discover_content .content {
   padding-top: 44px;
   margin: 0px auto 0px auto;
-  width: 1160px;
   text-align: center;
 }
 
@@ -66,54 +78,46 @@ border-width:1px;
   margin: 0px 14px 0px 14px;
 }
 	
-/* PANELS */
+/* EVENTS */
 /******************************************/
-.panel_content {
-  position: relative;
-  margin: 0px auto 95px auto;
-  width: 1160px;
+.events_content .content {
+  padding-top: 44px;
+  margin: 0px auto 54px auto;
+  text-align: center;	
 }
 
-.panel_intro {
-  padding-top: 30px;
-  text-align: center;
-}
-
-.panel_intro .desc {
+.events_content .desc {
   margin: 24px auto 0px auto;
-  width: 570px;
   text-align: center;
 }
 
 .panels {
   padding-top: 26px;
-  text-align: center;
+}
+
+.events_content .trailers {
+  padding-top: 30px;	
+}
+
+.events_content .trailers .avatars {
+  padding-top: 20px;	
+}
+
+.events_content .trailers .avatars .avatar {
+  display: inline-block;
+  margin: 0px 9px 0px 9px;
 }
 
 /* GUIDE */
 /******************************************/
 .guide_content {
   width: 100%;
-  height: 924px;
   background: #FFF;
 }
 
-.guide_content .sticker {
-  position: relative;
-  margin: 0px auto 0px auto;
-  width: 162px;
-}
-
-.guide_content .sticker img {
-  position: absolute;
-  top: -56px;
-  width: 100%;
-}
-
 .guide_content .content {
-  padding-top: 122px;
-  margin: 0px auto 0px auto;
-  width: 1160px;
+  padding-top: 54px;
+  margin: 0px auto 52px auto;
 }
 
 .guide_content .content .title {
@@ -122,15 +126,13 @@ border-width:1px;
 
 .guide_content .content .desc {
   margin: 0px auto 0px auto;
-  width: 500px;
-  margin-top: 15px;
+  margin-top: 18px;
   text-align: center;    
 }
 
 .guide_content .guide_items {
   margin-top: 58px;
   width: 100%;
-  height: 420px;  
   background: url("../img/guide_back.png") no-repeat 364px 120px;    
 }
 
@@ -153,46 +155,9 @@ border-width:1px;
   margin-top: 18px;
 }
 
-/* FOOTER PROMOTE */
-/******************************************/
-.footer_promote {
-  z-index: 100;
-  position: relative;
-  width: 100%;
-  height: 682px;
-  overflow: overflow;  
-}
-
-.footer_promote .image_container {
-  position: relative;
-  opacity: 0;
-  width: 100%;
-  height: 682px;
-  overflow: hidden;
-}
-
-.footer_promote .promote_title {
-  position: absolute;
-  top: 122px;
-  width: 100%;
+.guide_content .join {
+  margin-top: 34px;
   text-align: center;
-}
-
-.footer_promote .desc {
-  margin-top: 18px;
-  font-size: 22px;
-  color: #FFF;
-  text-shadow: 1px 1px #000000;  
-}
-
-.footer_promote .signin {
-  margin-top: 18px;
-}
-
-.footer_promote .tb-credit {
-  position: absolute;
-  bottom: 12px;
-  left: 30px;
 }
 
 /* RESPONSIVE */
@@ -207,15 +172,15 @@ border-width:1px;
   #appview {
     min-width: 992px;
   }  
+  .content {
+    width: 992px;
+  }  
   .panel_content {
     width: 992px;
   }   
   .guide_content {
     height: 786px;
   }
-  .guide_content .content {
-    width: 992px;
-  }  
   .guide_content .guide_items {
     margin-top: 58px;
     width: 100%;
