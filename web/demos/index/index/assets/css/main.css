@@ -1,0 +1,277 @@
+/* APP */
+/******************************************/
+#appview {
+/*  
+border-style:solid;
+border-width:1px;
+*/  
+  min-width: 1200px;
+}
+
+/* HOME HEADER */
+/******************************************/
+#home_header {
+  z-index: 100;
+  position: relative;
+  margin-top: 63px;
+  width: 100%;
+  height: 486px;
+  overflow: overflow;
+}
+
+#home_header .image_container {
+  position: relative;
+  opacity: 0;
+  width: 100%;
+  height: 486px;
+  overflow: hidden;
+}
+
+#home_header .event_title {
+  position: absolute;
+  top: 23px;
+  left: 32px;
+}
+#home_header .tb-credit {
+  position: absolute;
+  bottom: 12px;
+  left: 30px;
+}
+
+/* DISCOVER */
+/******************************************/
+.discover_content {
+  width: 100%;
+  background: #FFF;
+}
+
+.discover_content .content {
+  padding-top: 44px;
+  margin: 0px auto 0px auto;
+  width: 1160px;
+  text-align: center;
+}
+
+.discover_content .desc {
+  margin-top: 18px;
+}
+
+.discover_content .cards {
+  margin-top: 26px;
+  margin-bottom: 58px;
+}
+
+.discover_content .trail_card_sticker {
+  display: inline-block;
+  margin: 0px 14px 0px 14px;
+}
+	
+/* PANELS */
+/******************************************/
+.panel_content {
+  position: relative;
+  margin: 0px auto 95px auto;
+  width: 1160px;
+}
+
+.panel_intro {
+  padding-top: 30px;
+  text-align: center;
+}
+
+.panel_intro .desc {
+  margin: 24px auto 0px auto;
+  width: 570px;
+  text-align: center;
+}
+
+.panels {
+  padding-top: 26px;
+  text-align: center;
+}
+
+/* GUIDE */
+/******************************************/
+.guide_content {
+  width: 100%;
+  height: 924px;
+  background: #FFF;
+}
+
+.guide_content .sticker {
+  position: relative;
+  margin: 0px auto 0px auto;
+  width: 162px;
+}
+
+.guide_content .sticker img {
+  position: absolute;
+  top: -56px;
+  width: 100%;
+}
+
+.guide_content .content {
+  padding-top: 122px;
+  margin: 0px auto 0px auto;
+  width: 1160px;
+}
+
+.guide_content .content .title {
+  text-align: center;  
+}
+
+.guide_content .content .desc {
+  margin: 0px auto 0px auto;
+  width: 500px;
+  margin-top: 15px;
+  text-align: center;    
+}
+
+.guide_content .guide_items {
+  margin-top: 58px;
+  width: 100%;
+  height: 420px;  
+  background: url("../img/guide_back.png") no-repeat 364px 120px;    
+}
+
+.guide_content .guide_item {
+  float: left;
+  margin: 0px 55px 0px 55px;
+  width: 270px;
+  text-align: center;  
+}
+
+.guide_content .guide_item img {
+  width: 100%;
+}
+
+.guide_content .guide_item .title {
+  margin-top: 10px;
+}
+
+.guide_content .guide_item h4 {
+  margin-top: 18px;
+}
+
+/* FOOTER PROMOTE */
+/******************************************/
+.footer_promote {
+  z-index: 100;
+  position: relative;
+  width: 100%;
+  height: 682px;
+  overflow: overflow;  
+}
+
+.footer_promote .image_container {
+  position: relative;
+  opacity: 0;
+  width: 100%;
+  height: 682px;
+  overflow: hidden;
+}
+
+.footer_promote .promote_title {
+  position: absolute;
+  top: 122px;
+  width: 100%;
+  text-align: center;
+}
+
+.footer_promote .desc {
+  margin-top: 18px;
+  font-size: 22px;
+  color: #FFF;
+  text-shadow: 1px 1px #000000;  
+}
+
+.footer_promote .signin {
+  margin-top: 18px;
+}
+
+.footer_promote .tb-credit {
+  position: absolute;
+  bottom: 12px;
+  left: 30px;
+}
+
+/* RESPONSIVE */
+/******************************************/
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+}
+ 
+/* Medium devices (desktops, 992px and up) */
+@media (max-width: 1199px) {  
+  #appview {
+    min-width: 992px;
+  }  
+  .panel_content {
+    width: 992px;
+  }   
+  .guide_content {
+    height: 786px;
+  }
+  .guide_content .content {
+    width: 992px;
+  }  
+  .guide_content .guide_items {
+    margin-top: 58px;
+    width: 100%;
+    height: 420px;  
+    background: url("../img/guide_back.png") no-repeat 302px 102px;    
+    background-size: 360px 71px;  
+  }  
+  .guide_content .guide_item {
+    margin: 0px 48px 0px 48px;
+    width: 222px;
+    font-size: 50px;
+    line-height: 1em;
+    color: #44B6F7;
+    text-align: center;  
+  }  
+}
+
+/* Small devices (tablets, 768px) */
+@media (max-width: 768px) {  
+}
+
+.image {
+  display: none;  
+}
+
+img {
+  max-width: none;
+}
+
+.avatar {
+  width: 54px;
+  height: 54px;
+  box-shadow: 2px 2px 2px #888888;
+  background: #FFF;
+  border-radius: 50%;
+  overflow: hidden;		
+}
+
+.feature_avatar {
+  width: 76px;
+  height: 76px;
+}
+
+.profile_avatar {
+  width: 210px;
+  height: 210px;
+}
+
+.avatar .photo {
+  margin: 4%;
+  width: 92%;
+  height: 92%;
+  border-radius: 50%;
+  overflow: hidden;	
+}
+
+.avatar .photo img {
+  width: 100%;
+}
