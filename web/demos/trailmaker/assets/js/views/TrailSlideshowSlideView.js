@@ -19,8 +19,8 @@ define([
       	
 	    var attribs = this.model.toJSON();
 	    $(this.el).html(this.template(attribs));
-	    	    
-		// scale images when loaded
+	    
+		// scale image when loaded
         var elImages = $('.scale', $(this.el));	    
 	    var imgLoad = imagesLoaded(elImages);
         imgLoad.on('always', function(instance) {
@@ -33,7 +33,7 @@ define([
           $('.fade_on_load', $(self.el)).addClass('tb-fade-in');
           $('.image_container', $(self.el)).css('opacity', 1);
         });
-	    
+
 		// store id for reference	    
 	    $(this.el).attr("data-id", this.model.id);
 	    

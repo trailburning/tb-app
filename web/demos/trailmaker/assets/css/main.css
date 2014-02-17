@@ -323,6 +323,7 @@ border-width:1px;
 #step_route_edit_view {
   display: none;
   background: #FFF;
+  height: 1571px;
 }
 
 #step_route_edit_view .gallery_panel {
@@ -381,6 +382,10 @@ border-width:1px;
   background: #FFF;
   color: #979797;
   font-size: 22px;
+}
+
+#step_route_edit_view .detail_panel .update {
+	padding-top: 12px;
 }
 
 #step_route_edit_view .slideshow_container {
@@ -569,8 +574,6 @@ border-width:1px;
 }
 
 .trail_card_sticker .panel .image_container {
-  position: relative;
-  opacity: 0;
   width: 100%;
   height: 220px;
   overflow: hidden;
@@ -754,11 +757,50 @@ border-width:1px;
 .leaflet-popup-tip{
   background: #FFF;
 }
-
-/* FOOTER */
+    
+/* BOOTSTRAP */
 /******************************************/
-#footerview {
-  display: none;
+.dropdown a {
+  text-decoration: none;
+  color: inherit; 
+}
+.dropdown a:hover,
+.dropdown a:active {
+  text-decoration: none;   
+  color: inherit; 
+}
+
+.btn-info {
+  line-height: 32px;
+  font-size: 22px;	
+  color: #979797;
+  text-shadow: none;
+  background-image: none;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+  -moz-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+  -webkit-transition: border linear .2s,box-shadow linear .2s;
+  -moz-transition: border linear .2s,box-shadow linear .2s;
+  -o-transition: border linear .2s,box-shadow linear .2s;
+  transition: border linear .2s,box-shadow linear .2s;  
+}
+
+.btn-info:hover,
+.btn-info:focus,
+.btn-info:active,
+.btn-info.active,
+.btn-info.disabled,
+.btn-info[disabled] {
+  color: #979797;
+  background-color: #fff;
+}
+
+.btn-info .caret {
+  margin-top: 15px;	
+  border-top-color: #979797;
+  border-bottom-color: #979797;	
 }
     
 /* TOUCH */

@@ -237,19 +237,31 @@
       <form>
       <div class="form-group">
         <label for="form_event"><h4 class="tb">Name your trail</h4></label>
-        <input type="text" name="form_trail_name" id="form_trail_name" class="validate[required]" value="TB Crew Demo">
+        <input type="text" name="form_trail_name" id="form_trail_name" class="validate[required]">
       </div>
       <div class="form-group">
         <label for="form_event"><h4 class="tb">Trail region</h4></label>
-        <input type="text" name="form_trail_region" id="form_trail_region" class="validate[required]" value="Berlin">
+        <input type="text" name="form_trail_region" id="form_trail_region" class="validate[required]">
       </div>
       <div class="form-group">
+		<div class="dropdown" id="trail_types">
+		  <button class="btn dropdown-toggle sr-only btn-info" type="button" id="form_trail_type" data-toggle="dropdown">
+		    <span data-bind="label">Trail type</span>
+		    <span class="caret"></span>
+		  </button>
+		  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+		  </ul>
+		</div>      
+	  </div>
+      <div class="form-group">
         <label for="form_notes"><h4 class="tb">Trail notes</h4></label>
-        <textarea name="form_trail_notes" id="form_trail_notes">A really lovely trail.</textarea>
+        <textarea name="form_trail_notes" id="form_trail_notes"></textarea>
+      </div>      
+      <div class="form-group">
+	  	<div class="update"><span class="btn btn-tb-action btn-tb-large update_details">Update</span></div>
       </div>      
 	  </form>
     </div>
-  	
   </div>
 
   <div class="trailcard_panel">
@@ -257,29 +269,29 @@
       <div class="left">                  
 		<div class="trail_card_sticker">
 			<div class="panel trail_card_panel">
-				<div class="title"><h3 class="tb">Park</h3></div>
+				<div class="title"><h3 class="tb trail_card_category"></h3></div>
 		        <a href="../../trail/demo">
 		        <div class="photo tb-photo-btn">
-		        	<div class="image_container"><img src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/trailburning-media/ef02c627350d30e13e2283460817ce37d5da8445.jpg" class="resrc scale" border="0"/></div>
-		        	<div class="card_title">
-		            <h1>TB Crew Demo</h1>
-		            <br />
-		            <h1>Berlin</h1>
-		        	</div>
+		       	  <div class="image_container"></div>
+		          <div class="card_title">
+		          <h1 class="trail_card_title"></h1>
+		          <br />
+		          <h1 class="trail_card_region"></h1>
+		          </div>
 		       	</div>
 		        </a>
 		        <div class="summary">
-			    	<div class="avatar"><a href="../../profile/mattallbeury"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/mattallbeury/avatar_ma.png"></a></div>
-			        <div class="detail">
-			        by <strong>Matt Allbeury</strong>
-			        <div class="stars">
-			        	<div class="star_full"></div>
-			            <div class="star_full"></div>
-			            <div class="star_full"></div>
-			            <div class="star_half"></div>
-			            <div class="star"></div>
-			        </div>
-			        </div>
+			      <div class="avatar"><a href="../../profile/mattallbeury"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/mattallbeury/avatar_ma.png"></a></div>
+			      <div class="detail">
+			      by <strong>Matt Allbeury</strong>
+			      <div class="stars">
+			        <div class="star_full"></div>
+			        <div class="star_full"></div>
+			        <div class="star_full"></div>
+			        <div class="star_half"></div>
+			        <div class="star"></div>
+			      </div>
+			      </div>
 		        </div>
 		 	</div>						 	
 		</div>		 
@@ -339,14 +351,15 @@
   <div class="panel_content">
     <div class="panel">
       <div class="content">      
-        <h1 class="tb">Photos</h1>
+        <h1 class="tb">Published</h1>
         <div class="desc">
           <h4 class="tb">
-		  Thanks for taking part in the Trailburning adventure. Don’t forget to send us the photos you just marked on the trail, we will add the photos and build the trail experience for you to share!              <br /><br />
-          Send photos to: <a href="mailto:events@trailburning.com">events@trailburning.com</a>            
-            </h4>
+          Congratulations, your Trail Card has now been published!
+          <br /><br />
+          If you have any questions then please do not hesitate to contact Trailburning <a href="mailto:support@trailburning.com">support</a>.
+          </h4>
           </div> 
-          <div class="next_step"><a href="../../" class="btn btn-tb-action btn-tb-large submit">Discover Trails</a></div>
+          <div class="next_step"><a href="../../" class="btn btn-tb-action btn-tb-large submit">View your Trail Card</a></div>
         </div>
       </div>
       <div class="step_marker_container">

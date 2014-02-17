@@ -28,8 +28,6 @@ define([
       return this;
     },    
     upload: function(){
-      console.log('TrailMediaUploadView:upload');
-        
       var self = this;
         
       // fire event
@@ -75,8 +73,6 @@ define([
       $('#uploadPhotoForm').upload(strURL, function(res) {
       },function(data) {
         var progress = parseInt(data.loaded / data.total * 100, 10);        
-        console.log('p:'+progress);
-        
         // fire event
         app.dispatcher.trigger("TrailUploadPhotoView:uploadProgress", progress);                
       });                        

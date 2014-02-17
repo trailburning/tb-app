@@ -190,19 +190,25 @@ border-width:1px;
 /* EDITORIAL CARD PANEL */
 /******************************************/
 .editorial_card_panel .title {
+  border-top-style: solid;
+  border-top-color: #FFA955;
+  border-top-width: 8px;
+}
+
+.editorial_card_panel .title {
   width: 100%;
-  height: 53px;
-  background: url("../img/sponsor/back_orange_small.png") repeat-x top left;  
+  height: 45px;
+  background: url("../img/sponsor/back_small.png") repeat-x top left;  
 }
 
 .editorial_card_panel .title .tb {
   float: left;
-  margin: 15px 0px 0px 10px;
+  margin: 7px 0px 0px 10px;
 }
 
 .editorial_card_panel .title .sponsor {
   float: right;
-  margin: 15px 10px 0px 0px;
+  margin: 7px 10px 0px 0px;
 }
 
 .editorial_card_panel .detail_container {
