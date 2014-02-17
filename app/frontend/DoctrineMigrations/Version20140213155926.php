@@ -19,13 +19,13 @@ class Version20140213155926 extends AbstractMigration
                 
         $this->addSql("UPDATE fos_user SET email='patrick@trailburning.com', email_canonical=email, enabled=true, salt='null', password='null', locked=false, expired=false, roles='" . serialize(array('ROLE_ADMIN')) . "', credentials_expired=false WHERE name='admin'");
         
-        $this->addSql("UPDATE fos_user SET username=name, username_canonical=name, email='matt@trailburning.com', email_canonical=email, enabled=true, salt='null', password='null', locked=false, expired=false, roles='" . serialize(array('ROLE_USER')) . "', credentials_expired=false WHERE name='mattallbeury'");
+        $this->addSql("UPDATE fos_user SET username='matt@trailburning.com', username_canonical='matt@trailburning.com', email='matt@trailburning.com', email_canonical=email, enabled=true, salt='null', password='null', locked=false, expired=false, roles='" . serialize(array('ROLE_USER')) . "', credentials_expired=false WHERE name='mattallbeury'");
         
-        $this->addSql("UPDATE fos_user SET username=name, username_canonical=name, email='marianne@trailburning.com', email_canonical=email, enabled=true, salt='null', password='null', locked=false, expired=false, roles='" . serialize(array('ROLE_USER')) . "', credentials_expired=false WHERE name='mariannenicolas'");
+        $this->addSql("UPDATE fos_user SET username='marianne@trailburning.com', username_canonical='marianne@trailburning.com', email='marianne@trailburning.com', email_canonical=email, enabled=true, salt='null', password='null', locked=false, expired=false, roles='" . serialize(array('ROLE_USER')) . "', credentials_expired=false WHERE name='mariannenicolas'");
         
-        $this->addSql("UPDATE fos_user SET username=name, username_canonical=name, email='magdalena@trailburning.com', email_canonical=email, enabled=true, salt='null', password='null', locked=false, expired=false, roles='" . serialize(array('ROLE_USER')) . "', credentials_expired=false WHERE name='magdalenazeslawska'");
+        $this->addSql("UPDATE fos_user SET username='magdalena@trailburning.com', username_canonical='magdalena@trailburning.com', email='magdalena@trailburning.com', email_canonical=email, enabled=true, salt='null', password='null', locked=false, expired=false, roles='" . serialize(array('ROLE_USER')) . "', credentials_expired=false WHERE name='magdalenazeslawska'");
         
-        $this->addSql("UPDATE fos_user SET username=name, username_canonical=name, email='justin@trailburning.com', email_canonical=email, enabled=true, salt='null', password='null', locked=false, expired=false, roles='" . serialize(array('ROLE_USER')) . "', credentials_expired=false WHERE name='justinwilden'");
+        $this->addSql("UPDATE fos_user SET username='justin@trailburning.com', username_canonical='justin@trailburning.com', email='justin@trailburning.com', email_canonical=email, enabled=true, salt='null', password='null', locked=false, expired=false, roles='" . serialize(array('ROLE_USER')) . "', credentials_expired=false WHERE name='justinwilden'");
         
         $this->addSql("ALTER TABLE fos_user ALTER username SET NOT NULL");
         $this->addSql("ALTER TABLE fos_user ALTER username_canonical SET NOT NULL");
