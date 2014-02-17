@@ -68,6 +68,7 @@ border-width:1px;
 }
 
 .panel_content input[type="text"],
+.panel_content input[type="email"],
 .panel_content input[type="password"] {
   display: block;  
   width: 324px;
