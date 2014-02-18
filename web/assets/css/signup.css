@@ -8,133 +8,133 @@ border-width:1px;
   min-width: 1200px;
 }
 
-/* DEF HEADER */
+/* CONTENT */
 /******************************************/
-#def_header {
-  z-index: 100;
+#contentview {
   position: relative;
-  margin-top: 63px;
-  width: 100%;
-  height: 486px;
-  overflow: hidden;
+  margin-top: 63px;      
+  min-height: 600px;
 }
 
-#def_header .image_container {
-  position: relative;
-  opacity: 0;
-  width: 100%;
-  height: 486px;
-  overflow: hidden;
-}
-
-#def_header .event_title {
-  position: absolute;
-  top: 23px;
-  left: 32px;
-  color: #44b6f7;
-}
-
-/* PANELS */
+/* PANEL CONTENT */
 /******************************************/
 .panel_content {
   position: relative;
-  margin: 0px auto 420px auto;
-  width: 1112px;
-}
-
-.panel_intro {
-  clear: both;
-  padding-top: 30px;
+  padding-top: 70px;
+  margin: 0px auto 92px auto;
+  width: 614px;
   text-align: center;
 }
 
-.panel_intro .desc {
+.panel_content .panel {
+  float: none;
+}
+
+.panel_content .panel .content {
+  margin: 54px 0px 24px 0px;
+}
+
+.panel_content .step_marker_container {
+  position: absolute;
+  top: 30px;
+  width: 100%;
+  text-align: center;
+}
+
+.panel_content .desc {
   margin: 24px auto 0px auto;
-  width: 700px;
+  width: 380px;
   text-align: center;
 }
 
-.panel_intro .desc h3 {
-  padding-top: 20px;
+.panel_content form {
+  display: block;  
+  padding-top: 18px;
 }
 
-.panel_intro .desc h4 {
-  padding-top: 24px;
+.panel_content form ul {
+  margin-left: 0px;
+  list-style-type: none;  
 }
 
-.panel_intro .signup_panel {
-  margin-top: 40px;
+.panel_content form ul li {
+  margin-left: 0px;
+  color: #CC0000;
 }
 
-.panel_intro .signup_panel input[type="email"],
-.panel_intro .signup_panel input[type="password"],
-.panel_intro .signup_panel input[type="text"] {
-  margin: 0px 0 10px;
-  width: 325px;
-  height: 36px;
-  line-height: 36px;
-  font-family: 'Signika', sans-serif;
-  font-weight: normal;
-  font-size: 20px;
-  color: #444444;      
-  background: #FFF;
+.panel_content form div {
+  width: 324px;
+  margin: 14px auto 0px auto;  
+  text-align: left;
 }
 
-.panel_intro .submit {
+.panel_content input[type="text"],
+.panel_content input[type="email"],
+.panel_content input[type="password"] {
+  display: block;  
+  width: 324px;
+  height: 32px;
+  line-height: 32px;
+  background: #F0F0F0;  
+  color: #979797;
+  font-size: 22px;
+}
+
+.panel_content input[type="checkbox"] {
+  margin: -4px 4px 0px 0px;
+  padding: 0px;
+}
+
+.panel_content textarea {
+  display: block;  
+  resize: none;
+  width: 324px;
+  height: 176px;
+  background: #F0F0F0;
+  color: #979797;
+  font-size: 22px;
+}
+
+.panel_content .option_text {
+  line-height: 1em;
+}
+
+.panel_content .next_step {
   margin-top: 24px;
 }
 
-.panel_intro .msg {
+.msg {
   width: 100%;
   height: 100px;
 }
 
-.panel_intro .success {
+.success {
   display: none;
 }
 
-.panel_intro .fail {
+.fail {
   display: none;
 }
 
-.panel_intro .fail h4 {
+.error {
+  text-align: left;
   color: #CC0000;  
 }
 
-/* FOOTER PROMOTE */
+.fail h4 {
+  color: #CC0000;  
+}
+
+/* GENERAL */
 /******************************************/
-.footer_promote {
-  z-index: 100;
-  position: relative;
-  width: 100%;
-  height: 682px;
-  overflow: overflow;  
-}
-
-.footer_promote .image_container {
-  position: relative;
-  opacity: 0;
-  width: 100%;
-  height: 682px;
-  overflow: hidden;
-}
-
-.footer_promote .promote_title {
-  position: absolute;
-  top: 122px;
-  width: 100%;
-  text-align: center;
-}
-
-.footer_promote .desc {
-  margin-top: 18px;
-  font-size: 22px;
+.step_marker {
+  margin: 0px auto 0px auto;
+  width: 73px;
+  height: 73px;
+  line-height: 73px;
+  font-size: 28px;
   color: #FFF;
-  text-shadow: 1px 1px #000000;  
-}
-
-.footer_promote .signin {
-  margin-top: 18px;
+  background: url("../img/steps/step.png") no-repeat top left;
 }
 
 /* RESPONSIVE */
@@ -150,7 +150,7 @@ border-width:1px;
     min-width: 992px;
   }  
   .panel_content {
-    width: 992px;
+    width: 534px;
   }   
 }
 
