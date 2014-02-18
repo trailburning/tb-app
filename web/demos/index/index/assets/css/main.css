@@ -115,6 +115,29 @@ border-width:1px;
   background-repeat: no-repeat;
 }
 
+.sponsor_content {	
+  position: absolute;
+  bottom: 12px;
+  right: 30px;	
+  font-size: 14px;
+  line-height: 1em;
+  color: #FFFFFF;	
+}
+
+.sponsor_content .brand {
+  float: right;
+}
+
+.sponsor_content .strap {
+  float: left;  
+  margin-top: 25px;
+}
+
+.sponsor_content .logo {
+  float: left;
+  margin-left: 10px;
+}
+
 /* DISCOVER */
 /******************************************/
 .discover_content {
