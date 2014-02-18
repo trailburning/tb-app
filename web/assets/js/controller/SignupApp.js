@@ -48,7 +48,7 @@ define([
         .css('top', '-9999px')
         .css('left', '-9999px');
     
-    
+    // set a high tabindex so the user doesn't tab to the field when tabbing through the register form
     $('#fos_user_registration_form_location').attr('tabindex', 999)
     
     // remove html5 checking because the field gets hidden from the user
