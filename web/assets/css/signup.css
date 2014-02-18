@@ -12,7 +12,8 @@ border-width:1px;
 /******************************************/
 #contentview {
   position: relative;
-  margin-top: 63px;    
+  margin-top: 63px;      
+  min-height: 600px;
 }
 
 /* PANEL CONTENT */
@@ -79,6 +80,11 @@ border-width:1px;
   font-size: 22px;
 }
 
+.panel_content input[type="checkbox"] {
+  margin: -4px 4px 0px 0px;
+  padding: 0px;
+}
+
 .panel_content textarea {
   display: block;  
   resize: none;
@@ -87,6 +93,10 @@ border-width:1px;
   background: #F0F0F0;
   color: #979797;
   font-size: 22px;
+}
+
+.panel_content .option_text {
+  line-height: 1em;
 }
 
 .panel_content .next_step {
@@ -104,6 +114,11 @@ border-width:1px;
 
 .fail {
   display: none;
+}
+
+.error {
+  text-align: left;
+  color: #CC0000;  
 }
 
 .fail h4 {
