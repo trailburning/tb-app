@@ -118,13 +118,18 @@ define([
     },
     renderTrailCardPhoto: function(){
       var self = this;
-      
+
       var model = this.options.mediaCollection.at(0); 
   
 	  var elContext = $('.trailcard_panel', $(self.el));
 	  $('.image_container', elContext).removeClass('tb-fade-in').css('opacity', 0);
 	  
-  	  $('.trailcard_panel .photo .image_container', $(this.el)).html('<img src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/'+model.get('versions')[0].path+'" class="resrc scale" border="0"/>');
+	  if (this.options.mediaCollection.length) {
+  	    $('.trailcard_panel .photo .image_container', $(this.el)).html('<img src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/'+model.get('versions')[0].path+'" class="resrc scale" border="0"/>');	  	
+	  }
+	  else {
+  	    $('.trailcard_panel .photo .image_container', $(this.el)).html('');	  	
+	  }
         
 	  // scale images when loaded
       var elImages = $('.scale', elContext);	    
