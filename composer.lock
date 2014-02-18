@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "a5f81252741b6cb4da6bd5b554b5993b",
+    "hash": "856a9a48e3d1824d3a6a9f1247f1024f",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -1366,6 +1366,57 @@
             "time": "2014-01-12 16:20:24"
         },
         {
+            "name": "jul/location-bundle",
+            "version": "1.0.x-dev",
+            "target-dir": "Jul/LocationBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/youlweb/JulLocationBundle.git",
+                "reference": "06f439a7c2dce1cc1fe61dddb49774bf01f6f0a5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/youlweb/JulLocationBundle/zipball/06f439a7c2dce1cc1fe61dddb49774bf01f6f0a5",
+                "reference": "06f439a7c2dce1cc1fe61dddb49774bf01f6f0a5",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.1",
+                "symfony/framework-bundle": "2.1.*"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-0": {
+                    "Jul\\LocationBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Bob Dope",
+                    "email": "bob.dope@hotmail.com"
+                }
+            ],
+            "description": "Provides a location management system to use independently or with a map API",
+            "homepage": "http://github.com/youlweb/JulLocationBundle",
+            "keywords": [
+                "Symfony2",
+                "api",
+                "autocomplete",
+                "city",
+                "country",
+                "location",
+                "map",
+                "places",
+                "state",
+                "symfony"
+            ],
+            "time": "2013-08-08 13:16:14"
+        },
+        {
             "name": "kriswallsmith/assetic",
             "version": "v1.1.2",
             "source": {
@@ -1435,6 +1486,96 @@
                 "minification"
             ],
             "time": "2013-07-19 00:03:27"
+        },
+        {
+            "name": "lenybernard/symfony",
+            "version": "v2.1.13",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lenybernard/symfony.git",
+                "reference": "fc0a09a2052e9275c16b5ab7af426935fe432f39"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/lenybernard/symfony/zipball/fc0a09a2052e9275c16b5ab7af426935fe432f39",
+                "reference": "fc0a09a2052e9275c16b5ab7af426935fe432f39",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/common": "~2.2",
+                "php": ">=5.3.3",
+                "twig/twig": ">=1.9.1,<2.0-dev"
+            },
+            "replace": {
+                "symfony/browser-kit": "self.version",
+                "symfony/class-loader": "self.version",
+                "symfony/config": "self.version",
+                "symfony/console": "self.version",
+                "symfony/css-selector": "self.version",
+                "symfony/dependency-injection": "self.version",
+                "symfony/doctrine-bridge": "self.version",
+                "symfony/dom-crawler": "self.version",
+                "symfony/event-dispatcher": "self.version",
+                "symfony/filesystem": "self.version",
+                "symfony/finder": "self.version",
+                "symfony/form": "self.version",
+                "symfony/framework-bundle": "self.version",
+                "symfony/http-foundation": "self.version",
+                "symfony/http-kernel": "self.version",
+                "symfony/locale": "self.version",
+                "symfony/monolog-bridge": "self.version",
+                "symfony/options-resolver": "self.version",
+                "symfony/process": "self.version",
+                "symfony/propel1-bridge": "self.version",
+                "symfony/routing": "self.version",
+                "symfony/security": "self.version",
+                "symfony/security-bundle": "self.version",
+                "symfony/serializer": "self.version",
+                "symfony/swiftmailer-bridge": "self.version",
+                "symfony/templating": "self.version",
+                "symfony/translation": "self.version",
+                "symfony/twig-bridge": "self.version",
+                "symfony/twig-bundle": "self.version",
+                "symfony/validator": "self.version",
+                "symfony/web-profiler-bundle": "self.version",
+                "symfony/yaml": "self.version"
+            },
+            "require-dev": {
+                "doctrine/data-fixtures": "1.0.*",
+                "doctrine/dbal": ">=2.2,<2.4-dev",
+                "doctrine/orm": ">=2.2.3,<2.4-dev",
+                "monolog/monolog": ">=1.0,<1.3-dev",
+                "propel/propel1": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Symfony": "src/",
+                    "SessionHandlerInterface": "src/Symfony/Component/HttpFoundation/Resources/stubs"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                }
+            ],
+            "description": "The Symfony PHP framework",
+            "homepage": "http://symfony.com",
+            "keywords": [
+                "framework"
+            ],
+            "time": "2013-10-10 11:03:57"
         },
         {
             "name": "monolog/monolog",
@@ -2869,6 +3010,7 @@
         "doctrine/migrations": 20,
         "doctrine/doctrine-migrations-bundle": 20,
         "stof/doctrine-extensions-bundle": 20,
+        "jul/location-bundle": 20,
         "phpunit/phpunit": 0,
         "sami/sami": 20,
         "liip/functional-test-bundle": 20

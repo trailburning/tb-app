@@ -6,6 +6,7 @@
 <link href="{{ asset('assets/css/signup.css') }}" rel="stylesheet" type="text/css">
 {% endblock %}
 
+
 {% block fos_user_content %}
 
 {% set breadcrumb = [{'name': 'fos_user_registration_register', 'params': [], 'label': 'Join Trailburning'}] %}
@@ -45,6 +46,7 @@ var TB_APP = 'SignupApp';
                     {{ form_row(form.plainPassword) }}
                     {{ form_row(form.firstName) }}
                     {{ form_row(form.lastName) }}
+                    {{ form_row(form.location) }}
 
                     <br />
                     

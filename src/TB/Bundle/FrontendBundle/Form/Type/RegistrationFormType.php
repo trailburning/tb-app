@@ -18,6 +18,7 @@ class RegistrationFormType extends BaseType
         // add your custom fields not defined in FOSUserBundle
         $builder->add('firstName');
         $builder->add('lastName');
+        $builder->add('location');
         
         $builder->remove('username');
     }

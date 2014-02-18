@@ -36,11 +36,12 @@ class RegistrationControllerTest extends WebTestCase
         $this->assertTrue($client->getContainer()->get('security.context')->isGranted('IS_AUTHENTICATED_ANONYMOUSLY'));
                 
         $form = $crawler->filter('#signup')->form(array(
-            'fos_user_registration_form[email]'  => 'test@trailburning.com',
+            'fos_user_registration_form[email]' => 'test@trailburning.com',
             'fos_user_registration_form[plainPassword][first]' => 'password',
             'fos_user_registration_form[plainPassword][second]' => 'password',
-            'fos_user_registration_form[firstName]'  => 'first',
-            'fos_user_registration_form[lastName]'  => 'last',
+            'fos_user_registration_form[firstName]' => 'first',
+            'fos_user_registration_form[lastName]' => 'last',
+            'fos_user_registration_form[location]' => '(52.5234051, 13.4113999)',
             ));     
             
         $client->submit($form);

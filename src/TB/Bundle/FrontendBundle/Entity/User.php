@@ -5,6 +5,8 @@ namespace TB\Bundle\FrontendBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 use Gedmo\Mapping\Annotation as Gedmo;
+use CrEOF\Spatial\PHP\Types\Geometry\Point;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * User
@@ -38,21 +40,24 @@ abstract class User extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(name="first_name", type="string", length=50, nullable=true)
+     * @ORM\Column(name="first_name", type="string", length=50)
+     * @Assert\NotBlank()
      */
     private $firstName;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="last_name", type="string", length=50, nullable=true)
+     * @ORM\Column(name="last_name", type="string", length=50)
+     * @Assert\NotBlank()
      */
     private $lastName;
 
     /**
      * @var Point
      *
-     * @ORM\Column(name="location", type="point", columnDefinition="GEOMETRY(POINT,4326)", nullable=true)
+     * @ORM\Column(name="location", type="point", columnDefinition="GEOMETRY(POINT,4326)")
+     * @Assert\NotBlank()
      */
     private $location; 
     
@@ -365,13 +370,21 @@ abstract class User extends BaseUser
     }
 
     /**
-     * Set location
+     * Set location. Create a Point Object when the location is a string
      *
      * @param point $location
      * @return UserProfile
      */
     public function setLocation($location)
     {
+        if (is_string($location)) {
+            // check the location Sting format
+            if (!preg_match('/^\((\d+\.\d+), (\d+\.\d+)\)$/', $location, $match)) {
+                throw new \Exception(sprintf('Invalid location string format: %s', $location));
+            }
+            $location = new Point($match[1], $match[2], 4326);
+        }
+        
         $this->location = $location;
 
         return $this;
