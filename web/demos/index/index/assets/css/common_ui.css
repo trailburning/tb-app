@@ -91,47 +91,6 @@ a.btn {
 .btn-tb-action[disabled] {
   background-color: #ED1C24;
 }
-.btn-tb-inspire {
-  font-family: 'Signika', sans-serif;  
-  padding: 4px 10px;
-  font-size: 18px;  
-  color: #FFFFFF !important;
-/*  
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-*/  
-  text-shadow: none;
-  
-  background-color: #FF8309 !important;
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#cc0000), to(#FF8309));
-  background-image: -webkit-linear-gradient(top, #FFA752, #FF8309);
-  background-image: -o-linear-gradient(top, #FFA752, #FF8309);
-  background-image: linear-gradient(to bottom, #FFA752, #FF8309);
-  background-repeat: repeat-x;
-  border-color: #FF8309;
-  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#cc0000', endColorstr='#0000cc', GradientType=0);
-  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
-}
-.btn-tb-inspire:hover,
-.btn-tb-inspire:active,
-.btn-tb-inspire.active,
-.btn-tb-inspire.disabled,
-.btn-tb-inspire[disabled] {
-  background-color: #FF8309;
-}
-
-.icon-tb {
-  background-image: url("../img/tb_icon_btn.png");
-}
-
-.tb-logo {
-  display: inline-block;
-  width: 17px;
-  height: 18px;
-  line-height: 18px;
-  background-image: url("../img/tb_icon_btn.png");
-  background-repeat:no-repeat;  
-}
 
 .btn-tb-large {
   padding: 8px 15px;

@@ -31,24 +31,88 @@ border-width:1px;
   overflow: hidden;
 }
 
-#home_header .event_title {
+/* FEATURE */
+/******************************************/
+.feature {
+}
+
+.feature .feature_title {
   position: absolute;
   top: 23px;
   left: 32px;  
 }
 
-#home_header .event_title h1 {
+.feature .feature_author {
+  position: absolute;
+  top: 46px;
+  right: 46px;  	
+}
+
+.feature .feature_title h1 {
   color: #6d6e71;
 }
 
-#home_header .feature_btn {
+.feature .feature_title .author {
+  display: inline-block;
+  margin: 13px 0px 0px 0px;
+  padding: 5px 10px 5px 10px;
+  font-size: 22px;
+  line-height: 1em;
+  font-weight: 400;
+  color: #FFF;
+  border: none;
+  background-color: #000;  
+  background: rgba(0, 0, 0, 0.6);  
+}
+
+.feature .feature_btn {
   margin-top: 24px;	
 }
 
-#home_header .tb-credit {
+.feature .tb-credit {
   position: absolute;
   bottom: 12px;
   left: 30px;
+}
+
+.btn-tb-inspire {
+  font-family: 'Signika', sans-serif;
+  padding: 6px 14px;
+  font-size: 18px;
+  line-height: 30px;
+  color: #FFFFFF !important;
+  text-shadow: none;
+  background-color: #FF8309 !important;
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#cc0000), to(#FF8309));
+  background-image: -webkit-linear-gradient(top, #FFA752, #FF8309);
+  background-image: -o-linear-gradient(top, #FFA752, #FF8309);
+  background-image: linear-gradient(to bottom, #FFA752, #FF8309);
+  background-repeat: repeat-x;
+  border-color: #FF8309;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#cc0000', endColorstr='#0000cc', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;    
+}
+.btn-tb-inspire:hover,
+.btn-tb-inspire:active,
+.btn-tb-inspire.active,
+.btn-tb-inspire.disabled,
+.btn-tb-inspire[disabled] {
+  background-color: #FF8309;
+}
+
+.tb-logo {
+  display: block;
+  float: left;
+  margin-top: 2px;
+  margin-right: 8px;
+  width: 25px;
+  height: 25px;
+  background-image: url("../img/tb_icon_btn.png");
+  background-repeat: no-repeat;
 }
 
 /* DISCOVER */
@@ -219,9 +283,14 @@ img {
   overflow: hidden;		
 }
 
-.feature_avatar {
+.highlight_avatar {
   width: 76px;
   height: 76px;
+}
+
+.feature_avatar {
+  width: 128px;
+  height: 128px;
 }
 
 .profile_avatar {
