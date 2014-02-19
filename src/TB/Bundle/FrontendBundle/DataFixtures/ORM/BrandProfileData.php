@@ -16,7 +16,6 @@ class BrandProfileData extends AbstractFixture implements FixtureInterface
     {
         
         $brand = new BrandProfile();
-        $brand->setName('ashmei');
         $brand->setAbout('For me Trailburning is about connecting with nature, sharing great trail experiences with other like minded individuals. It\'s also about discovery but at the end of the day it\'s about just getting out there!');
         $brand->setDisplayName('ashmei');
         $brand->setAvatar('brand_logo.png');
@@ -25,9 +24,19 @@ class BrandProfileData extends AbstractFixture implements FixtureInterface
         $brand->setSubtitle('The finest performance running clothes in the World');
         $brand->setAbstract('Performance running apparel');
         $brand->setLink('http://www.ashmei.com');
+        $brand->setEmail('email@ashmei');
+        $brand->setPassword('password');
+        
+        $brand->setName('ashmei');
+        $brand->setUsername('ashmei');
+        $brand->setEnabled(true);
+        $brand->setLocked(false);
+        $brand->setExpired(false);
+        $brand->setCredentialsExpired(false);
 
         $manager->persist($brand);
         $manager->flush();
+        
         $this->addReference('BrandProfile-ashmei', $brand);
     }
     

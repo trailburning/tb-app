@@ -200,6 +200,7 @@ class Postgis extends \PDO
               FROM routes r
               INNER JOIN route_medias rm ON r.id=rm.route_id        
               WHERE r.user_id=:user_id
+              AND r.slug IS NOT NULL
               GROUP BY r.id
               LIMIT :count';
 

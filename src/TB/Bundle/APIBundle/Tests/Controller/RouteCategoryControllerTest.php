@@ -38,7 +38,8 @@ class RouteCategoryControllerTest extends AbstractApiTestCase
         // Get same Route from API
         $client = $this->createClient();
         $crawler = $client->request('GET', '/v1/route_category/list');
-        $this->assertEquals(Response::HTTP_OK,  $client->getResponse()->getStatusCode());  
+        $this->assertEquals(Response::HTTP_OK,  $client->getResponse()->getStatusCode());
+        $this->assertEquals('application/json',  $client->getResponse()->headers->get('Content-Type'));  
         $response = $client->getResponse()->getContent();
         $this->assertTrue($this->isValidJson($response));   
     }

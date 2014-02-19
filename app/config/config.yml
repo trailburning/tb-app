@@ -79,3 +79,19 @@ swiftmailer:
     username:  %mailer_user%
     password:  %mailer_password%
     spool:     { type: memory }
+    
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: TB\Bundle\FrontendBundle\Entity\UserProfile
+    
+    # Use custom form type defined in srv/TB/Bundle/FrontendBundle/Form/Type
+    registration:
+        form:
+            type: tb_user_registration
+            
+stof_doctrine_extensions:
+    default_locale: en_US
+    orm:
+        default: 
+            sluggable: true

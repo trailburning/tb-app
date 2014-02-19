@@ -3,23 +3,30 @@
 namespace TB\Bundle\FrontendBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * BrandProfile
  *
  * @ORM\Entity
- * @ORM\Table(name="`user`")
  */
 class BrandProfile extends User
 {
     
+    /**
+     * @var string
+     *
+     * @Gedmo\Slug(fields={"displayName"}, updatable=false, separator="")
+     * @ORM\Column(name="name", type="string", length=50, nullable=true, unique=true)
+     */
+    protected $name;
     
     /**
      * @var string
      *
      * @ORM\Column(name="display_name", type="string", length=100, nullable=true)
      */
-    private $display_name;
+    private $displayName;
     
     /**
      * @var string
@@ -40,7 +47,7 @@ class BrandProfile extends User
      *
      * @ORM\Column(name="header_image", type="string", length=100, nullable=true)
      */
-    private $header_image;
+    private $headerImage;
     
     /**
      * @var string
@@ -69,26 +76,26 @@ class BrandProfile extends User
     }
 
     /**
-     * Set header_image
+     * Set headerImage
      *
      * @param string $headerImage
      * @return BrandProfile
      */
     public function setHeaderImage($headerImage)
     {
-        $this->header_image = $headerImage;
+        $this->headerImage = $headerImage;
 
         return $this;
     }
 
     /**
-     * Get header_image
+     * Get headerImage
      *
      * @return string 
      */
     public function getHeaderImage()
     {
-        return $this->header_image;
+        return $this->headerImage;
     }
 
     /**
@@ -155,26 +162,26 @@ class BrandProfile extends User
     }
 
     /**
-     * Set display_name
+     * Set displayName
      *
      * @param string $displayName
      * @return BrandProfile
      */
     public function setDisplayName($displayName)
     {
-        $this->display_name = $displayName;
+        $this->displayName = $displayName;
 
         return $this;
     }
 
     /**
-     * Get display_name
+     * Get displayName
      *
      * @return string 
      */
     public function getDisplayName()
     {
-        return $this->display_name;
+        return $this->displayName;
     }
 
     /**
@@ -245,4 +252,38 @@ class BrandProfile extends User
     {
         return $this->link;
     }
+    
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return User
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+    
+    /**
+     * Workaround to get the inheritence working with FOSUserBundle (there is no setter for salt and FOSUser Bundles user model doensn't handle this entity when it is saved)
+     */
+    public function setPassword($password)
+    {
+        $this->salt = $password;
+
+        return parent::setPassword($password);
+    }
+    
 }

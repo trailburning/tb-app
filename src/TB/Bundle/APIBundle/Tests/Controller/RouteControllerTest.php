@@ -38,7 +38,8 @@ class RouteControllerTest extends AbstractApiTestCase
         // Get same Route from API
         $client = $this->createClient();
         $crawler = $client->request('GET', '/v1/route/' . $route->getId());
-        $this->assertEquals(Response::HTTP_OK,  $client->getResponse()->getStatusCode());  
+        $this->assertEquals(Response::HTTP_OK,  $client->getResponse()->getStatusCode());
+        $this->assertEquals('application/json',  $client->getResponse()->headers->get('Content-Type')); 
         $response = $client->getResponse()->getContent();
         $this->assertTrue($this->isValidJson($response));   
     }
@@ -90,7 +91,8 @@ class RouteControllerTest extends AbstractApiTestCase
         // Delete that Route per API
         $client = $this->createClient();
         $crawler = $client->request('DELETE', '/v1/route/' . $route->getId());
-        $this->assertEquals(Response::HTTP_OK,  $client->getResponse()->getStatusCode());  
+        $this->assertEquals(Response::HTTP_OK,  $client->getResponse()->getStatusCode());
+        $this->assertEquals('application/json',  $client->getResponse()->headers->get('Content-Type'));  
         $response = $client->getResponse()->getContent();
         $this->assertTrue($this->isValidJson($response));
 
@@ -151,7 +153,8 @@ class RouteControllerTest extends AbstractApiTestCase
         
         $client = $this->createClient();
         $crawler = $client->request('GET', '/v1/routes/user/' . $user->getId());
-        $this->assertEquals(Response::HTTP_OK,  $client->getResponse()->getStatusCode());  
+        $this->assertEquals(Response::HTTP_OK,  $client->getResponse()->getStatusCode());
+          
         $response = $client->getResponse()->getContent();
         $this->assertTrue($this->isValidJson($response));
     }
