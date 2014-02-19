@@ -183,7 +183,10 @@ h4.tb {
   top: 0px;
   width: 100%;
   height: 63px;  
+/*  
   background: #FFF;
+*/  
+  background: #000;
 }
 
 #headerview .left {
@@ -208,12 +211,19 @@ h4.tb {
   height: 18px;
   border: none;
   font-size: 0;
-  background: url("../img/header/search.gif") no-repeat top left;  
+/*  
+  background: url("../img/header/search.gif") no-repeat top left;
+*/    
+  background: url("../img/header/search_black.gif") no-repeat top left;
 }
 
 #headerview .right .discover input[type="text"] {
   margin: 0px 6px 0px 0px;
+/*  
   background-color: #F0F0F0;
+*/  
+  border: 1px solid #000;
+  background-color: #4B4B4B;
 }
 
 #headerview .right .links {
@@ -240,7 +250,7 @@ h4.tb {
 
 #headerview .right .link a:hover, 
 #headerview .right .link a:active {
-  color: #979797;
+  color: #FFF;
   text-decoration: none;    
 }
 

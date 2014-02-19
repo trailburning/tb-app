@@ -33,9 +33,6 @@ border-width:1px;
 
 /* FEATURE */
 /******************************************/
-.feature {
-}
-
 .feature .feature_title {
   position: absolute;
   top: 23px;
@@ -157,13 +154,17 @@ border-width:1px;
 
 .discover_content .cards {
   margin-top: 32px;
-  margin-bottom: 58px;
+  margin-bottom: 12px;
 }
 
 .discover_content .trail_card_sticker {
   display: inline-block;
   margin: 0px 14px 0px 14px;
 }
+	
+.discover_content .more_btn {
+  margin-bottom: 28px;
+}	
 	
 /* EVENTS */
 /******************************************/
@@ -180,11 +181,12 @@ border-width:1px;
 
 .panels {
   padding-top: 26px;
+  margin-bottom: 24px;
 }
 
-.events_content .trailers {
-  padding-top: 30px;	
-}
+.events_content .more_btn {
+  margin-bottom: 36px;
+}	
 
 .events_content .trailers .avatars {
   padding-top: 20px;	
@@ -218,24 +220,31 @@ border-width:1px;
 }
 
 .guide_content .guide_items {
-  margin-top: 58px;
-  width: 100%;
-  background: url("../img/guide_back.png") no-repeat 364px 120px;    
+  margin: 56px auto 0px auto;
+  width: 918px;
+  height: 420px;  
+  background: url("../img/guide_back.png") no-repeat 290px 90px;    
+  background-size: 340px 67px;
 }
 
 .guide_content .guide_item {
   float: left;
-  margin: 0px 55px 0px 55px;
+  margin: 0px 18px 0px 18px;
   width: 270px;
   text-align: center;  
 }
 
-.guide_content .guide_item img {
+.guide_content .guide_item .guide_image {
+  display: inline-block;
+  width: 190px;	
+}
+
+.guide_content .guide_item .guide_image img {
   width: 100%;
 }
 
 .guide_content .guide_item .title {
-  margin-top: 10px;
+  margin-top: 16px;
 }
 
 .guide_content .guide_item h4 {
@@ -243,7 +252,6 @@ border-width:1px;
 }
 
 .guide_content .join {
-  margin-top: 34px;
   text-align: center;
 }
 
@@ -265,24 +273,19 @@ border-width:1px;
   .panel_content {
     width: 992px;
   }   
-  .guide_content {
-    height: 786px;
-  }
   .guide_content .guide_items {
-    margin-top: 58px;
-    width: 100%;
-    height: 420px;  
-    background: url("../img/guide_back.png") no-repeat 302px 102px;    
-    background-size: 360px 71px;  
-  }  
+    width: 825px;
+    height: 365px;  
+    background: url("../img/guide_back.png") no-repeat 267px 78px;    
+    background-size: 296px 59px;
+  }
   .guide_content .guide_item {
-    margin: 0px 48px 0px 48px;
-    width: 222px;
-    font-size: 50px;
-    line-height: 1em;
-    color: #44B6F7;
-    text-align: center;  
-  }  
+    margin: 0px 16px 0px 16px;
+    width: 243px;
+  }
+  .guide_content .guide_item .guide_image {
+    width: 165px;	
+  }
 }
 
 /* Small devices (tablets, 768px) */
