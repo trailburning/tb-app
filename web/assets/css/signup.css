@@ -1,0 +1,163 @@
+/* APP */
+/******************************************/
+#appview {
+/*  
+border-style:solid;
+border-width:1px;
+*/  
+  min-width: 1200px;
+}
+
+/* CONTENT */
+/******************************************/
+#contentview {
+  position: relative;
+  margin-top: 63px;      
+  min-height: 600px;
+}
+
+/* PANEL CONTENT */
+/******************************************/
+.panel_content {
+  position: relative;
+  padding-top: 70px;
+  margin: 0px auto 92px auto;
+  width: 614px;
+  text-align: center;
+}
+
+.panel_content .panel {
+  float: none;
+}
+
+.panel_content .panel .content {
+  margin: 54px 0px 24px 0px;
+}
+
+.panel_content .step_marker_container {
+  position: absolute;
+  top: 30px;
+  width: 100%;
+  text-align: center;
+}
+
+.panel_content .desc {
+  margin: 24px auto 0px auto;
+  width: 380px;
+  text-align: center;
+}
+
+.panel_content form {
+  display: block;  
+  padding-top: 18px;
+}
+
+.panel_content form ul {
+  margin-left: 0px;
+  list-style-type: none;  
+}
+
+.panel_content form ul li {
+  margin-left: 0px;
+  color: #CC0000;
+}
+
+.panel_content form div {
+  width: 324px;
+  margin: 14px auto 0px auto;  
+  text-align: left;
+}
+
+.panel_content input[type="text"],
+.panel_content input[type="email"],
+.panel_content input[type="password"] {
+  display: block;  
+  width: 324px;
+  height: 32px;
+  line-height: 32px;
+  background: #F0F0F0;  
+  color: #979797;
+  font-size: 22px;
+}
+
+.panel_content input[type="checkbox"] {
+  margin: -4px 4px 0px 0px;
+  padding: 0px;
+}
+
+.panel_content textarea {
+  display: block;  
+  resize: none;
+  width: 324px;
+  height: 176px;
+  background: #F0F0F0;
+  color: #979797;
+  font-size: 22px;
+}
+
+.panel_content .option_text {
+  line-height: 1em;
+}
+
+.panel_content .next_step {
+  margin-top: 24px;
+}
+
+.msg {
+  width: 100%;
+  height: 100px;
+}
+
+.success {
+  display: none;
+}
+
+.fail {
+  display: none;
+}
+
+.error {
+  text-align: left;
+  color: #CC0000;  
+}
+
+.fail h4 {
+  color: #CC0000;  
+}
+
+/* GENERAL */
+/******************************************/
+.step_marker {
+  margin: 0px auto 0px auto;
+  width: 73px;
+  height: 73px;
+  line-height: 73px;
+  font-size: 28px;
+  color: #FFF;
+  background: url("../img/steps/step.png") no-repeat top left;
+}
+
+/* RESPONSIVE */
+/******************************************/
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+}
+ 
+/* Medium devices (desktops, 992px and up) */
+@media (max-width: 1199px) {  
+  #appview {
+    min-width: 992px;
+  }  
+  .panel_content {
+    width: 534px;
+  }   
+}
+
+.image {
+  display: none;  
+}
+
+img {
+  max-width: none;
+}

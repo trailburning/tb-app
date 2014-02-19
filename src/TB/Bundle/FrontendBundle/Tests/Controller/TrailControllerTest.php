@@ -32,7 +32,7 @@ class TrailControllerTest extends WebTestCase
 
         $client = $this->createClient();
         $crawler = $client->request('GET', '/trail/grunewald');
-        $this->assertEquals(Response::HTTP_OK,  $client->getResponse()->getStatusCode());   
+        $this->assertEquals(Response::HTTP_OK,  $client->getResponse()->getStatusCode());
         $this->assertGreaterThan(0,
             $crawler->filter('h2.tb-title:contains("Grunewald")')->count());
         $this->assertGreaterThan(0,

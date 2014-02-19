@@ -9,4 +9,6 @@ services:
     rest_client:
         class:      %rest_client_class%
         arguments:  [%api_host%]
-        
+
+framework:
+    translator: ~        

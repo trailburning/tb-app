@@ -12,10 +12,6 @@ class AppKernel extends Kernel
     
     public function __construct($environment, $debug)
     {
-	    // Allow third party sites to make AJAX calls to this API
-		header('Access-Control-Allow-Origin: *');
-		header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
-    	
         // All PHP date functions should read datetime without timezone info as relative to UTC, and not current server timezone
         date_default_timezone_set('UTC');
         parent::__construct($environment, $debug);
@@ -34,6 +30,8 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new TB\Bundle\FrontendBundle\TBFrontendBundle(),
             new TB\Bundle\APIBundle\TBAPIBundle(),
+            new FOS\UserBundle\FOSUserBundle(), 
+            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

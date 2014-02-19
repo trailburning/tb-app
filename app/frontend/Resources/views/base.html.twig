@@ -42,7 +42,25 @@
                     <a href="{{ app.request.baseUrl }}/"><img src="{{ asset('assets/img/header/tb_logo.gif') }}" border="0"></a>
                 </div>    
                 <div class="right">
-                    <div class="signin"><a href="{{ app.request.baseUrl }}/join" class="btn btn-tb-action btn-tb-large">Join</a></div>
+                    
+                    {% if app.user %}
+                        <div class="signin">
+							<a href="{{ app.request.baseUrl }}/join" class="btn btn-tb-action btn-tb-large">Join</a>                                         	
+{#                        	                        	
+                            <a href="{{ path('profile', {name: app.user.name}) }}" class="btn btn-tb-action btn-tb-large">Profile</a>
+                            <a href="{{ path('fos_user_security_logout') }}" class="btn btn-tb-action btn-tb-large">Sign out</a>
+#}                            
+                        </div>
+                     {% else %}
+                        <div class="signin">
+							<a href="{{ app.request.baseUrl }}/join" class="btn btn-tb-action btn-tb-large">Join</a>                                         	
+{#                        	                        	
+                            <a href="{{ path('fos_user_registration_register') }}" class="btn btn-tb-action btn-tb-large">Join</a>
+                            <a href="{{ path('fos_user_security_login') }}" class="btn btn-tb-action btn-tb-large">Sign in</a>
+#}                            
+                        </div>
+                     {% endif %}
+                    
                     <div class="links">
                         <div class="link"><a href="{{ app.request.baseUrl }}/about">Discover Trailburning</a></div>        
                     </div>
