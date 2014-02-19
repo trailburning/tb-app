@@ -237,9 +237,12 @@ h4.tb {
   margin: 0px 19px 0px 19px;
   color: #44b6f7;
   font-size: 14px;
+}
+
+#headerview .links .main {
   font-weight: 700;
   text-transform: uppercase;
-}
+}  
 
 #headerview .right .link a, 
 #headerview .right .link a:link, 
@@ -268,6 +271,86 @@ h4.tb {
   width: 100%;
   height: 2px;
   background: url(../img/trans_line.png) repeat-x top left;  
+}
+
+#headerview .navbar .nav>li>a {
+  padding: 0px;
+  text-shadow: none;
+}
+
+#headerview .navbar .btn, .navbar .btn-group {
+  margin-top: 0px;
+}
+
+#headerview li {
+  line-height: inherit;
+}
+
+#headerview .navbar .nav li.dropdown.open>.dropdown-toggle {
+  background: none;
+} 
+
+#headerview .navbar .nav li.dropdown a.dropdown-toggle:hover,
+#headerview .navbar .nav li.dropdown a.dropdown-toggle:active {
+	background: none;
+}
+
+#headerview .open>.dropdown-menu {
+  margin-top: 8px;
+}
+
+#headerview .dropdown-menu li {
+  width: 362px;
+  background: #F2F2F2;
+}
+
+#headerview .dropdown-menu>li>a {
+  white-space: normal;
+}
+
+#headerview .dropdown-menu .title {
+  height: 24px;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: #C2C2C2;
+}
+
+#headerview .dropdown-menu .btns {
+  margin: 12px 0px 0px 24px;	
+  height: 36px;
+}
+
+#headerview .dropdown-menu .btns .profile_btn {
+  float: left;
+  margin-right: 26px;
+}
+
+#headerview .navbar .nav .dropdown-menu a {
+  color: #666666;
+}
+
+#headerview .navbar .nav .dropdown-menu a:hover,
+#headerview .navbar.nav .dropdown-menu a:active {
+  color: #666666;;
+  background: #DADADA;
+}
+
+#headerview .navbar .nav .dropdown-menu li {
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: #C2C2C2;
+}
+
+#headerview .navbar .nav li .avatar {
+  float: left;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  margin-right: 12px;
+}
+
+#headerview .navbar .nav li .note {
+  min-height: 62px;
+  margin-top: 8px;
 }
 
 /* FOOTER */
