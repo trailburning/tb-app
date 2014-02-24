@@ -196,12 +196,26 @@ h4.tb {
 
 #headerview .right {
   float: right;
-  margin: 12px 22px 0px 0px;
+  margin: 0px 22px 0px 0px;
+  font-size: 14px;  
+}
+
+#headerview .right a, 
+#headerview .right a:link, 
+#headerview .right a:visited {
+  color: #44b6f7;
+  text-decoration: none;
+}
+
+#headerview .right a:hover, 
+#headerview .right a:active {
+  color: #FFF;
+  text-decoration: none;    
 }
 
 #headerview .right .discover {
   float: right;
-  margin: 5px 0px 0px 0px;
+  margin: 17px 0px 0px 0px;
 }
 
 #headerview .right .discover .search-btn {
@@ -211,24 +225,18 @@ h4.tb {
   height: 18px;
   border: none;
   font-size: 0;
-/*  
-  background: url("../img/header/search.gif") no-repeat top left;
-*/    
   background: url("../img/header/search_black.gif") no-repeat top left;
 }
 
 #headerview .right .discover input[type="text"] {
   margin: 0px 6px 0px 0px;
-/*  
-  background-color: #F0F0F0;
-*/  
   border: 1px solid #000;
   background-color: #4B4B4B;
 }
 
 #headerview .right .links {
   float: right;
-  margin-top: 14px;
+  margin: 26px 0px 0px 0px;
   line-height: 1em;
 }
 
@@ -236,7 +244,6 @@ h4.tb {
   float: left;
   margin: 0px 19px 0px 19px;
   color: #44b6f7;
-  font-size: 14px;
 }
 
 #headerview .links .main {
@@ -244,25 +251,35 @@ h4.tb {
   text-transform: uppercase;
 }  
 
-#headerview .right .link a, 
-#headerview .right .link a:link, 
-#headerview .right .link a:visited {
-  color: #44b6f7;
-  text-decoration: none;
+#headerview .right .profile {  
+  float: right;
+  margin: 6px 20px 0px 19px;  
 }
 
-#headerview .right .link a:hover, 
-#headerview .right .link a:active {
-  color: #FFF;
-  text-decoration: none;    
+#headerview .right .profile .activity { 
+  position: absolute;
+  top: 15px;
+  left: 46px;  
+  width: 24px;
+  height: 24px;
+  line-height: 24px;
+  text-align: center;
+  font-size: 15px;
+  color: #FFF;  
+  background: #f83d3d;
+  border-radius: 50%;
+  overflow: hidden;		   
+}
+
+#headerview .right .profile .dropdown-toggle .avatar {
+  box-shadow: none;
+  width: 50px;
+  height: 50px;
 }
 
 #headerview .right .signin {  
   float: right;
-  margin-left: 19px;
-}
-
-#headerview .right .signin .btn {  
+  margin: 12px 0px 0px 19px;
 }
 
 #headerview .trans-line {
@@ -273,6 +290,8 @@ h4.tb {
   background: url(../img/trans_line.png) repeat-x top left;  
 }
 
+/* BOOTSTRAP DROPDWON */
+/******************************************/
 #headerview .navbar .nav>li>a {
   padding: 0px;
   text-shadow: none;
@@ -296,7 +315,7 @@ h4.tb {
 }
 
 #headerview .open>.dropdown-menu {
-  margin-top: 8px;
+  margin-top: 6px;
 }
 
 #headerview .dropdown-menu li {
@@ -309,10 +328,16 @@ h4.tb {
 }
 
 #headerview .dropdown-menu .title {
-  height: 24px;
+  height: 46px;
   border-bottom-width: 1px;
   border-bottom-style: solid;
   border-bottom-color: #C2C2C2;
+}
+
+#headerview .dropdown-menu .title h4 {
+  color: #44b6f7;
+  margin-left: 20px;
+  line-height: 42px;
 }
 
 #headerview .dropdown-menu .btns {
@@ -325,14 +350,22 @@ h4.tb {
   margin-right: 26px;
 }
 
+#headerview .dropdown-menu .btns .signout {
+  float: right;
+  margin-right: 20px;
+  line-height: 30px;
+}
+
 #headerview .navbar .nav .dropdown-menu a {
   color: #666666;
 }
 
 #headerview .navbar .nav .dropdown-menu a:hover,
 #headerview .navbar.nav .dropdown-menu a:active {
-  color: #666666;;
-  background: #DADADA;
+  color: #666666;
+  background-color: #DADADA;
+  background-image: none;
+  filter: none;
 }
 
 #headerview .navbar .nav .dropdown-menu li {
@@ -341,16 +374,16 @@ h4.tb {
   border-bottom-color: #C2C2C2;
 }
 
-#headerview .navbar .nav li .avatar {
+#headerview .navbar .nav .dropdown-menu li .avatar {
   float: left;
   margin-top: 8px;
   margin-bottom: 8px;
   margin-right: 12px;
 }
 
-#headerview .navbar .nav li .note {
+#headerview .navbar .nav .dropdown-menu li .note {
   min-height: 62px;
-  margin-top: 8px;
+  margin-top: 12px;
 }
 
 /* FOOTER */
