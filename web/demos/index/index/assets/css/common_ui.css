@@ -356,12 +356,23 @@ h4.tb {
   line-height: 30px;
 }
 
-#headerview .navbar .nav .dropdown-menu a {
+#headerview .dropdown-menu .btns .signout a {
+  color: #666666;
+  text-decoration: underline;
+}
+
+#headerview .dropdown-menu .btns .signout a:hover,
+#headerview .dropdown-menu .btns .signout a:active {
+  color: inherit;
+  text-decoration: none;
+}
+
+#headerview .navbar .nav .dropdown-menu li a {
   color: #666666;
 }
 
-#headerview .navbar .nav .dropdown-menu a:hover,
-#headerview .navbar.nav .dropdown-menu a:active {
+#headerview .navbar .nav .dropdown-menu li a:hover,
+#headerview .navbar.nav .dropdown-menu li a:active {
   color: #666666;
   background-color: #DADADA;
   background-image: none;
