@@ -24,10 +24,10 @@ define([
       event.preventDefault();
     });
     
-    var imgLoad = imagesLoaded('.discover_content .scale');
-	imgLoad.on('always', function(instance) {
-      for ( var i = 0, len = imgLoad.images.length; i < len; i++ ) {
-        $(imgLoad.images[i].img).addClass('scale_image_ready');
+    var imgLoad1 = imagesLoaded('.discover_content .scale');
+	imgLoad1.on('always', function(instance) {
+      for ( var i = 0, len = imgLoad1.images.length; i < len; i++ ) {
+        $(imgLoad1.images[i].img).addClass('scale_image_ready');
       }
       // update pos
       $('.discover_content img.scale_image_ready').imageScale();
@@ -38,10 +38,10 @@ define([
 	  resrc.resrcAll();
 	});
         
-    var imgLoad = imagesLoaded('.events_content .scale');
-	imgLoad.on('always', function(instance) {
-      for ( var i = 0, len = imgLoad.images.length; i < len; i++ ) {
-        $(imgLoad.images[i].img).addClass('scale_image_ready');
+    var imgLoad2 = imagesLoaded('.events_content .scale');
+	imgLoad2.on('always', function(instance) {
+      for ( var i = 0, len = imgLoad2.images.length; i < len; i++ ) {
+        $(imgLoad2.images[i].img).addClass('scale_image_ready');
       }
       // update pos
       $('.events_content img.scale_image_ready').imageScale();
