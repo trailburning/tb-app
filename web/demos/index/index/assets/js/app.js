@@ -2,8 +2,9 @@ var app = app || {};
 
 define([
   'underscore', 
-  'backbone'
-], function(_, Backbone){
+  'backbone',
+  'views/HomeHerosView'
+], function(_, Backbone, HomeHerosView){
   app.dispatcher = _.clone(Backbone.Events);
   
   var initialize = function() {
@@ -21,22 +22,39 @@ define([
     $('#search_form').submit(function(evt) {
       $('#search_field').val('not just yet...');
       event.preventDefault();
-    });    
-
-    var imgLoad = imagesLoaded('.scale');
-    imgLoad.on('always', function(instance) {
+    });
+    
+    var imgLoad = imagesLoaded('.discover_content .scale');
+	imgLoad.on('always', function(instance) {
       for ( var i = 0, len = imgLoad.images.length; i < len; i++ ) {
         $(imgLoad.images[i].img).addClass('scale_image_ready');
       }
       // update pos
-      $("img.scale_image_ready").imageScale();
+      $('.discover_content img.scale_image_ready').imageScale();
       // fade in - delay adding class to ensure image is ready  
-      $('.fade_on_load').addClass('tb-fade-in');
-      $('.image_container').css('opacity', 1);
+      $('.discover_content .fade_on_load').addClass('tb-fade-in');
+      $('.discover_content .image_container').css('opacity', 1);
       // force update to fix blurry bug
 	  resrc.resrcAll();
-    });
-    
+	});
+        
+    var imgLoad = imagesLoaded('.events_content .scale');
+	imgLoad.on('always', function(instance) {
+      for ( var i = 0, len = imgLoad.images.length; i < len; i++ ) {
+        $(imgLoad.images[i].img).addClass('scale_image_ready');
+      }
+      // update pos
+      $('.events_content img.scale_image_ready').imageScale();
+      // fade in - delay adding class to ensure image is ready  
+      $('.events_content .fade_on_load').addClass('tb-fade-in');
+      $('.events_content .image_container').css('opacity', 1);
+      // force update to fix blurry bug
+	  resrc.resrcAll();
+	});        
+        
+    this.homeHerosView = new HomeHerosView({ el: '#home_header' });
+	this.homeHerosView.render();
+
     function handleResize() {
       $("img.scale_image_ready").imageScale();
     }
