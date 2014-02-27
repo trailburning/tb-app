@@ -4,6 +4,7 @@ define([
 ], function(_, Backbone){
 
   var OFFSCREEN_Y = 500;
+  var SHOW_CONTENT_DELAY = 500;
 
   var HomeHeroView = Backbone.View.extend({
     initialize: function(){
@@ -49,7 +50,7 @@ define([
 	  // update pos
 	  $('img.scale_image_ready', $(this.el)).imageScale();
 	  // fade in - delay adding class to ensure image is ready  
-	  $('.fade_on_load', $(this.el)).addClass('tb-fade-in');
+	  $('.fade_on_load', $(this.el)).addClass('tb-fade-in-no-delay');
 	  $('.image_container', $(this.el)).css('opacity', 1);
 	  // force update to fix blurry bug
 	  resrc.resrcAll();
@@ -74,7 +75,7 @@ define([
         self.elHeroRight.css('top', 46);      
         self.elCredit.css('top', $('#home_header').height() - self.elCredit.height() - 12);
         self.elSponsor.css('top', $('#home_header').height() - self.elSponsor.height() - 12);                                 
-  	  }, 1500);      
+  	  }, SHOW_CONTENT_DELAY);      
     },	
     hide: function(){
 	  $('.image_container', $(this.el)).css('opacity', 0);

@@ -636,6 +636,13 @@ h4.tb {
   transition-delay: 0.5s;
 }
 
+.tb-fade-in-no-delay {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  -moz-transition: opacity 0.5s ease-in-out;
+  -webkit-transition: opacity 0.5s ease-in-out;
+}
+
 .tb-fade {
   opacity: 0;
   transition: opacity 1s ease-in-out;

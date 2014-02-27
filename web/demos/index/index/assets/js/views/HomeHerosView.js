@@ -4,8 +4,8 @@ define([
   'views/HomeHeroView'
 ], function(_, Backbone, HomeHeroView){
 
-  var HERO_TIMER = 8000;
-  var TRANSITION_TIMER = 1000;
+  var HERO_TIMER = 10000;
+  var TRANSITION_TIMER = 0;
 
   var HomeHerosView = Backbone.View.extend({
     initialize: function(){
@@ -52,9 +52,11 @@ define([
       	}
       	
       	this.arrHeros[this.nCurrHero].hideContent();
+  
+  		self.onTransitionTimer();
       	
         this.nTransitionTimer = setTimeout(function() {
-          self.onTransitionTimer();
+//          self.onTransitionTimer();
         }, TRANSITION_TIMER);           	      	
       }
     },
