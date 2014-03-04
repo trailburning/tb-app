@@ -55,12 +55,12 @@ define([
     },    
     addMedia: function(mediaModel){
       var jsonPoints = this.model.get('value').route.route_points;
-      
       var self = this;
       $.each(jsonPoints, function(key, point) {
         if (mediaModel.get('coords').lat == point.coords[1] && mediaModel.get('coords').long == point.coords[0]) {
           var trailMediaMarkerView = new TrailMediaMarkerView({ pos: key, model: mediaModel });
-          self.arrMediaPoints.push(trailMediaMarkerView);          
+          self.arrMediaPoints.push(trailMediaMarkerView);
+          return false;          
         }
       });           
     },        
