@@ -33,7 +33,7 @@ define([
       // fire event
       app.dispatcher.trigger("TrailUploadPhotoView:upload", this);                
                         
-      var strURL = RESTAPI_BASEURL + 'v1/route/'+this.model.get('id')+'/medias/add';      
+      var strURL = TB_RESTAPI_BASEURL + '/v1/route/'+this.model.get('id')+'/medias/add';      
         
       $.fn.upload = function(remote,successFn,progressFn) {
         return this.each(function() {    

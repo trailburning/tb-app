@@ -6,6 +6,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 use TB\Bundle\APIBundle\Util\ApiException;
+use Symfony\Component\HttpFoundation\Request;
 
 class RouteController extends AbstractRestController
 {
@@ -86,6 +87,62 @@ class RouteController extends AbstractRestController
         
         $postgis = $this->get('postgis');
         $routes = $postgis->readRoutes($userId, 10);
+        $json_routes = array();
+        foreach ($routes as $route) {
+            $json_routes[] = $route->toJSON();
+        }
+        
+        $output = array('usermsg' => 'success', "value" => json_decode('{"routes": ['. implode(',', $json_routes).']}'));
+
+        return $this->getRestResponse($output);
+    }
+    
+   
+    /**
+     * Get Routes created by an authenticated user
+     *
+     * Optional query string parameters to filter the result: 
+     * route_type_id int 
+     * route_category_id int     
+     * publish boolean
+     * count int (default 10)
+     *
+     * @Route("/routes/my")
+     * @Method("GET")
+     */
+    public function getRoutesByAuthenticatedUser(Request $request)
+    {
+        $request->headers->set('Trailburning-User-ID', 30);
+        if (!$request->headers->has('Trailburning-User-ID')) {
+            throw new ApiException('Header Trailburning-User-ID is not set', 400);
+        }
+        
+        $userId = $request->headers->get('Trailburning-User-ID');
+        $user = $this->getDoctrine()
+            ->getRepository('TBFrontendBundle:user')
+            ->findOneById($userId);
+
+        if (!$user) {
+            throw $this->createNotFoundException(
+                sprintf('User with id "%s" not found', $userId)
+            );
+        }
+        
+        
+        $route_type_id = $request->query->get('route_type_id', null);
+        $route_category_id = $request->query->get('route_category_id', null);
+        if ($request->query->get('publish') === 'true') {
+            $publish = true;
+        } elseif ($request->query->get('publish') === 'false') { 
+            $publish = false;
+        } else {
+            $publish = null;
+        }
+        
+        $count = $request->query->get('count', null);
+        
+        $postgis = $this->get('postgis');
+        $routes = $postgis->readRoutes($userId, $count, $route_type_id, $route_category_id, $publish);
         $json_routes = array();
         foreach ($routes as $route) {
             $json_routes[] = $route->toJSON();

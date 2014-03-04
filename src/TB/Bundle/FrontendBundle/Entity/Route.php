@@ -3,6 +3,7 @@
 namespace TB\Bundle\FrontendBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Route
@@ -36,6 +37,7 @@ class Route
     /**
      * @var string
      *
+     * @Gedmo\Slug(fields={"name", "region"}, separator="-")    
      * @ORM\Column(name="slug", type="string", length=50, nullable=true)
      */
     private $slug;
@@ -304,7 +306,20 @@ class Route
     }
 
     /**
-     * Get id
+     * Set id
+     *
+     * @param integer $id
+     * @return Route
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    
+        return $this;
+    }
+    
+    /**
+     * Set id
      *
      * @return integer 
      */
@@ -718,11 +733,17 @@ class Route
     /**
      * Set publish
      *
+     * @throws Exception when published is set true but the name is empty (a slug will be generated)
      * @param boolean $publish
      * @return Route
      */
     public function setPublish($publish)
     {
+        if ($publish === true && $this->getName() === null) {
+            throw new \Exception('Before publishing a Route, the name field must be set');
+            
+        }
+        
         $this->publish = $publish;
 
         return $this;
@@ -834,6 +855,7 @@ class Route
     public function toJSON() 
     {
         $route = '{';
+        $route .= '"id": "'.$this->getId().'",';
         $route .= '"name": "'.$this->getName().'",';
         $route .= '"slug": "'.$this->getSlug().'",';     
         $route .= '"region": "'.$this->getRegion().'",';     

@@ -73,7 +73,7 @@ define([
             
       // get trail types
 	  var elList = $('#trail_types ul', $(this.el));
-      var strURL = RESTAPI_BASEURL + 'v1/route_category/list';      
+      var strURL = TB_RESTAPI_BASEURL + '/v1/route_category/list';      
       $.ajax({
         type: "GET",
         dataType: "json",
@@ -173,7 +173,7 @@ define([
 	  this.options.mediaCollection.remove(mediaID);
       this.trailSlideshowView.remove(mediaID);
       
-      var strURL = RESTAPI_BASEURL + 'v1/media/' + mediaID;      
+      var strURL = TB_RESTAPI_BASEURL + '/v1/media/' + mediaID;      
       $.ajax({
         url: strURL,
         type: 'DELETE',            
@@ -196,7 +196,7 @@ define([
 	  console.log('onTrailMapViewMoveMedia:');
       console.log(postData);
       
-      var strURL = RESTAPI_BASEURL + 'v1/media/' + mediaID;      
+      var strURL = TB_RESTAPI_BASEURL + '/v1/media/' + mediaID;      
       $.ajax({
         type: "PUT",
         dataType: "json",
