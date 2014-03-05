@@ -4,6 +4,7 @@ namespace TB\Bundle\APIBundle\Tests\Entity;
 
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 use TB\Bundle\FrontendBundle\Entity\Route;
+use TB\Bundle\FrontendBundle\Entity\GpxFile;
 
 class RouteTest extends WebTestCase
 {
@@ -85,4 +86,61 @@ class RouteTest extends WebTestCase
         $route = new Route();
         $route->updateFromJSON('invalid JSON string');
     }
+    
+    public function testSlug()
+    {
+        $this->loadFixtures([
+            'TB\Bundle\FrontendBundle\DataFixtures\ORM\UserProfileData',
+        ]); 
+ 
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        $user = $em
+            ->getRepository('TBFrontendBundle:User')
+            ->findOneByName('mattallbeury');
+        
+        if (!$user) {
+            $this->fail('Missing User with name "mattallbeury" in test DB');
+        }
+        
+        $gpxFile = new GpxFile();
+        $gpxFile->setPath('path');
+        
+        $em->persist($gpxFile);
+        $em->flush();
+ 
+        $route = new Route();
+        $route->setUser($user);
+        $route->setName('name');
+        $route->setRegion('region');
+        $route->setGpxFile($gpxFile);
+        
+        $em->persist($route);
+        $em->flush();
+        
+        $this->assertEquals('name-region', $route->getSlug(), 
+            'The slug field was set with the value from name and region');
+    }
+ 
+    /**
+     * @expectedException Exception
+     * @@expectedExceptionMessage Before publishing a Route, the name field must be set
+     */
+    public function testSetPublishThrowsException()
+    {
+        $route = new Route();
+        $route->setPublish(true);
+    }
+    
+    /**
+     */
+    public function testSetPublish()
+    {
+        $route = new Route();
+        $route->setName('name');
+        $route->setPublish(true);
+        
+        $this->assertTrue($route->getPublish(),
+            'publish was set to "true"');
+    }
+    
 }

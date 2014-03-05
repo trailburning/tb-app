@@ -89,7 +89,7 @@ class Postgis extends \PDO
         $this->beginTransaction();
         $q = 'INSERT INTO routes (name, gpx_file_id, tags, user_id, region, slug) VALUES (?, ?, ?, ?, ?, ?)';
         $pq = $this->prepare($q);
-        $success = $pq->execute(array($route->getName(), $route->getGpxFileId(), $tags, $user_id, $route->getRegion(), $route->getName()));
+        $success = $pq->execute(array($route->getName(), $route->getGpxFileId(), $tags, $route->getUserId(), $route->getRegion(), $route->getName()));
         if (!$success) {
             $this->rollBack();
             throw (new ApiException("Failed to insert the route into the database", 500));
@@ -194,19 +194,43 @@ class Postgis extends \PDO
         return $route;
     }
     
-    public function readRoutes($user_id, $count = null) 
+    public function readRoutes($user_id, $count = null, $route_type_id = null, $route_category_id = null, $publish = null) 
     {
         $q = 'SELECT r.id, r.name, r.slug, r.region, r.length, ST_X(r.centroid) AS long, ST_Y(r.centroid) AS lat, r.tags 
               FROM routes r
               INNER JOIN route_medias rm ON r.id=rm.route_id        
               WHERE r.user_id=:user_id
-              AND r.slug IS NOT NULL
-              GROUP BY r.id
-              LIMIT :count';
+              AND r.slug IS NOT NULL';
+        if ($route_type_id !== null) {
+            $q  .= ' AND r.route_type_id=:route_type_id';
+        }      
+        if ($route_category_id !== null) {
+            $q  .= ' AND r.route_category_id=:route_category_id';
+        }
+        if ($publish !== null) {
+            $q .= ' AND publish=:publish';
+        }
+        $q.= ' GROUP BY r.id ';
+        if ($count !== null) {
+            $q .= ' LIMIT :count';
+        }
 
         $pq = $this->prepare($q);
         $pq->bindParam('user_id', $user_id, \PDO::PARAM_INT);
-        $pq->bindParam('count', $count, \PDO::PARAM_INT);
+        if ($count !== null) {
+            $pq->bindParam('count', $count, \PDO::PARAM_INT);
+        }
+        if ($route_type_id !== null) {
+            $pq->bindParam('route_type_id', $route_type_id, \PDO::PARAM_INT);
+        }
+        if ($route_category_id !== null) {
+            $pq->bindParam('route_category_id', $route_category_id, \PDO::PARAM_INT);
+        }     
+        if ($publish !== null) {
+            $publish = ($publish === true) ? 'true' : 'false';
+            $pq->bindParam('publish', $publish, \PDO::PARAM_INT);
+        }
+        
         $success = $pq->execute();
         if (!$success) {
             throw (new ApiException('Failed to fetch route from Database', 500));
@@ -217,6 +241,7 @@ class Postgis extends \PDO
         while ($row = $pq->fetch(\PDO::FETCH_ASSOC)) {
             
             $route = new Route();
+            $route->setId($row['id']);
             $route->setName($row['name']);
             $route->setSlug($row['slug']);
             $route->setRegion($row['region']);

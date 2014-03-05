@@ -30,7 +30,7 @@ define([
     upload: function(){
       var self = this;
         
-      var strURL = RESTAPI_BASEURL + 'v1/import/gpx';      
+      var strURL = TB_RESTAPI_BASEURL + '/v1/import/gpx';      
         
       $.fn.upload = function(remote,successFn,progressFn) {
         return this.each(function() {    
@@ -47,6 +47,7 @@ define([
               }
               return myXhr;
             },
+            headers: {'Trailburning-User-ID': TB_USER_ID},
             data: formData,
             cache: false,
             contentType: false,

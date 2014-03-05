@@ -37,6 +37,20 @@ class GpxFileController extends AbstractRestController
      */
     public function postImport(Request $request)
     {   
+        if (!$request->headers->has('Trailburning-User-ID')) {
+            throw new ApiException('Header Trailburning-User-ID is not set', 400);
+        }
+        
+        $userId = $request->headers->get('Trailburning-User-ID');
+        $user = $this->getDoctrine()
+            ->getRepository('TBFrontendBundle:user')
+            ->findOneById($userId);
+
+        if (!$user) {
+            throw $this->createNotFoundException(
+                sprintf('User with id "%s" not found', $userId)
+            );
+        }
         
         if (!array_key_exists('gpxfile', $_FILES)) {
             throw (new ApiException('Gpxfile variable not set', 400));
@@ -60,6 +74,7 @@ class GpxFileController extends AbstractRestController
         $importedRoutesIds = array();
         foreach ($routes as $route) {
             $route->setGpxFileId($gpx_file_id);
+            $route->setUserId($user->getId());
             $importedRoutesIds[] = $postgis->writeRoute($route);
         }
 

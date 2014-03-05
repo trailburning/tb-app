@@ -2,7 +2,7 @@ define([
   'underscore', 
   'backbone',
   'models/TrailMediasModel',    
-  'views/TrailMapView',
+  'views/TrailmakerMapView',
   'views/StepRouteView',
   'views/StepRouteEditView',
   'views/StepPublishedView'
@@ -13,7 +13,7 @@ define([
   var TITLE_OFF = 0;
   var TITLE_ON = 1;
 
-  var AppView = Backbone.View.extend({
+  var TrailmakerView = Backbone.View.extend({
     initialize: function(){
       app.dispatcher.on("StepRouteView:gpxuploaded", this.onStepRouteViewGPXUploaded, this);
       app.dispatcher.on("StepRouteEditView:photouploaded", this.onStepRouteEditViewPhotoUploaded, this);
@@ -44,7 +44,7 @@ define([
       
       // Step Rpute
       this.stepRouteView = new StepRouteView({ el: '#step_route_view', model: this.model });
-      if (!nTrail) {
+      if (!TB_TRAIL_ID) {
         $('#step_route_view').show();    
         this.stepRouteView.render();        
       	$('#trail_map_overlay').show();            
@@ -53,7 +53,7 @@ define([
       }
       // Step Route Edit
       this.stepRouteEditView = new StepRouteEditView({ el: '#step_route_edit_view', model: this.model, mediaCollection: this.mediaCollection });
-      if (nTrail) {
+      if (TB_TRAIL_ID) {
         $('#step_route_edit_view').show();          
         self.stepRouteView.render();
       }
@@ -132,7 +132,7 @@ define([
     getTrailMedia: function(){
       var self = this; 
       
-      this.mediasModel.url = RESTAPI_BASEURL + 'v1/route/'+this.model.get('id')+'/medias';
+      this.mediasModel.url = TB_RESTAPI_BASEURL + '/v1/route/'+this.model.get('id')+'/medias';
       this.mediasModel.fetch({
         success: function () {
 	      var data = self.mediasModel.get('value');
@@ -154,8 +154,8 @@ define([
       this.handleResize();
     	
       // mla test
-      if (nTrail) {
-      	this.model.set('id', nTrail);
+      if (TB_TRAIL_ID) {
+      	this.model.set('id', TB_TRAIL_ID);
       }
       this.getTrail();      
       
@@ -177,7 +177,7 @@ define([
       var postData = JSON.stringify(jsonObj);
       var postArray = {json:postData};
 
-      var strURL = RESTAPI_BASEURL + 'v1/route/' + this.model.id;      
+      var strURL = TB_RESTAPI_BASEURL + '/v1/route/' + this.model.id;      
       $.ajax({
         type: "PUT",
         dataType: "json",
@@ -198,7 +198,7 @@ define([
       var postData = JSON.stringify(jsonObj);
       var postArray = {json:postData};
 
-      var strURL = RESTAPI_BASEURL + 'v1/route/' + this.model.id;      
+      var strURL = TB_RESTAPI_BASEURL + '/v1/route/' + this.model.id;      
       $.ajax({
         type: "PUT",
         dataType: "json",
@@ -240,5 +240,5 @@ route_category_id (integer)
     }
   });
 
-  return AppView;
+  return TrailmakerView;
 });

@@ -11,7 +11,7 @@ define([
   'modernizr',
   'backbone',
   'models/TrailModel',
-  'views/AppView'  
+  'views/TrailmakerView',
 ], function(_, Modernizr, Backbone, TrailModel, AppView){
   app.dispatcher = _.clone(Backbone.Events);
   

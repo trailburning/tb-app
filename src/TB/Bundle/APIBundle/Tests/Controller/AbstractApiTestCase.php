@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 abstract class AbstractApiTestCase extends WebTestCase
 {
     
-    public function isValidJson($json)
+    protected function isValidJson($json)
     {
         $ob = json_decode($json);
         if ($ob === null) {
@@ -34,6 +34,14 @@ abstract class AbstractApiTestCase extends WebTestCase
         require_once self::getPhpUnitXmlDir() . '/api/AppKernel.php';
 
         return 'AppKernel';
+    }
+    
+    protected function assertJsonResponse($client)
+    {
+        $this->assertEquals('application/json',  $client->getResponse()->headers->get('Content-Type'),
+            'Content-Type Header is "application/json"');  
+        $this->assertTrue($this->isValidJson($client->getResponse()->getContent()), 
+            'Response is Valid JSON');
     }
     
 }
