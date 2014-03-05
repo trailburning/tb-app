@@ -1,0 +1,359 @@
+/* APP */
+/******************************************/
+#appview {
+/*  
+border-style:solid;
+border-width:1px;
+*/  
+  min-width: 1200px;
+}
+
+.content {
+  width: 1160px;
+}
+
+/* HOME HEADER */
+/******************************************/
+#home_header {
+  z-index: 100;
+  position: relative;
+  margin-top: 63px;
+  width: 100%;
+  height: 486px;
+  overflow: overflow;
+}
+
+#home_header .image_container {
+  position: relative;
+  opacity: 0;
+  width: 100%;
+  height: 486px;
+  overflow: hidden;
+}
+
+/* HERO */
+/******************************************/
+.hero {
+  visibility: hidden;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;  
+}
+
+.hero-move {
+  -webkit-transition: top 1s;
+  -moz-transition: top 1s;
+  -o-transition: top 1s;
+  transition: top 1s;    
+}
+
+.hero .left {
+  visibility: hidden;
+  position: absolute;
+  top: 23px;
+  left: 32px;  
+}
+
+.hero .right {
+  visibility: hidden;
+  position: absolute;
+  top: 46px;
+  right: 46px;  	
+}
+
+.hero .left .feature h1 {
+  color: #6d6e71;
+}
+
+.hero .left .title .author {
+  display: inline-block;
+  margin: 13px 0px 0px 0px;
+  padding: 5px 10px 5px 10px;
+  font-size: 22px;
+  line-height: 1em;
+  font-weight: 400;
+  color: #FFF;
+  border: none;
+  background-color: #000;  
+  background: rgba(0, 0, 0, 0.6);  
+}
+
+.hero .hero_btn {
+  position: relative;
+  top: 0px;
+}
+
+.hero .tb-credit {
+  visibility: hidden;
+  position: absolute;
+  top: 0px;
+  left: 32px;
+}
+
+.btn-tb-inspire {
+  font-family: 'Signika', sans-serif;
+  padding: 6px 14px;
+  font-size: 18px;
+  line-height: 30px;
+  color: #FFFFFF !important;
+  text-shadow: none;
+  background-color: #FF8309 !important;
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#cc0000), to(#FF8309));
+  background-image: -webkit-linear-gradient(top, #FFA752, #FF8309);
+  background-image: -o-linear-gradient(top, #FFA752, #FF8309);
+  background-image: linear-gradient(to bottom, #FFA752, #FF8309);
+  background-repeat: repeat-x;
+  border-color: #FF8309;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#cc0000', endColorstr='#0000cc', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;    
+}
+.btn-tb-inspire:hover,
+.btn-tb-inspire:active,
+.btn-tb-inspire.active,
+.btn-tb-inspire.disabled,
+.btn-tb-inspire[disabled] {
+  background-color: #FF8309;
+}
+
+.tb-logo {
+  display: block;
+  float: left;
+  margin-top: 2px;
+  margin-right: 8px;
+  width: 25px;
+  height: 25px;
+  background-image: url("../img/tb_icon_btn.png");
+  background-repeat: no-repeat;
+}
+
+.sponsor_content {	
+  visibility: hidden;
+  position: absolute;
+  top: 0px;
+  right: 30px;	
+  font-size: 14px;
+  line-height: 1em;
+  color: #FFFFFF;	
+}
+
+.sponsor_content .brand {
+  float: right;
+}
+
+.sponsor_content .strap {
+  float: left;  
+  margin-top: 25px;
+}
+
+.sponsor_content .logo {
+  float: left;
+  margin-left: 10px;
+}
+
+/* DISCOVER */
+/******************************************/
+.discover_content {
+  width: 100%;
+  background: #FFF;
+}
+
+.discover_content .content {
+  padding-top: 44px;
+  margin: 0px auto 0px auto;
+  text-align: center;
+}
+
+.discover_content .desc {
+  margin-top: 18px;
+}
+
+.discover_content .cards {
+  margin-top: 32px;
+  margin-bottom: 12px;
+}
+
+.discover_content .trail_card_sticker {
+  display: inline-block;
+  margin: 0px 14px 0px 14px;
+}
+	
+.discover_content .more_btn {
+  margin-bottom: 28px;
+}	
+	
+/* EVENTS */
+/******************************************/
+.events_content .content {
+  padding-top: 44px;
+  margin: 0px auto 54px auto;
+  text-align: center;	
+}
+
+.events_content .desc {
+  margin: 24px auto 0px auto;
+  text-align: center;
+}
+
+.panels {
+  padding-top: 26px;
+  margin-bottom: 24px;
+}
+
+.events_content .more_btn {
+  margin-bottom: 36px;
+}	
+
+.events_content .trailers .avatars {
+  padding-top: 20px;	
+}
+
+.events_content .trailers .avatars .avatar {
+  display: inline-block;
+  margin: 0px 9px 0px 9px;
+}
+
+/* GUIDE */
+/******************************************/
+.guide_content {
+  width: 100%;
+  background: #FFF;
+}
+
+.guide_content .content {
+  padding-top: 54px;
+  margin: 0px auto 52px auto;
+}
+
+.guide_content .content .title {
+  text-align: center;  
+}
+
+.guide_content .content .desc {
+  margin: 0px auto 0px auto;
+  margin-top: 18px;
+  text-align: center;    
+}
+
+.guide_content .guide_items {
+  margin: 56px auto 0px auto;
+  width: 918px;
+  height: 420px;  
+  background: url("../img/guide_back.png") no-repeat 290px 90px;    
+  background-size: 340px 67px;
+}
+
+.guide_content .guide_item {
+  float: left;
+  margin: 0px 18px 0px 18px;
+  width: 270px;
+  text-align: center;  
+}
+
+.guide_content .guide_item .guide_image {
+  display: inline-block;
+  width: 190px;	
+}
+
+.guide_content .guide_item .guide_image img {
+  width: 100%;
+}
+
+.guide_content .guide_item .title {
+  margin-top: 16px;
+}
+
+.guide_content .guide_item h4 {
+  margin-top: 18px;
+}
+
+.guide_content .join {
+  text-align: center;
+}
+
+/* RESPONSIVE */
+/******************************************/
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+}
+ 
+/* Medium devices (desktops, 992px and up) */
+@media (max-width: 1199px) {  
+  #appview {
+    min-width: 992px;
+  }  
+  .content {
+    width: 992px;
+  }  
+  .panel_content {
+    width: 992px;
+  }   
+  .guide_content .guide_items {
+    width: 825px;
+    height: 365px;  
+    background: url("../img/guide_back.png") no-repeat 267px 78px;    
+    background-size: 296px 59px;
+  }
+  .guide_content .guide_item {
+    margin: 0px 16px 0px 16px;
+    width: 243px;
+  }
+  .guide_content .guide_item .guide_image {
+    width: 165px;	
+  }
+}
+
+/* Small devices (tablets, 768px) */
+@media (max-width: 768px) {  
+}
+
+.image {
+  display: none;  
+}
+
+img {
+  max-width: none;
+}
+
+.avatar {
+  width: 54px;
+  height: 54px;
+  box-shadow: 2px 2px 2px #888888;
+  background: #FFF;
+  border-radius: 50%;
+  overflow: hidden;		
+}
+
+.highlight_avatar {
+  width: 76px;
+  height: 76px;
+}
+
+.feature_avatar {
+  width: 128px;
+  height: 128px;
+}
+
+.profile_avatar {
+  width: 210px;
+  height: 210px;
+}
+
+.avatar .photo {
+  margin: 4%;
+  width: 92%;
+  height: 92%;
+  border-radius: 50%;
+  overflow: hidden;	
+}
+
+.avatar .photo img {
+  width: 100%;
+}

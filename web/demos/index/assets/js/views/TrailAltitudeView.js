@@ -55,12 +55,12 @@ define([
     },    
     addMedia: function(mediaModel){
       var jsonPoints = this.model.get('value').route.route_points;
+      
       var self = this;
       $.each(jsonPoints, function(key, point) {
         if (mediaModel.get('coords').lat == point.coords[1] && mediaModel.get('coords').long == point.coords[0]) {
           var trailMediaMarkerView = new TrailMediaMarkerView({ pos: key, model: mediaModel });
-          self.arrMediaPoints.push(trailMediaMarkerView);
-          return false;          
+          self.arrMediaPoints.push(trailMediaMarkerView);          
         }
       });           
     },        
@@ -206,21 +206,15 @@ define([
       var nStartX = 0, nStartY = 0;  
       $.each(jsonPoints, function(key, point) {
       	// ignore blank alt
-      	if (point.tags.altitude != '') {      		
+      	if (point.tags.altitude != '') {
           nX = nXOffset + self.objTrailMarginRect.left + Math.round(key / self.fXFactor);
           nYPercent = ((point.tags.altitude - Math.round(self.fLowAlt)) / self.fAltRange) * 100;
           nY = nYOffset + self.objTrailMarginRect.top + Math.round((self.nDrawHeight-2) - ((nYPercent * (self.nDrawHeight-2)) / 100));
 
-		  if (self.fXFactor > 1) {
-            rem = key % Math.round(self.fXFactor * 4);
-            if (rem == 0) {
-              self.context.lineTo(nX, nY);            
-            }
-		  }
-		  else {
+          rem = key % Math.round(self.fXFactor * 4);
+          if (rem == 0) {
             self.context.lineTo(nX, nY);            
-		  }
-
+          }
           if (!nStartX) {
             nStartX = nX;
             nStartY = nY;
