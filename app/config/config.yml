@@ -98,21 +98,32 @@ stof_doctrine_extensions:
             
 knp_gaufrette:
     adapters:
-        photo_storage:
-            amazon_s3:
-                amazon_s3_id: s3_client
+        gpx_files:
+            aws_s3:
+                service_id: aws_s3_client
                 bucket_name:  %aws_s3_bucket_name%
-                create:       false
                 options:
                     create: true
     filesystems:
-        photo_storage:
-            adapter:    photo_storage
-            alias:      photo_storage_filesystem 
+        gpx_files:
+            adapter:    gpx_files
+            alias:      gpx_files_filesystem 
             
 services:
     s3_client:
         class:      %s3_client_class% 
         factory_class:  %s3_client_class%
         factory_method: factory
-        arguments:  [%aws_accesskey%, %aws_secretkey%]
+        arguments: 
+            arguments:
+                - { key: %aws_accesskey%, secret: %aws_secretkey% } 
+                
+    aws_s3_client:
+        class: Aws\S3\S3Client
+        factory_class: Aws\S3\S3Client
+        factory_method: 'factory'
+        arguments:
+            -
+                key: %aws_accesskey%
+                secret: %aws_secretkey%
+        
