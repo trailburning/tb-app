@@ -112,7 +112,6 @@ class RouteController extends AbstractRestController
      */
     public function getRoutesByAuthenticatedUser(Request $request)
     {
-        $request->headers->set('Trailburning-User-ID', 30);
         if (!$request->headers->has('Trailburning-User-ID')) {
             throw new ApiException('Header Trailburning-User-ID is not set', 400);
         }
