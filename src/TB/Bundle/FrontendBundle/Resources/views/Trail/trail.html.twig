@@ -187,6 +187,14 @@ var TB_TRAIL_ID = {{ trail.id }};
     </div>  
 </div>  
           
+{% endblock %}
+
+
+{% block javascripts %}
+
+<script src="{{ asset('assets/js/libs/jquery.ui.widget.js') }}"></script>
+<script src="{{ asset('assets/js/libs/jquery.touchwipe.min.js') }}"></script>
+
 
 <script type="text/template" id="trailStatsViewTemplate">
   <div class="content">
@@ -253,4 +261,5 @@ var TB_TRAIL_ID = {{ trail.id }};
     </div>
   </div>
 </script>
+
 {% endblock %}

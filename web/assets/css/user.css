@@ -7,6 +7,10 @@ border-width:1px;
 */  
 }
 
+.fixed_content {
+  width: 1140px;
+}
+
 /* PROFILE HEADER */
 /******************************************/
 #profile_header {
@@ -14,21 +18,21 @@ border-width:1px;
   position: relative;
   margin-top: 63px;
   width: 100%;
-  height: 486px;
+  height: 350px;
   overflow: overflow;
 }
 
 #profile_header #profile_map_view {
   position: relative;  
   width: 100%; 
-  height: 486px;
+  height: 350px;
 }
 
 #profile_map {
   position: absolute;
   top: 0px;
   width:100%; 
-  height: 486px;
+  height: 350px;
 }
 
 #profile_map .leaflet-control-container {
@@ -48,34 +52,35 @@ border-width:1px;
   width: 880px;
   height: 486px;
   background: url(../img/above_map.png) no-repeat top left;
-  background-size: 880px 486px;
+  background-size: 880px 350px;
   pointer-events: none;  
 }
 
-#profile_header .profile_title {
+#profile_header .profile_info {
   z-index: 1000;
   position: absolute;
-  top: 25px;
+  top: 42px;
   left: 32px;
   color: #44b6f7;
 }
 
-#profile_header .profile_title .avatar {
-  margin: 38px 0px 0px 4px;  
-  width: 211px;
-  height: 210px;
+#profile_header .tb-avatar {
+  float: left;
 }
 
-#profile_header .profile_title .avatar img {
-  width: 100%;
+#profile_header .profile_title {
+  float: left;
+  margin-left: 16px;	
+}
+
+#profile_header .follow {
+  margin-top: 20px;
 }
 
 /* PANELS */
 /******************************************/
 .panel_content {
   position: relative;
-  margin: 0px auto 80px auto;
-  width: 1112px;
 }
 
 .panels {
@@ -84,14 +89,73 @@ border-width:1px;
   padding-top: 22px;
 }
 
-.panels .left {
-  float: left;
-  width: 544px;
+/* CRUMBS */
+/******************************************/
+.crumb_content {
+  margin: 0px auto 0px auto;
+  width: 1118px;  
 }
 
-.panels .right {
-  float: left;
-  width: 568px;
+/* DETAILS */
+/******************************************/
+.details_content {
+  margin: 0px auto 0px auto;
+}
+
+/* MY TRAILS TITLE */
+/******************************************/
+.mytrails_title_content {
+  margin: 0px auto 0px auto;
+  width: 1118px;	
+}
+
+/* MY TRAILS */
+/******************************************/
+.mytrails_content {
+  clear: both;
+}
+
+.mytrails_content {
+  padding-bottom: 38px;
+  margin: 0px auto 0px auto;
+}
+
+.mytrails_content .panels {
+/*	
+  text-align: center;
+*/  
+}
+
+/* LIKE TRAILS */
+/******************************************/
+.likedtrails_content {
+  width: 100%;
+  background: #FFF;
+}
+
+.likedtrails_content .fixed_content {
+  padding-top: 44px;
+  padding-bottom: 68px;
+  margin: 0px auto 0px auto;
+  text-align: center;
+}
+
+.likedtrails_content .desc {
+  margin-top: 18px;
+}
+
+.likedtrails_content .panels {
+  margin-top: 32px;
+  margin-bottom: 12px;
+}
+
+.likedtrails_content .trail_card_sticker {
+  display: inline-block;
+  margin: 0px 14px 0px 14px;
+}
+
+.likedtrails_spacer {
+  margin-top: 44px;	
 }
 
 /* PANEL */
@@ -133,6 +197,13 @@ border-width:1px;
 
 .profile_detail_panel .content .join {  
   margin-top: 24px;
+}
+
+/* PROFILE FOLLOW PANEL */
+/******************************************/
+.profile_follow_panel {
+  margin-left: 24px;
+  width: 544px;
 }
 
 /* TRAIL GEAR PANEL */
@@ -245,38 +316,15 @@ border-width:1px;
     width: 730px;
     background-size: 730px 538px;
   }
-  #profile_header .profile_title .avatar {
-    margin: 38px 0px 0px 4px;  
-    width: 175px;
-    height: 174px;
+  .fixed_content {
+    width: 994px;
   }
-  .panel_content {
-    width: 968px;
+  .crumb_content {
+    width: 974px;
   }
-  .panels .left {
-    width: 472px;
+  .mytrails_title_content {
+    width: 974px;
   }
-  .panels .right {
-    width: 496px;
-  }
-  .profile_detail_panel {
-    width: 472px;
-  }
-  .trailgear_panel {
-    width: 472px;
-    height: 296px;
-  }
-  .trailgear_panel .content .gear_list {
-    height: 214px;
-  }
-  .trailgear_panel .content .gear_list .gear {
-    margin: 0px 7px 0px 7px;
-    width: 142px;
-  }
-  .tops_trails_panel {
-    margin-left: 24px;
-    width: 472px;
-  }    
 }
 
 .image {

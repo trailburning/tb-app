@@ -49,11 +49,13 @@ define([
       });
 
       // mla test
-//      this.model.set('id', 148);
-//      $('#step_route_view .panel_container').hide();      
-//      $('.map_step_container', $(this.el)).show();  
-      // fire event
-//      app.dispatcher.trigger("StepRouteView:gpxuploaded", self);                        
+      if (TB_TRAIL_ID) {
+         this.model.set('id', 148);
+         $('#step_route_view .panel_container').hide();      
+         $('.map_step_container', $(this.el)).show();  
+          // fire event
+         app.dispatcher.trigger("StepRouteView:gpxuploaded", self);           
+      }
         
       return this;
     },

@@ -39,9 +39,8 @@ class RouteControllerTest extends AbstractApiTestCase
         $client = $this->createClient();
         $crawler = $client->request('GET', '/v1/route/' . $route->getId());
         $this->assertEquals(Response::HTTP_OK,  $client->getResponse()->getStatusCode());
-        $this->assertEquals('application/json',  $client->getResponse()->headers->get('Content-Type')); 
-        $response = $client->getResponse()->getContent();
-        $this->assertTrue($this->isValidJson($response));   
+        
+        $this->assertJsonResponse($client);
     }
     
     public function testGetRoute404()
@@ -68,6 +67,8 @@ class RouteControllerTest extends AbstractApiTestCase
         // Check user message
         $jsonObj = json_decode($response);
         $this->assertEquals('Route with id "1" does not exist', $jsonObj->usermsg);
+        
+        $this->assertJsonResponse($client);
     }
     
     /**
@@ -92,9 +93,8 @@ class RouteControllerTest extends AbstractApiTestCase
         $client = $this->createClient();
         $crawler = $client->request('DELETE', '/v1/route/' . $route->getId());
         $this->assertEquals(Response::HTTP_OK,  $client->getResponse()->getStatusCode());
-        $this->assertEquals('application/json',  $client->getResponse()->headers->get('Content-Type'));  
-        $response = $client->getResponse()->getContent();
-        $this->assertTrue($this->isValidJson($response));
+
+        $this->assertJsonResponse($client);
 
         // Verify that if Route was deleted from the DB
         $route = $em
@@ -130,6 +130,8 @@ class RouteControllerTest extends AbstractApiTestCase
         // Check user message
         $jsonObj = json_decode($response);
         $this->assertEquals('Failed to delete non existing route with id "1"', $jsonObj->usermsg);
+        
+        $this->assertJsonResponse($client);
     }
     
     /**
@@ -155,12 +157,11 @@ class RouteControllerTest extends AbstractApiTestCase
         $crawler = $client->request('GET', '/v1/routes/user/' . $user->getId());
         $this->assertEquals(Response::HTTP_OK,  $client->getResponse()->getStatusCode());
           
-        $response = $client->getResponse()->getContent();
-        $this->assertTrue($this->isValidJson($response));
+        $this->assertJsonResponse($client);
     }
     
     /**
-     * 
+     * Test 404 Response for not existing User
      */
     public function testGetRoutesByUser404()
     {
@@ -187,6 +188,8 @@ class RouteControllerTest extends AbstractApiTestCase
         // Check user message
         $jsonObj = json_decode($response);
         $this->assertEquals('User with id "1" does not exist', $jsonObj->usermsg);
+        
+        $this->assertJsonResponse($client);
     }
     
     /**
@@ -217,6 +220,48 @@ class RouteControllerTest extends AbstractApiTestCase
         $client = $this->createClient();
         $crawler = $client->request('PUT', '/v1/route/1', array('json' => $json));
         
+        $this->assertJsonResponse($client);
+    }
+    
+    /**
+     * Test the GET /route/my action
+     */
+    public function testGetRoutesByAuthenticatedUser()
+    {
+        $this->loadFixtures([
+            'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData',
+        ]);
+        
+        // Get User from DB with the slug "mattallbeury"..
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        $user = $em
+            ->getRepository('TBFrontendBundle:User')
+            ->findOneByName('mattallbeury');
+        
+        if (!$user) {
+            $this->fail('Missing User with name "mattallbeury" in test DB');
+        }
+        
+        $client = $this->createClient();
+        $crawler = $client->request('GET', '/v1/routes/my', [], [], ['HTTP_Trailburning_User_ID' => $user->getId()]);
+        $this->assertEquals(Response::HTTP_OK,  $client->getResponse()->getStatusCode());
+          
+        $this->assertJsonResponse($client);
+    }
+
+    /**
+     * Test the GET /route/my action without Authentification
+     */
+    public function testGetRoutesByAuthenticatedUserNoHeader()
+    {
+        $this->loadFixtures([]);
+                
+        $client = $this->createClient();
+        $crawler = $client->request('GET', '/v1/routes/my');
+        $this->assertEquals(Response::HTTP_BAD_REQUEST,  $client->getResponse()->getStatusCode(), 
+            'Response returns Status Code 400');
+          
+        $this->assertJsonResponse($client);  
     }
 
 }

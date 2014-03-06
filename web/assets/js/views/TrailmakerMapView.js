@@ -1,7 +1,7 @@
 define([
   'underscore', 
   'backbone',
-  'views/TrailMapMediaMarkerView'    
+  'views/TrailmakerMapMediaMarkerView'    
 ], function(_, Backbone, TrailMapMediaMarkerView){
 
   var MAP_STREET_VIEW = 0;

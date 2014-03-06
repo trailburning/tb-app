@@ -2,17 +2,12 @@
 
 namespace TB\Bundle\FrontendBundle\Tests\Controller;
 
-use Liip\FunctionalTestBundle\Test\WebTestCase;
-use Symfony\Bundle\FrameworkBundle\Console\Application;
-use Symfony\Component\Console\Tester\ApplicationTester;
-use Symfony\Component\Console\Output\Output;
 use Symfony\Component\HttpFoundation\Response;
-use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 
 /**
  *
  */
-class TrailControllerTest extends WebTestCase
+class TrailControllerTest extends BaseFrontendTest
 {
     protected static function getKernelClass()
     {
@@ -75,5 +70,36 @@ class TrailControllerTest extends WebTestCase
         $this->assertEquals(Response::HTTP_NOT_FOUND, $client->getResponse()->getStatusCode());
     }
     
+    public function testTrailmakerNewTrail()
+    {
+        $this->loadFixtures([
+            'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData',
+        ]);
+ 
+        $client = $this->createClient();
+        $this->logIn($client, 'email@mattallbeury');
+        $crawler = $client->request('GET', '/trailmaker');
+        $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+    }
+    
+    public function testTrailmakerEditTrail()
+    {
+        $this->loadFixtures([
+            'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData',
+        ]);
+        
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        $route = $em
+            ->getRepository('TBFrontendBundle:Route')
+            ->findOneBySlug('grunewald');
+        if (!$route) {
+            $this->fail('Missing Route with slug "grunewald" in test DB');
+        }
+ 
+        $client = $this->createClient();
+        $this->logIn($client, 'email@mattallbeury');
+        $crawler = $client->request('GET', '/trailmaker/' . $route->getId());
+        $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+    }
 
 }
