@@ -104,6 +104,7 @@ knp_gaufrette:
                 bucket_name:  %aws_s3_bucket_name%
                 options:
                     create: true
+                
     filesystems:
         gpx_files:
             adapter:    gpx_files

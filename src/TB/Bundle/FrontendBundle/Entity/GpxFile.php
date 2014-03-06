@@ -5,6 +5,7 @@ namespace TB\Bundle\FrontendBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Gaufrette\Filesystem;
 
 /**
  * GpxFile
@@ -31,9 +32,9 @@ class GpxFile
     private $id;
 
     /**
-     * @Assert\File(maxSize="6000000")
+     * @Assert\File(maxSize="12m")
      */
-    private $gpxfile;
+    private $file;
 
     /**
      * Set path
@@ -73,9 +74,9 @@ class GpxFile
      *
      * @param UploadedFile $file
      */
-    public function setGpxfile(UploadedFile $gpxfile = null)
+    public function setFile(UploadedFile $file)
     {
-       $this->gpxfile = $gpxfile;
+       $this->file = $file;
     }
 
     /**
@@ -83,32 +84,36 @@ class GpxFile
      *
      * @return UploadedFile
      */
-    public function getGpxfile()
+    public function getFile()
     {
-       return $this->gpxfile;
+       return $this->file;
     }
     
-    public function upload()
+    /**
+     * Move the file to the provided Filesystem
+     * Sets the filename to the path field
+     *
+     * @return the name of the uploaded file
+     */
+    public function upload(Filesystem $filesystem)
     {
         // the file property can be empty if the field is not required
-        if (null === $this->getGpxfile()) {
-            return;
+        if (null === $this->getFile()) {
+            throw new \Exception('gpxFile is empty');
         }
-
-        // use the original file name here but you should
-        // sanitize it at least to avoid any security issues
-
-        // move takes the target directory and then the
-        // target filename to move to
-        $this->getGpxfile()->move(
-            $this->getUploadRootDir(),
-            $this->getGpxfile()->getClientOriginalName()
-        );
-
-        // set the path property to the filename where you've saved the file
-        $this->path = $this->getGpxfile()->getClientOriginalName();
-
+        
+        $file = $this->getFile();
+        
+        $filename = sprintf('%s/%s/%s/%s.gpx', date('Y'), date('m'), date('d'), uniqid());
+        
+        $adapter = $filesystem->getAdapter();
+        // $adapter->setMetadata($filename, array('contentType' => $file->getClientMimeType())); // doesn't work with in_memory adapter
+        $adapter->write($filename, file_get_contents($file->getPathname()));
+        $this->setPath($filename);
+        
         // clean up the file property as you won't need it anymore
         $this->file = null;
+        
+        return $filename;
     }
 }

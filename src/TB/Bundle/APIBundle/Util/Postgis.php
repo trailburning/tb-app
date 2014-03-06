@@ -87,10 +87,13 @@ class Postgis extends \PDO
         $tags = self::hstoreFromMap($route->getTags());
 
         $this->beginTransaction();
-        $q = 'INSERT INTO routes (name, gpx_file_id, tags, user_id, region, slug) VALUES (?, ?, ?, ?, ?, ?)';
+        $q = 'INSERT INTO routes (name, gpx_file_id, tags, user_id, region) VALUES (?, ?, ?, ?, ?)';
         $pq = $this->prepare($q);
-        $success = $pq->execute(array($route->getName(), $route->getGpxFileId(), $tags, $user_id, $route->getRegion(), $route->getName()));
+        $success = $pq->execute(array($route->getName(), $route->getGpxFileId(), $tags, $user_id, $route->getRegion()));
         if (!$success) {
+            echo $q;
+            var_export(array($route->getName(), $route->getGpxFileId(), $tags, $user_id, $route->getRegion()));
+            exit;
             $this->rollBack();
             throw (new ApiException("Failed to insert the route into the database", 500));
         }

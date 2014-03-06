@@ -24,16 +24,17 @@ class GpxFileControllerTest extends AbstractApiTestCase
     public function testPostImport()
     {
         $gpxfile = new UploadedFile(
-            realpath(__DIR__) . '/../../DataFixtures/GpxFiles/example.gpx',
-            'example.gpx',
-            123,
-            null,
-            true
+            realpath(__DIR__ . '/../../DataFixtures/GpxFiles/example.gpx'),
+            'example.gpx'
         );
         
         $client = $this->createClient();
 
         $crawler = $client->request('POST', '/v1/import/gpx', array(), array('gpxfile' => $gpxfile));
+        
+        echo $client->getResponse()->getContent();
+        exit;
+        
         $this->assertEquals(Response::HTTP_OK,  $client->getResponse()->getStatusCode());
         $this->assertEquals('application/json',  $client->getResponse()->headers->get('Content-Type'));
     }
