@@ -8,7 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use Symfony\Component\HttpFoundation\Request;
 
-use TB\Bundle\APIBundle\Entity\GpxFile;
+use TB\Bundle\FrontendBundle\Entity\GpxFile;
 use TB\Bundle\APIBundle\Util\GpxFileImporter;
 use TB\Bundle\APIBundle\Util\ApiException;
 
@@ -55,17 +55,25 @@ class GpxFileController extends AbstractRestController
         if (!$request->files->has('gpxfile')) {
             throw (new ApiException('gpxfile variable not set', 400));
         }
+        $file = $request->files->get('gpxfile');
+        
+        $importer = new GpxFileImporter();
+        try {
+            $routes = $importer->parse(file_get_contents($file->getPathname()));
+        } catch (\Exception $e) {
+            throw (new ApiException('Problem parsing GPX file - not a valid GPX file?', 400));
+        }
     
         $filesystem = $this->get('gpx_files_filesystem');
+        $postgis = $this->get('postgis');
         
         $gpxFile = new GpxFile();    
         $gpxFile->setFile($file);
+        $filename = $gpxFile->upload($filesystem);
         
         $em = $this->getDoctrine()->getManager();
         $em->persist($gpxFile);
         $em->flush();
-            
-        $filename = $gpxFile->upload($filesystem);
         
         $importedRoutesIds = array();
         foreach ($routes as $route) {

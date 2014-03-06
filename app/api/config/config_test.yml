@@ -32,5 +32,6 @@ liip_functional_test: ~
 knp_gaufrette:
     adapters:
         gpx_files:
-            in_memory:
-    
+            in_memory: ~
+        media_files:
+            in_memory: ~

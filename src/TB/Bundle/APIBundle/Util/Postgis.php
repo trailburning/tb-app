@@ -82,19 +82,14 @@ class Postgis extends \PDO
     public function writeRoute($route) 
     {
         $route_id = 0;
-        $user_id = 1;
         $route->calculateAscentDescent();
         $tags = self::hstoreFromMap($route->getTags());
 
         $this->beginTransaction();
         $q = 'INSERT INTO routes (name, gpx_file_id, tags, user_id, region) VALUES (?, ?, ?, ?, ?)';
         $pq = $this->prepare($q);
-        $success = $pq->execute(array($route->getName(), $route->getGpxFileId(), $tags, $user_id, $route->getRegion()));
-
+        $success = $pq->execute(array($route->getName(), $route->getGpxFileId(), $tags, $route->getUserId(), $route->getRegion()));
         if (!$success) {
-            echo $q;
-            var_export(array($route->getName(), $route->getGpxFileId(), $tags, $user_id, $route->getRegion()));
-            exit;
             $this->rollBack();
             throw (new ApiException("Failed to insert the route into the database", 500));
         }

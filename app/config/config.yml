@@ -101,7 +101,13 @@ knp_gaufrette:
         gpx_files:
             aws_s3:
                 service_id: aws_s3_client
-                bucket_name:  %aws_s3_bucket_name%
+                bucket_name:  trailburning-gpx
+                options:
+                    create: true
+        media_files:
+            aws_s3:
+                service_id: aws_s3_client
+                bucket_name:  trailburning-media
                 options:
                     create: true
                 
@@ -109,6 +115,9 @@ knp_gaufrette:
         gpx_files:
             adapter:    gpx_files
             alias:      gpx_files_filesystem 
+        media_files:
+            adapter:    media_files
+            alias:      media_files_filesystem             
             
 services:
     s3_client:

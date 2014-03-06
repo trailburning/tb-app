@@ -23,6 +23,7 @@ class GpxFileControllerTest extends AbstractApiTestCase
      */
     public function testPostImport()
     {
+        
         $this->loadFixtures([
             'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData',
         ]);
@@ -35,7 +36,7 @@ class GpxFileControllerTest extends AbstractApiTestCase
         
         if (!$user) {
             $this->fail('Missing User with name "mattallbeury" in test DB');
-        }
+        }   
         
         $gpxfile = new UploadedFile(
             realpath(__DIR__ . '/../../DataFixtures/GpxFiles/example.gpx'),
@@ -45,11 +46,15 @@ class GpxFileControllerTest extends AbstractApiTestCase
         $client = $this->createClient();
         $crawler = $client->request('POST', '/v1/import/gpx', [], ['gpxfile' => $gpxfile], ['HTTP_Trailburning_User_ID' => $user->getId()]);
         
-        echo $client->getResponse()->getContent();
-        exit;
+        $this->assertEquals(Response::HTTP_OK,  $client->getResponse()->getStatusCode(),
+            'Response returns Status Code 200');
+        $this->assertJsonResponse($client);  
         
-        $this->assertEquals(Response::HTTP_OK,  $client->getResponse()->getStatusCode());
-        $this->assertEquals('application/json',  $client->getResponse()->headers->get('Content-Type'));
+        $responseObj = json_decode($client->getResponse()->getContent());
+        $this->assertEquals('GPX successfully imports', $responseObj->usermsg,
+            'usermsg of JSON response is ok');
+        $this->assertGreaterThan(0, count($responseObj->value->route_ids),
+            'route_ids array is greater than 0');
     }
 
 }
