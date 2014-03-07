@@ -663,6 +663,18 @@ border-width:1px;
   background: url("../img/steps/step.png") no-repeat top left;
 }
 
+.step_marker_gps {
+  background: url("../img/steps/step_gps.png") no-repeat top left;	
+}
+
+.step_marker_photo {
+  background: url("../img/steps/step_photo.png") no-repeat top left;	
+}
+
+.step_marker_publish {
+  background: url("../img/steps/step_publish.png") no-repeat top left;	
+}
+
 #trail_map {
   width: 100%; 
   height: 100%;

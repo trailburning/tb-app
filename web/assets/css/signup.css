@@ -137,6 +137,14 @@ border-width:1px;
   background: url("../img/steps/step.png") no-repeat top left;
 }
 
+.step_marker_signin {
+  background: url("../img/steps/step_signin.png") no-repeat top left;
+}
+
+.step_marker_join {
+  background: url("../img/steps/step_join.png") no-repeat top left;	
+}
+
 /* RESPONSIVE */
 /******************************************/
 
