@@ -9,6 +9,7 @@
   margin: 11px 11px 11px 11px;
   line-height: 1em;
   color: #FFFFFF;
+  overflow: visible;
 }  
 
 .trail_card .summary {  

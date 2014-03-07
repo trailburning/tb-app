@@ -61,7 +61,7 @@ define([
       this.stepPublishedView = new StepPublishedView({ el: '#step_published_view', model: this.model });
     
   	  this.handleResize();
-      $('#footerview').show();            
+      $('#footerview').show();  
     },
     handleResize: function(){
       var elContentView = $('#contentview');

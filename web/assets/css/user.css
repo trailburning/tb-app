@@ -86,7 +86,7 @@ border-width:1px;
 .panels {
   clear: left;
   width: 100%;
-  padding-top: 22px;
+  padding-top: 6px;
 }
 
 /* CRUMBS */
@@ -112,12 +112,25 @@ border-width:1px;
 /* MY TRAILS */
 /******************************************/
 .mytrails_content {
-  clear: both;
+  padding-bottom: 38px;
+  margin: 8px auto 0px auto;
 }
 
-.mytrails_content {
-  padding-bottom: 38px;
-  margin: 0px auto 0px auto;
+.mytrails_content .panel {
+  position: relative;
+}
+
+.mytrails_content .draft {
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  width: 93px;
+  height: 93px;
+  background: url("../img/editor/draft.png") no-repeat top left;    	
+}
+
+.mytrails_content .cntrls {
+  line-height: 68px;
 }
 
 .mytrails_content .panels {

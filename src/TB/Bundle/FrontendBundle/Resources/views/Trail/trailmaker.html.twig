@@ -3,8 +3,9 @@
 {% block title %}Trailmaker{% endblock %}
 
 {% block stylesheets %}
-<link href="{{ asset('assets/css/trailmaker.css') }}" rel="stylesheet" type="text/css">
+<link href="{{ asset('assets/css/jquery-ui-1.10.4.custom.min.css') }}" rel="stylesheet" type="text/css">
 <link href="{{ asset('assets/css/jquery.fileupload.css') }}" rel="stylesheet" type="text/css">
+<link href="{{ asset('assets/css/trailmaker.css') }}" rel="stylesheet" type="text/css">
 {% endblock %}
 
 {% block body %}
@@ -115,7 +116,7 @@ var TB_USER_ID = {{ app.user.id }}
     <div class="detail_panel clearfix">
         <div class="line_break"></div>
         <div class="content">      
-            <h1 class="tb">Story</h1>
+            <h1 class="tb">Story</h1>            
             <div class="desc">
                 <h4 class="tb">Tell us more about your trail</h4>
             </div>        
