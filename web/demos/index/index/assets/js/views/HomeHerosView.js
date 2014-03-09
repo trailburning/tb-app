@@ -41,8 +41,10 @@ define([
     },
     checkpoint: function(){
       var self = this;
-      
+            
       if (this.bWaiting && this.bHeroReady) {      	
+      	$('#hero_overlay').hide();
+      	
       	this.bWaiting = false;
       	
       	var nDelay = 2000;
@@ -59,6 +61,11 @@ define([
 //          self.onTransitionTimer();
         }, TRANSITION_TIMER);           	      	
       }
+
+	  // still waiting - show loader      
+      if (this.bWaiting) {
+        $('#hero_overlay').show();	
+      }      
     },
     onTransitionTimer: function(){
       var self = this;
