@@ -198,10 +198,13 @@ h4.tb {
 }
 
 #tb-loader-overlay {
-  display: none;
   position: absolute;
   width: 100%;
   height: 100%;
+  opacity: 0;
+  transition: opacity 0.1s linear;
+  -moz-transition: opacity 0.1s linear;
+  -webkit-transition: opacity 0.1s linear;
 }
 
 #tb-loader-overlay .back {
