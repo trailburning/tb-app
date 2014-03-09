@@ -35,6 +35,8 @@ define([
       this.nCurrSlide = nSlide;
 
       this.renderSlide(this.nCurrSlide);
+      
+      this.checkSlideState();      
     },    
     addMedia: function(mediaModel){
       var photoView = new TrailSlidePhotoView({ model: mediaModel, type: 0 });
@@ -114,8 +116,10 @@ define([
     },
     checkSlideState: function(){
       var self = this;
-
+console.log('t1');
       if (this.bSlideReady && this.bWaitingForSlide) {
+        $('#tb-loader-overlay').hide();	
+        
         this.bWaitingForSlide = false;
         
         var photoView;
@@ -130,6 +134,10 @@ define([
         
         // fire event
         app.dispatcher.trigger("TrailSlideView:slideview", this);                
+      }
+      
+      if (this.bWaitingForSlide) {
+        $('#tb-loader-overlay').show();	
       }
     },    
     onSlidePhotoReady: function(trailSlidePhotoView){   

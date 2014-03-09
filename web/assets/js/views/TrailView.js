@@ -181,6 +181,7 @@ define([
       $('#trail_map_view').height(this.nPlayerHeight);
       // force height update for MapBox
       $('#trail_map_view .map_container').height(this.nPlayerHeight);
+      $('#trail_views').height(this.nPlayerHeight);      
     },
     handleResize: function(){
       // remove transition to avoid seeing grey beneath image when resizing

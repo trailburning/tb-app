@@ -43,7 +43,7 @@ define([
       var self = this;
             
       if (this.bWaiting && this.bHeroReady) {      	
-      	$('#hero_overlay').hide();
+      	$('#tb-loader-overlay').hide();
       	
       	this.bWaiting = false;
       	
@@ -64,7 +64,7 @@ define([
 
 	  // still waiting - show loader      
       if (this.bWaiting) {
-        $('#hero_overlay').show();	
+        $('#tb-loader-overlay').show();	
       }      
     },
     onTransitionTimer: function(){
