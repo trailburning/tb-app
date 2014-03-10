@@ -118,7 +118,7 @@ class RouteController extends AbstractRestController
         
         $userId = $request->headers->get('Trailburning-User-ID');
         $user = $this->getDoctrine()
-            ->getRepository('TBFrontendBundle:user')
+            ->getRepository('TBFrontendBundle:User')
             ->findOneById($userId);
 
         if (!$user) {
