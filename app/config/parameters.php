@@ -34,4 +34,18 @@ if (isset($_SERVER['AWS_SECRETKEY'])) {
     $container->setParameter('aws_secretkey', $_SERVER['AWS_SECRETKEY']);
 }
 
+if (isset($_SERVER['AWS_SECRETKEY'])) {
+    $container->setParameter('aws_secretkey', $_SERVER['AWS_SECRETKEY']);
+}
 
+if (isset($_SERVER['MAILER_HOST'])) {
+    $container->setParameter('mailer_host', $_SERVER['MAILER_HOST']);
+}
+
+if (isset($_SERVER['MAILER_USER'])) {
+    $container->setParameter('mailer_user', $_SERVER['MAILER_USER']);
+}
+
+if (isset($_SERVER['MAILER_PASSWORD'])) {
+    $container->setParameter('mailer_password', $_SERVER['MAILER_PASSWORD']);
+}

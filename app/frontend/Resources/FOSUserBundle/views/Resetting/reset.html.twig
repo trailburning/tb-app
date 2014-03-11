@@ -1,0 +1,37 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block stylesheets %}
+<link href="{{ asset('assets/css/signup.css') }}" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block fos_user_content %}
+
+{% set breadcrumb = [{'name': 'fos_user_security_login', 'params': [], 'label': 'Sign in'}] %}
+
+<script>
+var TB_APP = 'BaseApp';
+</script>
+
+<div id="contentview" class="clearfix">    
+	<div class="panel_content">        	
+    	<div class="panel">
+      		<div class="content">      
+        	<h1 class="tb">Reset password</h1>
+            
+            <form action="{{ path('fos_user_resetting_reset', {'token': token}) }}" {{ form_enctype(form) }} method="POST" class="fos_user_resetting_reset">
+                {{ form_widget(form) }}
+                <div>
+                    <input type="submit" value="{{ 'resetting.reset.submit'|trans }}" />
+                </div>
+            </form>
+            
+            </div>
+        </div>
+    	<div class="step_marker_container">
+    		<div class="step_marker step_marker_signin"></div>  
+    	</div>	                        
+    </div>
+</div>  
+
+{% endblock fos_user_content %}

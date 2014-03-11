@@ -22,7 +22,7 @@ class RegistrationControllerTest extends WebTestCase
     }
     
     /**
-     * Test Trail created by UserProfile, no Event, no Editorial
+     * Test user registration form
      */
     public function testRegistration()
     {
