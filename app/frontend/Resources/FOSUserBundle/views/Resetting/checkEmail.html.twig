@@ -17,13 +17,15 @@ var TB_APP = 'BaseApp';
 	<div class="panel_content">        	
     	<div class="panel">
       		<div class="content">      
-            	<h1 class="tb">Reset password</h1>
-                <br />
-                <p>
+            	<h1 class="tb">Reset password</h1>            	
+            	<div class="msg">
                 {{ 'resetting.check_email'|trans({'%email%': email}) }}
-                </p>
+                </div>
             </div>
         </div>
+    	<div class="step_marker_container">
+    		<div class="step_marker step_marker_signin"></div>  
+    	</div>	                        
     </div>
 </div>  
 

@@ -21,9 +21,7 @@ var TB_APP = 'BaseApp';
             
             <form action="{{ path('fos_user_resetting_reset', {'token': token}) }}" {{ form_enctype(form) }} method="POST" class="fos_user_resetting_reset">
                 {{ form_widget(form) }}
-                <div>
-                    <input type="submit" value="{{ 'resetting.reset.submit'|trans }}" />
-                </div>
+                <div class="next_step"><button type="submit" class="btn btn-tb-action btn-tb-large">{{ 'resetting.reset.submit'|trans }}</button></div>
             </form>
             
             </div>
