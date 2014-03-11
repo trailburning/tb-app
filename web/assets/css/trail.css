@@ -36,8 +36,7 @@ html.touch #small_sponsor_bar {
 }
 
 #small_sponsor_bar .sponsor_content {
-  margin: 6px auto 0px auto;
-  width: 1112px;	
+  margin: 6px 22px 0px 40px;
 }
 
 /* SPONSOR CONTENT */
@@ -1115,12 +1114,6 @@ html.touch #trailplayer #view_map_btns {
  
 /* Medium devices (desktops, 992px and up) */
 @media (max-width: 1199px) {  
-  #small_sponsor_bar .sponsor_content {
-    width: 968px;  
-  }  
-  #trail_overlay .overlay_content {
-    width: 992px;
-  }
   #trail_stats_view {
     position: absolute;
     width: 194px;

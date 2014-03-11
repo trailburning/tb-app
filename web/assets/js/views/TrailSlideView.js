@@ -118,7 +118,8 @@ define([
       var self = this;
 
       if (this.bSlideReady && this.bWaitingForSlide) {
-        $('#tb-loader-overlay').css('opacity', 0);	
+        $('#tb-loader-overlay').css('opacity', 0);
+		setTimeout( "$('#tb-loader-overlay').hide();", 100);        
         
         this.bWaitingForSlide = false;
         
