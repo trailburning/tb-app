@@ -5,6 +5,7 @@ namespace TB\Bundle\APIBundle\Tests\Entity;
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 use TB\Bundle\FrontendBundle\Entity\Route;
 use TB\Bundle\FrontendBundle\Entity\GpxFile;
+use CrEOF\Spatial\PHP\Types\Geometry\Point;
 
 class RouteTest extends WebTestCase
 {
@@ -141,6 +142,21 @@ class RouteTest extends WebTestCase
         
         $this->assertTrue($route->getPublish(),
             'publish was set to "true"');
+    }
+    
+    public function testGetTimezone()
+    {
+        $this->loadFixtures([
+            'TB\Bundle\FrontendBundle\DataFixtures\ORM\TzWorldMpData'
+        ]);
+        
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+
+        $route = new Route();
+        $route->setCentroid(new Point(13.257437, 52.508006, 4326));
+        $timezone = $route->getTimezone($em);
+        
+        $this->assertEquals('Europe/Berlin', $timezone, 'Route::getTimezone() return the correct timezone "Europe/Berlin"');
     }
     
 }

@@ -4,6 +4,7 @@ namespace TB\Bundle\FrontendBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Doctrine\ORM\EntityManager;
 
 /**
  * Route
@@ -943,6 +944,41 @@ class Route
     public function getMedia() 
     { 
         return $this->media; 
+    }
+    
+    /**
+     * Gte the timezone for the current Route
+     * 
+     * @param EntityManager $em doctrine entity manager 
+     * @throws Exception when centroid is not set
+     * @return mixed the timezone when found, null when no timezone was found
+     */
+    public function getTimezone($em)
+    {
+        if ($this->getCentroid() === null) {
+            throw new \Exception('centroid is not set');
+        }
+        
+        $sql = "SELECT tzid FROM tz_world_mp WHERE ST_Contains(geom, ST_MakePoint(:long, :lat));";
+        
+        $long = $this->getCentroid()->getLongitude();
+        $lat = $this->getCentroid()->getLatitude();
+        
+        $stmt = $em->getConnection()->prepare($sql);
+        $stmt->bindParam(':long', $long, \PDO::PARAM_STR);
+        $stmt->bindParam(':lat', $lat, \PDO::PARAM_STR);
+        
+        if (!$stmt->execute()) {
+            throw new \Exception('failed fetching timezone for route');
+        }
+
+        if ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+            $timezone = $row['tzid'];
+        } else {
+            $timezone = null;
+        }
+
+        return $timezone;
     }
     
 }

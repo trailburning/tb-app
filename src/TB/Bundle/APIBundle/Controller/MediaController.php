@@ -42,8 +42,12 @@ class MediaController extends AbstractRestController
      */
     public function postRouteMedias($routeId)
     {
-        if (!array_key_exists('medias', $_FILES)) {
-            throw (new ApiException("Medias variable not set", 400));
+        if (!$request->files->has('gpxfile')) {
+            throw (new ApiException('gpxfile variable not set', 400));
+        }
+        $medias = $request->files->get('medias');
+        if (!is_array($medias)) {
+            $medias = array($medias);
         }
         
         $route = $this->getDoctrine()
@@ -55,6 +59,11 @@ class MediaController extends AbstractRestController
                 sprintf('Route with id "%s" not found', $routeId)
             );
         }
+        
+        
+        
+        
+        
 
         $postgis = $this->get('postgis');
 
