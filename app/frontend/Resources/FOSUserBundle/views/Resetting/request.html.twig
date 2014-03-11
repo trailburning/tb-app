@@ -21,20 +21,22 @@ var TB_APP = 'BaseApp';
             
             <form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
                 <div>
-                    {% if invalid_username is defined %}
-                        <p>{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}) }}</p>
-                    {% endif %}
                     <label for="username">{{ 'resetting.request.username'|trans }}</label>
                     <input type="text" id="username" name="username" required="required" />
                 </div>
-                <div>
-                    <input type="submit" value="{{ 'resetting.request.submit'|trans }}" />
-                </div>
+                <div class="next_step"><button type="submit" class="btn btn-tb-action btn-tb-large">{{ 'resetting.request.submit'|trans }}</button></div>
+	            {% if invalid_username is defined %}
+	                <div class="error">{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}) }}</div>
+	            {% endif %}
             </form>
             
             
             </div>
+            
         </div>
+    	<div class="step_marker_container">
+    		<div class="step_marker step_marker_signin"></div>  
+    	</div>	                        
     </div>
 </div>  
 
