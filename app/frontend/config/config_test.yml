@@ -6,7 +6,8 @@ framework:
     session:
         storage_id: session.storage.filesystem
     profiler:
-        collect: false
+        collect: true
+        enabled: true 
 
 # Call API in test enviroment
 twig:
@@ -31,4 +32,5 @@ liip_functional_test: ~
 services:
     rest_client:
         class:      %rest_client_class%
-        arguments:  [%api_host%/app_test.php]        
+        arguments:  [%api_host%/app_test.php]       
+
