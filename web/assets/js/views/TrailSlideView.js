@@ -119,7 +119,7 @@ define([
 
       if (this.bSlideReady && this.bWaitingForSlide) {
         $('#tb-loader-overlay').css('opacity', 0);
-		setTimeout( "$('#tb-loader-overlay').hide();", 100);        
+		setTimeout( "$('#tb-loader-overlay').hide();", 1000);        
         
         this.bWaitingForSlide = false;
         
@@ -138,8 +138,8 @@ define([
       }
       
       if (this.bWaitingForSlide) {
-        $('#tb-loader-overlay').show();
         $('#tb-loader-overlay').css('opacity', 1);	
+        $('#tb-loader-overlay').show();
       }
     },    
     onSlidePhotoReady: function(trailSlidePhotoView){   
