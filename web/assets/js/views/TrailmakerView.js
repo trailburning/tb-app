@@ -136,50 +136,53 @@ define([
       this.mediasModel.fetch({
         success: function () {
 	      var data = self.mediasModel.get('value');
+	      var nPos = 0;
 	      $.each(data, function(key, jsonMedia) {
-	      	console.log(key);
-	      	switch (Number(key)) {
-	      	  case 442:
+	      	console.log(nPos+' : '+key);
+	      	switch (Number(nPos)) {
+	      	  case 0:
 	      	    jsonMedia.coords.lat = 47.409269;
 	      	    jsonMedia.coords.long = 10.347692;
 	      	  	break;
-	      	  case 443:
+	      	  case 1:
 	      	    jsonMedia.coords.lat = 47.407063;
 	      	    jsonMedia.coords.long = 10.352125;
 	      	  	break;
-	      	  case 444:
+	      	  case 2:
 	      	    jsonMedia.coords.lat = 47.407063;
 	      	    jsonMedia.coords.long = 10.352125;
 	      	  	break;
-	      	  case 445:
+	      	  case 3:
 	      	    jsonMedia.coords.lat = 47.40564;
 	      	    jsonMedia.coords.long = 10.351181;
 	      	  	break;
-	      	  case 446:
+	      	  case 4:
 	      	    jsonMedia.coords.lat = 47.392859;
 	      	    jsonMedia.coords.long = 10.35912;
 	      	  	break;
-	      	  case 447:
+	      	  case 5:
 	      	    jsonMedia.coords.lat = 47.393091;
 	      	    jsonMedia.coords.long = 10.368476;
 	      	  	break;
-	      	  case 448:
+	      	  case 6:
 	      	    jsonMedia.coords.lat = 47.392946;
 	      	    jsonMedia.coords.long = 10.36869;
 	      	  	break;
-	      	  case 449:
+	      	  case 7:
 	      	    jsonMedia.coords.lat = 47.393091;
 	      	    jsonMedia.coords.long = 10.379333;
 	      	  	break;
-	      	  case 450:
+	      	  case 8:
 	      	    jsonMedia.coords.lat = 47.392328;
 	      	    jsonMedia.coords.long = 10.417464;
 	      	  	break;
-	      	  case 451:
+	      	  case 9:
 	      	    jsonMedia.coords.lat = 47.439902;
 	      	    jsonMedia.coords.long = 10.469928;
-	      	  	break;
+	      	  	break;	      	  	
 	      	}
+	      	nPos++;
+	      	
 			self.trailMapView.addMarker(jsonMedia, true);
 		    self.mediaCollection.add(jsonMedia);
 	      });
