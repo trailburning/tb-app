@@ -138,6 +138,7 @@ define([
 	      var data = self.mediasModel.get('value');
 	      var nPos = 0;
 	      $.each(data, function(key, jsonMedia) {
+/*	      	
 	      	console.log(nPos+' : '+key);
 	      	switch (Number(nPos)) {
 	      	  case 0:
@@ -181,6 +182,7 @@ define([
 	      	    jsonMedia.coords.long = 10.469928;
 	      	  	break;	      	  	
 	      	}
+*/	      	
 	      	nPos++;
 	      	
 			self.trailMapView.addMarker(jsonMedia, true);
