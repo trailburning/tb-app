@@ -137,7 +137,7 @@ define([
         success: function () {
 	      var data = self.mediasModel.get('value');
 	      $.each(data, function(key, jsonMedia) {
-	      	
+	      	console.log(key);
 	      	switch (Number(key)) {
 	      	  case 442:
 	      	    jsonMedia.coords.lat = 47.409269;
