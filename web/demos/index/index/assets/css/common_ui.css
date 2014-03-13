@@ -181,8 +181,24 @@ h4.tb {
   margin: -44px auto 0px auto;
   top: 50%;
   width: 88px;
-  height: 88px;
-  background: url("../img/loading.png") no-repeat top left;	
+  height: 88px;	
+}
+
+#tb-loader-overlay .middle {
+  position: absolute;
+  top: 11px;
+  left: 11px;
+  width: 66px;
+  height: 66px;
+  line-height: 52px;
+  text-align: center;
+  font-size: 33px;
+  font-weight: 400; 
+  color: #44b6f7;
+  box-shadow: 2px 2px 2px #BEBEBE;
+  background: #FFF;
+  border-radius: 50%;
+  overflow: hidden;		
 }
 
 #tb-loader-overlay .spinner {

@@ -43,8 +43,7 @@ define([
       var self = this;
                         
       if (this.bWaiting && this.bHeroReady) {      	
-        $('#tb-loader-overlay').css('opacity', 0);
-		setTimeout( "$('#tb-loader-overlay').hide();", 100);        
+        $('#tb-loader-overlay').fadeOut();	
       	
       	this.bWaiting = false;
       	
@@ -65,8 +64,7 @@ define([
 
 	  // still waiting - show loader      
       if (this.bWaiting) {
-        $('#tb-loader-overlay').show();
-        $('#tb-loader-overlay').css('opacity', 1);	
+        $('#tb-loader-overlay').fadeIn();	
       }      
     },
     onTransitionTimer: function(){
