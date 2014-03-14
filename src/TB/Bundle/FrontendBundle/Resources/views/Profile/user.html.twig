@@ -77,7 +77,7 @@ var TB_USER_LAT = {{ user.location.latitude }};
 			<div class="panel profile_follow_panel">
 			  <div class="content">
 			  	<div class="you_follow">
-			  	  <div class="title">You follow them</div>			  	  
+			  	  <div class="title">I follow them</div>			  	  
 			      <div class="avatars">
 	    		  {% if user.id == 2 %}
 				    <div class="tb-avatar">
@@ -90,56 +90,56 @@ var TB_USER_LAT = {{ user.location.latitude }};
 				      <div class="photo"><a href="../profile/paultran"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/paultran/avatar.jpg"></a></div>
 				    </div><!--	
 				 --><div class="tb-avatar">
-				      <div class="photo"><img src="{{ asset('assets/img/avatar.jpg') }}"></div>
+				      <div class="photo"><img src="{{ asset('assets/img/avatar_woman.jpg') }}"></div>
 				    </div><!--	
 				 --><div class="tb-avatar">
-				      <div class="photo"><img src="{{ asset('assets/img/avatar.jpg') }}"></div>
+				      <div class="photo"><img src="{{ asset('assets/img/avatar_man.jpg') }}"></div>
 				    </div><!--	
 				 --><div class="tb-avatar">
-				      <div class="photo"><img src="{{ asset('assets/img/avatar.jpg') }}"></div>
+				      <div class="photo"><img src="{{ asset('assets/img/avatar_man.jpg') }}"></div>
 				    </div>	
 				  {% else %}
 				    <div class="tb-avatar">
-				      <div class="photo"><img src="{{ asset('assets/img/avatar.jpg') }}"></div>
+				      <div class="photo"><img src="{{ asset('assets/img/avatar_woman.jpg') }}"></div>
 				    </div><!--	
 				 --><div class="tb-avatar">
-				      <div class="photo"><img src="{{ asset('assets/img/avatar.jpg') }}"></div>
+				      <div class="photo"><img src="{{ asset('assets/img/avatar_man.jpg') }}"></div>
 				    </div><!--	
 				 --><div class="tb-avatar">
-				      <div class="photo"><img src="{{ asset('assets/img/avatar.jpg') }}"></div>
+				      <div class="photo"><img src="{{ asset('assets/img/avatar_woman.jpg') }}"></div>
 				    </div><!--	
 				 --><div class="tb-avatar">
-				      <div class="photo"><img src="{{ asset('assets/img/avatar.jpg') }}"></div>
+				      <div class="photo"><img src="{{ asset('assets/img/avatar_man.jpg') }}"></div>
 				    </div><!--	
 				 --><div class="tb-avatar">
-				      <div class="photo"><img src="{{ asset('assets/img/avatar.jpg') }}"></div>
+				      <div class="photo"><img src="{{ asset('assets/img/avatar_man.jpg') }}"></div>
 				    </div><!--	
 				 --><div class="tb-avatar">
-				      <div class="photo"><img src="{{ asset('assets/img/avatar.jpg') }}"></div>
+				      <div class="photo"><img src="{{ asset('assets/img/avatar_man.jpg') }}"></div>
 				    </div>	
 				  {% endif %}    	
 				  </div>
 			  	</div>
 			  	<div class="they_follow">
-			  	  <div class="title">They Follow you</div>			  				  	
+			  	  <div class="title">They Follow me</div>			  				  	
 			      <div class="avatars">
 				    <div class="tb-avatar">
-				      <div class="photo"><img src="{{ asset('assets/img/avatar.jpg') }}"></div>
+				      <div class="photo"><img src="{{ asset('assets/img/avatar_man.jpg') }}"></div>
 				    </div><!--	
 				 --><div class="tb-avatar">
-				      <div class="photo"><img src="{{ asset('assets/img/avatar.jpg') }}"></div>
+				      <div class="photo"><img src="{{ asset('assets/img/avatar_woman.jpg') }}"></div>
 				    </div><!--	
 				 --><div class="tb-avatar">
-				      <div class="photo"><img src="{{ asset('assets/img/avatar.jpg') }}"></div>
+				      <div class="photo"><img src="{{ asset('assets/img/avatar_woman.jpg') }}"></div>
 				    </div><!--	
 				 --><div class="tb-avatar">
-				      <div class="photo"><img src="{{ asset('assets/img/avatar.jpg') }}"></div>
+				      <div class="photo"><img src="{{ asset('assets/img/avatar_man.jpg') }}"></div>
 				    </div><!--	
 				 --><div class="tb-avatar">
-				      <div class="photo"><img src="{{ asset('assets/img/avatar.jpg') }}"></div>
+				      <div class="photo"><img src="{{ asset('assets/img/avatar_man.jpg') }}"></div>
 				    </div><!--	
 				 --><div class="tb-avatar">
-				      <div class="photo"><img src="{{ asset('assets/img/avatar.jpg') }}"></div>
+				      <div class="photo"><img src="{{ asset('assets/img/avatar_woman.jpg') }}"></div>
 				    </div>	
 				  </div>
 			  	</div>
@@ -148,7 +148,6 @@ var TB_USER_LAT = {{ user.location.latitude }};
     	</div>
 
 	    {% if user.id == 2 %}
-
     	<div class="likedtrails_content">
   		  <div class="fixed_content">
       		<h2 class="tb">Trails I Like</h2>
@@ -241,10 +240,8 @@ var TB_USER_LAT = {{ user.location.latitude }};
 			      </div>        
 			  </div>	   	
 		  	</div>
-			
 		  </div>    		
     	</div>
-    	
 		{% endif %}    	
     	
 		{% if user.id == 2 %}
