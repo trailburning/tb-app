@@ -19,17 +19,17 @@ class Version20140312092645 extends AbstractMigration
         ;
         $this->addSql("ALTER TABLE medias ADD route_id INT NULL");
         $this->addSql("ALTER TABLE medias ADD path VARCHAR(100) DEFAULT NULL");
-        $this->addSql("ALTER TABLE medias ADD original_name VARCHAR(100) DEFAULT NULL");
+        $this->addSql("ALTER TABLE medias ADD filename VARCHAR(100) DEFAULT NULL");
 
         $this->addSql("ALTER TABLE medias ADD CONSTRAINT FK_12D2AF8134ECB4E6 FOREIGN KEY (route_id) REFERENCES routes (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE");
         
         $this->addSql("UPDATE medias as m SET route_id = rm.route_id FROM route_medias AS rm WHERE m.id=rm.media_id");
         $this->addSql("UPDATE medias as m SET path = mv.path FROM media_versions AS mv WHERE m.id=mv.media_id");
-        $this->addSql("UPDATE medias SET original_name = substring(path, 20)");
+        $this->addSql("UPDATE medias SET filename = substring(path, 20)");
         
         $this->addSql("ALTER TABLE medias ALTER route_id SET NOT NULL");
         $this->addSql("ALTER TABLE medias ALTER path SET NOT NULL");
-        $this->addSql("ALTER TABLE medias ALTER original_name SET NOT NULL");
+        $this->addSql("ALTER TABLE medias ALTER filename SET NOT NULL");
         $this->addSql("CREATE INDEX IDX_12D2AF8134ECB4E6 ON medias (route_id)");
         $this->addSql("DROP TABLE route_medias");
         $this->addSql("DROP TABLE media_versions");
@@ -64,6 +64,6 @@ class Version20140312092645 extends AbstractMigration
         $this->addSql("DROP INDEX IDX_12D2AF8134ECB4E6");
         $this->addSql("ALTER TABLE medias DROP route_id");
         $this->addSql("ALTER TABLE medias DROP path");
-        $this->addSql("ALTER TABLE medias DROP original_name");
+        $this->addSql("ALTER TABLE medias DROP filename");
     }
 }

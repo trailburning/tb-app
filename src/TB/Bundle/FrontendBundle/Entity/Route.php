@@ -151,10 +151,10 @@ class Route
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\Media", inversedBy="routes")
-     * @ORM\JoinTable(name="route_medias")
-     */
+     * @ORM\OneToMany(targetEntity="Media", mappedBy="route")
+     **/
     private $medias;
+    
     
     /**
      * @var string
@@ -169,13 +169,6 @@ class Route
      * @ORM\ManyToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\Editorial", mappedBy="routes")
      */
     private $editorials;
-    
-    #/**
-    # * @var \Doctrine\Common\Collections\Collection
-    # *
-    # * @ORM\OneToMany(targetEntity="RouteMedia", mappedBy="route")
-    # **/
-    #private $routeMedias;
     
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -833,7 +826,7 @@ class Route
     /**
      * Only used by API
      */
-    public function getNearestPointBytime($unixtimestamp) {
+    public function getNearestPointByTime($unixtimestamp) {
         $routePoints = $this->getRoutePoints();
         if ($routePoints->count() < 2)
             throw new \Exception("Route is less than 2 points.");
@@ -897,13 +890,14 @@ class Route
         }
         
         if ($this->media !== null) {
-            $route .= ',"media": ' . json_encode($this->media);
+            $route .= ',"media": ' . $this->media->toJSON();
         }
 
         $route .= '}';
         
         return $route;
     }
+    
     /**
      * Only used by API
      */
@@ -946,39 +940,6 @@ class Route
         return $this->media; 
     }
     
-    /**
-     * Gte the timezone for the current Route
-     * 
-     * @param EntityManager $em doctrine entity manager 
-     * @throws Exception when centroid is not set
-     * @return mixed the timezone when found, null when no timezone was found
-     */
-    public function getTimezone($em)
-    {
-        if ($this->getCentroid() === null) {
-            throw new \Exception('centroid is not set');
-        }
-        
-        $sql = "SELECT tzid FROM tz_world_mp WHERE ST_Contains(geom, ST_MakePoint(:long, :lat));";
-        
-        $long = $this->getCentroid()->getLongitude();
-        $lat = $this->getCentroid()->getLatitude();
-        
-        $stmt = $em->getConnection()->prepare($sql);
-        $stmt->bindParam(':long', $long, \PDO::PARAM_STR);
-        $stmt->bindParam(':lat', $lat, \PDO::PARAM_STR);
-        
-        if (!$stmt->execute()) {
-            throw new \Exception('failed fetching timezone for route');
-        }
 
-        if ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
-            $timezone = $row['tzid'];
-        } else {
-            $timezone = null;
-        }
-
-        return $timezone;
-    }
     
 }

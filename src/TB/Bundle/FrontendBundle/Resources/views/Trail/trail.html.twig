@@ -106,7 +106,7 @@ var TB_TRAIL_ID = {{ trail.id }};
 				                            <h3 class="tb">{{ eventTrail.routeType ? eventTrail.routeType.name : 'Run' }}</h3>
 				                            <a href="{{ path('trail', {trailSlug: eventTrail.slug}) }}">
 				                                <div class="photo tb-photo-btn">
-				                                    <div class="image_container"><img src="http://app.resrc.it/http://s3-eu-west-1.amazonaws.com/{{ eventTrail.medias[0].versions[0].path }}" class="resrc scale" border="0"/></div>
+				                                    <div class="image_container"><img src="http://app.resrc.it/http://s3-eu-west-1.amazonaws.com/{{ eventTrail.medias[0].path }}" class="resrc scale" border="0"/></div>
 				                                    <div class="card_title">
 				                                        {% if eventTrail.eventRoutes[0].date %}
 				                                            <h1>{{ eventTrail.eventRoutes[0].date|date('d.m.y') }}</h1>

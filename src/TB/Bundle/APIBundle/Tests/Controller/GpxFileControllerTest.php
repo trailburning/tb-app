@@ -39,7 +39,7 @@ class GpxFileControllerTest extends AbstractApiTestCase
         }   
         
         $gpxfile = new UploadedFile(
-            realpath(__DIR__ . '/../../DataFixtures/GpxFiles/example.gpx'),
+            realpath(__DIR__ . '/../../DataFixtures/GPX/example.gpx'),
             'example.gpx'
         );
         

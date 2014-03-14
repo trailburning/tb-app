@@ -85,7 +85,7 @@ class ProfileController extends Controller
             }
             $data = $response->json();
             $routes = $data['value']['routes'];
-            
+
             $breadcrumb[] = [
                 'name' => 'profile',
                 'label' => $user->getFirstName() . ' ' . $user->getLastName(), 

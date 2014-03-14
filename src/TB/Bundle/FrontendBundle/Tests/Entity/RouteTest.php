@@ -144,19 +144,4 @@ class RouteTest extends WebTestCase
             'publish was set to "true"');
     }
     
-    public function testGetTimezone()
-    {
-        $this->loadFixtures([
-            'TB\Bundle\FrontendBundle\DataFixtures\ORM\TzWorldMpData'
-        ]);
-        
-        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-
-        $route = new Route();
-        $route->setCentroid(new Point(13.257437, 52.508006, 4326));
-        $timezone = $route->getTimezone($em);
-        
-        $this->assertEquals('Europe/Berlin', $timezone, 'Route::getTimezone() return the correct timezone "Europe/Berlin"');
-    }
-    
 }

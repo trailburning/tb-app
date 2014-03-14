@@ -12,7 +12,6 @@ use TB\Bundle\FrontendBundle\Entity\GpxFile;
 use TB\Bundle\FrontendBundle\Entity\Route;
 use TB\Bundle\FrontendBundle\Entity\RoutePoint;
 use TB\Bundle\FrontendBundle\Entity\Media;
-use TB\Bundle\FrontendBundle\Entity\MediaVersion;
 use TB\Bundle\FrontendBundle\Entity\RouteMedia;
 
 class RouteData extends AbstractFixture implements FixtureInterface, DependentFixtureInterface
@@ -32,7 +31,7 @@ class RouteData extends AbstractFixture implements FixtureInterface, DependentFi
         $route->setGpxfile($gpxFile);
         $route->setName('Grunewald');
         $route->setLength(11298);    
-        $route->setCentroid(new Point(52.508006, 13.257437, 4326));
+        $route->setCentroid(new Point(13.257437, 52.508006, 4326));
         $route->setTags(['ascent' => 223.3, 'descent' => 207.3]);
         $route->setUser($this->getReference('UserProfile-matt'));
         $route->setRouteType($this->getReference('RouteType-marathon'));
@@ -46,7 +45,7 @@ class RouteData extends AbstractFixture implements FixtureInterface, DependentFi
         $this->addReference('Route-grunewald', $route);
         
         // add RoutePoints to Route
-        $points = [
+        $points = [                               
             [1, ['altitude' => 60.1, 'datetime' => 1376728877], [13.257437, 52.508006]],
             [2, ['altitude' => 70.6, 'datetime' => 1376729276], [13.257437, 52.508006]],
             [69, ['altitude' => 64.1, 'datetime' => 1376729222], [13.249617, 52.501565]],
@@ -74,28 +73,23 @@ class RouteData extends AbstractFixture implements FixtureInterface, DependentFi
          
         // add Image Media to Route 
         $medias = [
-            [['width' => 1280, 'height' => 960, 'altitude' => 60.1, 'datetime' => 1376728834, 'filesize' => 607249], [13.257437,  52.508006], 0, 'trailburning-media/cb88c97a09a59aa2452c0d0cdfdd2f4ccc211a53.jpg'],
-            [['width' => 1280, 'height' => 956, 'altitude' => 56.8, 'datetime' => 1376729041, 'filesize' => 329318], [13.252078,  52.504918], 0, 'trailburning-media/895d0ce8f7d3bb08c7d4ef128b0131eaccd67b97.jpg'],
-            [['width' => 1280, 'height' => 956, 'altitude' => 86.2, 'datetime' => 1376729419, 'filesize' => 283286], [13.248702,  52.502691], 0, 'trailburning-media/4f222c50f054b2feefd18be66edb3dcd44858493.jpg'],
-            [['width' => 1280, 'height' => 956, 'altitude' => 79.0, 'datetime' => 1376729478, 'filesize' => 413357], [13.247005,  52.503021], 0, 'trailburning-media/29d35f4e5f485b8da742f7ce6b3e96b4c8cf8691.jpg'],
-            [['width' => 1280, 'height' => 956, 'altitude' => 47.5, 'datetime' => 1376730053, 'filesize' => 341782], [13.227167,  52.496973], 0, 'trailburning-media/c9472914f7ef51f7df7025ebd85d791e48309987.jpg'],
-            [['width' => 1280, 'height' => 956, 'altitude' => 38.0, 'datetime' => 1376731875, 'filesize' => 287037], [13.194522,  52.48193], 0, 'trailburning-media/837c5c05f9b047ea7f545ad7aef9796271508066.jpg'],
-            [['width' => 1280, 'height' => 956, 'altitude' => 31.6, 'datetime' => 1376732354, 'filesize' => 193569], [13.196252,  52.471298], 0, 'trailburning-media/3d0994ca3d074920e661f5a4182a93f8c07460e5.jpg'],
-            [['width' => 1280, 'height' => 956, 'altitude' => 76.5, 'datetime' => 1376732724, 'filesize' => 279660], [13.196632,  52.47771], 0, 'trailburning-media/d7bc334a55c629e69ace79e5b64d14a6a36bec22.jpg'],
+            [['width' => 1280, 'height' => 960, 'altitude' => 60.1, 'datetime' => 1376728834, 'filesize' => 607249], [13.257437,  52.508006], 0, 'trailburning-media/cb88c97a09a59aa2452c0d0cdfdd2f4ccc211a53.jpg', 'cb88c97a09a59aa2452c0d0cdfdd2f4ccc211a53.jpg'],
+            [['width' => 1280, 'height' => 956, 'altitude' => 56.8, 'datetime' => 1376729041, 'filesize' => 329318], [13.252078,  52.504918], 0, 'trailburning-media/895d0ce8f7d3bb08c7d4ef128b0131eaccd67b97.jpg', '895d0ce8f7d3bb08c7d4ef128b0131eaccd67b97.jpg'],
+            [['width' => 1280, 'height' => 956, 'altitude' => 86.2, 'datetime' => 1376729419, 'filesize' => 283286], [13.248702,  52.502691], 0, 'trailburning-media/4f222c50f054b2feefd18be66edb3dcd44858493.jpg', '4f222c50f054b2feefd18be66edb3dcd44858493.jpg'],
+            [['width' => 1280, 'height' => 956, 'altitude' => 79.0, 'datetime' => 1376729478, 'filesize' => 413357], [13.247005,  52.503021], 0, 'trailburning-media/29d35f4e5f485b8da742f7ce6b3e96b4c8cf8691.jpg', '29d35f4e5f485b8da742f7ce6b3e96b4c8cf8691.jpg'],
+            [['width' => 1280, 'height' => 956, 'altitude' => 47.5, 'datetime' => 1376730053, 'filesize' => 341782], [13.227167,  52.496973], 0, 'trailburning-media/c9472914f7ef51f7df7025ebd85d791e48309987.jpg', 'c9472914f7ef51f7df7025ebd85d791e48309987.jpg'],
+            [['width' => 1280, 'height' => 956, 'altitude' => 38.0, 'datetime' => 1376731875, 'filesize' => 287037], [13.194522,  52.48193], 0, 'trailburning-media/837c5c05f9b047ea7f545ad7aef9796271508066.jpg', '837c5c05f9b047ea7f545ad7aef9796271508066.jpg'],
+            [['width' => 1280, 'height' => 956, 'altitude' => 31.6, 'datetime' => 1376732354, 'filesize' => 193569], [13.196252,  52.471298], 0, 'trailburning-media/3d0994ca3d074920e661f5a4182a93f8c07460e5.jpg', '3d0994ca3d074920e661f5a4182a93f8c07460e5.jpg'],
+            [['width' => 1280, 'height' => 956, 'altitude' => 76.5, 'datetime' => 1376732724, 'filesize' => 279660], [13.196632,  52.47771], 0, 'trailburning-media/d7bc334a55c629e69ace79e5b64d14a6a36bec22.jpg', 'd7bc334a55c629e69ace79e5b64d14a6a36bec22.jpg'],
         ];
         foreach ($medias as $mediaData) {
             $media = new Media();
             $media->setTags($mediaData[0]);
             $media->setCoords(new Point($mediaData[1][0], $mediaData[1][1], 4326));
+            $media->setPath($mediaData[3]);
+            $media->setFilename($mediaData[4]);
+            $media->setRoute($route);
             $manager->persist($media);
-            
-            $mediaVersion = new MediaVersion();
-            $mediaVersion->setVersionSize($mediaData[2]);
-            $mediaVersion->setPath($mediaData[3]);
-            $mediaVersion->setMedia($media);
-            $manager->persist($mediaVersion);
-            
-            $route->addMedia($media);
         }
         $manager->persist($route);
         $manager->flush();
@@ -114,7 +108,7 @@ class RouteData extends AbstractFixture implements FixtureInterface, DependentFi
         $route->setGpxfile($gpxFile);
         $route->setName('Thames Trail Marathon');
         $route->setLength(41309);    
-        $route->setCentroid(new Point(52.508006, 13.257437, 4326));
+        $route->setCentroid(new Point(13.257437, 52.508006, 4326));
         $route->setTags(['ascent' => 176.8, 'descent' => 187.6]);
         $route->setUser($this->getReference('BrandProfile-ashmei'));
         $route->setRouteType($this->getReference('RouteType-marathon'));
@@ -166,27 +160,22 @@ The scenery along the footpath; including locks, bridges, forestry and the river
         
         // add Image Media to Route 
         $medias = [
-            [['width' => 1280, 'height' => 853, 'altitude' => 55.2, 'datetime' => 1385535601, 'filesize' => 456795], [-1.28153801, 51.66696583], 0, 'trailburning-media/465195300a1a39b572936ea21eb51ea01d3a0a32.jpg'],
-            [['width' => 1280, 'height' => 853, 'altitude' => 54.3, 'datetime' => 1385535602, 'filesize' => 330399], [-1.282997131, 51.66603421], 0, 'trailburning-media/fd50753240135f6710b5326124cdb875bc793c6c.jpg'],
-            [['width' => 1280, 'height' => 853, 'altitude' => 51.3, 'datetime' => 1385535605, 'filesize' => 429740], [-1.281108856, 51.660044766], 0, 'trailburning-media/7fb4aae007ca8c9beea19bd601b34410e516f60a.jpg'],
-            [['width' => 1280, 'height' => 853, 'altitude' => 47.0, 'datetime' => 1385535633, 'filesize' => 222317], [-1.211628914, 51.648223274], 0, 'trailburning-media/ab1f6a307886400a912322cdc0ef5684ebac841f.jpg'],
-            [['width' => 1280, 'height' => 853, 'altitude' => 48.2, 'datetime' => 1385535637, 'filesize' => 263489], [-1.211071014, 51.654693527], 0, 'trailburning-media/3e7e193fa3aa0f199ed4b03b5cec29fb48d8d653.jpg'],
-            [['width' => 1280, 'height' => 853, 'altitude' => 57.2, 'datetime' => 1385535779, 'filesize' => 267777], [-1.112751961, 51.5096506], 0, 'trailburning-media/9338e17e06f412d2a6e8a172cfdf7ef13ef44682.jpg'],
-            [['width' => 1280, 'height' => 853, 'altitude' => 68.5, 'datetime' => 1385535784, 'filesize' => 377970], [-1.106786728, 51.502545247], 0, 'trailburning-media/eaef8b08afaf4e410b57ac27356f4d88f8bd7c10.jpg'],
+            [['width' => 1280, 'height' => 853, 'altitude' => 55.2, 'datetime' => 1385535601, 'filesize' => 456795], [-1.28153801, 51.66696583], 0, 'trailburning-media/465195300a1a39b572936ea21eb51ea01d3a0a32.jpg', '465195300a1a39b572936ea21eb51ea01d3a0a32.jpg'],
+            [['width' => 1280, 'height' => 853, 'altitude' => 54.3, 'datetime' => 1385535602, 'filesize' => 330399], [-1.282997131, 51.66603421], 0, 'trailburning-media/fd50753240135f6710b5326124cdb875bc793c6c.jpg', 'fd50753240135f6710b5326124cdb875bc793c6c.jpg'],
+            [['width' => 1280, 'height' => 853, 'altitude' => 51.3, 'datetime' => 1385535605, 'filesize' => 429740], [-1.281108856, 51.660044766], 0, 'trailburning-media/7fb4aae007ca8c9beea19bd601b34410e516f60a.jpg', '7fb4aae007ca8c9beea19bd601b34410e516f60a.jpg'],
+            [['width' => 1280, 'height' => 853, 'altitude' => 47.0, 'datetime' => 1385535633, 'filesize' => 222317], [-1.211628914, 51.648223274], 0, 'trailburning-media/ab1f6a307886400a912322cdc0ef5684ebac841f.jpg', 'ab1f6a307886400a912322cdc0ef5684ebac841f.jpg'],
+            [['width' => 1280, 'height' => 853, 'altitude' => 48.2, 'datetime' => 1385535637, 'filesize' => 263489], [-1.211071014, 51.654693527], 0, 'trailburning-media/3e7e193fa3aa0f199ed4b03b5cec29fb48d8d653.jpg', '3e7e193fa3aa0f199ed4b03b5cec29fb48d8d653.jpg'],
+            [['width' => 1280, 'height' => 853, 'altitude' => 57.2, 'datetime' => 1385535779, 'filesize' => 267777], [-1.112751961, 51.5096506], 0, 'trailburning-media/9338e17e06f412d2a6e8a172cfdf7ef13ef44682.jpg', '9338e17e06f412d2a6e8a172cfdf7ef13ef44682.jpg'],
+            [['width' => 1280, 'height' => 853, 'altitude' => 68.5, 'datetime' => 1385535784, 'filesize' => 377970], [-1.106786728, 51.502545247], 0, 'trailburning-media/eaef8b08afaf4e410b57ac27356f4d88f8bd7c10.jpg', 'eaef8b08afaf4e410b57ac27356f4d88f8bd7c10.jpg'],
         ];
         foreach ($medias as $mediaData) {
             $media = new Media();
             $media->setTags($mediaData[0]);
             $media->setCoords(new Point($mediaData[1][0], $mediaData[1][1], 4326));
+            $media->setPath($mediaData[3]);
+            $media->setFilename($mediaData[4]);
+            $media->setRoute($route);
             $manager->persist($media);
-            
-            $mediaVersion = new MediaVersion();
-            $mediaVersion->setVersionSize($mediaData[2]);
-            $mediaVersion->setPath($mediaData[3]);
-            $mediaVersion->setMedia($media);
-            $manager->persist($mediaVersion);
-            
-            $route->addMedia($media);
         }
         $manager->persist($route);
         $manager->flush();
@@ -201,6 +190,7 @@ The scenery along the footpath; including locks, bridges, forestry and the river
     public function getDependencies()
     {
         return [
+            'TB\Bundle\FrontendBundle\DataFixtures\ORM\TzWorldMpData',
             'TB\Bundle\FrontendBundle\DataFixtures\ORM\UserProfileData',
             'TB\Bundle\FrontendBundle\DataFixtures\ORM\BrandProfileData',
             'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteTypeData',

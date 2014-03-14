@@ -38,5 +38,5 @@ knp_gaufrette:
     adapters:
         gpx_files:
             in_memory: ~
-        media_files:
+        trail_media_files:
             in_memory: ~                
