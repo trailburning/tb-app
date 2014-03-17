@@ -55,6 +55,17 @@ define([
     this.homeHerosView = new HomeHerosView({ el: '#home_header' });
 	this.homeHerosView.render();
 
+	$('.more_btn').click(function(evt){	
+	  evt.stopPropagation();
+	  
+	  $('.activity_list').css('top', -243);        
+
+	});
+
+    $(document).on('click', '.activity-menu', function (evt) {
+      evt.stopPropagation();
+    }); 
+
     function handleResize() {
       $("img.scale_image_ready").imageScale();
     }
