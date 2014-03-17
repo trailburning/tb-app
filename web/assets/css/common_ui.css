@@ -107,6 +107,11 @@ a.btn {
   border-radius: 8px;  
 }
 
+.pressed-btn-tb {
+  background-image: none;
+  background-color: #DADADA !important;
+}
+
 /* TB TITLES */
 /******************************************/
 .tb-title {
@@ -487,12 +492,12 @@ h4.tb {
   font-size: 14px;
   line-height: 20px;
   color: #979797;
-  text-transform: uppercase;
 }
 
 #bigbar .crumbs {
   float: left;
   margin-top: 12px;  
+  text-transform: uppercase;
 }
 
 #bigbar .crumbs a, 
@@ -535,6 +540,30 @@ h4.tb {
 #bigbar .crumb_links {
   float: left;
   margin: 1px 0px 0px 16px;
+}
+
+#bigbar .like {
+  float: right;
+  line-height: 38px;
+}
+
+#bigbar [class^="icon-"], #bigbar .like [class*=" icon-"] {
+  margin-top: -2px;
+  vertical-align: middle;
+}
+
+#bigbar .compact_share {
+  float: right;
+  margin-left: 10px;
+  line-height: 38px;
+}
+
+#bigbar .btn-group {
+  font-size: 18px;
+}
+
+#bigbar .btn-group>.btn, #bigbar .btn-group>.dropdown-menu, #bigbar .btn-group>.popover {
+  font-size: 18px;
 }
 
 #bigbar .share {

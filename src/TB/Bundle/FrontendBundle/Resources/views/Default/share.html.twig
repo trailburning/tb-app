@@ -4,6 +4,7 @@
 {% if text is not defined  %}
     {% set text = 'Are you trailburning?' %}
 {% endif %}
+
 <div class="share">
     <div class="link facebook"><a href="http://www.facebook.com/share.php?u={{ url|url_shareable }}" target="_blank" class="button btnFacebook">Facebook</a></div>
     <div class="link twitter"><a href="http://twitter.com/share?text={{ text|url_encode }}&url={{ url|url_shareable }}" target="_blank" class="button btnTwitter">Twitter</a></div>

@@ -149,6 +149,16 @@ define([
         $('#trail_overlay .overlay_pull .button').removeClass('overlay_pull_hover');                
       });
             
+      $('.like_btn').click(function(evt){
+      	if ($(this).hasClass('pressed-btn-tb')) {
+      	  $('.btn-label', $(this)).text('Like');
+          $(this).removeClass('pressed-btn-tb');
+      	}
+      	else {
+      	  $('.btn-label', $(this)).text('Liked');
+          $(this).addClass('pressed-btn-tb');      		
+      	}      	
+      });
     },
     updatePlayerHeight: function(){
       var nPlayerHeight = 0;      

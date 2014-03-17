@@ -89,7 +89,22 @@ var TB_TRAIL_ID = {{ trail.id }};
             <div class="panel_content">       
                 <div id="bigbar">
                     {{ include('TBFrontendBundle:Default:breadcrumb.html.twig', breadcrumb) }}
-                    {{ include('TBFrontendBundle:Default:share.html.twig') }}                     
+                    {{ include('TBFrontendBundle:Default:share.html.twig') }}
+                    
+					<div class="compact_share btn-group">
+					  <a class="btn btn-primary btn-tb-action btn-tb dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-share icon-white"></i> 
+					    Share
+					    <span class="caret"></span>
+					  </a>
+					  <ul class="dropdown-menu">
+						<li><a href="#">Facebook</a></li>
+						<li><a href="#">Google+</a></li>
+						<li><a href="#">Twitter</a></li>
+						<li><a href="#">Pinterest</a></li>
+					  </ul>
+					</div>                    
+					                                         
+					<div class="like"><a href="javascript:void(0)" class="btn btn-tb-action btn-tb like_btn"><i class="icon-star icon-white"></i> <span class="btn-label">Like</span></a></div>
                 </div>
 
                 <div class="panels clearfix">     
