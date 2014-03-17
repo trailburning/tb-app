@@ -32,6 +32,7 @@ class AppKernel extends Kernel
             new TB\Bundle\APIBundle\TBAPIBundle(),
             new FOS\UserBundle\FOSUserBundle(), 
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+            new Knp\Bundle\GaufretteBundle\KnpGaufretteBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

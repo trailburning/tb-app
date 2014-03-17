@@ -32,5 +32,13 @@ liip_functional_test: ~
 services:
     rest_client:
         class:      %rest_client_class%
-        arguments:  [%api_host%/app_test.php]       
-
+        arguments:  [%api_host%/app_test.php]        
+        
+# Use in memory file adapter in test enviroment
+knp_gaufrette:
+    adapters:
+        gpx_files:
+            in_memory: ~
+        trail_media_files:
+            in_memory: ~                
+            

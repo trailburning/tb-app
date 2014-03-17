@@ -5,13 +5,13 @@
         <div class="photo tb-photo-btn">
         	<div class="image_container">
         	{% if route.id == 42 %}
-        		<img src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/{{ route.medias[5].versions[0].path }}" class="resrc scale" border="0"/></div>
+        		<img src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/{{ route.medias[5].path }}" class="resrc scale" border="0"/></div>
         	{% elseif route.id == 121 %}
-        		<img src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/{{ route.medias[5].versions[0].path }}" class="resrc scale" border="0"/></div>
+        		<img src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/{{ route.medias[5].path }}" class="resrc scale" border="0"/></div>
         	{% elseif route.id == 144 %}
-        		<img src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/{{ route.medias[3].versions[0].path }}" class="resrc scale" border="0"/></div>
+        		<img src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/{{ route.medias[3].path }}" class="resrc scale" border="0"/></div>
         	{% else %}
-        		<img src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/{{ route.medias[0].versions[0].path }}" class="resrc scale" border="0"/></div>
+        		<img src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/{{ route.medias[0].path }}" class="resrc scale" border="0"/></div>
         	{% endif %}	        		
           	<div class="card_title">
             <h1>{{ route.shortName ? route.shortName : route.name }}</h1>

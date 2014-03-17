@@ -31,7 +31,12 @@ class MediaController extends AbstractRestController
         $postgis = $this->get('postgis');
         $medias = $postgis->getRouteMedia($routeId);
         
-        $output = array('usermsg' => 'success', "value" => $medias);
+        $jsonMedias = [];
+        foreach ($medias as $media) {
+            $jsonMedias[] = $media->toJSON();
+        }
+        
+        $output = ['usermsg' => 'success', "value" => json_decode('['. implode(',', $jsonMedias).']')];
 
        return $this->getRestResponse($output);
     }
@@ -42,8 +47,14 @@ class MediaController extends AbstractRestController
      */
     public function postRouteMedias($routeId)
     {
-        if (!array_key_exists('medias', $_FILES)) {
-            throw (new ApiException("Medias variable not set", 400));
+        $request = $this->getRequest();
+        if (!$request->files->has('medias')) {
+            throw (new ApiException('medias variable not set', 400));
+        }
+        
+        $mediaFiles = $request->files->get('medias');
+        if (!is_array($mediaFiles)) {
+            $mediaFiles = [$mediaFiles];
         }
         
         $route = $this->getDoctrine()
@@ -55,69 +66,26 @@ class MediaController extends AbstractRestController
                 sprintf('Route with id "%s" not found', $routeId)
             );
         }
-
-        $postgis = $this->get('postgis');
-
-        $r = $postgis->readRoute($routeId);
-
-        if (($tz = $postgis->getTimezone($r->getCentroid()->getLongitude(), $r->getCentroid()->getLatitude())) == NULL) {
-            throw new \Exception("Error getting timezone");     
-        }
-
-        $dtz = new \DateTimeZone($tz);
-        $offset = $dtz->getOffset(\DateTime::createFromFormat('U', $r->getRoutePoints()[0]->getTags()['datetime']));
-
-        $medias = array();
-        for ($i = 0; $i < count($_FILES['medias']['name']); $i++) {
-            if ($_FILES['medias']['error'][$i] != 0) {
-                throw (new \ApiException("An error happened uploading the medias", 400));
-            }
-
-            $media_filename = preg_replace('/[^\w\-~_\.]+/u', '-', $_FILES["medias"]["name"][$i]);
-
-            $extension = strtolower(pathinfo($media_filename, PATHINFO_EXTENSION));
-            switch ($extension) {
-                case "jpg":
-                case "jpeg":
-                    $media = new JpegMedia();
-                    break;
-                default:
-                    throw (new ApiException(sprintf('Tried to upload file with non recognised extension "%s"', $extension), 400));        
-                    break;
-            }
-
-            $media_tmp_path = $_FILES["medias"]["tmp_name"][$i]; 
         
-            $media->fromFile($media_filename, $media_tmp_path);
-            $media->setTag("datetime", intval($media->getTag('datetime')) - $offset);
-
-            $rp = $r->getNearestPointByTime($media->tags['datetime']);
-            $media->setCoords($rp->getCoords()->getLongitude(), $rp->getCoords()->getLatitude());
-            if (isset($rp->getTags()['altitude'])) {
-                $media->setTag('altitude', $rp->getTags()['altitude']);
-            }
-
-            $postgis->importPicture($media);
-            $postgis->attachMediaToRoute($routeId, $media);
-
-            // $s3_client = $this->get('s3_client'); service call results in an error, fix when possible
-            $s3_client = \Aws\S3\S3Client::factory(array(
-                'key'    => $this->container->getParameter('aws_accesskey'),
-                'secret' => $this->container->getParameter('aws_secretkey')
-            ));
+        $mediaImporter = $this->get('media_importer');
+        $filesystem = $this->get('trail_media_files_filesystem');
+        $medias = [];
+        
+        foreach ($mediaFiles as $mediaFile) {
+            $media = new Media();    
+            $media->setRoute($route);
+            $media->setFile($mediaFile);
+            $media->readMetadata($mediaImporter);
+            $media->upload($filesystem);
+        
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($media);
             
-            $result = $s3_client->putObject(array(
-                'Bucket'      => 'trailburning-media',
-                'Key'         => sha1_file($media_tmp_path).'.jpg',
-                'Body'        => file_get_contents($media_tmp_path),
-                'ContentType' => $media->mimetype,
-                'ACL'         => 'public-read'
-            ));
-
-            $medias[] = $media;
+            $medias[] = $media->toJSON();
         }
-
-        $output = array('usermsg' => 'success', "value" => $medias);
+        $em->flush();
+        
+        $output = ['usermsg' => 'success', "value" => json_decode('['. implode(',', $medias).']')];
 
        return $this->getRestResponse($output);
     }
@@ -128,22 +96,23 @@ class MediaController extends AbstractRestController
      */
     public function deleteMedia($id)
     {
-        $route = $this->getDoctrine()
+        $media = $this->getDoctrine()
             ->getRepository('TBFrontendBundle:Media')
             ->findOneById($id);
 
-        if (!$route) {
+        if (!$media) {
             throw $this->createNotFoundException(
                 sprintf('Media with id "%s" not found', $id)
             );
         }
         
-        $postgis = $this->get('postgis');
-        $postgis->deleteMedia($id);
-        
-        $output = array('usermsg' => 'success', "value" => $id);
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($media);
+        $em->flush();
+                
+        $output = ['usermsg' => 'success', "value" => $id];
 
-       return $this->getRestResponse($output);
+        return $this->getRestResponse($output);
     }
     
     /**
@@ -177,7 +146,7 @@ class MediaController extends AbstractRestController
         $em->persist($media);
         $em->flush();
         
-        $output = array('usermsg' => 'success', "value" => $id);
+        $output = ['usermsg' => 'success', "value" => $id];
 
        return $this->getRestResponse($output);
     }

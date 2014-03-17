@@ -43,6 +43,13 @@ class RoutePoint
     private $id;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="route_id", type="integer")
+     */
+    private $routeId;
+
+    /**
      * @var \TB\Bundle\FrontendBundle\Entity\Route
      *
      * @ORM\ManyToOne(targetEntity="TB\Bundle\FrontendBundle\Entity\Route", inversedBy="routePoints")

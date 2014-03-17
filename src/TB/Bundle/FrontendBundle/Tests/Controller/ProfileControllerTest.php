@@ -24,9 +24,9 @@ class ProfileControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/profile/mattallbeury');
         $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());   
         $this->assertGreaterThan(0,
-            $crawler->filter('h1.tb-title:contains("Matt")')->count());
+            $crawler->filter('h2.tb-title:contains("Matt")')->count());
         $this->assertGreaterThan(0,
-            $crawler->filter('h1.tb-title:contains("Allbeury")')->count());
+            $crawler->filter('h2.tb-title:contains("Allbeury")')->count());
     }
     
     public function testBrandProfile()

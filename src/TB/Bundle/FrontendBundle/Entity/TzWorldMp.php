@@ -20,7 +20,7 @@ class TzWorldMp
     private $tzid;
 
     /**
-     * @var MultiPolygon
+     * @var MultiPoint
      *
      * @ORM\Column(name="geom", type="geometry", columnDefinition="GEOMETRY(MULTIPOLYGON)", nullable=true)
      */

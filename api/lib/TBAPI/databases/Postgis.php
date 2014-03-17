@@ -274,10 +274,9 @@ class Postgis extends \PDO
 
     public function getRouteMedia($route_id, $count = null) 
     {
-        $q = "SELECT mv.media_id AS id, ST_AsText(m.coords) AS coords, m.tags as tags, mv.path AS path, mv.version_size AS size
-              FROM medias m, route_medias rm, media_versions mv
-              WHERE m.id = rm.media_id AND rm.media_id = mv.media_id AND rm.route_id=:route_id
-              GROUP BY mv.media_id, mv.path, mv.version_size, m.coords, m.tags
+        $q = "SELECT id, ST_AsText(m.coords) AS coords, m.tags as tags, path
+              FROM medias m
+              WHERE m.route_id=:route_id
               ORDER BY m.tags->'datetime' ASC   
               LIMIT :count"; 
 
