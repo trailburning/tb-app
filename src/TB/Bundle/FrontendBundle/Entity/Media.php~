@@ -3,6 +3,9 @@
 namespace TB\Bundle\FrontendBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Gaufrette\Filesystem;
 
 /**
  * Media
@@ -12,6 +15,15 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Media
 {
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+    
     /**
      * @var hstore
      *
@@ -25,39 +37,43 @@ class Media
      * @ORM\Column(name="coords", type="point", columnDefinition="GEOMETRY(POINT,4326)", nullable=true)
      */
     private $coords;
-
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="path", type="string", length=100)
+     */
+    private $path;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="original_name", type="string", length=100)
+     */
+    private $originalName;
+    
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\Column(name="route_id", type="integer")
      */
-    private $id;
-    
-    
-    #/**
-    # * @var \Doctrine\Common\Collections\Collection
-    # *
-    # * @ORM\OneToMany(targetEntity="RouteMedia", mappedBy="media")
-    # **/
-    #private $routeMedias;
-    
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\Route", mappedBy="medias")
-     */
-    private $routes;
+    private $routeId;
     
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var \TB\Bundle\FrontendBundle\Entity\Route
      *
-     * @ORM\OneToMany(targetEntity="MediaVersion", mappedBy="media")
-     **/
-    private $versions;
+     * @ORM\ManyToOne(targetEntity="TB\Bundle\FrontendBundle\Entity\Route", inversedBy="medias")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="route_id", referencedColumnName="id")
+     * })
+     */
+    private $route;
     
+    
+    /**
+     * @Assert\File(maxSize="12m")
+     */
+    private $file;
 
     /**
      * Set tags
@@ -117,110 +133,129 @@ class Media
 
 
     /**
-     * Add routeMedias
-     *
-     * @param \TB\Bundle\FrontendBundle\Entity\RouteMedia $routeMedias
-     * @return Media
-     */
-    public function addRouteMedia(\TB\Bundle\FrontendBundle\Entity\RouteMedia $routeMedias)
-    {
-        $this->routeMedias[] = $routeMedias;
-
-        return $this;
-    }
-
-    /**
-     * Remove routeMedias
-     *
-     * @param \TB\Bundle\FrontendBundle\Entity\RouteMedia $routeMedias
-     */
-    public function removeRouteMedia(\TB\Bundle\FrontendBundle\Entity\RouteMedia $routeMedias)
-    {
-        $this->routeMedias->removeElement($routeMedias);
-    }
-
-    /**
-     * Get routeMedias
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getRouteMedias()
-    {
-        return $this->routeMedias;
-    }
-
-    /**
      * Constructor
      */
     public function __construct()
     {
-        $this->routeMedias = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->versions = new \Doctrine\Common\Collections\ArrayCollection();
+        
+    }
+    
+    /**
+     * Sets file.
+     *
+     * @param UploadedFile $file
+     */
+    public function setFile(UploadedFile $file)
+    {
+       $this->file = $file;
     }
 
     /**
-     * Add versions
+     * Get file.
      *
-     * @param \TB\Bundle\FrontendBundle\Entity\MediaVersion $versions
+     * @return UploadedFile
+     */
+    public function getFile()
+    {
+       return $this->file;
+    }
+    
+    /**
+     * Move the file to the provided Filesystem
+     * Sets the filename to the path field
+     *
+     * @param Filesystem $filesystem where the file gets uploaded to
+     * @param Int $routeId the ID of the associated Route for the path
+     * @return the name of the uploaded file
+     */
+    public function upload(Filesystem $filesystem, $routeId)
+    {
+        // the file property can be empty if the field is not required
+        if (null === $this->getFile()) {
+            throw new \Exception('file is empty');
+        }
+        
+        $file = $this->getFile();
+        
+        $filename = sprintf('/%s.gpx', $routeId, uniqid());
+        
+        $adapter = $filesystem->getAdapter();
+        // $adapter->setMetadata($filename, array('contentType' => $file->getClientMimeType())); // doesn't work with in_memory adapter
+        $adapter->write($filename, file_get_contents($file->getPathname()));
+        $this->setPath($filename);
+        
+        // clean up the file property as you won't need it anymore
+        $this->file = null;
+        
+        return $filename;
+    }
+
+    /**
+     * Set routeId
+     *
+     * @param integer $routeId
      * @return Media
      */
-    public function addVersion(\TB\Bundle\FrontendBundle\Entity\MediaVersion $versions)
+    public function setRouteId($routeId)
     {
-        $this->versions[] = $versions;
+        $this->routeId = $routeId;
 
         return $this;
     }
 
     /**
-     * Remove versions
+     * Get routeId
      *
-     * @param \TB\Bundle\FrontendBundle\Entity\MediaVersion $versions
+     * @return integer 
      */
-    public function removeVersion(\TB\Bundle\FrontendBundle\Entity\MediaVersion $versions)
+    public function getRouteId()
     {
-        $this->versions->removeElement($versions);
+        return $this->routeId;
     }
 
     /**
-     * Get versions
+     * Set route
      *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getVersions()
-    {
-        return $this->versions;
-    }
-
-    /**
-     * Add routes
-     *
-     * @param \TB\Bundle\FrontendBundle\Entity\Route $routes
+     * @param \TB\Bundle\FrontendBundle\Entity\Route $route
      * @return Media
      */
-    public function addRoute(\TB\Bundle\FrontendBundle\Entity\Route $routes)
+    public function setRoute(\TB\Bundle\FrontendBundle\Entity\Route $route = null)
     {
-        $this->routes[] = $routes;
+        $this->route = $route;
 
         return $this;
     }
 
     /**
-     * Remove routes
+     * Get route
      *
-     * @param \TB\Bundle\FrontendBundle\Entity\Route $routes
+     * @return \TB\Bundle\FrontendBundle\Entity\Route 
      */
-    public function removeRoute(\TB\Bundle\FrontendBundle\Entity\Route $routes)
+    public function getRoute()
     {
-        $this->routes->removeElement($routes);
+        return $this->route;
     }
 
     /**
-     * Get routes
+     * Set path
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @param string $path
+     * @return Media
      */
-    public function getRoutes()
+    public function setPath($path)
     {
-        return $this->routes;
+        $this->path = $path;
+
+        return $this;
+    }
+
+    /**
+     * Get path
+     *
+     * @return string 
+     */
+    public function getPath()
+    {
+        return $this->path;
     }
 }

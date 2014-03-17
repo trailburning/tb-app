@@ -3,6 +3,12 @@
 namespace TB\Bundle\FrontendBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Gaufrette\Filesystem;
+use Gaufrette\Adapter\MetadataSupporter;
+use Gaufrette\Adapter\AwsS3;
+use TB\Bundle\FrontendBundle\Util\MediaImporter;
 
 /**
  * Media
@@ -12,6 +18,15 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Media
 {
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+    
     /**
      * @var hstore
      *
@@ -25,39 +40,43 @@ class Media
      * @ORM\Column(name="coords", type="point", columnDefinition="GEOMETRY(POINT,4326)", nullable=true)
      */
     private $coords;
-
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="path", type="string", length=100)
+     */
+    private $path;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="filename", type="string", length=100)
+     */
+    private $filename;
+    
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\Column(name="route_id", type="integer")
      */
-    private $id;
-    
-    
-    #/**
-    # * @var \Doctrine\Common\Collections\Collection
-    # *
-    # * @ORM\OneToMany(targetEntity="RouteMedia", mappedBy="media")
-    # **/
-    #private $routeMedias;
-    
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\Route", mappedBy="medias")
-     */
-    private $routes;
+    private $routeId;
     
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var \TB\Bundle\FrontendBundle\Entity\Route
      *
-     * @ORM\OneToMany(targetEntity="MediaVersion", mappedBy="media")
-     **/
-    private $versions;
+     * @ORM\ManyToOne(targetEntity="TB\Bundle\FrontendBundle\Entity\Route", inversedBy="medias")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="route_id", referencedColumnName="id", onDelete="CASCADE")
+     * })
+     */
+    private $route;
     
+    
+    /**
+     * @Assert\File(maxSize="12m")
+     */
+    private $file;
 
     /**
      * Set tags
@@ -121,73 +140,257 @@ class Media
      */
     public function __construct()
     {
-        $this->routes = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->versions = new \Doctrine\Common\Collections\ArrayCollection();
+        
+    }
+    
+    /**
+     * Sets file.
+     *
+     * @param UploadedFile $file
+     */
+    public function setFile(UploadedFile $file)
+    {
+       $this->file = $file;
     }
 
     /**
-     * Add versions
+     * Get file.
      *
-     * @param \TB\Bundle\FrontendBundle\Entity\MediaVersion $versions
+     * @return UploadedFile
+     */
+    public function getFile()
+    {
+       return $this->file;
+    }
+    
+    /**
+     * Move the file to the provided Filesystem
+     * Sets the path and filename field
+     *
+     * @param Filesystem $filesystem where the file gets uploaded to
+     * @param Int $routeId the ID of the associated Route for the path
+     * @return the name of the uploaded file
+     */
+    public function upload(Filesystem $filesystem)
+    {
+        if ($this->getFile() === null) {
+            throw new \Exception('file is empty');
+        }
+        
+        if ($this->getRoute() === null) {
+            throw new \Exception('Route must be set before uploading a file');
+        }
+        
+        if ($this->getRoute()->getId() == 0) {
+            throw new \Exception('The Route must be persisted before uploading a file');
+        }
+        
+        $file = $this->getFile();
+        
+        if (filesize($this->file->getPathname()) < 11 || exif_imagetype($this->file->getPathname()) != 2) {
+            throw new \Exception('Only JPEG files are allowed');
+        }
+        
+        $filename = sprintf('/%s/%s.%s', $this->getRoute()->getId(), sha1_file($this->file->getPathname()), $this->file->getClientOriginalExtension());
+        
+        $adapter = $filesystem->getAdapter();
+        // Store Metadata to S3 (doesn't work in unit tests when using memory filesystem)
+        if ($adapter instanceof MetadataSupporter) {
+            $adapter->setMetadata($filename, array('ContentType' => 'image/jpeg', 'ACL' => 'public-read'));
+        }
+        
+        $adapter->write($filename, file_get_contents($this->file->getPathname()));
+        // Add the S3 Bucket name to the filename, this should not be part of the path, fix when possible
+        $filename = 'trailburning-media' . $filename;
+        
+        $this->setPath($filename);
+        $this->setFilename($this->file->getClientOriginalName());
+        
+        // clean up the file property as you won't need it anymore
+        $this->file = null;
+        
+        return $filename;
+    }
+    
+    /**
+     * Extract Metadata from a provided Jpeg image and sets filesize, datetime, width and height, latitude as tags 
+     * and longitude, latidute as coords
+     *
+     * @param MediaImporter $mediImporter media importer helper class
+     * @throws Excpetion when the route field is empty, the Route was not persisted before, the image field is not set
+     * @throws Excpetion No DateTime metadata is found
+     */
+    public function readMetadata(MediaImporter $mediaImporter)
+    {
+        if ($this->getFile() === null) {
+            throw new \Exception('file is empty');
+        }
+        
+        if ($this->getRoute() === null) {
+            throw new \Exception('Route must be set before uploading a file');
+        }
+        
+        if ($this->getRoute()->getId() == 0) {
+            throw new \Exception('The Route must be persisted before uploading a file');
+        }
+        
+        if (filesize($this->file->getPathname()) < 11 || exif_imagetype($this->file->getPathname()) != 2) {
+            throw new \Exception('Only JPEG files are supported');
+        }
+        
+        $tags = $this->getTags();
+        $exiftags = exif_read_data($this->file->getPathname());
+
+        if (isset($exiftags['FileSize'])) { 
+            $tags['filesize'] = $exiftags['FileSize']; 
+        }
+        
+        if (isset($exiftags['DateTimeOriginal'])) {
+            $datetime = intval(strtotime($exiftags['DateTimeOriginal']));
+        } elseif (isset($exiftags['DateTime'])) {
+            $datetime = intval(strtotime($exiftags['DateTime']));
+        } else {
+            $routePoint = $mediaImporter->getFirstRoutePoint($this->getRoute());
+            if (!isset($routePoint->getTags()['datetime'])) {
+                throw new \Exception('Image and first RoutePoint have no datetime information');
+            }
+            $datetime = $routePoint->getTags()['datetime'];
+        }
+        
+        // the image contains no information about the timezone where the image was taken, the routes timezone is UTC.
+        // get a timezone offset by the related Route and substract it from the datetime of the image to get a UTC datetime.
+        $timezoneOffset = $mediaImporter->getRouteTimezoneOffset($this->getRoute());
+        $datetime = $datetime - $timezoneOffset;
+        $tags['datetime'] = $datetime;
+        
+        if (isset($exiftags['COMPUTED']) && isset($exiftags['COMPUTED']['Width'])) {
+            $tags['width'] = $exiftags['COMPUTED']['Width']; 
+        }
+        
+        if (isset($exiftags['COMPUTED']) && isset($exiftags['COMPUTED']['Height'])) {
+            $tags['height'] = $exiftags['COMPUTED']['Height']; 
+        }    
+        
+        //get the longitude, latitude and altitude from the nearest RoutePoint by datetime
+        $routePoint = $mediaImporter->getNearestRoutePointByTime($this->getRoute(), $datetime);
+        $this->setCoords($routePoint->getCoords());
+        if (isset($routePoint->getTags()['altitude'])) {
+            $tags['altitude'] = $routePoint->getTags()['altitude'];
+        }
+        
+        $this->setTags($tags);
+    }
+
+    /**
+     * Set id
+     *
+     * @param integer $routeId
      * @return Media
      */
-    public function addVersion(\TB\Bundle\FrontendBundle\Entity\MediaVersion $versions)
+    public function setId($id)
     {
-        $this->versions[] = $versions;
+        $this->id = $id;
 
         return $this;
     }
 
     /**
-     * Remove versions
+     * Get routeId
      *
-     * @param \TB\Bundle\FrontendBundle\Entity\MediaVersion $versions
+     * @return integer 
      */
-    public function removeVersion(\TB\Bundle\FrontendBundle\Entity\MediaVersion $versions)
+    public function getRouteId()
     {
-        $this->versions->removeElement($versions);
+        return $this->routeId;
     }
 
     /**
-     * Get versions
+     * Set route
      *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getVersions()
-    {
-        return $this->versions;
-    }
-
-    /**
-     * Add routes
-     *
-     * @param \TB\Bundle\FrontendBundle\Entity\Route $routes
+     * @param \TB\Bundle\FrontendBundle\Entity\Route $route
      * @return Media
      */
-    public function addRoute(\TB\Bundle\FrontendBundle\Entity\Route $routes)
+    public function setRoute(\TB\Bundle\FrontendBundle\Entity\Route $route = null)
     {
-        $this->routes[] = $routes;
+        $this->route = $route;
 
         return $this;
     }
 
     /**
-     * Remove routes
+     * Get route
      *
-     * @param \TB\Bundle\FrontendBundle\Entity\Route $routes
+     * @return \TB\Bundle\FrontendBundle\Entity\Route 
      */
-    public function removeRoute(\TB\Bundle\FrontendBundle\Entity\Route $routes)
+    public function getRoute()
     {
-        $this->routes->removeElement($routes);
+        return $this->route;
     }
 
     /**
-     * Get routes
+     * Set path
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @param string $path
+     * @return Media
      */
-    public function getRoutes()
+    public function setPath($path)
     {
-        return $this->routes;
+        $this->path = $path;
+
+        return $this;
+    }
+
+    /**
+     * Get path
+     *
+     * @return string 
+     */
+    public function getPath()
+    {
+        return $this->path;
+    }
+
+    /**
+     * Set filename
+     *
+     * @param string $filename
+     * @return Media
+     */
+    public function setFilename($filename)
+    {
+        $this->filename = $filename;
+
+        return $this;
+    }
+
+    /**
+     * Get filename
+     *
+     * @return string 
+     */
+    public function getFilename()
+    {
+        return $this->filename;
+    }
+    
+    public function toJSON() 
+    {
+        $media = '{';
+        $media .= '"id": "'.$this->getId().'",';
+        $media .= '"filename": "'.$this->getFilename().'",';
+        $media .= '"mimetype": "image/jpeg",';     
+        $media .= '"versions": [{"path": "' . $this->getPath() .'", "size": 0}],';
+        $media .= '"coords" : {"long": '.$this->getCoords()->getLongitude().',"lat": '.$this->getCoords()->getLatitude().'},';
+        $media .= '"tags": {';
+        $i=0;
+        foreach ($this->getTags() as $tag_name => $tag_value) {
+            if ($i++ != 0) {
+                $media.=',';
+            }
+            $media .= '"'.$tag_name.'": "'.$tag_value.'"';
+        }
+        $media .= '}}';
+        
+        return $media;
     }
 }

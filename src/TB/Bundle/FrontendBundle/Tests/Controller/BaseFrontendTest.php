@@ -16,8 +16,15 @@ use Symfony\Component\HttpFoundation\Session\Storage\MockFileSessionStorage;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
  
  
-class BaseFrontendTest extends WebTestCase 
+abstract class BaseFrontendTest extends WebTestCase 
 {
+    
+    protected static function getKernelClass()
+    {
+        require_once self::getPhpUnitXmlDir() . '/frontend/AppKernel.php';
+
+        return 'AppKernel';
+    }
  
     protected function logIn($client, $username)
     {

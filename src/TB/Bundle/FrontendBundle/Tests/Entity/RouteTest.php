@@ -5,6 +5,7 @@ namespace TB\Bundle\APIBundle\Tests\Entity;
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 use TB\Bundle\FrontendBundle\Entity\Route;
 use TB\Bundle\FrontendBundle\Entity\GpxFile;
+use CrEOF\Spatial\PHP\Types\Geometry\Point;
 
 class RouteTest extends WebTestCase
 {

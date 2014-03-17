@@ -27,4 +27,11 @@ services:
         arguments:  [%database_host%, %database_port%, %database_name%_test, %database_user%, %database_password%]
         
 liip_functional_test: ~
-    
+
+# Use in memory file adapter in test enviroment
+knp_gaufrette:
+    adapters:
+        gpx_files:
+            in_memory: ~
+        trail_media_files:
+            in_memory: ~

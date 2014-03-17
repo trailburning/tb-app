@@ -8,7 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use Symfony\Component\HttpFoundation\Request;
 
-use TB\Bundle\APIBundle\Entity\GpxFile;
+use TB\Bundle\FrontendBundle\Entity\GpxFile;
 use TB\Bundle\APIBundle\Util\GpxFileImporter;
 use TB\Bundle\APIBundle\Util\ApiException;
 
@@ -51,44 +51,36 @@ class GpxFileController extends AbstractRestController
                 sprintf('User with id "%s" not found', $userId)
             );
         }
-        
-        if (!array_key_exists('gpxfile', $_FILES)) {
-            throw (new ApiException('Gpxfile variable not set', 400));
-        }
-        if ($_FILES['gpxfile']['error'] != 0) {
-            throw (new ApiException('An error happened uploading the GPX file', 400));
-        }
-        $gpx_filename = preg_replace('/[^\w\-~_\.]+/u', '-', $_FILES['gpxfile']['name']);
-        $gpx_tmp_path = $_FILES['gpxfile']['tmp_name'];
 
+        if (!$request->files->has('gpxfile')) {
+            throw (new ApiException('gpxfile variable not set', 400));
+        }
+        $file = $request->files->get('gpxfile');
+        
         $importer = new GpxFileImporter();
         try {
-            $routes = $importer->parse(file_get_contents($gpx_tmp_path));
+            $routes = $importer->parse(file_get_contents($file->getPathname()));
         } catch (\Exception $e) {
             throw (new ApiException('Problem parsing GPX file - not a valid GPX file?', 400));
         }
-
+    
+        $filesystem = $this->get('gpx_files_filesystem');
         $postgis = $this->get('postgis');
         
-        $gpx_file_id = $postgis->importGpxFile('/trailburning-gpx/'.$gpx_tmp_path);
+        $gpxFile = new GpxFile();    
+        $gpxFile->setFile($file);
+        $filename = $gpxFile->upload($filesystem);
+        
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($gpxFile);
+        $em->flush();
+        
         $importedRoutesIds = array();
         foreach ($routes as $route) {
-            $route->setGpxFileId($gpx_file_id);
+            $route->setGpxFileId($gpxFile->getId());
             $route->setUserId($user->getId());
             $importedRoutesIds[] = $postgis->writeRoute($route);
         }
-
-        // $s3_client = $this->get('s3_client'); service call results in an error, fix when possible
-        $s3_client = \Aws\S3\S3Client::factory(array(
-            'key'    => $this->container->getParameter('aws_accesskey'),
-            'secret' => $this->container->getParameter('aws_secretkey')
-        ));
-
-        $result = $s3_client->putObject(array(
-            'Bucket'    => 'trailburning-gpx',
-            'Key'       => sha1_file($gpx_tmp_path).'.gpx',
-            'Body'      => file_get_contents($gpx_tmp_path)
-        ));
 
         $output = array('usermsg' => 'GPX successfully imports', "value" => json_decode('{"route_ids": '.json_encode($importedRoutesIds).'}'));
 
