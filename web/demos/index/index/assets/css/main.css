@@ -187,34 +187,34 @@ border-width:1px;
 .discover_content .more_btn {
   margin-bottom: 28px;
 }	
-	
-/* EVENTS */
+
+/* TRAILS */
 /******************************************/
-.events_content .content {
+.trails_content .content {
   padding-top: 44px;
   margin: 0px auto 54px auto;
   text-align: center;	
 }
 
-.events_content .desc {
+.trails_content .desc {
   margin: 24px auto 0px auto;
   text-align: center;
 }
 
-.panels {
+.trails_content .panels {
   padding-top: 26px;
   margin-bottom: 24px;
 }
-
-.events_content .more_btn {
+	
+.trails_content .more_btn {
   margin-bottom: 36px;
 }	
 
-.events_content .trailers .avatars {
+.trails_content .trailers .avatars {
   padding-top: 20px;	
 }
 
-.events_content .trailers .avatars .avatar {
+.trails_content .trailers .avatars .avatar {
   display: inline-block;
   margin: 0px 9px 0px 9px;
 }

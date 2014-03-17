@@ -12,7 +12,7 @@ use TB\Bundle\FrontendBundle\Entity\User;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/")
+     * @Route("/", name="homepage")
      * @Template()
      */
     public function indexAction()

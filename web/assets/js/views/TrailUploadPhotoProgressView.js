@@ -10,8 +10,6 @@ define([
       this.bRendered = false;
     },            
     render: function(nProgress){
-    	console.log('p:'+nProgress);
-    	
       if (!this.bRendered) {
         var attribs = this.model.toJSON();
         $(this.el).html(this.template(attribs));      	

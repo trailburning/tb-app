@@ -99,7 +99,8 @@ border-width:1px;
 /* DETAILS */
 /******************************************/
 .details_content {
-  margin: 0px auto 0px auto;
+  margin: 0px auto 44px auto;
+  width: 1118px;  
 }
 
 /* MY TRAILS TITLE */
@@ -112,7 +113,7 @@ border-width:1px;
 /* MY TRAILS */
 /******************************************/
 .mytrails_content {
-  padding-bottom: 38px;
+  padding-bottom: 24px;
   margin: 8px auto 0px auto;
 }
 
@@ -167,10 +168,6 @@ border-width:1px;
   margin: 0px 14px 0px 14px;
 }
 
-.likedtrails_spacer {
-  margin-top: 44px;	
-}
-
 /* PANEL */
 /******************************************/
 .panel .image_container {
@@ -181,11 +178,12 @@ border-width:1px;
 /* PROFILE DETAIL PANEL */
 /******************************************/
 .profile_detail_panel {
-  width: 544px;
+  width: 542px;
 }
 
 .profile_detail_panel .content {
-  margin: 34px 72px 28px 24px;
+  margin: 34px 72px 28px 24px;  
+  min-height: 246px;  
   font-size: 14px;
   font-weight: 300;
   line-height: 1.3em;  
@@ -215,8 +213,45 @@ border-width:1px;
 /* PROFILE FOLLOW PANEL */
 /******************************************/
 .profile_follow_panel {
-  margin-left: 24px;
-  width: 544px;
+  margin-left: 22px;
+  width: 542px;
+}
+
+.profile_follow_panel .content {
+  margin: 34px 24px 28px 24px;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.3em;  
+  color: #000000;
+}
+
+.profile_follow_panel .you_follow {
+  height: 112px;
+}
+
+.profile_follow_panel .they_follow {
+  margin-top: 22px;
+  height: 112px;
+}
+
+.profile_follow_panel .avatars {
+  padding-top: 16px;	
+  
+  width: 100%;
+  height: 56px;
+  overflow: hidden;
+}
+
+.profile_follow_panel .tb-avatar {
+  display: inline-block;
+  margin: 0px 22px 0px 0px;
+}
+
+.profile_follow_panel .content .title {
+  font-size: 42px;
+  font-weight: 400;
+  line-height: 1em;
+  color: #44B6F7;
 }
 
 /* TRAIL GEAR PANEL */
@@ -334,6 +369,18 @@ border-width:1px;
   }
   .crumb_content {
     width: 974px;
+  }  
+  .profile_detail_panel {
+  	width: 472px;
+  }    
+  
+.mytrails_content {
+  padding-bottom: 16px;
+}
+  
+  .profile_follow_panel {
+    margin-left: 10px;
+  	width: 472px;
   }
   .mytrails_title_content {
     width: 974px;

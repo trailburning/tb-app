@@ -41,9 +41,9 @@ define([
     },
     checkpoint: function(){
       var self = this;
-            
+                        
       if (this.bWaiting && this.bHeroReady) {      	
-      	$('#tb-loader-overlay').hide();
+        $('#tb-loader-overlay').fadeOut();	
       	
       	this.bWaiting = false;
       	
@@ -64,7 +64,7 @@ define([
 
 	  // still waiting - show loader      
       if (this.bWaiting) {
-        $('#tb-loader-overlay').show();	
+        $('#tb-loader-overlay').fadeIn();	
       }      
     },
     onTransitionTimer: function(){

@@ -47,6 +47,12 @@ border-width:1px;
   text-align: center;
 }
 
+.panel_content .msg {
+  padding-top: 18px;
+  margin: 0px auto 0px auto;  
+  width: 500px;
+}
+
 .panel_content form {
   display: block;  
   padding-top: 18px;

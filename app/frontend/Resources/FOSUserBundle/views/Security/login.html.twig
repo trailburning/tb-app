@@ -36,6 +36,7 @@ var TB_APP = 'BaseApp';
             	{% if error %}
                 	<div class="error">{{ error|trans }}</div>
             	{% endif %}
+                <div><a href="{{ path('fos_user_resetting_request') }}">Forgot password?</a></div>
             </form>
             </div>
         </div>

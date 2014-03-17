@@ -137,6 +137,49 @@ define([
         success: function () {
 	      var data = self.mediasModel.get('value');
 	      $.each(data, function(key, jsonMedia) {
+	      	console.log(key);
+	      	switch (Number(key)) {
+	      	  case 442:
+	      	    jsonMedia.coords.lat = 47.409269;
+	      	    jsonMedia.coords.long = 10.347692;
+	      	  	break;
+	      	  case 443:
+	      	    jsonMedia.coords.lat = 47.407063;
+	      	    jsonMedia.coords.long = 10.352125;
+	      	  	break;
+	      	  case 444:
+	      	    jsonMedia.coords.lat = 47.407063;
+	      	    jsonMedia.coords.long = 10.352125;
+	      	  	break;
+	      	  case 445:
+	      	    jsonMedia.coords.lat = 47.40564;
+	      	    jsonMedia.coords.long = 10.351181;
+	      	  	break;
+	      	  case 446:
+	      	    jsonMedia.coords.lat = 47.392859;
+	      	    jsonMedia.coords.long = 10.35912;
+	      	  	break;
+	      	  case 447:
+	      	    jsonMedia.coords.lat = 47.393091;
+	      	    jsonMedia.coords.long = 10.368476;
+	      	  	break;
+	      	  case 448:
+	      	    jsonMedia.coords.lat = 47.392946;
+	      	    jsonMedia.coords.long = 10.36869;
+	      	  	break;
+	      	  case 449:
+	      	    jsonMedia.coords.lat = 47.393091;
+	      	    jsonMedia.coords.long = 10.379333;
+	      	  	break;
+	      	  case 450:
+	      	    jsonMedia.coords.lat = 47.392328;
+	      	    jsonMedia.coords.long = 10.417464;
+	      	  	break;
+	      	  case 451:
+	      	    jsonMedia.coords.lat = 47.439902;
+	      	    jsonMedia.coords.long = 10.469928;
+	      	  	break;
+	      	}
 			self.trailMapView.addMarker(jsonMedia, true);
 		    self.mediaCollection.add(jsonMedia);
 	      });

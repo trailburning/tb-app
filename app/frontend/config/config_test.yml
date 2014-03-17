@@ -6,7 +6,8 @@ framework:
     session:
         storage_id: session.storage.filesystem
     profiler:
-        collect: false
+        collect: true
+        enabled: true 
 
 # Call API in test enviroment
 twig:
@@ -40,3 +41,4 @@ knp_gaufrette:
             in_memory: ~
         trail_media_files:
             in_memory: ~                
+            

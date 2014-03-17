@@ -74,11 +74,11 @@ doctrine:
 
 # Swiftmailer Configuration
 swiftmailer:
-    transport: %mailer_transport%
-    host:      %mailer_host%
-    username:  %mailer_user%
-    password:  %mailer_password%
-    spool:     { type: memory }
+    transport:  %mailer_transport%
+    host:       %mailer_host%
+    username:   %mailer_user%
+    password:   %mailer_password%
+    logging:    "%kernel.debug%"
     
 fos_user:
     db_driver: orm
@@ -89,6 +89,9 @@ fos_user:
     registration:
         form:
             type: tb_user_registration
+    from_email:
+            address:        email@trailburning.com
+            sender_name:    email@trailburning.com
             
 stof_doctrine_extensions:
     default_locale: en_US
