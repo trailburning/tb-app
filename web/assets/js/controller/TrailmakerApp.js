@@ -17,10 +17,7 @@ define([
   
   var initialize = function() {
     this.trailModel = new TrailModel();
-            
-//    this.trailModel.id = 164;
-//    this.trailModel.destroy();
-            
+                        
     $('#search_field').focus(function(evt) {
       $('#search_field').val('not just yet...');
       event.preventDefault();

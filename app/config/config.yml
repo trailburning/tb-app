@@ -69,8 +69,8 @@ doctrine:
                 st_geomfromtext: CrEOF\Spatial\ORM\Query\AST\Functions\PostgreSql\STGeomFromText
                 st_centroid:     CrEOF\Spatial\ORM\Query\AST\Functions\PostgreSql\STCentroid
                 st_astext:       CrEOF\Spatial\ORM\Query\AST\Functions\PostgreSql\STAsText
-                st_makeline:     CrEOF\Spatial\ORM\Query\AST\Functions\PostgreSql\STMakeLine	
-                st_setsrid:      CrEOF\Spatial\ORM\Query\AST\Functions\PostgreSql\STSetSRID			
+                st_makeline:     CrEOF\Spatial\ORM\Query\AST\Functions\PostgreSql\STMakeLine
+                st_setsrid:      CrEOF\Spatial\ORM\Query\AST\Functions\PostgreSql\STSetSRID	
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -98,3 +98,45 @@ stof_doctrine_extensions:
     orm:
         default: 
             sluggable: true
+            
+knp_gaufrette:
+    adapters:
+        gpx_files:
+            aws_s3:
+                service_id: aws_s3_client
+                bucket_name:  trailburning-gpx
+                options:
+                    create: true
+        trail_media_files:
+            aws_s3:
+                service_id: aws_s3_client
+                bucket_name:  trailburning-media
+                options:
+                    create: true
+                
+    filesystems:
+        gpx_files:
+            adapter:    gpx_files
+            alias:      gpx_files_filesystem 
+        trail_media_files:
+            adapter:    trail_media_files
+            alias:      trail_media_files_filesystem             
+            
+services:
+    s3_client:
+        class:      %s3_client_class% 
+        factory_class:  %s3_client_class%
+        factory_method: factory
+        arguments: 
+            arguments:
+                - { key: %aws_accesskey%, secret: %aws_secretkey% } 
+                
+    aws_s3_client:
+        class: Aws\S3\S3Client
+        factory_class: Aws\S3\S3Client
+        factory_method: 'factory'
+        arguments:
+            -
+                key: %aws_accesskey%
+                secret: %aws_secretkey%
+        

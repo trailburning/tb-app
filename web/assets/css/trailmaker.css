@@ -478,7 +478,75 @@ border-width:1px;
 }
 
 #step_route_edit_view .trailcard_panel .content .publish {
-  margin-top: 32px;
+  float: left;
+  margin-top: 32px;  
+}
+
+#step_route_edit_view .trailcard_panel .content .delete {
+  float: left;
+  margin-top: 40px;
+  margin-left: 16px;
+}
+
+#step_route_edit_view a.button {
+  float:left; 
+  display:block;
+  line-height:24px; 
+  text-indent: -10000px;  
+  background-repeat:no-repeat;
+  background-position:top center;
+  overflow: hidden;   
+  text-decoration: none;
+  width:24px;
+  height:24px;
+}
+
+#step_route_edit_view a.button:hover {
+  background-position: 0 -24px;
+}
+
+#step_route_edit_view .btnDeleteTrail {
+  background: url("../img/editor/btn_delete.png") no-repeat top left;
+}
+
+/* STEP ROUTE REMOVE */
+/******************************************/
+#step_route_remove_view {
+  display: none;
+}
+
+#step_route_remove_view .panel_content {
+  position: relative;
+  padding-top: 216px;
+  margin: 0px auto 92px auto;
+  width: 614px;
+  text-align: center;
+}
+
+#step_route_remove_view .panel {
+  float: none;
+}
+
+#step_route_remove_view .panel .content {
+  height: 364px;
+  margin: 54px 0px 0px 0px;
+}
+
+#step_route_remove_view .step_marker_container {
+  position: absolute;
+  top: 176px;
+  width: 100%;
+  text-align: center;
+}
+
+#step_route_remove_view .desc {
+  margin: 24px auto 0px auto;
+  width: 486px;
+  text-align: center;
+}
+
+#step_route_remove_view .next_step {
+  margin-top: 24px;
 }
 
 /* STEP PUBLISHED */
@@ -740,6 +808,9 @@ border-width:1px;
   float: left;
   margin: 48px 0px 0px 24px;
   text-align: left;
+  width: 191px;
+  height: 48px;
+  overflow: hidden;
 }
 
 .trail_media_popup .form-group {
@@ -762,12 +833,11 @@ border-width:1px;
   margin-bottom: 12px;
 }
 
-.leaflet-popup-content-wrapper{
+.leaflet-popup-content-wrapper {
   background: #FFF;
 }
 
-.leaflet-popup-tip{
-  background: #FFF;
+.leaflet-popup-tip {
 }
     
 /* BOOTSTRAP */

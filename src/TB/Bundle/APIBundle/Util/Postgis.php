@@ -4,6 +4,7 @@ namespace TB\Bundle\APIBundle\Util;
 
 use TB\Bundle\FrontendBundle\Entity\Route;
 use TB\Bundle\FrontendBundle\Entity\RoutePoint;
+use TB\Bundle\FrontendBundle\Entity\Media;
 use CrEOF\Spatial\PHP\Types\Geometry\Point;
 use TB\Bundle\APIBundle\Util;
 
@@ -82,14 +83,13 @@ class Postgis extends \PDO
     public function writeRoute($route) 
     {
         $route_id = 0;
-        $user_id = 1;
         $route->calculateAscentDescent();
         $tags = self::hstoreFromMap($route->getTags());
 
         $this->beginTransaction();
-        $q = 'INSERT INTO routes (name, gpx_file_id, tags, user_id, region, slug) VALUES (?, ?, ?, ?, ?, ?)';
+        $q = 'INSERT INTO routes (name, gpx_file_id, tags, user_id, region) VALUES (?, ?, ?, ?, ?)';
         $pq = $this->prepare($q);
-        $success = $pq->execute(array($route->getName(), $route->getGpxFileId(), $tags, $route->getUserId(), $route->getRegion(), $route->getName()));
+        $success = $pq->execute(array($route->getName(), $route->getGpxFileId(), $tags, $route->getUserId(), $route->getRegion()));
         if (!$success) {
             $this->rollBack();
             throw (new ApiException("Failed to insert the route into the database", 500));
@@ -198,7 +198,6 @@ class Postgis extends \PDO
     {
         $q = 'SELECT r.id, r.name, r.slug, r.region, r.length, ST_X(r.centroid) AS long, ST_Y(r.centroid) AS lat, r.tags 
               FROM routes r
-              INNER JOIN route_medias rm ON r.id=rm.route_id        
               WHERE r.user_id=:user_id
               AND r.slug IS NOT NULL';
         if ($route_type_id !== null) {
@@ -298,10 +297,9 @@ class Postgis extends \PDO
 
     public function getRouteMedia($route_id, $count = null) 
     {
-        $q = "SELECT mv.media_id AS id, ST_AsText(m.coords) AS coords, m.tags as tags, mv.path AS path, mv.version_size AS size
-              FROM medias m, route_medias rm, media_versions mv
-              WHERE m.id = rm.media_id AND rm.media_id = mv.media_id AND rm.route_id=:route_id
-              GROUP BY mv.media_id, mv.path, mv.version_size, m.coords, m.tags
+        $q = "SELECT id, ST_AsText(m.coords) AS coords, tags, filename, path
+              FROM medias m
+              WHERE m.route_id=:route_id
               ORDER BY m.tags->'datetime' ASC   
               LIMIT :count"; 
 
@@ -316,21 +314,17 @@ class Postgis extends \PDO
 
         $medias = array();
         while ($row = $pq->fetch(\PDO::FETCH_ASSOC)) {
-            if (!isset($medias[$row['id']])) {
-                $pic = new JpegMedia();
-                $pic->setId($row['id']);
-                $coords = explode(" ", substr(trim($row['coords']),6,-1)); //Strips POINT( and trailing )
-                $pic->setCoords($coords[0], $coords[1]);
-                $tags = json_decode('{' . str_replace('"=>"', '":"', $row['tags']) . '}', true);
-                foreach ($tags as $tag => $v) {
-                    $pic->setTag($tag, $v);
-                }
-                $pic->addVersion($row['size'], $row['path']);;
-                $medias[$row['id']] = $pic;
-            } else {
-                $medias[$row['id']]->addVersion($row['size'], $row['path']);;
-            }
+            $media = new Media();
+            $media->setId($row['id']);
+            $media->setPath($row['path']);
+            $coords = explode(" ", substr(trim($row['coords']), 6, -1)); 
+            $media->setCoords(new Point($coords[0], $coords[1], 4326));
+            $media->setFilename($row['filename']);
+            $tags = json_decode('{' . str_replace('"=>"', '":"', $row['tags']) . '}', true);
+            $media->setTags($tags);
+            $medias[$row['id']] = $media;    
         }
+        
         return $medias;
     }
 
@@ -362,7 +356,6 @@ class Postgis extends \PDO
             if ($row = $pq->fetch(\PDO::FETCH_ASSOC)) {
                 $linear_position = $row['linear_position'];
             }
-                
 
             $this->commit();
         }

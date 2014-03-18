@@ -5,8 +5,9 @@ define([
   'views/TrailmakerMapView',
   'views/StepRouteView',
   'views/StepRouteEditView',
+  'views/StepRouteRemoveView',
   'views/StepPublishedView'
-], function(_, Backbone, TrailMediasModel, TrailMapView, StepRouteView, StepRouteEditView, StepPublishedView){
+], function(_, Backbone, TrailMediasModel, TrailMapView, StepRouteView, StepRouteEditView, StepRouteRemoveView, StepPublishedView){
 
   var TITLE_TIMER = 10000;
 
@@ -20,6 +21,7 @@ define([
       app.dispatcher.on("StepRouteEditView:galleryphotoclick", this.onStepRouteEditViewGalleryPhotoClick, this);
       app.dispatcher.on("StepRouteEditView:updatedetailsclick", this.onStepRouteEditViewUpdateDetailsClick, this);
       app.dispatcher.on("StepRouteEditView:submitclick", this.onStepRouteEditViewSubmitClick, this);
+      app.dispatcher.on("StepRouteEditView:deleteclick", this.onStepRouteEditViewDeleteClick, this);
       app.dispatcher.on("StepPublishedView:submitclick", this.onStepPublishedViewSubmitClick, this);
 
       this.nTitleState = TITLE_OFF;
@@ -59,6 +61,8 @@ define([
       }
       // Step Published
       this.stepPublishedView = new StepPublishedView({ el: '#step_published_view', model: this.model });
+      // Step Route Remove
+      this.stepRouteRemoveView = new StepRouteRemoveView({ el: '#step_route_remove_view', model: this.model });
     
   	  this.handleResize();
       $('#footerview').show();  
@@ -136,50 +140,54 @@ define([
       this.mediasModel.fetch({
         success: function () {
 	      var data = self.mediasModel.get('value');
+	      var nPos = 0;
 	      $.each(data, function(key, jsonMedia) {
-	      	console.log(key);
-	      	switch (Number(key)) {
-	      	  case 442:
+/*	      	
+	      	console.log(nPos+' : '+key);
+	      	switch (Number(nPos)) {
+	      	  case 0:
 	      	    jsonMedia.coords.lat = 47.409269;
 	      	    jsonMedia.coords.long = 10.347692;
 	      	  	break;
-	      	  case 443:
+	      	  case 1:
 	      	    jsonMedia.coords.lat = 47.407063;
 	      	    jsonMedia.coords.long = 10.352125;
 	      	  	break;
-	      	  case 444:
+	      	  case 2:
 	      	    jsonMedia.coords.lat = 47.407063;
 	      	    jsonMedia.coords.long = 10.352125;
 	      	  	break;
-	      	  case 445:
+	      	  case 3:
 	      	    jsonMedia.coords.lat = 47.40564;
 	      	    jsonMedia.coords.long = 10.351181;
 	      	  	break;
-	      	  case 446:
+	      	  case 4:
 	      	    jsonMedia.coords.lat = 47.392859;
 	      	    jsonMedia.coords.long = 10.35912;
 	      	  	break;
-	      	  case 447:
+	      	  case 5:
 	      	    jsonMedia.coords.lat = 47.393091;
 	      	    jsonMedia.coords.long = 10.368476;
 	      	  	break;
-	      	  case 448:
+	      	  case 6:
 	      	    jsonMedia.coords.lat = 47.392946;
 	      	    jsonMedia.coords.long = 10.36869;
 	      	  	break;
-	      	  case 449:
+	      	  case 7:
 	      	    jsonMedia.coords.lat = 47.393091;
 	      	    jsonMedia.coords.long = 10.379333;
 	      	  	break;
-	      	  case 450:
+	      	  case 8:
 	      	    jsonMedia.coords.lat = 47.392328;
 	      	    jsonMedia.coords.long = 10.417464;
 	      	  	break;
-	      	  case 451:
+	      	  case 9:
 	      	    jsonMedia.coords.lat = 47.439902;
 	      	    jsonMedia.coords.long = 10.469928;
-	      	  	break;
+	      	  	break;	      	  	
 	      	}
+*/	      	
+	      	nPos++;
 			self.trailMapView.addMarker(jsonMedia, true);
 		    self.mediaCollection.add(jsonMedia);
 	      });
@@ -280,7 +288,27 @@ route_category_id (integer)
       this.trailMapView.render();
       
       $("body").animate({scrollTop:0}, '500', 'swing');
-    }
+    },
+    onStepRouteEditViewDeleteClick: function(stepRouteEditView){
+	  $('#trail_map_view').removeClass('map_small');
+	  $('#trail_map_view').addClass('map_large');
+
+      $('#step_route_edit_view').hide();    
+      $('#step_route_remove_view').show();    
+      this.stepRouteRemoveView.render();
+      
+      $('#trail_map_overlay').show();
+      $('#view_map_btns', $(this.el)).hide();
+
+      this.handleResize();
+      this.trailMapView.render();
+      
+      $("body").animate({scrollTop:0}, '500', 'swing');
+
+	  // remove trail      
+      this.model.destroy();            
+    }    
+    
   });
 
   return TrailmakerView;

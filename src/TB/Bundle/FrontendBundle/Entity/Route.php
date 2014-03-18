@@ -4,6 +4,7 @@ namespace TB\Bundle\FrontendBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Doctrine\ORM\EntityManager;
 
 /**
  * Route
@@ -150,10 +151,10 @@ class Route
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\Media", inversedBy="routes")
-     * @ORM\JoinTable(name="route_medias")
-     */
+     * @ORM\OneToMany(targetEntity="Media", mappedBy="route")
+     **/
     private $medias;
+    
     
     /**
      * @var string
@@ -168,13 +169,6 @@ class Route
      * @ORM\ManyToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\Editorial", mappedBy="routes")
      */
     private $editorials;
-    
-    #/**
-    # * @var \Doctrine\Common\Collections\Collection
-    # *
-    # * @ORM\OneToMany(targetEntity="RouteMedia", mappedBy="route")
-    # **/
-    #private $routeMedias;
     
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -832,7 +826,7 @@ class Route
     /**
      * Only used by API
      */
-    public function getNearestPointBytime($unixtimestamp) {
+    public function getNearestPointByTime($unixtimestamp) {
         $routePoints = $this->getRoutePoints();
         if ($routePoints->count() < 2)
             throw new \Exception("Route is less than 2 points.");
@@ -896,13 +890,14 @@ class Route
         }
         
         if ($this->media !== null) {
-            $route .= ',"media": ' . json_encode($this->media);
+            $route .= ',"media": ' . $this->media->toJSON();
         }
 
         $route .= '}';
         
         return $route;
     }
+    
     /**
      * Only used by API
      */
@@ -944,5 +939,7 @@ class Route
     { 
         return $this->media; 
     }
+    
+
     
 }

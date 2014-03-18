@@ -38,22 +38,33 @@ define([
 	  resrc.resrcAll();
 	});
         
-    var imgLoad2 = imagesLoaded('.events_content .scale');
+    var imgLoad2 = imagesLoaded('.trails_content .scale');
 	imgLoad2.on('always', function(instance) {
       for ( var i = 0, len = imgLoad2.images.length; i < len; i++ ) {
         $(imgLoad2.images[i].img).addClass('scale_image_ready');
       }
       // update pos
-      $('.events_content img.scale_image_ready').imageScale();
+      $('.trails_content img.scale_image_ready').imageScale();
       // fade in - delay adding class to ensure image is ready  
-      $('.events_content .fade_on_load').addClass('tb-fade-in');
-      $('.events_content .image_container').css('opacity', 1);
+      $('.trails_content .fade_on_load').addClass('tb-fade-in');
+      $('.trails_content .image_container').css('opacity', 1);
       // force update to fix blurry bug
 	  resrc.resrcAll();
 	});        
         
     this.homeHerosView = new HomeHerosView({ el: '#home_header' });
 	this.homeHerosView.render();
+
+	$('.more_btn').click(function(evt){	
+	  evt.stopPropagation();
+	  
+	  $('.activity_list').css('top', -243);        
+
+	});
+
+    $(document).on('click', '.activity-menu', function (evt) {
+      evt.stopPropagation();
+    }); 
 
     function handleResize() {
       $("img.scale_image_ready").imageScale();
