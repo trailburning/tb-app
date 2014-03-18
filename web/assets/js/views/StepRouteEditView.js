@@ -51,6 +51,11 @@ define([
         // fire event
         app.dispatcher.trigger("StepRouteEditView:submitclick", self);                        
       });
+
+      $('.btnDeleteTrail', $(this.el)).click(function(evt) {
+        // fire event
+        app.dispatcher.trigger("StepRouteEditView:deleteclick", self);                        
+      });
             
       return this;
     },
