@@ -3,6 +3,8 @@
 namespace TB\Bundle\APIBundle\Util;
 
 use TB\Bundle\FrontendBundle\Entity\Route;
+use TB\Bundle\FrontendBundle\Entity\RouteType;
+use TB\Bundle\FrontendBundle\Entity\RouteCategory;
 use TB\Bundle\FrontendBundle\Entity\RoutePoint;
 use TB\Bundle\FrontendBundle\Entity\Media;
 use CrEOF\Spatial\PHP\Types\Geometry\Point;
@@ -196,8 +198,10 @@ class Postgis extends \PDO
     
     public function readRoutes($user_id, $count = null, $route_type_id = null, $route_category_id = null, $publish = null) 
     {
-        $q = 'SELECT r.id, r.name, r.slug, r.region, r.length, ST_X(r.centroid) AS long, ST_Y(r.centroid) AS lat, r.tags 
+        $q = 'SELECT r.id, r.name, r.slug, r.region, r.length, ST_X(r.centroid) AS long, ST_Y(r.centroid) AS lat, r.tags, rt.name AS rt_name, rc.name AS rc_name
               FROM routes r
+              LEFT JOIN route_type rt ON r.route_type_id=rt.id
+              LEFT JOIN route_category rc ON r.route_category_id=rc.id
               WHERE r.user_id=:user_id
               AND r.slug IS NOT NULL';
         if ($route_type_id !== null) {
@@ -209,7 +213,7 @@ class Postgis extends \PDO
         if ($publish !== null) {
             $q .= ' AND publish=:publish';
         }
-        $q.= ' GROUP BY r.id ';
+        $q.= ' GROUP BY r.id, rt.name, rc.name ';
         if ($count !== null) {
             $q .= ' LIMIT :count';
         }
@@ -232,6 +236,7 @@ class Postgis extends \PDO
         
         $success = $pq->execute();
         if (!$success) {
+            echo $q;exit;
             throw (new ApiException('Failed to fetch route from Database', 500));
         }
 
@@ -248,7 +253,16 @@ class Postgis extends \PDO
             $route->setCentroid(new Point($row['long'], $row['lat'], 4326)); 
             $tags = json_decode('{' . str_replace('"=>"', '":"', $row['tags']) . '}', true);
             $route->setTags($tags);
-            
+            if ($row['rc_name'] != '') {
+                $routeCategory = new RouteCategory();
+                $routeCategory->setName($row['rc_name']);
+                $route->setRouteCategory($routeCategory);
+            }
+            if ($row['rt_name'] != '') {
+                $routeType = new RouteType();
+                $routeType->setName($row['rt_name']);
+                $route->setRouteType($routeType);
+            }
             $media = $this->getRouteMedia($row['id'], 1);
             if (count($media) > 0) {
                 $route->setMedia(array_shift($media));

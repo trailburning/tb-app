@@ -858,7 +858,18 @@ class Route
         if ($this->getBBox() !== null) {
             $route .= '"bbox": "'.$this->getBBox().'",';
         }
-
+        if ($this->getRouteType() !== null) {
+            $routeType = $this->getRouteType()->getName();
+        } else {
+            $routeType = '';
+        }
+        $route .= '"type": "'. $routeType .'",';
+        if ($this->getRouteCategory() !== null) {
+            $routeCategory = $this->getRouteCategory()->getName();
+        } else {
+            $routeCategory = '';
+        }
+        $route .= '"category": "'. $routeCategory .'",';
         $route .= '"tags": {';
         $i=0;
         foreach ($this->getTags() as $tag_name => $tag_value) {
