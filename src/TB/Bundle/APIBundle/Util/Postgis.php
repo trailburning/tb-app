@@ -236,7 +236,6 @@ class Postgis extends \PDO
         
         $success = $pq->execute();
         if (!$success) {
-            echo $q;exit;
             throw (new ApiException('Failed to fetch route from Database', 500));
         }
 
