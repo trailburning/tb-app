@@ -5,10 +5,19 @@
     {% set text = 'Are you trailburning?' %}
 {% endif %}
 
-{% if trail.id != 148 %}
-<div class="share">
+{% if trail is defined %}
+  {% if trail.id != 148 %}
+  <div class="share">
     <div class="link facebook"><a href="http://www.facebook.com/share.php?u={{ url|url_shareable }}" target="_blank" class="button btnFacebook">Facebook</a></div>
     <div class="link twitter"><a href="http://twitter.com/share?text={{ text|url_encode }}&url={{ url|url_shareable }}" target="_blank" class="button btnTwitter">Twitter</a></div>
     <div class="link googleplus"><a href="https://plus.google.com/share?url={{ url|url_shareable }}" target="_blank" class="button btnGooglePlus">Google+</a></div>          
-</div>
+  </div>
+  {% endif %}
+{% else %}
+  <div class="share">
+    <div class="link facebook"><a href="http://www.facebook.com/share.php?u={{ url|url_shareable }}" target="_blank" class="button btnFacebook">Facebook</a></div>
+    <div class="link twitter"><a href="http://twitter.com/share?text={{ text|url_encode }}&url={{ url|url_shareable }}" target="_blank" class="button btnTwitter">Twitter</a></div>
+    <div class="link googleplus"><a href="https://plus.google.com/share?url={{ url|url_shareable }}" target="_blank" class="button btnGooglePlus">Google+</a></div>          
+  </div>
 {% endif %}
+
