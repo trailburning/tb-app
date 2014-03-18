@@ -38,6 +38,7 @@ var TB_USER_ID = {{ app.user.id }}
         <div id="step_route_view"></div>
         <div id="step_route_edit_view"></div>
         <div id="step_published_view"></div>
+        <div id="step_route_remove_view"></div>
     </div>
 
     <div id='content_overlay'></div>	
@@ -189,7 +190,9 @@ var TB_USER_ID = {{ app.user.id }}
                 <h4 class="tb">
                 Make sure you chose your favourite  picture on the map, by using the star icon. If you’re ok with it, then let’s share your trail!      	
                 </h4>      
-                <div class="publish"><span class="btn btn-tb-action btn-tb-large submit">Publish Trail</span></div>                
+                <div class="publish"><span class="btn btn-tb-action btn-tb-large submit">Publish Trail</span></div>
+                <div class="delete"><a href="javascript:void(0)" class="btnDeleteTrail button">Delete</a></div>                	
+                </div>                
             </div>
         </div>
     </div>
@@ -248,6 +251,27 @@ var TB_USER_ID = {{ app.user.id }}
                     </h4>
                 </div> 
                 <div class="next_step"><a href="../../" class="btn btn-tb-action btn-tb-large submit">View your Trail Card</a></div>
+            </div>
+        </div>
+        <div class="step_marker_container">
+            <div class="step_marker step_marker_publish"></div>  
+        </div>
+    </div>    
+</script>
+
+<script type="text/template" id="stepRouteRemoveViewTemplate">
+    <div class="panel_content">
+        <div class="panel">
+            <div class="content">      
+                <h1 class="tb">Remove</h1>
+                <div class="desc">
+                    <h4 class="tb">
+                        Your trail has been removed!
+                        <br /><br />
+                        If you have any questions then please do not hesitate to contact Trailburning <a href="mailto:support@trailburning.com">support</a>.
+                    </h4>
+                </div> 
+                <div class="next_step"><a href="../../" class="btn btn-tb-action btn-tb-large submit">View your profile</a></div>
             </div>
         </div>
         <div class="step_marker_container">

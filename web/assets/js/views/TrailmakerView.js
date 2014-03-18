@@ -5,8 +5,9 @@ define([
   'views/TrailmakerMapView',
   'views/StepRouteView',
   'views/StepRouteEditView',
+  'views/StepRouteRemoveView',
   'views/StepPublishedView'
-], function(_, Backbone, TrailMediasModel, TrailMapView, StepRouteView, StepRouteEditView, StepPublishedView){
+], function(_, Backbone, TrailMediasModel, TrailMapView, StepRouteView, StepRouteEditView, StepRouteRemoveView, StepPublishedView){
 
   var TITLE_TIMER = 10000;
 
@@ -20,6 +21,7 @@ define([
       app.dispatcher.on("StepRouteEditView:galleryphotoclick", this.onStepRouteEditViewGalleryPhotoClick, this);
       app.dispatcher.on("StepRouteEditView:updatedetailsclick", this.onStepRouteEditViewUpdateDetailsClick, this);
       app.dispatcher.on("StepRouteEditView:submitclick", this.onStepRouteEditViewSubmitClick, this);
+      app.dispatcher.on("StepRouteEditView:deleteclick", this.onStepRouteEditViewDeleteClick, this);
       app.dispatcher.on("StepPublishedView:submitclick", this.onStepPublishedViewSubmitClick, this);
 
       this.nTitleState = TITLE_OFF;
@@ -59,6 +61,8 @@ define([
       }
       // Step Published
       this.stepPublishedView = new StepPublishedView({ el: '#step_published_view', model: this.model });
+      // Step Route Remove
+      this.stepRouteRemoveView = new StepRouteRemoveView({ el: '#step_route_remove_view', model: this.model });
     
   	  this.handleResize();
       $('#footerview').show();  
@@ -137,7 +141,7 @@ define([
         success: function () {
 	      var data = self.mediasModel.get('value');
 	      $.each(data, function(key, jsonMedia) {
-	      	console.log(key);
+/*	      	
 	      	switch (Number(key)) {
 	      	  case 442:
 	      	    jsonMedia.coords.lat = 47.409269;
@@ -180,6 +184,7 @@ define([
 	      	    jsonMedia.coords.long = 10.469928;
 	      	  	break;
 	      	}
+*/	      	
 			self.trailMapView.addMarker(jsonMedia, true);
 		    self.mediaCollection.add(jsonMedia);
 	      });
@@ -280,7 +285,27 @@ route_category_id (integer)
       this.trailMapView.render();
       
       $("body").animate({scrollTop:0}, '500', 'swing');
-    }
+    },
+    onStepRouteEditViewDeleteClick: function(stepRouteEditView){
+	  $('#trail_map_view').removeClass('map_small');
+	  $('#trail_map_view').addClass('map_large');
+
+      $('#step_route_edit_view').hide();    
+      $('#step_route_remove_view').show();    
+      this.stepRouteRemoveView.render();
+      
+      $('#trail_map_overlay').show();
+      $('#view_map_btns', $(this.el)).hide();
+
+      this.handleResize();
+      this.trailMapView.render();
+      
+      $("body").animate({scrollTop:0}, '500', 'swing');
+
+	  // remove trail      
+      this.model.destroy();            
+    }    
+    
   });
 
   return TrailmakerView;
