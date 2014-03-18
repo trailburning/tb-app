@@ -30,7 +30,7 @@ define([
   var AppView = Backbone.View.extend({
     initialize: function(){
       var self = this;
-      
+
 	  var MediaCollection = Backbone.Collection.extend({
     	comparator: function(item) {
     		// sort by datetime
@@ -191,7 +191,6 @@ define([
       $('#trail_map_view').height(this.nPlayerHeight);
       // force height update for MapBox
       $('#trail_map_view .map_container').height(this.nPlayerHeight);
-      $('#trail_views').height(this.nPlayerHeight);      
     },
     handleResize: function(){
       // remove transition to avoid seeing grey beneath image when resizing
@@ -217,7 +216,15 @@ define([
       }
     },
     handleTrail: function(){
-      $('#trail_views').addClass('tb-move');
+	  $('#trail_views').addClass('tb-move');
+// mla      
+//	  $('#trail_views').addClass('tb-move');
+    	
+//      $('#trail_views').addClass('tb-move');
+      // mla
+//      $('#tb-loader-overlay').addClass('tb-size');
+//  	  $('#tb-loader-overlay').addClass('tb-move');
+//  	  $('#trail_views').addClass('tb-move');
       
       $('#trail_overlay').addClass('tb-move');
       $('#trail_info').addClass('tb-move');
