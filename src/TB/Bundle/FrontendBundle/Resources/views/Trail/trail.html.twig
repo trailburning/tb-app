@@ -91,20 +91,17 @@ var TB_TRAIL_ID = {{ trail.id }};
                     {{ include('TBFrontendBundle:Default:breadcrumb.html.twig', breadcrumb) }}
                     {{ include('TBFrontendBundle:Default:share.html.twig') }}
                     
-					<div class="compact_share btn-group">
-					  <a class="btn btn-primary btn-tb-action btn-tb dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-share icon-white"></i> 
-					    Share
-					    <span class="caret"></span>
-					  </a>
-					  <ul class="dropdown-menu">
-						<li><a href="#">Facebook</a></li>
-						<li><a href="#">Google+</a></li>
-						<li><a href="#">Twitter</a></li>
-						<li><a href="#">Pinterest</a></li>
+                    {% if trail.id == 148 %}                    
+					<div class="compact_share btn-group dropup">
+					  <a class="btn btn-primary btn-tb-action btn-tb dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-share icon-white"></i> Share <span class="caret"></span></a>
+					  <ul class="dropdown-menu pull-right">
+			        	<li class="clearfix"><a href="#" class="clearfix"><div class="logo"><img src="{{ asset('assets/icons/share/share_facebook_red.png') }}"></div><div class="detail">Facebook</div></a></li>
+			        	<li class="clearfix"><a href="#" class="clearfix"><div class="logo"><img src="{{ asset('assets/icons/share/share_googleplus_red.png') }}"></div><div class="detail">Google+</div></a></li>
+			        	<li class="clearfix"><a href="#" class="clearfix"><div class="logo"><img src="{{ asset('assets/icons/share/share_twitter_red.png') }}"></div><div class="detail">Twitter</div></a></li>
 					  </ul>
 					</div>                    
-					                                         
 					<div class="like"><a href="javascript:void(0)" class="btn btn-tb-action btn-tb like_btn"><i class="icon-star icon-white"></i> <span class="btn-label">Like</span></a></div>
+					{% endif %}                                         
                 </div>
 
                 <div class="panels clearfix">     
@@ -186,8 +183,9 @@ var TB_TRAIL_ID = {{ trail.id }};
     				    	</div>  
                         </div>
                     {% endif %}
-                </div>
-            </div>    
+                </div>                                
+            </div>                
+        	<div class="line_break"></div>            
         </div>
   
         <div id="trail_overlay">
@@ -204,7 +202,6 @@ var TB_TRAIL_ID = {{ trail.id }};
             </div>
             <div class="overlay_pull"><span class="button"></span></div>
         </div>
-        <div class="line_break"></div>    
     </div>  
 </div>  
           
