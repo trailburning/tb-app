@@ -693,6 +693,14 @@ form label {
   -webkit-transform:translate3d(0,0,0);              
 }
 
+.tb-move-vert {
+  -webkit-transition: top 1s;
+  -moz-transition: top 1s;
+  -o-transition: top 1s;
+  transition: top 1s;    
+  -webkit-transform:translate3d(0,0,0);              
+}
+
 .tb-size {
   -webkit-transition: height 1s, width 1s;
   -moz-transition: height 1s, width 1s;

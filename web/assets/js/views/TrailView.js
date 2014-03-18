@@ -217,22 +217,14 @@ define([
     },
     handleTrail: function(){
 	  $('#trail_views').addClass('tb-move');
-// mla      
-//	  $('#trail_views').addClass('tb-move');
-    	
-//      $('#trail_views').addClass('tb-move');
-      // mla
-//      $('#tb-loader-overlay').addClass('tb-size');
-//  	  $('#tb-loader-overlay').addClass('tb-move');
-//  	  $('#trail_views').addClass('tb-move');
-      
+
       $('#trail_overlay').addClass('tb-move');
       $('#trail_info').addClass('tb-move');
       $('#trail_info .trail_avatar').addClass('tb-move');       
       $('#trail_info .trail_title').addClass('tb-move');            
-      $('#trail_stats_view').addClass('tb-move');
-      $('#trail_altitude_view').addClass('tb-move');            
-      $('#trail_mini_view').addClass('tb-move');      
+      $('#trail_stats_view').addClass('tb-move-vert');
+      $('#trail_altitude_view').addClass('tb-move-vert');            
+      $('#trail_mini_view').addClass('tb-move-vert');      
       
       var self = this;          
       this.nTickleTimer = setInterval(function() {
