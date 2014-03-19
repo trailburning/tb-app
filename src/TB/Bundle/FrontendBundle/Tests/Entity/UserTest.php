@@ -79,4 +79,20 @@ class UserTest extends WebTestCase
         $user = $this->getMockForAbstractClass('TB\Bundle\FrontendBundle\Entity\User');
         $user->setlocation('invalid format');
     }
+    
+    public function testUpdateAvatarGravatar()
+    {
+        $user = $this->getMockForAbstractClass('TB\Bundle\FrontendBundle\Entity\User');
+        $user->setEmail('info@cynova.net'); // email that has a gravatar profile
+        $user->updateAvatarGravatar();
+        $this->assertEquals('http://www.gravatar.com/avatar/0410852438283d8bec95c3eef1fe0814', $user->getAvatarGravatar());
+    }
+    
+    public function testUpdateAvatarGravatarUnavailable()
+    {
+        $user = $this->getMockForAbstractClass('TB\Bundle\FrontendBundle\Entity\User');
+        $user->setEmail('email@withoutgravatar'); // email that has no gravatar profile
+        $user->updateAvatarGravatar();
+        $this->assertEquals('', $user->getAvatarGravatar());
+    }
 }

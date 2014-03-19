@@ -8,6 +8,9 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
+/**
+ * Redirect to the homepage after resetting password. The listener is registered in services.xml
+ */
 class ResettingResetSuccessListener implements EventSubscriberInterface
 {
     private $router;

@@ -213,10 +213,11 @@ define([
       $('#trail_map_overlay', $(this.el)).hide();
       $('#view_map_btns', $(this.el)).show();
     },    
-    onStepRouteEditViewPhotoUploaded: function(trailUploadPhotoView){
+    onStepRouteEditViewPhotoUploaded: function(trailUploadPhotoView){    	
 	  var data = trailUploadPhotoView.photoData.value[0];
-	  this.trailMapView.addMarker(data, true, "");
 	  this.mediaCollection.add(data);
+	  
+	  this.trailMapView.addMarker(data, true, "");
 	  
 	  this.stepRouteEditView.renderSlideshow();
     },    

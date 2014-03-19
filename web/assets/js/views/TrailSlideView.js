@@ -137,7 +137,7 @@ define([
       }
       
       if (this.bWaitingForSlide) {
-        $('#tb-loader-overlay').fadeIn();	
+	    $('#tb-loader-overlay').fadeIn();      		
       }
     },    
     onSlidePhotoReady: function(trailSlidePhotoView){   
