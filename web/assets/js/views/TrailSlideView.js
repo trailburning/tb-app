@@ -137,11 +137,7 @@ define([
       }
       
       if (this.bWaitingForSlide) {
-      	// 140319 MLA - this is required until preloading is implemented.
-      	// otherwise we see the loader for every image
-      	if (this.nCurrSlide == 0) {
-		  $('#tb-loader-overlay').fadeIn();      		
-      	}        	
+	    $('#tb-loader-overlay').fadeIn();      		
       }
     },    
     onSlidePhotoReady: function(trailSlidePhotoView){   
