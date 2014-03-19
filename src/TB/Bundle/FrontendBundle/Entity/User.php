@@ -83,6 +83,13 @@ abstract class User extends BaseUser
     private $avatar;
     
     /**
+     * @var string
+     *
+     * @ORM\Column(name="avatar_gravatar", type="string", length=100, nullable=true)
+     */
+    private $avatarGravatar;
+    
+    /**
      * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\OneToMany(targetEntity="Route", mappedBy="user")
