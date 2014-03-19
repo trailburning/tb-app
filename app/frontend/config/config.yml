@@ -10,11 +10,5 @@ services:
         class:      %rest_client_class%
         arguments:  [%api_host%]
         
-    change_password_complete:
-        class: TB\Bundle\FrontendBundle\EventListener\ResettingResetSuccessListener
-        arguments: [@router]
-        tags:
-            - { name: kernel.event_subscriber }
-
 framework:
     translator: ~        
