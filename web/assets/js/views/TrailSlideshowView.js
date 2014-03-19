@@ -11,10 +11,10 @@ define([
       app.dispatcher.on("TrailSlideshowSlideView:click", this.onTrailSlideshowSlideViewClick, this);
       
       this.nActiveID = 0;      
+	  this.bRendered = false;
     },            
     render: function(){
       var self = this;
-	  this.bRendered = false;
 
       // first time
       if (!this.bRendered) {
