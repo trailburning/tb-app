@@ -80,10 +80,10 @@ class MediaController extends AbstractRestController
         
             $em = $this->getDoctrine()->getManager();
             $em->persist($media);
+            $em->flush();    
             
             $medias[] = $media->toJSON();
         }
-        $em->flush();
         
         $output = ['usermsg' => 'success', "value" => json_decode('['. implode(',', $medias).']')];
 
