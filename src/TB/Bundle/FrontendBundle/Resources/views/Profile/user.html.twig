@@ -48,7 +48,15 @@ var TB_USER_LAT = {{ user.location.latitude }};
 	            </div>
 	          	</a>
 		      	<div class="summary">
-		          <div class="tb-avatar"><div class="photo"><a href="profile/{{ user.name }}"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/{{ user.name }}/avatar.jpg"></a></div></div>
+		          <div class="tb-avatar"><div class="photo"><a href="profile/{{ user.name }}">		          	
+            	  {% if user.avatar %}
+                	<img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/{{ user.name }}/avatar.jpg">
+            	  {% elseif user.avatarGravatar %}
+                	<img src="{{ user.avatarGravatar }}">
+            	  {% else %}
+                	<img src="{{ asset('assets/img/avatar_man.jpg') }}">
+            	  {% endif %}
+		          </a></div></div>
 		          <div class="detail">
 		            by <strong>{{ user.firstName }} {{ user.lastName }}</strong>
 		            <div class="stars">
