@@ -22,5 +22,17 @@
             <argument type="service" id="doctrine.orm.entity_manager" />
         </service>
         
+        <!-- Register event listener to redirecto to the homepage after resetting password -->
+        <service id="change_password_complete" class="TB\Bundle\FrontendBundle\EventListener\ResettingResetSuccessListener">
+            <argument type="service" id="router" />
+            <tag name="kernel.event_subscriber" />
+        </service>
+        
+        <service id="tb.security.login_listener" class="TB\Bundle\FrontendBundle\EventListener\AuthenticationSuccessListener">  
+            <argument type="service" id="service_container" />  
+            <argument type="service" id="doctrine.orm.entity_manager" />  
+            <tag name="kernel.event_listener" event="security.authentication.success" method="onAuthenticationSuccess" />  
+        </service> 
+        
     </services>
 </container>

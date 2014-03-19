@@ -83,6 +83,13 @@ abstract class User extends BaseUser
     private $avatar;
     
     /**
+     * @var string
+     *
+     * @ORM\Column(name="avatar_gravatar", type="string", length=100, nullable=true)
+     */
+    private $avatarGravatar;
+    
+    /**
      * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\OneToMany(targetEntity="Route", mappedBy="user")
@@ -428,4 +435,55 @@ abstract class User extends BaseUser
         return sprintf('%s %s', $this->getFirstName(), $this->getLastName());
     }
 
+
+    /**
+     * Set avatarGravatar
+     *
+     * @param string $avatarGravatar
+     * @return User
+     */
+    public function setAvatarGravatar($avatarGravatar)
+    {
+        $this->avatarGravatar = $avatarGravatar;
+
+        return $this;
+    }
+
+    /**
+     * Get avatarGravatar
+     *
+     * @return string 
+     */
+    public function getAvatarGravatar()
+    {
+        return $this->avatarGravatar;
+    }
+    
+    /**
+     * Get the avatar from gravatar
+     */
+    public function updateAvatarGravatar()
+    {
+        if ($this->getEmail() == '') {
+            throw new Exception('Unable to generate gravatar profile hash, missing email firld for User');
+        }
+        $hash = md5($this->getEmail());
+        $imageUrl = sprintf('http://www.gravatar.com/avatar/%s', $hash);
+        $testImageUrl = $imageUrl . '?d=404'; //forces Gravatar to return 404 status code for none existing images
+        
+        $c = curl_init();
+        curl_setopt( $c, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt( $c, CURLOPT_CUSTOMREQUEST, 'HEAD');
+        curl_setopt( $c, CURLOPT_HEADER, 1);
+        curl_setopt( $c, CURLOPT_NOBODY, true);
+        curl_setopt( $c, CURLOPT_URL, $testImageUrl);
+        curl_exec($c);
+        $statusCode = curl_getinfo($c, CURLINFO_HTTP_CODE);
+        
+        if ($statusCode === 200) {
+            $this->setAvatarGravatar($imageUrl);
+        } else {
+            $this->setAvatarGravatar('');
+        }
+    }
 }
