@@ -46,7 +46,9 @@ class MediaControllerTest extends AbstractApiTestCase
         $this->assertEquals(8, count($responseObj->value),
             'The response JSON value array with media objects'); 
         $this->assertObjectHasAttribute('id', $responseObj->value[0],
-            'The response JSON media has the field id');  
+            'The response JSON media has the field id'); 
+        $this->assertGreaterThan(0,  $responseObj->value[0]->id, 
+            'The id field has a value greater than 0');
         $this->assertObjectHasAttribute('filename', $responseObj->value[0],
             'The response JSON media has the field filename');               
         $this->assertObjectHasAttribute('mimetype', $responseObj->value[0],
@@ -96,7 +98,7 @@ class MediaControllerTest extends AbstractApiTestCase
             'The response JSON value is an array');   
         $this->assertEquals(1, count($responseObj->value),
             'The response JSON value array contains one media object'); 
-        $this->assertGreaterThan(0, count($responseObj->value[0]->id),
+        $this->assertGreaterThan(0, $responseObj->value[0]->id,
             'The response JSON media id is greater than 0');   
         $this->assertEquals('P5250773.jpg', $responseObj->value[0]->filename,
             'The response JSON media filename is ok');               
