@@ -245,23 +245,35 @@ class Media
             $tags['filesize'] = $exiftags['FileSize']; 
         }
         
-        if (isset($exiftags['DateTimeOriginal'])) {
-            $datetime = intval(strtotime($exiftags['DateTimeOriginal']));
-        } elseif (isset($exiftags['DateTime'])) {
-            $datetime = intval(strtotime($exiftags['DateTime']));
-        } else {
-            $routePoint = $mediaImporter->getFirstRoutePoint($this->getRoute());
-            if (!isset($routePoint->getTags()['datetime'])) {
-                throw new \Exception('Image and first RoutePoint have no datetime information');
-            }
+        $geoPoint = $mediaImporter->getGeometryPointFromExif($exiftags);
+        
+        
+        if ($geoPoint) {
+            // When the image has GPS data, get the datetime from the nearest RoutePoint by GPS
+            $routePoint = $mediaImporter->getNearestRoutePointByGeoPoint($this->getRoute(), $geoPoint);
             $datetime = $routePoint->getTags()['datetime'];
+        } else {
+            // When the image has no GPS data, get the datetime from the image
+            if (isset($exiftags['DateTimeOriginal'])) {
+                $datetime = intval(strtotime($exiftags['DateTimeOriginal']));
+            } elseif (isset($exiftags['DateTime'])) {
+                $datetime = intval(strtotime($exiftags['DateTime']));
+            } else {
+                // When the image has no datetime, get the datetimt from the first RoutePoint
+                $routePoint = $mediaImporter->getFirstRoutePoint($this->getRoute());
+                if (!isset($routePoint->getTags()['datetime'])) {
+                    throw new \Exception('Image and first RoutePoint have no datetime information');
+                }
+                $datetime = $routePoint->getTags()['datetime'];
+            }
+            // the image contains no information about the timezone where the image was taken, the routes timezone is UTC.
+            // get a timezone offset by the related Route and substract it from the datetime of the image to get a UTC datetime.
+            $timezoneOffset = $mediaImporter->getRouteTimezoneOffset($this->getRoute());
+            $datetime = $datetime - $timezoneOffset;
         }
         
-        // the image contains no information about the timezone where the image was taken, the routes timezone is UTC.
-        // get a timezone offset by the related Route and substract it from the datetime of the image to get a UTC datetime.
-        $timezoneOffset = $mediaImporter->getRouteTimezoneOffset($this->getRoute());
-        $datetime = $datetime - $timezoneOffset;
         $tags['datetime'] = $datetime;
+       
         
         if (isset($exiftags['COMPUTED']) && isset($exiftags['COMPUTED']['Width'])) {
             $tags['width'] = $exiftags['COMPUTED']['Width']; 

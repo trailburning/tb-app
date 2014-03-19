@@ -5,6 +5,7 @@ namespace TB\Bundle\FrontendBundle\Util;
 use Doctrine\ORM\EntityManager;
 use TB\Bundle\FrontendBundle\Entity\Route;
 use TB\Bundle\FrontendBundle\Entity\RoutePoint;
+use CrEOF\Spatial\PHP\Types\Geometry\Point;
 
 /**
 * 
@@ -106,7 +107,7 @@ class MediaImporter
      *
      * @param Route $route The Route to search for the RoutePoint
      * @param int $unixtimestamp The timestamp to search for the nearest RoutePoint
-     * @throws Exception when no RoutePoint if found for different reasons
+     * @throws Exception when no RoutePoint if found for various reasons
      * @return RoutePoint
      */
     public function getNearestRoutePointByTime(Route $route, $unixtimestamp) 
@@ -119,13 +120,52 @@ class MediaImporter
                 WHEN (tags->'datetime')::integer = :timestamp 
                     THEN 0
                 END AS diff, id
-                FROM route_points WHERE route_id = :route_id 
-                ORDER BY diff ASC LIMIT 1";
+                FROM route_points 
+                WHERE route_id = :route_id 
+                ORDER BY diff 
+                ASC LIMIT 1";
         $stmt = $this->em->getConnection()->prepare($sql);
         $stmt->bindValue(':route_id', $route->getId(), \PDO::PARAM_INT);
         $stmt->bindParam(':timestamp', $unixtimestamp, \PDO::PARAM_INT);
         if (!$stmt->execute()) {
             throw new \Exception('Failed to fetch nearest RoutePoint by datetime');
+        }
+
+        if ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+            $id = $row['id'];
+        } else {
+            throw new \Exception(sprintf('Route with id %s has no RoutePoints', $route->getId()));
+        } 
+
+        $routePoint = $this->em->getRepository('TBFrontendBundle:RoutePoint')->findOneById($id);
+        if (!$routePoint) {
+            throw new \Exception(sprintf('failed to fetch RoutePoint with id: %s', $id));
+        }
+        
+        return $routePoint;
+    }
+    
+    /**
+     * Finds the RoutePoint from a given Route that is nearest to a given Geometry Point
+     *
+     * @param Route $route The Route to search for the RoutePoint
+     * @param Point $point The Geometry Point to search for the nearest RoutePoint
+     * @throws Exception when no RoutePoint if found for various reasons
+     * @return RoutePoint
+     */
+    public function getNearestRoutePointByGeoPoint(Route $route, Point $point) 
+    {
+        $sql = "SELECT id
+                FROM route_points 
+                WHERE route_id = :route_id 
+                ORDER BY ST_Distance(coords, ST_GeomFromText('POINT(" . $point->getLongitude() . " " . $point->getLatitude() . ")', 4326)) ASC 
+                LIMIT 1";
+        $stmt = $this->em->getConnection()->prepare($sql);
+        $stmt->bindValue(':route_id', $route->getId(), \PDO::PARAM_INT);
+        // $stmt->bindValue(':long', $point->getLongitude(), \PDO::PARAM_STR);
+        // $stmt->bindParam(':lat', $point->getLatitude(), \PDO::PARAM_STR);
+        if (!$stmt->execute()) {
+            throw new \Exception('Failed to fetch nearest RoutePoint by Point');
         }
 
         if ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
@@ -158,6 +198,57 @@ class MediaImporter
         }
         
         return $routePoint;
+    }
+    
+    /**
+     * extracts Latitude and Longitude from EXIF data array
+     * 
+     * @param array EXIF tags array, the result of exif_read_data()
+     * @return mixed returns a CrEOF\Spatial\PHP\Types\Geometry\Point, or null wehn no GPS data was found
+     */
+    public function getGeometryPointFromExif(array $exif)
+    {
+        if (!isset($exif['GPSLongitude']) || !isset($exif['GPSLongitudeRef']) || !isset($exif['GPSLatitude']) || !isset($exif['GPSLatitudeRef'])) {
+            return null;
+        }
+        
+        $longitude = $this->getGps($exif["GPSLongitude"], $exif['GPSLongitudeRef']);
+        $latitude = $this->getGps($exif["GPSLatitude"], $exif['GPSLatitudeRef']);
+        $point = new Point($longitude, $latitude, 4326);
+        
+        return $point;
+    }
+    
+    /**
+     * Helper function to extract and format GPS coordinates from EXIF data
+     */
+    protected function getGps($exifCoord, $hemi) 
+    {
+        $degrees = count($exifCoord) > 0 ? $this->gps2Num($exifCoord[0]) : 0;
+        $minutes = count($exifCoord) > 1 ? $this->gps2Num($exifCoord[1]) : 0;
+        $seconds = count($exifCoord) > 2 ? $this->gps2Num($exifCoord[2]) : 0;
+
+        $flip = ($hemi == 'W' or $hemi == 'S') ? -1 : 1;
+
+        return $flip * ($degrees + $minutes / 60 + $seconds / 3600);
+    }
+
+    /**
+     * Helper function to extract and format GPS coordinates from EXIF data
+     */
+    protected function gps2Num($coordPart) 
+    {
+        $parts = explode('/', $coordPart);
+
+        if (count($parts) <= 0) {
+            return 0;
+        }
+
+        if (count($parts) == 1) {
+            return $parts[0];
+        }
+
+        return floatval($parts[0]) / floatval($parts[1]);
     }
     
 }
