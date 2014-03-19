@@ -49,8 +49,6 @@ class MediaControllerTest extends AbstractApiTestCase
             'The response JSON media has the field id'); 
         $this->assertGreaterThan(0,  $responseObj->value[0]->id, 
             'The id field has a value greater than 0');
-        $this->assertNotEquals('', count($responseObj->value[0]->id),
-            'The response JSON media id is not empty');
         $this->assertObjectHasAttribute('filename', $responseObj->value[0],
             'The response JSON media has the field filename');               
         $this->assertObjectHasAttribute('mimetype', $responseObj->value[0],
