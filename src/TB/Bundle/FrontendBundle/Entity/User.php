@@ -379,7 +379,7 @@ abstract class User extends BaseUser
     {
         if (is_string($location)) {
             // check the location Sting format
-            if (!preg_match('/^\((\d+\.\d+), (\d+\.\d+)\)$/', $location, $match)) {
+            if (!preg_match('/^\(([-\d]+\.[-\d]+), ([-\d]+\.[-\d]+)\)$/', $location, $match)) {
                 throw new \Exception(sprintf('Invalid location string format: %s', $location));
             }
             $location = new Point($match[1], $match[2], 4326);

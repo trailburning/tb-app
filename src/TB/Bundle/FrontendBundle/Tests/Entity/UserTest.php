@@ -62,7 +62,11 @@ class UserTest extends WebTestCase
         $user->setlocation('(52.5234051, 13.4113999)');
         $this->assertInstanceOf('CrEOF\Spatial\PHP\Types\Geometry\Point', $user->getLocation(),
             'A Point Object was created');
+        $user->setlocation('(-34.92862119999999, 138.5999594)');
+        $this->assertInstanceOf('CrEOF\Spatial\PHP\Types\Geometry\Point', $user->getLocation(),
+            'A Point Object was created');
     }
+    
     
     /**
      * Test that an Exception is throsn when passing an invalid Point string to setLocation()
