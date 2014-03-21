@@ -33,6 +33,9 @@
               setTimeout(function() {window.open(link.href, '_blank');}, 100);
             }
             var TB_RESTAPI_BASEURL = '{{ api_host }}';
+            {% if app.user %}
+            var TB_RESTAPI_USER = {{ extract_entity(app.user, ['id', 'name', 'firstName', 'lastName', 'location'])|json_encode()|raw }};
+            {% endif %}
         </script>
     </head>
     <body>

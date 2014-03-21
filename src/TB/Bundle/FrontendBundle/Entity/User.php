@@ -472,11 +472,11 @@ abstract class User extends BaseUser
         $testImageUrl = $imageUrl . '?d=404'; //forces Gravatar to return 404 status code for none existing images
         
         $c = curl_init();
-        curl_setopt( $c, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt( $c, CURLOPT_CUSTOMREQUEST, 'HEAD');
-        curl_setopt( $c, CURLOPT_HEADER, 1);
-        curl_setopt( $c, CURLOPT_NOBODY, true);
-        curl_setopt( $c, CURLOPT_URL, $testImageUrl);
+        curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($c, CURLOPT_CUSTOMREQUEST, 'HEAD');
+        curl_setopt($c, CURLOPT_HEADER, 1);
+        curl_setopt($c, CURLOPT_NOBODY, true);
+        curl_setopt($c, CURLOPT_URL, $testImageUrl);
         curl_exec($c);
         $statusCode = curl_getinfo($c, CURLINFO_HTTP_CODE);
         

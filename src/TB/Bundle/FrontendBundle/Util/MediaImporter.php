@@ -182,6 +182,9 @@ class MediaImporter
         return $routePoint;
     }
     
+    /**
+     * @param Route $route The Route to look for the first RoutePoint
+     */
     public function getFirstRoutePoint(Route $route)
     {
         $query = $this->em

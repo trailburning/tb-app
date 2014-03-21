@@ -148,21 +148,17 @@ class MediaImporterTest extends WebTestCase
             $this->fail('Missing Route with slug "grunewald" in test DB');
         }
         
-        $point = new Point(144.9545, -37.8231666667, 4326);
-
+        $point = new Point(13.249617, 52.501565, 4326);
         $routePoint = $mediaImporter->getNearestRoutePointByGeoPoint($route, $point);
         $this->assertInstanceOf('TB\Bundle\FrontendBundle\Entity\RoutePoint', $routePoint, 
-            'MediaImporter::getNearestRoutePointByGeoTime() returns a RoutePoint object');
-        // $this->assertEquals(427, $routePoint->getPointNumber(), 
-//             'MediaImporter::getNearestRoutePointByGeoTime() returns the expected RoutePoint object');
-//         
-//         $routePoint = $mediaImporter->getNearestRoutePointByGeoTime($route, 1376730897);
-//         $this->assertEquals(394, $routePoint->getPointNumber(), 
-//             'MediaImporter::getNearestRoutePointByGeoTime() returns the expected RoutePoint object');
-//             
-//         $routePoint = $mediaImporter->getNearestRoutePointByGeoTime($route, 1376731050);
-//         $this->assertEquals(427, $routePoint->getPointNumber(), 
-//             'MediaImporter::getNearestRoutePointByGeoTime() returns the expected RoutePoint object');
+            'MediaImporter::getNearestRoutePointByGeoTime() returns a RoutePoint object');            
+        $this->assertEquals(69, $routePoint->getPointNumber(), 
+            'MediaImporter::getNearestRoutePointByGeoTime() returns the expected RoutePoint object');
+            
+        $point = new Point(13.192097, 52.478326, 4326);
+        $routePoint = $mediaImporter->getNearestRoutePointByGeoPoint($route, $point);
+        $this->assertEquals(616, $routePoint->getPointNumber(), 
+            'MediaImporter::getNearestRoutePointByGeoTime() returns the expected RoutePoint object');
     }
     
     

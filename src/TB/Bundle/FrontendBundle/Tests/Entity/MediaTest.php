@@ -49,7 +49,7 @@ class MediaTest extends WebTestCase
             $this->fail('Missing Route with slug "grunewald" in test DB');
         }
         
-        $mediaImporter = $this->getContainer()->get('media_importer');
+        $mediaImporter = $this->getContainer()->get('tb.media.importer');
         
         $filepath = realpath(__DIR__ . '/../../DataFixtures/Media/grunewald/P5250773.jpg');
         $file = new UploadedFile($filepath, 'P5250773.jpg');
@@ -93,7 +93,7 @@ class MediaTest extends WebTestCase
             $this->fail('Missing Route with slug "grunewald" in test DB');
         }
         
-        $mediaImporter = $this->getContainer()->get('media_importer');
+        $mediaImporter = $this->getContainer()->get('tb.media.importer');
         
         $filepath = realpath(__DIR__ . '/../../DataFixtures/Media/no_metadata.jpg');
         $file = new UploadedFile($filepath, 'P5250773.jpg');
