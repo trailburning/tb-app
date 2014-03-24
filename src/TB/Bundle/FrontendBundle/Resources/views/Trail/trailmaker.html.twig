@@ -167,12 +167,18 @@ var TB_USER_ID = {{ app.user.id }}
                                 </div>
                             </div>
                         </a>
-                        <div class="summary">
-                            <div class="avatar">
-                                <a href="../../profile/mattallbeury"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/mattallbeury/avatar_ma.png"></a>
-                            </div>
+                        <div class="summary">                        	
+		          			<div class="tb-avatar"><div class="photo"><a href="{{ path('profile', {'name': app.user.name}) }}">
+            	  			{% if app.user.avatar %}
+                				<img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/{{ app.user.name }}/avatar.jpg">
+            	  			{% elseif app.user.avatarGravatar %}
+                				<img src="{{ app.user.avatarGravatar }}">
+            	  			{% else %}
+                				<img src="{{ asset('assets/img/avatar_man.jpg') }}">
+            	  			{% endif %}
+							</a></div></div>
                             <div class="detail">
-                              by <strong>Matt Allbeury</strong>
+                              by <strong>{{ app.user.firstname }} {{ app.user.lastname }}</strong>
                                 <div class="stars">
                                     <div class="star_full"></div>
                                     <div class="star_full"></div>

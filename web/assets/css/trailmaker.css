@@ -694,14 +694,10 @@ border-width:1px;
   height: 100%;
 }
 
-.trail_card_panel .summary .avatar {
+.trail_card_panel .summary .tb-avatar {
   float: left;
   width: 54px;
   margin-top: 5px;
-}
-
-.trail_card_panel .summary .avatar img {
-  width: 100%;
 }
 
 .trail_card_panel .summary .detail {
