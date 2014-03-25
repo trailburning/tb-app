@@ -14,11 +14,17 @@ define([
 
       // first time
       if (!this.bRendered) {
-        var versions = this.model.get('versions');
-        this.model.set('versionLargePath', versions[0].path);
-      	
+      	if (this.model) {
+          var versions = this.model.get('versions');
+      	  this.model.set('versionLargePath', versions[0].path);	
+      	}
+      	else {
+      	  this.model = new Backbone.Model();
+      	  this.model.id = -1;
+      	  this.model.set('versionLargePath', 'trailburning-assets/images/default/example_trailcard.jpg');
+      	}        
 	    var attribs = this.model.toJSON();
-	    $(this.el).html(this.template(attribs));
+	    $(this.el).html(this.template(attribs));      	  
 	    
 		// scale image when loaded
         var elImages = $('.scale', $(this.el));	    
@@ -36,15 +42,16 @@ define([
 
 		// store id for reference	    
 	    $(this.el).attr("data-id", this.model.id);
+		if (this.model.id != -1) {	    
+	      $(this.el).mouseover(function(evt){
+            $(evt.currentTarget).css('cursor','pointer');      
+          });      
 	    
-	    $(this.el).mouseover(function(evt){
-          $(evt.currentTarget).css('cursor','pointer');      
-        });      
-	    
-	    $(this.el).click(function(evt){
-          // fire event
-          app.dispatcher.trigger("TrailSlideshowSlideView:click", self);                
-        });      
+	      $(this.el).click(function(evt){
+            // fire event
+            app.dispatcher.trigger("TrailSlideshowSlideView:click", self);                
+          });      
+		}
 	  }
       this.bRendered = true;
 

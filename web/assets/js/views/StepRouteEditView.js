@@ -61,14 +61,14 @@ define([
     },
     renderTrailDetail: function(){   
       var self = this;
-       
+                   
       $('#form_trail_name').val(this.model.get('value').route.name);
       $('#form_trail_region').val(this.model.get('value').route.region);
-      $('#form_trail_notes').val('');
+      $('#form_trail_notes').val(this.model.get('value').route.about);
       $('.update_details', $(this.el)).click(function(evt) {      
         self.model.get('value').route.name = $('#form_trail_name').val();
         self.model.get('value').route.region = $('#form_trail_region').val();
-//        self.model.get('value').route.about = $('#form_trail_notes').val('');
+        self.model.get('value').route.about = $('#form_trail_notes').val();
 		self.model.get('value').route.route_category_id = $('#trail_types').find('[data-bind="label"]').attr('data-id');
 		
 	  	self.renderTrailCard();                      		
@@ -133,7 +133,7 @@ define([
   	    $('.trailcard_panel .photo .image_container', $(this.el)).html('<img src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/'+model.get('versions')[0].path+'" class="resrc scale" border="0"/>');	  	
 	  }
 	  else {
-  	    $('.trailcard_panel .photo .image_container', $(this.el)).html('');	  	
+  	    $('.trailcard_panel .photo .image_container', $(this.el)).html('<img src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/default/example_trailcard.jpg" class="resrc scale" border="0"/>');
 	  }
         
 	  // scale images when loaded
@@ -183,10 +183,10 @@ define([
         url: strURL,
         type: 'DELETE',            
         complete : function(res) {
-          console.log('complete');              
+//          console.log('complete');              
         },
         success: function(data) {
-          console.log('msg:'+data.message);
+//          console.log('msg:'+data.message);
         },
       });
     },

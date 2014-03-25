@@ -38,6 +38,18 @@ define([
 
       return this;
     },
+    checkSlideshow: function(){
+	  if (this.options.collection.length) {
+	  	// remove def photo
+	    this.remove(-1);
+	  }
+	  else {
+	    // append def photo
+        var slide = new TrailSlideshowSlideView();
+        slide.render();
+        $(this.el).append(slide.el);      
+	  }
+    },
     appendMedia: function(media){
       var versions = media.get('versions');
       
@@ -59,6 +71,11 @@ define([
         // fire event
         app.dispatcher.trigger("TrailSlideshowView:mediaclick", $(this).attr('data-id'));
 	  });
+	  
+	  // if not removing def then check we have a slide
+	  if (id != -1) {
+	    this.checkSlideshow();	  	
+	  }
       // fire event
       app.dispatcher.trigger("TrailSlideshowView:mediaupdate");                          		  	  
 	},
@@ -123,6 +140,7 @@ define([
 	  
 	  this.moveSlides(nActiveSlide, false);
 	  
+	  this.checkSlideshow();	  
       // fire event
       app.dispatcher.trigger("TrailSlideshowView:mediaupdate");                          		  
 	},
