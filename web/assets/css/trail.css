@@ -948,7 +948,6 @@ html.touch #trailplayer #view_map_btns {
 .editorial_panel .editorial_header {
   margin: 80px 85px 0px 85px;
   padding-bottom: 20px;
-
 }
 
 .editorial_panel .header {
@@ -962,11 +961,13 @@ html.touch #trailplayer #view_map_btns {
 
 .editorial_panel .line {
   float: right;
+/*  
   width: 262px;
   margin-top: 22px;
   border-top-style: solid;
   border-top-width: 1px;
   border-top-color: #C1C1C1;
+*/  
 }
 
 .editorial_panel .author {
@@ -1074,14 +1075,9 @@ html.touch #trailplayer #view_map_btns {
   height: 100%;
 }
 
-.trail_card_panel .summary .avatar {
+.trail_card_panel .summary .tb-avatar {
   float: left;
-  width: 54px;
   margin-top: 5px;
-}
-
-.trail_card_panel .summary .avatar img {
-  width: 100%;
 }
 
 .trail_card_panel .summary .detail {

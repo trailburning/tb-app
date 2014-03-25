@@ -125,13 +125,8 @@ html.touch #small_sponsor_bar {
   line-height: 1.1em;
 }
 
-.editorial_panel .header .avatar {
+.editorial_panel .header .tb-avatar {
   float: left;
-  width: 128px;
-}
-
-.editorial_panel .header .avatar img {
-  width: 100%;
 }
 
 .editorial_panel .hero {
@@ -503,14 +498,9 @@ html.touch #small_sponsor_bar {
   height: 100%;
 }
 
-.trail_card_panel .summary .avatar {
+.trail_card_panel .summary .tb-avatar {
   float: left;
-  width: 54px;
   margin-top: 5px;
-}
-
-.trail_card_panel .summary .avatar img {
-  width: 100%;
 }
 
 .trail_card_panel .summary .detail {

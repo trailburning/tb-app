@@ -41,11 +41,21 @@ var TB_EDITORIAL_TRAILS = [
 		<div class="panel editorial_panel">
 	  		<div class="header clearfix">
 	  			<div class="title">{{ editorial.title|nl2br }}</div>
-	  			<div class="avatar"><a href="{{ path('profile', {'name': editorial.user.name}) }}"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/{{ editorial.user.name }}/{{ editorial.user.avatar }}"></a></div>
+	  			<div class="tb-avatar tb-avatar-feature"><div class="photo"><a href="{{ path('profile', {'name': editorial.user.name}) }}">
+            	{% if editorial.user.avatar %}
+                	<img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/{{ editorial.user.name }}/avatar.jpg">
+            	{% elseif editorial.user.avatarGravatar %}
+                	<img src="{{ editorial.user.avatarGravatar }}">
+            	{% else %}
+                	<img src="{{ asset('assets/img/avatar_man.jpg') }}">
+            	{% endif %}
+	  			</a></div></div>
 	  		</div>
 	  		<div class="hero">
 				<div class="image_container fade_on_load"><img src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/editorial/{{ editorial.slug }}/{{ editorial.image }}" class="scale"></div>
-				<div class="tb-credit">Photo credit: © <a href="http://reubentabner.co.uk" onClick="trackOutboundLink(this, 'Outbound Links', 'reubentabner.co.uk'); return false;">Reuben Tabner</a></div>
+				{% if editorial.id == 1 %}				
+				  <div class="tb-credit">Photo credit: © <a href="http://reubentabner.co.uk" onClick="trackOutboundLink(this, 'Outbound Links', 'reubentabner.co.uk'); return false;">Reuben Tabner</a></div>
+				{% endif %}
 			</div>
 	  		<div class="content">
 	  			<div class="content_header">
@@ -58,6 +68,7 @@ var TB_EDITORIAL_TRAILS = [
 	  			
 				<div id="column_wrapper_intro" class="column_wrapper">
 	  			<div class="columns">
+				{% if editorial.id == 1 %}	  				
 	  			<h4 class="tb">	  				
 Trailburning #Inspire is our new section that pulls together a collection of trails into a single story. By featuring multiple Trail Cards in an #Inspire article Trailburning becomes greater than the sum of its parts.
 				</h4>
@@ -76,6 +87,19 @@ But by getting lost, I really mean getting found. I want to find the lake halfwa
 				<p>
 So as a dedication to all those who would also like to pat the cow and ‘get lost’, the Trailburning team presents #Inspire. Enjoy!
 				</p>
+				
+				{% elseif editorial.id == 9 %}
+				<h4 class="tb">
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed leo nibh, dignissim quis purus quis, auctor pharetra tortor. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Proin ultricies lectus id erat blandit ultricies. Nulla hendrerit tellus massa, non ultricies nisl porta vitae. Vivamus vel magna ac arcu ultrices sollicitudin. Nulla id aliquam eros. Sed ornare sagittis est, eget adipiscing sem pretium vitae.
+				</h4>
+				<p>
+Fusce mattis sed orci et imperdiet. Suspendisse lorem massa, pulvinar vel est sed, mollis molestie tortor. Aliquam erat volutpat. Proin non orci non metus fringilla condimentum. Morbi tincidunt facilisis purus a feugiat. Quisque quis mauris suscipit, feugiat nulla ac, pellentesque ipsum. Mauris eu eros nunc. Morbi cursus dictum mi sit amet ullamcorper. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec tempus consequat quam at consequat.
+				</p>
+				<p>
+Suspendisse potenti. Donec nec ante sit amet eros rutrum sollicitudin ac at risus. Nam posuere molestie nisi, non gravida dui lacinia a. Fusce molestie massa eros, ullamcorper adipiscing eros tincidunt vitae. Nam et augue nisl. Vestibulum sapien tellus, adipiscing et ipsum id, suscipit hendrerit ligula. Mauris a elit sollicitudin, malesuada tellus at, viverra lorem.
+				</p>
+				{% endif %}
+				
 	  			</div>	  			
 	  			</div>	  			
 	  			
@@ -175,6 +199,77 @@ So as a dedication to all those who would also like to pat the cow and ‘get lo
 				  		</div>		       	
 			        	{% endif %}	        		
                     {% endfor %}
+                    
+                	{% for route in routes %}
+						{% if route.id == 164 %}
+						<div class="editorial_card">
+							<div class="sticker_container">			
+							{{ include('TBFrontendBundle:Trail:editorial_trailcard.html.twig', {route: route, editorial: editorial}) }}
+							</div>
+							
+							<div class="card_column_wrapper column_wrapper">
+				  			<div class="columns">	
+							<h4 class="tb">				  				
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed leo nibh, dignissim quis purus quis, auctor pharetra tortor. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Proin ultricies lectus id erat blandit ultricies. Nulla hendrerit tellus massa, non ultricies nisl porta vitae. Vivamus vel magna ac arcu ultrices sollicitudin.
+							</h4>
+							<p>
+Fusce mattis sed orci et imperdiet. Suspendisse lorem massa, pulvinar vel est sed, mollis molestie tortor. Aliquam erat volutpat. Proin non orci non metus fringilla condimentum. Morbi tincidunt facilisis purus a feugiat. Quisque quis mauris suscipit, feugiat nulla ac, pellentesque ipsum. Mauris eu eros nunc. Morbi cursus dictum mi sit amet ullamcorper. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec tempus consequat quam at consequat.
+							</p>
+							<p>
+Suspendisse potenti. Donec nec ante sit amet eros rutrum sollicitudin ac at risus. Nam posuere molestie nisi, non gravida dui lacinia a. Fusce molestie massa eros, ullamcorper adipiscing eros tincidunt vitae. Nam et augue nisl. Vestibulum sapien tellus, adipiscing et ipsum id, suscipit hendrerit ligula. Mauris a elit sollicitudin, malesuada tellus at, viverra lorem.
+							</p>
+							</div>
+							</div>						
+						</div>							
+			        	{% endif %}	        		
+                    {% endfor %}
+                    
+                	{% for route in routes %}
+						{% if route.id == 123 %}          
+						<div class="editorial_card align_right">      	
+							<div class="card_column_wrapper column_wrapper">
+				  			<div class="columns">
+							<h4 class="tb">				  				
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed leo nibh, dignissim quis purus quis, auctor pharetra tortor. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Proin ultricies lectus id erat blandit ultricies. Nulla hendrerit tellus massa, non ultricies nisl porta vitae. Vivamus vel magna ac arcu ultrices sollicitudin.
+							</h4>
+							<p>
+Fusce mattis sed orci et imperdiet. Suspendisse lorem massa, pulvinar vel est sed, mollis molestie tortor. Aliquam erat volutpat. Proin non orci non metus fringilla condimentum. Morbi tincidunt facilisis purus a feugiat. Quisque quis mauris suscipit, feugiat nulla ac, pellentesque ipsum. Mauris eu eros nunc. Morbi cursus dictum mi sit amet ullamcorper. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec tempus consequat quam at consequat.
+							</p>
+							<p>
+Suspendisse potenti. Donec nec ante sit amet eros rutrum sollicitudin ac at risus. Nam posuere molestie nisi, non gravida dui lacinia a. Fusce molestie massa eros, ullamcorper adipiscing eros tincidunt vitae. Nam et augue nisl. Vestibulum sapien tellus, adipiscing et ipsum id, suscipit hendrerit ligula. Mauris a elit sollicitudin, malesuada tellus at, viverra lorem.
+							</p>
+							</div>
+							</div>
+							<div class="sticker_container">			
+							{{ include('TBFrontendBundle:Trail:editorial_trailcard.html.twig', {route: route, editorial: editorial}) }}
+							</div>
+						</div>				
+			        	{% endif %}	        		
+                    {% endfor %}
+                    
+                	{% for route in routes %}
+						{% if route.id == 56 %}    
+						<div class="editorial_card">
+							<div class="sticker_container">			
+							{{ include('TBFrontendBundle:Trail:editorial_trailcard.html.twig', {route: route, editorial: editorial}) }}
+							</div>     
+							<div class="card_column_wrapper column_wrapper">
+				  			<div class="columns">
+							<h4 class="tb">				  				
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed leo nibh, dignissim quis purus quis, auctor pharetra tortor. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Proin ultricies lectus id erat blandit ultricies. Nulla hendrerit tellus massa, non ultricies nisl porta vitae. Vivamus vel magna ac arcu ultrices sollicitudin.
+							</h4>
+							<p>
+Fusce mattis sed orci et imperdiet. Suspendisse lorem massa, pulvinar vel est sed, mollis molestie tortor. Aliquam erat volutpat. Proin non orci non metus fringilla condimentum. Morbi tincidunt facilisis purus a feugiat. Quisque quis mauris suscipit, feugiat nulla ac, pellentesque ipsum. Mauris eu eros nunc. Morbi cursus dictum mi sit amet ullamcorper. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec tempus consequat quam at consequat.
+							</p>
+							<p>
+Suspendisse potenti. Donec nec ante sit amet eros rutrum sollicitudin ac at risus. Nam posuere molestie nisi, non gravida dui lacinia a. Fusce molestie massa eros, ullamcorper adipiscing eros tincidunt vitae. Nam et augue nisl. Vestibulum sapien tellus, adipiscing et ipsum id, suscipit hendrerit ligula. Mauris a elit sollicitudin, malesuada tellus at, viverra lorem.
+							</p>
+				  			</div>
+				  			</div>				
+				  		</div>		       	
+			        	{% endif %}	        		
+                    {% endfor %}
+                    
   				{% endif %}  
   				</div>
 	  			
