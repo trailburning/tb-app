@@ -121,8 +121,10 @@ html.touch #small_sponsor_bar {
 .editorial_panel .header .title {
   float: left;
   width: 809px;
-  font-size: 70px;
-  line-height: 1.1em;
+}
+
+.editorial_panel .header .title h1.tb {
+  color: #6D6E71;
 }
 
 .editorial_panel .header .tb-avatar {
@@ -345,6 +347,10 @@ html.touch #small_sponsor_bar {
   height: 378px;
 }
 
+.single_region #editorial_region_view {
+  margin-bottom: 26px;
+}    
+
 #editorial_map_view {
   position: absolute;
   top: 0px;
@@ -405,7 +411,12 @@ html.touch #small_sponsor_bar {
   margin-bottom: 46px;
 }
 
-.editorial_cards .panel {
+.single_region .editorial_cards {
+  margin-left: 36px;
+  text-align: center;
+}
+
+.editorial_cards .panel {	
   display: inline-block;
   float: none;
   text-align: left;
@@ -438,6 +449,13 @@ html.touch #small_sponsor_bar {
   clear: both;
   margin-left: 72px;
   width: 969px;  
+}
+
+.single_region .editorial_card {
+  display: inline-block;
+  clear: none;
+  margin-left: 0px;
+  width: auto;
 }
 
 /* TRAIL CARD PANEL */
@@ -614,7 +632,10 @@ html.touch #small_sponsor_bar {
   .trail_card_sticker {
     width: 265px;
     height: 358px;
-  }
+  }  
+  .single_region .editorial_cards {
+    margin-left: 12px;
+  }  
   .editorial_cards .panel {
     width: 224px;
     margin: 12px 10px 12px 10px;

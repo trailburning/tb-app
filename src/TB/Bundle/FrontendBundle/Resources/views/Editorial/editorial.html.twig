@@ -40,7 +40,7 @@ var TB_EDITORIAL_TRAILS = [
 	<div class="panels clearfix">               	
 		<div class="panel editorial_panel">
 	  		<div class="header clearfix">
-	  			<div class="title">{{ editorial.title|nl2br }}</div>
+	  			<div class="title"><h1 class="tb">{{ editorial.title|nl2br }}</h1></div>
 	  			<div class="tb-avatar tb-avatar-feature"><div class="photo"><a href="{{ path('profile', {'name': editorial.user.name}) }}">
             	{% if editorial.user.avatar %}
                 	<img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/{{ editorial.user.name }}/avatar.jpg">
@@ -107,6 +107,8 @@ Suspendisse potenti. Donec nec ante sit amet eros rutrum sollicitudin ac at risu
 		  			<div class="header"><h2 class="tb">Discover the Trails</h2></div>
 		  			<div class="line"></div>
 	  			</div>
+
+				{% if editorial.id == 1 %}
 
 				<div class="editorial_cards clearfix">
                 {% if routes %}
@@ -272,17 +274,43 @@ Suspendisse potenti. Donec nec ante sit amet eros rutrum sollicitudin ac at risu
                     
   				{% endif %}  
   				</div>
-	  			
+  				
 	  			<div id="region_header" class="section_header clearfix">
 		  			<div class="header"><h2 class="tb">Discover the Region</h2></div>
 		  			<div class="line"></div>
 	  			</div>
-	  			
+  				
 				<div id="editorial_region_view">		  				
 					<div id="editorial_map_view" class="editorial_map"></div>		  				
 	            	<div class='border_top'></div>
 	            	<div class='border_left'></div>
   				</div>
+  				
+				{% elseif editorial.id == 6 %}
+
+				<div class="single_region">		  				
+
+				<div id="editorial_region_view">		  				
+					<div id="editorial_map_view" class="editorial_map"></div>		  				
+	            	<div class='border_top'></div>
+	            	<div class='border_left'></div>
+  				</div>
+
+				<div class="editorial_cards clearfix">
+                {% if routes %}
+                	{% for route in routes %}
+						<div class="editorial_card">
+							<div class="sticker_container">			
+							{{ include('TBFrontendBundle:Trail:editorial_trailcard.html.twig', {route: route, editorial: editorial}) }}
+							</div>
+						</div>							
+                    {% endfor %}
+				{% endif %}
+				</div>
+				
+				</div>							
+				
+				{% endif %}
 
 	  		</div>		  		
 	  	</div>

@@ -765,7 +765,11 @@ form label {
   }
   form label {
     font-size: 18px;
-  }    
+  }      
+  .tb-avatar-feature {
+    width: 112px;
+    height: 112px;
+  }  
 }
 
 /* Small devices (tablets, 768px) */
