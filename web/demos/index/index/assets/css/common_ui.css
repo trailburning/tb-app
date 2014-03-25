@@ -355,6 +355,22 @@ h4.tb {
   overflow: hidden;		   
 }
 
+#headerview .new {
+  display: inline-block;
+  position: relative;
+  margin-right: 8px;
+  width: 8px;
+  height: 8px;
+  line-height: 14px;
+  background: #f83d3d;
+  border-radius: 50%;
+  overflow: hidden;		     
+}
+
+#headerview .time {
+  color: #44b6f7;
+}
+	
 #headerview .right .profile .dropdown-toggle .avatar {
   box-shadow: none;
   width: 50px;
@@ -477,13 +493,6 @@ h4.tb {
   float: right;
   margin-right: 20px;
   line-height: 30px;
-}
-
-#headerview .dropdown-menu .footer .signout a {
-/*	
-  color: #666666;
-  text-decoration: underline;
-*/  
 }
 
 #headerview .dropdown-menu .footer .signout a:hover,

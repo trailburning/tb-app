@@ -55,11 +55,17 @@ define([
     this.homeHerosView = new HomeHerosView({ el: '#home_header' });
 	this.homeHerosView.render();
 
+	$('.show_activity').click(function(evt){
+	  $('.more_btn').attr('disabled', false);  
+	  $('.activity_list').css('top', 0);        
+	});	
+
+
 	$('.more_btn').click(function(evt){	
 	  evt.stopPropagation();
 	  
+	  $('.more_btn').attr('disabled', true);  
 	  $('.activity_list').css('top', -243);        
-
 	});
 
     $(document).on('click', '.activity-menu', function (evt) {
