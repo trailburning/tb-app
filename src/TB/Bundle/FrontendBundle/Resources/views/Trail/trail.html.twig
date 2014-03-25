@@ -98,15 +98,7 @@ var TB_TRAIL_ID = {{ trail.id }};
                     {{ include('TBFrontendBundle:Default:share.html.twig') }}
                     
                     {% if trail.id == 148 %}                    
-					<div class="compact_share btn-group dropup">
-					  <a class="btn btn-primary btn-tb-action btn-tb dropdown-toggle" data-toggle="dropdown" href="#">Share <span class="caret"></span></a>
-					  <ul class="dropdown-menu pull-right">
-			        	<li class="clearfix"><a href="#" class="clearfix"><div class="logo"><img src="{{ asset('assets/icons/share/share_facebook_red.png') }}"></div><div class="detail">Facebook</div></a></li>
-			        	<li class="clearfix"><a href="#" class="clearfix"><div class="logo"><img src="{{ asset('assets/icons/share/share_googleplus_red.png') }}"></div><div class="detail">Google+</div></a></li>
-			        	<li class="clearfix"><a href="#" class="clearfix"><div class="logo"><img src="{{ asset('assets/icons/share/share_twitter_red.png') }}"></div><div class="detail">Twitter</div></a></li>
-					  </ul>
-					</div>                    
-					<div class="like"><a href="javascript:void(0)" class="btn btn-tb-action btn-tb like_btn"><i class="icon-star icon-white"></i> <span class="btn-label">Like</span></a></div>
+                      {{ include('TBFrontendBundle:Default:shareTrail.html.twig') }}
 					{% endif %}                                         
                 </div>
 

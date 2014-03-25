@@ -1,0 +1,19 @@
+{% if url is not defined  %}
+    {% set url = url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}
+{% endif %}
+{% if text is not defined  %}
+    {% set text = 'Are you trailburning?' %}
+{% endif %}
+
+{% if trail is defined %}
+	<div class="compact_share btn-group dropup">
+	  <a class="btn btn-primary btn-tb-action btn-tb dropdown-toggle" data-toggle="dropdown" href="#">Share <span class="caret"></span></a>
+	  <ul class="dropdown-menu pull-right">
+		<li class="clearfix"><a href="http://www.facebook.com/share.php?u={{ url|url_shareable }}" target="_blank" class="clearfix"><div class="logo"><img src="{{ asset('assets/icons/share/share_facebook.png') }}"></div><div class="detail">Facebook</div></a></li>
+		<li class="clearfix"><a href="https://plus.google.com/share?url={{ url|url_shareable }}" target="_blank" class="clearfix"><div class="logo"><img src="{{ asset('assets/icons/share/share_googleplus.png') }}"></div><div class="detail">Google+</div></a></li>
+		<li class="clearfix"><a href="http://twitter.com/share?text={{ text|url_encode }}&url={{ url|url_shareable }}" target="_blank" class="clearfix"><div class="logo"><img src="{{ asset('assets/icons/share/share_twitter.png') }}"></div><div class="detail">Twitter</div></a></li>
+	  </ul>
+	</div>                    
+	<div class="like"><a href="javascript:void(0)" class="btn btn-tb-action btn-tb like_btn"><i class="icon-star icon-white"></i> <span class="btn-label">Like</span></a></div>
+{% endif %}
+
