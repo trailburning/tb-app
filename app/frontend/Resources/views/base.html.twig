@@ -44,38 +44,96 @@
                 <div class="left">
                     <a href="{{ app.request.baseUrl }}/"><img src="{{ asset('assets/img/header/tb_logo_black.gif') }}" border="0"></a>
                 </div>    
-                <div class="right">
-                    
-                    {% if app.user %}
-                        <div class="signin">
-							<a href="{{ app.request.baseUrl }}/join" class="btn btn-tb-action btn-tb-large">Join</a>                                         	
+                
+			    <div class="right navbar">
+                	{% if app.user %}
+				    	<div class="profile">
+				    		<ul class="nav pull-right">
+						    	<li class="dropdown">
+						    	<a href="#" class="dropdown-toggle show_activity" data-toggle="dropdown">
+						    	<div class="tb-avatar"><div class="photo">        
+		            	  		{% if app.user.avatar %}
+		                			<img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/{{ app.user.name }}/avatar.jpg">
+		            	  		{% elseif app.user.avatarGravatar %}
+		                			<img src="{{ app.user.avatarGravatar }}">
+		            	  		{% else %}
+		                			<img src="{{ asset('assets/img/avatar_man.jpg') }}">
+		            	  		{% endif %}
+								</div></div>			
+								<div class="activity">2</div>			        		        		
+						    	</a>
+						        <ul class="dropdown-menu activity-menu">
+						        	<div class="header">
+						        		<div class="title"><h4 class="tb">Activity</h4></div>
+						        		<div class="viewprofile"><a href="{{ path('profile', {name: app.user.name}) }}">View profile</a></div>
+						        	</div>
+						        	
+						        	<div class="activity_list_container">
+						        	  <div class="activity_list tb-move">
+							        	<li class="clearfix">
+							        	<a href="{{ app.request.baseUrl }}/trail/laufbachereckweg-allgauer-alps">            	
+									 	<div class="tb-avatar"><div class="photo"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/patricktrost/avatar.jpg"></div></div>	
+							        	<div class="note"><span class="new"></span><span class="time">2 minutes ago</span><br/><strong>Christian Raimann</strong> published a new trail: <strong>Laufbachereckweg</strong>.</div>
+							        	</a></li>
+							        	<li class="clearfix">
+							        	<a href="{{ app.request.baseUrl }}/trail/chamonix">            	
+									 	<div class="tb-avatar"><div class="photo"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/reubentabner/avatar.jpg"></div></div>	
+							        	<div class="note"><span class="new"></span><span class="time">3 days ago</span><br/><strong>Reuben Tabner</strong> published a new trail: <strong>Alpine Adventure Chamonix</strong>.</div>
+							        	</a></li>
+							        	<li class="clearfix">
+							        	<a href="{{ app.request.baseUrl }}/profile/magdalenazeslawska">            	
+									 	<div class="tb-avatar"><div class="photo"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/magdalenazeslawska/avatar.jpg"></div></div>	
+							        	<div class="note"><span class="time">2 weeks ago</span><br/><strong>Magdalena Zeslawska</strong> started <strong>following</strong> your trails.</div>
+							        	</a></li>
+		<!--					        	
+							        	<li class="clearfix">
+							        	<a href="#">            	
+									 	<div class="tb-avatar"><div class="photo"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/justinwilden/avatar.jpg"></div></div>	
+							        	<div class="note"><span class="time">3 weeks ago</span><br/><strong>Justin Wilden</strong> started <strong>following</strong> your trails.</div>
+							        	</a></li>
+							        	<li class="clearfix">
+							        	<a href="#">            	
+									 	<div class="tb-avatar"><div class="photo"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/reubentabner/avatar.jpg"></div></div>	
+							        	<div class="note"><span class="time">3 weeks ago</span><br/><strong>Reuben Tabner</strong> published a new trail: <strong>North Yorkshire Moors trail</strong>.</div>
+							        	</a></li>
+							        	<li class="clearfix">
+							        	<a href="#">            	
+									 	<div class="tb-avatar"><div class="photo"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/justinwilden/avatar.jpg"></div></div>	
+							        	<div class="note"><span class="time">4 weeks ago</span><br/><strong>Justin Wilden</strong> published a new trail: <strong>Yarra river trail</strong>.</div>
+							        	</a></li>					        	
+		-->					        	
+									  </div>
+						        	</div>
+						
+						        	<div class="footer">
+						  				<div class="profile_btn"><a href="javascript:void(0)" class="btn btn-tb btn-tb-small more_btn" disabled="disabled">More notifications</a></div>
+						        		<div class="signout"><a href="{{ path('fos_user_security_logout') }}">Sign out</a></div>
+						        	</div>
+						        </ul>
+						    	</li>
+				    		</ul>
+				      	</div>
+			    	{% else %}
+			      		<div class="signin"><a href="{{ app.request.baseUrl }}/join" class="btn btn-tb-action btn-tb-large">Join</a></div>
 {#                        	                        	
-                            <a href="{{ path('profile', {name: app.user.name}) }}" class="btn btn-tb-action btn-tb-large">Profile</a>
-                            <a href="{{ path('fos_user_security_logout') }}" class="btn btn-tb-action btn-tb-large">Sign out</a>
+                        <a href="{{ path('fos_user_registration_register') }}" class="btn btn-tb-action btn-tb-large">Join</a>
+                       	<a href="{{ path('fos_user_security_login') }}" class="btn btn-tb-action btn-tb-large">Sign in</a>
 #}                            
-                        </div>
-                     {% else %}
-                        <div class="signin">
-							<a href="{{ app.request.baseUrl }}/join" class="btn btn-tb-action btn-tb-large">Join</a>                                         	
-{#                        	                        	
-                            <a href="{{ path('fos_user_registration_register') }}" class="btn btn-tb-action btn-tb-large">Join</a>
-                            <a href="{{ path('fos_user_security_login') }}" class="btn btn-tb-action btn-tb-large">Sign in</a>
-#}                            
-                        </div>
-                     {% endif %}
-                    
-                    <div class="links">
-                        <div class="link"><a href="{{ app.request.baseUrl }}/about">Discover Trailburning</a></div>        
-                    </div>
-                    <div class="discover">
-<!--                    	
-                        <form id="search_form">
-                            <input type="text" id="search_field" name="discover">
-                            <input type="submit" class="search-btn">        
-                        </form>
--->                        
-                    </div>
-                </div>
+			    	{% endif %}
+			      
+			      	<div class="links">
+						<div class="link main"><a href="{{ app.request.baseUrl }}/about">Discover Trailburning</a></div>			      	
+			      	</div>
+			      	<div class="discover">
+			<!--      	
+			        <form id="search_form">
+			        <input type="text" id="search_field" name="discover">
+			        <input type="submit" class="search-btn">        
+			        </form>
+			-->        
+			    	</div>
+			    </div>    
+                
                 <div class="trans-line"></div>        
             </div>    
 
