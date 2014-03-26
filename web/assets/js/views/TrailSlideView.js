@@ -1,160 +1,63 @@
 define([
   'underscore', 
-  'backbone',
-  'views/TrailSlidePhotoView'
-], function(_, Backbone, TrailSlidePhotoView){
-  
+  'backbone'
+], function(_, Backbone){
+
   var TrailSlideView = Backbone.View.extend({
     initialize: function(){
       this.template = _.template($('#trailSlideViewTemplate').text());        
             
-      app.dispatcher.on("TrailSlidePhotoView:imageready", this.onSlidePhotoReady, this);
-            
+      this.nType = this.options.type;
+      this.bLoaded = false;
       this.bRendered = false;
-      this.arrSlidePhotos = [];
-      this.nOldSlide = -1;
-      this.nCurrSlide = -1;
-      this.bSlideReady = false;
-      this.bWaitingForSlide = false;
     },            
-    show: function(){      
+    show: function(){
       $(this.el).show();
+      $('.image_container', $(this.el)).css('opacity', 1);
     },
     hide: function(){
-      $(this.el).hide();
+      $('.image_container', $(this.el)).css('opacity', 0);      
     },
-    renderSlide: function(nSlide){
-      var photoView = this.arrSlidePhotos[nSlide];
-      photoView.render($('#appview').width());            
-    },        
-    gotoSlide: function(nSlide){
-      this.bSlideReady = false;     
-      this.bWaitingForSlide = true;
-                    
-      this.nOldSlide = this.nCurrSlide;  
-      this.nCurrSlide = nSlide;
+    render: function(nPanelWidth){
+      var self = this;
 
-      this.renderSlide(this.nCurrSlide);
-      
-      this.checkSlideState();      
-    },    
-    addMedia: function(mediaModel){
-      var photoView = new TrailSlidePhotoView({ model: mediaModel, type: 0 });
-      this.arrSlidePhotos.push(photoView);
-    },
-    render: function(){
-      if (!this.model) {
+      function onImageLoaded() {
+        $('.image_container', self.el).width(nPanelWidth);
+        // update pos
+        $("img.scale_image_ready", $(self.el)).imageScale();
+        // fade in - delay adding class to ensure image is ready  
+        $('.fade_on_load', $(self.el)).addClass('tb-fade');
+        // fire event
+        app.dispatcher.trigger("TrailSlideView:imageready", self);                        
+      }   
+                  
+      if (this.bRendered) {
+        $('.image_container', this.el).width(nPanelWidth);
+        if (self.bLoaded) {
+          onImageLoaded();
+        }
         return;
       }
+                                    
+      var versions = this.model.get('versions');
+      this.model.set('versionLargePath', versions[0].path);
 
-      // already rendered?  Just update
-      if (this.bRendered) {
-        // update container width
-        $('.image_container', this.el).width($('#appview').width());
-        $('.photos_container', this.el).width($('#appview').width());        
-        if (this.nCurrSlide >= 0) {
-          var photoView = this.arrSlidePhotos[this.nCurrSlide];
-          photoView.render($('#appview').width());
-        }
-        return;         
-      }        
-                
-      var self = this;
-                
       var attribs = this.model.toJSON();
       $(this.el).html(this.template(attribs));
 
-      // update container width
-      $('.image_container', this.el).width($('#appview').width());
-      $('.photos_container', this.el).width($('#appview').width());                        
-      for (var nMedia=0; nMedia < this.arrSlidePhotos.length; nMedia++) {
-        var photoView = this.arrSlidePhotos[nMedia];
-        $('.photos_container', this.el).append(photoView.el);      
-      }
-      this.buildBtns();
-            
+      var elImg = $('img', $(this.el));
+      var imgLoad = imagesLoaded(elImg);
+      imgLoad.on('always', function(instance) {
+        for ( var i = 0, len = imgLoad.images.length; i < len; i++ ) {
+          $(imgLoad.images[i].img).addClass('scale_image_ready');
+        }
+        self.bLoaded = true;
+        onImageLoaded();
+      });
       this.bRendered = true;
                         
       return this;
-    },
-    buildBtns: function(){    
-      // make btns more touch friendly
-      if (Modernizr.touch) {
-        $('.slide_btns', $(this.el)).touchwipe({
-           wipeLeft: function() {
-            // fire event
-            app.dispatcher.trigger("TrailSlideView:clickslidenext", self);                
-           },
-           wipeRight: function() {
-            // fire event
-            app.dispatcher.trigger("TrailSlideView:clickslideprev", self);                              
-           },
-           wipeUp: function() { },
-           wipeDown: function() { },
-           min_move_x: 20,
-           min_move_y: 20,
-           preventDefaultEvents: false
-        });            
-      }
-      else {
-        $('.slide_btns .left', $(this.el)).click(function(evt){
-          // fire event
-          app.dispatcher.trigger("TrailSlideView:clickslideprev", self);                
-        });
-        $('.slide_btns .left', $(this.el)).mouseover(function(evt){
-          $(evt.currentTarget).css('cursor','pointer');      
-        });      
-        
-        $('.slide_btns .right', $(this.el)).click(function(evt){
-          // fire event
-          app.dispatcher.trigger("TrailSlideView:clickslidenext", self);                
-        });
-        $('.slide_btns .right', $(this.el)).mouseover(function(evt){
-          $(evt.currentTarget).css('cursor','pointer');      
-        });      
-      }
-    },
-    checkSlideState: function(){
-      var self = this;
-
-      if (this.bSlideReady && this.bWaitingForSlide) {
-        $('#tb-loader-overlay').fadeOut();	
-        
-        this.bWaitingForSlide = false;
-        
-        var photoView;
-        // hide old photo
-        if (this.nOldSlide >= 0) {
-          photoView = this.arrSlidePhotos[this.nOldSlide];      
-          photoView.hide();        
-        }
-                
-        photoView = this.arrSlidePhotos[this.nCurrSlide];        
-        photoView.show();
-        
-        // fire event
-        app.dispatcher.trigger("TrailSlideView:slideview", this);                
-      }
-      
-      if (this.bWaitingForSlide) {
-	    $('#tb-loader-overlay').fadeIn();      		
-      }
-    },    
-    onSlidePhotoReady: function(trailSlidePhotoView){   
-      if (trailSlidePhotoView.nType != 0) {
-        return;
-      }
-         
-      var nCurrCID = trailSlidePhotoView.model.cid;      
-      var photoView = this.arrSlidePhotos[this.nCurrSlide];
-      if (photoView) {
-        nCurrCID = photoView.model.cid;
-      }      
-      if (nCurrCID == trailSlidePhotoView.model.cid) {        
-        this.bSlideReady = true;
-        this.checkSlideState();
-      }      
-    }
+    }    
   });
 
   return TrailSlideView;

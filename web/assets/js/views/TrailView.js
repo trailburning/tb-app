@@ -3,13 +3,13 @@ define([
   'backbone',
   'models/TrailMediaModel',  
   'views/TrailMiniMapView',
-  'views/TrailMiniSlideView',
-  'views/TrailSlideView',  
+  'views/TrailMiniSlidesView',
+  'views/TrailSlidesView',  
   'views/TrailMapView',  
   'views/TrailStatsView',  
   'views/TrailAltitudeView',
   'views/TrailWeatherView'
-], function(_, Backbone, TrailMediaModel, TrailMiniMapView, TrailMiniSlideView, TrailSlideView, TrailMapView, TrailStatsView, TrailAltitudeView, TrailWeatherView){
+], function(_, Backbone, TrailMediaModel, TrailMiniMapView, TrailMiniSlidesView, TrailSlidesView, TrailMapView, TrailStatsView, TrailAltitudeView, TrailWeatherView){
 
   var MIN_HEIGHT = 540;
   var PLAYER_REDUCE_HEIGHT = 50;
@@ -45,9 +45,9 @@ define([
       app.dispatcher.on("TrailMapMediaMarkerView:mediaclick", self.onTrailMapMediaMarkerClick, this);
       app.dispatcher.on("TrailMapMediaMarkerView:photoclick", self.onTrailMapMediaPhotoClick, this);      
       app.dispatcher.on("TrailMediaMarkerView:mediaclick", self.onTrailMediaMarkerClick, this);
-      app.dispatcher.on("TrailSlideView:slideview", self.onTrailSlideViewSlideView, this);
-      app.dispatcher.on("TrailSlideView:clickslideprev", self.onTrailSlideViewSlideClickPrev, this);
-      app.dispatcher.on("TrailSlideView:clickslidenext", self.onTrailSlideViewSlideClickNext, this);
+      app.dispatcher.on("TrailSlidesView:slideview", self.onTrailSlidesViewSlideView, this);
+      app.dispatcher.on("TrailSlidesView:clickslideprev", self.onTrailSlidesViewSlideClickPrev, this);
+      app.dispatcher.on("TrailSlidesView:clickslidenext", self.onTrailSlidesViewSlideClickNext, this);
       
       this.nTrailView = SLIDE_VIEW;
       this.nTitleState = TITLE_OFF;
@@ -66,9 +66,9 @@ define([
       this.trailStatsView = new TrailStatsView({ el: '#trail_stats_view', model: this.model });
       this.trailAltitudeView = new TrailAltitudeView({ el: '#trail_altitude_view', model: this.model });
       this.trailMiniMapView = new TrailMiniMapView({ el: '#trail_minimap_view', model: this.model });
-      this.trailMiniSlideView = new TrailMiniSlideView({ el: '#trail_minislide_view', model: this.model });
+      this.trailMiniSlidesView = new TrailMiniSlidesView({ el: '#trail_minislides_view', model: this.model });
   
-      this.trailSlideView = new TrailSlideView({ el: '#trail_slide_view', model: this.mediaModel });
+      this.trailSlidesView = new TrailSlidesView({ el: '#trail_slides_view', model: this.mediaModel });
       this.trailMapView = new TrailMapView({ el: '#trail_map_view', elCntrls: '#view_map_btns', model: this.model });
       
       this.trailWeatherView = new TrailWeatherView({ el: '#trail_weather_view', model: this.model });
@@ -209,8 +209,8 @@ define([
       }      
       
       if (this.bPlayerReady) {
-        this.trailSlideView.render();
-        this.trailMiniSlideView.render();
+        this.trailSlidesView.render();
+        this.trailMiniSlidesView.render();
         this.trailStatsView.render();
         this.trailAltitudeView.render();
       }
@@ -248,8 +248,8 @@ define([
         self.trailMiniMapView.addMedia(model);
         self.trailMapView.addMedia(model);
         
-        self.trailMiniSlideView.addMedia(model);
-        self.trailSlideView.addMedia(model);
+        self.trailMiniSlidesView.addMedia(model);
+        self.trailSlidesView.addMedia(model);
         
         self.trailAltitudeView.addMedia(model);
         self.trailWeatherView.render();
@@ -385,8 +385,8 @@ define([
       this.gotoMedia(nSlide);
     },    
     gotoMedia: function(nSlide){
-      this.trailMiniSlideView.gotoSlide(nSlide);    
-      this.trailSlideView.gotoSlide(nSlide);
+      this.trailMiniSlidesView.gotoSlide(nSlide);    
+      this.trailSlidesView.gotoSlide(nSlide);
       
       this.trailMiniMapView.gotoMedia(nSlide);
       this.trailMapView.gotoMedia(nSlide);
@@ -397,8 +397,8 @@ define([
       
       // render next slide to avoid stalling when in slide show
       if (nSlide < this.mediaCollection.length-1) {
-        this.trailMiniSlideView.render(nSlide+1);    
-        this.trailSlideView.render(nSlide+1);
+        this.trailMiniSlidesView.render(nSlide+1);    
+        this.trailSlidesView.render(nSlide+1);
       }        
       
       this.updatePlayerHeight();      
@@ -527,13 +527,13 @@ define([
             }
           }
           
-          this.trailMiniSlideView.hide();
+          this.trailMiniSlidesView.hide();
           this.trailMiniMapView.show();
           this.trailMiniMapView.render();
           
           this.trailMapView.hide();
-          this.trailSlideView.show();
-          this.trailSlideView.render();
+          this.trailSlidesView.show();
+          this.trailSlidesView.render();
           
           this.showTitle();
           break;
@@ -550,9 +550,9 @@ define([
           }
           
           this.trailMiniMapView.hide();
-          this.trailMiniSlideView.show();
-          this.trailMiniSlideView.render();
-          this.trailSlideView.hide();
+          this.trailMiniSlidesView.show();
+          this.trailMiniSlidesView.render();
+          this.trailSlidesView.hide();
           
           this.trailMapView.show();
           this.trailMapView.render();
@@ -594,7 +594,7 @@ define([
           break;
       }
     },
-    onTrailSlideViewSlideView: function(){
+    onTrailSlidesViewSlideView: function(){
       var self = this;
       
       // start timer
@@ -614,11 +614,11 @@ define([
         this.bFirstSlide = false;
       }
     },    
-    onTrailSlideViewSlideClickPrev: function(){
+    onTrailSlidesViewSlideClickPrev: function(){
       this.stopSlideShow();
       this.prevSlide();         
     },
-    onTrailSlideViewSlideClickNext: function(){
+    onTrailSlidesViewSlideClickNext: function(){
       this.stopSlideShow();
       this.nextSlide();         
     },

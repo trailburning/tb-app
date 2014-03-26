@@ -294,9 +294,9 @@ html.touch #small_sponsor_bar {
   background-color: transparent; 
 }
 
-/* TRAIL MINI SLIDE VIEW */
+/* TRAIL MINI SLIDES VIEW */
 /******************************************/
-#trail_minislide_view {
+#trail_minislides_view {
   display: none;
   position: absolute;
   top: 5px;
@@ -305,14 +305,14 @@ html.touch #small_sponsor_bar {
   height: 204px;
 }
 
-#minislide .photos_container {  
+#minislides .photos_container {  
   position: absolute;
   width: 100%;
   height: 100%;
   overflow: hidden;
 }
 
-#minislide .image_container {
+#minislides .image_container {
   position: absolute;
   opacity: 0;
   top: 0px;
@@ -322,9 +322,9 @@ html.touch #small_sponsor_bar {
   overflow: hidden;  
 }
 
-/* TRAIL SLIDE VIEW */
+/* TRAIL SLIDES VIEW */
 /******************************************/
-#trail_slide_view {
+#trail_slides_view {
   position: absolute;
   top: 0px;
   left: 0px;
@@ -333,14 +333,14 @@ html.touch #small_sponsor_bar {
   overflow: hidden;  
 }
 
-#trail_slide_view .photos_container {  
+#trail_slides_view .photos_container {  
   position: relative;  
   width: 100%;
   height: 100%;  
   overflow: hidden;  
 }
 
-#trail_slide_view .image_container {
+#trail_slides_view .image_container {
   position: absolute;
   opacity: 0;  
   top: 0px;
@@ -350,11 +350,11 @@ html.touch #small_sponsor_bar {
   overflow: hidden;
 }
 
-#trail_slide_view .image_container img {
+#trail_slides_view .image_container img {
   width: 100%;
 }
 
-#trail_slide_view .slide_btns { 
+#trail_slides_view .slide_btns { 
   position: absolute;
   top: 0px;
   left: 0px;
@@ -362,7 +362,7 @@ html.touch #small_sponsor_bar {
   height: 100%;
 }
 
-#trail_slide_view .slide_btns .left { 
+#trail_slides_view .slide_btns .left { 
   position: absolute;
   top: 0px;
   left: 0px;
@@ -370,7 +370,7 @@ html.touch #small_sponsor_bar {
   height: 100%;
 }
 
-#trail_slide_view .slide_btns .right { 
+#trail_slides_view .slide_btns .right { 
   position: absolute;
   top: 0px;
   right: 0px;
@@ -378,7 +378,7 @@ html.touch #small_sponsor_bar {
   height: 100%;
 }
 
-#trail_slide_view .loader_container {
+#trail_slides_view .loader_container {
   display: none;
   position: absolute;
   top: 50%;
@@ -387,7 +387,7 @@ html.touch #small_sponsor_bar {
   height: 100%;
 }
 
-#trail_slide_view .loader {
+#trail_slides_view .loader {
   margin: -44px auto 0px auto;
   width: 88px;
   height: 88px;
@@ -1139,10 +1139,10 @@ html.touch #trailplayer #view_map_btns {
   #trail_minimap_view #minimap {
     width: 222px;
   }
-  #trail_minislide_view {
+  #trail_minislides_view {
     width: 222px;
   }
-  #minislide .image_container {
+  #minislides .image_container {
     width: 222px;
   }  
   .panel_content {

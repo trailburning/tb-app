@@ -1,14 +1,14 @@
 define([
   'underscore', 
   'backbone',
-  'views/TrailSlidePhotoView'
-], function(_, Backbone, TrailSlidePhotoView){
+  'views/TrailSlideView'
+], function(_, Backbone, TrailSlideView){
 
-  var TrailMiniSlideView = Backbone.View.extend({
+  var TrailMiniSlidesView = Backbone.View.extend({
     initialize: function(){
-      this.template = _.template($('#trailMiniSlideViewTemplate').text());
+      this.template = _.template($('#trailMiniSlidesViewTemplate').text());
       
-      app.dispatcher.on("TrailSlidePhotoView:imageready", this.onSlidePhotoReady, this);
+      app.dispatcher.on("TrailSlideView:imageready", this.onSlideReady, this);
       
       this.bRendered = false;        
       this.arrSlidePhotos = [];
@@ -39,7 +39,7 @@ define([
       this.checkSlideState();      
     },    
     addMedia: function(mediaModel){
-      var photoView = new TrailSlidePhotoView({ model: mediaModel, type: 1 });
+      var photoView = new TrailSlideView({ model: mediaModel, type: 1 });
       this.arrSlidePhotos.push(photoView);
     },    
     render: function(){
@@ -88,22 +88,22 @@ define([
         photoView.show();
       }
     },
-    onSlidePhotoReady: function(trailSlidePhotoView){
-      if (trailSlidePhotoView.nType != 1) {
+    onSlideReady: function(trailSlideView){
+      if (trailSlideView.nType != 1) {
         return;
       }
       
-      var nCurrCID = trailSlidePhotoView.model.cid;      
+      var nCurrCID = trailSlideView.model.cid;      
       var photoView = this.arrSlidePhotos[this.nCurrSlide];
       if (photoView) {
         nCurrCID = photoView.model.cid;
       }
-      if (nCurrCID == trailSlidePhotoView.model.cid) {        
+      if (nCurrCID == trailSlideView.model.cid) {        
         this.bSlideReady = true;
         this.checkSlideState();
       }      
     }        
   });
 
-  return TrailMiniSlideView;
+  return TrailMiniSlidesView;
 });
