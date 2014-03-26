@@ -14,6 +14,8 @@ define([
     });    
     handleResize();        
     
+    $('#footerview').show();
+    
     $('#search_field').focus(function(evt) {
       $('#search_field').val('not just yet...');
       event.preventDefault();
