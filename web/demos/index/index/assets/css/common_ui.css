@@ -519,7 +519,7 @@ h4.tb {
   border-bottom-color: #C2C2C2;
 }
 
-#headerview .navbar .nav .dropdown-menu li .avatar {
+#headerview .navbar .nav .dropdown-menu li .tb-avatar {
   float: left;
   margin-top: 8px;
   margin-bottom: 8px;
@@ -529,6 +529,44 @@ h4.tb {
 #headerview .navbar .nav .dropdown-menu li .note {
   min-height: 62px;
   margin-top: 12px;
+}
+
+/* TB COMMON STYLES */
+/******************************************/
+.tb-avatar {
+  width: 48px;
+  height: 48px;
+  box-shadow: 1px 1px 1px #888888;
+  background: #FFF;
+  border-radius: 50%;
+  overflow: hidden;		
+}
+
+.tb-avatar-highlight {
+  width: 76px;
+  height: 76px;
+}
+
+.tb-avatar-feature {
+  width: 128px;
+  height: 128px;
+}
+
+.tb-avatar-profile {
+  width: 210px;
+  height: 210px;
+}
+
+.tb-avatar .photo {
+  margin: 4%;
+  width: 92%;
+  height: 92%;
+  border-radius: 50%;
+  overflow: hidden;	
+}
+
+.tb-avatar .photo img {
+  width: 100%;
 }
 
 /* FOOTER */

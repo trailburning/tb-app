@@ -214,7 +214,7 @@ border-width:1px;
   padding-top: 20px;	
 }
 
-.trails_content .trailers .avatars .avatar {
+.trails_content .trailers .avatars .tb-avatar {
   display: inline-block;
   margin: 0px 9px 0px 9px;
 }
@@ -320,6 +320,11 @@ border-width:1px;
 
 img {
   max-width: none;
+}
+
+.summary .tb-avatar {
+  float: left;
+  margin-top: 5px;
 }
 
 .avatar {
