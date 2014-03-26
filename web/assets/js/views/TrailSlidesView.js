@@ -23,24 +23,23 @@ define([
     hide: function(){
       $(this.el).hide();
     },
-    renderSlide: function(nSlide){
-      var photoView = this.arrSlidePhotos[nSlide];
-      photoView.render($('#appview').width());            
-    },        
     gotoSlide: function(nSlide){
-      this.bSlideReady = false;     
-      this.bWaitingForSlide = true;
-                    
+      this.bSlideReady = false;
+      this.bWaitingForSlide = true;     
+      
       this.nOldSlide = this.nCurrSlide;  
       this.nCurrSlide = nSlide;
-
-      this.renderSlide(this.nCurrSlide);
       
-      this.checkSlideState();      
+      var photoView = this.arrSlidePhotos[nSlide];
+      if (!photoView.isLoaded()) {
+	    $('#tb-loader-overlay').fadeIn();      		      	
+      }
+      photoView.load();      
     },    
     addMedia: function(mediaModel){
       var photoView = new TrailSlideView({ model: mediaModel, type: 0 });
       this.arrSlidePhotos.push(photoView);
+      photoView.render($('#appview').width());
     },
     render: function(){
       if (!this.model) {
@@ -114,7 +113,7 @@ define([
         });      
       }
     },
-    checkSlideState: function(){
+    checkpoint: function(){
       var self = this;
 
       if (this.bSlideReady && this.bWaitingForSlide) {
@@ -132,27 +131,35 @@ define([
         photoView = this.arrSlidePhotos[this.nCurrSlide];        
         photoView.show();
         
+	    // pre-load next slide
+	    var nNextSlide = 0;
+	    if (this.nCurrSlide+1 >= this.arrSlidePhotos.length) {
+	      nNextSlide = 0;      		
+	    }
+	    else {
+	      nNextSlide = this.nCurrSlide+1; 
+	    }
+        var photoNextView = this.arrSlidePhotos[nNextSlide];
+        photoNextView.load();        
+        
         // fire event
         app.dispatcher.trigger("TrailSlidesView:slideview", this);                
-      }
-      
-      if (this.bWaitingForSlide) {
-	    $('#tb-loader-overlay').fadeIn();      		
       }
     },    
     onSlideReady: function(trailSlideView){   
       if (trailSlideView.nType != 0) {
         return;
       }
-         
-      var nCurrCID = trailSlideView.model.cid;      
+                  
+      var nCurrCID = trailSlideView.model.cid;
       var photoView = this.arrSlidePhotos[this.nCurrSlide];
       if (photoView) {
         nCurrCID = photoView.model.cid;
       }      
+      
       if (nCurrCID == trailSlideView.model.cid) {        
         this.bSlideReady = true;
-        this.checkSlideState();
+        this.checkpoint();
       }      
     }
   });

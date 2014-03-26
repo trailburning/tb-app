@@ -173,7 +173,7 @@ define([
       if (nPlayerHeight < MIN_HEIGHT) {
         nPlayerHeight = MIN_HEIGHT;
       }
-
+      
       // height of white bar
       nPlayerHeight -= 8;
       this.nPlayerHeight = nPlayerHeight;
@@ -184,9 +184,9 @@ define([
         $('#trailplayer').height(this.nPlayerHeight - PLAYER_REDUCE_HEIGHT);            
       }      
 
-      $('#trail_slide_view').height(this.nPlayerHeight);
+      $('#trail_slides_view').height(this.nPlayerHeight);
       // force height update for imageScale
-      $('#trail_slide_view .image_container').height(this.nPlayerHeight);
+      $('#trail_slides_view .image_container').height(this.nPlayerHeight);
 
       $('#trail_map_view').height(this.nPlayerHeight);
       // force height update for MapBox
@@ -526,7 +526,7 @@ define([
               $('#view_toggle .button').addClass('view_map_hover');        
             }
           }
-          
+                    
           this.trailMiniSlidesView.hide();
           this.trailMiniMapView.show();
           this.trailMiniMapView.render();
