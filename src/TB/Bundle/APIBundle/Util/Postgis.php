@@ -141,11 +141,12 @@ class Postgis extends \PDO
                      r.region AS region, 
                      r.length as length,
                      r.tags as rtags,
+                     r.about,
                      ST_AsText(ST_Centroid(ST_MakeLine(rp.coords ORDER BY rp.point_number ASC))) as centroid,
                      ST_AsText(Box2D(ST_MakeLine(rp.coords ORDER BY rp.point_number ASC))) as bbox
               FROM routes r, route_points rp
               WHERE r.id=? AND rp.route_id=r.id
-              GROUP BY name, length, r.tags, r.slug, r.region";
+              GROUP BY name, length, r.tags, r.slug, r.region, r.about";
         $pq = $this->prepare($q);
         $success = $pq->execute(array($route_id));
         if (!$success) {
@@ -160,6 +161,7 @@ class Postgis extends \PDO
             $route->setRegion($row['region']);
             $route->setBBox($row['bbox']);
             $route->setLength($row['length']);
+            $route->setAbout($row['about']);
             $c = explode(" ", substr(trim($row['centroid']),6,-1));
             $route->setCentroid(new Point($c[0], $c[1], 4326)); 
             $tags = json_decode('{' . str_replace('"=>"', '":"', $row['rtags']) . '}', true);
@@ -198,7 +200,7 @@ class Postgis extends \PDO
     
     public function readRoutes($user_id, $count = null, $route_type_id = null, $route_category_id = null, $publish = null) 
     {
-        $q = 'SELECT r.id, r.name, r.slug, r.region, r.length, ST_X(r.centroid) AS long, ST_Y(r.centroid) AS lat, r.tags, rt.name AS rt_name, rc.name AS rc_name
+        $q = 'SELECT r.id, r.name, r.slug, r.region, r.length, ST_X(r.centroid) AS long, ST_Y(r.centroid) AS lat, r.tags, rt.name AS rt_name, rc.name AS rc_name, r.about
               FROM routes r
               LEFT JOIN route_type rt ON r.route_type_id=rt.id
               LEFT JOIN route_category rc ON r.route_category_id=rc.id
@@ -250,6 +252,7 @@ class Postgis extends \PDO
             $route->setRegion($row['region']);
             $route->setLength($row['length']);
             $route->setCentroid(new Point($row['long'], $row['lat'], 4326)); 
+            $route->setAbout($row['about']);
             $tags = json_decode('{' . str_replace('"=>"', '":"', $row['tags']) . '}', true);
             $route->setTags($tags);
             if ($row['rc_name'] != '') {
