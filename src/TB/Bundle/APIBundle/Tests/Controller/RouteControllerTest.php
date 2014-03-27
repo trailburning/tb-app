@@ -160,7 +160,6 @@ class RouteControllerTest extends AbstractApiTestCase
         $this->assertJsonResponse($client);
     }
     
-    
     /**
      * Test 404 Response for not existing User
      */
