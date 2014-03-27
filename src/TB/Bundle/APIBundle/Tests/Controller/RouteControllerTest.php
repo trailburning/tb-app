@@ -161,32 +161,6 @@ class RouteControllerTest extends AbstractApiTestCase
     }
     
     /**
-     * Test the GET /route/user/{id} action
-     */
-    public function testGetRoutesByUser()
-    {
-        $this->loadFixtures([
-            'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData',
-        ]);
-        
-        // Get User from DB with the slug "mattallbeury"..
-        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $user = $em
-            ->getRepository('TBFrontendBundle:User')
-            ->findOneByName('mattallbeury');
-        
-        if (!$user) {
-            $this->fail('Missing User with name "mattallbeury" in test DB');
-        }
-        
-        $client = $this->createClient();
-        $crawler = $client->request('GET', '/v1/routes/user/' . $user->getId());
-        $this->assertEquals(Response::HTTP_OK,  $client->getResponse()->getStatusCode());
-          
-        $this->assertJsonResponse($client);
-    }
-    
-    /**
      * Test 404 Response for not existing User
      */
     public function testGetRoutesByUser404()
