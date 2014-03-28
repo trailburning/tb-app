@@ -854,6 +854,7 @@ class Route
         $route .= '"slug": "'.$this->getSlug().'",';     
         $route .= '"region": "'.$this->getRegion().'",';     
         $route .= '"length": "'.$this->getLength().'",';
+        $route .= '"about": "'.$this->getAbout().'",';
         $route .= '"centroid": ['.$this->getCentroid()->getLongitude().', '.$this->getCentroid()->getLatitude().'],';
         if ($this->getBBox() !== null) {
             $route .= '"bbox": "'.$this->getBBox().'",';
