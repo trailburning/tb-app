@@ -48,16 +48,22 @@ var TB_TRAIL_ID = {{ trail.id }};
   	  	</div>        
         
         <div id="trail_info">   
-            {% if user.avatar %}
-                <div class="trail_avatar">                	
-                	<div class="tb-avatar tb-avatar-feature"><div class="photo"><a href="{{ path('profile', {'name': user.name}) }}"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/{{ user.name }}/avatar.jpg"></a></div></div>                	
-                </div>    
-            {% elseif user.avatarGravatar %}
-                <div class="trail_avatar">                	
-                	<div class="tb-avatar tb-avatar-feature"><div class="photo"><a href="{{ path('profile', {'name': user.name}) }}"><img src="{{ user.avatarGravatar }}"></a></div></div>                	
-                </div>    
+        	
+        	{% if event %}
+        	{% else %}
+	            <div class="trail_avatar">
+	            	<div class="tb-avatar tb-avatar-feature"><div class="photo"><a href="{{ path('profile', {'name': user.name}) }}">                	
+	            {% if user.avatar %}
+	            	<img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/{{ user.name }}/avatar.jpg">                		               
+	            {% elseif user.avatarGravatar %}
+	                <img src="{{ user.avatarGravatar }}">                	
+        	  	{% else %}
+            		<img src="{{ asset('assets/img/avatar_man.jpg') }}">	                
+	            {% endif %}
+	            	</a></div></div>
+	            </div>
             {% endif %}
-            <div class="trail_title{% if not user.avatar and not user.avatarGravatar %} no_avatar{% endif %}">
+            <div class="trail_title{% if event %} no_avatar{% endif %}">
                 {% if event %}
                     <h2 class="tb tb-title">{{ event.title }}</h2>
                     <br/>

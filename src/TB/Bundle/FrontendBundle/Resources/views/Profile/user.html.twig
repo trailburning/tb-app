@@ -22,7 +22,12 @@ var TB_USER_LAT = {{ user.location.latitude }};
 	<div class="crumb_content fixed_content">
 	  <div id="bigbar">
         {{ include('TBFrontendBundle:Default:breadcrumb.html.twig', breadcrumb) }}
-        {{ include('TBFrontendBundle:Default:share.html.twig') }}
+
+		{% if app.user %}		        
+			{{ include('TBFrontendBundle:Default:shareProfile.html.twig') }}
+		{% else %}		        
+        	{{ include('TBFrontendBundle:Default:share.html.twig') }}
+        {% endif %}        
       </div>
     </div>
                         
@@ -48,7 +53,7 @@ var TB_USER_LAT = {{ user.location.latitude }};
 	            </div>
 	          	</a>
 		      	<div class="summary">
-		          <div class="tb-avatar"><div class="photo"><a href="profile/{{ user.name }}">		          	
+		          <div class="tb-avatar"><div class="photo"><a href="{{ path('profile', {'name': user.name}) }}">		          	
             	  {% if user.avatar %}
                 	<img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/{{ user.name }}/avatar.jpg">
             	  {% elseif user.avatarGravatar %}

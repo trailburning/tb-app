@@ -18,7 +18,7 @@ var TB_EDITORIAL_TRAILS = [
 
 <div id="big_sponsor_bar">
 	<div class="sponsor_content">
-		<div class="link"><a href="{{ app.request.baseUrl }}/"><img src="{{ asset('assets/img/sponsor/arrow_big.png') }}">&nbsp;&nbsp;&nbsp;&nbsp;Back to home page</a></div>
+		<div class="link"><a href="{{ app.request.baseUrl }}/"><img src="{{ asset('assets/img/sponsor/arrow_big.png') }}">&nbsp;&nbsp;&nbsp;&nbsp;Back to Home page</a></div>
 		<div class="brand">
 			<div class="strap">#Inspire brought to you by</div>
 			<div class="logo"><a href="{{ path('profile', {'name': 'ashmei'}) }}"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/ashmei/editorial_sponsor_logo_big.png" border="0"></a></div>
@@ -28,7 +28,7 @@ var TB_EDITORIAL_TRAILS = [
 
 <div id="small_sponsor_bar">
 	<div class="sponsor_content">
-		<div class="link"><a href="{{ app.request.baseUrl }}/"><img src="{{ asset('assets/img/sponsor/arrow_small.png') }}">&nbsp;&nbsp;&nbsp;&nbsp;Back to home page</a></div>
+		<div class="link"><a href="{{ app.request.baseUrl }}/"><img src="{{ asset('assets/img/sponsor/arrow_small.png') }}">&nbsp;&nbsp;&nbsp;&nbsp;Back to Home page</a></div>
 		<div class="brand">
 			<div class="strap">#Inspire brought to you by</div>
 			<div class="logo"><a href="{{ path('profile', {'name': 'ashmei'}) }}"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/ashmei/editorial_sponsor_logo_small.png" border="0"></a></div>
@@ -89,14 +89,14 @@ So as a dedication to all those who would also like to pat the cow and ‘get lo
 				</p>
 				
 				{% elseif editorial.id == 6 %}
-				<h4 class="tb">
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed leo nibh, dignissim quis purus quis, auctor pharetra tortor. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Proin ultricies lectus id erat blandit ultricies. Nulla hendrerit tellus massa, non ultricies nisl porta vitae. Vivamus vel magna ac arcu ultrices sollicitudin. Nulla id aliquam eros. Sed ornare sagittis est, eget adipiscing sem pretium vitae.
+				<h4 class="tb">				  				
+For almost 30 years I lived in this city - Adelaide, barely looking to the surrounding hills.  But discovering the treasures they hold I liken to a child’s first visit to Disneyland.      
 				</h4>
 				<p>
-Fusce mattis sed orci et imperdiet. Suspendisse lorem massa, pulvinar vel est sed, mollis molestie tortor. Aliquam erat volutpat. Proin non orci non metus fringilla condimentum. Morbi tincidunt facilisis purus a feugiat. Quisque quis mauris suscipit, feugiat nulla ac, pellentesque ipsum. Mauris eu eros nunc. Morbi cursus dictum mi sit amet ullamcorper. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec tempus consequat quam at consequat.
+Initially it was cycling with mates at dawn through the extremely accessible hills roads whilst training for a triathlon, the true passion however came on my first long trail run through the hills.  Exploring a small section of the many trails, seeing an abundance of wildlife including kangaroos, koalas and cockatoos, going back to the pure innocence of childhood where all my adult-life worries simply left me.  That first trail run showed me that to run wild is to truly live!    
 				</p>
 				<p>
-Suspendisse potenti. Donec nec ante sit amet eros rutrum sollicitudin ac at risus. Nam posuere molestie nisi, non gravida dui lacinia a. Fusce molestie massa eros, ullamcorper adipiscing eros tincidunt vitae. Nam et augue nisl. Vestibulum sapien tellus, adipiscing et ipsum id, suscipit hendrerit ligula. Mauris a elit sollicitudin, malesuada tellus at, viverra lorem.
+Since then I’ve discovered a vibrant trail running community and a selection of world class running events - such as the Yurrebilla Ultramarathon, a 56km event that links numerous trails and yet never ventures more than 12km from the Adelaide CBD.  Now, whenever I visit a city I look out, out to the surrounding countryside, and wonder what hidden trails may be out there.  Enough wondering, get out there and run wild...
 				</p>
 				{% endif %}
 				
@@ -195,76 +195,6 @@ Suspendisse potenti. Donec nec ante sit amet eros rutrum sollicitudin ac at risu
 							</p>
 							<p>
 							<a href="http://www.uelisteck.ch" target="_blank">Ueli Steck</a> - 'The Swiss Machine' refers to the Eiger Ultra Trail as 'harder than the North Face solo'.  Considering Ueli's speed record of the <a href="http://www.youtube.com/watch?v=OmGcRIIIxK8" target="_blank">North Face</a> that certainly says something about the event!
-							</p>
-				  			</div>
-				  			</div>				
-				  		</div>		       	
-			        	{% endif %}	        		
-                    {% endfor %}
-                    
-                	{% for route in routes %}
-						{% if route.id == 164 %}
-						<div class="editorial_card">
-							<div class="sticker_container">			
-							{{ include('TBFrontendBundle:Trail:editorial_trailcard.html.twig', {route: route, editorial: editorial}) }}
-							</div>
-							
-							<div class="card_column_wrapper column_wrapper">
-				  			<div class="columns">	
-							<h4 class="tb">				  				
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed leo nibh, dignissim quis purus quis, auctor pharetra tortor. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Proin ultricies lectus id erat blandit ultricies. Nulla hendrerit tellus massa, non ultricies nisl porta vitae. Vivamus vel magna ac arcu ultrices sollicitudin.
-							</h4>
-							<p>
-Fusce mattis sed orci et imperdiet. Suspendisse lorem massa, pulvinar vel est sed, mollis molestie tortor. Aliquam erat volutpat. Proin non orci non metus fringilla condimentum. Morbi tincidunt facilisis purus a feugiat. Quisque quis mauris suscipit, feugiat nulla ac, pellentesque ipsum. Mauris eu eros nunc. Morbi cursus dictum mi sit amet ullamcorper. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec tempus consequat quam at consequat.
-							</p>
-							<p>
-Suspendisse potenti. Donec nec ante sit amet eros rutrum sollicitudin ac at risus. Nam posuere molestie nisi, non gravida dui lacinia a. Fusce molestie massa eros, ullamcorper adipiscing eros tincidunt vitae. Nam et augue nisl. Vestibulum sapien tellus, adipiscing et ipsum id, suscipit hendrerit ligula. Mauris a elit sollicitudin, malesuada tellus at, viverra lorem.
-							</p>
-							</div>
-							</div>						
-						</div>							
-			        	{% endif %}	        		
-                    {% endfor %}
-                    
-                	{% for route in routes %}
-						{% if route.id == 123 %}          
-						<div class="editorial_card align_right">      	
-							<div class="card_column_wrapper column_wrapper">
-				  			<div class="columns">
-							<h4 class="tb">				  				
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed leo nibh, dignissim quis purus quis, auctor pharetra tortor. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Proin ultricies lectus id erat blandit ultricies. Nulla hendrerit tellus massa, non ultricies nisl porta vitae. Vivamus vel magna ac arcu ultrices sollicitudin.
-							</h4>
-							<p>
-Fusce mattis sed orci et imperdiet. Suspendisse lorem massa, pulvinar vel est sed, mollis molestie tortor. Aliquam erat volutpat. Proin non orci non metus fringilla condimentum. Morbi tincidunt facilisis purus a feugiat. Quisque quis mauris suscipit, feugiat nulla ac, pellentesque ipsum. Mauris eu eros nunc. Morbi cursus dictum mi sit amet ullamcorper. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec tempus consequat quam at consequat.
-							</p>
-							<p>
-Suspendisse potenti. Donec nec ante sit amet eros rutrum sollicitudin ac at risus. Nam posuere molestie nisi, non gravida dui lacinia a. Fusce molestie massa eros, ullamcorper adipiscing eros tincidunt vitae. Nam et augue nisl. Vestibulum sapien tellus, adipiscing et ipsum id, suscipit hendrerit ligula. Mauris a elit sollicitudin, malesuada tellus at, viverra lorem.
-							</p>
-							</div>
-							</div>
-							<div class="sticker_container">			
-							{{ include('TBFrontendBundle:Trail:editorial_trailcard.html.twig', {route: route, editorial: editorial}) }}
-							</div>
-						</div>				
-			        	{% endif %}	        		
-                    {% endfor %}
-                    
-                	{% for route in routes %}
-						{% if route.id == 56 %}    
-						<div class="editorial_card">
-							<div class="sticker_container">			
-							{{ include('TBFrontendBundle:Trail:editorial_trailcard.html.twig', {route: route, editorial: editorial}) }}
-							</div>     
-							<div class="card_column_wrapper column_wrapper">
-				  			<div class="columns">
-							<h4 class="tb">				  				
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed leo nibh, dignissim quis purus quis, auctor pharetra tortor. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Proin ultricies lectus id erat blandit ultricies. Nulla hendrerit tellus massa, non ultricies nisl porta vitae. Vivamus vel magna ac arcu ultrices sollicitudin.
-							</h4>
-							<p>
-Fusce mattis sed orci et imperdiet. Suspendisse lorem massa, pulvinar vel est sed, mollis molestie tortor. Aliquam erat volutpat. Proin non orci non metus fringilla condimentum. Morbi tincidunt facilisis purus a feugiat. Quisque quis mauris suscipit, feugiat nulla ac, pellentesque ipsum. Mauris eu eros nunc. Morbi cursus dictum mi sit amet ullamcorper. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec tempus consequat quam at consequat.
-							</p>
-							<p>
-Suspendisse potenti. Donec nec ante sit amet eros rutrum sollicitudin ac at risus. Nam posuere molestie nisi, non gravida dui lacinia a. Fusce molestie massa eros, ullamcorper adipiscing eros tincidunt vitae. Nam et augue nisl. Vestibulum sapien tellus, adipiscing et ipsum id, suscipit hendrerit ligula. Mauris a elit sollicitudin, malesuada tellus at, viverra lorem.
 							</p>
 				  			</div>
 				  			</div>				

@@ -22,7 +22,12 @@ var TB_USER_LAT = {{ user.location.latitude }};
 	<div class="crumb_content fixed_content">
 	  <div id="bigbar">
         {{ include('TBFrontendBundle:Default:breadcrumb.html.twig', breadcrumb) }}
-        {{ include('TBFrontendBundle:Default:share.html.twig') }}
+        
+		{% if app.user %}		        
+			{{ include('TBFrontendBundle:Default:shareProfile.html.twig') }}
+		{% else %}		        
+        	{{ include('TBFrontendBundle:Default:share.html.twig') }}
+        {% endif %}        
       </div>
     </div>
                         
@@ -297,7 +302,7 @@ var TB_USER_LAT = {{ user.location.latitude }};
 			 	</div>						 	
 			  </div>
 			</div>
-      		<div class="discover"><a href="index" class="btn btn-tb btn-tb-mega">Discover Trails</a></div>                        
+      		<div class="discover"><a href="{{ app.request.baseUrl }}/about" class="btn btn-tb btn-tb-mega">Discover Trails</a></div>                        
 		{% endif %}    	
 		  </div>    		
     	</div>
