@@ -129,13 +129,8 @@ html.touch #small_sponsor_bar {
   color: #6D6E71;
 }
 
-.editorial .avatar {
+.editorial .tb-avatar {
   float: right;
-  width: 128px;
-}
-
-.editorial .avatar img {
-  width: 100%;
 }
 
 .editorial .hero {
