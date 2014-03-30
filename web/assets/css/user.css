@@ -59,8 +59,8 @@ border-width:1px;
 #profile_header .profile_info {
   z-index: 1000;
   position: absolute;
-  top: 42px;
-  left: 32px;
+  top: 24px;
+  left: 24px;
   color: #44b6f7;
 }
 
