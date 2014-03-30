@@ -36,7 +36,7 @@ define([
     addMedia: function(mediaModel){
       var photoView = new TrailSlideView({ model: mediaModel, type: 1 });
       this.arrSlidePhotos.push(photoView);
-      photoView.render($(this.el).width);
+      photoView.render();
     },    
     render: function(){
       if (!this.model) {
@@ -48,7 +48,7 @@ define([
         // update container width
         if (this.nCurrSlide >= 0) {
           var photoView = this.arrSlidePhotos[this.nCurrSlide];
-          photoView.render($(this.el).width);
+          photoView.render();
         }
         return;         
       }        
@@ -81,7 +81,7 @@ define([
           photoView.hide();        
         }
         photoView = this.arrSlidePhotos[this.nCurrSlide];
-        photoView.show();
+        photoView.show($(this.el).width);
       }
     },
     onSlideReady: function(trailSlideView){

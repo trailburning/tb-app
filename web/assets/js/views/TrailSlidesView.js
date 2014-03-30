@@ -129,7 +129,7 @@ define([
         }
                 
         photoView = this.arrSlidePhotos[this.nCurrSlide];        
-        photoView.show();
+        photoView.show($('#appview').width());
         
 	    // pre-load next slide
 	    var nNextSlide = 0;

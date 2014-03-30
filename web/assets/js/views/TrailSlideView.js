@@ -8,15 +8,16 @@ define([
       this.template = _.template($('#trailSlideViewTemplate').text());        
             
       this.nType = this.options.type;
-      this.nPanelWidth = 0;
       this.bLoaded = false;
       this.bRendered = false;
     },            
     isLoaded: function(){
       return this.bLoaded;
     },    	
-    show: function(){
+    show: function(nPanelWidth){
       $(this.el).show();
+            
+      $('.image_container', $(this.el)).width(nPanelWidth);
 	  // force scale      
       $("img.scale_image_ready", $(this.el)).imageScale();
       $('.image_container', $(this.el)).css('opacity', 1);
@@ -24,9 +25,7 @@ define([
     hide: function(){
       $('.image_container', $(this.el)).css('opacity', 0);      
     },
-    render: function(nPanelWidth){
-      this.nPanelWidth = nPanelWidth;      	
-      
+    render: function(){
       var self = this;
 
       if (this.bRendered) {
@@ -55,7 +54,6 @@ define([
 	    for ( var i = 0, len = imgLoad.images.length; i < len; i++ ) {
 	  	  $(imgLoad.images[i].img).addClass('scale_image_ready');
 	   	}	  			   	
-        $('.image_container', self.el).width(self.nPanelWidth);
         // fade in - delay adding class to ensure image is ready  
         $('.fade_on_load', $(self.el)).addClass('tb-fade');
 	   	
