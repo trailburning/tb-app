@@ -31,6 +31,12 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0px;
 }
 
+/* APP */
+/******************************************/
+#appview {
+  min-width: 1200px;
+}
+
 /* TB BUTTONS */
 /******************************************/
 a.btn {
@@ -973,6 +979,9 @@ form label {
   form label {
     font-size: 18px;
   }      
+  #appview {
+    min-width: 992px;
+  }    
   .tb-avatar-feature {
     width: 112px;
     height: 112px;
