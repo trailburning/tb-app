@@ -15,8 +15,10 @@ define([
     isLoaded: function(){
       return this.bLoaded;
     },    	
-    show: function(){    	
+    show: function(){
       $(this.el).show();
+	  // force scale      
+      $("img.scale_image_ready", $(this.el)).imageScale();
       $('.image_container', $(this.el)).css('opacity', 1);
     },
     hide: function(){
@@ -28,7 +30,6 @@ define([
       var self = this;
 
       if (this.bRendered) {
-        $('.image_container', this.el).width(this.nPanelWidth);
         return;
       }
 
@@ -55,8 +56,6 @@ define([
 	  	  $(imgLoad.images[i].img).addClass('scale_image_ready');
 	   	}	  			   	
         $('.image_container', self.el).width(self.nPanelWidth);
-        // update pos
-        $("img.scale_image_ready", $(self.el)).imageScale();
         // fade in - delay adding class to ensure image is ready  
         $('.fade_on_load', $(self.el)).addClass('tb-fade');
 	   	

@@ -49,8 +49,8 @@ define([
       // already rendered?  Just update
       if (this.bRendered) {
         // update container width
-        $('.image_container', this.el).width($('#appview').width());
         $('.photos_container', this.el).width($('#appview').width());        
+        $('.image_container', this.el).width($('#appview').width());
         if (this.nCurrSlide >= 0) {
           var photoView = this.arrSlidePhotos[this.nCurrSlide];
           photoView.render($('#appview').width());
