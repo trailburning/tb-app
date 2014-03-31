@@ -111,6 +111,16 @@ abstract class User extends BaseUser
     private $editorials;
     
     /**
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="myFollower")
+     **/
+    private $followMe;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="User", inversedBy="followMe")
+     **/
+    private $myFollower;
+    
+    /**
      * Constructor
      */
     public function __construct()
@@ -118,7 +128,8 @@ abstract class User extends BaseUser
         $this->routes = new \Doctrine\Common\Collections\ArrayCollection();
         $this->events = new \Doctrine\Common\Collections\ArrayCollection();
         $this->editorials = new \Doctrine\Common\Collections\ArrayCollection();
-        
+        $this->followMe = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->myFollower = new \Doctrine\Common\Collections\ArrayCollection();
         parent::__construct();
     }
     
@@ -485,5 +496,71 @@ abstract class User extends BaseUser
         } else {
             $this->setAvatarGravatar('');
         }
+    }
+
+    /**
+     * Add followMe
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\User $followMe
+     * @return User
+     */
+    public function addFollowMe(\TB\Bundle\FrontendBundle\Entity\User $followMe)
+    {
+        $this->followMe[] = $followMe;
+
+        return $this;
+    }
+
+    /**
+     * Remove followMe
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\User $followMe
+     */
+    public function removeFollowMe(\TB\Bundle\FrontendBundle\Entity\User $followMe)
+    {
+        $this->followMe->removeElement($followMe);
+    }
+
+    /**
+     * Get followMe
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getFollowMe()
+    {
+        return $this->followMe;
+    }
+
+    /**
+     * Add myFollower
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\User $myFollower
+     * @return User
+     */
+    public function addMyFollower(\TB\Bundle\FrontendBundle\Entity\User $myFollower)
+    {
+        $this->myFollower[] = $myFollower;
+
+        return $this;
+    }
+
+    /**
+     * Remove myFollower
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\User $myFollower
+     */
+    public function removeMyFollower(\TB\Bundle\FrontendBundle\Entity\User $myFollower)
+    {
+        $this->myFollower->removeElement($myFollower);
+    }
+
+    /**
+     * Get myFollower
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMyFollower()
+    {
+        return $this->myFollower;
     }
 }
