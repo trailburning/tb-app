@@ -387,22 +387,28 @@ class Media
     
     public function toJSON() 
     {
-        $media = '{';
-        $media .= '"id": "'.$this->getId().'",';
-        $media .= '"filename": "'.$this->getFilename().'",';
-        $media .= '"mimetype": "image/jpeg",';     
-        $media .= '"versions": [{"path": "' . $this->getPath() .'", "size": 0}],';
-        $media .= '"coords" : {"long": '.$this->getCoords()->getLongitude().',"lat": '.$this->getCoords()->getLatitude().'},';
-        $media .= '"tags": {';
-        $i=0;
-        foreach ($this->getTags() as $tag_name => $tag_value) {
-            if ($i++ != 0) {
-                $media.=',';
-            }
-            $media .= '"'.$tag_name.'": "'.$tag_value.'"';
-        }
-        $media .= '}}';
+        $media = new \StdClass;
+        $media->id = $this->getId();
+        $media->filename = $this->getFilename();
+        $media->mimetype = 'image/jpeg';     
         
-        return $media;
+        $version = new \StdClass();
+        $version->path = $this->getPath(); 
+        $version->size = 0;
+        $media->versions = array($version);
+        
+        $coords = new \StdClass();
+        $coords->long = $this->getCoords()->getLongitude();
+        $coords->lat = $this->getCoords()->getLatitude();
+        
+        $media->coords = $coords;
+        
+        $media->tags = new \StdClass;
+        
+        foreach ($this->getTags() as $tag_name => $tag_value) {
+             $media->tags->$tag_name = $tag_value;
+        }
+        
+        return json_encode($media);
     }
 }

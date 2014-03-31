@@ -17,6 +17,52 @@ class RouteTest extends WebTestCase
         return 'AppKernel';
     }
     
+    public function testToJSON()
+    {
+        $this->loadFixtures([
+            'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData',
+        ]); 
+
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        $route = $em
+            ->getRepository('TBFrontendBundle:Route')
+            ->findOneBySlug('grunewald');
+        
+        if (!$route) {
+            $this->fail('Missing Route with slug "grunewald" in test DB');
+        }
+        
+        $json = $route->toJSON();
+        
+        $obj = json_decode($json);
+        if ($obj === null) {
+            $this->fail('Route::toJSON() returns invalid JSON');
+        }
+        
+        $this->assertObjectHasAttribute('id', $obj, 
+            'JSON object contrains attribute "id"');
+        $this->assertObjectHasAttribute('name', $obj, 
+            'JSON object contrains attribute "name"');
+        $this->assertObjectHasAttribute('slug', $obj, 
+            'JSON object contrains attribute "slug"');
+        $this->assertObjectHasAttribute('region', $obj, 
+            'JSON object contrains attribute "region"');
+        $this->assertObjectHasAttribute('length', $obj, 
+            'JSON object contrains attribute "length"');
+        $this->assertObjectHasAttribute('about', $obj, 
+            'JSON object contrains attribute "about"');
+        $this->assertObjectHasAttribute('centroid', $obj, 
+            'JSON object contrains attribute "centroid"');
+        $this->assertObjectHasAttribute('type', $obj, 
+            'JSON object contrains attribute "type"');
+        $this->assertObjectHasAttribute('category', $obj, 
+            'JSON object contrains attribute "category"');
+        $this->assertObjectHasAttribute('tags', $obj, 
+            'JSON object contrains attribute "tags"');
+        $this->assertObjectHasAttribute('route_points', $obj, 
+            'JSON object contrains attribute "route_points"');
+    }
+    
     /**
      * Test update of entity from JSON object
      */
