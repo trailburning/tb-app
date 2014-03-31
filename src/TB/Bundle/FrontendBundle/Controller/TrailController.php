@@ -30,6 +30,29 @@ class TrailController extends Controller
     }
     
     /**
+     * @Route("/trail/{id}", requirements={"id" = "\d+"}, name="trail_id")
+     */
+    public function trailIdAction($id)
+    {
+        $query = $this->getDoctrine()->getManager()
+            ->createQuery('
+                SELECT r FROM TBFrontendBundle:Route r
+                WHERE r.slug != :slug 
+                AND r.id = :trailId')
+            ->setParameter('slug', '')    
+            ->setParameter('trailId', $id);
+        try {
+            $trail = $query->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            throw $this->createNotFoundException(
+                sprintf('Trail not found')
+            );
+        }
+       
+        return $this->redirect($this->generateUrl('trail', ['trailSlug' => $trail->getSlug()]), 301);
+    }
+    
+    /**
      * @Route("/trail/{trailSlug}", name="trail")
      * @Route("/inspire/{editorialSlug}/trail/{trailSlug}", name="editorial_trail")
      * @Template()

@@ -102,4 +102,37 @@ class TrailControllerTest extends BaseFrontendTest
         $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
     }
 
+    
+    /**
+     * Test Trail ID url redirect
+     */
+    public function testTrailId()
+    {
+        $this->loadFixtures([
+            'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData',
+        ]);
+        
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        $route = $em
+            ->getRepository('TBFrontendBundle:Route')
+            ->findOneBySlug('grunewald');
+        if (!$route) {
+            $this->fail('Missing Route with slug "grunewald" in test DB');
+        }
+
+        $client = $this->createClient();
+        $crawler = $client->request('GET', '/trail/' . $route->getId());
+        
+        $this->assertTrue($client->getResponse()->isRedirect(), 
+            'User is redirected to the slug-URL');
+
+        $crawler = $client->followRedirect();
+        
+        $this->assertEquals(Response::HTTP_OK,  $client->getResponse()->getStatusCode());
+        $this->assertGreaterThan(0,
+            $crawler->filter('h2.tb-title:contains("Grunewald")')->count());
+        $this->assertGreaterThan(0,
+            $crawler->filter('h2.tb-title:contains("Berlin")')->count());
+    }
+    
 }
