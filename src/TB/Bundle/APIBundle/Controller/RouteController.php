@@ -86,7 +86,7 @@ class RouteController extends AbstractRestController
         }
         
         $postgis = $this->get('postgis');
-        $routes = $postgis->readRoutes($userId, 10);
+        $routes = $postgis->readRoutes($userId, 10, null, null, true);
         $json_routes = array();
         foreach ($routes as $route) {
             $json_routes[] = $route->toJSON();
