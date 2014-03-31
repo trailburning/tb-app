@@ -848,66 +848,77 @@ class Route
      */
     public function toJSON() 
     {
-        $route = '{';
-        $route .= '"id": "'.$this->getId().'",';
-        $route .= '"name": "'.$this->getName().'",';
-        $route .= '"slug": "'.$this->getSlug().'",';     
-        $route .= '"region": "'.$this->getRegion().'",';     
-        $route .= '"length": "'.$this->getLength().'",';
-        $route .= '"about": "'.$this->getAbout().'",';
-        $route .= '"centroid": ['.$this->getCentroid()->getLongitude().', '.$this->getCentroid()->getLatitude().'],';
+        $route = new \StdClass();
+        $route->id = $this->getId();
+        $route->name = $this->getName();
+        $route->slug = $this->getSlug();     
+        $route->region = $this->getRegion();     
+        $route->length = $this->getLength();
+        $route->about = $this->getAbout();
+        $route->centroid = array($this->getCentroid()->getLongitude(), $this->getCentroid()->getLatitude());
+        
         if ($this->getBBox() !== null) {
-            $route .= '"bbox": "'.$this->getBBox().'",';
+            $route->bbox = $this->getBBox();
         }
+        
         if ($this->getRouteType() !== null) {
-            $routeType = $this->getRouteType()->getName();
+            
+            $route->type = $this->getRouteType()->getName();
         } else {
-            $routeType = '';
+            $route->type = '';
         }
-        $route .= '"type": "'. $routeType .'",';
+        
         if ($this->getRouteCategory() !== null) {
-            $routeCategory = $this->getRouteCategory()->getName();
+            $route->category = $this->getRouteCategory()->getName();
         } else {
-            $routeCategory = '';
+            $route->category = '';
         }
-        $route .= '"category": "'. $routeCategory .'",';
-        $route .= '"tags": {';
-        $i=0;
+        
+        $route->tags = new \StdClass();;
         foreach ($this->getTags() as $tag_name => $tag_value) {
-            if ($i++ != 0) {
-                $route.=',';
-            }
-            $route .= '"'.$tag_name.'": "'.$tag_value.'"';
+            $route->tags->$tag_name = $tag_value;
         }
-        $route .= '}';
         
         if (count($this->getRoutePoints()) > 0) {
-            $route .= ',"route_points" : [';
-            $i=0;
+            $route->route_points = array();;
             foreach ($this->getRoutePoints() as $rp) {
-                if ($i++ != 0) {
-                    $route.=',';
-                }
-                $route .= '{"coords" : ['.$rp->getCoords()->getLongitude().','.$rp->getCoords()->getLatitude().'], "tags" : {';
-                $j=0;
+                $routePoint = new \StdClass();
+                $routePoint->coords = array($rp->getCoords()->getLongitude() , $rp->getCoords()->getLatitude());
+                $routePoint->tags = new \StdClass();
                 foreach ($rp->getTags() as $rp_tag => $rp_tag_value) {
-                    if ($j++ != 0) {
-                        $route.=',';
-                    }
-                    $route .= '"'.$rp_tag.'" : "'.$rp_tag_value.'"';
+                    $routePoint->tags->$rp_tag = $rp_tag_value;
                 }
-                $route .= '}}';
+                $route->route_points[] = $routePoint;    
             }
-            $route .= ']';
         }
         
         if ($this->media !== null) {
-            $route .= ',"media": ' . $this->media->toJSON();
+            
+            $media = new \StdClass;
+            $media->id = $this->media->getId();
+            $media->filename = $this->media->getFilename();
+            $media->mimetype = 'image/jpeg';     
+            
+            $version = new \StdClass();
+            $version->path = $this->media->getPath(); 
+            $version->size = 0;
+            $media->versions = array($version);
+            
+            $coords = new \StdClass();
+            $coords->long = $this->media->getCoords()->getLongitude();
+            $coords->lat = $this->media->getCoords()->getLatitude();
+            
+            $media->coords = $coords;
+            
+            $media->tags = new \StdClass;
+            foreach ($this->media->getTags() as $tag_name => $tag_value) {
+                 $media->tags->$tag_name = $tag_value;
+            }
+            
+            $route->media = $media;
         }
-
-        $route .= '}';
         
-        return $route;
+        return json_encode($route);
     }
     
     /**
