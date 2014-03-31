@@ -95,4 +95,6 @@ class UserTest extends WebTestCase
         $user->updateAvatarGravatar();
         $this->assertEquals('', $user->getAvatarGravatar());
     }
+    
+    
 }

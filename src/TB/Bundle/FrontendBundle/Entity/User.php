@@ -111,14 +111,18 @@ abstract class User extends BaseUser
     private $editorials;
     
     /**
-     * @ORM\ManyToMany(targetEntity="User", mappedBy="myFollower")
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="iFollow")
      **/
-    private $followMe;
+    private $myFollower;    
 
     /**
-     * @ORM\ManyToMany(targetEntity="User", inversedBy="followMe")
+     * @ORM\ManyToMany(targetEntity="User", inversedBy="myFollower")
+     * @ORM\JoinTable(name="follower",
+     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="follower_user_id", referencedColumnName="id")}
+     *      )
      **/
-    private $myFollower;
+    private $iFollow;
     
     /**
      * Constructor
@@ -128,7 +132,7 @@ abstract class User extends BaseUser
         $this->routes = new \Doctrine\Common\Collections\ArrayCollection();
         $this->events = new \Doctrine\Common\Collections\ArrayCollection();
         $this->editorials = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->followMe = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->iFollow = new \Doctrine\Common\Collections\ArrayCollection();
         $this->myFollower = new \Doctrine\Common\Collections\ArrayCollection();
         parent::__construct();
     }
@@ -499,36 +503,36 @@ abstract class User extends BaseUser
     }
 
     /**
-     * Add followMe
+     * Add iFollow
      *
-     * @param \TB\Bundle\FrontendBundle\Entity\User $followMe
+     * @param \TB\Bundle\FrontendBundle\Entity\User $iFollow
      * @return User
      */
-    public function addFollowMe(\TB\Bundle\FrontendBundle\Entity\User $followMe)
+    public function addIFollow(\TB\Bundle\FrontendBundle\Entity\User $iFollow)
     {
-        $this->followMe[] = $followMe;
+        $this->iFollow[] = $iFollow;
 
         return $this;
     }
 
     /**
-     * Remove followMe
+     * Remove iFollow
      *
-     * @param \TB\Bundle\FrontendBundle\Entity\User $followMe
+     * @param \TB\Bundle\FrontendBundle\Entity\User $iFollow
      */
-    public function removeFollowMe(\TB\Bundle\FrontendBundle\Entity\User $followMe)
+    public function removeIFollow(\TB\Bundle\FrontendBundle\Entity\User $iFollow)
     {
-        $this->followMe->removeElement($followMe);
+        $this->iFollow->removeElement($iFollow);
     }
 
     /**
-     * Get followMe
+     * Get iFollow
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getFollowMe()
+    public function getIFollow()
     {
-        return $this->followMe;
+        return $this->iFollow;
     }
 
     /**
@@ -539,6 +543,7 @@ abstract class User extends BaseUser
      */
     public function addMyFollower(\TB\Bundle\FrontendBundle\Entity\User $myFollower)
     {
+        $myFollower->addIFollow($this);
         $this->myFollower[] = $myFollower;
 
         return $this;

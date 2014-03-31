@@ -113,10 +113,10 @@ abstract class User extends BaseUser
     /**
      * @ORM\ManyToMany(targetEntity="User", mappedBy="myFollower")
      **/
-    private $followMe;
+    private $iFollow;
 
     /**
-     * @ORM\ManyToMany(targetEntity="User", inversedBy="followMe")
+     * @ORM\ManyToMany(targetEntity="User", inversedBy="iFollow")
      **/
     private $myFollower;
     
@@ -128,7 +128,7 @@ abstract class User extends BaseUser
         $this->routes = new \Doctrine\Common\Collections\ArrayCollection();
         $this->events = new \Doctrine\Common\Collections\ArrayCollection();
         $this->editorials = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->followMe = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->iFollow = new \Doctrine\Common\Collections\ArrayCollection();
         $this->myFollower = new \Doctrine\Common\Collections\ArrayCollection();
         parent::__construct();
     }
@@ -497,4 +497,5 @@ abstract class User extends BaseUser
             $this->setAvatarGravatar('');
         }
     }
+
 }
