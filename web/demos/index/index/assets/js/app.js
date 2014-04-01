@@ -2,9 +2,10 @@ var app = app || {};
 
 define([
   'underscore', 
+  'modernizr',
   'backbone',
   'views/HomeHerosView'
-], function(_, Backbone, HomeHerosView){
+], function(_, Modernizr, Backbone, HomeHerosView){
   app.dispatcher = _.clone(Backbone.Events);
   
   var initialize = function() {

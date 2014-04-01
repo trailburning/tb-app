@@ -20,7 +20,7 @@ border-width:1px;
   margin-top: 63px;
   width: 100%;
   height: 486px;
-  overflow: overflow;
+  overflow: hidden;
 }
 
 #home_header .image_container {
@@ -29,6 +29,47 @@ border-width:1px;
   width: 100%;
   height: 486px;
   overflow: hidden;
+}
+
+#home_header #tb-loader-overlay {
+  z-index: 100;	
+}
+
+/* HERO NAV */
+/******************************************/
+.hero_nav {
+  z-index: 101;	
+  position: absolute;
+  width: 100%;
+  bottom: 10px;
+  margin: 0px auto 0px auto;
+  text-align: center;
+  pointer-events: none;
+  background:none !important;
+}
+
+.hero_nav .button {
+  display: inline-block;
+  margin: 0px 6px 0px 6px;
+  width: 13px;
+  height: 13px;
+  background: #FFF;
+  border-radius: 50%;
+  overflow: hidden;		
+  pointer-events: auto;
+}
+
+html.touch .hero_nav .button {
+  width: 26px;
+  height: 26px;
+}
+
+.hero_nav .button:hover {
+  background: #44B6F7;
+}
+
+.hero_nav .active {
+  background: #44B6F7;
 }
 
 /* HERO */

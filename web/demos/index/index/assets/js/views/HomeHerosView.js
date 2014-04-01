@@ -17,6 +17,16 @@ define([
 	  this.bHeroReady = false;
 	  this.bWaiting = false;
 	  this.bFirstHero = true;      
+	  
+	  var self = this;
+	  // nav btns
+	  $('.button', $(this.el)).mouseover(function(evt){
+        $(evt.currentTarget).css('cursor','pointer');	  	
+	  });
+	  $('.button', $(this.el)).click(function(evt){
+	    self.bWaiting = true;     
+	    self.loadHero(Number($(this).attr('data-slide')));	  	
+	  });
     },   
     render: function(){
       var self = this;
@@ -33,6 +43,10 @@ define([
 
       return this;    	
 	},
+    updateNav: function(){
+	  $('.button', $(this.el)).removeClass('active');    	
+	  $('.button:eq('+this.nLoadingHero+')', $(this.el)).addClass('active');    	
+	},
     loadHero: function(nHero){
       this.nLoadingHero = nHero;
       
@@ -41,6 +55,10 @@ define([
     },
     checkpoint: function(){
       var self = this;
+      
+      if (this.bWaiting) {
+      	this.updateNav();
+      }
                         
       if (this.bWaiting && this.bHeroReady) {      	
         $('#tb-loader-overlay').fadeOut();	
@@ -56,7 +74,6 @@ define([
       	this.arrHeros[this.nCurrHero].hideContent();
   
   		self.onTransitionTimer();
-      	
         this.nTransitionTimer = setTimeout(function() {
 //          self.onTransitionTimer();
         }, TRANSITION_TIMER);           	      	
@@ -71,9 +88,13 @@ define([
       var self = this;
 
       this.arrHeros[this.nCurrHero].hide();
+      this.arrHeros[this.nCurrHero].setZIndex(1);
 
-      this.nCurrHero = this.nLoadingHero;     	      	
-      this.arrHeros[this.nCurrHero].show();    	    	
+      this.nCurrHero = this.nLoadingHero;
+      
+      this.arrHeros[this.nCurrHero].show();      
+      this.arrHeros[this.nCurrHero].setZIndex(2);
+          	    	
       // load next hero
       if (this.nLoadingHero+1 >= this.arrHeros.length) {
         this.nLoadingHero = 0;      		
@@ -81,7 +102,12 @@ define([
       else {
         this.nLoadingHero++;      		
       }
+      
       this.loadHero(this.nLoadingHero);
+      	
+  	  if (this.nHeroTimer) {
+  	    clearTimeout(this.nHeroTimer);
+  	  }
       	
       this.nHeroTimer = setTimeout(function() {
         self.onHeroTimer();
