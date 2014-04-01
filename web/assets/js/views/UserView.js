@@ -8,19 +8,33 @@ define([
     initialize: function(){
       var self = this;
 
+	  this.elLikeBtn = $('.like_btn', $(this.el));
+	
       this.profileMapView = new ProfileMapView({ el: '#profile_map_view' });
       this.profileMapView.render();
 
+	  function updateFollowBtn() {
+	    if (self.elLikeBtn.hasClass('pressed-btn-tb')) {
+	  	  $('.btn-label', self.elLikeBtn).text(self.elLikeBtn.attr('data-on')+' '+self.elLikeBtn.attr('data-firstname'));
+	    }
+	    else {
+	  	  $('.btn-label', self.elLikeBtn).text(self.elLikeBtn.attr('data-off')+' '+self.elLikeBtn.attr('data-firstname'));
+	    }
+	  }
+	  // check initial state
+	  updateFollowBtn();
+
+
   	  $('.like_btn', $(this.el)).click(function(evt){
   	    if ($(this).hasClass('pressed-btn-tb')) {
-		  $('.btn-label', $(this)).text($(this).attr('data-off')+' '+$(this).attr('data-firstname'));
       	  $(this).removeClass('pressed-btn-tb');
       	  self.follow($(this).attr('data-userid'), false);
+  	      updateFollowBtn();
   	    }
         else {
-  	  	  $('.btn-label', $(this)).text($(this).attr('data-on')+' '+$(this).attr('data-firstname'));
       	  $(this).addClass('pressed-btn-tb');
       	  self.follow($(this).attr('data-userid'), true);
+          updateFollowBtn();
   	    }      	
   	  });
     },

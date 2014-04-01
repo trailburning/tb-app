@@ -10,7 +10,9 @@
 {% block body %}
 <script>
 var TB_APP = 'UserApp';
+{% if app.user %}		
 var TB_USER_ID = {{ app.user.id }};
+{% endif %}
 {% if user.location %}
 var TB_USER_LONG = {{ user.location.longitude }};
 var TB_USER_LAT = {{ user.location.latitude }};
