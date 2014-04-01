@@ -16,7 +16,7 @@
 
 {% if app.user.id %}
 	{% if app.user.id != user.id %}
-		<div class="follow"><a href="javascript:void(0)" class="btn btn-tb-action btn-tb like_btn{% if user_is_following(app.user, user) %} pressed-btn-tb{% endif %}" data-off="Follow" data-on="Following" data-firstname="{{ user.firstname}}" data-userid="{{ user.id}}"><i class="icon-star icon-white"></i> <span class="btn-label">Follow {{ user.firstname}}</span></a></div>
+		<div class="follow"><a href="javascript:void(0)" class="btn btn-tb-action btn-tb like_btn{% if user_is_following(app.user, user) %} pressed-btn-tb{% endif %}" data-off="Follow" data-on="Following" data-firstname="{{ user.firstname}}" data-userid="{{ user.id}}"><i class="icon-star icon-white"></i> <span class="btn-label">{% if user_is_following(app.user, user) %}Following{% else %}Follow{% endif %} {{ user.firstname}}</span></a></div>
 	{% endif %}
 {% else %}
 		<div class="follow"><a href="javascript:void(0)" class="btn btn-tb-action btn-tb like_btn" data-off="Follow" data-on="Following" data-firstname="{{ user.firstname}}" data-userid="{{ user.id}}"><i class="icon-star icon-white"></i> <span class="btn-label">Follow {{ user.firstname}}</span></a></div>
