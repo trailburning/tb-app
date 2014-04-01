@@ -4,18 +4,17 @@ define([
   'underscore', 
   'modernizr',
   'backbone',
-  'views/ProfileMapView'
-], function(_, Modernizr, Backbone, ProfileMapView){
+  'views/UserView'
+], function(_, Modernizr, Backbone, AppView){
   app.dispatcher = _.clone(Backbone.Events);
   
-  var initialize = function() {
-    this.profileMapView = new ProfileMapView({ el: '#profile_map_view' });
-    this.profileMapView.render();
-        
+  var initialize = function() {        
     $(window).resize(function() {
       handleResize(); 
     });    
     handleResize();
+    
+    this.appView = new AppView({ el: '#appview' });
     
     $('#search_field').focus(function(evt) {
       $('#search_field').val('not just yet...');
@@ -38,7 +37,7 @@ define([
       $('.image_container').css('opacity', 1);
     });
     
-  	$('#footerview').show();
+  	$('#footerview').show();  	
   	    
     function handleResize() {
       $("img.scale_image_ready").imageScale();
