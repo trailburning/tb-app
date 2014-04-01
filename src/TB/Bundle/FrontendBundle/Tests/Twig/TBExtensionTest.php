@@ -63,4 +63,35 @@ class TBExtensionTest extends WebTestCase
             'extractEntity returns an array of values for the requested fields');
     }
     
+    public function testUserIsFollowing()
+    {
+        $this->loadFixtures([
+            'TB\Bundle\FrontendBundle\DataFixtures\ORM\UserProfileData',
+        ]);
+        
+        // Get Route from DB with the slug "grunewald"..
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        $user1 = $em
+            ->getRepository('TBFrontendBundle:User')
+            ->findOneByName('mattallbeury');
+        if (!$user1) {
+            $this->fail('Missing User with name "mattallbeury" in test DB');
+        }
+        
+        $user2 = $em
+            ->getRepository('TBFrontendBundle:User')
+            ->findOneByName('paultran');
+        if (!$user2) {
+            $this->fail('Missing User to follow with name "paultran" in test DB');
+        }
+        
+        $this->assertFalse($this->extension->userIsFollowing($user1, $user2), 'user1 is not following user2');
+        
+        $user1->addIFollow($user2);
+        $em->persist($user1);
+        $em->flush();
+        
+        $this->assertTrue($this->extension->userIsFollowing($user1, $user2), 'user1 is following user2');
+    }
+    
 }

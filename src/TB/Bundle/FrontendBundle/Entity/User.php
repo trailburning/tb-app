@@ -568,4 +568,21 @@ abstract class User extends BaseUser
     {
         return $this->myFollower;
     }
+    
+    /**
+     * Tests if the User is following a given User
+     *
+     * @param User $user The User to looup in the follower
+     * @return boolean returns true if the User is following, false if not
+     */
+    public function isFollowing(User $user)
+    {
+        foreach ($this->getIFollow() as $iFollowUser) {
+            if ($iFollowUser->getId() === $user->getId()) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
 }

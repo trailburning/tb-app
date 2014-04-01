@@ -3,6 +3,7 @@
 namespace TB\Bundle\FrontendBundle\Twig;
 
 use Symfony\Bundle\TwigBundle\Loader\FilesystemLoader;
+use TB\Bundle\FrontendBundle\Entity\User;
 
 /**
 * 
@@ -37,6 +38,7 @@ class TBExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
+            new \Twig_SimpleFunction('user_is_following',  array($this, 'userIsFollowing')),
             new \Twig_SimpleFunction('extract_entity',  array($this, 'extractEntity')),
         );
     }
@@ -106,6 +108,18 @@ class TBExtension extends \Twig_Extension
         }
         
         return $values;
+    }
+    
+    /**
+     * test if a given User A is following a given User B
+     * 
+     * @param User $userA The User to lookup
+     * @param User $userB The User to test for following 
+     * @return boolean true is the User A is following User B, false if not
+     */
+    public function userIsFollowing(User $userA, User $userB)
+    {
+        return $userA->isFollowing($userB);
     }
 
     public function getName()

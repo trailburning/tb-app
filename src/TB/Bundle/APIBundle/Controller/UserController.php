@@ -43,10 +43,8 @@ class UserController extends AbstractRestController
         }
         
         //check if user is already following
-        foreach ($user->getIfollow() as $iFollow) {
-            if ($iFollow->getId() == $userToFollow->getId()) {
-                throw new ApiException(sprintf('User %s is alreaddy following user %s', $user->getId(), $userToFollow->getId()), 400);
-            }
+        if ($user->isFollowing($userToFollow)) {
+            throw new ApiException(sprintf('User %s is alreaddy following user %s', $user->getId(), $userToFollow->getId()), 400);
         }
 
         $user->addIFollow($userToFollow);
@@ -95,15 +93,7 @@ class UserController extends AbstractRestController
         }
         
         //check if user is following
-        $isFollowing = false;
-        foreach ($user->getIfollow() as $iFollow) {
-            if ($iFollow->getId() == $userToUnfollow->getId()) {
-                $isFollowing = true;
-                break;
-            }
-        }
-        
-        if ($isFollowing === false) {
+        if (!$user->isFollowing($userToUnfollow)) {
             throw new ApiException(sprintf('User %s is not following user %s', $user->getId(), $userToUnfollow->getId()), 400);
         }
         
