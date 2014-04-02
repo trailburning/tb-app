@@ -8,15 +8,29 @@
                     I follow them
                 {% endif %}
             </div>	
+            <div class="avatars">
             {% if user.iFollow|length > 0 %}
-                <div class="avatars">
                     {% for user in user.iFollow %}
                         {{ include('TBFrontendBundle:Profile:_userAvatar.html.twig', [user]) }}
                     {% endfor %}
-                </div>
             {% else %}
-                &nbsp;
+				<div class="tb-avatar">
+				    <div class="photo"><img src="{{ asset('assets/img/avatar_woman.jpg') }}"></div>
+				</div>                
+				<div class="tb-avatar">
+				    <div class="photo"><img src="{{ asset('assets/img/avatar_man.jpg') }}"></div>
+				</div>                
+				<div class="tb-avatar">
+				    <div class="photo"><img src="{{ asset('assets/img/avatar_man.jpg') }}"></div>
+				</div>                
+				<div class="tb-avatar">
+				    <div class="photo"><img src="{{ asset('assets/img/avatar_woman.jpg') }}"></div>
+				</div>                
+				<div class="tb-avatar">
+				    <div class="photo"><img src="{{ asset('assets/img/avatar_woman.jpg') }}"></div>
+				</div>                
             {% endif %}
+            </div>
         </div>
         <div class="they_follow">
             <div class="title">
@@ -26,15 +40,29 @@
                     They follow me
                 {% endif %}
             </div>	
+            <div class="avatars">
             {% if user.myFollower|length > 0 %}
-                <div class="avatars">
                     {% for user in user.myFollower %}
                         {{ include('TBFrontendBundle:Profile:_userAvatar.html.twig', [user]) }}
                     {% endfor %}
-                </div>
             {% else %}
-                &nbsp;
+				<div class="tb-avatar">
+				    <div class="photo"><img src="{{ asset('assets/img/avatar_man.jpg') }}"></div>
+				</div>                
+				<div class="tb-avatar">
+				    <div class="photo"><img src="{{ asset('assets/img/avatar_woman.jpg') }}"></div>
+				</div>                
+				<div class="tb-avatar">
+				    <div class="photo"><img src="{{ asset('assets/img/avatar_man.jpg') }}"></div>
+				</div>                
+				<div class="tb-avatar">
+				    <div class="photo"><img src="{{ asset('assets/img/avatar_man.jpg') }}"></div>
+				</div>                
+				<div class="tb-avatar">
+				    <div class="photo"><img src="{{ asset('assets/img/avatar_woman.jpg') }}"></div>
+				</div>                
             {% endif %}
+            </div>
         </div>     
     </div>
 </div>
