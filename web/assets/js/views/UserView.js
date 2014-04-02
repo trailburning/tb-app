@@ -21,9 +21,6 @@ define([
 	  	  $('.btn-label', self.elLikeBtn).text(self.elLikeBtn.attr('data-off')+' '+self.elLikeBtn.attr('data-firstname'));
 	    }
 	  }
-	  // check initial state
-	  updateFollowBtn();
-
 
   	  $('.like_btn', $(this.el)).click(function(evt){
   	    if ($(this).hasClass('pressed-btn-tb')) {
