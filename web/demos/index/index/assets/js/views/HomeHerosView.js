@@ -46,7 +46,29 @@ define([
     updateNav: function(){
 	  $('.button', $(this.el)).removeClass('active');    	
 	  $('.button:eq('+this.nLoadingHero+')', $(this.el)).addClass('active');    	
-	},
+	},	
+    prevHero: function(){
+      var nHero = this.nCurrHero;
+	  if (nHero-1 < 0) {
+        nHero = this.arrHeros.length-1;      		
+      } 
+      else {
+        nHero--;      	
+      }      
+	  this.bWaiting = true;           
+	  this.loadHero(nHero);     	    	
+    },
+    nextHero: function(){
+      var nHero = this.nCurrHero;
+	  if (nHero+1 >= this.arrHeros.length) {
+        nHero = 0;      	
+      } 
+      else {
+        nHero++;      		
+      }      
+	  this.bWaiting = true;           
+	  this.loadHero(nHero);     	    	
+    },
     loadHero: function(nHero){
       this.nLoadingHero = nHero;
       

@@ -73,6 +73,18 @@ define([
       evt.stopPropagation();
     }); 
 
+  	// keyboard control
+  	$(document).keydown(function(e){
+  	  switch (e.keyCode) {
+  	    case 37: // previous hero
+  	      self.homeHerosView.prevHero();
+  	      break;
+  	  	case 39: // next hero
+  	      self.homeHerosView.nextHero();
+  	      break;
+  	  }
+  	});
+      
     function handleResize() {
       $("img.scale_image_ready").imageScale();
     }
