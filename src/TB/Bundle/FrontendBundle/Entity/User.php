@@ -111,6 +111,20 @@ abstract class User extends BaseUser
     private $editorials;
     
     /**
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="iFollow")
+     **/
+    private $myFollower;    
+
+    /**
+     * @ORM\ManyToMany(targetEntity="User", inversedBy="myFollower")
+     * @ORM\JoinTable(name="follower",
+     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="follower_user_id", referencedColumnName="id")}
+     *      )
+     **/
+    private $iFollow;
+    
+    /**
      * Constructor
      */
     public function __construct()
@@ -118,7 +132,8 @@ abstract class User extends BaseUser
         $this->routes = new \Doctrine\Common\Collections\ArrayCollection();
         $this->events = new \Doctrine\Common\Collections\ArrayCollection();
         $this->editorials = new \Doctrine\Common\Collections\ArrayCollection();
-        
+        $this->iFollow = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->myFollower = new \Doctrine\Common\Collections\ArrayCollection();
         parent::__construct();
     }
     
@@ -485,5 +500,89 @@ abstract class User extends BaseUser
         } else {
             $this->setAvatarGravatar('');
         }
+    }
+
+    /**
+     * Add iFollow
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\User $iFollow
+     * @return User
+     */
+    public function addIFollow(\TB\Bundle\FrontendBundle\Entity\User $iFollow)
+    {
+        $this->iFollow[] = $iFollow;
+
+        return $this;
+    }
+
+    /**
+     * Remove iFollow
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\User $iFollow
+     */
+    public function removeIFollow(\TB\Bundle\FrontendBundle\Entity\User $iFollow)
+    {
+        $this->iFollow->removeElement($iFollow);
+    }
+
+    /**
+     * Get iFollow
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getIFollow()
+    {
+        return $this->iFollow;
+    }
+
+    /**
+     * Add myFollower
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\User $myFollower
+     * @return User
+     */
+    public function addMyFollower(\TB\Bundle\FrontendBundle\Entity\User $myFollower)
+    {
+        $myFollower->addIFollow($this);
+        $this->myFollower[] = $myFollower;
+
+        return $this;
+    }
+
+    /**
+     * Remove myFollower
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\User $myFollower
+     */
+    public function removeMyFollower(\TB\Bundle\FrontendBundle\Entity\User $myFollower)
+    {
+        $this->myFollower->removeElement($myFollower);
+    }
+
+    /**
+     * Get myFollower
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMyFollower()
+    {
+        return $this->myFollower;
+    }
+    
+    /**
+     * Tests if the User is following a given User
+     *
+     * @param User $user The User to looup in the follower
+     * @return boolean returns true if the User is following, false if not
+     */
+    public function isFollowing(User $user)
+    {
+        foreach ($this->getIFollow() as $iFollowUser) {
+            if ($iFollowUser->getId() === $user->getId()) {
+                return true;
+            }
+        }
+        
+        return false;
     }
 }

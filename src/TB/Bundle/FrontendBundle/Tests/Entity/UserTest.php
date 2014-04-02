@@ -69,7 +69,7 @@ class UserTest extends WebTestCase
     
     
     /**
-     * Test that an Exception is throsn when passing an invalid Point string to setLocation()
+     * Test that an Exception is thrown when passing an invalid Point string to setLocation()
      *
      * @expectedException Exception
      * @@expectedExceptionMessage Invalid location string format: invalid format
@@ -94,5 +94,46 @@ class UserTest extends WebTestCase
         $user->setEmail('email@withoutgravatar'); // email that has no gravatar profile
         $user->updateAvatarGravatar();
         $this->assertEquals('', $user->getAvatarGravatar());
+    }
+    
+    public function testIsFollowing()
+    {
+        $this->loadFixtures([
+            'TB\Bundle\FrontendBundle\DataFixtures\ORM\UserProfileData',
+        ]);
+        
+        // Get Route from DB with the slug "grunewald"..
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        $user1 = $em
+            ->getRepository('TBFrontendBundle:User')
+            ->findOneByName('mattallbeury');
+        if (!$user1) {
+            $this->fail('Missing User with name "mattallbeury" in test DB');
+        }
+        
+        $user2 = $em
+            ->getRepository('TBFrontendBundle:User')
+            ->findOneByName('paultran');
+        if (!$user2) {
+            $this->fail('Missing User to follow with name "paultran" in test DB');
+        }
+        
+        $this->assertFalse($user1->isFollowing($user2), 'user1 is not following user2');
+        
+        $user1->addIFollow($user2);
+        $em->persist($user1);
+        $em->flush();
+        
+        $this->assertTrue($user1->isFollowing($user2), 'user1 is following user2');
+        
+        // Test the other way of adding follower
+        $this->assertFalse($user2->isFollowing($user1), 'user2 is not following user1');
+        
+        $user1->addMyFollower($user2);
+        $em->persist($user1);
+        $em->flush();
+        
+        $this->assertTrue($user2->isFollowing($user1), 'user2 is following user1');
+        
     }
 }

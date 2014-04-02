@@ -111,6 +111,16 @@ abstract class User extends BaseUser
     private $editorials;
     
     /**
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="myFollower")
+     **/
+    private $iFollow;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="User", inversedBy="iFollow")
+     **/
+    private $myFollower;
+    
+    /**
      * Constructor
      */
     public function __construct()
@@ -118,7 +128,8 @@ abstract class User extends BaseUser
         $this->routes = new \Doctrine\Common\Collections\ArrayCollection();
         $this->events = new \Doctrine\Common\Collections\ArrayCollection();
         $this->editorials = new \Doctrine\Common\Collections\ArrayCollection();
-        
+        $this->iFollow = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->myFollower = new \Doctrine\Common\Collections\ArrayCollection();
         parent::__construct();
     }
     
@@ -386,7 +397,7 @@ abstract class User extends BaseUser
     {
         if (is_string($location)) {
             // check the location Sting format
-            if (!preg_match('/^\((\d+\.\d+), (\d+\.\d+)\)$/', $location, $match)) {
+            if (!preg_match('/^\(([-\d]+\.[-\d]+), ([-\d]+\.[-\d]+)\)$/', $location, $match)) {
                 throw new \Exception(sprintf('Invalid location string format: %s', $location));
             }
             $location = new Point($match[1], $match[2], 4326);
@@ -433,6 +444,58 @@ abstract class User extends BaseUser
     public function getFullName()
     {
         return sprintf('%s %s', $this->getFirstName(), $this->getLastName());
+    }
+
+
+    /**
+     * Set avatarGravatar
+     *
+     * @param string $avatarGravatar
+     * @return User
+     */
+    public function setAvatarGravatar($avatarGravatar)
+    {
+        $this->avatarGravatar = $avatarGravatar;
+
+        return $this;
+    }
+
+    /**
+     * Get avatarGravatar
+     *
+     * @return string 
+     */
+    public function getAvatarGravatar()
+    {
+        return $this->avatarGravatar;
+    }
+    
+    /**
+     * Get the avatar from gravatar
+     */
+    public function updateAvatarGravatar()
+    {
+        if ($this->getEmail() == '') {
+            throw new Exception('Unable to generate gravatar profile hash, missing email firld for User');
+        }
+        $hash = md5($this->getEmail());
+        $imageUrl = sprintf('http://www.gravatar.com/avatar/%s', $hash);
+        $testImageUrl = $imageUrl . '?d=404'; //forces Gravatar to return 404 status code for none existing images
+        
+        $c = curl_init();
+        curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($c, CURLOPT_CUSTOMREQUEST, 'HEAD');
+        curl_setopt($c, CURLOPT_HEADER, 1);
+        curl_setopt($c, CURLOPT_NOBODY, true);
+        curl_setopt($c, CURLOPT_URL, $testImageUrl);
+        curl_exec($c);
+        $statusCode = curl_getinfo($c, CURLINFO_HTTP_CODE);
+        
+        if ($statusCode === 200) {
+            $this->setAvatarGravatar($imageUrl);
+        } else {
+            $this->setAvatarGravatar('');
+        }
     }
 
 }

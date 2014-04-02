@@ -10,6 +10,9 @@
 {% block body %}
 <script>
 var TB_APP = 'UserApp';
+{% if app.user %}		
+var TB_USER_ID = {{ app.user.id }};
+{% endif %}
 {% if user.location %}
 var TB_USER_LONG = {{ user.location.longitude }};
 var TB_USER_LAT = {{ user.location.latitude }};
@@ -121,77 +124,8 @@ var TB_USER_LAT = {{ user.location.latitude }};
 			  </div>
 			</div>
     	
-			<div class="panel profile_follow_panel">
-			  <div class="content">
-			  	<div class="you_follow">
-			  	  <div class="title">You follow them</div>			  	  
-			      <div class="avatars">
-	    		  {% if user.id == 2 %}
-				    <div class="tb-avatar">
-				      <div class="photo"><a href="../profile/justinwilden"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/justinwilden/avatar.jpg"></a></div>
-				    </div><!--	
-				 --><div class="tb-avatar">
-				      <div class="photo"><a href="../profile/reubentabner"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/reubentabner/avatar.jpg"></a></div>
-				    </div><!--	
-				 --><div class="tb-avatar">
-				      <div class="photo"><a href="../profile/paultran"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/paultran/avatar.jpg"></a></div>
-				    </div><!--	
-				 --><div class="tb-avatar">
-				      <div class="photo"><img src="{{ asset('assets/img/avatar_woman.jpg') }}"></div>
-				    </div><!--	
-				 --><div class="tb-avatar">
-				      <div class="photo"><img src="{{ asset('assets/img/avatar_man.jpg') }}"></div>
-				    </div><!--	
-				 --><div class="tb-avatar">
-				      <div class="photo"><img src="{{ asset('assets/img/avatar_man.jpg') }}"></div>
-				    </div>	
-				  {% else %}
-				    <div class="tb-avatar">
-				      <div class="photo"><img src="{{ asset('assets/img/avatar_woman.jpg') }}"></div>
-				    </div><!--	
-				 --><div class="tb-avatar">
-				      <div class="photo"><img src="{{ asset('assets/img/avatar_man.jpg') }}"></div>
-				    </div><!--	
-				 --><div class="tb-avatar">
-				      <div class="photo"><img src="{{ asset('assets/img/avatar_woman.jpg') }}"></div>
-				    </div><!--	
-				 --><div class="tb-avatar">
-				      <div class="photo"><img src="{{ asset('assets/img/avatar_man.jpg') }}"></div>
-				    </div><!--	
-				 --><div class="tb-avatar">
-				      <div class="photo"><img src="{{ asset('assets/img/avatar_man.jpg') }}"></div>
-				    </div><!--	
-				 --><div class="tb-avatar">
-				      <div class="photo"><img src="{{ asset('assets/img/avatar_man.jpg') }}"></div>
-				    </div>	
-				  {% endif %}    	
-				  </div>
-			  	</div>
-			  	<div class="they_follow">
-			  	  <div class="title">They Follow you</div>			  				  	
-			      <div class="avatars">
-				    <div class="tb-avatar">
-				      <div class="photo"><img src="{{ asset('assets/img/avatar_man.jpg') }}"></div>
-				    </div><!--	
-				 --><div class="tb-avatar">
-				      <div class="photo"><img src="{{ asset('assets/img/avatar_woman.jpg') }}"></div>
-				    </div><!--	
-				 --><div class="tb-avatar">
-				      <div class="photo"><img src="{{ asset('assets/img/avatar_woman.jpg') }}"></div>
-				    </div><!--	
-				 --><div class="tb-avatar">
-				      <div class="photo"><img src="{{ asset('assets/img/avatar_man.jpg') }}"></div>
-				    </div><!--	
-				 --><div class="tb-avatar">
-				      <div class="photo"><img src="{{ asset('assets/img/avatar_man.jpg') }}"></div>
-				    </div><!--	
-				 --><div class="tb-avatar">
-				      <div class="photo"><img src="{{ asset('assets/img/avatar_woman.jpg') }}"></div>
-				    </div>	
-				  </div>
-			  	</div>
-			  </div>
-			</div>
+            {{ include('TBFrontendBundle:profile:_follow.html.twig', [user]) }}
+            
     	</div>
 
     	<div class="likedtrails_content">
