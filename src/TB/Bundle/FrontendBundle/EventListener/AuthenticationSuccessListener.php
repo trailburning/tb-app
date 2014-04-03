@@ -8,7 +8,7 @@ use FOS\UserBundle\Model\UserInterface;
 use Symfony\Component\Security\Core\Event\AuthenticationEvent;
 
 /**
- * Updates the gravater image
+ * 
  */
 class AuthenticationSuccessListener
 {
@@ -21,6 +21,9 @@ class AuthenticationSuccessListener
         $this->em = $em;
     }
     
+    /**
+     * Updates the gravater image
+     */ 
     public function onAuthenticationSuccess(AuthenticationEvent $event)
     {
         $user = $event->getAuthenticationToken()->getUser();

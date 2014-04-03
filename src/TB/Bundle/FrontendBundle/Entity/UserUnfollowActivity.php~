@@ -1,0 +1,37 @@
+<?php 
+
+namespace TB\Bundle\FrontendBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/** @ORM\Entity */
+class UserUnfollowActivity extends AbstractActivity
+{
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToOne(targetEntity="TB\Bundle\FrontendBundle\Entity\User", inversedBy="userUnfollowActivities")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="actor_id", referencedColumnName="id")
+     * })
+     **/
+    protected $actor;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToOne(targetEntity="TB\Bundle\FrontendBundle\Entity\User", inversedBy="userUnfollowedActivities")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="object_id", referencedColumnName="id")
+     * })
+     **/
+    protected $object;
+
+    public function __construct(User $unfollowingUser, User $unfollowedUser)
+    {
+        $this->setActor($unfollowingUser);
+        $this->setObject($unfollowedUser);
+    }
+
+}

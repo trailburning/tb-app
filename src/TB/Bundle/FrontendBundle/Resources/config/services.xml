@@ -22,17 +22,42 @@
             <argument type="service" id="doctrine.orm.entity_manager" />
         </service>
         
-        <!-- Register event listener to redirecto to the homepage after resetting password -->
+        <!-- Register event listener to redirect to the homepage after resetting password -->
         <service id="change_password_complete" class="TB\Bundle\FrontendBundle\EventListener\ResettingResetSuccessListener">
             <argument type="service" id="router" />
             <tag name="kernel.event_subscriber" />
         </service>
         
+        <!-- Register Event Listener to update the user gravatar avatar on every login --> 
         <service id="tb.security.login_listener" class="TB\Bundle\FrontendBundle\EventListener\AuthenticationSuccessListener">  
             <argument type="service" id="service_container" />  
             <argument type="service" id="doctrine.orm.entity_manager" />  
             <tag name="kernel.event_listener" event="security.authentication.success" method="onAuthenticationSuccess" />  
         </service> 
+        
+        <!-- Register Event Subscriber to listen on Entity update and persist events -->
+        <service id="tb.entity_event_subscriber" class="TB\Bundle\FrontendBundle\EventListener\EntityEventSubscriber">
+            <argument type="service" id="service_container" />
+            <tag name="doctrine.event_subscriber" connection="default" />
+        </service>
+        
+        <!-- Register Event Listener to create an Activity Feed Item when a Route gets published -->
+        <service id="tb.activity.route_publish_listener" class="TB\Bundle\FrontendBundle\EventListener\ActivityListener">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <tag name="kernel.event_listener" event="tb.route_publish" method="onRoutePublish" />
+        </service>
+        
+        <!-- Register Event Listener to create an Activity Feed Item when a User gets followed -->
+        <service id="tb.activity.user_follow_listener" class="TB\Bundle\FrontendBundle\EventListener\ActivityListener">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <tag name="kernel.event_listener" event="tb.user_follow" method="onUserFollow" />
+        </service>
+        
+        <!-- Register Event Listener to create an Activity Feed Item when a User gets unfollowed -->
+        <service id="tb.activity.user_unfollow_listener" class="TB\Bundle\FrontendBundle\EventListener\ActivityListener">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <tag name="kernel.event_listener" event="tb.user_unfollow" method="onUserUnfollow" />
+        </service>
         
     </services>
 </container>

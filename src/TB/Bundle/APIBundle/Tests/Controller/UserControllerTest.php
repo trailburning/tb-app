@@ -17,7 +17,7 @@ class UserControllerTest extends AbstractApiTestCase
 {
     
     /**
-     * Test the GET /route/{id} action
+     * Test the PUT /user/{id}#/follow action
      */
     public function testPutUserFollow()
     {   
@@ -91,7 +91,60 @@ class UserControllerTest extends AbstractApiTestCase
     }
     
     /**
-     * Test the GET /route/{id} action
+     * Test if PUT /user/{id}#/follow dispatches the tb.user_follow event
+     */
+    public function testPutUserFollowDispatchesEvent()
+    {   
+        $this->loadFixtures([
+            'TB\Bundle\FrontendBundle\DataFixtures\ORM\UserProfileData',
+        ]);
+        
+        // Get Route from DB with the slug "grunewald"..
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        $user = $em
+            ->getRepository('TBFrontendBundle:User')
+            ->findOneByName('mattallbeury');
+        if (!$user) {
+            $this->fail('Missing User with name "mattallbeury" in test DB');
+        }
+        
+        $userToFollow = $em
+            ->getRepository('TBFrontendBundle:User')
+            ->findOneByName('paultran');
+        if (!$userToFollow) {
+            $this->fail('Missing User to follow with name "paultran" in test DB');
+        }
+        
+        // set flag to false
+        $this->eventDispatched = false;
+        
+        $client = $this->createClient();
+        
+        //  get the event dispatcher and add a listener for the tb.route_publish event
+        $dispatcher = $client->getContainer()->get('event_dispatcher'); 
+        $dispatcher->addListener('tb.user_follow', function ($event, $eventName, $dispatcher) {
+            // this part gets executed when the event is dispatched
+            $this->assertInstanceOf('TB\Bundle\FrontendBundle\Event\UserFollowEvent', $event,
+                'The UserFollowEvent was created');
+            $this->assertEquals('mattallbeury', $event->getFollowingUser()->getName(), 
+                'The following User was passed to the UserFollowEvent event');
+            $this->assertEquals('paultran', $event->getFollowedUser()->getName(), 
+                'The User who gets followed was passed to the UserFollowEvent event');
+            
+            // set flag to true, it means the event was dispatched
+            $this->eventDispatched = true;
+        });
+        
+        // execute user follow request
+        $crawler = $client->request('PUT', '/v1/user/' . $userToFollow->getId() . '/follow', [], [], ['HTTP_Trailburning_User_ID' => $user->getId()]);
+        $this->assertEquals(Response::HTTP_OK,  $client->getResponse()->getStatusCode());
+        
+        // test fails when the event gets not dispatched
+        $this->assertTrue($this->eventDispatched, 'The tb.user_follow Event was successfully dispatched');
+    }
+    
+    /**
+     * Test the PUT /user/{id}#/unfollow action
      */
     public function testPutUserUnfollow()
     {   
@@ -167,6 +220,65 @@ class UserControllerTest extends AbstractApiTestCase
         if ($isFollowing === true) {
             $this->fail('User is still following');
         }
+    }
+    
+    /**
+     *  Test if PUT /user/{id}#/unfollow dispatches the tb.user_unfollow event
+     */
+    public function testPutUserUnfollowDispatchesEvent()
+    {   
+        $this->loadFixtures([
+            'TB\Bundle\FrontendBundle\DataFixtures\ORM\UserProfileData',
+        ]);
+        
+        // Get Route from DB with the slug "grunewald"..
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        $user = $em
+            ->getRepository('TBFrontendBundle:User')
+            ->findOneByName('mattallbeury');
+        if (!$user) {
+            $this->fail('Missing User with name "mattallbeury" in test DB');
+        }
+        
+        $userToUnfollow = $em
+            ->getRepository('TBFrontendBundle:User')
+            ->findOneByName('paultran');
+        if (!$userToUnfollow) {
+            $this->fail('Missing User to follow with name "paultran" in test DB');
+        }
+                
+        // create following user
+        $user->addIFollow($userToUnfollow);
+        
+        $em->persist($user);
+        $em->flush();
+        
+        // set flag to false
+        $this->eventDispatched = false;
+        
+        $client = $this->createClient();
+        
+        //  get the event dispatcher and add a listener for the tb.route_publish event
+        $dispatcher = $client->getContainer()->get('event_dispatcher'); 
+        $dispatcher->addListener('tb.user_unfollow', function ($event, $eventName, $dispatcher) {
+            // this part gets executed when the event is dispatched
+            $this->assertInstanceOf('TB\Bundle\FrontendBundle\Event\UserUnfollowEvent', $event,
+                'The UserUnfollowEvent was created');
+            $this->assertEquals('mattallbeury', $event->getUnfollowingUser()->getName(), 
+                'The unfollowing User was passed to the UserUnfollowEvent event');
+            $this->assertEquals('paultran', $event->getUnfollowedUser()->getName(), 
+                'The User who gets unfollowed was passed to the UserUnfollowEvent event');
+            
+            // set flag to true, it means the event was dispatched
+            $this->eventDispatched = true;
+        });
+
+        $crawler = $client->request('PUT', '/v1/user/' . $userToUnfollow->getId() . '/unfollow', [], [], ['HTTP_Trailburning_User_ID' => $user->getId()]);
+        $this->assertEquals(Response::HTTP_OK,  $client->getResponse()->getStatusCode());
+        
+        // test fails when the event gets not dispatched
+        $this->assertTrue($this->eventDispatched, 'The tb.user_unfollow Event was successfully dispatched');
+
     }
     
 }
