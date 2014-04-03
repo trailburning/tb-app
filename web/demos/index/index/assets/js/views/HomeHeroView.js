@@ -21,9 +21,9 @@ define([
       
       return this;    	
 	},
-    setZIndex: function(nZIndex){
-      $(this.el).css("z-index", nZIndex);
-      $(this.elOverlay).css("z-index", nZIndex);
+    setZIndex: function(nZIndexBack, nZIndexFore){
+      $(this.el).css("z-index", nZIndexBack);
+      $(this.elOverlay).css("z-index", nZIndexFore);
 	},
     load: function(){
       var self = this;
@@ -82,15 +82,13 @@ define([
     },	
     hide: function(){
 	  $('.image_container', $(this.el)).css('opacity', 0);
-	},
-	hideContent: function(){
+	  
       this.elHeroLeft.css('top', -(this.elHeroLeft.height() + OFFSCREEN_Y));             
       this.elHeroLeftBtn.css('top', 0);
       this.elHeroRight.css('top', -(this.elHeroRight.height() + OFFSCREEN_Y));                   
       this.elCredit.css('top', ($('#home_header').height() + OFFSCREEN_Y));
       this.elSponsor.css('top', ($('#home_header').height() + OFFSCREEN_Y));
-	}
-
+	},
   });
 
   return HomeHeroView;

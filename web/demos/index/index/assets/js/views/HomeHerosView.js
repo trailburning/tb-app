@@ -5,7 +5,6 @@ define([
 ], function(_, Backbone, HomeHeroView){
 
   var HERO_TIMER = 10000;
-  var TRANSITION_TIMER = 0;
 
   var HomeHerosView = Backbone.View.extend({
     initialize: function(){
@@ -94,12 +93,7 @@ define([
       	  nDelay = 0;
       	}
       	
-      	this.arrHeros[this.nCurrHero].hideContent();
-  
-  		self.onTransitionTimer();
-        this.nTransitionTimer = setTimeout(function() {
-//          self.onTransitionTimer();
-        }, TRANSITION_TIMER);           	      	
+  		this.transition();
       }
 
 	  // still waiting - show loader      
@@ -107,16 +101,16 @@ define([
         $('#tb-loader-overlay').fadeIn();	
       }      
     },
-    onTransitionTimer: function(){
+    transition: function(){
       var self = this;
 
       this.arrHeros[this.nCurrHero].hide();
-      this.arrHeros[this.nCurrHero].setZIndex(1);
+      this.arrHeros[this.nCurrHero].setZIndex(1, 1);
 
       this.nCurrHero = this.nLoadingHero;
       
       this.arrHeros[this.nCurrHero].show();      
-      this.arrHeros[this.nCurrHero].setZIndex(2);
+      this.arrHeros[this.nCurrHero].setZIndex(2, 2);
           	    	
       // load next hero
       if (this.nLoadingHero+1 >= this.arrHeros.length) {
