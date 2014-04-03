@@ -41,15 +41,20 @@ class EntityEventSubscriber implements EventSubscriber
     public function update(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
-        $entityManager = $args->getEntityManager();
+        $em = $args->getEntityManager();
 
         if ($entity instanceof Route) {
             // Create custom Event RoutePublishEvent named tb.route_publish when a Route gets published
-            if ($entity->getPublish() === true) {
+            $uow = $em->getUnitOfWork();
+            $uow->computeChangeSets();
+            // Test that publish was set from false to true  by computing a changeset
+            $changeset = $uow->getEntityChangeSet($entity);
+            // publish is in the changeset, the new differs from the old value, publish is true
+            if (isset($changeset['publish']) && $changeset['publish'][0] !== $changeset['publish'][1] && $entity->getPublish() === true) {
                 $event = new RoutePublishEvent($entity, $entity->getUser());
                 $dispatcher = $this->container->get('event_dispatcher'); 
                 $dispatcher->dispatch('tb.route_publish', $event);
-            }
+            }        
         }
     }
 }

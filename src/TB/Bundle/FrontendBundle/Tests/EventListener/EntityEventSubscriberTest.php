@@ -78,9 +78,9 @@ class EntityEventSubscriberTest extends WebTestCase
         
         return $route; 
     }
-
+    
     protected $eventDispatched; 
-
+    
     /**
      * Test that on Route persist and published set to true, the RoutePublishEvent gets dispatched
      */
@@ -213,6 +213,39 @@ class EntityEventSubscriberTest extends WebTestCase
         $this->em->flush();
         
         $route->setPublish(false);
+        
+        $this->em->persist($route);
+        $this->em->flush();
+        
+        $this->assertFalse($this->eventDispatched, 'The tb.route_publish Event was not dispatched');
+    }
+ 
+    /**
+     * Test that on Route persist and published set to true again, the RoutePublishEvent gets not dispatched
+     */
+    public function testPublishedRoutePersistNotDispatchesEvent()
+    {
+        $this->loadFixtures([
+            'TB\Bundle\FrontendBundle\DataFixtures\ORM\UserProfileData',
+        ]);
+        
+        $route = $this->getRoute();
+        $route->setPublish(true);
+        
+        $this->em->persist($route);
+        $this->em->flush();
+        
+        // set flag to false
+        $this->eventDispatched = false;
+        
+        //  get the event dispatcher and add a listener for the tb.route_publish event
+        $dispatcher = $this->getContainer()->get('event_dispatcher'); 
+        $dispatcher->addListener('tb.route_publish', function ($event, $eventName, $dispatcher) {
+             // set flag to true, it means the event was dispatched
+            $this->eventDispatched = true;
+        });
+        
+        $route->setPublish(true);
         
         $this->em->persist($route);
         $this->em->flush();

@@ -7,7 +7,7 @@ use TB\Bundle\FrontendBundle\Event\RoutePublishEvent;
 use TB\Bundle\FrontendBundle\Event\UserFollowEvent;
 use TB\Bundle\FrontendBundle\Event\UserUnfollowEvent;
 
-class EntityEventSubscriberTest extends WebTestCase
+class ActivityListenerTest extends WebTestCase
 {
     
     protected static function getKernelClass()
