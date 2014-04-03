@@ -8,20 +8,22 @@ define([
 
   var HomeHeroView = Backbone.View.extend({
     initialize: function(){
+      this.elOverlay = this.options.elOverlay;
       this.nPos = this.options.pos;
     },   
     render: function(){
       var self = this;
       
-      this.elHeroLeft = $('.left', $(this.el));
-      this.elHeroRight = $('.right', $(this.el));
-      this.elCredit = $('.tb-credit', $(this.el));
-      this.elSponsor = $('.sponsor_content', $(this.el));
+      this.elHeroLeft = $('.left', $(this.elOverlay));
+      this.elHeroRight = $('.right', $(this.elOverlay));
+      this.elCredit = $('.tb-credit', $(this.elOverlay));
+      this.elSponsor = $('.sponsor_content', $(this.elOverlay));
       
       return this;    	
 	},
     setZIndex: function(nZIndex){
       $(this.el).css("z-index", nZIndex);
+      $(this.elOverlay).css("z-index", nZIndex);
 	},
     load: function(){
       var self = this;
@@ -46,7 +48,8 @@ define([
       var self = this;
 
 	  $(this.el).css('visibility', 'visible');
-      
+	  $(this.elOverlay).css('visibility', 'visible');
+
 	  // update pos
 	  $('img.scale_image_ready', $(this.el)).imageScale();
 	  // fade in - delay adding class to ensure image is ready  

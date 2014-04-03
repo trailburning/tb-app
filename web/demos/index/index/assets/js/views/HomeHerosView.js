@@ -32,8 +32,9 @@ define([
       var self = this;
       
       var homeHeroView = null, heroModel = null;
-      $('.hero', $(this.el)).each(function(index) {
-	    homeHeroView = new HomeHeroView({ el: this, pos: index });
+      $('.hero_image', $(this.el)).each(function(index) {      	
+      	var elOverlay = $('.hero_overlay:eq('+index+')', $(self.el));
+	    homeHeroView = new HomeHeroView({ el: this, elOverlay: elOverlay, pos: index });
 	    homeHeroView.render();
 	    self.arrHeros.push(homeHeroView);      	
       });
