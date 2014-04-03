@@ -38,7 +38,7 @@ border-width:1px;
 /* HERO NAV */
 /******************************************/
 .hero_nav {
-  z-index: 101;	
+  z-index: 3;	
   position: absolute;
   width: 100%;
   bottom: 10px;
