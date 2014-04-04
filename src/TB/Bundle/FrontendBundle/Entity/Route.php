@@ -861,14 +861,8 @@ class Route implements \JsonSerializable
         ];                       
         
         if (count($this->getRoutePoints()) > 0) {
-            
             foreach ($this->getRoutePoints() as $rp) {
-                $routeData = [
-                    'coords' => [$rp->getCoords()->getLongitude() , $rp->getCoords()->getLatitude()],
-                    'tags' => $rp->getTags(),
-                ]; 
-                
-                $data['route_points'][] = $routeData;    
+                $data['route_points'][] = json_decode($rp->jsonSerialize());    
             }
         }
         
