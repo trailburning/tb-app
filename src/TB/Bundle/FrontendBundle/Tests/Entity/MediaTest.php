@@ -141,34 +141,37 @@ class MediaTest extends WebTestCase
             'The files original name was set to the media objecs');
     }
     
-    public function testToJSON()
+    public function testTojsonSerialize()
     {
         $media = new Media();
+        $media->setId(1);
         $media->setFilename('file.jpg');
         $media->setPath('path/file.jpg');
         $media->setPath('path/file.jpg');
         $media->setCoords(new Point(13.257437, 52.508006, 4326));
         $media->setTags(['key' => 'val']);
-        $obj = json_decode($media->toJSON());
         
-        $expected = new \stdClass();
-        $expected->id = '';
-        $expected->filename = 'file.jpg';
-        $expected->mimetype = 'image/jpeg';
-        $versions = new \stdClass();
-        $versions->path = 'path/file.jpg';
-        $versions->size = 0;    
-        $expected->versions = array($versions);
-        $coords = new \stdClass();
-        $coords->long = 13.257437;
-        $coords->lat = 52.508006;
-        $expected->coords = $coords;
-        $tags = new \stdClass();
-        $tags->key = 'val';
-        $expected->tags = $tags;
+        $expectedJson = '{
+            "id":' . $media->getId() . ',
+            "filename":"file.jpg",
+            "mimetype":"image\/jpeg",
+            "versions":[
+                {
+                    "path":"path\/file.jpg",
+                    "size":0
+                }
+            ],
+            "coords":{
+                "long":13.257437,
+                "lat":52.508006
+            },
+            "tags":{
+                "key":"val"
+            }
+        }';
         
-        $this->assertNotNull($obj, 'A valid JSON sting was returned by Media::toJSON()');
-        $this->assertEquals($expected, $obj, 'The returned JSON object has all expected fields');
+        $this->assertJsonStringEqualsJsonString($expectedJson, $media->jsonSerialize(),
+            'Media::jsonSerialize() returns the expected JSON string');
     }
     
 }

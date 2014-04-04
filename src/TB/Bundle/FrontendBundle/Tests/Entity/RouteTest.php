@@ -32,35 +32,180 @@ class RouteTest extends WebTestCase
             $this->fail('Missing Route with slug "grunewald" in test DB');
         }
         
-        $json = $route->toJSON();
         
-        $obj = json_decode($json);
-        if ($obj === null) {
-            $this->fail('Route::toJSON() returns invalid JSON');
-        }
+        $expectedJson = '{
+            "id": ' . $route->getId() . ',
+            "about": "The Grunewald is a forest located in the western side of Berlin on the east side of the river Havel.", 
+            "category": "Park", 
+            "centroid": [
+                13.257437, 
+                52.508006
+            ],  
+            "length": 11298, 
+            "name": "Grunewald", 
+            "region": "Berlin", 
+            "route_points": [
+                {
+                    "coords": [
+                        13.196279, 
+                        52.477955
+                    ], 
+                    "tags": {
+                        "altitude": 76.1, 
+                        "datetime": 1376732751
+                    }
+                }, 
+                {
+                    "coords": [
+                        13.196559, 
+                        52.477397
+                    ], 
+                    "tags": {
+                        "altitude": 74, 
+                        "datetime": 1376732687
+                    }
+                }, 
+                {
+                    "coords": [
+                        13.196252, 
+                        52.471298
+                    ], 
+                    "tags": {
+                        "altitude": 31.6, 
+                        "datetime": 1376732355
+                    }
+                }, 
+                {
+                    "coords": [
+                        13.192097, 
+                        52.478326
+                    ], 
+                    "tags": {
+                        "altitude": 30.7, 
+                        "datetime": 1376732022
+                    }
+                }, 
+                {
+                    "coords": [
+                        13.193966, 
+                        52.485072
+                    ], 
+                    "tags": {
+                        "altitude": 31.2, 
+                        "datetime": 1376731754
+                    }
+                }, 
+                {
+                    "coords": [
+                        13.203118, 
+                        52.491101
+                    ], 
+                    "tags": {
+                        "altitude": 61.2, 
+                        "datetime": 1376731319
+                    }
+                }, 
+                {
+                    "coords": [
+                        13.213987, 
+                        52.490498
+                    ], 
+                    "tags": {
+                        "altitude": 69.9, 
+                        "datetime": 1376731062
+                    }
+                }, 
+                {
+                    "coords": [
+                        13.221316, 
+                        52.489695
+                    ], 
+                    "tags": {
+                        "altitude": 58.8, 
+                        "datetime": 1376730897
+                    }
+                }, 
+                {
+                    "coords": [
+                        13.233876, 
+                        52.48959
+                    ], 
+                    "tags": {
+                        "altitude": 52.9, 
+                        "datetime": 1376730612
+                    }
+                }, 
+                {
+                    "coords": [
+                        13.231805, 
+                        52.490537
+                    ], 
+                    "tags": {
+                        "altitude": 51.4, 
+                        "datetime": 1376730345
+                    }
+                }, 
+                {
+                    "coords": [
+                        13.227167, 
+                        52.496973
+                    ], 
+                    "tags": {
+                        "altitude": 47.5, 
+                        "datetime": 1376730055
+                    }
+                }, 
+                {
+                    "coords": [
+                        13.248257, 
+                        52.50296
+                    ], 
+                    "tags": {
+                        "altitude": 87.3, 
+                        "datetime": 1376729446
+                    }
+                }, 
+                {
+                    "coords": [
+                        13.249617, 
+                        52.501565
+                    ], 
+                    "tags": {
+                        "altitude": 64.1, 
+                        "datetime": 1376729222
+                    }
+                }, 
+                {
+                    "coords": [
+                        13.257437, 
+                        52.508006
+                    ], 
+                    "tags": {
+                        "altitude": 70.6, 
+                        "datetime": 1376729276
+                    }
+                }, 
+                {
+                    "coords": [
+                        13.257437, 
+                        52.508006
+                    ], 
+                    "tags": {
+                        "altitude": 60.1, 
+                        "datetime": 1376728877
+                    }
+                }
+            ], 
+            "slug": "grunewald", 
+            "tags": {
+                "ascent": 223.3, 
+                "descent": 207.3
+            }, 
+            "type": "Marathon"
+        }';
         
-        $this->assertObjectHasAttribute('id', $obj, 
-            'JSON object contrains attribute "id"');
-        $this->assertObjectHasAttribute('name', $obj, 
-            'JSON object contrains attribute "name"');
-        $this->assertObjectHasAttribute('slug', $obj, 
-            'JSON object contrains attribute "slug"');
-        $this->assertObjectHasAttribute('region', $obj, 
-            'JSON object contrains attribute "region"');
-        $this->assertObjectHasAttribute('length', $obj, 
-            'JSON object contrains attribute "length"');
-        $this->assertObjectHasAttribute('about', $obj, 
-            'JSON object contrains attribute "about"');
-        $this->assertObjectHasAttribute('centroid', $obj, 
-            'JSON object contrains attribute "centroid"');
-        $this->assertObjectHasAttribute('type', $obj, 
-            'JSON object contrains attribute "type"');
-        $this->assertObjectHasAttribute('category', $obj, 
-            'JSON object contrains attribute "category"');
-        $this->assertObjectHasAttribute('tags', $obj, 
-            'JSON object contrains attribute "tags"');
-        $this->assertObjectHasAttribute('route_points', $obj, 
-            'JSON object contrains attribute "route_points"');
+        $this->assertJsonStringEqualsJsonString($expectedJson, $route->jsonSerialize(),
+            'Route::jsonSerialize() returns the expected JSON string');
     }
     
     /**

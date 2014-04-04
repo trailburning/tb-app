@@ -33,12 +33,12 @@ class RouteTypeTest extends WebTestCase
             $this->fail('Missing RouteType with name "Marathon" in test DB');
         }
         
-        $json = $routeType->toJSON();
-        $jsonObj = json_decode($json);
+        $expectedJson = '{
+            "id":' . $routeType->getId() . ',
+            "name":"Marathon"
+        }';
         
-        $this->assertNotNull($jsonObj);
-        $this->assertEquals($routeType->getId(), $jsonObj->id);
-        $this->assertEquals($routeType->getName(), $jsonObj->name);
-        
+        $this->assertJsonStringEqualsJsonString($expectedJson, $routeType->jsonSerialize(),
+            'RouteType::jsonSerialize() returns the expected JSON string');
     }
 }
