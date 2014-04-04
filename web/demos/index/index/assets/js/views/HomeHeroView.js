@@ -10,6 +10,7 @@ define([
     initialize: function(){
       this.elOverlay = this.options.elOverlay;
       this.nPos = this.options.pos;
+      this.Active = false;
     },   
     render: function(){
       var self = this;
@@ -45,6 +46,7 @@ define([
 	  });
     },
     show: function(){
+      this.Active = true;
       var self = this;
 
 	  $(this.el).css('visibility', 'visible');
@@ -73,14 +75,17 @@ define([
       this.elSponsor.addClass('hero-move');
       
 	  setTimeout(function() {
-        self.elHeroLeft.css('top', 24);             
-        self.elHeroLeftBtn.css('top', 24);
-        self.elHeroRight.css('top', 46);      
-        self.elCredit.css('top', $('#home_header').height() - self.elCredit.height() - 12);
-        self.elSponsor.css('top', $('#home_header').height() - self.elSponsor.height() - 12);                                 
+	  	if (self.Active) {
+          self.elHeroLeft.css('top', 24);             
+          self.elHeroLeftBtn.css('top', 24);
+          self.elHeroRight.css('top', 46);      
+          self.elCredit.css('top', $('#home_header').height() - self.elCredit.height() - 12);
+          self.elSponsor.css('top', $('#home_header').height() - self.elSponsor.height() - 12);                                 
+	  	}
   	  }, SHOW_CONTENT_DELAY);      
     },	
     hide: function(){
+      this.Active = false;
 	  $('.image_container', $(this.el)).css('opacity', 0);
 	  
       this.elHeroLeft.css('top', -(this.elHeroLeft.height() + OFFSCREEN_Y));             
