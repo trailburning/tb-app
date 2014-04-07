@@ -8,6 +8,10 @@ border-width:1px;
   min-width: 1200px;
 }
 
+.content {
+  width: 1140px;
+}
+
 /* HOME HEADER */
 /******************************************/
 #home_header {
@@ -15,348 +19,254 @@ border-width:1px;
   position: relative;
   margin-top: 63px;
   width: 100%;
-  height: 564px;
-  overflow: overflow;
+  height: 486px;
+  overflow: hidden;
 }
 
 #home_header .image_container {
   position: relative;
   opacity: 0;
   width: 100%;
-  height: 564px;
+  height: 486px;
   overflow: hidden;
 }
 
-#home_header .event_title {
-  position: absolute;
-  top: 23px;
-  left: 32px;
+#home_header #tb-loader-overlay {
+  z-index: 100;	
 }
 
-#home_header .share_bar {
-  position: relative;
-  margin: 0px auto 0px auto;
-  width: 1112px;
-}
-
-#home_header .share_bar .share {
-  float: right;
-  margin-top: -60px;
-}
-
-#home_header .tb-credit {
-  position: absolute;
-  bottom: 12px;
-  left: 30px;
-}
-
-/* PANELS */
+/* HERO NAV */
 /******************************************/
-.panel_content {
-  position: relative;
-  margin: 0px auto 95px auto;
-  width: 1160px;
-}
-
-.panel_intro {
-  padding-top: 30px;
-  text-align: center;
-}
-
-.panel_intro .desc {
-  margin: 24px auto 0px auto;
-  width: 570px;
-  text-align: center;
-}
-
-.panels {
-  padding-top: 26px;
-  text-align: center;
-}
-
-/* PANEL */
-/******************************************/
-.panel {
-  display: inline-block;
-  float: none;
-  text-align: left;
-  vertical-align: top;
-  width: 260px;
-  margin: 13px 13px 13px 13px;
-  line-height: 1em;
-  color: #FFFFFF;
-}  
-
-.panel .summary {  
-  font-size: 16px;
-  font-weight: 300;
-  color: #666666;
-}
-
-.panel .summary strong {
-  font-weight: 700;
-}
-
-.panel .image_container {
-  position: relative;
-  opacity: 0;
+.hero_nav {
+  z-index: 3;	
+  position: absolute;
   width: 100%;
-  height: 220px;
-  overflow: hidden;
+  bottom: 10px;
+  margin: 0px auto 0px auto;
+  text-align: center;
 }
 
-/* BRAND CARD PANEL */
+.hero_nav .button {
+  display: inline-block;
+  margin: 0px 6px 0px 6px;
+  width: 13px;
+  height: 13px;
+  background: #FFF;
+  border-radius: 50%;
+  overflow: hidden;		
+}
+
+html.touch .hero_nav .button {
+  width: 26px;
+  height: 26px;
+}
+
+.hero_nav .button:hover {
+  background: #44B6F7;
+}
+
+.hero_nav .active {
+  background: #44B6F7;
+}
+
+/* HERO */
 /******************************************/
-.brand_card_panel .photo {
-  position: relative;
-}
-
-.brand_card_panel .photo .image_container {
-  height: 294px;  
-}
-
-.brand_card_panel .summary {  
-  height: 62px;
-  margin: 16px 0px 0px 14px;
-  line-height: 1.5em;
-}
-
-/* EVENT CARD PANEL */
-/******************************************/
-.event_card_panel .photo {
-  position: relative;
-}
-
-.event_card_panel .photo .logo {
+.hero_image, .hero_overlay {
+  visibility: hidden;
   position: absolute;
   top: 0px;
   left: 0px;
   width: 100%;
+  height: 100%;
+  overflow: hidden;  
 }
 
-.event_card_panel .photo .image_container {
-  height: 294px;  
+.hero-move {
+  -webkit-transition: top 1s;
+  -moz-transition: top 1s;
+  -o-transition: top 1s;
+  transition: top 1s;    
 }
 
-.event_card_panel .photo .logo img {
-  width: 100%;
-}
-
-.event_card_panel .summary {  
-  height: 62px;
-  margin: 16px 0px 0px 14px;
-  line-height: 1.5em;
-}
-
-/* BIG EVENT CARD PANEL */
-/******************************************/
-.big_event_card_panel {
-  width: 546px;
-  margin: 13px 13px 13px 13px;
-  line-height: 1em;
-  color: #FFFFFF;
-}
-
-.big_event_card_panel .photo {
-  position: relative;
-}
-
-.big_event_card_panel .photo .logo {
+.hero_overlay .left {
+  visibility: hidden;
   position: absolute;
-  top: 0px;
+  top: 23px;
+  left: 32px;  
 }
 
-.big_event_card_panel .photo .image_container {
-  width: 546px;
-  height: 294px;  
-}
-
-.big_event_card_panel .summary {
-  height: 62px;
-  margin: 16px 0px 0px 14px;
-  line-height: 1.5em;
-}
-
-.big_event_card_panel .summary .title {
-  float: left;  
-}
-
-.big_event_card_panel .summary .detail {  
-  float: right;
-  margin-right: 24px;  
-  text-align: right;
-}
-
-/* EDITORIAL CARD PANEL */
-/******************************************/
-.editorial_card_panel .title {
-  border-top-style: solid;
-  border-top-color: #FFA955;
-  border-top-width: 8px;
-}
-
-.editorial_card_panel .title {
-  width: 100%;
-  height: 45px;
-  background: url("../img/sponsor/back_small.png") repeat-x top left;  
-}
-
-.editorial_card_panel .title .tb {
-  float: left;
-  margin: 7px 0px 0px 10px;
-}
-
-.editorial_card_panel .title .sponsor {
-  float: right;
-  margin: 7px 10px 0px 0px;
-}
-
-.editorial_card_panel .detail_container {
-  height: 294px;
-}
-
-.editorial_card_panel .detail_container .detail {
-  position: relative;
-  margin: 0px 22px 0px 22px;
-  height: 243px;
-  overflow: hidden;    	
-}
-
-.editorial_card_panel .detail_container .detail h3 {
+.hero_overlay .right {
+  visibility: hidden;
   position: absolute;
-  bottom: 16px;
-  line-height: 1.1em;
-  color: #6D6E71;
+  top: 46px;
+  right: 46px;  	
 }
 
-.editorial_card_panel a,
-.editorial_card_panel a:hover,
-.editorial_card_panel a:active {
-  text-decoration: none;   
-  color: inherit; 
+.hero_overlay .left .feature h1 {
+  color: #6d6e71;
 }
 
-.editorial_card_panel .summary {
-  height: 73px;
-  margin: 5px 0px 0px 14px;
-}
-
-.editorial_card_panel .summary .avatar {
-  float: left;
-  width: 54px;
-  margin-top: 5px;
-}
-
-.editorial_card_panel .summary .avatar img {
-  width: 100%;
-}
-
-.editorial_card_panel .summary .detail {
-  float: left;  
-  margin-top: 14px;
-  margin-left: 6px;
-}
-
-.editorial_card_panel .summary .date {
-  margin-top: 6px;
-  font-size: 14px;
-  line-height: 1em;
-  color: #979797;
-}
-
-/* TRAIL CARD PANEL */
-/******************************************/
-.trail_card_panel .title {
-  margin-left: 22px;
-  height: 74px;
-  color: #44B6F7;
-}
-
-.trail_card_panel .title h3 {
-  line-height: 74px;
-}
-
-.trail_card_panel .photo {
-  position: relative;
-}
-
-.trail_card_panel .photo .card_title {
-  position: absolute;
-  bottom: 14px;
-  left: 14px;
-  color: #FFFFFF;
-}
-
-.trail_card_panel .photo .card_title h1 {
+.hero_overlay .left .title .author {
   display: inline-block;
-  margin: 8px 0px 0px 0px;
-  padding: 5px 10px 5px 5px;
+  margin: 13px 0px 0px 0px;
+  padding: 5px 10px 5px 10px;
+  font-size: 22px;
+  line-height: 1em;
   font-weight: 400;
-  font-size: 26px;
-  line-height: 1em;  
+  color: #FFF;
+  border: none;
   background-color: #000;  
   background: rgba(0, 0, 0, 0.6);  
 }
 
-.trail_card_panel .summary {  
-  height: 73px;
-  margin: 5px 0px 0px 14px;
-  color: #44B6F7;
+.hero_overlay .hero_btn {
+  position: relative;
+  top: 0px;
 }
 
-.trail_card_panel .summary .sponsor {
-  float: left;  
+.hero_overlay .tb-credit {
+  visibility: hidden;
+  position: absolute;
+  top: 0px;
+  left: 32px;
 }
 
-.trail_card_panel .summary .avatar {
+.btn-tb-inspire {
+  font-family: 'Signika', sans-serif;
+  padding: 6px 14px;
+  font-size: 18px;
+  line-height: 30px;
+  color: #FFFFFF !important;
+  text-shadow: none;
+  background-color: #FF8309 !important;
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#cc0000), to(#FF8309));
+  background-image: -webkit-linear-gradient(top, #FFA752, #FF8309);
+  background-image: -o-linear-gradient(top, #FFA752, #FF8309);
+  background-image: linear-gradient(to bottom, #FFA752, #FF8309);
+  background-repeat: repeat-x;
+  border-color: #FF8309;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#cc0000', endColorstr='#0000cc', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;    
+}
+.btn-tb-inspire:hover,
+.btn-tb-inspire:active,
+.btn-tb-inspire.active,
+.btn-tb-inspire.disabled,
+.btn-tb-inspire[disabled] {
+  background-color: #FF8309;
+}
+
+.tb-logo {
+  display: block;
   float: left;
-  width: 54px;
-  margin-top: 5px;
+  margin-top: 2px;
+  margin-right: 8px;
+  width: 25px;
+  height: 25px;
+  background-image: url("../img/tb_icon_btn.png");
+  background-repeat: no-repeat;
 }
 
-.trail_card_panel .summary .avatar img {
-  width: 100%;
+.sponsor_content {	
+  visibility: hidden;
+  position: absolute;
+  top: 0px;
+  right: 30px;	
+  font-size: 14px;
+  line-height: 1em;
+  color: #FFFFFF;	
 }
 
-.trail_card_panel .summary .detail {
+.sponsor_content .brand {
+  float: right;
+}
+
+.sponsor_content .strap {
   float: left;  
-  margin-top: 14px;
-  margin-left: 6px;
+  margin-top: 25px;
 }
 
-.trail_card_panel .summary .stars {
-  margin-top: 6px;
+.sponsor_content .logo {
+  float: left;
+  margin-left: 10px;
 }
 
-.trail_card_panel .summary .stars div {
-  width: 13px;
-  height: 14px;
+/* DISCOVER */
+/******************************************/
+.discover_content {
+  width: 100%;
+  background: #FFF;
+}
+
+.discover_content .content {
+  padding-top: 44px;
+  margin: 0px auto 0px auto;
+  text-align: center;
+}
+
+.discover_content .desc {
+  margin-top: 18px;
+}
+
+.discover_content .cards {
+  margin-top: 32px;
+  margin-bottom: 12px;
+}
+
+.discover_content .trail_card_sticker {
+  display: inline-block;
+  margin: 0px 14px 0px 14px;
+}
+	
+.discover_content .more_btn {
+  margin-bottom: 28px;
+}	
+
+/* TRAILS */
+/******************************************/
+.trails_content .content {
+  padding-top: 44px;
+  margin: 0px auto 54px auto;
+  text-align: center;	
+}
+
+.trails_content .desc {
+  margin: 24px auto 0px auto;
+  text-align: center;
+}
+
+.trails_content .panels {
+  padding-top: 26px;
+  margin-bottom: 24px;
+}
+	
+.trails_content .more_btn {
+  margin-bottom: 36px;
+}	
+
+.trails_content .trailers .avatars {
+  padding-top: 20px;	
+}
+
+.trails_content .trailers .avatars .tb-avatar {
+  display: inline-block;
+  margin: 0px 9px 0px 9px;
 }
 
 /* GUIDE */
 /******************************************/
 .guide_content {
   width: 100%;
-  height: 924px;
   background: #FFF;
 }
 
-.guide_content .sticker {
-  position: relative;
-  margin: 0px auto 0px auto;
-  width: 162px;
-}
-
-.guide_content .sticker img {
-  position: absolute;
-  top: -56px;
-  width: 100%;
-}
-
 .guide_content .content {
-  padding-top: 122px;
-  margin: 0px auto 0px auto;
-  width: 1160px;
+  padding-top: 54px;
+  margin: 0px auto 52px auto;
 }
 
 .guide_content .content .title {
@@ -365,82 +275,44 @@ border-width:1px;
 
 .guide_content .content .desc {
   margin: 0px auto 0px auto;
-  width: 500px;
-  margin-top: 15px;
+  margin-top: 18px;
   text-align: center;    
 }
 
 .guide_content .guide_items {
-  margin-top: 58px;
-  width: 100%;
+  margin: 56px auto 0px auto;
+  width: 918px;
   height: 420px;  
-  background: url("../img/guide_back.png") no-repeat 364px 120px;    
+  background: url("../img/guide_back.png") no-repeat 290px 90px;    
+  background-size: 340px 67px;
 }
 
 .guide_content .guide_item {
   float: left;
-  margin: 0px 55px 0px 55px;
+  margin: 0px 18px 0px 18px;
   width: 270px;
-/*  
-  font-size: 50px;
-  line-height: 1em;
-  color: #44B6F7;
-*/  
   text-align: center;  
 }
 
-.guide_content .guide_item img {
+.guide_content .guide_item .guide_image {
+  display: inline-block;
+  width: 190px;	
+}
+
+.guide_content .guide_item .guide_image img {
   width: 100%;
 }
 
 .guide_content .guide_item .title {
-  margin-top: 10px;
+  margin-top: 16px;
 }
 
 .guide_content .guide_item h4 {
   margin-top: 18px;
 }
 
-/* FOOTER PROMOTE */
-/******************************************/
-.footer_promote {
-  z-index: 100;
-  position: relative;
-  width: 100%;
-  height: 682px;
-  overflow: overflow;  
-}
-
-.footer_promote .image_container {
-  position: relative;
-  opacity: 0;
-  width: 100%;
-  height: 682px;
-  overflow: hidden;
-}
-
-.footer_promote .promote_title {
-  position: absolute;
-  top: 122px;
-  width: 100%;
+.guide_content .join {
   text-align: center;
-}
-
-.footer_promote .desc {
-  margin-top: 18px;
-  font-size: 22px;
-  color: #FFF;
-  text-shadow: 1px 1px #000000;  
-}
-
-.footer_promote .signin {
-  margin-top: 18px;
-}
-
-.footer_promote .tb-credit {
-  position: absolute;
-  bottom: 12px;
-  left: 30px;
 }
 
 /* RESPONSIVE */
@@ -455,89 +327,25 @@ border-width:1px;
   #appview {
     min-width: 992px;
   }  
-  #home_header .share_bar {
+  .content {
     width: 992px;
-  }
+  }  
   .panel_content {
     width: 992px;
   }   
-  .panel {
-    width: 224px;
-    margin: 12px 10px 12px 10px;
-  }    
-  .panel .summary {  
-    font-size: 14px;
-  }  
-  .panel .image_container {
-    height: 190px;
-  }
-  .brand_card_panel .photo .image_container {
-    height: 254px;
-  }  
-  .brand_card_panel .summary {  
-    height: 54px;
-    margin: 10px 0px 0px 12px;
-  }
-  .event_card_panel .photo .image_container {
-    height: 254px;
-  }  
-  .event_card_panel .summary {  
-    height: 54px;
-    margin: 10px 0px 0px 12px;
-  }
-  .big_event_card_panel {  
-    width: 468px;
-  }  
-  .big_event_card_panel .photo .image_container {
-    width: 468px;
-    height: 254px;
-  }
-  .big_event_card_panel .summary {
-    height: 54px;
-    margin: 10px 0px 0px 12px;
-  }  
-  .trail_card_panel .title {
-    margin-left: 18px;
-    height: 64px;
-  }  
-  .trail_card_panel .title h3 {
-    line-height: 64px;
-  }
-  .trail_card_panel .summary {  
-    height: 64px;
-    margin: 0px 0px 0px 12px;
-  }      
-  .editorial_card_panel .detail_container {
-    height: 254px;
-  }
-  .editorial_card_panel .detail_container .detail {
-    height: 203px;
-  }
-  .editorial_card_panel .summary {  
-    height: 64px;
-    margin: 0px 0px 0px 12px;
-  }      
-  .guide_content {
-    height: 786px;
-  }
-  .guide_content .content {
-    width: 992px;
-  }  
   .guide_content .guide_items {
-    margin-top: 58px;
-    width: 100%;
-    height: 420px;  
-    background: url("../img/guide_back.png") no-repeat 302px 102px;    
-    background-size: 360px 71px;  
-  }  
+    width: 825px;
+    height: 365px;  
+    background: url("../img/guide_back.png") no-repeat 267px 78px;    
+    background-size: 296px 59px;
+  }
   .guide_content .guide_item {
-    margin: 0px 48px 0px 48px;
-    width: 222px;
-    font-size: 50px;
-    line-height: 1em;
-    color: #44B6F7;
-    text-align: center;  
-  }  
+    margin: 0px 16px 0px 16px;
+    width: 243px;
+  }
+  .guide_content .guide_item .guide_image {
+    width: 165px;	
+  }
 }
 
 /* Small devices (tablets, 768px) */
@@ -550,4 +358,45 @@ border-width:1px;
 
 img {
   max-width: none;
+}
+
+.summary .tb-avatar {
+  float: left;
+  margin-top: 5px;
+}
+
+.avatar {
+  width: 54px;
+  height: 54px;
+  box-shadow: 2px 2px 2px #888888;
+  background: #FFF;
+  border-radius: 50%;
+  overflow: hidden;		
+}
+
+.highlight_avatar {
+  width: 76px;
+  height: 76px;
+}
+
+.feature_avatar {
+  width: 128px;
+  height: 128px;
+}
+
+.profile_avatar {
+  width: 210px;
+  height: 210px;
+}
+
+.avatar .photo {
+  margin: 4%;
+  width: 92%;
+  height: 92%;
+  border-radius: 50%;
+  overflow: hidden;	
+}
+
+.avatar .photo img {
+  width: 100%;
 }

@@ -883,6 +883,13 @@ form label {
   -ms-filter: contrast(1.5);   
 }
 
+.tb-fade-in-no-delay {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  -moz-transition: opacity 0.5s ease-in-out;
+  -webkit-transition: opacity 0.5s ease-in-out;
+}
+
 .tb-fade-in {
   opacity: 0;
   transition: opacity 0.5s ease-in-out;
