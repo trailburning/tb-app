@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="route_points")
  * @ORM\Entity
  */
-class RoutePoint
+class RoutePoint implements \JsonSerializable
 {
     /**
      * @var integer
@@ -159,5 +159,18 @@ class RoutePoint
     public function getCoords()
     {
         return $this->coords;
+    }
+    
+    public function jsonSerialize() 
+    {
+        $data = [
+            'coords' => [
+                $this->getCoords()->getLongitude(), 
+                $this->getCoords()->getLatitude(),
+            ],
+            'tags' => $this->getTags(),
+        ];                       
+        
+        return json_encode($data);
     }
 }

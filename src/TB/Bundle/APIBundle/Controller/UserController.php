@@ -5,6 +5,8 @@ namespace TB\Bundle\APIBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use TB\Bundle\APIBundle\Util\ApiException;
+use TB\Bundle\FrontendBundle\Event\UserFollowEvent;
+use TB\Bundle\FrontendBundle\Event\UserUnfollowEvent;
 
 class UserController extends AbstractRestController
 {
@@ -52,6 +54,11 @@ class UserController extends AbstractRestController
         $em = $this->getDoctrine()->getManager();
         $em->persist($user);
         $em->flush();
+        
+        // dispath tb.user_follow event
+        $event = new UserFollowEvent($user, $userToFollow);
+        $dispatcher = $this->container->get('event_dispatcher'); 
+        $dispatcher->dispatch('tb.user_follow', $event);
         
         $output = array('usermsg' => 'success');
         
@@ -102,6 +109,11 @@ class UserController extends AbstractRestController
         $em = $this->getDoctrine()->getManager();
         $em->persist($user);
         $em->flush();
+        
+        // dispath tb.user_follow event
+        $event = new UserUnfollowEvent($user, $userToUnfollow);
+        $dispatcher = $this->container->get('event_dispatcher'); 
+        $dispatcher->dispatch('tb.user_unfollow', $event);
         
         $output = array('usermsg' => 'success');
         

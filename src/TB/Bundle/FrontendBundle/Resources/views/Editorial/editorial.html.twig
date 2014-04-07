@@ -9,6 +9,9 @@
 {% block body %}
 <script>
 var TB_APP = 'EditorialApp';
+{% if app.user %}		
+var TB_USER_ID = {{ app.user.id }};
+{% endif %}
 var TB_EDITORIAL_TRAILS = [
     {% for route in routes %}
         { long: {{ route.centroid.longitude }}, lat: {{ route.centroid.latitude }}, short_name: "{{ route.shortName }}", region: "{{ route.region }}", url: "{{ path('editorial_trail', {trailSlug: route.slug, editorialSlug: editorial.slug}) }}" },          

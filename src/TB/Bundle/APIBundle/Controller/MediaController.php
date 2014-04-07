@@ -33,7 +33,7 @@ class MediaController extends AbstractRestController
         
         $jsonMedias = [];
         foreach ($medias as $media) {
-            $jsonMedias[] = $media->toJSON();
+            $jsonMedias[] = $media->jsonSerialize();
         }
         
         $output = ['usermsg' => 'success', "value" => json_decode('['. implode(',', $jsonMedias).']')];
@@ -82,7 +82,7 @@ class MediaController extends AbstractRestController
             $em->persist($media);
             $em->flush();    
             
-            $medias[] = $media->toJSON();
+            $medias[] = $media->jsonSerialize();
         }
         
         $output = ['usermsg' => 'success', "value" => json_decode('['. implode(',', $medias).']')];

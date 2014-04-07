@@ -9,6 +9,9 @@
 {% block body %}
 <script>
 var TB_APP = 'EventApp';
+{% if app.user %}		
+var TB_USER_ID = {{ app.user.id }};
+{% endif %}
 var TB_EVENT_LONG = {{ event.location.longitude }};
 var TB_EVENT_LAT = {{ event.location.latitude }};
 var TB_EVENT_MAP_ZOOM = {{ event.mapZoom }};

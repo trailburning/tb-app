@@ -1,13 +1,14 @@
 define([
   'underscore', 
   'backbone',
-  'models/TrailMediasModel',    
+  'models/TrailMediasModel',
+  'views/ActivityFeedView',  
   'views/TrailmakerMapView',
   'views/StepRouteView',
   'views/StepRouteEditView',
   'views/StepRouteRemoveView',
   'views/StepPublishedView'
-], function(_, Backbone, TrailMediasModel, TrailMapView, StepRouteView, StepRouteEditView, StepRouteRemoveView, StepPublishedView){
+], function(_, Backbone, TrailMediasModel, ActivityFeedView, TrailMapView, StepRouteView, StepRouteEditView, StepRouteRemoveView, StepPublishedView){
 
   var TITLE_TIMER = 10000;
 
@@ -40,6 +41,12 @@ define([
       $(window).resize(function() {
         self.handleResize();
       });    
+
+	  if (typeof TB_USER_ID != 'undefined') {
+      	this.activityFeedView = new ActivityFeedView({ el: '#activity_feed_view' });
+      	this.activityFeedView.render();
+      	this.activityFeedView.getActivity();	  	
+	  }
 
       // Trail Map    
       this.trailMapView = new TrailMapView({ el: '#trail_map_view', elCntrls: '#view_map_btns', model: this.model });

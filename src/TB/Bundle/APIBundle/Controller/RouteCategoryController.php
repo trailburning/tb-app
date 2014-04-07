@@ -21,7 +21,7 @@ class RouteCategoryController extends AbstractRestController
         $jsonRouteCategories = [];
         
         foreach ($routeCategories as $routeCategory) {
-            $jsonRouteCategories[] = $routeCategory->toJSON();
+            $jsonRouteCategories[] = $routeCategory->jsonSerialize();
         }
         
         $output = array('usermsg' => 'success', 'value' => json_decode('{"route_types": ['. implode(',', $jsonRouteCategories).']}'));

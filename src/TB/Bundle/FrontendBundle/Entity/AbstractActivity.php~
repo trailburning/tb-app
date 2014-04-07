@@ -1,0 +1,64 @@
+<?php
+
+namespace TB\Bundle\FrontendBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="activity")
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="verb", type="string")
+ * @ORM\DiscriminatorMap({
+ *    "user_follow"   = "UserFollowActivity",
+ *    "user_unfollow" = "UserUnfollowActivity",
+ *    "route_publish" = "RoutePublishActivity",
+ * })
+ */
+abstract class AbstractActivity
+{
+   
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+    
+    /**
+     * @var datetime $published
+     *
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime")
+     */
+    protected $published;
+    
+    /**
+     * @var integer
+     * 
+     * @ORM\Column(name="actor_id", type="integer")
+     */
+    private $actorId;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="object_id", type="integer")
+     */
+    private $objectId;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="target_id", type="integer", nullable=true)
+     */
+    private $targetId;
+    
+    protected $actor;
+    protected $object;
+    protected $target;
+    
+}

@@ -1,8 +1,9 @@
 define([
   'underscore', 
   'backbone',
-  'views/ProfileMapView'  
-], function(_, Backbone, ProfileMapView){
+  'views/ProfileMapView',  
+  'views/ActivityFeedView'  
+], function(_, Backbone, ProfileMapView, ActivityFeedView){
 
   var AppView = Backbone.View.extend({
     initialize: function(){
@@ -12,6 +13,12 @@ define([
 	
       this.profileMapView = new ProfileMapView({ el: '#profile_map_view' });
       this.profileMapView.render();
+
+	  if (typeof TB_USER_ID != 'undefined') {
+      	this.activityFeedView = new ActivityFeedView({ el: '#activity_feed_view' });
+      	this.activityFeedView.render();
+      	this.activityFeedView.getActivity();	  	
+	  }
 
 	  function updateFollowBtn() {
 	    if (self.elLikeBtn.hasClass('pressed-btn-tb')) {
