@@ -16,7 +16,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *    "route_publish" = "RoutePublishActivity",
  * })
  */
-abstract class AbstractActivity
+abstract class AbstractActivity implements Exportable
 {
    
     /**
@@ -49,6 +49,7 @@ abstract class AbstractActivity
      * @ORM\Column(name="object_id", type="integer")
      */
     protected $objectId;
+    
     
     /**
      * @var integer
@@ -162,5 +163,15 @@ abstract class AbstractActivity
     public function getTargetId()
     {
         return $this->targetId;
+    }
+    
+    protected function getFormatedPublishedDate()
+    {
+        $date = $this->getPublished();
+        if ($date instanceof \DateTime) {
+            $date = $date->format('Y-m-d H:i:s');
+        } 
+        
+        return str_replace(' ', 'T', $date) . 'Z';
     }
 }

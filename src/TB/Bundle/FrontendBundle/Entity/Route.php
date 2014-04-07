@@ -183,6 +183,13 @@ class Route implements \JsonSerializable
      * @ORM\OneToMany(targetEntity="RoutePoint", mappedBy="route")
      **/
     private $routePoints;
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="RoutePublishActivity", mappedBy="routePublishActivities")
+     **/
+    private $routePublishActivities;
 
     /**
      * Set name
@@ -929,4 +936,52 @@ class Route implements \JsonSerializable
     
 
     
+
+    /**
+     * Add routePublishActivities
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\RoutePublishActivity $routePublishActivities
+     * @return Route
+     */
+    public function addRoutePublishActivity(\TB\Bundle\FrontendBundle\Entity\RoutePublishActivity $routePublishActivities)
+    {
+        $this->routePublishActivities[] = $routePublishActivities;
+
+        return $this;
+    }
+
+    /**
+     * Remove routePublishActivities
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\RoutePublishActivity $routePublishActivities
+     */
+    public function removeRoutePublishActivity(\TB\Bundle\FrontendBundle\Entity\RoutePublishActivity $routePublishActivities)
+    {
+        $this->routePublishActivities->removeElement($routePublishActivities);
+    }
+
+    /**
+     * Get routePublishActivities
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRoutePublishActivities()
+    {
+        return $this->routePublishActivities;
+    }
+    
+    /**
+     * Returns an data array representatiosn of this entity for the activity feed
+     */
+    public function exportAsActivity()
+    {   
+        $data = [
+            'url' => '/trail/' . $this->getSlug(),
+            'objectType' => 'trail',
+            'id' => $this->getId(),
+            'displayName' => $this->getName(),
+        ];
+        
+        return $data;
+    }
 }

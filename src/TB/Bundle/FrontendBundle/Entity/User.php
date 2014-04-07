@@ -125,6 +125,41 @@ abstract class User extends BaseUser
     private $iFollow;
     
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="RoutePublishActivity", mappedBy="routePublishActivities")
+     **/
+    private $routePublishActivities;
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="UserFollowActivity", mappedBy="userFollowActivities")
+     **/
+    private $userFollowActivities;
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="UserFollowActivity", mappedBy="userFollowedActivities")
+     **/
+    private $userFollowedActivities;
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="UserUnfollowActivity", mappedBy="userUnfollowActivities")
+     **/
+    private $userUnfollowActivities;
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="UserUnfollowActivity", mappedBy="userUnfollowedActivities")
+     **/
+    private $userUnfollowedActivities;
+    
+    /**
      * Constructor
      */
     public function __construct()
@@ -584,5 +619,170 @@ abstract class User extends BaseUser
         }
         
         return false;
+    }
+
+    /**
+     * Add routePublishActivities
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\RoutePublishActivity $routePublishActivities
+     * @return User
+     */
+    public function addRoutePublishActivity(\TB\Bundle\FrontendBundle\Entity\RoutePublishActivity $routePublishActivities)
+    {
+        $this->routePublishActivities[] = $routePublishActivities;
+
+        return $this;
+    }
+
+    /**
+     * Remove routePublishActivities
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\RoutePublishActivity $routePublishActivities
+     */
+    public function removeRoutePublishActivity(\TB\Bundle\FrontendBundle\Entity\RoutePublishActivity $routePublishActivities)
+    {
+        $this->routePublishActivities->removeElement($routePublishActivities);
+    }
+
+    /**
+     * Get routePublishActivities
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRoutePublishActivities()
+    {
+        return $this->routePublishActivities;
+    }
+
+    /**
+     * Add userFollowActivities
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\UserFollowActivity $userFollowActivities
+     * @return User
+     */
+    public function addUserFollowActivity(\TB\Bundle\FrontendBundle\Entity\UserFollowActivity $userFollowActivities)
+    {
+        $this->userFollowActivities[] = $userFollowActivities;
+
+        return $this;
+    }
+
+    /**
+     * Remove userFollowActivities
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\UserFollowActivity $userFollowActivities
+     */
+    public function removeUserFollowActivity(\TB\Bundle\FrontendBundle\Entity\UserFollowActivity $userFollowActivities)
+    {
+        $this->userFollowActivities->removeElement($userFollowActivities);
+    }
+
+    /**
+     * Get userFollowActivities
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUserFollowActivities()
+    {
+        return $this->userFollowActivities;
+    }
+
+    /**
+     * Add userFollowedActivities
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\UserFollowActivity $userFollowedActivities
+     * @return User
+     */
+    public function addUserFollowedActivity(\TB\Bundle\FrontendBundle\Entity\UserFollowActivity $userFollowedActivities)
+    {
+        $this->userFollowedActivities[] = $userFollowedActivities;
+
+        return $this;
+    }
+
+    /**
+     * Remove userFollowedActivities
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\UserFollowActivity $userFollowedActivities
+     */
+    public function removeUserFollowedActivity(\TB\Bundle\FrontendBundle\Entity\UserFollowActivity $userFollowedActivities)
+    {
+        $this->userFollowedActivities->removeElement($userFollowedActivities);
+    }
+
+    /**
+     * Get userFollowedActivities
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUserFollowedActivities()
+    {
+        return $this->userFollowedActivities;
+    }
+
+    /**
+     * Add userUnfollowActivities
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\UserUnfollowActivity $userUnfollowActivities
+     * @return User
+     */
+    public function addUserUnfollowActivity(\TB\Bundle\FrontendBundle\Entity\UserUnfollowActivity $userUnfollowActivities)
+    {
+        $this->userUnfollowActivities[] = $userUnfollowActivities;
+
+        return $this;
+    }
+
+    /**
+     * Remove userUnfollowActivities
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\UserUnfollowActivity $userUnfollowActivities
+     */
+    public function removeUserUnfollowActivity(\TB\Bundle\FrontendBundle\Entity\UserUnfollowActivity $userUnfollowActivities)
+    {
+        $this->userUnfollowActivities->removeElement($userUnfollowActivities);
+    }
+
+    /**
+     * Get userUnfollowActivities
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUserUnfollowActivities()
+    {
+        return $this->userUnfollowActivities;
+    }
+
+    /**
+     * Add userUnfollowedActivities
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\UserUnfollowActivity $userUnfollowedActivities
+     * @return User
+     */
+    public function addUserUnfollowedActivity(\TB\Bundle\FrontendBundle\Entity\UserUnfollowActivity $userUnfollowedActivities)
+    {
+        $this->userUnfollowedActivities[] = $userUnfollowedActivities;
+
+        return $this;
+    }
+
+    /**
+     * Remove userUnfollowedActivities
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\UserUnfollowActivity $userUnfollowedActivities
+     */
+    public function removeUserUnfollowedActivity(\TB\Bundle\FrontendBundle\Entity\UserUnfollowActivity $userUnfollowedActivities)
+    {
+        $this->userUnfollowedActivities->removeElement($userUnfollowedActivities);
+    }
+
+    /**
+     * Get userUnfollowedActivities
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUserUnfollowedActivities()
+    {
+        return $this->userUnfollowedActivities;
     }
 }

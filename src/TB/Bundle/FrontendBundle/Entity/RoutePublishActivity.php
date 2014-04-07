@@ -80,4 +80,15 @@ class RoutePublishActivity extends AbstractActivity
         return $this->object;
     }
 
+    public function export()
+    {
+        $data = [
+            'published' => $this->getFormatedPublishedDate(),
+            'actor' => $this->getActor()->exportAsActivity(),
+            'verb' => 'publish',
+            'object' => $this->getObject()->exportAsActivity(),
+        ];
+        
+        return $data;
+    }
 }

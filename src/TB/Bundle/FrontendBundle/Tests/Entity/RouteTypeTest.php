@@ -16,9 +16,9 @@ class RouteTypeTest extends WebTestCase
     }
     
     /**
-     * Test update of entity from JSON object
+     * Test JSON serialization of entity
      */
-    public function testToJSON()
+    public function testJsonSerialize()
     {
         $this->loadFixtures(
             ['TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteTypeData']

@@ -17,7 +17,10 @@ class RouteTest extends WebTestCase
         return 'AppKernel';
     }
     
-    public function testToJSON()
+    /**
+     * Test JSON serialization of entity
+     */
+    public function testJsonSerialize()
     {
         $this->loadFixtures([
             'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData',
@@ -334,5 +337,33 @@ class RouteTest extends WebTestCase
         $this->assertTrue($route->getPublish(),
             'publish was set to "true"');
     }
-    
+        
+    /**
+     * 
+     */
+    public function testExportAsActivity()
+    {
+        $this->loadFixtures([
+            'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData',
+        ]);
+            
+        // Get Route from DB with the slug "grunewald"..
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        $route = $em
+            ->getRepository('TBFrontendBundle:Route')
+            ->findOneBySlug('grunewald');
+        if (!$route) {
+            $this->fail('Missing Route with slug "grunewald" in test DB');
+        }
+        
+        $expected = [
+            'url' => '/trail/grunewald',
+            'objectType' => 'trail',
+            'id' => $route->getId(),
+            'displayName' => 'Grunewald',
+        ];
+        
+        $this->assertEquals($expected, $route->exportAsActivity(),
+            'Route::exportAsActivity() returns the expected data array');
+    }
 }

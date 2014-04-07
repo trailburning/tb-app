@@ -79,4 +79,16 @@ class UserUnfollowActivity extends AbstractActivity
     {
         return $this->object;
     }
+    
+    public function export()
+    {
+        $data = [
+            'published' => $this->getFormatedPublishedDate(),
+            'actor' => $this->getActor()->exportAsActivity(),
+            'verb' => 'unfollow',
+            'object' => $this->getObject()->exportAsActivity(),
+        ];
+        
+        return $data;
+    }
 }
