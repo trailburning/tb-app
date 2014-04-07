@@ -2,8 +2,9 @@ var app = app || {};
 
 define([
   'underscore', 
-  'backbone'
-], function(_, Backbone){
+  'backbone',
+  'views/ActivityFeedView'  
+], function(_, Backbone, ActivityFeedView){
   app.dispatcher = _.clone(Backbone.Events);
   
   var initialize = function() {
@@ -36,6 +37,12 @@ define([
     });
     
   	$('#footerview').show();
+    
+    if (typeof TB_USER_ID != 'undefined') {
+  	  this.activityFeedView = new ActivityFeedView({ el: '#activity_feed_view' });
+  	  this.activityFeedView.render();
+  	  this.activityFeedView.getActivity();	  	
+    }
     
     function handleResize() {
       $("img.scale_image_ready").imageScale();

@@ -16,6 +16,9 @@
 {% block body %}
 <script>
 var TB_APP = 'TrailApp';
+{% if app.user %}		
+var TB_USER_ID = {{ app.user.id }};
+{% endif %}
 var TB_TRAIL_ID = {{ trail.id }};
 </script>
 
