@@ -9,6 +9,9 @@
 {% block body %}
 <script>
 var TB_APP = 'HomeApp';
+{% if app.user %}		
+var TB_USER_ID = {{ app.user.id }};
+{% endif %}
 </script>
 
   <div id="home_header">  
