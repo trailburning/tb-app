@@ -12,7 +12,7 @@ use Doctrine\ORM\EntityManager;
  * @ORM\Table(name="routes")
  * @ORM\Entity
  */
-class Route
+class Route implements \JsonSerializable
 {
     /**
      * @var string
@@ -183,6 +183,13 @@ class Route
      * @ORM\OneToMany(targetEntity="RoutePoint", mappedBy="route")
      **/
     private $routePoints;
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="RoutePublishActivity", mappedBy="routePublishActivities")
+     **/
+    private $routePublishActivities;
 
     /**
      * Set name
@@ -843,82 +850,46 @@ class Route
         }
     }
     
-    /**
-     * Only used by API
-     */
-    public function toJSON() 
+    public function jsonSerialize() 
     {
-        $route = new \StdClass();
-        $route->id = $this->getId();
-        $route->name = $this->getName();
-        $route->slug = $this->getSlug();     
-        $route->region = $this->getRegion();     
-        $route->length = $this->getLength();
-        $route->about = $this->getAbout();
-        $route->centroid = array($this->getCentroid()->getLongitude(), $this->getCentroid()->getLatitude());
+        $data = [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'slug' => $this->getSlug(),
+            'region' => $this->getRegion(),
+            'length' => $this->getLength(),
+            'about' => $this->getAbout(),
+            'centroid' => [
+                $this->getCentroid()->getLongitude(), 
+                $this->getCentroid()->getLatitude(),
+            ],
+            'tags' => $this->getTags(),
+            'route_points' => [],
+        ];                       
+        
+        if (count($this->getRoutePoints()) > 0) {
+            foreach ($this->getRoutePoints() as $rp) {
+                $data['route_points'][] = json_decode($rp->jsonSerialize());    
+            }
+        }
         
         if ($this->getBBox() !== null) {
-            $route->bbox = $this->getBBox();
+            $data['bbox'] = $this->getBBox();
         }
         
         if ($this->getRouteType() !== null) {
-            
-            $route->type = $this->getRouteType()->getName();
-        } else {
-            $route->type = '';
+            $data['type'] = $this->getRouteType()->getName();
         }
         
         if ($this->getRouteCategory() !== null) {
-            $route->category = $this->getRouteCategory()->getName();
-        } else {
-            $route->category = '';
-        }
-        
-        $route->tags = new \StdClass();;
-        foreach ($this->getTags() as $tag_name => $tag_value) {
-            $route->tags->$tag_name = $tag_value;
-        }
-        
-        if (count($this->getRoutePoints()) > 0) {
-            $route->route_points = array();;
-            foreach ($this->getRoutePoints() as $rp) {
-                $routePoint = new \StdClass();
-                $routePoint->coords = array($rp->getCoords()->getLongitude() , $rp->getCoords()->getLatitude());
-                $routePoint->tags = new \StdClass();
-                foreach ($rp->getTags() as $rp_tag => $rp_tag_value) {
-                    $routePoint->tags->$rp_tag = $rp_tag_value;
-                }
-                $route->route_points[] = $routePoint;    
-            }
+            $data['category'] = $this->getRouteCategory()->getName();
         }
         
         if ($this->media !== null) {
-            
-            $media = new \StdClass;
-            $media->id = $this->media->getId();
-            $media->filename = $this->media->getFilename();
-            $media->mimetype = 'image/jpeg';     
-            
-            $version = new \StdClass();
-            $version->path = $this->media->getPath(); 
-            $version->size = 0;
-            $media->versions = array($version);
-            
-            $coords = new \StdClass();
-            $coords->long = $this->media->getCoords()->getLongitude();
-            $coords->lat = $this->media->getCoords()->getLatitude();
-            
-            $media->coords = $coords;
-            
-            $media->tags = new \StdClass;
-            foreach ($this->media->getTags() as $tag_name => $tag_value) {
-                 $media->tags->$tag_name = $tag_value;
-            }
-            
-            $route->media = $media;
+            $data['media'] = json_decode($this->media->jsonSerialize());
         }
         
-        return json_encode($route);
+        return json_encode($data);
     }
     
     /**
@@ -965,4 +936,52 @@ class Route
     
 
     
+
+    /**
+     * Add routePublishActivities
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\RoutePublishActivity $routePublishActivities
+     * @return Route
+     */
+    public function addRoutePublishActivity(\TB\Bundle\FrontendBundle\Entity\RoutePublishActivity $routePublishActivities)
+    {
+        $this->routePublishActivities[] = $routePublishActivities;
+
+        return $this;
+    }
+
+    /**
+     * Remove routePublishActivities
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\RoutePublishActivity $routePublishActivities
+     */
+    public function removeRoutePublishActivity(\TB\Bundle\FrontendBundle\Entity\RoutePublishActivity $routePublishActivities)
+    {
+        $this->routePublishActivities->removeElement($routePublishActivities);
+    }
+
+    /**
+     * Get routePublishActivities
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRoutePublishActivities()
+    {
+        return $this->routePublishActivities;
+    }
+    
+    /**
+     * Returns an data array representatiosn of this entity for the activity feed
+     */
+    public function exportAsActivity()
+    {   
+        $data = [
+            'url' => '/trail/' . $this->getSlug(),
+            'objectType' => 'trail',
+            'id' => $this->getId(),
+            'displayName' => $this->getName(),
+        ];
+        
+        return $data;
+    }
 }

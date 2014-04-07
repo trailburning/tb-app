@@ -18,7 +18,7 @@ class RouteController extends AbstractRestController
     {
         $postgis = $this->get('postgis');
         $route = $postgis->readRoute($id);
-        $output = array('usermsg' => 'success', "value" => json_decode('{"route": '.$route->ToJSON().'}'));
+        $output = array('usermsg' => 'success', "value" => json_decode('{"route": '.$route->jsonSerialize().'}'));
         
         return $this->getRestResponse($output);
     }
@@ -89,7 +89,7 @@ class RouteController extends AbstractRestController
         $routes = $postgis->readRoutes($userId, 10, null, null, true);
         $json_routes = array();
         foreach ($routes as $route) {
-            $json_routes[] = $route->toJSON();
+            $json_routes[] = $route->jsonSerialize();
         }
         
         $output = array('usermsg' => 'success', "value" => json_decode('{"routes": ['. implode(',', $json_routes).']}'));
@@ -144,7 +144,7 @@ class RouteController extends AbstractRestController
         $routes = $postgis->readRoutes($userId, $count, $route_type_id, $route_category_id, $publish);
         $json_routes = array();
         foreach ($routes as $route) {
-            $json_routes[] = $route->toJSON();
+            $json_routes[] = $route->jsonSerialize();
         }
         
         $output = array('usermsg' => 'success', "value" => json_decode('{"routes": ['. implode(',', $json_routes).']}'));

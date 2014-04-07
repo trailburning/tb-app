@@ -16,9 +16,9 @@ class RouteCategoryTest extends WebTestCase
     }
     
     /**
-     * Test update of entity from JSON object
+     * Test JSON serialization of entity
      */
-    public function testToJSON()
+    public function testJsonSerialize()
     {
         $this->loadFixtures(
             ['TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteCategoryData']
@@ -33,12 +33,12 @@ class RouteCategoryTest extends WebTestCase
             $this->fail('Missing RouteType with name "Park" in test DB');
         }
         
-        $json = $routeCategory->toJSON();
-        $jsonObj = json_decode($json);
+        $expectedJson = '{
+            "id":' . $routeCategory->getId() . ',
+            "name":"Park"
+        }';
         
-        $this->assertNotNull($jsonObj);
-        $this->assertEquals($routeCategory->getId(), $jsonObj->id);
-        $this->assertEquals($routeCategory->getName(), $jsonObj->name);
-        
+        $this->assertJsonStringEqualsJsonString($expectedJson, $routeCategory->jsonSerialize(),
+            'RouteCategory::jsonSerialize() returns the expected JSON string');
     }
 }

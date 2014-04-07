@@ -1,8 +1,9 @@
 define([
   'underscore', 
   'backbone',
+  'views/ActivityFeedView',  
   'views/EditorialMapView'
-], function(_, Backbone, EditorialMapView){
+], function(_, Backbone, ActivityFeedView, EditorialMapView){
 
   var STATE_BIG_SPONSOR = 1;
   var STATE_SMALL_SPONSOR = 2;
@@ -25,6 +26,12 @@ define([
 	  $(window).resize(function() {
 	    self.handleResize(); 
 	  });                
+      
+	  if (typeof TB_USER_ID != 'undefined') {
+      	this.activityFeedView = new ActivityFeedView({ el: '#activity_feed_view' });
+      	this.activityFeedView.render();
+      	this.activityFeedView.getActivity();	  	
+	  }
       
       this.editorialMapView = new EditorialMapView({ el: '#editorial_map_view' });          
       self.editorialMapView.render();

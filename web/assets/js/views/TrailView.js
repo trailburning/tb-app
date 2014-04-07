@@ -1,7 +1,8 @@
 define([
   'underscore', 
   'backbone',
-  'models/TrailMediaModel',  
+  'models/TrailMediaModel',    
+  'views/ActivityFeedView',
   'views/TrailMiniMapView',
   'views/TrailMiniSlidesView',
   'views/TrailSlidesView',  
@@ -9,7 +10,7 @@ define([
   'views/TrailStatsView',  
   'views/TrailAltitudeView',
   'views/TrailWeatherView'
-], function(_, Backbone, TrailMediaModel, TrailMiniMapView, TrailMiniSlidesView, TrailSlidesView, TrailMapView, TrailStatsView, TrailAltitudeView, TrailWeatherView){
+], function(_, Backbone, TrailMediaModel, ActivityFeedView, TrailMiniMapView, TrailMiniSlidesView, TrailSlidesView, TrailMapView, TrailStatsView, TrailAltitudeView, TrailWeatherView){
 
   var MIN_HEIGHT = 540;
   var PLAYER_REDUCE_HEIGHT = 50;
@@ -62,6 +63,11 @@ define([
       this.bPlayerReady = false;
   
       this.bSlideFull = true;
+	  if (typeof TB_USER_ID != 'undefined') {
+      	this.activityFeedView = new ActivityFeedView({ el: '#activity_feed_view' });
+      	this.activityFeedView.render();
+      	this.activityFeedView.getActivity();	  	
+	  }
       
       this.trailStatsView = new TrailStatsView({ el: '#trail_stats_view', model: this.model });
       this.trailAltitudeView = new TrailAltitudeView({ el: '#trail_altitude_view', model: this.model });

@@ -60,7 +60,9 @@
 		                			<img src="{{ asset('assets/img/avatar_man.jpg') }}">
 		            	  		{% endif %}
 								</div></div>			
-								<div class="activity">2</div>			        		        		
+<!--								
+								<div class="activity">2</div>
+-->											        		        		
 						    	</a>
 						        <ul class="dropdown-menu activity-menu">
 						        	<div class="header">
@@ -69,40 +71,7 @@
 						        	</div>
 						        	
 						        	<div class="activity_list_container">
-						        	  <div class="activity_list tb-move">
-							        	<li class="clearfix">
-							        	<a href="{{ app.request.baseUrl }}/trail/laufbachereckweg-allgauer-alps">            	
-									 	<div class="tb-avatar"><div class="photo"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/patricktrost/avatar.jpg"></div></div>	
-							        	<div class="note"><span class="new"></span><span class="time">2 minutes ago</span><br/><strong>Christian Raimann</strong> published a new trail: <strong>Laufbachereckweg</strong>.</div>
-							        	</a></li>
-							        	<li class="clearfix">
-							        	<a href="{{ app.request.baseUrl }}/trail/chamonix">            	
-									 	<div class="tb-avatar"><div class="photo"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/reubentabner/avatar.jpg"></div></div>	
-							        	<div class="note"><span class="new"></span><span class="time">3 days ago</span><br/><strong>Reuben Tabner</strong> published a new trail: <strong>Alpine Adventure Chamonix</strong>.</div>
-							        	</a></li>
-							        	<li class="clearfix">
-							        	<a href="{{ app.request.baseUrl }}/profile/magdalenazeslawska">            	
-									 	<div class="tb-avatar"><div class="photo"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/magdalenazeslawska/avatar.jpg"></div></div>	
-							        	<div class="note"><span class="time">2 weeks ago</span><br/><strong>Magdalena Zeslawska</strong> started <strong>following</strong> your trails.</div>
-							        	</a></li>
-		<!--					        	
-							        	<li class="clearfix">
-							        	<a href="#">            	
-									 	<div class="tb-avatar"><div class="photo"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/justinwilden/avatar.jpg"></div></div>	
-							        	<div class="note"><span class="time">3 weeks ago</span><br/><strong>Justin Wilden</strong> started <strong>following</strong> your trails.</div>
-							        	</a></li>
-							        	<li class="clearfix">
-							        	<a href="#">            	
-									 	<div class="tb-avatar"><div class="photo"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/reubentabner/avatar.jpg"></div></div>	
-							        	<div class="note"><span class="time">3 weeks ago</span><br/><strong>Reuben Tabner</strong> published a new trail: <strong>North Yorkshire Moors trail</strong>.</div>
-							        	</a></li>
-							        	<li class="clearfix">
-							        	<a href="#">            	
-									 	<div class="tb-avatar"><div class="photo"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/justinwilden/avatar.jpg"></div></div>	
-							        	<div class="note"><span class="time">4 weeks ago</span><br/><strong>Justin Wilden</strong> published a new trail: <strong>Yarra river trail</strong>.</div>
-							        	</a></li>					        	
-		-->					        	
-									  </div>
+						        	  <div id="activity_feed_view" class="activity_list tb-move"></div>
 						        	</div>
 						
 						        	<div class="footer">
@@ -156,6 +125,48 @@
                 </div>
             </div>     
         </div>      
+
+		<script type="text/template" id="activityFeedViewTemplate">
+		<!--					        	
+							        	<li class="clearfix">
+							        	<a href="{{ app.request.baseUrl }}/trail/laufbachereckweg-allgauer-alps">            	
+									 	<div class="tb-avatar"><div class="photo"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/patricktrost/avatar.jpg"></div></div>	
+							        	<div class="note"><span class="new"></span><span class="time">2 minutes ago</span><br/><strong>Christian Raimann</strong> published a new trail: <strong>Laufbachereckweg</strong>.</div>
+							        	</a></li>
+							        	<li class="clearfix">
+							        	<a href="{{ app.request.baseUrl }}/trail/chamonix">            	
+									 	<div class="tb-avatar"><div class="photo"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/reubentabner/avatar.jpg"></div></div>	
+							        	<div class="note"><span class="new"></span><span class="time">3 days ago</span><br/><strong>Reuben Tabner</strong> published a new trail: <strong>Alpine Adventure Chamonix</strong>.</div>
+							        	</a></li>
+							        	<li class="clearfix">
+							        	<a href="{{ app.request.baseUrl }}/profile/magdalenazeslawska">            	
+									 	<div class="tb-avatar"><div class="photo"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/magdalenazeslawska/avatar.jpg"></div></div>	
+							        	<div class="note"><span class="time">2 weeks ago</span><br/><strong>Magdalena Zeslawska</strong> started <strong>following</strong> your trails.</div>
+							        	</a></li>
+							        	<li class="clearfix">
+							        	<a href="#">            	
+									 	<div class="tb-avatar"><div class="photo"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/justinwilden/avatar.jpg"></div></div>	
+							        	<div class="note"><span class="time">3 weeks ago</span><br/><strong>Justin Wilden</strong> started <strong>following</strong> your trails.</div>
+							        	</a></li>
+							        	<li class="clearfix">
+							        	<a href="#">            	
+									 	<div class="tb-avatar"><div class="photo"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/reubentabner/avatar.jpg"></div></div>	
+							        	<div class="note"><span class="time">3 weeks ago</span><br/><strong>Reuben Tabner</strong> published a new trail: <strong>North Yorkshire Moors trail</strong>.</div>
+							        	</a></li>
+							        	<li class="clearfix">
+							        	<a href="#">            	
+									 	<div class="tb-avatar"><div class="photo"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/justinwilden/avatar.jpg"></div></div>	
+							        	<div class="note"><span class="time">4 weeks ago</span><br/><strong>Justin Wilden</strong> published a new trail: <strong>Yarra river trail</strong>.</div>
+							        	</a></li>					        	
+		-->					        	
+		</script>
+
+		<script type="text/template" id="activityFeedItemViewTemplate">
+    	  <a href="{{ app.request.baseUrl }}<%=  actorURL%>">            	
+	 	  <div class="tb-avatar"><div class="photo"><img src="<%= actorAvatarURL%>"></div></div>	
+    	  <div class="note"><span class="time"><%= displayPublished%></span><br/><strong> <%= actorDisplayName%></strong> <%= preVerbDisplayName%> <strong><%= verbDisplayName%></strong> <%= subjectDisplayName%>.</div>
+    	  </a>
+		</script>
 
         <script>
         resrc = {

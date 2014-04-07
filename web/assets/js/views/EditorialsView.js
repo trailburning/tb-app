@@ -1,7 +1,8 @@
 define([
   'underscore', 
-  'backbone'
-], function(_, Backbone){
+  'backbone',
+  'views/ActivityFeedView'    
+], function(_, Backbone, ActivityFeedView){
 
   var STATE_BIG_SPONSOR = 1;
   var STATE_SMALL_SPONSOR = 2;
@@ -26,6 +27,12 @@ define([
 	  });                
       
       $('#footerview').show();
+	  
+	  if (typeof TB_USER_ID != 'undefined') {
+      	this.activityFeedView = new ActivityFeedView({ el: '#activity_feed_view' });
+      	this.activityFeedView.render();
+      	this.activityFeedView.getActivity();	  	
+	  }
 	  
 	  this.handleResize();      
     },

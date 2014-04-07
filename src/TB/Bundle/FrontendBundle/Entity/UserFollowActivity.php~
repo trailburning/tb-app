@@ -1,0 +1,37 @@
+<?php 
+
+namespace TB\Bundle\FrontendBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/** @ORM\Entity */
+class UserFollowActivity extends AbstractActivity
+{
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToOne(targetEntity="TB\Bundle\FrontendBundle\Entity\User", inversedBy="userFollowActivities")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="actor_id", referencedColumnName="id")
+     * })
+     **/
+    protected $actor;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToOne(targetEntity="TB\Bundle\FrontendBundle\Entity\User", inversedBy="userFollowedActivities")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="object_id", referencedColumnName="id")
+     * })
+     **/
+    protected $object;
+
+    public function __construct(User $followingUser, User $followedUser)
+    {
+        $this->setActor($followingUser);
+        $this->setObject($followedUser);
+    }
+
+}

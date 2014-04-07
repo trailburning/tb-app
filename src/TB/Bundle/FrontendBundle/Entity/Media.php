@@ -16,7 +16,7 @@ use TB\Bundle\FrontendBundle\Util\MediaImporter;
  * @ORM\Table(name="medias")
  * @ORM\Entity
  */
-class Media
+class Media implements \JsonSerializable
 {
     /**
      * @var integer
@@ -384,31 +384,24 @@ class Media
     {
         return $this->filename;
     }
-    
-    public function toJSON() 
+
+    public function jsonSerialize() 
     {
-        $media = new \StdClass;
-        $media->id = $this->getId();
-        $media->filename = $this->getFilename();
-        $media->mimetype = 'image/jpeg';     
+        $data = [
+            'id' => $this->getId(),
+            'filename' => $this->getFilename(),
+            'mimetype' => 'image/jpeg',
+            'versions' => [[
+                'path' => $this->getPath(),
+                'size' => 0,
+            ]],
+            'coords' => [
+                'long' => $this->getCoords()->getLongitude(),
+                'lat' => $this->getCoords()->getLatitude(),
+            ],
+            'tags' => $this->getTags(),
+        ];
         
-        $version = new \StdClass();
-        $version->path = $this->getPath(); 
-        $version->size = 0;
-        $media->versions = array($version);
-        
-        $coords = new \StdClass();
-        $coords->long = $this->getCoords()->getLongitude();
-        $coords->lat = $this->getCoords()->getLatitude();
-        
-        $media->coords = $coords;
-        
-        $media->tags = new \StdClass;
-        
-        foreach ($this->getTags() as $tag_name => $tag_value) {
-             $media->tags->$tag_name = $tag_value;
-        }
-        
-        return json_encode($media);
+        return json_encode($data);
     }
 }

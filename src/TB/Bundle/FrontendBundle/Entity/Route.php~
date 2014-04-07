@@ -3,6 +3,8 @@
 namespace TB\Bundle\FrontendBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Doctrine\ORM\EntityManager;
 
 /**
  * Route
@@ -10,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="routes")
  * @ORM\Entity
  */
-class Route
+class Route implements \JsonSerializable
 {
     /**
      * @var string
@@ -36,6 +38,7 @@ class Route
     /**
      * @var string
      *
+     * @Gedmo\Slug(fields={"name", "region"}, separator="-")    
      * @ORM\Column(name="slug", type="string", length=50, nullable=true)
      */
     private $slug;
@@ -103,7 +106,7 @@ class Route
      *
      * @ORM\Column(name="publish", type="boolean", options={"default" = false})
      */
-    private $publish;
+    private $publish = false;
 
     /**
      * @var \TB\Bundle\FrontendBundle\Entity\GpxFile
@@ -148,10 +151,10 @@ class Route
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\Media", inversedBy="routes")
-     * @ORM\JoinTable(name="route_medias")
-     */
+     * @ORM\OneToMany(targetEntity="Media", mappedBy="route")
+     **/
     private $medias;
+    
     
     /**
      * @var string
@@ -167,13 +170,6 @@ class Route
      */
     private $editorials;
     
-    #/**
-    # * @var \Doctrine\Common\Collections\Collection
-    # *
-    # * @ORM\OneToMany(targetEntity="RouteMedia", mappedBy="route")
-    # **/
-    #private $routeMedias;
-    
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
@@ -187,6 +183,13 @@ class Route
      * @ORM\OneToMany(targetEntity="RoutePoint", mappedBy="route")
      **/
     private $routePoints;
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="RoutePublishActivity", mappedBy="routePublishActivities")
+     **/
+    private $routePublishActivities;
 
     /**
      * Set name
@@ -304,7 +307,20 @@ class Route
     }
 
     /**
-     * Get id
+     * Set id
+     *
+     * @param integer $id
+     * @return Route
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    
+        return $this;
+    }
+    
+    /**
+     * Set id
      *
      * @return integer 
      */
@@ -718,11 +734,17 @@ class Route
     /**
      * Set publish
      *
+     * @throws Exception when published is set true but the name is empty (a slug will be generated)
      * @param boolean $publish
      * @return Route
      */
     public function setPublish($publish)
     {
+        if ($publish === true && $this->getName() === null) {
+            throw new \Exception('Before publishing a Route, the name field must be set');
+            
+        }
+        
         $this->publish = $publish;
 
         return $this;
@@ -737,4 +759,181 @@ class Route
     {
         return $this->publish;
     }
+    
+    
+    
+    /**
+     * Only used by API
+     * Updates an existing Route Entity from a JSON object
+     *
+     * @param $json JSON object
+     * @throws Exception for invalid JSON object
+     */
+    public function updateFromJSON($json)
+    {
+        $routeObj = json_decode($json);
+        if ($routeObj === null) {
+            throw new \Exception('Invalid JSON data');
+        }
+        
+        $fields = [
+            'name' => 'name',
+            'region' => 'region',
+            'about' => 'about',
+            'publish' => 'publish',
+            'route_type_id' => 'routeTypeId',
+            'route_category_id' => 'routeCategoryId',
+        ];
+          
+        foreach ($fields as $apiName => $entityName) {
+            if (property_exists($routeObj, $apiName)) {
+                $method = 'set' . ucfirst($entityName);
+                $this->$method($routeObj->$apiName);
+            }
+        }  
+    }
+    
+    /**
+     * Only used by API
+     */
+    public function calculateAscentDescent() 
+    {
+        $lastRpAltitude = 0;
+        $asc = 0;
+        $desc = 0;
+        
+        $tags = $this->getTags();
+
+        foreach ($this->getRoutePoints() as $routePoint) {
+            $rpTags = $routePoint->getTags();
+            if (!isset($rpTags['altitude'])) {
+                continue;
+            }
+            $rpAltitude = $rpTags['altitude'];
+            
+            if ($lastRpAltitude != 0) {
+                if ($rpAltitude > $lastRpAltitude) {
+                    $asc += $rpAltitude - $lastRpAltitude;
+                } else {
+                    $desc += $lastRpAltitude - $rpAltitude;
+                }
+            }
+
+            $lastRpAltitude = $rpAltitude;
+        }
+
+        $tags['ascent'] = $asc;
+        $tags['descent'] = $desc;
+
+        $this->setTags($tags);
+
+        return 0;
+    }
+    
+    /**
+     * Only used by API
+     */
+    public function getNearestPointByTime($unixtimestamp) {
+        $routePoints = $this->getRoutePoints();
+        if ($routePoints->count() < 2)
+            throw new \Exception("Route is less than 2 points.");
+        if ($unixtimestamp < $routePoints[0]->getTags()['datetime']) {
+            return $routePoints[0];
+        } else if ($unixtimestamp > $routePoints->last()->getTags()['datetime']) {
+            return $routePoints->last();
+        } else {
+            foreach ($routePoints as $rp) {
+                if ($rp->getTags()['datetime'] > $unixtimestamp ) {
+                    return $rp; 
+                }
+            }
+        }
+    }
+    
+    public function jsonSerialize() 
+    {
+        $data = [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'slug' => $this->getSlug(),
+            'region' => $this->getRegion(),
+            'length' => $this->getLength(),
+            'about' => $this->getAbout(),
+            'centroid' => [
+                $this->getCentroid()->getLongitude(), 
+                $this->getCentroid()->getLatitude(),
+            ],
+            'tags' => $this->getTags(),
+            'route_points' => [],
+        ];                       
+        
+        if (count($this->getRoutePoints()) > 0) {
+            foreach ($this->getRoutePoints() as $rp) {
+                $data['route_points'][] = json_decode($rp->jsonSerialize());    
+            }
+        }
+        
+        if ($this->getBBox() !== null) {
+            $data['bbox'] = $this->getBBox();
+        }
+        
+        if ($this->getRouteType() !== null) {
+            $data['type'] = $this->getRouteType()->getName();
+        }
+        
+        if ($this->getRouteCategory() !== null) {
+            $data['category'] = $this->getRouteCategory()->getName();
+        }
+        
+        if ($this->media !== null) {
+            $data['media'] = json_decode($this->media->jsonSerialize());
+        }
+        
+        return json_encode($data);
+    }
+    
+    /**
+     * Only used by API
+     */
+    private $bbox;
+    
+    /**
+     * Only used by API
+     */
+    private $media;
+    
+    /**
+     * Only used by API
+     */
+    public function setBBox($bbox) 
+    { 
+        $this->bbox = $bbox; 
+    }
+    
+    /**
+     * Only used by API
+     */
+    public function getBBox() 
+    { 
+        return $this->bbox; 
+    }
+    
+    /**
+     * Only used by API
+     */
+    public function setMedia($media) 
+    { 
+        $this->media = $media; 
+    }
+    
+    /**
+     * Only used by API
+     */
+    public function getMedia() 
+    { 
+        return $this->media; 
+    }
+    
+
+    
 }

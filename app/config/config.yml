@@ -98,6 +98,7 @@ stof_doctrine_extensions:
     orm:
         default: 
             sluggable: true
+            timestampable: true
             
 knp_gaufrette:
     adapters:

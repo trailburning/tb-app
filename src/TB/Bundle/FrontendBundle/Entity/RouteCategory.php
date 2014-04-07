@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="route_category")
  * @ORM\Entity
  */
-class RouteCategory
+class RouteCategory implements \JsonSerializable
 {
     /**
      * @var integer
@@ -108,12 +108,13 @@ class RouteCategory
         return $this->routes;
     }
     
-    public function toJSON()
+    public function jsonSerialize()
     {
-        $obj = new \StdClass();
-        $obj->id = $this->getId();
-        $obj->name = $this->getName();
+        $data = [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+        ];
         
-        return json_encode($obj);
+        return json_encode($data);
     }
 }
