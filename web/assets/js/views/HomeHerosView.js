@@ -48,6 +48,11 @@ define([
 	  $('.button:eq('+this.nLoadingHero+')', $(this.el)).addClass('active');    	
 	},	
     prevHero: function(){
+	  // no more slides          	    	
+	  if (this.arrHeros.length < 2) {
+	  	return;
+	  }          	    	
+    	
       var nHero = this.nCurrHero;
 	  if (nHero-1 < 0) {
         nHero = this.arrHeros.length-1;      		
@@ -59,6 +64,11 @@ define([
 	  this.loadHero(nHero);     	    	
     },
     nextHero: function(){
+	  // no more slides          	    	
+	  if (this.arrHeros.length < 2) {
+	  	return;
+	  }          	    	
+    	
       var nHero = this.nCurrHero;
 	  if (nHero+1 >= this.arrHeros.length) {
         nHero = 0;      	
@@ -111,6 +121,11 @@ define([
       
       this.arrHeros[this.nCurrHero].show();      
       this.arrHeros[this.nCurrHero].setZIndex(2, 2);
+
+	  // no more slides          	    	
+	  if (this.arrHeros.length < 2) {
+	  	return;
+	  }          	    	
           	    	
       // load next hero
       if (this.nLoadingHero+1 >= this.arrHeros.length) {
