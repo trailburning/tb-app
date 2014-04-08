@@ -160,9 +160,9 @@ abstract class User extends BaseUser
     private $userUnfollowedActivities;
     
     /**
-     * @var datetime $activity_last_viewed
+     * @var datetime
      *
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(name="activity_last_viewed", type="datetime", nullable=true)
      */
     protected $activityLastViewed;
     
