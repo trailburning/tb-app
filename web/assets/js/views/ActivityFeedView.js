@@ -13,7 +13,19 @@ define([
       var self = this;
                 
       $(this.el).html(this.template());
-                        
+/*                        
+	  $('.show_activity').click(function(evt){
+	    $('.more_btn').attr('disabled', false);  
+	  	$('.activity_list').css('top', 0);        
+	  });	
+
+	  $('.more_btn').click(function(evt){	
+	    evt.stopPropagation();
+	  
+	  	$('.more_btn').attr('disabled', true);  
+	  	$('.activity_list').css('top', -243);        
+	  });
+*/                        
       return this;
     },
     renderItems: function(arrItems){
