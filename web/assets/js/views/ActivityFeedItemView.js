@@ -20,6 +20,12 @@ define([
 	  var dtCreated = new Date(this.model.get('published'));
 	  var options = {weekday: "long", year: "numeric", month: "long", day: "numeric"};
       this.model.set('displayPublished', dtCreated.toLocaleDateString("en-GB", options));
+	  if (this.model.get('seen')) {
+      	this.model.set('displaySeen', 'old');	  	
+	  }
+	  else {
+      	this.model.set('displaySeen', 'new');	  	
+	  }
       
       switch (this.model.get('verb')) {
       	case 'follow':      	

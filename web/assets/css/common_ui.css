@@ -412,7 +412,8 @@ h4.tb {
   margin: 6px 20px 0px 19px;  
 }
 
-#headerview .right .profile .activity { 
+#headerview .right .profile .activity {
+  display: none; 
   position: absolute;
   top: 15px;
   left: 46px;  
