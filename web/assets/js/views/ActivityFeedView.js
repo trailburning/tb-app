@@ -8,24 +8,35 @@ define([
     initialize: function(){
       this.template = _.template($('#activityFeedViewTemplate').text());        
             
+	  this.bActivityViewed = false;
+	  this.arrActivityItems = [];            
     },            
     render: function(){
       var self = this;
                 
       $(this.el).html(this.template());
-/*                        
+                        
 	  $('.show_activity').click(function(evt){
-	    $('.more_btn').attr('disabled', false);  
-	  	$('.activity_list').css('top', 0);        
+//	    $('.more_btn').attr('disabled', false);  
+//	  	$('.activity_list').css('top', 0);
+        
+	    if (self.bActivityViewed) {
+	      // remove unseen flags
+	      for (var nItem = 0; nItem < self.arrActivityItems.length; nItem++) {
+		    self.arrActivityItems[nItem].setSeen(true);	
+	      }
+	    }
+        // update seen activity
+        self.updateActivityViewed();
 	  });	
 
 	  $('.more_btn').click(function(evt){	
 	    evt.stopPropagation();
-	  
-	  	$('.more_btn').attr('disabled', true);  
-	  	$('.activity_list').css('top', -243);        
+	  	  
+//	  	$('.more_btn').attr('disabled', true);  
+//	  	$('.activity_list').css('top', -243);        
 	  });
-*/                        
+                        
       return this;
     },
     renderItems: function(jsonItems){
@@ -35,6 +46,7 @@ define([
       for (var nItem=0; nItem < arrItems.length; nItem++) {
         model = new Backbone.Model(arrItems[nItem]);
         activityFeedItemView = new ActivityFeedItemView({ model: model });
+        this.arrActivityItems.push(activityFeedItemView);
         if (!model.get('seen')) {
           nUnseen++;
         }
@@ -63,13 +75,15 @@ define([
 //          console.log('success');
 //          console.log(data);
           self.renderItems(data);
-          
-//          self.updateActivityViewed();
         }
       });        
     },
     updateActivityViewed: function(){
+      this.bActivityViewed = true;
+      
       var self = this;
+      
+	  $('.profile .activity').hide();
       
 	  var strURL = TB_RESTAPI_BASEURL + '/v1/user/activity/viewed';
       $.ajax({

@@ -44,7 +44,22 @@ define([
       $(this.el).html(this.template(attribs));
                         
       return this;
-    }
+    },
+    setSeen: function(bSeen){
+	  var elSeen = $('.seen', this.el);    	
+    	
+      this.model.set('seen', bSeen);
+	  if (this.model.get('seen')) {
+      	this.model.set('displaySeen', 'old');
+      	elSeen.removeClass('new');	  	
+	  }
+	  else {
+      	this.model.set('displaySeen', 'new');	  	
+      	elSeen.removeClass('old');	  	
+	  }
+	  elSeen.addClass(this.model.get('displaySeen'));
+	}
+	    
   });
 
   return ActivityFeedItemView;
