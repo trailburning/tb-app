@@ -141,7 +141,7 @@ class MediaTest extends WebTestCase
             'The files original name was set to the media objecs');
     }
     
-    public function testTojsonSerialize()
+    public function testExport()
     {
         $media = new Media();
         $media->setId(1);
@@ -170,8 +170,8 @@ class MediaTest extends WebTestCase
             }
         }';
         
-        $this->assertJsonStringEqualsJsonString($expectedJson, $media->jsonSerialize(),
-            'Media::jsonSerialize() returns the expected JSON string');
+        $this->assertJsonStringEqualsJsonString($expectedJson, json_encode($media->export()),
+            'Media::export() returns the expected data array');
     }
     
 }

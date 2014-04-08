@@ -18,7 +18,7 @@ class RouteController extends AbstractRestController
     {
         $postgis = $this->get('postgis');
         $route = $postgis->readRoute($id);
-        $output = array('usermsg' => 'success', "value" => json_decode('{"route": '.$route->jsonSerialize().'}'));
+        $output = ['usermsg' => 'success', 'value' => ['route' => $route->export()]];
         
         return $this->getRestResponse($output);
     }
@@ -87,12 +87,12 @@ class RouteController extends AbstractRestController
         
         $postgis = $this->get('postgis');
         $routes = $postgis->readRoutes($userId, 10, null, null, true);
-        $json_routes = array();
+        $routesExport = [];
         foreach ($routes as $route) {
-            $json_routes[] = $route->jsonSerialize();
+            $routesExport[] = $route->export();
         }
         
-        $output = array('usermsg' => 'success', "value" => json_decode('{"routes": ['. implode(',', $json_routes).']}'));
+        $output = ['usermsg' => 'success', "value" => ['routes' => $routesExport]];
 
         return $this->getRestResponse($output);
     }
@@ -142,12 +142,33 @@ class RouteController extends AbstractRestController
         
         $postgis = $this->get('postgis');
         $routes = $postgis->readRoutes($userId, $count, $route_type_id, $route_category_id, $publish);
-        $json_routes = array();
+        $routesExport = [];
         foreach ($routes as $route) {
-            $json_routes[] = $route->jsonSerialize();
+            $routesExport[] = $route->export();
         }
         
-        $output = array('usermsg' => 'success', "value" => json_decode('{"routes": ['. implode(',', $json_routes).']}'));
+        $output = ['usermsg' => 'success', 'value' => ['routes' => $routesExport]];
+
+        return $this->getRestResponse($output);
+    }
+    
+    /**
+     * @Route("/routes/search")
+     * @Method("GET")
+     */
+    public function getSearchRoutes(Request $request)
+    {
+        $limit = $request->query->get('limit', 10);
+        $offset = $request->query->get('offset', 0);
+        
+        $postgis = $this->get('postgis');
+        $routes = $postgis->searchRoutes($limit, $offset);
+        $routesExport = [];
+        foreach ($routes as $route) {
+            $routesExport[] = $route->export();
+        }
+        
+        $output = ['usermsg' => 'success', "value" => ['routes' => $routesExport]];
 
         return $this->getRestResponse($output);
     }

@@ -16,7 +16,7 @@ use TB\Bundle\FrontendBundle\Util\MediaImporter;
  * @ORM\Table(name="medias")
  * @ORM\Entity
  */
-class Media implements \JsonSerializable
+class Media implements Exportable
 {
     /**
      * @var integer
@@ -385,7 +385,7 @@ class Media implements \JsonSerializable
         return $this->filename;
     }
 
-    public function jsonSerialize() 
+    public function export() 
     {
         $data = [
             'id' => $this->getId(),
@@ -402,6 +402,6 @@ class Media implements \JsonSerializable
             'tags' => $this->getTags(),
         ];
         
-        return json_encode($data);
+        return $data;
     }
 }

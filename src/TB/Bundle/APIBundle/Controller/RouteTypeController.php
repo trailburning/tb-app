@@ -21,10 +21,10 @@ class RouteTypeController extends AbstractRestController
         $jsonRouteTypes = [];
         
         foreach ($routeTypes as $routeType) {
-            $jsonRouteTypes[] = $routeType->jsonSerialize();
+            $jsonRouteTypes[] = $routeType->export();
         }
         
-        $output = array('usermsg' => 'success', 'value' => json_decode('{"route_types": ['. implode(',', $jsonRouteTypes).']}'));
+        $output = ['usermsg' => 'success', 'value' => ['route_types' => $jsonRouteTypes]];
 
         return $this->getRestResponse($output);
     }

@@ -12,7 +12,7 @@ use Doctrine\ORM\EntityManager;
  * @ORM\Table(name="routes")
  * @ORM\Entity
  */
-class Route implements \JsonSerializable
+class Route implements Exportable
 {
     /**
      * @var string
@@ -850,7 +850,7 @@ class Route implements \JsonSerializable
         }
     }
     
-    public function jsonSerialize() 
+    public function export() 
     {
         $data = [
             'id' => $this->getId(),
@@ -869,7 +869,7 @@ class Route implements \JsonSerializable
         
         if (count($this->getRoutePoints()) > 0) {
             foreach ($this->getRoutePoints() as $rp) {
-                $data['route_points'][] = json_decode($rp->jsonSerialize());    
+                $data['route_points'][] = $rp->export();    
             }
         }
         
@@ -885,11 +885,15 @@ class Route implements \JsonSerializable
             $data['category'] = $this->getRouteCategory()->getName();
         }
         
-        if ($this->media !== null) {
-            $data['media'] = json_decode($this->media->jsonSerialize());
+        if ($this->getUser() !== null) {
+            $data['user'] = $this->getuser()->export();
         }
         
-        return json_encode($data);
+        if ($this->media !== null) {
+            $data['media'] = $this->media->export();
+        }
+        
+        return $data;
     }
     
     /**

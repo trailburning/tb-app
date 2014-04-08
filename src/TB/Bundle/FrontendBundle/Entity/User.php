@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\DiscriminatorColumn(name="discr", type="string")
  * @ORM\DiscriminatorMap({"user" = "UserProfile", "brand" = "BrandProfile"})
  */
-abstract class User extends BaseUser
+abstract class User extends BaseUser implements Exportable
 {
     
     /**
@@ -784,5 +784,16 @@ abstract class User extends BaseUser
     public function getUserUnfollowedActivities()
     {
         return $this->userUnfollowedActivities;
+    }
+    
+    public function export()
+    {
+        $data = [
+            'name' => $this->getName(),
+            'title' => $this->getTitle(),
+            'avatar' => $this->getAvatar(),
+        ];
+
+        return $data;
     }
 }

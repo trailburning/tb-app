@@ -18,9 +18,9 @@ class RouteTest extends WebTestCase
     }
     
     /**
-     * Test JSON serialization of entity
+     * Test export of entity
      */
-    public function testJsonSerialize()
+    public function testExport()
     {
         $this->loadFixtures([
             'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData',
@@ -207,8 +207,8 @@ class RouteTest extends WebTestCase
             "type": "Marathon"
         }';
         
-        $this->assertJsonStringEqualsJsonString($expectedJson, $route->jsonSerialize(),
-            'Route::jsonSerialize() returns the expected JSON string');
+        $this->assertJsonStringEqualsJsonString($expectedJson, json_encode($route->export()),
+            'Route::export() returns the expected data');
     }
     
     /**

@@ -63,6 +63,6 @@
         <service id="activity_feed_generator" class="TB\Bundle\FrontendBundle\Util\ActivityFeedGenerator">
             <argument type="service" id="doctrine.orm.entity_manager" />
         </service>
-            
+
     </services>
 </container>

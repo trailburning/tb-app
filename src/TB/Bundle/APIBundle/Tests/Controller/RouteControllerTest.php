@@ -263,5 +263,21 @@ class RouteControllerTest extends AbstractApiTestCase
           
         $this->assertJsonResponse($client);  
     }
+    
+    /**
+     * Test the GET /routes/search action
+     */
+    public function testGetSearchRoutes()
+    {
+        $this->loadFixtures([
+            'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData',
+        ]);
+        
+        $client = $this->createClient();
+        $crawler = $client->request('GET', '/v1/routes/search');
+        $this->assertEquals(Response::HTTP_OK,  $client->getResponse()->getStatusCode());
+          
+        $this->assertJsonResponse($client);
+    }
 
 }

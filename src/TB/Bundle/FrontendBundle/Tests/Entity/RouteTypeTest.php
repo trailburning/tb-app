@@ -16,7 +16,7 @@ class RouteTypeTest extends WebTestCase
     }
     
     /**
-     * Test JSON serialization of entity
+     * Test export of entity
      */
     public function testJsonSerialize()
     {
@@ -38,7 +38,7 @@ class RouteTypeTest extends WebTestCase
             "name":"Marathon"
         }';
         
-        $this->assertJsonStringEqualsJsonString($expectedJson, $routeType->jsonSerialize(),
-            'RouteType::jsonSerialize() returns the expected JSON string');
+        $this->assertJsonStringEqualsJsonString($expectedJson, json_encode($routeType->export()),
+            'RouteType::export() returns the expected data array');
     }
 }

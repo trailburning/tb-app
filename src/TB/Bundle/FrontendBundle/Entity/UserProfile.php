@@ -42,5 +42,5 @@ class UserProfile extends User
         
         return $data;
     }
-    
+
 }
