@@ -160,6 +160,13 @@ abstract class User extends BaseUser
     private $userUnfollowedActivities;
     
     /**
+     * @var datetime $activity_last_viewed
+     *
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $activityLastViewed;
+    
+    /**
      * Constructor
      */
     public function __construct()
@@ -784,5 +791,28 @@ abstract class User extends BaseUser
     public function getUserUnfollowedActivities()
     {
         return $this->userUnfollowedActivities;
+    }
+
+    /**
+     * Set activityLastViewed
+     *
+     * @param \DateTime $activityLastViewed
+     * @return User
+     */
+    public function setActivityLastViewed($activityLastViewed)
+    {
+        $this->activityLastViewed = $activityLastViewed;
+
+        return $this;
+    }
+
+    /**
+     * Get activityLastViewed
+     *
+     * @return \DateTime 
+     */
+    public function getActivityLastViewed()
+    {
+        return $this->activityLastViewed;
     }
 }

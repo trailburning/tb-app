@@ -21,20 +21,17 @@ class ActivityFeedGenerator
     
     public function getFeedForUser($userId)
     {
+        $user = $this->em
+            ->getRepository('TBFrontendBundle:User')
+            ->findOneById($userId);
+        if (!$user) {
+            throw new Exception(sprintf('Mising user with id %s', $userId));
+        }
+        
         // Get all following User's ID
-        $query = $this->em
-            ->createQuery('
-                SELECT f.id FROM TBFrontendBundle:User u
-                INNER JOIN u.iFollow f
-                WHERE u.id = :userId')
-            ->setParameter('userId', $userId);
-        
-        $results = $query->getResult();
-        
         $followingUserIds = [];
-        
-        foreach ($results as $user) {
-            $followingUserIds[] = $user['id'];
+        foreach ($user->getIFollow() as $followUser) {
+            $followingUserIds[] = $followUser->getId();
         }
         
         // get all RoutePublishActivity activities for following users and UserFollowActivity for user that start following thet given userId
@@ -45,7 +42,7 @@ class ActivityFeedGenerator
                 OR (a.objectId IN (:userId) AND a INSTANCE OF TB\Bundle\FrontendBundle\Entity\UserFollowActivity)
                 ORDER BY a.id DESC')
             ->setParameter('following', $followingUserIds)
-            ->setParameter('userId', $userId)
+            ->setParameter('userId', $user->getId())
             ->setMaxResults(100);
         
         $results = $query->getResult();
@@ -55,8 +52,12 @@ class ActivityFeedGenerator
             'totalItems' => count($results),
         ];
         
+        $decorator = new ActivityFeedSeenDecorator($user);
+        
         foreach ($results as $result) {
-            $feedData['items'][] = $result->export();
+            $activityItem = $result->export();
+            $activityItem = $decorator->decorate($activityItem);
+            $feedData['items'][] = $activityItem;
         }
         
         return $feedData;

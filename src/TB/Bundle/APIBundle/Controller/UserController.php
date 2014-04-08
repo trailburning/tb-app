@@ -119,4 +119,37 @@ class UserController extends AbstractRestController
         
         return $this->getRestResponse($output);
     }
+    
+    /**
+     * Set the User activityLastViewed to now
+     *
+     * @Route("/user/activity/viewed")
+     * @Method("PUT")
+     */
+    public function putUserActivityViewd()
+    {
+        $request = $this->getRequest();
+        if (!$request->headers->has('Trailburning-User-ID')) {
+            throw new ApiException('Header Trailburning-User-ID is not set', 400);
+        }
+        $userId = $request->headers->get('Trailburning-User-ID');
+        $user = $this->getDoctrine()
+            ->getRepository('TBFrontendBundle:User')
+            ->findOneById($userId);
+
+        if (!$user) {
+            throw new ApiException(sprintf('User with id "%s" does not exist', $userId), 404);
+        }
+        
+        $user->setActivityLastViewed(new \DateTime("now"));
+        $user->setFirstName('test');
+        
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->flush();
+        
+        $output = array('usermsg' => 'success');
+        
+        return $this->getRestResponse($output);
+    }
 }
