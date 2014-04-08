@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\HttpFoundation\Request;
 
 class TrailController extends Controller
 {
@@ -240,5 +241,15 @@ class TrailController extends Controller
         }
         
         return $route;
+    }
+    
+    /**
+     * @Route("/trails", name="trails")
+     * @Template()
+     */    
+    public function trailsAction(Request $request)
+    {
+        
+        return [];
     }
 }
