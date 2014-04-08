@@ -935,8 +935,6 @@ class Route implements \JsonSerializable
     }
     
 
-    
-
     /**
      * Add routePublishActivities
      *
