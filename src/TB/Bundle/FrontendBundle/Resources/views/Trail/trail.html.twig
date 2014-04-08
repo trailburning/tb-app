@@ -105,10 +105,9 @@ var TB_TRAIL_ID = {{ trail.id }};
                 <div id="bigbar">
                     {{ include('TBFrontendBundle:Default:breadcrumb.html.twig', breadcrumb) }}
                     {{ include('TBFrontendBundle:Default:share.html.twig') }}
-                    
-                    {% if trail.id == 148 %}                    
-                      {{ include('TBFrontendBundle:Default:shareTrail.html.twig') }}
-					{% endif %}                                         
+					{% if app.user %}                    
+						<div class="like"><a href="javascript:void(0)" class="btn btn-tb-action btn-tb like_btn"><i class="icon-star icon-white"></i> <span class="btn-label">Like</span></a></div>
+					{% endif %}						
                 </div>
 
                 <div class="panels clearfix">     
@@ -219,7 +218,6 @@ var TB_TRAIL_ID = {{ trail.id }};
 
 <script src="{{ asset('assets/js/libs/jquery.ui.widget.js') }}"></script>
 <script src="{{ asset('assets/js/libs/jquery.touchwipe.min.js') }}"></script>
-
 
 <script type="text/template" id="trailStatsViewTemplate">
   <div class="content">

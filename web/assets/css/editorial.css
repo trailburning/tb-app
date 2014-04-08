@@ -156,7 +156,8 @@ html.touch #small_sponsor_bar {
 }
 
 .editorial_panel .content .content_header {
-  margin-left: 82px;
+  margin: 0px auto 0px auto;
+  width: 948px;
   font-size: 22px;
   line-height: 38px;
   color: #979797;
@@ -173,29 +174,27 @@ html.touch #small_sponsor_bar {
 }
 
 .editorial_panel .content .content_header .line {
-	float: left;
-	width: 528px;
-	margin-top: 27px;
-	border-top-style: solid;
-	border-top-width: 1px;
-	border-top-color: #C1C1C1;	
+  float: left;
+  width: 578px;
+  margin-top: 27px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #C1C1C1;	
 }
 
 .editorial_panel .content .share_bar {
-	float: left;
-	margin-top: 8px;
-	width: 148px;
+  float: right;
+  margin-top: 8px;	
 }
 
 .editorial_panel .content .share_bar .share {
-	float: right;
+  float: right;
 }
 
 #column_wrapper_intro {
-	clear: both;
-  	width: 948px;	
-  	margin-left: 82px;
-	margin-bottom: 46px;
+  clear: both;	
+  margin: 0px auto 46px auto;
+  width: 948px;
 }
 
 #column_wrapper_intro .first .columns {
@@ -567,7 +566,7 @@ html.touch #small_sponsor_bar {
     margin-top: 26px;
   }    
   .editorial_panel .content .content_header {
-	margin-left: 71px;
+  	width: 826px;	
   }
   #column_wrapper_intro {
   	width: 826px;	
@@ -581,7 +580,7 @@ html.touch #small_sponsor_bar {
     width: 268px;
   }
   .editorial_panel .content .content_header .line {
-	width: 410px;
+	width: 460px;
   }
   #column_wrapper .columns {
 	margin: 37px 0px 0px 0px;

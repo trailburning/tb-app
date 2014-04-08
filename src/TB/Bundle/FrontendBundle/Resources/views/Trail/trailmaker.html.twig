@@ -145,7 +145,7 @@ var TB_USER_ID = {{ app.user.id }}
                     <textarea name="form_trail_notes" id="form_trail_notes"></textarea>
                 </div>      
                 <div class="form-group">
-                    <div class="update"><span class="btn btn-tb-action btn-tb-large update_details">Update</span></div>
+                    <div class="update"><span class="btn btn-tb-action btn-tb-large update_details">Add Story</span></div>
                 </div>      
             </form>
         </div>
@@ -157,7 +157,7 @@ var TB_USER_ID = {{ app.user.id }}
                 <div class="trail_card_sticker">
                 	<div class="panel trail_card_panel">
                 		<div class="title"><h3 class="tb trail_card_category"></h3></div>
-                        <a href="../../trail/demo">
+                        <a href="{{ app.request.baseUrl }}/trail/<%= id %>" target="_blank">
                             <div class="photo tb-photo-btn">
                                 <div class="image_container"></div>
                                 <div class="card_title">
@@ -256,7 +256,7 @@ var TB_USER_ID = {{ app.user.id }}
                         If you have any questions then please do not hesitate to contact Trailburning <a href="mailto:support@trailburning.com">support</a>.
                     </h4>
                 </div> 
-                <div class="next_step"><a href="../../" class="btn btn-tb-action btn-tb-large submit">View your Trail Card</a></div>
+                <div class="next_step"><a href="{{ app.request.baseUrl }}/trail/<%= id %>" class="btn btn-tb-action btn-tb-large submit">View your Trail Card</a></div>
             </div>
         </div>
 		<div class="step_marker_container">
@@ -277,7 +277,7 @@ var TB_USER_ID = {{ app.user.id }}
                         If you have any questions then please do not hesitate to contact Trailburning <a href="mailto:support@trailburning.com">support</a>.
                     </h4>
                 </div> 
-                <div class="next_step"><a href="../../" class="btn btn-tb-action btn-tb-large submit">View your profile</a></div>
+                <div class="next_step"><a href="{{ path('profile', {name: app.user.name}) }}" class="btn btn-tb-action btn-tb-large submit">View your profile</a></div>
             </div>
         </div>
 		<div class="step_marker_container">

@@ -75,11 +75,15 @@ function trackOutboundLink(link, category, action) {
         <div class="crumb_lead"><a href="../../../">Home</a></div>
         <div class="crumb_links"><a href="../../events/template">Your Event</a></div>
       </div>
-      <div class="share">
-        <div class="link facebook"><a href="javascript:void(0)" class="button btnFacebook">Facebook</a></div>
-        <div class="link twitter"><a href="javascript:void(0)" class="button btnTwitter">Twitter</a></div>
-        <div class="link googleplus"><a href="javascript:void(0)" class="button btnGooglePlus">Google+</a></div>          
-      </div>
+      
+	  <div class="compact_share btn-group dropup">
+	  <a class="btn btn-primary btn-tb-action btn-tb dropdown-toggle" data-toggle="dropdown" href="#">Share <span class="caret"></span></a>
+	  <ul class="dropdown-menu pull-right">
+		<li class="clearfix"><a href="javascript:void(0)" target="_blank" class="clearfix"><div class="logo"><img src="assets/icons/share/share_facebook.png"></div><div class="detail">Facebook</div></a></li>
+		<li class="clearfix"><a href="javascript:void(0)" target="_blank" class="clearfix"><div class="logo"><img src="assets/icons/share/share_googleplus.png"></div><div class="detail">Google+</div></a></li>
+		<li class="clearfix"><a href="javascript:void(0)" target="_blank" class="clearfix"><div class="logo"><img src="assets/icons/share/share_twitter.png"></div><div class="detail">Twitter</div></a></li>
+	  </ul>
+	  </div>                    
     </div>
               
     <div class="panels clearfix">           

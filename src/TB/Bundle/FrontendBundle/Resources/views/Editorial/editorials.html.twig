@@ -60,11 +60,10 @@ var TB_USER_ID = {{ app.user.id }};
         						<h4 class="tb">by <strong>{{ editorial.user.title }}</strong></h4><span class="date">{{ editorial.date|date('d/m/Y') }}</span>
         					</div>
         		  			<div class="share_bar">
-              					{{ include('TBFrontendBundle:Default:share.html.twig', {url: url('editorial', {slug: editorial.slug}) }) }}
         		  			</div>
         				</div>
         				<div class="content clearfix">
-        					<div class="synopsis"><h4 class="tb">{{ editorial.synopsis }}..</h4></div>
+        					<div class="synopsis"><h4 class="tb">{{ editorial.synopsis|length > 400 ? editorial.synopsis|slice(0, 400) ~ '...' : editorial.synopsis }}</h4></div>
         					<div class="more"><a class="btn btn-tb" href="{{ path('editorial', {slug: editorial.slug}) }}">More</a></div>						
         				</div>
         				<div class="line"></div>						
@@ -93,10 +92,9 @@ var TB_USER_ID = {{ app.user.id }};
         						</div>
         					</div>
         					<div class="content">
-        						<div class="synopsis"><h4 class="tb">{{ editorial.synopsis }}..</h4></div>
+        						<div class="synopsis"><h4 class="tb">{{ editorial.synopsis|length > 120 ? editorial.synopsis|slice(0, 120) ~ '...' : editorial.synopsis }}</h4></div>
         					</div>
         		  			<div class="share_bar">
-              					{{ include('TBFrontendBundle:Default:share.html.twig', {url: url('editorial', {slug: editorial.slug}) }) }}	 
         						<div class="more"><a class="btn btn-tb" href="{{ path('editorial', {slug: editorial.slug}) }}">More</a></div>						
         		  			</div>
         				</div>
