@@ -142,7 +142,6 @@ class UserController extends AbstractRestController
         }
         
         $user->setActivityLastViewed(new \DateTime("now"));
-        $user->setFirstName('test');
         
         $em = $this->getDoctrine()->getManager();
         $em->persist($user);
