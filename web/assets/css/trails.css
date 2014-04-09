@@ -30,6 +30,23 @@ border-width:1px;
   margin-bottom: 24px;
 }
 
+.trails_content .nav {
+/*	
+  margin-top: 24px;
+*/  
+  height: 88px;
+}
+
+.trails_content .more_btn {
+/*	
+*/  
+  display: none;
+}
+
+.tb-loader {
+  top: 0px;
+  margin-top: 0px;
+}
 
 /* RESPONSIVE */
 /******************************************/
