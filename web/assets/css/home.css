@@ -5,7 +5,6 @@
 border-style:solid;
 border-width:1px;
 */  
-  min-width: 1200px;
 }
 
 .content {
@@ -324,9 +323,6 @@ html.touch .hero_nav .button {
  
 /* Medium devices (desktops, 992px and up) */
 @media (max-width: 1199px) {  
-  #appview {
-    min-width: 992px;
-  }  
   .content {
     width: 992px;
   }  
@@ -358,11 +354,6 @@ html.touch .hero_nav .button {
 
 img {
   max-width: none;
-}
-
-.summary .tb-avatar {
-  float: left;
-  margin-top: 5px;
 }
 
 .avatar {

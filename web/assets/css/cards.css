@@ -17,6 +17,11 @@
   color: #666666;
 }
 
+.trailcards .panel .summary .tb-avatar {
+  float: left;
+  margin-top: 5px;
+}
+
 .trailcards .panel .summary strong {
   font-weight: 700;
 }
@@ -276,14 +281,14 @@
  
 /* Medium devices (desktops, 992px and up) */
 @media (max-width: 1199px) {  
-  .panel {
+  .trailcards .panel {
     width: 224px;
     margin: 12px 10px 12px 10px;
   }    
-  .panel .summary {  
+  .trailcards .panel .summary {  
     font-size: 14px;
   }  
-  .panel .image_container {
+  .trailcards .panel .image_container {
     height: 190px;
   }
   .trail_card_sticker {
