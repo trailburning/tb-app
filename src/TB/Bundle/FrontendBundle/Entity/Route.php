@@ -939,8 +939,6 @@ class Route implements Exportable
     }
     
 
-    
-
     /**
      * Add routePublishActivities
      *

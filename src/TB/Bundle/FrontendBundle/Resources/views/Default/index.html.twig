@@ -23,25 +23,22 @@ var TB_USER_ID = {{ app.user.id }};
   	</div>
   	
   	{% endif %}
-{#
+
     <div class="hero_image">
-      <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/editorial/wild/image_edited.jpg" class="resrc scale" /></div>
+      <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/editorial/wild/image_edited2.jpg" class="resrc scale" /></div>
   	</div>
-#}
+
     <div class="hero_image">
       <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/O=80/http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/editorial/alps/Reuben_Tabner-0208_edited.jpg" class="resrc scale" /></div>
   	</div>
 
-	{% if not app.user %}
-
 	<div class="hero_nav">
+	{% if not app.user %}
+	  <div class="button" data-slide="0"></div><div class="button" data-slide="1"></div><div class="button" data-slide="2"></div>
+	{% else %}  	  	  	
 	  <div class="button" data-slide="0"></div><div class="button" data-slide="1"></div>
-{#
-	  <div class="button" data-slide="2"></div>
-#}	  
-	</div>
-	
 	{% endif %}  	  	  	
+	</div>
 
 	{% if not app.user %}
 
@@ -63,7 +60,7 @@ var TB_USER_ID = {{ app.user.id }};
   	</div>  	
   	
   	{% endif %}
-{#  	
+  	
     <div class="hero_overlay">
       <div class="left">
     	<div class="title feature">
@@ -90,7 +87,7 @@ var TB_USER_ID = {{ app.user.id }};
 	    </div>
 	  </div>  	
   	</div>
-#}
+
     <div class="hero_overlay">
       <div class="left">
     	<div class="title feature">

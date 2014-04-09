@@ -18,8 +18,7 @@ border-width:1px;
 }
 
 #big_sponsor_bar .sponsor_content {
-  margin: 34px auto 0px auto;
-  width: 1112px;  
+  margin: 34px 22px 0px 40px;
   text-shadow: 1px 1px #000000;    
 }
 
@@ -273,12 +272,6 @@ html.touch #small_sponsor_bar {
  
 /* Medium devices (desktops, 992px and up) */
 @media (max-width: 1199px) {  
-  #big_sponsor_bar .sponsor_content {
-    width: 968px;  
-  }
-  #small_sponsor_bar .sponsor_content {
-    width: 968px;  
-  }
   .panel_content {
     width: 968px;
   }

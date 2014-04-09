@@ -280,5 +280,44 @@ class UserControllerTest extends AbstractApiTestCase
         $this->assertTrue($this->eventDispatched, 'The tb.user_unfollow Event was successfully dispatched');
 
     }
+        
+    /**
+     * Test the PUT /user/{id}#/follow action
+     */
+    public function testPutUserActivityViewd()
+    {   
+        $this->loadFixtures([
+            'TB\Bundle\FrontendBundle\DataFixtures\ORM\UserProfileData',
+        ]);
+        
+        // Get Route from DB with the slug "grunewald"..
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        $user = $em
+            ->getRepository('TBFrontendBundle:User')
+            ->findOneByName('mattallbeury');
+        if (!$user) {
+            $this->fail('Missing User with name "mattallbeury" in test DB');
+        }
+
+        $this->assertEquals(null, $user->getActivityLastViewed(),
+            'The activityLastViewed field is empty');
+        
+        // Test Trailburning-User-ID not set
+        $client = $this->createClient();
+        $crawler = $client->request('PUT', '/v1/user/activity/viewed');
+        $this->assertEquals(Response::HTTP_BAD_REQUEST,  $client->getResponse()->getStatusCode());
+        $this->assertJsonResponse($client);
+        
+        // Test user follow
+        $client = $this->createClient();
+        $crawler = $client->request('PUT', '/v1/user/activity/viewed', [], [], ['HTTP_Trailburning_User_ID' => $user->getId()]);
+        $this->assertEquals(Response::HTTP_OK,  $client->getResponse()->getStatusCode());
+        $this->assertJsonResponse($client);
+        
+        $em->refresh($user);
+        
+        $this->assertNotNull($user->getActivityLastViewed(),
+            'The activityLastViewed field was set to NOW');
+    }    
     
 }
