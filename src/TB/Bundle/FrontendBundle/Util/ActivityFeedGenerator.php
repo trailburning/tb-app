@@ -50,6 +50,7 @@ class ActivityFeedGenerator
         $feedData = [
             'items' => [],
             'totalItems' => count($results),
+            'newItems' => 0,
         ];
         
         $decorator = new ActivityFeedSeenDecorator($user);
@@ -57,6 +58,9 @@ class ActivityFeedGenerator
         foreach ($results as $result) {
             $activityItem = $result->export();
             $activityItem = $decorator->decorate($activityItem);
+            if (isset($activityItem['seen']) && $activityItem['seen'] === false) {
+                $feedData['newItems']++;
+            }
             $feedData['items'][] = $activityItem;
         }
         
