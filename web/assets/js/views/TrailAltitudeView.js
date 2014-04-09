@@ -20,7 +20,7 @@ define([
       this.objTrailMarginRect = new Object();
       this.objTrailMarginRect.left = 75;// allow space to alt title
       this.objTrailMarginRect.right = 50;
-      this.objTrailMarginRect.top = 20;
+      this.objTrailMarginRect.top = 40;
       this.objTrailMarginRect.bottom = 60;
       
       this.objBackgroundMargin = new Object();

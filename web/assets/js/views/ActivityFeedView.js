@@ -13,17 +13,39 @@ define([
       var self = this;
                 
       $(this.el).html(this.template());
-                        
+/*                        
+	  $('.show_activity').click(function(evt){
+	    $('.more_btn').attr('disabled', false);  
+	  	$('.activity_list').css('top', 0);        
+	  });	
+
+	  $('.more_btn').click(function(evt){	
+	    evt.stopPropagation();
+	  
+	  	$('.more_btn').attr('disabled', true);  
+	  	$('.activity_list').css('top', -243);        
+	  });
+*/                        
       return this;
     },
-    renderItems: function(arrItems){
-      var activityItemFeedView = null, elItem, model;
+    renderItems: function(jsonItems){
+      var arrItems = jsonItems.items          	
+    	
+      var nUnseen = 0, activityItemFeedView = null, elItem, model;
       for (var nItem=0; nItem < arrItems.length; nItem++) {
         model = new Backbone.Model(arrItems[nItem]);
         activityFeedItemView = new ActivityFeedItemView({ model: model });
+        if (!model.get('seen')) {
+          nUnseen++;
+        }
         elItem = activityFeedItemView.render();
         $(this.el).append(elItem.el);
 	  }    	
+	  // do we have unseen activity?
+	  if (nUnseen) {
+	  	$('.profile .activity').html(nUnseen);
+	  	$('.profile .activity').show();
+	  }
     },
     getActivity: function(){
       var self = this;
@@ -40,7 +62,27 @@ define([
         success: function(data) {      
 //          console.log('success');
 //          console.log(data);
-          self.renderItems(data.items);
+          self.renderItems(data);
+          
+//          self.updateActivityViewed();
+        }
+      });        
+    },
+    updateActivityViewed: function(){
+      var self = this;
+      
+	  var strURL = TB_RESTAPI_BASEURL + '/v1/user/activity/viewed';
+      $.ajax({
+        type: "PUT",
+        dataType: "json",
+        url: strURL,
+        headers: {'Trailburning-User-ID': TB_USER_ID},
+        error: function(data) {
+//          console.log('error:'+data.responseText);      
+        },
+        success: function(data) {      
+//          console.log('success');
+//          console.log(data);
         }
       });        
     }    

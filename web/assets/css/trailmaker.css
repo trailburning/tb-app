@@ -382,6 +382,7 @@ border-width:1px;
   background: #FFF;
   color: #979797;
   font-size: 22px;
+  line-height: 1.1em;
 }
 
 #step_route_edit_view .detail_panel .update {

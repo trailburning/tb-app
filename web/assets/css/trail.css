@@ -639,7 +639,7 @@ html.touch #trailplayer #view_map_btns {
 /* TRAIL DETAIL PANEL */
 /******************************************/
 .trail_detail_panel {
-  width: 544px;
+  width: 542px;
 }
 
 .trail_detail_panel .content {
@@ -658,7 +658,7 @@ html.touch #trailplayer #view_map_btns {
 /******************************************/
 .trail_weather_panel {
   margin: 0px 0px 0px 24px;
-  width: 544px;
+  width: 542px;
 }
 
 .trail_weather_panel .content {

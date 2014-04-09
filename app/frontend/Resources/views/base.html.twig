@@ -16,6 +16,7 @@
         <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
         <link href="{{ asset('assets/css/bootstrap-responsive.min.css') }}" rel="stylesheet">
         <link href="{{ asset('assets/css/common_ui.css') }}" rel="stylesheet" type="text/css">
+        <link href="{{ asset('assets/css/cards.css') }}" rel="stylesheet" type="text/css">
         {% block stylesheets %}{% endblock %}
         <script>
             var _gaq = _gaq || [];
@@ -60,9 +61,9 @@
 		                			<img src="{{ asset('assets/img/avatar_man.jpg') }}">
 		            	  		{% endif %}
 								</div></div>			
-<!--								
+								
 								<div class="activity">2</div>
--->											        		        		
+											        		        		
 						    	</a>
 						        <ul class="dropdown-menu activity-menu">
 						        	<div class="header">
@@ -164,7 +165,7 @@
 		<script type="text/template" id="activityFeedItemViewTemplate">
     	  <a href="{{ app.request.baseUrl }}<%=  actorURL%>">            	
 	 	  <div class="tb-avatar"><div class="photo"><img src="<%= actorAvatarURL%>"></div></div>	
-    	  <div class="note"><span class="time"><%= displayPublished%></span><br/><strong> <%= actorDisplayName%></strong> <%= preVerbDisplayName%> <strong><%= verbDisplayName%></strong> <%= subjectDisplayName%>.</div>
+    	  <div class="note"><span class="<%= displaySeen%>"></span><span class="time"><%= displayPublished%></span><br/><strong> <%= actorDisplayName%></strong> <%= preVerbDisplayName%> <strong><%= verbDisplayName%></strong> <%= subjectDisplayName%>.</div>
     	  </a>
 		</script>
 
