@@ -33,10 +33,12 @@ define([
       	  this.model.set('verbDisplayName', 'following');      	
       	  this.model.set('subjectDisplayName', 'your trails');      	
       	  break;
-      	case 'trail':      	
+      	case 'publish':      	
       	  this.model.set('preVerbDisplayName', 'has');
       	  this.model.set('verbDisplayName', 'published a new trail:');      	
       	  this.model.set('subjectDisplayName', 'TRAIL NAME');      	
+      	  break;
+      	default:      	
       	  break;
       }
       

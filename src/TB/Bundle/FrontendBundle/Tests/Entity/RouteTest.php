@@ -204,7 +204,12 @@ class RouteTest extends WebTestCase
                 "ascent": 223.3, 
                 "descent": 207.3
             }, 
-            "type": "Marathon"
+            "type": "Marathon",
+            "user": {
+                "avatar": "avatar_ma.png", 
+                "name": "mattallbeury", 
+                "title": "Matt Allbeury"
+            }
         }';
         
         $this->assertJsonStringEqualsJsonString($expectedJson, json_encode($route->export()),

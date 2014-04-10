@@ -5,14 +5,14 @@ define([
   'modernizr',
   'backbone',
   'views/TrailsView'  
-], function(_, Modernizr, Backbone, TrailsView){
+], function(_, Modernizr, Backbone, AppView){
   app.dispatcher = _.clone(Backbone.Events);
     
   var initialize = function() {
     var self = this;
               
-    this.trailsView = new TrailsView({ });
-    this.trailsView.getResults();
+    this.appView = new AppView({ });
+    this.appView.getResults();
     
   	$('#footerview').show();  	
   };

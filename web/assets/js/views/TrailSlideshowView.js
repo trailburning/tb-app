@@ -79,6 +79,11 @@ define([
       // fire event
       app.dispatcher.trigger("TrailSlideshowView:mediaupdate");                          		  	  
 	},
+    selectSlide: function(mediaID){	
+      this.gotoSlide(mediaID);
+      // fire event
+      app.dispatcher.trigger("TrailSlideshowView:mediaclick", mediaID);
+    },                          		
     gotoSlide: function(mediaID){
       bAnimate = true;          	
       // has the active slide changed?
@@ -145,9 +150,7 @@ define([
       app.dispatcher.trigger("TrailSlideshowView:mediaupdate");                          		  
 	},
     onTrailSlideshowSlideViewClick: function(trailGallerySlideView){
-      this.gotoSlide(trailGallerySlideView.model.id);
-      // fire event
-      app.dispatcher.trigger("TrailSlideshowView:mediaclick", trailGallerySlideView.model.id);                          	
+      this.selectSlide(trailGallerySlideView.model.id);
 	}	
     
   });

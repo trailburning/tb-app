@@ -90,6 +90,13 @@ abstract class User extends BaseUser implements Exportable
     private $avatarGravatar;
     
     /**
+     * @var datetime
+     *
+     * @ORM\Column(name="activity_last_viewed", type="datetime", nullable=true)
+     */
+    private $activityLastViewed;
+    
+    /**
      * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\OneToMany(targetEntity="Route", mappedBy="user")
@@ -795,5 +802,28 @@ abstract class User extends BaseUser implements Exportable
         ];
 
         return $data;
+    }
+
+    /**
+     * Set activityLastViewed
+     *
+     * @param \DateTime $activityLastViewed
+     * @return User
+     */
+    public function setActivityLastViewed($activityLastViewed)
+    {
+        $this->activityLastViewed = $activityLastViewed;
+
+        return $this;
+    }
+
+    /**
+     * Get activityLastViewed
+     *
+     * @return \DateTime 
+     */
+    public function getActivityLastViewed()
+    {
+        return $this->activityLastViewed;
     }
 }

@@ -1,8 +1,9 @@
 define([
   'underscore', 
   'backbone',
+  'views/ActivityFeedView',
   'views/TrailsTrailCardView'
-], function (_, Backbone, TrailsTrailCardView){
+], function (_, Backbone, ActivityFeedView, TrailsTrailCardView){
 
   var TrailsView = Backbone.View.extend({
     initialize: function(){
@@ -10,6 +11,12 @@ define([
       this.PageSize = 10;
       
       var self = this;
+      
+	  if (typeof TB_USER_ID != 'undefined') {
+      	this.activityFeedView = new ActivityFeedView({ el: '#activity_feed_view' });
+      	this.activityFeedView.render();
+      	this.activityFeedView.getActivity();	  	
+	  }
       
 	  $('.more_btn').click(function(evt){	
 	    evt.stopPropagation();
