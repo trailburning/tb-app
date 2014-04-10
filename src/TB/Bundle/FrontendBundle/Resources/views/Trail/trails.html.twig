@@ -48,7 +48,7 @@ var TB_USER_ID = {{ app.user.id }};
     </div>
     </a>
     <div class="summary">
-      <div class="tb-avatar"><div class="photo"><a href="profile/<%= user.name %>"><img src="{{ asset('assets/img/avatar_man.jpg') }}"></a></div></div>
+      <div class="tb-avatar"><div class="photo"><a href="profile/<%= user.name %>"><img src="<%= user.avatar %>"></a></div></div>
       <div class="detail">
         by <strong><%= user.title %></strong>
         <div class="stars">
