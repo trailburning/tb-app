@@ -162,13 +162,16 @@ class RouteController extends AbstractRestController
         $offset = $request->query->get('offset', 0);
         
         $postgis = $this->get('postgis');
-        $routes = $postgis->searchRoutes($limit, $offset);
+        $routes = $postgis->searchRoutes($limit, $offset, $count);
         $routesExport = [];
         foreach ($routes as $route) {
             $routesExport[] = $route->export();
         }
         
-        $output = ['usermsg' => 'success', "value" => ['routes' => $routesExport]];
+        $output = ['usermsg' => 'success', "value" => [
+            'routes' => $routesExport,
+            'totalCount' => $count,    
+        ]];
 
         return $this->getRestResponse($output);
     }
