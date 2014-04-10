@@ -79,7 +79,7 @@ abstract class AbstractActivity implements Exportable
      * @param \DateTime $published
      * @return AbstractActivity
      */
-    public function setPublished($published)
+    public function setPublished(\DateTime $published)
     {
         $this->published = $published;
 
@@ -167,11 +167,10 @@ abstract class AbstractActivity implements Exportable
     
     protected function getFormatedPublishedDate()
     {
-        $date = $this->getPublished();
-        if ($date instanceof \DateTime) {
-            $date = $date->format('Y-m-d H:i:s');
+        if ($this->getPublished() !== null) {
+            return $this->getPublished()->format('Y-m-d\TH:i:s\Z');
         } 
         
-        return str_replace(' ', 'T', $date) . 'Z';
+        return null;
     }
 }

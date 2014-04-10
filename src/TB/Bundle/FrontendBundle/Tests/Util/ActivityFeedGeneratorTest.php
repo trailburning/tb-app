@@ -44,6 +44,8 @@ class ActivityFeedGeneratorTest extends WebTestCase
         $this->assertInternalType('array', $feed['items'], 'Activity field items is of type array');
         $this->assertTrue(isset($feed['totalItems']), 'Activity contains totalItems field');
         $this->assertEquals(2, $feed['totalItems'], 'Activity totalItems field value is"2"');
+        $this->assertTrue(isset($feed['newItems']), 'Activity contains newItems field');
+        $this->assertEquals(2, $feed['newItems'], 'Activity newItems field value is"2"');
     }
 
 }    

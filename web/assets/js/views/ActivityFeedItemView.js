@@ -20,6 +20,12 @@ define([
 	  var dtCreated = new Date(this.model.get('published'));
 	  var options = {weekday: "long", year: "numeric", month: "long", day: "numeric"};
       this.model.set('displayPublished', dtCreated.toLocaleDateString("en-GB", options));
+	  if (this.model.get('seen')) {
+      	this.model.set('displaySeen', 'old');	  	
+	  }
+	  else {
+      	this.model.set('displaySeen', 'new');	  	
+	  }
       
       switch (this.model.get('verb')) {
       	case 'follow':      	
@@ -38,7 +44,22 @@ define([
       $(this.el).html(this.template(attribs));
                         
       return this;
-    }
+    },
+    setSeen: function(bSeen){
+	  var elSeen = $('.seen', this.el);    	
+    	
+      this.model.set('seen', bSeen);
+	  if (this.model.get('seen')) {
+      	this.model.set('displaySeen', 'old');
+      	elSeen.removeClass('new');	  	
+	  }
+	  else {
+      	this.model.set('displaySeen', 'new');	  	
+      	elSeen.removeClass('old');	  	
+	  }
+	  elSeen.addClass(this.model.get('displaySeen'));
+	}
+	    
   });
 
   return ActivityFeedItemView;

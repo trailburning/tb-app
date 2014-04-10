@@ -37,6 +37,10 @@ h1, h2, h3, h4, h5, h6 {
   min-width: 1200px;
 }
 
+#bodyview {
+  min-height: 800px;
+}
+
 /* TB BUTTONS */
 /******************************************/
 a.btn {
@@ -248,7 +252,7 @@ h4.tb {
   background: #000000;
 }
 
-#tb-loader-overlay .loader {
+.tb-loader {
   position:relative;
   margin: -44px auto 0px auto;
   top: 50%;
@@ -256,7 +260,7 @@ h4.tb {
   height: 88px;
 }
 
-#tb-loader-overlay .middle {
+.tb-loader .middle {
   position: absolute;
   top: 11px;
   left: 11px;
@@ -273,7 +277,7 @@ h4.tb {
   overflow: hidden;		
 }
 
-#tb-loader-overlay .spinner {
+.tb-loader .spinner {
   height:64px;
   width:64px;
   margin:0 auto;
@@ -286,7 +290,7 @@ h4.tb {
   border-radius:100%;
 }
 
-#tb-loader-overlay .spinner:before {
+.tb-loader .spinner:before {
   content:"";
   display:block;
   position:absolute;
@@ -412,7 +416,8 @@ h4.tb {
   margin: 6px 20px 0px 19px;  
 }
 
-#headerview .right .profile .activity { 
+#headerview .right .profile .activity {
+  display: none; 
   position: absolute;
   top: 15px;
   left: 46px;  
