@@ -65,7 +65,14 @@ define([
       $('#form_trail_name').val(this.model.get('value').route.name);
       $('#form_trail_region').val(this.model.get('value').route.region);
       $('#form_trail_notes').val(this.model.get('value').route.about);
-      $('.update_details', $(this.el)).click(function(evt) {      
+      
+      $('.update_details', $(this.el)).click(function(evt) {      	      
+        var btn = $(this);
+        btn.button('loading');
+        setTimeout(function () {
+            btn.button('reset');
+        }, 2000);
+      	
         self.model.get('value').route.name = $('#form_trail_name').val();
         self.model.get('value').route.region = $('#form_trail_region').val();
         self.model.get('value').route.about = $('#form_trail_notes').val();
@@ -92,8 +99,6 @@ define([
 	      	elList.append('<li role="presentation" data-id="'+routeType.id+'"><a role="menuitem" tabindex="-1" href="#">'+routeType.name+'</a></li>');
 	      });
 	      // set curr sel
-	      console.log(self.model.get('value'));
-	      
       	  if (self.model.get('value').route.route_category_id == undefined) {
       		// mla temp - this should always be set in db
       		self.model.get('value').route.route_category_id = 3;
