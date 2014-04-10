@@ -32,7 +32,8 @@
         "doctrine/doctrine-migrations-bundle": "dev-master",
         "stof/doctrine-extensions-bundle": "~1.1@dev",
         "knplabs/gaufrette": "dev-master",
-        "knplabs/knp-gaufrette-bundle": "dev-master"
+        "knplabs/knp-gaufrette-bundle": "dev-master",
+        "oldsound/rabbitmq-bundle": "1.2.*@dev"
     },
     "repositories": [
         {
