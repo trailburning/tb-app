@@ -13,7 +13,6 @@ define([
     render: function(){
       var self = this;
                       
-      this.model.set('actorURL', this.model.get('actor').url);
       this.model.set('actorAvatarURL', this.model.get('actor').image.url);
       this.model.set('actorDisplayName', this.model.get('actor').displayName);
       
@@ -29,14 +28,16 @@ define([
       
       switch (this.model.get('verb')) {
       	case 'follow':      	
+      	  this.model.set('activityURL', this.model.get('actor').url);
       	  this.model.set('preVerbDisplayName', 'started');
       	  this.model.set('verbDisplayName', 'following');      	
       	  this.model.set('subjectDisplayName', 'your trails');      	
       	  break;
-      	case 'publish':      	
+      	case 'publish':      	      	
+      	  this.model.set('activityURL', this.model.get('object').url);
       	  this.model.set('preVerbDisplayName', 'has');
-      	  this.model.set('verbDisplayName', 'published a new trail:');      	
-      	  this.model.set('subjectDisplayName', 'TRAIL NAME');      	
+      	  this.model.set('verbDisplayName', 'published');      	
+      	  this.model.set('subjectDisplayName', ' a new trail: ' + this.model.get('object').displayName);      	
       	  break;
       	default:      	
       	  break;
