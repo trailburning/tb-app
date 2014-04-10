@@ -341,6 +341,7 @@ h4.tb {
 /* HEADER */
 /******************************************/
 #headerview {
+  min-width: 1200px;	
   z-index: 200;
   position: fixed;
   top: 0px;
@@ -402,8 +403,21 @@ h4.tb {
 
 #headerview .right .link {
   float: left;
-  margin: 0px 19px 0px 19px;
+  margin: 0px 15px 0px 15px;
   color: #44b6f7;
+}
+
+#headerview .right .signin .links {
+  float:left;
+  margin: 14px 15px 0px 30px;
+  line-height: 1em;
+}
+
+#headerview .right .signin .link {
+  float: left;
+  margin: 0px 0px 0px 0px;
+  color: #44b6f7;
+  text-transform: none;
 }
 
 #headerview .links .main {
@@ -413,7 +427,7 @@ h4.tb {
 
 #headerview .right .profile {  
   float: right;
-  margin: 6px 20px 0px 19px;  
+  margin: 6px 20px 0px 45px;  
 }
 
 #headerview .right .profile .activity {
@@ -994,6 +1008,9 @@ form label {
   #appview {
     min-width: 992px;
   }    
+  #headerview {
+    min-width: 992px;
+  }  
   .tb-avatar-feature {
     width: 112px;
     height: 112px;
