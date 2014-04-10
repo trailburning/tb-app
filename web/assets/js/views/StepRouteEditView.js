@@ -69,7 +69,7 @@ define([
         self.model.get('value').route.name = $('#form_trail_name').val();
         self.model.get('value').route.region = $('#form_trail_region').val();
         self.model.get('value').route.about = $('#form_trail_notes').val();
-		self.model.get('value').route.route_category_id = $('#trail_types').find('[data-bind="label"]').attr('data-id');
+		self.model.get('value').route.category.id = $('#trail_types').find('[data-bind="label"]').attr('data-id');
 		
 	  	self.renderTrailCard();                      		
         // fire event
@@ -92,15 +92,9 @@ define([
 	      	elList.append('<li role="presentation" data-id="'+routeType.id+'"><a role="menuitem" tabindex="-1" href="#">'+routeType.name+'</a></li>');
 	      });
 	      // set curr sel
-	      console.log(self.model.get('value'));
-	      
-      	  if (self.model.get('value').route.route_category_id == undefined) {
-      		// mla temp - this should always be set in db
-      		self.model.get('value').route.route_category_id = 3;
-      	  }
-      	  var elItem = $('#trail_types li[data-id='+self.model.get('value').route.route_category_id+']');
+      	  var elItem = $('#trail_types li[data-id='+self.model.get('value').route.category.id+']');
       	  if (elItem.length) {
-   			$('#trail_types').find('[data-bind="label"]').text(elItem.eq(0).text()).attr('data-id', self.model.get('value').route.route_category_id);
+   			$('#trail_types').find('[data-bind="label"]').text(elItem.eq(0).text()).attr('data-id', self.model.get('value').route.category.id);
       	  }
 	  	  // list handler            
 	  	  $('.dropdown-menu li', $(self.el)).click(function(evt) { 
@@ -111,8 +105,7 @@ define([
       		.children('.dropdown-toggle').dropdown('toggle');
  
    			return false; 
-	  	  });
-	  	  
+	  	  });	  	  
 	  	  self.renderTrailCard();                      
         }
       });            
@@ -121,7 +114,7 @@ define([
       $('.trailcard_panel .trail_card_title', $(this.el)).html(this.model.get('value').route.name);
       $('.trailcard_panel .trail_card_region', $(this.el)).html(this.model.get('value').route.region);
 	  // trail_card_category      	
-	  $('.trailcard_panel .trail_card_category', $(this.el)).html($('#trail_types li[data-id='+this.model.get('value').route.route_category_id+']').text());        
+	  $('.trailcard_panel .trail_card_category', $(this.el)).html($('#trail_types li[data-id='+this.model.get('value').route.category.id+']').text());        
     },
     renderTrailCardPhoto: function(){
       var self = this;
@@ -203,9 +196,6 @@ define([
       var postData = JSON.stringify(model.toJSON());
       var postArray = {json:postData};
 
-	  console.log('onTrailMapViewMoveMedia:');
-      console.log(postData);
-      
       var strURL = TB_RESTAPI_BASEURL + '/v1/media/' + mediaID;      
       $.ajax({
         type: "PUT",
