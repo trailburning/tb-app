@@ -315,7 +315,7 @@ class Postgis extends \PDO
         $routes = array();
         if ($row = $pq->fetch(\PDO::FETCH_ASSOC)) {
             $count = $row['count'];
-            $q = 'SELECT r.id, r.name, r.slug, r.region, r.length, ST_X(r.centroid) AS long, ST_Y(r.centroid) AS lat, r.tags, rt.id AS rt_id, rt.name AS rt_name, rc.id AS rc_id, rc.name AS rc_name, r.about, u.id AS user_id, u.name AS user_name, u.discr, u.first_name, u.last_name, u.display_name, u.avatar
+            $q = 'SELECT r.id, r.name, r.slug, r.region, r.length, ST_X(r.centroid) AS long, ST_Y(r.centroid) AS lat, r.tags, rt.id AS rt_id, rt.name AS rt_name, rc.id AS rc_id, rc.name AS rc_name, r.about, u.id AS user_id, u.name AS user_name, u.discr, u.first_name, u.last_name, u.display_name, u.avatar, u.avatar_gravatar
                   FROM routes r
                   INNER JOIN fos_user u ON r.user_id=u.id
                   LEFT JOIN route_type rt ON r.route_type_id=rt.id
@@ -362,11 +362,13 @@ class Postgis extends \PDO
                     $user->setFirstName($row['first_name']);
                     $user->setLastName($row['last_name']);
                     $user->setAvatar($row['avatar']);
+                    $user->setAvatarGravatar($row['avatar_gravatar']);
                 } elseif ($row['discr'] == 'brand') {
                     $user = new BrandProfile();
                     $user->setName($row['user_name']);
                     $user->setDisplayName($row['display_name']);
                     $user->setAvatar($row['avatar']);
+                    $user->setAvatarGravatar($row['avatar_gravatar']);
                 }
                 $route->setUser($user);
                 $media = $this->getRouteMedia($row['id'], 1);

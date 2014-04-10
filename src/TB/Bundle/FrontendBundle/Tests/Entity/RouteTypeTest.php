@@ -1,6 +1,6 @@
 <?php 
 
-namespace TB\Bundle\APIBundle\Tests\Entity;
+namespace TB\Bundle\FrontendBundle\Tests\Entity;
 
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 use TB\Bundle\FrontendBundle\Entity\RouteType;

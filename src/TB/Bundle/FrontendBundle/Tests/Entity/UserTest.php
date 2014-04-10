@@ -1,6 +1,6 @@
 <?php 
 
-namespace TB\Bundle\APIBundle\Tests\Entity;
+namespace TB\Bundle\FrontendBundle\Tests\Entity;
 
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 use CrEOF\Spatial\PHP\Types\Geometry\Point;
@@ -134,6 +134,21 @@ class UserTest extends WebTestCase
         $em->flush();
         
         $this->assertTrue($user2->isFollowing($user1), 'user2 is following user1');
+        
+    }
+    
+    public function testGetMainAvatar()
+    {
+        $stub = $this->getMockForAbstractClass('TB\\Bundle\\FrontendBundle\\Entity\\User');
+        $this->assertEquals('assets/img/avatar_man.jpg', $stub->getMainAvatar());
+        
+        $stub->setAvatarGravatar('gravatar');
+        $this->assertEquals('gravatar', $stub->getMainAvatar());
+        
+        $stub->setName('test');
+        $stub->setAvatar('avatar.png');
+        $this->assertEquals('https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/test/avatar.jpg', $stub->getMainAvatar());
+        
         
     }
 }
