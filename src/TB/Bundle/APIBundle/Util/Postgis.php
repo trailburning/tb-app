@@ -145,15 +145,10 @@ class Postgis extends \PDO
                      r.tags as rtags,
                      r.about,
                      ST_AsText(ST_Centroid(ST_MakeLine(rp.coords ORDER BY rp.point_number ASC))) as centroid,
-                     ST_AsText(Box2D(ST_MakeLine(rp.coords ORDER BY rp.point_number ASC))) as bbox,
-                     rt.name AS rt_name, 
-                     rc.name AS rc_name
-              FROM routes r
-              INNER JOIN route_points rp ON r.id=rp.route_id
-              LEFT JOIN route_type rt ON r.route_type_id=rt.id
-              LEFT JOIN route_category rc ON r.route_category_id=rc.id
-              WHERE r.id=?
-              GROUP BY r.name, length, r.tags, r.slug, r.region, r.about, rt.name, rc.name";
+                     ST_AsText(Box2D(ST_MakeLine(rp.coords ORDER BY rp.point_number ASC))) as bbox
+              FROM routes r, route_points rp
+              WHERE r.id=? AND rp.route_id=r.id
+              GROUP BY name, length, r.tags, r.slug, r.region, r.about";
         $pq = $this->prepare($q);
         $success = $pq->execute(array($route_id));
         if (!$success) {
@@ -173,16 +168,6 @@ class Postgis extends \PDO
             $route->setCentroid(new Point($c[0], $c[1], 4326)); 
             $tags = json_decode('{' . str_replace('"=>"', '":"', $row['rtags']) . '}', true);
             $route->setTags($tags);
-            if ($row['rc_name'] != '') {
-                $routeCategory = new RouteCategory();
-                $routeCategory->setName($row['rc_name']);
-                $route->setRouteCategory($routeCategory);
-            }
-            if ($row['rt_name'] != '') {
-                $routeType = new RouteType();
-                $routeType->setName($row['rt_name']);
-                $route->setRouteType($routeType);
-            }
         } else {
             throw (new ApiException(sprintf('Route with id "%s" does not exist', $route_id), 404));
         }
