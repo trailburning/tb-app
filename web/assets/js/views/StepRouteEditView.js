@@ -92,6 +92,8 @@ define([
 	      	elList.append('<li role="presentation" data-id="'+routeType.id+'"><a role="menuitem" tabindex="-1" href="#">'+routeType.name+'</a></li>');
 	      });
 	      // set curr sel
+	      console.log(self.model.get('value'));
+	      
       	  if (self.model.get('value').route.route_category_id == undefined) {
       		// mla temp - this should always be set in db
       		self.model.get('value').route.route_category_id = 3;
@@ -153,6 +155,9 @@ define([
     renderSlideshow: function(){
       this.trailSlideshowView.render();          
 	},
+    selectSlideshowSlide: function(mediaID){
+      this.trailSlideshowView.selectSlide(mediaID);
+	},    	
     onTrailUploadPhotoViewUpload: function(trailUploadPhotoView){
       $('#content_overlay').show();      
       $('#overlay_view').show();

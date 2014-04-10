@@ -211,7 +211,6 @@ define([
   
       this.handleResize();
     	
-      // mla test
       if (TB_TRAIL_ID) {
       	this.model.set('id', TB_TRAIL_ID);
       }
@@ -226,7 +225,9 @@ define([
 	  
 	  this.trailMapView.addMarker(data, true, "");
 	  
-	  this.stepRouteEditView.renderSlideshow();
+	  this.stepRouteEditView.renderSlideshow();	  
+	  // select slide
+	  this.stepRouteEditView.selectSlideshowSlide(data.id);
     },    
     onStepRouteEditViewGalleryPhotoClick: function(mediaID){
       this.trailMapView.selectMarker(mediaID);    
@@ -273,15 +274,6 @@ define([
         }
       });
     	      
-/*      
-name (string)
-region (string)
-about (string)
-publish (boolean)
-route_type_id (integer)
-route_category_id (integer)      
-*/
-
 	  $('#trail_map_view').removeClass('map_small');
 	  $('#trail_map_view').addClass('map_large');
 
