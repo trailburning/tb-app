@@ -278,70 +278,83 @@ class Postgis extends \PDO
         return $routes;
     }
     
-    public function searchRoutes($limit = 10, $offset = 0) 
+    public function searchRoutes($limit = 10, $offset = 0, &$count = 0) 
     {
-        $q = 'SELECT r.id, r.name, r.slug, r.region, r.length, ST_X(r.centroid) AS long, ST_Y(r.centroid) AS lat, r.tags, rt.name AS rt_name, rc.name AS rc_name, r.about, u.id AS user_id, u.name AS user_name, u.discr, u.first_name, u.last_name, u.display_name, u.avatar
+        $q = 'SELECT COUNT(r.id) AS count
               FROM routes r
               INNER JOIN fos_user u ON r.user_id=u.id
-              LEFT JOIN route_type rt ON r.route_type_id=rt.id
-              LEFT JOIN route_category rc ON r.route_category_id=rc.id
               WHERE r.slug IS NOT NULL
-              AND r.publish = true
-              GROUP BY r.id, rt.name, rc.name , u.id
-              ORDER BY r.id DESC
-              LIMIT :limit OFFSET :offset';
+              AND r.publish = true';
         $pq = $this->prepare($q);
-        $pq->bindParam('limit', $limit, \PDO::PARAM_INT);
-        $pq->bindParam('offset', $offset, \PDO::PARAM_INT);
-        
         $success = $pq->execute();
         if (!$success) {
             throw (new ApiException('Failed to fetch route from Database', 500));
         }
-
-        $routes = array();
         
-        while ($row = $pq->fetch(\PDO::FETCH_ASSOC)) {
+        $routes = array();
+        if ($row = $pq->fetch(\PDO::FETCH_ASSOC)) {
+            $count = $row['count'];
+            $q = 'SELECT r.id, r.name, r.slug, r.region, r.length, ST_X(r.centroid) AS long, ST_Y(r.centroid) AS lat, r.tags, rt.name AS rt_name, rc.name AS rc_name, r.about, u.id AS user_id, u.name AS user_name, u.discr, u.first_name, u.last_name, u.display_name, u.avatar
+                  FROM routes r
+                  INNER JOIN fos_user u ON r.user_id=u.id
+                  LEFT JOIN route_type rt ON r.route_type_id=rt.id
+                  LEFT JOIN route_category rc ON r.route_category_id=rc.id
+                  WHERE r.slug IS NOT NULL
+                  AND r.publish = true
+                  GROUP BY r.id, rt.name, rc.name , u.id
+                  ORDER BY r.id DESC
+                  LIMIT :limit OFFSET :offset';
+            $pq = $this->prepare($q);
+            $pq->bindParam('limit', $limit, \PDO::PARAM_INT);
+            $pq->bindParam('offset', $offset, \PDO::PARAM_INT);
+        
+            $success = $pq->execute();
+            if (!$success) {
+                throw (new ApiException('Failed to fetch route from Database', 500));
+            }
+        
+            while ($row = $pq->fetch(\PDO::FETCH_ASSOC)) {
             
-            $route = new Route();
-            $route->setId($row['id']);
-            $route->setName($row['name']);
-            $route->setSlug($row['slug']);
-            $route->setRegion($row['region']);
-            $route->setLength($row['length']);
-            $route->setCentroid(new Point($row['long'], $row['lat'], 4326)); 
-            $route->setAbout($row['about']);
-            $tags = json_decode('{' . str_replace('"=>"', '":"', $row['tags']) . '}', true);
-            $route->setTags($tags);
-            if ($row['rc_name'] != '') {
-                $routeCategory = new RouteCategory();
-                $routeCategory->setName($row['rc_name']);
-                $route->setRouteCategory($routeCategory);
-            }
-            if ($row['rt_name'] != '') {
-                $routeType = new RouteType();
-                $routeType->setName($row['rt_name']);
-                $route->setRouteType($routeType);
-            }
-            if ($row['discr'] == 'user') {
-                $user = new UserProfile();
-                $user->setName($row['user_name']);
-                $user->setFirstName($row['first_name']);
-                $user->setLastName($row['last_name']);
-                $user->setAvatar($row['avatar']);
-            } elseif ($row['discr'] == 'brand') {
-                $user = new BrandProfile();
-                $user->setName($row['user_name']);
-                $user->setDisplayName($row['display_name']);
-                $user->setAvatar($row['avatar']);
-            }
-            $route->setUser($user);
-            $media = $this->getRouteMedia($row['id'], 1);
-            if (count($media) > 0) {
-                $route->setMedia(array_shift($media));
-            }
+                $route = new Route();
+                $route->setId($row['id']);
+                $route->setName($row['name']);
+                $route->setSlug($row['slug']);
+                $route->setRegion($row['region']);
+                $route->setLength($row['length']);
+                $route->setCentroid(new Point($row['long'], $row['lat'], 4326)); 
+                $route->setAbout($row['about']);
+                $tags = json_decode('{' . str_replace('"=>"', '":"', $row['tags']) . '}', true);
+                $route->setTags($tags);
+                if ($row['rc_name'] != '') {
+                    $routeCategory = new RouteCategory();
+                    $routeCategory->setName($row['rc_name']);
+                    $route->setRouteCategory($routeCategory);
+                }
+                if ($row['rt_name'] != '') {
+                    $routeType = new RouteType();
+                    $routeType->setName($row['rt_name']);
+                    $route->setRouteType($routeType);
+                }
+                if ($row['discr'] == 'user') {
+                    $user = new UserProfile();
+                    $user->setName($row['user_name']);
+                    $user->setFirstName($row['first_name']);
+                    $user->setLastName($row['last_name']);
+                    $user->setAvatar($row['avatar']);
+                } elseif ($row['discr'] == 'brand') {
+                    $user = new BrandProfile();
+                    $user->setName($row['user_name']);
+                    $user->setDisplayName($row['display_name']);
+                    $user->setAvatar($row['avatar']);
+                }
+                $route->setUser($user);
+                $media = $this->getRouteMedia($row['id'], 1);
+                if (count($media) > 0) {
+                    $route->setMedia(array_shift($media));
+                }
             
-            $routes[] = $route;
+                $routes[] = $route;
+            }
         }
         
         return $routes;
