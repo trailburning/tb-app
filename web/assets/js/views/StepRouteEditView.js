@@ -68,6 +68,7 @@ define([
       
       $('.update_details', $(this.el)).click(function(evt) {      	      
         var btn = $(this);
+        btn.text('Update Story');
         btn.button('loading');
         setTimeout(function () {
             btn.button('reset');
@@ -99,13 +100,14 @@ define([
 	      	elList.append('<li role="presentation" data-id="'+routeType.id+'"><a role="menuitem" tabindex="-1" href="#">'+routeType.name+'</a></li>');
 	      });
 	      // set curr sel
-      	  if (self.model.get('value').route.route_category_id == undefined) {
-      		// mla temp - this should always be set in db
-      		self.model.get('value').route.route_category_id = 3;
-      	  }
-      	  var elItem = $('#trail_types li[data-id='+self.model.get('value').route.route_category_id+']');
+      	  var nCategoryID = 1;
+	      if (self.model.get('value').route.category != undefined) {
+      	    nCategoryID = self.model.get('value').route.category.id;
+	      }
+	      
+	      var elItem = $('#trail_types li[data-id='+nCategoryID+']');
       	  if (elItem.length) {
-   			$('#trail_types').find('[data-bind="label"]').text(elItem.eq(0).text()).attr('data-id', self.model.get('value').route.route_category_id);
+   			$('#trail_types').find('[data-bind="label"]').text(elItem.eq(0).text()).attr('data-id', nCategoryID);
       	  }
 	  	  // list handler            
 	  	  $('.dropdown-menu li', $(self.el)).click(function(evt) { 

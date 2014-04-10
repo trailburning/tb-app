@@ -233,7 +233,7 @@ define([
       this.trailMapView.selectMarker(mediaID);    
 	},    
     onStepRouteEditViewUpdateDetailsClick: function(stepRouteEditView){      
-      var jsonObj = {'name':this.model.get('value').route.name, 'region':this.model.get('value').route.region, 'about':this.model.get('value').route.about, 'category':{'id':this.model.get('value').route.category.id}};
+      var jsonObj = {'name':this.model.get('value').route.name, 'region':this.model.get('value').route.region, 'about':this.model.get('value').route.about, 'route_category_id':this.model.get('value').route.route_category_id};
       var postData = JSON.stringify(jsonObj);
       var postArray = {json:postData};
 
