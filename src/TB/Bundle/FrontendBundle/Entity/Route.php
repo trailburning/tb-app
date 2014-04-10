@@ -878,11 +878,11 @@ class Route implements Exportable
         }
         
         if ($this->getRouteType() !== null) {
-            $data['type'] = $this->getRouteType()->getName();
+            $data['type'] = $this->getRouteType()->export();
         }
         
         if ($this->getRouteCategory() !== null) {
-            $data['category'] = $this->getRouteCategory()->getName();
+            $data['category'] = $this->getRouteCategory()->export();
         }
         
         if ($this->getUser() !== null) {

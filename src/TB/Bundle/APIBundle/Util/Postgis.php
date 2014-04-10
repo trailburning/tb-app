@@ -146,14 +146,16 @@ class Postgis extends \PDO
                      r.about,
                      ST_AsText(ST_Centroid(ST_MakeLine(rp.coords ORDER BY rp.point_number ASC))) as centroid,
                      ST_AsText(Box2D(ST_MakeLine(rp.coords ORDER BY rp.point_number ASC))) as bbox,
+                     rt.id AS rt_id,
                      rt.name AS rt_name, 
+                     rc.id AS rc_id,
                      rc.name AS rc_name
               FROM routes r
               INNER JOIN route_points rp ON r.id=rp.route_id
               LEFT JOIN route_type rt ON r.route_type_id=rt.id
               LEFT JOIN route_category rc ON r.route_category_id=rc.id
               WHERE r.id=?
-              GROUP BY r.name, length, r.tags, r.slug, r.region, r.about, rt.name, rc.name";
+              GROUP BY r.id, length, r.tags, r.slug, r.region, r.about, rt.id, rc.id";
         $pq = $this->prepare($q);
         $success = $pq->execute(array($route_id));
         if (!$success) {
@@ -175,11 +177,13 @@ class Postgis extends \PDO
             $route->setTags($tags);
             if ($row['rc_name'] != '') {
                 $routeCategory = new RouteCategory();
+                $routeCategory->setId($row['rc_id']);
                 $routeCategory->setName($row['rc_name']);
                 $route->setRouteCategory($routeCategory);
             }
             if ($row['rt_name'] != '') {
                 $routeType = new RouteType();
+                $routeType->setId($row['rt_id']);
                 $routeType->setName($row['rt_name']);
                 $route->setRouteType($routeType);
             }
@@ -217,7 +221,7 @@ class Postgis extends \PDO
     
     public function readRoutes($user_id, $count = null, $route_type_id = null, $route_category_id = null, $publish = null) 
     {
-        $q = 'SELECT r.id, r.name, r.slug, r.region, r.length, ST_X(r.centroid) AS long, ST_Y(r.centroid) AS lat, r.tags, rt.name AS rt_name, rc.name AS rc_name, r.about
+        $q = 'SELECT r.id, r.name, r.slug, r.region, r.length, ST_X(r.centroid) AS long, ST_Y(r.centroid) AS lat, r.tags, rt.id AS rt_id, rt.name AS rt_name, rc.id AS rc_id, rc.name AS rc_name, r.about
               FROM routes r
               LEFT JOIN route_type rt ON r.route_type_id=rt.id
               LEFT JOIN route_category rc ON r.route_category_id=rc.id
@@ -232,11 +236,11 @@ class Postgis extends \PDO
         if ($publish !== null) {
             $q .= ' AND publish=:publish';
         }
-        $q.= ' GROUP BY r.id, rt.name, rc.name ';
+        $q.= ' GROUP BY r.id, rt.id, rc.id ';
         if ($count !== null) {
             $q .= ' LIMIT :count';
         }
-
+        
         $pq = $this->prepare($q);
         $pq->bindParam('user_id', $user_id, \PDO::PARAM_INT);
         if ($count !== null) {
@@ -274,11 +278,13 @@ class Postgis extends \PDO
             $route->setTags($tags);
             if ($row['rc_name'] != '') {
                 $routeCategory = new RouteCategory();
+                $routeCategory->setId($row['rc_id']);
                 $routeCategory->setName($row['rc_name']);
                 $route->setRouteCategory($routeCategory);
             }
             if ($row['rt_name'] != '') {
                 $routeType = new RouteType();
+                $routeType->setId($row['rt_id']);
                 $routeType->setName($row['rt_name']);
                 $route->setRouteType($routeType);
             }
@@ -295,14 +301,14 @@ class Postgis extends \PDO
     
     public function searchRoutes($limit = 10, $offset = 0) 
     {
-        $q = 'SELECT r.id, r.name, r.slug, r.region, r.length, ST_X(r.centroid) AS long, ST_Y(r.centroid) AS lat, r.tags, rt.name AS rt_name, rc.name AS rc_name, r.about, u.id AS user_id, u.name AS user_name, u.discr, u.first_name, u.last_name, u.display_name, u.avatar
+        $q = 'SELECT r.id, r.name, r.slug, r.region, r.length, ST_X(r.centroid) AS long, ST_Y(r.centroid) AS lat, r.tags, rt.name AS rt_name, rt.id AS rt_id, rc.name AS rc_name, rc.id AS rc_id, r.about, u.id AS user_id, u.name AS user_name, u.discr, u.first_name, u.last_name, u.display_name, u.avatar
               FROM routes r
               INNER JOIN fos_user u ON r.user_id=u.id
               LEFT JOIN route_type rt ON r.route_type_id=rt.id
               LEFT JOIN route_category rc ON r.route_category_id=rc.id
               WHERE r.slug IS NOT NULL
               AND r.publish = true
-              GROUP BY r.id, rt.name, rc.name , u.id
+              GROUP BY r.id, rt.id, rc.id , u.id
               ORDER BY r.id DESC
               LIMIT :limit OFFSET :offset';
         $pq = $this->prepare($q);
@@ -330,11 +336,13 @@ class Postgis extends \PDO
             $route->setTags($tags);
             if ($row['rc_name'] != '') {
                 $routeCategory = new RouteCategory();
+                $routeCategory->setId($row['rc_id']);
                 $routeCategory->setName($row['rc_name']);
                 $route->setRouteCategory($routeCategory);
             }
             if ($row['rt_name'] != '') {
                 $routeType = new RouteType();
+                $routeType->setId($row['rt_id']);
                 $routeType->setName($row['rt_name']);
                 $route->setRouteType($routeType);
             }

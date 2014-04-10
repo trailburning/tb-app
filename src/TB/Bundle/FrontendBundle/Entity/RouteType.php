@@ -44,6 +44,19 @@ class RouteType implements Exportable
     {
         return $this->id;
     }
+    
+    /**
+     * Set id
+     *
+     * @param integer $id
+     * @return RouteType
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    
+        return $this;
+    }
 
     /**
      * Set name

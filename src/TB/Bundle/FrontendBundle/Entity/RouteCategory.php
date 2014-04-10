@@ -44,6 +44,19 @@ class RouteCategory implements Exportable
     {
         return $this->id;
     }
+    
+    /**
+     * Set id
+     *
+     * @param integer $id
+     * @return RouteCategory
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    
+        return $this;
+    }
 
     /**
      * Set name
