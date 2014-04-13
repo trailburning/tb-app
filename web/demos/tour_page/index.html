@@ -1,0 +1,181 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta property="og:title" content="Discover Trails"/>
+                <title>Discover Trails</title>
+        
+        <link href="http://fonts.googleapis.com/css?family=Signika:400,300,700" rel="stylesheet">
+        <link href="http://api.tiles.mapbox.com/mapbox.js/v1.6.0/mapbox.css" rel="stylesheet">
+        <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="assets/css/bootstrap-responsive.min.css" rel="stylesheet">
+        <link href="assets/css/common_ui.css" rel="stylesheet" type="text/css">
+        <link href="assets/css/cards.css" rel="stylesheet" type="text/css">
+        <link href="assets/css/tour.css" rel="stylesheet" type="text/css">
+        <script>
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-45211566-1']);
+            _gaq.push(['_trackPageview']);
+            
+            (function() {
+              var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+              ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+              var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+
+            function trackOutboundLink(link, category, action) { 
+              try { _gaq.push(['_trackEvent', category , action]); } catch(err){}   
+              setTimeout(function() {window.open(link.href, '_blank');}, 100);
+            }
+            var TB_RESTAPI_BASEURL = 'http://localhost:8888/trailburning_api/app_dev.php';
+                    </script>
+    </head>
+    <body>
+        <div id="appview">      
+            <div id="headerview">
+                <div class="left">
+                    <a href="/"><img src="assets/img/header/tb_logo_black.gif" border="0"></a>
+                </div>    
+                
+			    <div class="right navbar">
+                				      		<div class="signin">
+			      			<div class="links">
+			      				<div class="link main"><a href="login">Sign in</a></div> 
+			      			</div>
+			      			<a href="register/" class="btn btn-tb-action btn-tb-large">Join</a>
+			      		</div>
+			    				      
+			      	<div class="links">
+						<div class="link main"><a href="about">Discover Trailburning</a></div>			      	
+						<div class="link main"><a href="inspire">#Inspire</a></div>			      	
+			      	</div>
+			      	<div class="discover">
+			    	</div>
+			    </div>    
+                
+                <div class="trans-line"></div>        
+            </div>    
+
+			<div id="bodyview">
+            <script>
+var TB_APP = 'TourApp';
+</script>
+
+  <div class="tour_content">
+  	<div class="panel content">
+	  <h2 class="tb">Trail Maker is here, make Trails!</h2>
+	  <div class="desc">
+	    <h4 class="tb">Join today and start making your own TrailCards, to share it with Trailburners around the world.</h4>	
+	  </div>
+
+	  <div id="steps">  		
+	    <div id="step1" class="animate">
+  	      <div id="step1_left" class="step1_left_init">
+  	      <h3 class="tb">Give it your best shots.</h3>
+  	      <h4 class="tb">Take photos on your next Trail at the highest resolution to get the best images possible.</h4>
+		  </div>  	
+  		  <div id="step1_right" class="image_container fade_on_load step1_right_init"><img src="assets/img/tour/step1.png"></div>	
+	    </div>
+	    <div id="step2" class="animate">
+  		  <div id="step2_left" class="image_container fade_on_load"><img src="assets/img/tour/step2.png"></div>	
+  	      <div id="step2_right">
+  	      <h3 class="tb">We turn the .GPX into your Trail.</h3>
+  	      <h4 class="tb">Trail Making is as simple as uploading a GPX file.</h4>
+		  </div>  	
+	    </div>
+	    <div id="step3" class="animate">
+  		  <div id="step3_left">
+  		  <h3 class="tb">Fill the Trail with beautiful pictures.</h3>
+  	      <h4 class="tb">As many as you want!</h4>
+  		  </div>	
+  	      <div id="step3_middle" class="image_container fade_on_load"><img src="assets/img/tour/step3_1.png"></div>  	
+  	      <div id="step3_right" class="image_container fade_on_load"><img src="assets/img/tour/step3_2.png"></div>  	
+	    </div>
+	    <div id="step4" class="animate">
+  		  <div id="step4_left" class="image_container fade_on_load"><img src="assets/img/tour/step4_2.png"></div>	
+  	      <div id="step4_middle" class="image_container fade_on_load"><img src="assets/img/tour/step4_1.png"></div>  	
+  	      <div id="step4_1_right">
+  	      <h3 class="tb">Tell your trail story.</h3>
+  	      <h4 class="tb">Share your thoughts and tips about the trail.</h4>
+  	      </div>
+  	      <div id="step4_2_right" class="image_container fade_on_load"><img src="assets/img/tour/step4_3.png"></div>  	
+	    </div>
+	    <div id="step5" class="animate">
+  		  <div id="step5_left" class="image_container fade_on_load"><img src="assets/img/tour/step5.png"></div>	
+  	      <div id="step5_right">
+  	      <h3 class="tb">Your TrailCard is created and ready to be published.</h3>
+  	      <h4 class="tb">You can share it with your friends and inspire the Trailburning community.</h4>
+  	      <div class="maketrails"><a href="../join" class="btn btn-tb-action btn-tb-large submit">Let's Make Trails</a></div>
+		  </div>  	
+	    </div>	    
+	  </div>
+  	  <div class="memo">
+  	  To make sure you don’t forget  anything, you can check or print our Trailburning memo before your next Trail.	
+  	  </div>
+  	</div>
+  	<div class="sticker"><img src="assets/img/tour/sticker.png"></div>  	
+  </div>
+
+            </div>
+
+            <div id="footerview">
+                <div class="left">
+                  <div class="copyright">Copyright © 2013, Augmented Media Projects Ltd</div>    
+                  <div class="links">
+                    <div class="link"><a href="app_dev.php/about">About</a></div>
+                    <div class="link"><a href="app_dev.php/presskit">Press Kit</a></div>
+                  </div>
+                </div>
+                <div class="right">
+                    <div class="social email"><a href="mailto:hello@trailburning.com" class="button btnEmail">Email</a></div>
+                    <div class="social facebook"><a href="http://www.facebook.com/trailburning" target="_blank" class="button btnFacebook">Facebook</a></div>
+                    <div class="social twitter"><a href="http://www.twitter.com/trailburning" target="_blank" class="button btnTwitter">Twitter</a></div>
+                    <div class="social googleplus"><a href="https://plus.google.com/+Trailburning/posts" target="_blank" class="button btnGooglePlus">Google+</a></div>          
+                    <div class="social pinterest"><a href="https://www.pinterest.com/trailburning/" target="_blank" class="button btnPinterest">Pinterest</a></div>          
+                </div>
+            </div>     
+        </div>      
+
+		<script type="text/template" id="activityFeedViewTemplate">
+		</script>
+
+		<script type="text/template" id="activityFeedItemViewTemplate">
+    	  <a href="">            	
+	 	  <div class="tb-avatar"><div class="photo"><img src="<%= actorAvatarURL%>"></div></div>	
+    	  <div class="note"><span class="seen <%= displaySeen%>"></span><span class="time"><%= displayPublished%></span><br/><strong> <%= actorDisplayName%></strong> <%= preVerbDisplayName%> <strong><%= verbDisplayName%></strong> <%= subjectDisplayName%>.</div>
+    	  </a>
+		</script>
+
+        <script>
+        resrc = {
+          options: {
+            server: "app.resrc.it",
+            resrcOnLoad: true,
+            resrcOnResize: true,
+            resrcOnPinch: false    
+          }
+        };
+        </script>
+		<script src="//use.resrc.it"></script>
+
+        <script src="assets/js/libs/jquery-1.8.3.min.js"></script>
+        <script src="assets/js/libs/bootstrap.min.js"></script>
+        <script src="assets/js/libs/bootstrap-filestyle.min.js"> </script>
+
+        <script src='http://api.tiles.mapbox.com/mapbox.js/v1.6.1/mapbox.js'></script>
+
+        <script src="assets/js/libs/imagesloaded.pkgd.min.js"></script>
+        <script src="assets/js/libs/image-scale.min.js"></script>
+        
+<script>
+var elementsToTrack = ["#step1_left", "#step1_right", "#step2_left", "#step2_right", "#step3_left", "#step3_middle", "#step3_right", "#step4_left", "#step4_1_right", "#step4_2_right", "#step5_left", "#step5_right"];
+</script>
+        <script src="assets/js/libs/divPeek.min.js"></script>
+
+        <script data-main="assets/js/main" src="assets/js/libs/require.js"></script>        
+    
+</body>
+</html>

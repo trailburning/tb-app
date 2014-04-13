@@ -222,25 +222,21 @@ border-width:1px;
 }
 
 .profile_follow_panel .you_follow {
-  height: 112px;
+  clear: both;
 }
 
 .profile_follow_panel .they_follow {
+  clear: both;
   margin-top: 22px;
-  height: 112px;
 }
 
 .profile_follow_panel .avatars {
-  padding-top: 16px;	
-  
   width: 100%;
-  height: 56px;
-  overflow: hidden;
 }
 
 .profile_follow_panel .tb-avatar {
   display: inline-block;
-  margin: 0px 22px 0px 0px;
+  margin: 16px 22px 0px 0px;
 }
 
 .profile_follow_panel .content .title {
