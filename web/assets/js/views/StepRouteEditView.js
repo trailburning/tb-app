@@ -104,6 +104,7 @@ define([
 	      if (self.model.get('value').route.category != undefined) {
       	    nCategoryID = self.model.get('value').route.category.id;
 	      }
+	      self.model.get('value').route.route_category_id = nCategoryID;
 	      
 	      var elItem = $('#trail_types li[data-id='+nCategoryID+']');
       	  if (elItem.length) {
