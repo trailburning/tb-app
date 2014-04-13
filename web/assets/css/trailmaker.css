@@ -795,6 +795,11 @@ border-width:1px;
   overflow: hidden;
 }
 
+.trail_media_popup .detail_container h3 {
+  font-size: 1em;
+  line-height: 1.3em;
+}
+
 .trail_media_popup .form-group {
   margin-top: 12px;
 }
