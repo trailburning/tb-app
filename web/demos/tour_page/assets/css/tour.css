@@ -49,7 +49,8 @@ border-width:1px;
  
 /* STEPS */
 /******************************************/
-#steps {	
+#steps img {
+  width: 100%;
 }
 
 #steps h4.tb {
@@ -82,11 +83,7 @@ border-width:1px;
   text-align: right;
 }
 
-#step1 .step1_left_init {
-  left: -304px;
-}
-
-#step1_left.outViewPort {
+#step1 .step1_left_init, #step1_left.outViewPort {
   left: -304px;
 }
 
@@ -98,11 +95,7 @@ border-width:1px;
   right: 60px;
 }
 
-#step1 .step1_right_init {
-  right: -590px;
-}
-
-#step1_right.outViewPort {
+#step1 .step1_right_init, #step1_right.outViewPort {
   right: -590px;
 }
 
@@ -273,7 +266,6 @@ border-width:1px;
   margin-top: 32px;
 }
 
-
 /* RESPONSIVE */
 /******************************************/
 
@@ -283,6 +275,139 @@ border-width:1px;
  
 /* Medium devices (desktops, 992px and up) */
 @media (max-width: 1199px) {
+  #steps img {
+    width: 87%;
+  }	
+  .tour_content .content {
+    width: 968px;
+  }
+  #step1 {
+    margin-top: 71px;
+    height: 324px;
+  }
+  #step1_left {
+    padding-top: 37px;
+    left: 73px;
+    width: 264px;
+  }
+  #step1 .step1_left_init, #step1_left.outViewPort {
+    left: -264px;
+  }
+  #step1_right {
+    width: 513px;
+    height: 324px;
+    right: 52px;
+  }
+  #step1 .step1_right_init, #step1_right.outViewPort {
+    right: -513px;
+  }
+  
+  #step2 {
+    margin-top: 37px;
+    height: 331px;
+  }
+  #step2_left {
+    left: 37px;
+    width: 534px;
+    height: 331px;
+  }
+  #step2_left.outViewPort {
+    left: -534px;
+  }
+  #step2_right {
+    padding-top: 61px;
+    right: 70px;
+    width: 324px;
+  }
+  #step2_right.outViewPort {
+    right: -324px;
+  }
+  #step3 {
+    height: 667px;
+  }
+  #step3_left {
+    padding-top: 42px;
+    left: 176px;
+    width: 305px;
+  }
+  #step3_left.outViewPort {
+    left: -305px;
+  }
+  #step3_middle {
+    padding-top: 190px;
+    left: 103px;
+    width: 778px;
+    height: 477px;
+  }
+  #step3_middle.outViewPort {
+    left: -778px;
+  }
+  #step3_right {
+    width: 404px;
+    height: 506px;
+    right: 66px; 
+  }
+  #step3_right.outViewPort {
+    right: -404px;
+  }
+  #step4 {
+    margin-top: 10px;
+    height: 729px;
+  }
+  #step4_left {
+    left: 82px;
+    width: 388px;
+    height: 395px;
+  }
+  #step4_left.outViewPort {
+    left: -388px;
+  }
+  #step4_middle {
+    padding-top: 245px;  
+    left: 104px;
+    width: 766px;
+    height: 482px;
+  }
+  #step4_1_right {
+    padding-top: 54px;
+    right: 254px; 
+    width: 223px;
+  }
+  #step4_1_right.outViewPort {
+    right: -223px;
+  }
+  #step4_2_right {
+    padding-top: 221px;  
+    right: 122px;
+    width: 162px;
+    height: 162px;
+  }
+  #step4_2_right.outViewPort {
+    right: -122px;
+  }
+  #step5 {
+    margin-top: 44px;
+    height: 386px;
+  }
+  #step5_left {
+    left: 167px;
+    width: 294px;
+    height: 386px;
+  }
+  #step5_left.outViewPort {
+    left: -294px;
+  }
+  #step5_right {
+    padding-top: 45px;
+    right: 146px;
+    width: 338px;
+  }
+  #step5_right.outViewPort {
+    right: -338px;
+  }
+  #step5 .maketrails {
+    margin-top: 28px;
+  }
 }
 
 /* Small devices (tablets, 768px) */
