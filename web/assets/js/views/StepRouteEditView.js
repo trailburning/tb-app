@@ -136,7 +136,16 @@ define([
     renderTrailCardPhoto: function(){
       var self = this;
 
-      var model = this.options.mediaCollection.at(0); 
+      var model = null; 
+	  // do we have a star?
+	  if (this.nStarMediaID) {
+      	model = this.options.mediaCollection.get(this.nStarMediaID);
+	  }
+	
+	  // default to first slide
+	  if (!model) {
+	  	model = this.options.mediaCollection.at(0);
+	  }
   
 	  var elContext = $('.trailcard_panel', $(self.el));
 	  $('.image_container', elContext).removeClass('tb-fade-in').css('opacity', 0);
@@ -221,6 +230,8 @@ define([
       }
       // update gallery
       this.trailSlideshowView.starSlide(this.nStarMediaID);
+	  // update trail card      
+      this.renderTrailCardPhoto();
 	},    
     onTrailMapViewMoveMedia: function(mediaID){
       // update gallery
@@ -230,8 +241,8 @@ define([
       var postData = JSON.stringify(model.toJSON());
       var postArray = {json:postData};
 
-	  console.log('onTrailMapViewMoveMedia:');
-      console.log(postData);
+//	  console.log('onTrailMapViewMoveMedia:');
+//      console.log(postData);
       
       var strURL = TB_RESTAPI_BASEURL + '/v1/media/' + mediaID;      
       $.ajax({
