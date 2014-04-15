@@ -195,8 +195,10 @@ define([
 	      	}
 */	      	
 	      	nPos++;
-			self.trailMapView.addMarker(jsonMedia, true);
-		    self.mediaCollection.add(jsonMedia);
+	      	
+	      	var model = new Backbone.Model(jsonMedia);
+			self.trailMapView.addMarker(model, true);
+		    self.mediaCollection.add(model);
 	      });
 	      self.stepRouteEditView.renderSlideshow();
         }
@@ -220,14 +222,15 @@ define([
       $('#view_map_btns', $(this.el)).show();
     },    
     onStepRouteEditViewPhotoUploaded: function(trailUploadPhotoView){    	
-	  var data = trailUploadPhotoView.photoData.value[0];
-	  this.mediaCollection.add(data);
+	  var data = trailUploadPhotoView.photoData.value[0];	  
+      var model = new Backbone.Model(data);
 	  
-	  this.trailMapView.addMarker(data, true, "");
+	  this.mediaCollection.add(model);	  
+	  this.trailMapView.addMarker(model, true, "");
 	  
 	  this.stepRouteEditView.renderSlideshow();	  
 	  // select slide
-	  this.stepRouteEditView.selectSlideshowSlide(data.id);
+	  this.stepRouteEditView.selectSlideshowSlide(model.id);
     },    
     onStepRouteEditViewGalleryPhotoClick: function(mediaID){
       this.trailMapView.selectMarker(mediaID);    
