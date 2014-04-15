@@ -3,11 +3,13 @@
 namespace TB\Bundle\FrontendBundle\EventListener;
 
 use Doctrine\ORM\EntityManager;
+use OldSound\RabbitMqBundle\RabbitMq\Producer;
 
 use TB\Bundle\FrontendBundle\Event\RoutePublishEvent;
 use TB\Bundle\FrontendBundle\Event\UserFollowEvent;
 use TB\Bundle\FrontendBundle\Event\UserUnfollowEvent;
 
+use TB\Bundle\FrontendBundle\Entity\AbstractActivity;
 use TB\Bundle\FrontendBundle\Entity\RoutePublishActivity;
 use TB\Bundle\FrontendBundle\Entity\UserFollowActivity;
 use TB\Bundle\FrontendBundle\Entity\UserUnfollowActivity;
@@ -18,10 +20,12 @@ use TB\Bundle\FrontendBundle\Entity\UserUnfollowActivity;
 class ActivityListener
 {
     protected $em;
+    protected $producer;
 
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $em, Producer $producer)
     {
         $this->em = $em;
+        $this->producer = $producer;
     }
     
     /**
@@ -32,6 +36,7 @@ class ActivityListener
         $routePublishActivity = new RoutePublishActivity($event->getRoute(), $event->getUser());
         $this->em->persist($routePublishActivity);
         $this->em->flush();
+        $this->publishMessage($routePublishActivity);
     }
     
     /**
@@ -42,6 +47,7 @@ class ActivityListener
         $userFollowActivity = new UserFollowActivity($event->getFollowingUser(), $event->getFollowedUser());
         $this->em->persist($userFollowActivity);
         $this->em->flush();
+        $this->publishMessage($userFollowActivity);
     }
     
     /**
@@ -52,5 +58,23 @@ class ActivityListener
         $userUnfollowActivity = new UserUnfollowActivity($event->getUnfollowingUser(), $event->getUnfollowedUser());
         $this->em->persist($userUnfollowActivity);
         $this->em->flush();
+        $this->publishMessage($userUnfollowActivity);
+    }
+    
+    /**
+     * Publishes a message to RabbitMQ
+     */
+    protected function publishMessage(AbstractActivity $activity)
+    {
+        // refresh to get the primary key of the newly created entity
+        $this->em->refresh($activity);
+        
+        $message = [
+            'type' => get_class($activity),
+            'id' => $activity->getId(),
+        ];
+        
+        $this->producer->setContentType('application/json');
+        $this->producer->publish(json_encode($message));
     }
 }
