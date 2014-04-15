@@ -9,13 +9,73 @@
 {% block body %}
 <script>
 var TB_APP = 'TourApp';
+var elementsToTrack = ["#step1_left", "#step1_right", "#step2_left", "#step2_right", "#step3_left", "#step3_middle", "#step3_right", "#step4_left", "#step4_1_right", "#step4_2_right", "#step5_left", "#step5_right"];
 </script>
 
-  
+<div class="tour_content">
+	<div class="panel content">
+	  	<h2 class="tb">Record.  Present.  Inspire.</h2>
+	  	<div class="desc">
+	    	<h4 class="tb">Join today and start making your own Trail Cards, to share with Trailburners around the world.</h4>	
+	  	</div>
+	
+	  	<div id="steps">  		
+	    	<div id="step1" class="animate">
+	      		<div id="step1_left" class="step1_left_init">
+	      		<h3 class="tb">Give it your best shots.</h3>
+	      		<h4 class="tb">Take photos on your next trail with your favourite camera.  Digital SLR or Smartphone, you decide.</h4>
+		  		</div>  	
+		  		<div id="step1_right" class="image_container fade_on_load step1_right_init"><img src="{{ asset('assets/img/tour/step1.png') }}"></div>	
+	    	</div>
+	    	<div id="step2" class="animate">
+		  		<div id="step2_left" class="image_container fade_on_load"><img src="{{ asset('assets/img/tour/step2.png') }}"></div>	
+	      		<div id="step2_right">
+	      		<h3 class="tb">We turn the .GPX into your Trail.</h3>
+	      		<h4 class="tb">Trail Making is as simple as uploading a GPX file from your running watch or favourite tracking App.</h4>
+		  		</div>  	
+	    	</div>
+	    	<div id="step3" class="animate">
+		  		<div id="step3_left">
+		  		<h3 class="tb">Fill the Trail with beautiful pictures.</h3>
+	      		<h4 class="tb">As many as you want!</h4>
+		  		</div>	
+	      		<div id="step3_middle" class="image_container fade_on_load"><img src="{{ asset('assets/img/tour/step3_1.png') }}"></div>  	
+	      		<div id="step3_right" class="image_container fade_on_load"><img src="{{ asset('assets/img/tour/step3_2.png') }}"></div>  	
+	    	</div>
+	    	<div id="step4" class="animate">
+		  		<div id="step4_left" class="image_container fade_on_load"><img src="{{ asset('assets/img/tour/step4_2.png') }}"></div>	
+	      		<div id="step4_middle" class="image_container fade_on_load"><img src="{{ asset('assets/img/tour/step4_1.png') }}"></div>  	
+	      		<div id="step4_1_right">
+	      		<h3 class="tb">Tell your Trail story.</h3>
+	      		<h4 class="tb">Share your thoughts and tips about the trail.</h4>
+	      		</div>
+	      		<div id="step4_2_right" class="image_container fade_on_load"><img src="{{ asset('assets/img/tour/step4_3.png') }}"></div>  	
+	    	</div>
+	    	<div id="step5" class="animate">
+		  		<div id="step5_left" class="image_container fade_on_load"><img src="{{ asset('assets/img/tour/step5.png') }}"></div>	
+	      		<div id="step5_right">
+	      		<h3 class="tb">Your Trail Card is created and ready to be published.</h3>
+	      		<h4 class="tb">You can share it with your friends and inspire the Trailburning community.
+	      		<br/><br/>
+	      		Launching 28th of April!
+	      		</h4>
+	<!--  	      
+	  	      	<div class="maketrails"><a href="../join" class="btn btn-tb-action btn-tb-large submit">Let's Make Trails</a></div>
+	-->  	      
+		  	</div>  	
+	    </div>
+	</div>
 
+	<div class="memo">
+	To make sure you don’t forget anything, you can view our handy <a href="{{ asset('assets/download/guide_trail_capture.pdf') }}" download="{{ asset('assets/download/guide_trail_capture.pdf') }}">guide</a> before your next trail.	
+	</div>
+</div>
+<div class="sticker"><img src="{{ asset('assets/img/tour/sticker.png') }}"></div>
+  	
 {% endblock %}
 
 {% block javascripts %}
 
+<script src="{{ asset('assets/js/libs/divPeek.min.js') }}"></script>
 
 {% endblock %}

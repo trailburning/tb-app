@@ -34,12 +34,14 @@ define([
       this.elHeroRight.css('top', -(this.elHeroRight.height() + OFFSCREEN_Y));
       this.elCredit.css('top', ($('#home_header').height() + OFFSCREEN_Y));
       this.elSponsor.css('top', ($('#home_header').height() + OFFSCREEN_Y));
-    	
-      var elScale = $('.scale', $(this.el));
-      var imgLoad = imagesLoaded(elScale);
+
+      var elImages = $('.image_container', $(this.el));
+      var imgLoad = imagesLoaded(elImages);
 	  imgLoad.on('always', function(instance) {
 	    for ( var i = 0, len = imgLoad.images.length; i < len; i++ ) {
-	  	  $(imgLoad.images[i].img).addClass('scale_image_ready');
+	      if ($(imgLoad.images[i].img).hasClass('scale')) {
+	  	    $(imgLoad.images[i].img).addClass('scale_image_ready');	      	
+	      }
 	   	}	  		
         // fire event
         app.dispatcher.trigger("HomeHeroView:ready", self);                        

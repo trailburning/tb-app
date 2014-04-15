@@ -2,29 +2,18 @@ var app = app || {};
 
 define([
   'underscore', 
-  'backbone'
-], function(_, Backbone){
+  'libs/modernizr.custom.68191',
+  'backbone',
+  'views/TourView'  
+], function(_, Modernizr, Backbone, AppView){
   app.dispatcher = _.clone(Backbone.Events);
-  
+    
   var initialize = function() {
     var self = this;
+              
+    this.appView = new AppView({ });
     
-    $(window).resize(function() {
-      handleResize(); 
-    });    
-    handleResize();        
-
-    $('#search_field').focus(function(evt) {
-      $('#search_field').val('not just yet...');
-      event.preventDefault();
-    });
-
-    function handleResize() {
-      $("img.scale_image_ready").imageScale();
-    }
-    
-    $('#footerview').show();
-       
+  	$('#footerview').show();  	
   };
     
   return { 
