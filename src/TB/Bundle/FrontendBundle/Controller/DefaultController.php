@@ -17,7 +17,15 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        return array();
+        return [];
     }           
 
+    /**
+     * @Route("/tour", name="tour")
+     * @Template()
+     */
+    public function tourAction()
+    {
+        return [];
+    }
 }
