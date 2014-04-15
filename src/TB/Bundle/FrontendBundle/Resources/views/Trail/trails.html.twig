@@ -36,7 +36,7 @@ var TB_USER_ID = {{ app.user.id }};
 {% block javascripts %}
 
 <script type="text/template" id="trailsTrailCardViewTemplate">
-    <div class="title"><h3 class="tb"><%= category %></h3></div>
+    <div class="title"><h3 class="tb"><%= category.name %></h3></div>
     <a href="trail/<%= slug %>">
     <div class="photo tb-photo-btn">
       <div class="image_container fade_on_load"><img src="http://app.resrc.it/O=80/http://s3-eu-west-1.amazonaws.com/<%= versionLargePath %>" class="resrc scale" border="0"/></div>
@@ -48,7 +48,7 @@ var TB_USER_ID = {{ app.user.id }};
     </div>
     </a>
     <div class="summary">
-      <div class="tb-avatar"><div class="photo"><a href="profile/<%= user.name %>"><img src="{{ asset('assets/img/avatar_man.jpg') }}"></a></div></div>
+      <div class="tb-avatar"><div class="photo"><a href="profile/<%= user.name %>"><img src="<%= user.avatar %>"></a></div></div>
       <div class="detail">
         by <strong><%= user.title %></strong>
         <div class="stars">

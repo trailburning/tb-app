@@ -5,7 +5,10 @@
 border-style:solid;
 border-width:1px;
 */  
-  min-width: 1200px;
+}
+
+#bodyview {
+  min-height: initial;
 }
 
 /* CONTENT */
@@ -790,6 +793,11 @@ border-width:1px;
   width: 191px;
   height: 48px;
   overflow: hidden;
+}
+
+.trail_media_popup .detail_container h3 {
+  font-size: 1em;
+  line-height: 1.3em;
 }
 
 .trail_media_popup .form-group {

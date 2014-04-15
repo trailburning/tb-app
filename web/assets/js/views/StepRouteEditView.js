@@ -65,7 +65,15 @@ define([
       $('#form_trail_name').val(this.model.get('value').route.name);
       $('#form_trail_region').val(this.model.get('value').route.region);
       $('#form_trail_notes').val(this.model.get('value').route.about);
-      $('.update_details', $(this.el)).click(function(evt) {      
+      
+      $('.update_details', $(this.el)).click(function(evt) {      	      
+        var btn = $(this);
+        btn.text('Update Story');
+        btn.button('loading');
+        setTimeout(function () {
+            btn.button('reset');
+        }, 2000);
+      	
         self.model.get('value').route.name = $('#form_trail_name').val();
         self.model.get('value').route.region = $('#form_trail_region').val();
         self.model.get('value').route.about = $('#form_trail_notes').val();
@@ -92,13 +100,15 @@ define([
 	      	elList.append('<li role="presentation" data-id="'+routeType.id+'"><a role="menuitem" tabindex="-1" href="#">'+routeType.name+'</a></li>');
 	      });
 	      // set curr sel
-      	  if (self.model.get('value').route.route_category_id == undefined) {
-      		// mla temp - this should always be set in db
-      		self.model.get('value').route.route_category_id = 3;
-      	  }
-      	  var elItem = $('#trail_types li[data-id='+self.model.get('value').route.route_category_id+']');
+      	  var nCategoryID = 1;
+	      if (self.model.get('value').route.category != undefined) {
+      	    nCategoryID = self.model.get('value').route.category.id;
+	      }
+	      self.model.get('value').route.route_category_id = nCategoryID;
+	      
+	      var elItem = $('#trail_types li[data-id='+nCategoryID+']');
       	  if (elItem.length) {
-   			$('#trail_types').find('[data-bind="label"]').text(elItem.eq(0).text()).attr('data-id', self.model.get('value').route.route_category_id);
+   			$('#trail_types').find('[data-bind="label"]').text(elItem.eq(0).text()).attr('data-id', nCategoryID);
       	  }
 	  	  // list handler            
 	  	  $('.dropdown-menu li', $(self.el)).click(function(evt) { 
@@ -153,6 +163,9 @@ define([
     renderSlideshow: function(){
       this.trailSlideshowView.render();          
 	},
+    selectSlideshowSlide: function(mediaID){
+      this.trailSlideshowView.selectSlide(mediaID);
+	},    	
     onTrailUploadPhotoViewUpload: function(trailUploadPhotoView){
       $('#content_overlay').show();      
       $('#overlay_view').show();

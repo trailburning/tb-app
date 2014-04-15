@@ -1,6 +1,6 @@
 <?php 
 
-namespace TB\Bundle\APIBundle\Tests\Entity;
+namespace TB\Bundle\FrontendBundle\Tests\Entity;
 
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 use TB\Bundle\FrontendBundle\Entity\Route;
@@ -35,11 +35,27 @@ class RouteTest extends WebTestCase
             $this->fail('Missing Route with slug "grunewald" in test DB');
         }
         
+        $routeCategory = $em
+            ->getRepository('TBFrontendBundle:RouteCategory')
+            ->findOneByName('Park');
+        if (!$routeCategory) {
+            $this->fail('Missing RouteCategory with name "Park" in test DB');
+        }
+        
+        $routeType = $em
+            ->getRepository('TBFrontendBundle:RouteType')
+            ->findOneByName('Marathon');
+        if (!$routeType) {
+            $this->fail('Missing RouteType with name "Marathon" in test DB');
+        }
         
         $expectedJson = '{
             "id": ' . $route->getId() . ',
             "about": "The Grunewald is a forest located in the western side of Berlin on the east side of the river Havel.", 
-            "category": "Park", 
+            "category": {
+                "id": ' . $routeCategory->getId() . ',
+                "name": "Park"
+            }, 
             "centroid": [
                 13.257437, 
                 52.508006
@@ -204,7 +220,15 @@ class RouteTest extends WebTestCase
                 "ascent": 223.3, 
                 "descent": 207.3
             }, 
-            "type": "Marathon"
+            "type": {
+                "id": ' . $routeType->getId() . ',
+                "name": "Marathon"
+            },
+            "user": {
+                "avatar": "https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/mattallbeury/avatar.jpg", 
+                "name": "mattallbeury", 
+                "title": "Matt Allbeury"
+            }
         }';
         
         $this->assertJsonStringEqualsJsonString($expectedJson, json_encode($route->export()),

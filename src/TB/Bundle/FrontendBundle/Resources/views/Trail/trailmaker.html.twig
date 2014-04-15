@@ -145,7 +145,7 @@ var TB_USER_ID = {{ app.user.id }}
                     <textarea name="form_trail_notes" id="form_trail_notes"></textarea>
                 </div>      
                 <div class="form-group">
-                    <div class="update"><span class="btn btn-tb-action btn-tb-large update_details">Add Story</span></div>
+                    <div class="update"><span class="btn btn-tb-action btn-tb-large update_details" data-loading-text="Saving...">{% if id %}Update{% else %}Add{% endif %} Story</span></div>
                 </div>      
             </form>
         </div>
@@ -180,10 +180,10 @@ var TB_USER_ID = {{ app.user.id }}
                             <div class="detail">
                               by <strong>{{ app.user.firstname }} {{ app.user.lastname }}</strong>
                                 <div class="stars">
-                                    <div class="star_full"></div>
-                                    <div class="star_full"></div>
-                                    <div class="star_full"></div>
-                                    <div class="star_half"></div>
+                                    <div class="star"></div>
+                                    <div class="star"></div>
+                                    <div class="star"></div>
+                                    <div class="star"></div>
                                     <div class="star"></div>
                                 </div>
                             </div>
