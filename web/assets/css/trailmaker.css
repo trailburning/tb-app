@@ -417,6 +417,7 @@ border-width:1px;
 }
 
 #step_route_edit_view .slideshow .photo {
+  position: relative;
   margin-left: 6px;
   width: 191px;
   height: 154px;
@@ -439,6 +440,16 @@ border-width:1px;
 
 #step_route_edit_view .slideshow .photo img {
   width: 100%;
+}
+
+#step_route_edit_view .slideshow .photo .star_marker {
+  display: none;
+  position: absolute;
+  top: 24px;
+  left: 21px;
+  width: 22px;
+  height: 20px;
+  background: url("../img/editor/star_marker.png") no-repeat top left;
 }
 
 #uploadPhoto_view {
@@ -756,6 +767,7 @@ border-width:1px;
 .trail_media_popup a.button {
   float:left; 
   display:block;
+  margin-right: 12px;
   line-height:24px; 
   text-indent: -10000px;  
   background-repeat:no-repeat;
@@ -768,6 +780,14 @@ border-width:1px;
 
 .trail_media_popup a.button:hover {
   background-position: 0 -24px;
+}
+
+.trail_media_popup a.selected {
+  background-position: 0 -24px;	
+}
+
+.trail_media_popup .btnStarMarker {
+  background: url("../img/editor/btn_star.png") no-repeat top left;
 }
 
 .trail_media_popup .btnDeleteMarker {

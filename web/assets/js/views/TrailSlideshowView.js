@@ -79,6 +79,15 @@ define([
       // fire event
       app.dispatcher.trigger("TrailSlideshowView:mediaupdate");                          		  	  
 	},
+    starSlide: function(mediaID){
+	  // hide all    	
+      $('.star_marker', $(this.el)).hide();
+      // find the one to show
+      var elSlide = $('.slide[data-id='+mediaID+']', $(this.el)); 
+	  if (elSlide.length) {	  	
+      	$('.star_marker', elSlide).show();
+	  }    	
+    },	
     selectSlide: function(mediaID){	
       this.gotoSlide(mediaID);
       // fire event

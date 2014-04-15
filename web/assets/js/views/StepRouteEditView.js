@@ -20,6 +20,7 @@ define([
       app.dispatcher.on("TrailMapView:mediaclick", this.onTrailMapViewMediaClick, this);
       app.dispatcher.on("TrailMapView:removemedia", this.onTrailMapViewRemoveMedia, this);
       app.dispatcher.on("TrailMapView:movedmedia", this.onTrailMapViewMoveMedia, this);
+      app.dispatcher.on("TrailMapView:starmedia", this.onTrailMapViewStarMedia, this);      
 
       app.dispatcher.on("TrailSlideshowView:mediaclick", this.onTrailSlideshowViewMediaClick, this);
       app.dispatcher.on("TrailSlideshowView:mediaupdate", this.onTrailSlideshowViewMediaUpdate, this);
@@ -27,6 +28,7 @@ define([
       this.nState = STATE_UPLOAD;
       this.timezoneData = null;      
       this.bRendered = false;
+      this.nStarMediaID = 0;
     },
     render: function(){
       if (this.bRendered) {
@@ -203,6 +205,23 @@ define([
         },
       });
     },
+    onTrailMapViewStarMedia: function(mediaID){
+      var model;
+      if (this.nStarMediaID && this.nStarMediaID != mediaID) {
+      	// remove previous
+      	model = this.options.mediaCollection.get(this.nStarMediaID);
+      	if (model) {
+      	  model.set('bStar', false);	
+      	}
+      }
+      this.nStarMediaID = mediaID;
+      model = this.options.mediaCollection.get(this.nStarMediaID);
+      if (model) {
+        model.set('bStar', true);
+      }
+      // update gallery
+      this.trailSlideshowView.starSlide(this.nStarMediaID);
+	},    
     onTrailMapViewMoveMedia: function(mediaID){
       // update gallery
       this.trailSlideshowView.sort();

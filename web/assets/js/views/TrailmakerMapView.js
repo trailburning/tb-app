@@ -16,6 +16,7 @@ define([
       app.dispatcher.on("TrailMapMediaMarkerView:mediaclick", self.onTrailMapMediaMarkerClick, this);
       app.dispatcher.on("TrailMapMediaMarkerView:removemedia", self.onTrailMapMediaMarkerRemove, this);
       app.dispatcher.on("TrailMapMediaMarkerView:mediamoved", self.onTrailMapMediaMarkerMoved, this);
+      app.dispatcher.on("TrailMapMediaMarkerView:starmedia", self.onTrailMapMediaMarkerStarClick, this);
       
       this.elCntrls = this.options.elCntrls;            
       this.bRendered = false;
@@ -99,8 +100,10 @@ define([
       this.timezoneData = timezoneData;
     },
     addMarker: function(jsonMedia, bPlaceOnTrail){
-      var model = new Backbone.Model(jsonMedia);
-      var trailMapMediaMarkerView = new TrailMapMediaMarkerView({ model: model, trailModel: this.model, map: this.map, timezoneData: this.timezoneData, placeOnTrail: bPlaceOnTrail });
+      // mla
+//      var model = new Backbone.Model(jsonMedia);
+//      var trailMapMediaMarkerView = new TrailMapMediaMarkerView({ model: model, trailModel: this.model, map: this.map, timezoneData: this.timezoneData, placeOnTrail: bPlaceOnTrail });
+      var trailMapMediaMarkerView = new TrailMapMediaMarkerView({ model: jsonMedia, trailModel: this.model, map: this.map, timezoneData: this.timezoneData, placeOnTrail: bPlaceOnTrail });
 
       trailMapMediaMarkerView.render();
       this.arrMapMediaViews.push(trailMapMediaMarkerView);        
@@ -190,6 +193,10 @@ define([
     onTrailMapMediaMarkerMoved: function(mapMediaMarkerView){
       // fire event
       app.dispatcher.trigger("TrailMapView:movedmedia", mapMediaMarkerView.model.id);                        		       
+    },    
+    onTrailMapMediaMarkerStarClick: function(mapMediaMarkerView){
+      // fire event
+      app.dispatcher.trigger("TrailMapView:starmedia", mapMediaMarkerView.model.id);                        		       
     }    
             
   });
