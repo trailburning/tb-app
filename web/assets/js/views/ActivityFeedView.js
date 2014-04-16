@@ -9,7 +9,9 @@ define([
       this.template = _.template($('#activityFeedViewTemplate').text());        
             
 	  this.bActivityViewed = false;
-	  this.arrActivityItems = [];            
+	  this.arrActivityItems = [];
+	  this.nPageSize = 3;
+	  this.nCurrPage = 0;            
     },            
     render: function(){
       var self = this;
@@ -17,8 +19,8 @@ define([
       $(this.el).html(this.template());
                         
 	  $('.show_activity').click(function(evt){
-//	    $('.more_btn').attr('disabled', false);  
-//	  	$('.activity_list').css('top', 0);
+	  	self.nCurrPage = 0;
+	  	$('.activity_list').css('top', 0);
         
 	    if (self.bActivityViewed) {
 	      // remove unseen flags
@@ -28,23 +30,21 @@ define([
 	    }
         // update seen activity
         self.updateActivityViewed();
+        self.checkIfMoreItems();
 	  });	
 
 	  $('.more_btn').click(function(evt){	
 	    evt.stopPropagation();
 	  	  
-//	  	$('.more_btn').attr('disabled', true);  
-//	  	$('.activity_list').css('top', -243);        
+	  	self.scrollItems();
 	  });
                         
       return this;
     },
     renderItems: function(jsonItems){
-      var arrItems = jsonItems.items          	
-    	
       var nUnseen = 0, activityItemFeedView = null, elItem, model;
-      for (var nItem=0; nItem < arrItems.length; nItem++) {
-        model = new Backbone.Model(arrItems[nItem]);
+      for (var nItem=0; nItem < jsonItems.items.length; nItem++) {
+        model = new Backbone.Model(jsonItems.items[nItem]);
         activityFeedItemView = new ActivityFeedItemView({ model: model });
         this.arrActivityItems.push(activityFeedItemView);
         if (!model.get('seen')) {
@@ -58,6 +58,28 @@ define([
 	  	$('.profile .activity').html(nUnseen);
 	  	$('.profile .activity').show();
 	  }
+	  this.checkIfMoreItems();
+    },
+    scrollItems: function(){
+      if (!$('.more_btn').attr('disabled')) {
+      	this.nCurrPage++;
+      	var nY = this.nCurrPage * $('.activity_list_container').height();
+	  	$('.activity_list').css('top', -nY);              	
+        this.checkIfMoreItems();    		
+      }
+    },
+    checkIfMoreItems: function(){
+      var bRet = false;
+      
+      var nViewItems = (this.nCurrPage * this.nPageSize) + this.nPageSize;
+      if (this.arrActivityItems.length > nViewItems) {
+      	bRet = true;      	
+	    $('.more_btn').attr('disabled', false);  
+      }
+      else {
+	    $('.more_btn').attr('disabled', true);        	      	
+      }
+      return bRet;
     },
     getActivity: function(){
       var self = this;
