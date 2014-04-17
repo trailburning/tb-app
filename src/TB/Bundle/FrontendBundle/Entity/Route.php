@@ -165,7 +165,7 @@ class Route implements Exportable
     
     /**
      * @ORM\OneToOne(targetEntity="Media")
-     * @ORM\JoinColumn(name="media_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="media_id", referencedColumnName="id", onDelete="CASCADE")
      **/
     private $media;
     
@@ -796,6 +796,7 @@ class Route implements Exportable
             'publish' => 'publish',
             'route_type_id' => 'routeTypeId',
             'route_category_id' => 'routeCategoryId',
+            'media_id' => 'mediaId',
         ];
           
         foreach ($fields as $apiName => $entityName) {
