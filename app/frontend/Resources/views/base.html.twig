@@ -88,7 +88,10 @@
 			      			<div class="links">
 			      				<div class="link main"><a href="{{ path('fos_user_security_login') }}">Sign in</a></div> 
 			      			</div>
-			      			<a href="{{ path('fos_user_registration_register') }}" class="btn btn-tb-action btn-tb-large">Join</a>
+{#
+			      			<a href="{{ path('fos_user_registration_register') }}" class="btn btn-tb-action btn-tb-large">Join</a>	
+#}			      			
+			      			<a href="{{ app.request.baseUrl }}/join" class="btn btn-tb-action btn-tb-large">Join</a>
 			      		</div>
 			    	{% endif %}
 			      
