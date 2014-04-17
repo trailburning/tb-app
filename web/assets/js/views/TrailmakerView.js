@@ -243,15 +243,12 @@ define([
     onStepRouteEditViewUpdateStarPhoto: function(stepRouteEditView){
       var self = this;
       
-      // mla
-      console.log('STAR 1:'+stepRouteEditView.getStarMediaID());
       // get model
       var mediaModel = this.mediaCollection.get(stepRouteEditView.getStarMediaID());    	
       if (!mediaModel) {
       	// must have removed starred photo so set 1st one.
 	    mediaModel = this.mediaCollection.at(0);
       }
-      console.log('STAR 2:'+mediaModel.id);
     	
       var jsonObj = {'media_id':mediaModel.id};
       var postData = JSON.stringify(jsonObj);
@@ -264,12 +261,12 @@ define([
         url: strURL,
         data: postArray,
         error: function(data) {
-          console.log('error:'+data.responseText);      
-          console.log(data);      
+//          console.log('error:'+data.responseText);      
+//          console.log(data);      
         },
         success: function(data) {      
-          console.log('success');
-          console.log(data);
+//          console.log('success');
+//          console.log(data);
         }
       });	  
 	},
