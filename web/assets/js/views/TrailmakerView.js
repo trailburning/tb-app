@@ -270,16 +270,6 @@ define([
         success: function(data) {      
           console.log('success');
           console.log(data);
-          
-          
-          self.model.fetch({
-            success: function () {
-            	console.log('GOOD');
-            }
-          });
-          
-          
-          
         }
       });	  
 	},

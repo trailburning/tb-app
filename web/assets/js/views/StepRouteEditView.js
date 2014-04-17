@@ -175,7 +175,23 @@ define([
       });
     },
     renderSlideshow: function(){
-      this.trailSlideshowView.render();          
+	  // do we have a starred photo?      
+      var objMedia = this.options.model.get('value').route.media;
+      if (objMedia) {
+	    this.nStarMediaID = objMedia.id;
+        var model = this.options.mediaCollection.get(this.nStarMediaID);
+      	if (model) {
+          model.set('bStar', true);
+        }
+	  }    	
+      this.trailSlideshowView.render();
+	  // do we have a star?
+	  if (this.nStarMediaID) {
+        // update gallery
+        this.trailSlideshowView.starSlide(this.nStarMediaID);
+	    // update trail card      
+        this.renderTrailCardPhoto();      
+	  }
 	},
     selectSlideshowSlide: function(mediaID){
       this.trailSlideshowView.selectSlide(mediaID);
@@ -198,6 +214,7 @@ define([
       this.trailUploadPhotoProgressView.render(nProgress);
     },
     onTrailMapViewMediaClick: function(mediaID){
+    	console.log('m1');
       this.trailSlideshowView.gotoSlide(mediaID);
 	},    
     onTrailMapViewRemoveMedia: function(mediaID){

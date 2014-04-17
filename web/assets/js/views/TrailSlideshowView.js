@@ -84,11 +84,11 @@ define([
       $('.star_marker', $(this.el)).hide();
       // find the one to show
       var elSlide = $('.slide[data-id='+mediaID+']', $(this.el)); 
-	  if (elSlide.length) {	  	
+	  if (elSlide.length) {	  
       	$('.star_marker', elSlide).show();
 	  }    	
     },	
-    selectSlide: function(mediaID){	
+    selectSlide: function(mediaID){
       this.gotoSlide(mediaID);
       // fire event
       app.dispatcher.trigger("TrailSlideshowView:mediaclick", mediaID);
