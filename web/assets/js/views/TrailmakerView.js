@@ -19,8 +19,10 @@ define([
     initialize: function(){
       app.dispatcher.on("StepRouteView:gpxuploaded", this.onStepRouteViewGPXUploaded, this);
       app.dispatcher.on("StepRouteEditView:photouploaded", this.onStepRouteEditViewPhotoUploaded, this);
+      app.dispatcher.on("StepRouteEditView:removemedia", this.onStepRouteEditViewRemoveMedia, this);
       app.dispatcher.on("StepRouteEditView:galleryphotoclick", this.onStepRouteEditViewGalleryPhotoClick, this);
       app.dispatcher.on("StepRouteEditView:updatedetailsclick", this.onStepRouteEditViewUpdateDetailsClick, this);
+      app.dispatcher.on("StepRouteEditView:updatestarphoto", this.onStepRouteEditViewUpdateStarPhoto, this);
       app.dispatcher.on("StepRouteEditView:submitclick", this.onStepRouteEditViewSubmitClick, this);
       app.dispatcher.on("StepRouteEditView:deleteclick", this.onStepRouteEditViewDeleteClick, this);
       app.dispatcher.on("StepPublishedView:submitclick", this.onStepPublishedViewSubmitClick, this);
@@ -235,6 +237,52 @@ define([
     onStepRouteEditViewGalleryPhotoClick: function(mediaID){
       this.trailMapView.selectMarker(mediaID);    
 	},    
+    onStepRouteEditViewRemoveMedia: function(stepRouteEditView){
+//	  this.onStepRouteEditViewUpdateStarPhoto(stepRouteEditView);
+	},    
+    onStepRouteEditViewUpdateStarPhoto: function(stepRouteEditView){
+      var self = this;
+      
+      // mla
+      console.log('STAR 1:'+stepRouteEditView.getStarMediaID());
+      // get model
+      var mediaModel = this.mediaCollection.get(stepRouteEditView.getStarMediaID());    	
+      if (!mediaModel) {
+      	// must have removed starred photo so set 1st one.
+	    mediaModel = this.mediaCollection.at(0);
+      }
+      console.log('STAR 2:'+mediaModel.id);
+    	
+      var jsonObj = {'media_id':mediaModel.id};
+      var postData = JSON.stringify(jsonObj);
+      var postArray = {json:postData};
+
+      var strURL = TB_RESTAPI_BASEURL + '/v1/route/' + this.model.id;      
+      $.ajax({
+        type: "PUT",
+        dataType: "json",
+        url: strURL,
+        data: postArray,
+        error: function(data) {
+          console.log('error:'+data.responseText);      
+          console.log(data);      
+        },
+        success: function(data) {      
+          console.log('success');
+          console.log(data);
+          
+          
+          self.model.fetch({
+            success: function () {
+            	console.log('GOOD');
+            }
+          });
+          
+          
+          
+        }
+      });	  
+	},
     onStepRouteEditViewUpdateDetailsClick: function(stepRouteEditView){      
       var jsonObj = {'name':this.model.get('value').route.name, 'region':this.model.get('value').route.region, 'about':this.model.get('value').route.about, 'route_category_id':this.model.get('value').route.route_category_id};
       var postData = JSON.stringify(jsonObj);
@@ -255,7 +303,7 @@ define([
 //          console.log(data);
         }
       });
-	},    	
+	},    		
     onStepRouteEditViewSubmitClick: function(stepRouteEditView){
       var jsonObj = {'publish':true};
       var postData = JSON.stringify(jsonObj);
