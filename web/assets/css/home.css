@@ -226,13 +226,13 @@ html.touch .hero_nav .button {
 }
 
 .discover_content .trailcards {
-  margin-top: 32px;
+  margin-top: 16px;
   margin-bottom: 12px;
 }
 
 .discover_content .trail_card_sticker {
   display: inline-block;
-  margin: 0px 14px 0px 14px;
+  margin: 16px 14px 0px 14px;
 }
 	
 .discover_content .more_btn {
