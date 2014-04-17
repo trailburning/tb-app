@@ -165,7 +165,7 @@ class Route implements Exportable
     
     /**
      * @ORM\OneToOne(targetEntity="Media")
-     * @ORM\JoinColumn(name="media_id", referencedColumnName="id", onDelete="CASCADE")
+     * @ORM\JoinColumn(name="media_id", referencedColumnName="id", onDelete="SET NULL")
      **/
     private $media;
     
