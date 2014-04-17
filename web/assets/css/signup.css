@@ -8,6 +8,20 @@ border-width:1px;
   min-width: 1200px;
 }
 
+body {
+  color: #979797;	
+}
+
+a {
+  text-decoration: none;
+  color: #444444; 
+}
+a:hover,
+a:active {
+  text-decoration: underline;   
+  color: #444444; 
+}
+
 /* CONTENT */
 /******************************************/
 #contentview {
