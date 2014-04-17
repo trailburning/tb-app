@@ -36,8 +36,9 @@ var TB_APP = 'SignupApp';
 	
 			<div class="next_step"><button type="submit" id="signup" name="submit" class="btn btn-tb-action btn-tb-large">Sign up</button></div>
 	        {{ form_row(form._token) }}
+	        <div>Already have an account?  <a href="{{ path('fos_user_security_login') }}">Sign in</a></div>
 	        </form>
-      		</div>
+      		</div>      		
     	</div>
     	<div class="step_marker_container">
     		<div class="step_marker tb-step"><div class="photo"><img src="{{ asset('assets/img/steps') }}/step_signin.jpg"></div></div>

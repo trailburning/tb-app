@@ -168,6 +168,10 @@
   color: #6D6E71;
 }
 
+.editorial_card_panel .detail_container .detail h3.tb {
+  font-size: 2.4em;
+}
+
 .editorial_card_panel a,
 .editorial_card_panel a:hover,
 .editorial_card_panel a:active {

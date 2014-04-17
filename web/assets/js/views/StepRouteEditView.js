@@ -30,6 +30,9 @@ define([
       this.bRendered = false;
       this.nStarMediaID = 0;
     },
+    getStarMediaID: function(){
+      return this.nStarMediaID;
+    },
     render: function(){
       if (this.bRendered) {
         return;
@@ -146,7 +149,7 @@ define([
 	  if (!model) {
 	  	model = this.options.mediaCollection.at(0);
 	  }
-  
+
 	  var elContext = $('.trailcard_panel', $(self.el));
 	  $('.image_container', elContext).removeClass('tb-fade-in').css('opacity', 0);
 	  
@@ -172,7 +175,23 @@ define([
       });
     },
     renderSlideshow: function(){
-      this.trailSlideshowView.render();          
+	  // do we have a starred photo?      
+      var objMedia = this.options.model.get('value').route.media;
+      if (objMedia) {
+	    this.nStarMediaID = objMedia.id;
+        var model = this.options.mediaCollection.get(this.nStarMediaID);
+      	if (model) {
+          model.set('bStar', true);
+        }
+	  }    	
+      this.trailSlideshowView.render();
+	  // do we have a star?
+	  if (this.nStarMediaID) {
+        // update gallery
+        this.trailSlideshowView.starSlide(this.nStarMediaID);
+	    // update trail card      
+        this.renderTrailCardPhoto();      
+	  }
 	},
     selectSlideshowSlide: function(mediaID){
       this.trailSlideshowView.selectSlide(mediaID);
@@ -195,6 +214,7 @@ define([
       this.trailUploadPhotoProgressView.render(nProgress);
     },
     onTrailMapViewMediaClick: function(mediaID){
+    	console.log('m1');
       this.trailSlideshowView.gotoSlide(mediaID);
 	},    
     onTrailMapViewRemoveMedia: function(mediaID){
@@ -207,12 +227,15 @@ define([
         url: strURL,
         type: 'DELETE',            
         complete : function(res) {
-//          console.log('complete');              
+          console.log('complete');              
         },
         success: function(data) {
-//          console.log('msg:'+data.message);
+          console.log('msg:'+data.message);
         },
       });
+      
+	  // fire event
+      app.dispatcher.trigger("StepRouteEditView:removemedia", this);                                    
     },
     onTrailMapViewStarMedia: function(mediaID){
       var model;
@@ -232,6 +255,8 @@ define([
       this.trailSlideshowView.starSlide(this.nStarMediaID);
 	  // update trail card      
       this.renderTrailCardPhoto();
+	  // fire event
+      app.dispatcher.trigger("StepRouteEditView:updatestarphoto", this);                              
 	},    
     onTrailMapViewMoveMedia: function(mediaID){
       // update gallery
