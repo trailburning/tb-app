@@ -2,17 +2,11 @@
 
 namespace TB\Bundle\FrontendBundle\Tests\Controller;
 
-use Liip\FunctionalTestBundle\Test\WebTestCase;
+use TB\Bundle\FrontendBundle\Tests\AbstractFrontendTest;
 use Symfony\Component\HttpFoundation\Response;
 
-class ProfileControllerTest extends WebTestCase
+class ProfileControllerTest extends AbstractFrontendTest
 {
-    protected static function getKernelClass()
-    {
-        require_once self::getPhpUnitXmlDir() . '/frontend/AppKernel.php';
-
-        return 'AppKernel';
-    }
     
     public function testUserProfile()
     {

@@ -90,6 +90,13 @@ abstract class User extends BaseUser implements Exportable
     private $avatarGravatar;
     
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="activity_unseen_count", type="smallint", nullable=true)
+     */
+    private $activityUnseenCount;
+    
+    /**
      * @var datetime
      *
      * @ORM\Column(name="activity_last_viewed", type="datetime", nullable=true)
@@ -134,37 +141,44 @@ abstract class User extends BaseUser implements Exportable
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\OneToMany(targetEntity="RoutePublishActivity", mappedBy="routePublishActivities")
+     * @ORM\OneToMany(targetEntity="RoutePublishActivity", mappedBy="actor")
      **/
     private $routePublishActivities;
     
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\OneToMany(targetEntity="UserFollowActivity", mappedBy="userFollowActivities")
+     * @ORM\OneToMany(targetEntity="UserFollowActivity", mappedBy="actor")
      **/
     private $userFollowActivities;
     
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\OneToMany(targetEntity="UserFollowActivity", mappedBy="userFollowedActivities")
+     * @ORM\OneToMany(targetEntity="UserFollowActivity", mappedBy="object")
      **/
     private $userFollowedActivities;
     
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\OneToMany(targetEntity="UserUnfollowActivity", mappedBy="userUnfollowActivities")
+     * @ORM\OneToMany(targetEntity="UserUnfollowActivity", mappedBy="actor")
      **/
     private $userUnfollowActivities;
     
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\OneToMany(targetEntity="UserUnfollowActivity", mappedBy="userUnfollowedActivities")
+     * @ORM\OneToMany(targetEntity="UserUnfollowActivity", mappedBy="object")
      **/
     private $userUnfollowedActivities;
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="UserActivity", mappedBy="user")
+     **/
+    private $userActivities;
     
     /**
      * Constructor
@@ -794,13 +808,85 @@ abstract class User extends BaseUser implements Exportable
     }
     
     public function export()
-    {
+    {   
         $data = [
             'name' => $this->getName(),
             'title' => $this->getTitle(),
-            'avatar' => $this->getAvatar(),
+            'avatar' => $this->getMainAvatar(),
         ];
 
         return $data;
+    }
+
+    /**
+     * Set activityLastViewed
+     *
+     * @param \DateTime $activityLastViewed
+     * @return User
+     */
+    public function setActivityLastViewed($activityLastViewed)
+    {
+        $this->activityLastViewed = $activityLastViewed;
+
+        return $this;
+    }
+
+    /**
+     * Get activityLastViewed
+     *
+     * @return \DateTime 
+     */
+    public function getActivityLastViewed()
+    {
+        return $this->activityLastViewed;
+    }
+    
+    /**
+     * Gets the best avatar for this user
+     */
+    public function getMainAvatar()
+    {
+        if ($this->getAvatar()) {
+            $avatar = sprintf('https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/%s/avatar.jpg', $this->getName());
+        } elseif ($this->getAvatarGravatar()) {
+            $avatar = $this->getAvatarGravatar();
+        } else {
+            $avatar = 'assets/img/avatar_man.jpg';
+        }
+        
+        return $avatar;
+    }
+
+    /**
+     * Add userActivities
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\UserActivity $userActivities
+     * @return User
+     */
+    public function addUserActivity(\TB\Bundle\FrontendBundle\Entity\UserActivity $userActivities)
+    {
+        $this->userActivities[] = $userActivities;
+
+        return $this;
+    }
+
+    /**
+     * Remove userActivities
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\UserActivity $userActivities
+     */
+    public function removeUserActivity(\TB\Bundle\FrontendBundle\Entity\UserActivity $userActivities)
+    {
+        $this->userActivities->removeElement($userActivities);
+    }
+
+    /**
+     * Get userActivities
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUserActivities()
+    {
+        return $this->userActivities;
     }
 }

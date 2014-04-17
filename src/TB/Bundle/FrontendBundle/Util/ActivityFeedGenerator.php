@@ -3,10 +3,13 @@
 namespace TB\Bundle\FrontendBundle\Util;
 
 use Doctrine\ORM\EntityManager;
+use TB\Bundle\FrontendBundle\Entity\Activity;
+use TB\Bundle\FrontendBundle\Entity\UserActivity;
+use TB\Bundle\FrontendBundle\Entity\User;
 
 /**
-* 
-*/
+ * 
+ */
 class ActivityFeedGenerator
 {
     
@@ -28,20 +31,13 @@ class ActivityFeedGenerator
             throw new Exception(sprintf('Mising user with id %s', $userId));
         }
         
-        // Get all following User's ID
-        $followingUserIds = [];
-        foreach ($user->getIFollow() as $followUser) {
-            $followingUserIds[] = $followUser->getId();
-        }
-        
-        // get all RoutePublishActivity activities for following users and UserFollowActivity for user that start following thet given userId
         $query = $this->em
             ->createQuery('
-                SELECT a FROM TBFrontendBundle:AbstractActivity a
-                WHERE (a.actorId IN (:following) AND a INSTANCE OF TB\Bundle\FrontendBundle\Entity\RoutePublishActivity)
-                OR (a.objectId IN (:userId) AND a INSTANCE OF TB\Bundle\FrontendBundle\Entity\UserFollowActivity)
+                SELECT a FROM TBFrontendBundle:Activity a
+                INNER JOIN TBFrontendBundle:UserActivity ua
+                WITH a.id = ua.activityId
+                WHERE ua.userId = :userId
                 ORDER BY a.id DESC')
-            ->setParameter('following', $followingUserIds)
             ->setParameter('userId', $user->getId())
             ->setMaxResults(100);
         
@@ -65,6 +61,53 @@ class ActivityFeedGenerator
         }
         
         return $feedData;
+    }
+    
+    /**
+     * 
+     */
+    public function createFeedFromActivity(Activity $activity)
+    {
+        $updatedUsers = [];
+        if ($activity instanceof \TB\Bundle\FrontendBundle\Entity\RoutePublishActivity) {
+            // Create a UserActivity for all User who follow the creator of the Route
+            $users = $activity->getActor()->getMyFollower();
+            foreach ($users as $user) {
+                $userActivity = new UserActivity();
+                $userActivity->setActivity($activity);
+                $userActivity->setUser($user);
+                $updatedUsers[] = $user;
+                $this->em->persist($userActivity);
+            }
+            $this->em->flush();
+        } elseif ($activity instanceof \TB\Bundle\FrontendBundle\Entity\UserFollowActivity) {
+            // Create a UserActivity for the User who gets followed
+            $userActivity = new UserActivity();
+            $userActivity->setActivity($activity);
+            $userActivity->setUser($activity->getObject());
+            $updatedUsers[] = $activity->getObject();
+            $this->em->persist($userActivity);
+            $this->em->flush();
+        } elseif ($activity instanceof \TB\Bundle\FrontendBundle\Entity\UserUnfollowActivity) {
+            // No UserActivity is created for UserUnfollowActivity
+        } else {
+            throw new Exception(sprintf('Unhandled activity item of type "%s"', $activity));
+        }
+        
+        foreach ($updatedUsers as $user) {
+            $this->updateUserActivityUnseenCount($user);
+        }
+    }
+    
+    public function updateUserActivityUnseenCount(User $user)
+    {
+        $query = $this->em
+            ->createQuery('SELECT COUNT(a.userId) FROM TBFrontendBundle:UserActivity a WHERE a.userId = :userId')
+            ->setParameter('userId', $user->getId());
+        $count = $query->getSingleScalarResult();
+        $user->setActivityUnseenCount($count);
+        $this->em->persist($user);
+        $this->em->flush($user);
     }
     
 }

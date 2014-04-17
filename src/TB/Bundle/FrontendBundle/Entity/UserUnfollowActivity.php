@@ -4,8 +4,10 @@ namespace TB\Bundle\FrontendBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/** @ORM\Entity */
-class UserUnfollowActivity extends AbstractActivity
+/** 
+ * @ORM\Entity 
+ */
+class UserUnfollowActivity extends Activity
 {
 
     /**

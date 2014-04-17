@@ -2,26 +2,30 @@
 
 namespace TB\Bundle\APIBundle\Tests\EventListener;
 
-use Liip\FunctionalTestBundle\Test\WebTestCase;
+use TB\Bundle\FrontendBundle\Tests\AbstractFrontendTest;
 use TB\Bundle\FrontendBundle\Event\RoutePublishEvent;
 use TB\Bundle\FrontendBundle\Event\UserFollowEvent;
 use TB\Bundle\FrontendBundle\Event\UserUnfollowEvent;
 
-class ActivityListenerTest extends WebTestCase
+class ActivityListenerTest extends AbstractFrontendTest
 {
-    
-    protected static function getKernelClass()
-    {
-        require_once self::getPhpUnitXmlDir() . '/frontend/AppKernel.php';
-
-        return 'AppKernel';
-    }
 
     /**
      * Test that a RoutePublishActivity is created when the tb.route_publish event gets dispatched
      */
     public function testOnRoutePublish()
     {
+        // Replace the RabbitMQ Producer Service with a Stub
+        $producer = $this->getMockBuilder('OldSound\RabbitMqBundle\RabbitMq\Producer')
+            ->disableOriginalConstructor()
+            ->getMock();
+        // Test that the publish() method gets called three times, two times when two Routes are created from fixtures,
+        // and once when the tb.route_publish Event is fired manually in this test
+        $producer->expects($this->exactly(3))
+            ->method('publish')
+            ->will($this->returnCallback(array($this, 'assertAMQPMessage'))); // Use this callback to verify AMQP message 
+        $this->getContainer()->set('old_sound_rabbit_mq.activity_producer', $producer);
+        
         $this->loadFixtures([
             'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData',
         ]);
@@ -80,6 +84,16 @@ class ActivityListenerTest extends WebTestCase
             $this->fail('Missing User to follow with name "paultran" in test DB');
         }
         
+        // Replace the RabbitMQ Producer Service with a Stub
+        $producer = $this->getMockBuilder('OldSound\RabbitMqBundle\RabbitMq\Producer')
+            ->disableOriginalConstructor()
+            ->getMock();
+        // Test that the publish() method gets called exactly once
+        $producer->expects($this->once())
+            ->method('publish')
+            ->will($this->returnCallback(array($this, 'assertAMQPMessage'))); // Use this callback to verify AMQP message AMQPChannel;
+        $this->getContainer()->set('old_sound_rabbit_mq.activity_producer', $producer);
+        
         //  get the event dispatcher and dispathe the tb.route_publish manually
         $dispatcher = $this->getContainer()->get('event_dispatcher');
         $event = new UserFollowEvent($user, $userToFollow);
@@ -125,7 +139,17 @@ class ActivityListenerTest extends WebTestCase
             $this->fail('Missing User to follow with name "paultran" in test DB');
         }
         
-        //  get the event dispatcher and dispathe the tb.route_publish manually
+        // Replace the RabbitMQ Producer Service with a Stub
+        $producer = $this->getMockBuilder('OldSound\RabbitMqBundle\RabbitMq\Producer')
+            ->disableOriginalConstructor()
+            ->getMock();
+        // Test that the publish() method gets called exactly once
+        $producer->expects($this->once())
+            ->method('publish')
+            ->will($this->returnCallback(array($this, 'assertAMQPMessage'))); // Use this callback to verify AMQP message AMQPChannel;
+        $this->getContainer()->set('old_sound_rabbit_mq.activity_producer', $producer);
+        
+        //  Get the event dispatcher and dispathe the tb.route_publish manually
         $dispatcher = $this->getContainer()->get('event_dispatcher');
         $event = new UserUnfollowEvent($user, $userToUnfollow);
         $dispatcher->dispatch('tb.user_unfollow', $event);
@@ -143,6 +167,23 @@ class ActivityListenerTest extends WebTestCase
         $this->assertEquals($user->getId(), $activity->getActor()->getId(),
             'UserUnfollowActivity with excpected targetId was created');
         
+    }
+    
+    /**
+     * Checks the message sent to RabbitMQ 
+     */
+    public function assertAMQPMessage($message)
+    {
+        $this->assertJson($message);
+        $obj = json_decode($message);
+        $this->assertObjectHasAttribute('id', $obj,
+            'The message has the id attribute');
+        $this->assertGreaterThan(0, $obj->id,
+            'The id value is grater than 0');
+        $this->assertObjectHasAttribute('type', $obj,
+            'The message has the type attribute');
+        $this->assertContains($obj->type, ['RoutePublishActivity', 'UserFollowActivity', 'UserUnfollowActivity'], 
+            'The type field contains one of the valid values');
     }
     
 }

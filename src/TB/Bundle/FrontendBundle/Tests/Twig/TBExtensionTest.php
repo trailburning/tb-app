@@ -2,20 +2,13 @@
 
 namespace TB\Bundle\FrontendBundle\Tests\Entity;
 
-use Liip\FunctionalTestBundle\Test\WebTestCase;
+use TB\Bundle\FrontendBundle\Tests\AbstractFrontendTest;
 use TB\Bundle\FrontendBundle\Util\MediaImporter;
 use CrEOF\Spatial\PHP\Types\Geometry\Point;
 
-class TBExtensionTest extends WebTestCase
+class TBExtensionTest extends AbstractFrontendTest
 {
-    
-    protected static function getKernelClass()
-    {
-        require_once self::getPhpUnitXmlDir() . '/frontend/AppKernel.php';
-
-        return 'AppKernel';
-    }
-    
+        
     public function setUp()
     {
         $this->extension = $this->getContainer()->get('tb.twig.tb_extension');

@@ -90,6 +90,13 @@ abstract class User extends BaseUser implements Exportable
     private $avatarGravatar;
     
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="activity_unseen_count", type="smallint", nullable=true)
+     */
+    private $activityUnseenCount;
+    
+    /**
      * @var datetime
      *
      * @ORM\Column(name="activity_last_viewed", type="datetime", nullable=true)
@@ -134,37 +141,44 @@ abstract class User extends BaseUser implements Exportable
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\OneToMany(targetEntity="RoutePublishActivity", mappedBy="routePublishActivities")
+     * @ORM\OneToMany(targetEntity="RoutePublishActivity", mappedBy="actor")
      **/
     private $routePublishActivities;
     
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\OneToMany(targetEntity="UserFollowActivity", mappedBy="userFollowActivities")
+     * @ORM\OneToMany(targetEntity="UserFollowActivity", mappedBy="actor")
      **/
     private $userFollowActivities;
     
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\OneToMany(targetEntity="UserFollowActivity", mappedBy="userFollowedActivities")
+     * @ORM\OneToMany(targetEntity="UserFollowActivity", mappedBy="object")
      **/
     private $userFollowedActivities;
     
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\OneToMany(targetEntity="UserUnfollowActivity", mappedBy="userUnfollowActivities")
+     * @ORM\OneToMany(targetEntity="UserUnfollowActivity", mappedBy="actor")
      **/
     private $userUnfollowActivities;
     
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\OneToMany(targetEntity="UserUnfollowActivity", mappedBy="userUnfollowedActivities")
+     * @ORM\OneToMany(targetEntity="UserUnfollowActivity", mappedBy="object")
      **/
     private $userUnfollowedActivities;
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="UserActivity", mappedBy="user")
+     **/
+    private $userActivities;
     
     /**
      * Constructor
@@ -841,5 +855,61 @@ abstract class User extends BaseUser implements Exportable
         }
         
         return $avatar;
+    }
+
+    /**
+     * Add userActivities
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\UserActivity $userActivities
+     * @return User
+     */
+    public function addUserActivity(\TB\Bundle\FrontendBundle\Entity\UserActivity $userActivities)
+    {
+        $this->userActivities[] = $userActivities;
+
+        return $this;
+    }
+
+    /**
+     * Remove userActivities
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\UserActivity $userActivities
+     */
+    public function removeUserActivity(\TB\Bundle\FrontendBundle\Entity\UserActivity $userActivities)
+    {
+        $this->userActivities->removeElement($userActivities);
+    }
+
+    /**
+     * Get userActivities
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUserActivities()
+    {
+        return $this->userActivities;
+    }
+
+    /**
+     * Set activityUnseenCount
+     *
+     * @param integer $activityUnseenCount
+     * @return User
+     */
+    public function setActivityUnseenCount($activityUnseenCount)
+    {
+        $this->activityUnseenCount = $activityUnseenCount;
+
+        return $this;
+    }
+
+    /**
+     * Get activityUnseenCount
+     *
+     * @return integer 
+     */
+    public function getActivityUnseenCount()
+    {
+        return $this->activityUnseenCount;
     }
 }

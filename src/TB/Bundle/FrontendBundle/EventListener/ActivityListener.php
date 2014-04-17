@@ -9,7 +9,7 @@ use TB\Bundle\FrontendBundle\Event\RoutePublishEvent;
 use TB\Bundle\FrontendBundle\Event\UserFollowEvent;
 use TB\Bundle\FrontendBundle\Event\UserUnfollowEvent;
 
-use TB\Bundle\FrontendBundle\Entity\AbstractActivity;
+use TB\Bundle\FrontendBundle\Entity\Activity;
 use TB\Bundle\FrontendBundle\Entity\RoutePublishActivity;
 use TB\Bundle\FrontendBundle\Entity\UserFollowActivity;
 use TB\Bundle\FrontendBundle\Entity\UserUnfollowActivity;
@@ -64,17 +64,9 @@ class ActivityListener
     /**
      * Publishes a message to RabbitMQ
      */
-    protected function publishMessage(AbstractActivity $activity)
-    {
-        // refresh to get the primary key of the newly created entity
-        $this->em->refresh($activity);
-        
-        $message = [
-            'type' => get_class($activity),
-            'id' => $activity->getId(),
-        ];
-        
+    protected function publishMessage(Activity $activity)
+    {   
         $this->producer->setContentType('application/json');
-        $this->producer->publish(json_encode($message));
+        $this->producer->publish(json_encode($activity->exportMessage()));
     }
 }

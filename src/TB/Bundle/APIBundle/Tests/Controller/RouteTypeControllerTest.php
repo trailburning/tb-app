@@ -2,7 +2,7 @@
 
 namespace TB\Bundle\APIBundle\Tests\Controller;
 
-use Liip\FunctionalTestBundle\Test\WebTestCase;
+use TB\Bundle\APIBundle\Tests\AbstractApiTestCase;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Tester\ApplicationTester;
 use Symfony\Component\Console\Output\Output;
@@ -39,9 +39,7 @@ class RouteTypeControllerTest extends AbstractApiTestCase
         $client = $this->createClient();
         $crawler = $client->request('GET', '/v1/route_type/list');
         $this->assertEquals(Response::HTTP_OK,  $client->getResponse()->getStatusCode());
-        $this->assertEquals('application/json',  $client->getResponse()->headers->get('Content-Type'));  
-        $response = $client->getResponse()->getContent();
-        $this->assertTrue($this->isValidJson($response));   
+        $this->assertJsonResponse($client);   
     }
     
     

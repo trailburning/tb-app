@@ -2,7 +2,7 @@
 
 namespace TB\Bundle\APIBundle\Tests\Controller;
 
-use Liip\FunctionalTestBundle\Test\WebTestCase;
+use TB\Bundle\APIBundle\Tests\AbstractApiTestCase;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Tester\ApplicationTester;
 use Symfony\Component\Console\Output\Output;
@@ -62,10 +62,9 @@ class RouteControllerTest extends AbstractApiTestCase
         // Check HTTP Status Code
         $this->assertEquals(Response::HTTP_NOT_FOUND,  $client->getResponse()->getStatusCode());
         // Verify JSON Response
-        $response = $client->getResponse()->getContent();
-        $this->assertTrue($this->isValidJson($response)); 
+        $this->assertJsonResponse($client);
         // Check user message
-        $jsonObj = json_decode($response);
+        $jsonObj = json_decode($client->getResponse()->getContent());
         $this->assertEquals('Route with id "1" does not exist', $jsonObj->usermsg);
         
         $this->assertJsonResponse($client);
@@ -125,10 +124,9 @@ class RouteControllerTest extends AbstractApiTestCase
         // Check HTTP Status Code
         $this->assertEquals(Response::HTTP_NOT_FOUND,  $client->getResponse()->getStatusCode());
         // Verify JSON Response
-        $response = $client->getResponse()->getContent();
-        $this->assertTrue($this->isValidJson($response)); 
+        $this->assertJsonResponse($client); 
         // Check user message
-        $jsonObj = json_decode($response);
+        $jsonObj = json_decode($client->getResponse()->getContent());
         $this->assertEquals('Failed to delete non existing route with id "1"', $jsonObj->usermsg);
         
         $this->assertJsonResponse($client);
@@ -183,10 +181,9 @@ class RouteControllerTest extends AbstractApiTestCase
         // Check HTTP Status Code
         $this->assertEquals(Response::HTTP_NOT_FOUND,  $client->getResponse()->getStatusCode());
         // Verify JSON Response
-        $response = $client->getResponse()->getContent();
-        $this->assertTrue($this->isValidJson($response)); 
+        $this->assertJsonResponse($client); 
         // Check user message
-        $jsonObj = json_decode($response);
+        $jsonObj = json_decode($client->getResponse()->getContent());
         $this->assertEquals('User with id "1" does not exist', $jsonObj->usermsg);
         
         $this->assertJsonResponse($client);

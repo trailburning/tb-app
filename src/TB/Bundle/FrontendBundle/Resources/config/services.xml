@@ -62,14 +62,15 @@
             <tag name="kernel.event_listener" event="tb.user_unfollow" method="onUserUnfollow" />
         </service>
 
-        <!--  Register activity feed generator and pass the JSON serializer -->
+        <!--  Register activity feed generator and as service -->
         <service id="activity_feed_generator" class="TB\Bundle\FrontendBundle\Util\ActivityFeedGenerator">
             <argument type="service" id="doctrine.orm.entity_manager" />
         </service>
         
-        <!--  Register activity feed consumer as service -->
+        <!--  Register activity feed consumer as service and pass the activity feed generator sevrice to the constructor -->
         <service id="activity_consumer" class="TB\Bundle\FrontendBundle\Util\ActivityConsumer">
             <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="activity_feed_generator" />
         </service>
 
     </services>

@@ -16,7 +16,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *    "route_publish" = "RoutePublishActivity",
  * })
  */
-abstract class AbstractActivity implements Exportable
+abstract class Activity implements Exportable
 {
    
     /**
@@ -58,6 +58,13 @@ abstract class AbstractActivity implements Exportable
      */
     protected $targetId;
     
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="UserActivity", mappedBy="activity")
+     **/
+    private $userActivities;
+    
     protected $actor;
     protected $object;
     protected $target;
@@ -77,7 +84,7 @@ abstract class AbstractActivity implements Exportable
      * Set published
      *
      * @param \DateTime $published
-     * @return AbstractActivity
+     * @return Activity
      */
     public function setPublished(\DateTime $published)
     {
@@ -100,7 +107,7 @@ abstract class AbstractActivity implements Exportable
      * Set actorId
      *
      * @param integer $actorId
-     * @return AbstractActivity
+     * @return Activity
      */
     public function setActorId($actorId)
     {
@@ -123,7 +130,7 @@ abstract class AbstractActivity implements Exportable
      * Set objectId
      *
      * @param integer $objectId
-     * @return AbstractActivity
+     * @return Activity
      */
     public function setObjectId($objectId)
     {
@@ -146,7 +153,7 @@ abstract class AbstractActivity implements Exportable
      * Set targetId
      *
      * @param integer $targetId
-     * @return AbstractActivity
+     * @return Activity
      */
     public function setTargetId($targetId)
     {
@@ -172,5 +179,61 @@ abstract class AbstractActivity implements Exportable
         } 
         
         return null;
+    }
+    
+    /**
+     * Returns a data array to create an AMQP message
+     */
+    public function exportMessage()
+    {
+        $reflection = new \ReflectionClass(get_class($this));
+        
+        $data = [
+            'type' => $reflection->getShortName(),
+            'id' => $this->getId(),
+        ];
+        
+        return $data;
+    }
+    
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->userActivities = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add userActivities
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\UserActivity $userActivities
+     * @return Activity
+     */
+    public function addUserActivity(\TB\Bundle\FrontendBundle\Entity\UserActivity $userActivities)
+    {
+        $this->userActivities[] = $userActivities;
+
+        return $this;
+    }
+
+    /**
+     * Remove userActivities
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\UserActivity $userActivities
+     */
+    public function removeUserActivity(\TB\Bundle\FrontendBundle\Entity\UserActivity $userActivities)
+    {
+        $this->userActivities->removeElement($userActivities);
+    }
+
+    /**
+     * Get userActivities
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUserActivities()
+    {
+        return $this->userActivities;
     }
 }

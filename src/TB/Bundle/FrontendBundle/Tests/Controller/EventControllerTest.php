@@ -2,17 +2,10 @@
 
 namespace TB\Bundle\FrontendBundle\Tests\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use TB\Bundle\FrontendBundle\Tests\AbstractFrontendTest;
 
-class EventControllerTest extends WebTestCase
+class EventControllerTest extends AbstractFrontendTest
 {
-    
-    protected static function getKernelClass()
-    {
-        require_once self::getPhpUnitXmlDir() . '/frontend/AppKernel.php';
-
-        return 'AppKernel';
-    }
     
     public function testEvent()
     {

@@ -2,20 +2,13 @@
 
 namespace TB\Bundle\FrontendBundle\Tests\Entity;
 
-use Liip\FunctionalTestBundle\Test\WebTestCase;
+use TB\Bundle\FrontendBundle\Tests\AbstractFrontendTest;
 use TB\Bundle\FrontendBundle\Entity\GpxFile;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Gaufrette\File;
 
-class GpxFileTest extends WebTestCase
+class GpxFileTest extends AbstractFrontendTest
 {
-    
-    protected static function getKernelClass()
-    {
-        require_once self::getPhpUnitXmlDir() . '/frontend/AppKernel.php';
-
-        return 'AppKernel';
-    }
     
     /**
      * Test the filesystem with uploading, and deleting a file

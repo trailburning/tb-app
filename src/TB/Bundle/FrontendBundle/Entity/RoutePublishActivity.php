@@ -4,8 +4,10 @@ namespace TB\Bundle\FrontendBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/** @ORM\Entity */
-class RoutePublishActivity extends AbstractActivity
+/** 
+ * @ORM\Entity 
+ */
+class RoutePublishActivity extends Activity
 {
 
     /**
