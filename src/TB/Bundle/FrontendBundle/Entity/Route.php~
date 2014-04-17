@@ -12,7 +12,7 @@ use Doctrine\ORM\EntityManager;
  * @ORM\Table(name="routes")
  * @ORM\Entity
  */
-class Route implements \JsonSerializable
+class Route implements Exportable
 {
     /**
      * @var string
@@ -92,6 +92,14 @@ class Route implements \JsonSerializable
      */
     private $gpxFileId;
     
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="media_id", type="integer", nullable=true)
+     */
+    private $mediaId;
+    
     /**
      * @var integer
      *
@@ -155,6 +163,11 @@ class Route implements \JsonSerializable
      **/
     private $medias;
     
+    /**
+     * @ORM\OneToOne(targetEntity="Media")
+     * @ORM\JoinColumn(name="media_id", referencedColumnName="id")
+     **/
+    private $media;
     
     /**
      * @var string
@@ -850,7 +863,7 @@ class Route implements \JsonSerializable
         }
     }
     
-    public function jsonSerialize() 
+    public function export() 
     {
         $data = [
             'id' => $this->getId(),
@@ -869,7 +882,7 @@ class Route implements \JsonSerializable
         
         if (count($this->getRoutePoints()) > 0) {
             foreach ($this->getRoutePoints() as $rp) {
-                $data['route_points'][] = json_decode($rp->jsonSerialize());    
+                $data['route_points'][] = $rp->export();    
             }
         }
         
@@ -878,18 +891,22 @@ class Route implements \JsonSerializable
         }
         
         if ($this->getRouteType() !== null) {
-            $data['type'] = $this->getRouteType()->getName();
+            $data['type'] = $this->getRouteType()->export();
         }
         
         if ($this->getRouteCategory() !== null) {
-            $data['category'] = $this->getRouteCategory()->getName();
+            $data['category'] = $this->getRouteCategory()->export();
+        }
+        
+        if ($this->getUser() !== null) {
+            $data['user'] = $this->getuser()->export();
         }
         
         if ($this->media !== null) {
-            $data['media'] = json_decode($this->media->jsonSerialize());
+            $data['media'] = $this->media->export();
         }
         
-        return json_encode($data);
+        return $data;
     }
     
     /**
@@ -897,10 +914,6 @@ class Route implements \JsonSerializable
      */
     private $bbox;
     
-    /**
-     * Only used by API
-     */
-    private $media;
     
     /**
      * Only used by API
@@ -916,24 +929,54 @@ class Route implements \JsonSerializable
     public function getBBox() 
     { 
         return $this->bbox; 
-    }
-    
-    /**
-     * Only used by API
-     */
-    public function setMedia($media) 
-    { 
-        $this->media = $media; 
-    }
-    
-    /**
-     * Only used by API
-     */
-    public function getMedia() 
-    { 
-        return $this->media; 
-    }
-    
+    }    
 
+    /**
+     * Add routePublishActivities
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\RoutePublishActivity $routePublishActivities
+     * @return Route
+     */
+    public function addRoutePublishActivity(\TB\Bundle\FrontendBundle\Entity\RoutePublishActivity $routePublishActivities)
+    {
+        $this->routePublishActivities[] = $routePublishActivities;
+
+        return $this;
+    }
+
+    /**
+     * Remove routePublishActivities
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\RoutePublishActivity $routePublishActivities
+     */
+    public function removeRoutePublishActivity(\TB\Bundle\FrontendBundle\Entity\RoutePublishActivity $routePublishActivities)
+    {
+        $this->routePublishActivities->removeElement($routePublishActivities);
+    }
+
+    /**
+     * Get routePublishActivities
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRoutePublishActivities()
+    {
+        return $this->routePublishActivities;
+    }
     
+    /**
+     * Returns an data array representatiosn of this entity for the activity feed
+     */
+    public function exportAsActivity()
+    {   
+        $data = [
+            'url' => '/trail/' . $this->getSlug(),
+            'objectType' => 'trail',
+            'id' => $this->getId(),
+            'displayName' => $this->getName(),
+        ];
+        
+        return $data;
+    }
+
 }
