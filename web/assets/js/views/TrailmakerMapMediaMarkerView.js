@@ -121,7 +121,7 @@ define([
         self.map.closePopup(self.popup);
         self.map.removeLayer(self.marker);
       });
-      this.popupContainer.html('<div class="trail_media_popup"><div class="image_container"><img src="http://app.resrc.it/O=80/http://s3-eu-west-1.amazonaws.com/'+versions[0].path+'" class="resrc scale"></div><div class="detail_container"><h3 class="tb">'+this.model.get('filename')+'</h3><div class="btns"><a href="javascript:void(0)" class="btnStarMarker button">Favourite</a><a href="javascript:void(0)" class="btnDeleteMarker button">Delete</a></div></div></div></div>');
+      this.popupContainer.html('<div class="trail_media_popup"><div class="image_container fade_on_load"><img src="http://app.resrc.it/O=80/http://s3-eu-west-1.amazonaws.com/'+versions[0].path+'" class="resrc scale"></div><div class="detail_container"><h3 class="tb">'+this.model.get('filename')+'</h3><div class="btns"><a href="javascript:void(0)" class="btnStarMarker button">Favourite</a><a href="javascript:void(0)" class="btnDeleteMarker button">Delete</a></div></div></div></div>');
 
       function onClick(e) {
       	self.showPopup();      	

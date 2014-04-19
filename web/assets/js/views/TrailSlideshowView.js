@@ -65,19 +65,20 @@ define([
 	  	  $(this).remove();
 	  	}
 	  });
+/*	  
 	  // select 1st element
 	  $('.slide:first', this.el).each(function(index) {
 	    self.gotoSlide($(this).attr('data-id'));
         // fire event
         app.dispatcher.trigger("TrailSlideshowView:mediaclick", $(this).attr('data-id'));
 	  });
-	  
+*/	  
 	  // if not removing def then check we have a slide
 	  if (id != -1) {
 	    this.checkSlideshow();	  	
 	  }
       // fire event
-      app.dispatcher.trigger("TrailSlideshowView:mediaupdate");                          		  	  
+      app.dispatcher.trigger("TrailSlideshowView:mediaremove");                          		  	  
 	},
     starSlide: function(mediaID){
 	  // hide all    	
@@ -92,7 +93,15 @@ define([
       this.gotoSlide(mediaID);
       // fire event
       app.dispatcher.trigger("TrailSlideshowView:mediaclick", mediaID);
-    },                          		
+    },           
+    selectDefSlide: function(){
+	  // select 1st element
+	  $('.slide:first', this.el).each(function(index) {
+	    self.gotoSlide($(this).attr('data-id'));
+        // fire event
+        app.dispatcher.trigger("TrailSlideshowView:mediaclick", $(this).attr('data-id'));
+	  });
+    },                       		
     gotoSlide: function(mediaID){
       bAnimate = true;          	
       // has the active slide changed?

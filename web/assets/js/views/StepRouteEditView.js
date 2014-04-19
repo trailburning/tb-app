@@ -24,6 +24,7 @@ define([
 
       app.dispatcher.on("TrailSlideshowView:mediaclick", this.onTrailSlideshowViewMediaClick, this);
       app.dispatcher.on("TrailSlideshowView:mediaupdate", this.onTrailSlideshowViewMediaUpdate, this);
+      app.dispatcher.on("TrailSlideshowView:mediaremove", this.onTrailSlideshowViewMediaRemove, this);
 
       this.nState = STATE_UPLOAD;
       this.timezoneData = null;      
@@ -148,6 +149,13 @@ define([
 	  // default to first slide
 	  if (!model) {
 	  	model = this.options.mediaCollection.at(0);
+	  	if (model) {
+	      model.set('bStar', true);
+	  	  this.nStarMediaID = model.id;
+	  	}
+	  	else {
+	  	  this.nStarMediaID = 0;
+	  	}
 	  }
 
 	  var elContext = $('.trailcard_panel', $(self.el));
@@ -227,10 +235,10 @@ define([
         url: strURL,
         type: 'DELETE',            
         complete : function(res) {
-          console.log('complete');              
+//          console.log('complete');              
         },
         success: function(data) {
-          console.log('msg:'+data.message);
+//          console.log('msg:'+data.message);
         },
       });
       
@@ -291,8 +299,14 @@ define([
     },
     onTrailSlideshowViewMediaUpdate: function(){
 	  this.renderTrailCardPhoto();
+    },
+    onTrailSlideshowViewMediaRemove: function(){
+      // update gallery
+      this.trailSlideshowView.starSlide(this.nStarMediaID);
+	  this.trailSlideshowView.selectSlide(this.nStarMediaID);
+	  this.renderTrailCardPhoto();
     }
-    
+        
   });
 
   return StepRouteEditView;
