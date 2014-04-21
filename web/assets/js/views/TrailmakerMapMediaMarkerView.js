@@ -77,10 +77,14 @@ define([
       .openOn(this.map);  
 
       $('.btnStarMarker', this.popupContainer[0]).removeClass('selected');
-      if (this.model.get('bStar')) {
+      if (this.model.id == this.trailModel.starID) {
         $('.btnStarMarker', this.popupContainer[0]).addClass('selected');      	
       }
 
+  	  // reset      
+      $('.trail_media_popup .fade_on_load').removeClass('tb-fade-in');
+      $('.trail_media_popup .image_container').css('opacity', 0);
+      
 	  // scale images when loaded
 	  var elImages = $('.trail_media_popup .scale');
 	  var imgLoad = imagesLoaded(elImages);

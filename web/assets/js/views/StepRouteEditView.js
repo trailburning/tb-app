@@ -29,10 +29,9 @@ define([
       this.nState = STATE_UPLOAD;
       this.timezoneData = null;      
       this.bRendered = false;
-      this.nStarMediaID = 0;
     },
     getStarMediaID: function(){
-      return this.nStarMediaID;
+      return this.model.starID;
     },
     render: function(){
       if (this.bRendered) {
@@ -45,7 +44,7 @@ define([
       var attribs = this.model.toJSON();
       $(this.el).html(this.template(attribs));
 
-      this.overlayView = new OverlayView({ el: '#overlay_view', model: this.model });
+      this.overlayView = new OverlayView({ el: '#tb-overlay-view', model: this.model });
       this.trailUploadPhotoView = new TrailUploadPhotoView({ el: '#uploadPhoto_view', model: this.model });
       this.trailSlideshowView = new TrailSlideshowView({ el: '#slideshow_view', collection: this.options.mediaCollection });
 
@@ -58,11 +57,6 @@ define([
         app.dispatcher.trigger("StepRouteEditView:submitclick", self);                        
       });
 
-      $('.btnDeleteTrail', $(this.el)).click(function(evt) {
-        // fire event
-        app.dispatcher.trigger("StepRouteEditView:deleteclick", self);                        
-      });
-            
       return this;
     },
     renderTrailDetail: function(){   
@@ -139,24 +133,8 @@ define([
     },
     renderTrailCardPhoto: function(){
       var self = this;
-
-      var model = null; 
-	  // do we have a star?
-	  if (this.nStarMediaID) {
-      	model = this.options.mediaCollection.get(this.nStarMediaID);
-	  }
-	
-	  // default to first slide
-	  if (!model) {
-	  	model = this.options.mediaCollection.at(0);
-	  	if (model) {
-	      model.set('bStar', true);
-	  	  this.nStarMediaID = model.id;
-	  	}
-	  	else {
-	  	  this.nStarMediaID = 0;
-	  	}
-	  }
+      
+      var model = this.options.mediaCollection.get(this.model.starID);
 
 	  var elContext = $('.trailcard_panel', $(self.el));
 	  $('.image_container', elContext).removeClass('tb-fade-in').css('opacity', 0);
@@ -183,38 +161,50 @@ define([
       });
     },
     renderSlideshow: function(){
-	  // do we have a starred photo?      
-      var objMedia = this.options.model.get('value').route.media;
-      if (objMedia) {
-	    this.nStarMediaID = objMedia.id;
-        var model = this.options.mediaCollection.get(this.nStarMediaID);
-      	if (model) {
-          model.set('bStar', true);
-        }
-	  }    	
+      this.updateStarSlide();
       this.trailSlideshowView.render();
-	  // do we have a star?
-	  if (this.nStarMediaID) {
-        // update gallery
-        this.trailSlideshowView.starSlide(this.nStarMediaID);
-	    // update trail card      
-        this.renderTrailCardPhoto();      
-	  }
+      // update gallery
+      this.trailSlideshowView.starSlide(this.options.model.starID);
+	  this.trailSlideshowView.selectSlide(this.options.model.starID);
+	  // update trail card      
+      this.renderTrailCardPhoto();     
 	},
     selectSlideshowSlide: function(mediaID){
       this.trailSlideshowView.selectSlide(mediaID);
 	},    	
+    updateStarSlide: function(){
+      var model = null;
+      // do we have an updated star?
+	  if (this.options.model.starID) {	  	
+        model = this.options.mediaCollection.get(this.options.model.starID);
+	  }
+      if (!model) {
+	  	// is it valid?
+	  	if (this.options.model.get('value').route.media) {
+          model = this.options.mediaCollection.get(this.options.model.get('value').route.media.id);	  		
+	  	}
+        if (!model) {
+          model = this.options.mediaCollection.at(0);
+        }
+        if (model) {
+          this.options.model.starID = model.id;	
+        }
+        else {
+          this.options.model.starID = 0;
+        }
+      }
+	},
     onTrailUploadPhotoViewUpload: function(trailUploadPhotoView){
-      $('#content_overlay').show();      
-      $('#overlay_view').show();
+      $('#tb-content-overlay').show();      
+      $('#tb-overlay-view').show();
       this.overlayView.render();
       
       this.trailUploadPhotoProgressView = new TrailUploadPhotoProgressView({ el: '#overlayContent_view', model: this.model });
       this.trailUploadPhotoProgressView.render();
     },
     onTrailUploadPhotoViewUploaded: function(trailUploadPhotoView){
-      $('#content_overlay').hide();      
-      $('#overlay_view').hide();
+      $('#tb-content-overlay').hide();      
+      $('#tb-overlay-view').hide();
       // fire event
       app.dispatcher.trigger("StepRouteEditView:photouploaded", trailUploadPhotoView);
     },
@@ -222,7 +212,6 @@ define([
       this.trailUploadPhotoProgressView.render(nProgress);
     },
     onTrailMapViewMediaClick: function(mediaID){
-    	console.log('m1');
       this.trailSlideshowView.gotoSlide(mediaID);
 	},    
     onTrailMapViewRemoveMedia: function(mediaID){
@@ -246,21 +235,9 @@ define([
       app.dispatcher.trigger("StepRouteEditView:removemedia", this);                                    
     },
     onTrailMapViewStarMedia: function(mediaID){
-      var model;
-      if (this.nStarMediaID && this.nStarMediaID != mediaID) {
-      	// remove previous
-      	model = this.options.mediaCollection.get(this.nStarMediaID);
-      	if (model) {
-      	  model.set('bStar', false);	
-      	}
-      }
-      this.nStarMediaID = mediaID;
-      model = this.options.mediaCollection.get(this.nStarMediaID);
-      if (model) {
-        model.set('bStar', true);
-      }
+      this.options.model.starID = mediaID;
       // update gallery
-      this.trailSlideshowView.starSlide(this.nStarMediaID);
+      this.trailSlideshowView.starSlide(this.options.model.starID);
 	  // update trail card      
       this.renderTrailCardPhoto();
 	  // fire event
@@ -301,9 +278,10 @@ define([
 	  this.renderTrailCardPhoto();
     },
     onTrailSlideshowViewMediaRemove: function(){
+      this.updateStarSlide();
       // update gallery
-      this.trailSlideshowView.starSlide(this.nStarMediaID);
-	  this.trailSlideshowView.selectSlide(this.nStarMediaID);
+      this.trailSlideshowView.starSlide(this.options.model.starID);
+	  this.trailSlideshowView.selectSlide(this.options.model.starID);
 	  this.renderTrailCardPhoto();
     }
         

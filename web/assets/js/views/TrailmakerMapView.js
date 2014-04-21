@@ -100,9 +100,6 @@ define([
       this.timezoneData = timezoneData;
     },
     addMarker: function(jsonMedia, bPlaceOnTrail){
-      // mla
-//      var model = new Backbone.Model(jsonMedia);
-//      var trailMapMediaMarkerView = new TrailMapMediaMarkerView({ model: model, trailModel: this.model, map: this.map, timezoneData: this.timezoneData, placeOnTrail: bPlaceOnTrail });
       var trailMapMediaMarkerView = new TrailMapMediaMarkerView({ model: jsonMedia, trailModel: this.model, map: this.map, timezoneData: this.timezoneData, placeOnTrail: bPlaceOnTrail });
 
       trailMapMediaMarkerView.render();

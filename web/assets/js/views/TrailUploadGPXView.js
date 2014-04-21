@@ -12,7 +12,6 @@ define([
 
       $(this.el).html(this.template());
 
-	  // mla test
 	  if (nTrail) {
         // fire event
         app.dispatcher.trigger("TrailUploadGPXView:uploaded", self);                

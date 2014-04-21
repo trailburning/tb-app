@@ -13,6 +13,7 @@ define([
       if (!this.bRendered) {
         var attribs = this.model.toJSON();
         $(this.el).html(this.template(attribs));      	
+        $(this.el).html(this.template());      	
       }
       $('.progressbar', this.el).progressbar({value: nProgress});      
       $('.percent', this.el).html(nProgress);      
