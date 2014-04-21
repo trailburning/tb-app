@@ -10,7 +10,7 @@ define([
 
   var STATE_UPLOAD = 0;
 
-  var StepRouteView = Backbone.View.extend({
+  var TrailmakerTrailCreateView = Backbone.View.extend({
     initialize: function(){
       this.template = _.template($('#stepRouteViewTemplate').text());        
       
@@ -45,7 +45,7 @@ define([
       
       $('.submit', $(this.el)).click(function(evt) {
         // fire event
-        app.dispatcher.trigger("StepRouteView:submitclick", self);                        
+        app.dispatcher.trigger("TrailCreateView:submitclick", self);                        
       });
 
       // mla test
@@ -54,7 +54,7 @@ define([
          $('#step_route_view .panel_container').hide();      
          $('.map_step_container', $(this.el)).show();  
           // fire event
-         app.dispatcher.trigger("StepRouteView:gpxuploaded", self);           
+         app.dispatcher.trigger("TrailCreateView:gpxuploaded", self);           
       }
         
       return this;
@@ -64,7 +64,7 @@ define([
 	},
     onTrailUploadGPXViewUploaded: function(trailUploadGPXView){
       // fire event
-      app.dispatcher.trigger("StepRouteView:gpxuploaded", self);                        
+      app.dispatcher.trigger("TrailCreateView:gpxuploaded", self);                        
     },
     onTrailUploadGPXViewUploadProgress: function(nProgress){
       this.trailUploadGPXProgressView.render(nProgress);
@@ -72,5 +72,5 @@ define([
     
   });
 
-  return StepRouteView;
+  return TrailmakerTrailCreateView;
 });

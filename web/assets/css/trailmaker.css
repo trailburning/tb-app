@@ -704,14 +704,17 @@ border-width:1px;
   background-position: 0 -24px;	
 }
 
-.trail_media_popup a.btnStarMarker {
+.trail_media_popup .btnStarMarker {
   background: url("../img/editor/btn_star.png") no-repeat top left;
+}
+
+.trail_media_popup .btnDeleteMarker {
+  background: url("../img/editor/btn_delete.png") no-repeat top left;
 }
 
 .trail_media_popup a.btnDeleteMarker {
   float: right;
   display: inline-block;
-  background: url("../img/editor/btn_delete.png") no-repeat top left;
 }
 
 .trail_media_popup .image_container {

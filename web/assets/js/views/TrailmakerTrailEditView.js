@@ -9,7 +9,7 @@ define([
 
   var STATE_UPLOAD = 0;
 
-  var StepRouteEditView = Backbone.View.extend({
+  var TrailmakerTrailEditView = Backbone.View.extend({
     initialize: function(){
       this.template = _.template($('#stepRouteEditViewTemplate').text());        
       
@@ -54,7 +54,7 @@ define([
             
       $('.submit', $(this.el)).click(function(evt) {
         // fire event
-        app.dispatcher.trigger("StepRouteEditView:submitclick", self);                        
+        app.dispatcher.trigger("TrailEditView:submitclick", self);                        
       });
 
       return this;
@@ -81,7 +81,7 @@ define([
 		
 	  	self.renderTrailCard();                      		
         // fire event
-        app.dispatcher.trigger("StepRouteEditView:updatedetailsclick", self);                        
+        app.dispatcher.trigger("TrailEditView:updatedetailsclick", self);                        
       });
             
       // get trail types
@@ -206,7 +206,7 @@ define([
       $('#tb-content-overlay').hide();      
       $('#tb-overlay-view').hide();
       // fire event
-      app.dispatcher.trigger("StepRouteEditView:photouploaded", trailUploadPhotoView);
+      app.dispatcher.trigger("TrailEditView:photouploaded", trailUploadPhotoView);
     },
     onTrailUploadPhotoViewUploadProgress: function(nProgress){
       this.trailUploadPhotoProgressView.render(nProgress);
@@ -232,7 +232,7 @@ define([
       });
       
 	  // fire event
-      app.dispatcher.trigger("StepRouteEditView:removemedia", this);                                    
+      app.dispatcher.trigger("TrailEditView:removemedia", this);                                    
     },
     onTrailMapViewStarMedia: function(mediaID){
       this.options.model.starID = mediaID;
@@ -241,7 +241,7 @@ define([
 	  // update trail card      
       this.renderTrailCardPhoto();
 	  // fire event
-      app.dispatcher.trigger("StepRouteEditView:updatestarphoto", this);                              
+      app.dispatcher.trigger("TrailEditView:updatestarphoto", this);                              
 	},    
     onTrailMapViewMoveMedia: function(mediaID){
       // update gallery
@@ -272,7 +272,7 @@ define([
     },    
     onTrailSlideshowViewMediaClick: function(mediaID){
       // fire event
-      app.dispatcher.trigger("StepRouteEditView:galleryphotoclick", mediaID);                              
+      app.dispatcher.trigger("TrailEditView:galleryphotoclick", mediaID);                              
     },
     onTrailSlideshowViewMediaUpdate: function(){
 	  this.renderTrailCardPhoto();
@@ -287,5 +287,5 @@ define([
         
   });
 
-  return StepRouteEditView;
+  return TrailmakerTrailEditView;
 });

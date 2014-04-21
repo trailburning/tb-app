@@ -113,7 +113,7 @@ define([
       // Create an element to hold all your text and markup
       this.popupContainer = $('<div />');      
       // Delegate all event handling for the container itself and its contents to the container
-      this.popupContainer.on('click', '.btnStarMarker', function() {      	
+      this.popupContainer.on('click', '.btnStarMarker', function() {
       	$('.btnStarMarker', self.popupContainer).addClass('selected');
         // fire event
         app.dispatcher.trigger("TrailMapMediaMarkerView:starmedia", self);                        

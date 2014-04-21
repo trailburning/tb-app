@@ -3,7 +3,7 @@ define([
   'backbone'
 ], function(_, Backbone){
 
-  var StepPublishedView = Backbone.View.extend({
+  var TrailmakerTrailPublishedView = Backbone.View.extend({
     initialize: function(){
       this.template = _.template($('#stepPublishedViewTemplate').text());        
       
@@ -22,5 +22,5 @@ define([
     }
   });
 
-  return StepPublishedView;
+  return TrailmakerTrailPublishedView;
 });
