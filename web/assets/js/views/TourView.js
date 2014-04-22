@@ -1,7 +1,8 @@
 define([
   'underscore', 
-  'backbone'
-], function (_, Backbone){
+  'backbone',
+  'views/ActivityFeedView'    
+], function (_, Backbone, ActivityFeedView){
 
   var TourView = Backbone.View.extend({
     initialize: function(){
@@ -17,7 +18,13 @@ define([
 	  this.loadAndShow($('#step2'));
 	  this.loadAndShow($('#step3'));      
 	  this.loadAndShow($('#step4'));      
-	  this.loadAndShow($('#step5'));            
+	  this.loadAndShow($('#step5'));         
+
+      if (typeof TB_USER_ID != 'undefined') {
+  	    this.activityFeedView = new ActivityFeedView({ el: '#activity_feed_view' });
+  	    this.activityFeedView.render();
+  	    this.activityFeedView.getActivity();	  	
+      }
     },        
     loadAndShow: function(elContainer){
       var self = this;
