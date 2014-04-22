@@ -5,6 +5,7 @@ namespace TB\Bundle\FrontendBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Request;
 
 class EventController extends Controller
 {
@@ -57,5 +58,14 @@ class EventController extends Controller
             'routes' => $routes,
         );
     }
-
+    
+    /**
+     * @Route("/events", name="events")
+     * @Template()
+     */    
+    public function eventsAction(Request $request)
+    {
+        
+        return [];
+    }
 }
