@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="region")
  * @ORM\Entity
  */
-class Region
+class Region implements Exportable
 {
     /**
      * @var integer
@@ -257,5 +257,20 @@ class Region
     public function getSlug()
     {
         return $this->slug;
+    }
+    
+    public function export()
+    {
+        $data = [
+            'id' => $this->getId(),
+            'slug' => $this->getSlug(),
+            'name' => $this->getName(),
+            'image' => $this->getImage(),
+            'logo' => $this->getLogo(),
+            'link' => $this->getLink(),
+            'about' => $this->getAbout(),
+        ];
+        
+        return $data;
     }
 }
