@@ -24,7 +24,7 @@ class ActivityListenerTest extends AbstractFrontendTest
         $producer->expects($this->exactly(3))
             ->method('publish')
             ->will($this->returnCallback(array($this, 'assertAMQPMessage'))); // Use this callback to verify AMQP message 
-        $this->getContainer()->set('old_sound_rabbit_mq.activity_producer', $producer);
+        $this->getContainer()->set('old_sound_rabbit_mq.main_producer', $producer);
         
         $this->loadFixtures([
             'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData',
@@ -92,7 +92,7 @@ class ActivityListenerTest extends AbstractFrontendTest
         $producer->expects($this->once())
             ->method('publish')
             ->will($this->returnCallback(array($this, 'assertAMQPMessage'))); // Use this callback to verify AMQP message AMQPChannel;
-        $this->getContainer()->set('old_sound_rabbit_mq.activity_producer', $producer);
+        $this->getContainer()->set('old_sound_rabbit_mq.main_producer', $producer);
         
         //  get the event dispatcher and dispathe the tb.route_publish manually
         $dispatcher = $this->getContainer()->get('event_dispatcher');
@@ -147,7 +147,7 @@ class ActivityListenerTest extends AbstractFrontendTest
         $producer->expects($this->once())
             ->method('publish')
             ->will($this->returnCallback(array($this, 'assertAMQPMessage'))); // Use this callback to verify AMQP message AMQPChannel;
-        $this->getContainer()->set('old_sound_rabbit_mq.activity_producer', $producer);
+        $this->getContainer()->set('old_sound_rabbit_mq.main_producer', $producer);
         
         //  Get the event dispatcher and dispathe the tb.route_publish manually
         $dispatcher = $this->getContainer()->get('event_dispatcher');
@@ -182,7 +182,7 @@ class ActivityListenerTest extends AbstractFrontendTest
             'The id value is grater than 0');
         $this->assertObjectHasAttribute('type', $obj,
             'The message has the type attribute');
-        $this->assertContains($obj->type, ['RoutePublishActivity', 'UserFollowActivity', 'UserUnfollowActivity'], 
+        $this->assertEquals('activity', $obj->type, 
             'The type field contains one of the valid values');
     }
     
