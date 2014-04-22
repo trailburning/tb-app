@@ -28,4 +28,31 @@ class DefaultController extends Controller
     {
         return [];
     }
+    
+    /**
+     * @Route("/about", name="about")
+     * @Template()
+     */
+    public function aboutAction()
+    {
+        return [];
+    }
+    
+    /**
+     * @Route("/competition", name="competition")
+     * @Template()
+     */
+    public function competitionAction()
+    {
+        return [];
+    }
+    
+    /**
+     * @Route("/presskit", name="presskit")
+     * @Template()
+     */
+    public function presskitAction()
+    {
+        return [];
+    }
 }
