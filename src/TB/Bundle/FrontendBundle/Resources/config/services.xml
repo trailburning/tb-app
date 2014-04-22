@@ -44,21 +44,21 @@
         <!-- Register Event Listener to create an Activity Feed Item when a Route gets published -->
         <service id="tb.activity.route_publish_listener" class="TB\Bundle\FrontendBundle\EventListener\ActivityListener">
             <argument type="service" id="doctrine.orm.entity_manager" />
-            <argument type="service" id="old_sound_rabbit_mq.activity_producer" />
+            <argument type="service" id="old_sound_rabbit_mq.main_producer" />
             <tag name="kernel.event_listener" event="tb.route_publish" method="onRoutePublish" />
         </service>
         
         <!-- Register Event Listener to create an Activity Feed Item when a User gets followed -->
         <service id="tb.activity.user_follow_listener" class="TB\Bundle\FrontendBundle\EventListener\ActivityListener">
             <argument type="service" id="doctrine.orm.entity_manager" />
-            <argument type="service" id="old_sound_rabbit_mq.activity_producer" />
+            <argument type="service" id="old_sound_rabbit_mq.main_producer" />
             <tag name="kernel.event_listener" event="tb.user_follow" method="onUserFollow" />
         </service>
         
         <!-- Register Event Listener to create an Activity Feed Item when a User gets unfollowed -->
         <service id="tb.activity.user_unfollow_listener" class="TB\Bundle\FrontendBundle\EventListener\ActivityListener">
             <argument type="service" id="doctrine.orm.entity_manager" />
-            <argument type="service" id="old_sound_rabbit_mq.activity_producer" />
+            <argument type="service" id="old_sound_rabbit_mq.main_producer" />
             <tag name="kernel.event_listener" event="tb.user_unfollow" method="onUserUnfollow" />
         </service>
 
@@ -66,11 +66,9 @@
         <service id="activity_feed_generator" class="TB\Bundle\FrontendBundle\Util\ActivityFeedGenerator">
             <argument type="service" id="doctrine.orm.entity_manager" />
         </service>
-        
-        <!--  Register activity feed consumer as service and pass the activity feed generator sevrice to the constructor -->
-        <service id="activity_consumer" class="TB\Bundle\FrontendBundle\Util\ActivityConsumer">
-            <argument type="service" id="doctrine.orm.entity_manager" />
-            <argument type="service" id="activity_feed_generator" />
+                
+        <service id="old_sound_rabbit_mq.main_consumer" class="TB\Bundle\FrontendBundle\Util\MainConsumer">
+            <argument type="service" id="old_sound_rabbit_mq.connection.default" />
         </service>
 
     </services>

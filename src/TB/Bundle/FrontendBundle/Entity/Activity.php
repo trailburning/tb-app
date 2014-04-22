@@ -189,7 +189,7 @@ abstract class Activity implements Exportable
         $reflection = new \ReflectionClass(get_class($this));
         
         $data = [
-            'type' => $reflection->getShortName(),
+            'type' => 'activity',
             'id' => $this->getId(),
         ];
         

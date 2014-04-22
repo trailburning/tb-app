@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Region
  *
- * @ORM\Table(name="user_activity")
+ * @ORM\Table(name="user_activity", uniqueConstraints={@ORM\UniqueConstraint(name="unique_user_activity", columns={"user_id", "activity_id"})})
  * @ORM\Entity
  */
 class UserActivity

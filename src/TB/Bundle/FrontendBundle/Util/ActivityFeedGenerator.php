@@ -101,9 +101,22 @@ class ActivityFeedGenerator
     
     public function updateUserActivityUnseenCount(User $user)
     {
-        $query = $this->em
-            ->createQuery('SELECT COUNT(a.userId) FROM TBFrontendBundle:UserActivity a WHERE a.userId = :userId')
-            ->setParameter('userId', $user->getId());
+        if ($user->getActivityLastViewed() instanceof \DateTime) {
+            $q = 'SELECT COUNT(ua.userId) FROM TBFrontendBundle:UserActivity ua 
+                  INNER JOIN ua.activity a WITH a.id = ua.activityId
+                  WHERE ua.userId = :userId
+                  AND a.published > :lastViewed';
+            $query = $this->em
+                ->createQuery($q)
+                ->setParameter('userId', $user->getId())
+                ->setParameter('lastViewed', $user->getActivityLastViewed()->format('Y-m-d H:i:s'));            
+        } else {
+            $q = 'SELECT COUNT(ua.userId) FROM TBFrontendBundle:UserActivity ua WHERE ua.userId = :userId';
+            $query = $this->em
+                ->createQuery($q)
+                ->setParameter('userId', $user->getId());
+        }
+        
         $count = $query->getSingleScalarResult();
         $user->setActivityUnseenCount($count);
         $this->em->persist($user);

@@ -152,13 +152,8 @@ old_sound_rabbit_mq:
             lazy:     false                
         
     producers:
-        activity:
+        main:
             connection:       default
-            exchange_options: {name: 'activity', type: direct}
-
-    consumers:
-        activity:
-            connection:       default
-            exchange_options: {name: 'activity', type: direct}
-            queue_options:    {name: 'activity'}
-            callback:         activity_consumer
+            exchange_options: {name: 'main', type: direct}
+            queue_options:    {name: 'main'}
+            
