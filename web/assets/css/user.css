@@ -7,6 +7,10 @@ border-width:1px;
 */  
 }
 
+#bodyview {
+  position: relative;
+}
+
 .fixed_content {
   width: 1140px;
 }
