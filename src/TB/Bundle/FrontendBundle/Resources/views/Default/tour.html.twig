@@ -9,6 +9,9 @@
 {% block body %}
 <script>
 var TB_APP = 'TourApp';
+{% if app.user %}		
+var TB_USER_ID = {{ app.user.id }};
+{% endif %}
 var elementsToTrack = ["#step1_left", "#step1_right", "#step2_left", "#step2_right", "#step3_left", "#step3_middle", "#step3_right", "#step4_left", "#step4_1_right", "#step4_2_right", "#step5_left", "#step5_right"];
 </script>
 

@@ -35,7 +35,15 @@ class DefaultController extends Controller
      */
     public function aboutAction()
     {
-        return [];
+      	$breadcrumb[] = [
+            'name' => 'about',
+            'label' => 'Discover Trailburning', 
+            'params' => [],
+        ];
+        
+        return array(
+            'breadcrumb' => $breadcrumb
+        );    	
     }
     
     /**
@@ -44,7 +52,15 @@ class DefaultController extends Controller
      */
     public function competitionAction()
     {
-        return [];
+      	$breadcrumb[] = [
+            'name' => 'competition',
+            'label' => 'Competition', 
+            'params' => [],
+        ];
+        
+        return array(
+            'breadcrumb' => $breadcrumb
+        );    	
     }
     
     /**
@@ -53,6 +69,14 @@ class DefaultController extends Controller
      */
     public function presskitAction()
     {
-        return [];
+      	$breadcrumb[] = [
+            'name' => 'presskit',
+            'label' => 'Press Kit', 
+            'params' => [],
+        ];
+        
+        return array(
+            'breadcrumb' => $breadcrumb
+        );    	
     }
 }

@@ -4,14 +4,97 @@
 
 {% block stylesheets %}
 <link href="{{ asset('assets/css/static.css') }}" rel="stylesheet" type="text/css">
+<link href="{{ asset('assets/css/presskit.css') }}" rel="stylesheet" type="text/css">
 {% endblock %}
 
 {% block body %}
 <script>
 var TB_APP = 'BaseApp';
+{% if app.user %}		
+var TB_USER_ID = {{ app.user.id }};
+{% endif %}
 </script>
 
-  	
+  <div id="def_header">  
+    <div class="image_container fade_on_load"><img src="http://app.resrc.it/http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/pages/hero_bridge.jpg" class="resrc scale" /></div>    
+    <div class="event_title">
+      <h1 class="tb tb-title">Want to talk about</h1>
+      <br/>
+      <h1 class="tb tb-title">#Trailburning?</h1>
+    </div>      
+  </div>    
+    
+  <div class="panel_content">          
+    <div id="bigbar">
+      {{ include('TBFrontendBundle:Default:breadcrumb.html.twig', breadcrumb) }}
+      {{ include('TBFrontendBundle:Default:share.html.twig') }}
+    </div>
+    
+    <div class="panel_intro">
+      <h1 class="tb tb-title">Be our guest!</h1>
+      <div class="desc">
+        <h3 class="tb">Trailburning will be breaking new ground (and trails) in 2014.</h3>
+        <h4 class="tb">
+		Trailburning is a site for runners (and hikers) to discover new trails.        	
+        <br /><br />        
+        Trailburning.com has been created by founder <a href="../profile/mattallbeury">Matt Allbeury</a> (Berlin, Germany) and co-founder <a href="../profile/justinwilden">Justin Wilden</a> (Melbourne, Australia). They got together in April 2013 to start 'something' that will redefine the way we interact with geolocation media. Matt is the CEO and technologist driving the vision for Trailburning, and Justin is the company's resident strategist and marketer.
+        <br /><br />        
+        Please view the press release below to read the story behind Trailburning.com, and feel free to use the images below in editorial or blogs (please link back to our site).
+        <br /><br />
+        "Trailburning.com making trails in 2014"                
+        <br /><br />
+        <a href="assets/download/PressRelease.pdf" download="assets/download/PressRelease.pdf" class="btn btn-tb-action btn-tb-large">Download PDF</a>
+        </h4></div>      
+    </div>
+  </div>
+  
+  <div class="guide_content">      
+    <div class="content">      
+      <h2>Trailburning imagery</h2>
+      <div class="example"><img src="{{ asset('assets/img/presskit/example.jpg') }}"/></div>      
+      <div class="packs clearfix">
+        
+        <div class="pack clearfix">
+          <div class="left"><img src="{{ asset('assets/img/presskit/example_i_logo.gif') }}"/></div>
+          <div class="right">
+          <h1>Trailburning badge</h1>
+          <a href="{{ asset('assets/download/badge_sticker_im_250x120.png') }}" download="{{ asset('assets/download/badge_sticker_im_250x120.png') }}">250x120</a> <a href="{{ asset('assets/download/badge_sticker_im_165x80.png') }}" download="{{ asset('assets/img/presskit/badge_sticker_im_165x80.png') }}">165x80</a>
+          </div>
+        </div>
+
+        <div class="pack clearfix">
+          <div class="left"><img src="{{ asset('assets/img/presskit/example_we_logo.gif') }}"/></div>
+          <div class="right">
+          <h1>Trailburning badge</h1>
+          <a href="{{ asset('assets/download/badge_sticker_we_250x120.png') }}" download="{{ asset('assets/download/badge_sticker_we_250x120.png') }}">250x120</a> <a href="{{ asset('assets/download/badge_sticker_we_165x80.png') }}" download="{{ asset('assets/download/badge_sticker_we_165x80.png') }}">165x80</a>
+          </div>
+        </div>
+
+        <div class="pack clearfix">
+          <div class="left"><img src="{{ asset('assets/img/presskit/example_logo.gif') }}"/></div>
+          <div class="right">
+          <h1>Trailburning logo</h1>
+          <a href="{{ asset('assets/download/logo_bk_700x400.jpg') }}" download="{{ asset('assets/download/logo_bk_700x400.jpg') }}">700x400</a> <a href="{{ asset('assets/download/logo_bk_350x200.jpg') }}" download="{{ asset('assets/download/logo_bk_350x200.jpg') }}">350x200</a> <a href="{{ asset('assets/download/logo_bk_175x100.jpg') }}" download="{{ asset('assets/download/logo_bk_175x100.jpg') }}">175x100</a>
+          </div>
+        </div>
+
+        <div class="pack clearfix">
+          <div class="left"><img src="{{ asset('assets/img/presskit/example_screenshot.jpg') }}"/></div>
+          <div class="right">
+<!--            
+          <h1>Website screenshots</h1>
+          <a href="">Home page</a>
+          <br />
+          <a href="">Trail page</a>
+-->          
+          <div class="download_all"><a href="{{ asset('assets/download/PressKit.zip') }}" download="{{ asset('assets/download/PressKit.zip') }}" class="btn btn-tb-action btn-tb-large">Download all</a></div>                
+          </div>
+        </div>
+        
+      </div>
+    </div>                  
+  </div>
+    	
 {% endblock %}
 
 {% block javascripts %}
