@@ -7,12 +7,15 @@ use PhpAmqpLib\Message\AMQPMessage;
 use Doctrine\ORM\EntityManager;
 use TB\Bundle\FrontendBundle\Util\ActivityFeedGenerator;
 use PhpAmqpLib\Connection\AMQPConnection;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Extends the Consumer to to set a max consumer count and a time after the consumer stops
  */
 class MainConsumer extends Consumer
 {
+    protected $container;
+    
     protected $consumerCount;
     
     protected $maxConsumerCount;
@@ -21,13 +24,14 @@ class MainConsumer extends Consumer
     
     protected $start;
     
-    public function __construct(AMQPConnection $conn, AMQPChannel $ch = null, $consumerTag = null)
+    public function __construct(AMQPConnection $conn, ContainerInterface $container, AMQPChannel $ch = null, $consumerTag = null)
     {
-        $this->setExchangeOptions(['name' => 'main', 'type' => 'direct']);
-        $this->setQueueOptions(['name' => 'main']);
+        $this->container = $container;
+        $this->setExchangeOptions(['name' => $container->getParameter('rabbit_mq_main_queue'), 'type' => 'direct']);
+        $this->setQueueOptions(['name' => $container->getParameter('rabbit_mq_main_queue')]);
         $this->callback = array($this, 'execute');
         $this->maxConsumerCount = 3;
-        $this->ttl = 300;
+        $this->ttl = 1800;
         $this->start = time();
         
         $this->setIdleTimeout($this->ttl);
