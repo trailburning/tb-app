@@ -24,7 +24,7 @@ define([
       	  // format date
 	 	  var strDate = $.format.date(this.model.get('date') + ' 00:00:00', 'dd MMM yyyy');
 	 	  if (this.model.get('date_to')) {
-	 	  	strDate = $.format.date(this.model.get('date') + ' 00:00:00', 'dd MMM') + ' to ' + $.format.date(this.model.get('date') + ' 00:00:00', 'dd MMM yyyy');
+	 	  	strDate = $.format.date(this.model.get('date') + ' 00:00:00', 'dd MMM') + ' to ' + $.format.date(this.model.get('date_to') + ' 00:00:00', 'dd MMM yyyy');
 	 	  }
       	  this.model.set('date_text', strDate);
       	}
