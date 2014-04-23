@@ -190,6 +190,14 @@ class Route implements Exportable
      * @ORM\OneToMany(targetEntity="RoutePublishActivity", mappedBy="routePublishActivities")
      **/
     private $routePublishActivities;
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\User", inversedBy="routeLikes")
+     * @ORM\JoinTable(name="route_likes")
+     */
+    private $userLikes;
 
     /**
      * Set name
@@ -985,5 +993,55 @@ class Route implements Exportable
         ];
         
         return $data;
+    }
+
+    /**
+     * Add userLikes
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\User $userLikes
+     * @return Route
+     */
+    public function addUserLike(\TB\Bundle\FrontendBundle\Entity\User $userLikes)
+    {
+        $this->userLikes[] = $userLikes;
+
+        return $this;
+    }
+
+    /**
+     * Remove userLikes
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\User $userLikes
+     */
+    public function removeUserLike(\TB\Bundle\FrontendBundle\Entity\User $userLikes)
+    {
+        $this->userLikes->removeElement($userLikes);
+    }
+
+    /**
+     * Get userLikes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUserLikes()
+    {
+        return $this->userLikes;
+    }
+    
+    /**
+     * Checks a User already likes this Route
+     *
+     * @param User $user The User to check in the follower
+     * @return boolean returns true if the User likes this Route, false if not
+     */
+    public function hasUserLike(User $user)
+    {
+        foreach ($this->getUserLikes() as $likingUser) {
+            if ($likingUser->getId() === $user->getId()) {
+                return true;
+            }
+        }
+        
+        return false;
     }
 }

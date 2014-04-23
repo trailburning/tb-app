@@ -181,6 +181,13 @@ abstract class User extends BaseUser implements Exportable
     private $userActivities;
     
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\Route", mappedBy="userLikes")
+     */
+    private $routeLikes;
+    
+    /**
      * Constructor
      */
     public function __construct()
@@ -888,5 +895,28 @@ abstract class User extends BaseUser implements Exportable
     public function getUserActivities()
     {
         return $this->userActivities;
+    }
+
+    /**
+     * Set activityUnseenCount
+     *
+     * @param integer $activityUnseenCount
+     * @return User
+     */
+    public function setActivityUnseenCount($activityUnseenCount)
+    {
+        $this->activityUnseenCount = $activityUnseenCount;
+
+        return $this;
+    }
+
+    /**
+     * Get activityUnseenCount
+     *
+     * @return integer 
+     */
+    public function getActivityUnseenCount()
+    {
+        return $this->activityUnseenCount;
     }
 }

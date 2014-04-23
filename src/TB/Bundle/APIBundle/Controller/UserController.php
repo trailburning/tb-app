@@ -46,7 +46,7 @@ class UserController extends AbstractRestController
         
         //check if user is already following
         if ($user->isFollowing($userToFollow)) {
-            throw new ApiException(sprintf('User %s is alreaddy following user %s', $user->getId(), $userToFollow->getId()), 400);
+            throw new ApiException(sprintf('User %s is already following user %s', $user->getId(), $userToFollow->getId()), 400);
         }
 
         $user->addIFollow($userToFollow);

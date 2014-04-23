@@ -181,6 +181,13 @@ abstract class User extends BaseUser implements Exportable
     private $userActivities;
     
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\Route", mappedBy="userLikes")
+     */
+    private $routeLikes;
+    
+    /**
      * Constructor
      */
     public function __construct()
@@ -626,9 +633,9 @@ abstract class User extends BaseUser implements Exportable
     }
     
     /**
-     * Tests if the User is following a given User
+     * Checks if the User is following a given User
      *
-     * @param User $user The User to looup in the follower
+     * @param User $user The User to check in the follower
      * @return boolean returns true if the User is following, false if not
      */
     public function isFollowing(User $user)
@@ -911,5 +918,38 @@ abstract class User extends BaseUser implements Exportable
     public function getActivityUnseenCount()
     {
         return $this->activityUnseenCount;
+    }
+
+    /**
+     * Add routeLikes
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\Route $routeLikes
+     * @return User
+     */
+    public function addRouteLike(\TB\Bundle\FrontendBundle\Entity\Route $routeLikes)
+    {
+        $this->routeLikes[] = $routeLikes;
+
+        return $this;
+    }
+
+    /**
+     * Remove routeLikes
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\Route $routeLikes
+     */
+    public function removeRouteLike(\TB\Bundle\FrontendBundle\Entity\Route $routeLikes)
+    {
+        $this->routeLikes->removeElement($routeLikes);
+    }
+
+    /**
+     * Get routeLikes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRouteLikes()
+    {
+        return $this->routeLikes;
     }
 }
