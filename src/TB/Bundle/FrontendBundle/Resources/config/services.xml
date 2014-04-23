@@ -22,6 +22,11 @@
             <argument type="service" id="doctrine.orm.entity_manager" />
         </service>
         
+        <!-- Register events finder service -->
+        <service id="tb.events.finder" class="TB\Bundle\FrontendBundle\Util\EventsFinder">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+        </service>
+        
         <!-- Register event listener to redirect to the homepage after resetting password -->
         <service id="change_password_complete" class="TB\Bundle\FrontendBundle\EventListener\ResettingResetSuccessListener">
             <argument type="service" id="router" />
