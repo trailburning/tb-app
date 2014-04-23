@@ -6,7 +6,7 @@ define([
   var EventsEventCardView = Backbone.View.extend({
   	className: "panel",
     initialize: function(){
-      this.template = _.template($('#trailsTrailCardViewTemplate').text());        
+      this.template = _.template($('#eventsEventCardViewTemplate').text());        
             
       this.bRendered = false;
     },            
@@ -14,6 +14,21 @@ define([
       var self = this;
 
       if (!this.bRendered) {
+      	if (this.model) {
+      	  // format title
+      	  var strTitle = this.model.get('title');
+      	  if (this.model.get('title2')) {
+      	  	strTitle += ' ' + this.model.get('title2');
+      	  }
+      	  this.model.set('title_text', strTitle);      	  
+      	  // format date
+	 	  var strDate = $.format.date(this.model.get('date') + ' 00:00:00', 'dd MMM yyyy');
+	 	  if (this.model.get('date_to')) {
+	 	  	strDate = $.format.date(this.model.get('date') + ' 00:00:00', 'dd MMM') + ' to ' + $.format.date(this.model.get('date') + ' 00:00:00', 'dd MMM yyyy');
+	 	  }
+      	  this.model.set('date_text', strDate);
+      	}
+      	      	
         var attribs = this.model.toJSON();
         $(this.el).html(this.template(attribs));
         $(this.el).addClass('event_card_panel');

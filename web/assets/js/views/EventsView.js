@@ -42,8 +42,8 @@ define([
 //          console.log('error:'+data.responseText);      
         },
         success: function(data) {      
-          console.log('success');
-          console.log(data);
+//          console.log('success');
+//          console.log(data);
 	      $('.tb-loader').hide();
 
           if (data.value.events.length) {
