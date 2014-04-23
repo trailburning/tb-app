@@ -103,6 +103,7 @@ class MainConsumer extends Consumer
         $handle = popen(sprintf('%s %s', $console, $command), 'r');
         $output = fread($handle, 2096);
         
+        // The script outputs 'OK' for success, test only the last 2 characters to handle php error messages and other debug output of the command
         return (substr($output, -2) == 'OK') ? true : false;
     }
     

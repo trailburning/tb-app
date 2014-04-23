@@ -8,11 +8,15 @@ use OldSound\RabbitMqBundle\RabbitMq\Producer;
 use TB\Bundle\FrontendBundle\Event\RoutePublishEvent;
 use TB\Bundle\FrontendBundle\Event\UserFollowEvent;
 use TB\Bundle\FrontendBundle\Event\UserUnfollowEvent;
+use TB\Bundle\FrontendBundle\Event\RouteLikeEvent;
+use TB\Bundle\FrontendBundle\Event\RouteUndoLikeEvent;
 
 use TB\Bundle\FrontendBundle\Entity\Activity;
 use TB\Bundle\FrontendBundle\Entity\RoutePublishActivity;
 use TB\Bundle\FrontendBundle\Entity\UserFollowActivity;
 use TB\Bundle\FrontendBundle\Entity\UserUnfollowActivity;
+use TB\Bundle\FrontendBundle\Entity\RouteLikeActivity;
+use TB\Bundle\FrontendBundle\Entity\RouteUndoLikeActivity;
 
 /**
  * Create activity feed items from corresponding events
@@ -58,23 +62,27 @@ class ActivityListener
         $userUnfollowActivity = new UserUnfollowActivity($event->getUnfollowingUser(), $event->getUnfollowedUser());
         $this->em->persist($userUnfollowActivity);
         $this->em->flush();
-        $this->publishMessage($userUnfollowActivity);
     }
     
     /**
      * Create a RouteLikeActivity from the RouteLikeEvent event
      */ 
-    public function onRouteLike()
+    public function onRouteLike(RouteLikeEvent $event)
     {
-        
+        $routeLikeActivity = new RouteLikeActivity($event->getRoute(), $event->getUser());
+        $this->em->persist($routeLikeActivity);
+        $this->em->flush();
+        $this->publishMessage($routeLikeActivity);
     }
     
     /**
      * Create a RouteUndoLikeActivity from the RouteUndoLikeEvent event
      */ 
-    public function onRouteUndoLike()
+    public function onRouteUndoLike(RouteUndoLikeEvent $event)
     {
-        
+        $routeUndoLikeActivity = new RouteUndoLikeActivity($event->getRoute(), $event->getUser());
+        $this->em->persist($routeUndoLikeActivity);
+        $this->em->flush();
     }
     
     /**

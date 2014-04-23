@@ -14,6 +14,8 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *    "user_follow"   = "UserFollowActivity",
  *    "user_unfollow" = "UserUnfollowActivity",
  *    "route_publish" = "RoutePublishActivity",
+ *    "route_like" = "RouteLikeActivity",
+ *    "route_undolike" = "RouteUndoLikeActivity",
  * })
  */
 abstract class Activity implements Exportable

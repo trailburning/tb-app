@@ -187,9 +187,23 @@ class Route implements Exportable
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\OneToMany(targetEntity="RoutePublishActivity", mappedBy="routePublishActivities")
+     * @ORM\OneToMany(targetEntity="RoutePublishActivity", mappedBy="object")
      **/
     private $routePublishActivities;
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="RouteLikeActivity", mappedBy="object")
+     **/
+    private $routeLikeActivities;
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="RouteUndoLikeActivity", mappedBy="object")
+     **/
+    private $routeUndoLikeActivities;
     
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -520,7 +534,9 @@ class Route implements Exportable
         $this->editorials = new \Doctrine\Common\Collections\ArrayCollection();
         $this->medias = new \Doctrine\Common\Collections\ArrayCollection();
         $this->eventRoutes = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->routePoints = new \Doctrine\Common\Collections\ArrayCollection();        
+        $this->routePoints = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->routeLikeActivities = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->routeUndoLikeActivities = new \Doctrine\Common\Collections\ArrayCollection();        
     }
     
     /**
@@ -1043,5 +1059,71 @@ class Route implements Exportable
         }
         
         return false;
+    }
+
+    /**
+     * Add routeUndoLikeActivities
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\RouteUndoLikeActivity $routeUndoLikeActivities
+     * @return Route
+     */
+    public function addRouteUndoLikeActivity(\TB\Bundle\FrontendBundle\Entity\RouteUndoLikeActivity $routeUndoLikeActivities)
+    {
+        $this->routeUndoLikeActivities[] = $routeUndoLikeActivities;
+
+        return $this;
+    }
+
+    /**
+     * Remove routeUndoLikeActivities
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\RouteUndoLikeActivity $routeUndoLikeActivities
+     */
+    public function removeRouteUndoLikeActivity(\TB\Bundle\FrontendBundle\Entity\RouteUndoLikeActivity $routeUndoLikeActivities)
+    {
+        $this->routeUndoLikeActivities->removeElement($routeUndoLikeActivities);
+    }
+
+    /**
+     * Get routeUndoLikeActivities
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRouteUndoLikeActivities()
+    {
+        return $this->routeUndoLikeActivities;
+    }
+
+    /**
+     * Add routeLikeActivities
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\RouteLikeActivity $routeLikeActivities
+     * @return Route
+     */
+    public function addRouteLikeActivity(\TB\Bundle\FrontendBundle\Entity\RouteLikeActivity $routeLikeActivities)
+    {
+        $this->routeLikeActivities[] = $routeLikeActivities;
+
+        return $this;
+    }
+
+    /**
+     * Remove routeLikeActivities
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\RouteLikeActivity $routeLikeActivities
+     */
+    public function removeRouteLikeActivity(\TB\Bundle\FrontendBundle\Entity\RouteLikeActivity $routeLikeActivities)
+    {
+        $this->routeLikeActivities->removeElement($routeLikeActivities);
+    }
+
+    /**
+     * Get routeLikeActivities
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRouteLikeActivities()
+    {
+        return $this->routeLikeActivities;
     }
 }

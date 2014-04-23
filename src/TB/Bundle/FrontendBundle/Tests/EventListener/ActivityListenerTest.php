@@ -6,6 +6,8 @@ use TB\Bundle\FrontendBundle\Tests\AbstractFrontendTest;
 use TB\Bundle\FrontendBundle\Event\RoutePublishEvent;
 use TB\Bundle\FrontendBundle\Event\UserFollowEvent;
 use TB\Bundle\FrontendBundle\Event\UserUnfollowEvent;
+use TB\Bundle\FrontendBundle\Event\RouteLikeEvent;
+use TB\Bundle\FrontendBundle\Event\RouteUndoLikeEvent;
 
 class ActivityListenerTest extends AbstractFrontendTest
 {
@@ -143,8 +145,8 @@ class ActivityListenerTest extends AbstractFrontendTest
         $producer = $this->getMockBuilder('OldSound\RabbitMqBundle\RabbitMq\Producer')
             ->disableOriginalConstructor()
             ->getMock();
-        // Test that the publish() method gets called exactly once
-        $producer->expects($this->once())
+        // Test that the publish() method gets not called
+        $producer->expects($this->never())
             ->method('publish')
             ->will($this->returnCallback(array($this, 'assertAMQPMessage'))); // Use this callback to verify AMQP message AMQPChannel;
         $this->getContainer()->set('old_sound_rabbit_mq.main_producer', $producer);
@@ -166,6 +168,116 @@ class ActivityListenerTest extends AbstractFrontendTest
             'UserUnfollowActivity with excpected objectId was created');
         $this->assertEquals($user->getId(), $activity->getActor()->getId(),
             'UserUnfollowActivity with excpected targetId was created');
+        
+    }
+    
+    /**
+     * Test that a UserFollowActivity is created when the tb.user_follow event gets dispatched
+     */
+    public function testOnRouteLike()
+    {
+        $this->loadFixtures([
+            'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData',
+        ]);
+            
+        // Get Route from DB with the slug "grunewald"..
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        $user = $em
+            ->getRepository('TBFrontendBundle:User')
+            ->findOneByName('mattallbeury');
+        if (!$user) {
+            $this->fail('Missing User with name "mattallbeury" in test DB');
+        }
+        
+        $route = $em
+            ->getRepository('TBFrontendBundle:Route')
+            ->findOneBySlug('grunewald');
+        if (!$route) {
+            $this->fail('Missing Route to like with slug "grunewald" in test DB');
+        }
+        
+        // Replace the RabbitMQ Producer Service with a Stub
+        $producer = $this->getMockBuilder('OldSound\RabbitMqBundle\RabbitMq\Producer')
+            ->disableOriginalConstructor()
+            ->getMock();
+        // Test that the publish() method gets called exactly once
+        $producer->expects($this->once())
+            ->method('publish')
+            ->will($this->returnCallback(array($this, 'assertAMQPMessage'))); // Use this callback to verify AMQP message AMQPChannel;
+        $this->getContainer()->set('old_sound_rabbit_mq.main_producer', $producer);
+        
+        //  get the event dispatcher and dispathe the tb.route_publish manually
+        $dispatcher = $this->getContainer()->get('event_dispatcher');
+        $event = new RouteLikeEvent($route, $user);
+        $dispatcher->dispatch('tb.route_like', $event);
+        
+        $activity = $em
+            ->getRepository('TBFrontendBundle:RouteLikeActivity')
+            ->findOneByObjectId($route->getId());
+        
+        if (!$activity) {
+            $this->fail('RouteLikeActivity was not created for tb.route_like event');
+        }
+        
+        $this->assertEquals($route->getId(), $activity->getObject()->getId(), 
+            'RouteLikeActivity with excpected objectId was created');
+        $this->assertEquals($user->getId(), $activity->getActor()->getId(),
+            'RouteLikeActivity with excpected targetId was created');
+        
+    }
+    
+    /**
+     * Test that a RouteUndoLikeEvent is created when the tb.route_undolike event gets dispatched
+     */
+    public function testOnRouteUndoLike()
+    {
+        $this->loadFixtures([
+            'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData',
+        ]);
+            
+        // Get Route from DB with the slug "grunewald"..
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        $user = $em
+            ->getRepository('TBFrontendBundle:User')
+            ->findOneByName('mattallbeury');
+        if (!$user) {
+            $this->fail('Missing User with name "mattallbeury" in test DB');
+        }
+        
+        $route = $em
+            ->getRepository('TBFrontendBundle:Route')
+            ->findOneBySlug('grunewald');
+        if (!$route) {
+            $this->fail('Missing Route to undo like with slug "grunewald" in test DB');
+        }
+        
+        // Replace the RabbitMQ Producer Service with a Stub
+        $producer = $this->getMockBuilder('OldSound\RabbitMqBundle\RabbitMq\Producer')
+            ->disableOriginalConstructor()
+            ->getMock();
+        // Test that the publish() method gets not called
+        $producer->expects($this->never())
+            ->method('publish')
+            ->will($this->returnCallback(array($this, 'assertAMQPMessage'))); // Use this callback to verify AMQP message AMQPChannel;
+        $this->getContainer()->set('old_sound_rabbit_mq.main_producer', $producer);
+        
+        //  Get the event dispatcher and dispathe the tb.route_publish manually
+        $dispatcher = $this->getContainer()->get('event_dispatcher');
+        $event = new RouteUndoLikeEvent($route, $user);
+        $dispatcher->dispatch('tb.route_undolike', $event);
+        
+        $activity = $em
+            ->getRepository('TBFrontendBundle:RouteUndoLikeActivity')
+            ->findOneByObjectId($route->getId());
+        
+        if (!$activity) {
+            $this->fail('RouteUndoLikeActivity was not created for tb.route_undolike event');
+        }
+        
+        $this->assertEquals($route->getId(), $activity->getObject()->getId(), 
+            'RouteUndoLikeActivity with excpected objectId was created');
+        $this->assertEquals($user->getId(), $activity->getActor()->getId(),
+            'RouteUndoLikeActivity with excpected targetId was created');
         
     }
     

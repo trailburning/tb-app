@@ -6,6 +6,8 @@ use Doctrine\ORM\EntityManager;
 use TB\Bundle\FrontendBundle\Entity\Activity;
 use TB\Bundle\FrontendBundle\Entity\UserActivity;
 use TB\Bundle\FrontendBundle\Entity\User;
+use TB\Bundle\FrontendBundle\Entity\RouteLikeActivity;
+use TB\Bundle\FrontendBundle\Entity\RouteUndoLikeActivity;
 
 /**
  * 
@@ -90,6 +92,16 @@ class ActivityFeedGenerator
             $this->em->flush();
         } elseif ($activity instanceof \TB\Bundle\FrontendBundle\Entity\UserUnfollowActivity) {
             // No UserActivity is created for UserUnfollowActivity
+        } elseif ($activity instanceof \TB\Bundle\FrontendBundle\Entity\RouteLikeActivity) {
+            $userActivity = new UserActivity();
+            $userActivity->setActivity($activity);
+            $user = $activity->getObject()->getUser();
+            $userActivity->setUser($user);
+            $updatedUsers[] = $user;
+            $this->em->persist($userActivity);
+            $this->em->flush();
+        } elseif ($activity instanceof \TB\Bundle\FrontendBundle\Entity\RouteUndoLikeActivity) {
+            // No UserActivity is created for RouteUndoLikeActivity
         } else {
             throw new Exception(sprintf('Unhandled activity item of type "%s"', $activity));
         }

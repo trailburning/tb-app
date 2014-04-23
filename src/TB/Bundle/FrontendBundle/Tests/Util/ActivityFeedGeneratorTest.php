@@ -110,4 +110,36 @@ class ActivityFeedGeneratorTest extends AbstractFrontendTest
                 'The followed Users activityUnseenCount was upated');
     }
     
+    public function testCreateFeedFromRouteLikeActivity()
+    {
+        $this->loadFixtures([
+            'TB\Bundle\FrontendBundle\DataFixtures\ORM\ActivityStreamData',
+        ]);
+        
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        
+        $query = $em->createQuery('SELECT a FROM TBFrontendBundle:RouteLikeActivity a ORDER BY a.id ASC');
+        try {
+            $activity = $query->setMaxResults(1)->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            $this->fail('No RouteLikeActivity found in Test DB');
+        }
+        
+        $generator = $this->getContainer()->get('activity_feed_generator');
+        
+        $generator->createFeedFromActivity($activity);
+        
+        $route = $activity->getObject();
+        $notifiedUser = $route->getUser();
+        
+        $this->assertEquals(1, count($route->getUserLikes()),
+            'THe liked Route has one UserActivity');
+        $activities = $route->getRouteLikeActivities();
+        
+        $this->assertEquals($activity->getId(), $notifiedUser->getUserActivities()[0]->getActivity()->getId(),
+            'The UserActivity was created');    
+        $this->assertEquals(1, $notifiedUser->getActivityUnseenCount(),
+                'The followed Users activityUnseenCount was upated');
+    }
+    
 }    

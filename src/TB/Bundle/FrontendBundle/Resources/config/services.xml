@@ -61,6 +61,20 @@
             <argument type="service" id="old_sound_rabbit_mq.main_producer" />
             <tag name="kernel.event_listener" event="tb.user_unfollow" method="onUserUnfollow" />
         </service>
+        
+        <!-- Register Event Listener to create an Activity Feed Item when a Route gets liked -->
+        <service id="tb.activity.route_like_listener" class="TB\Bundle\FrontendBundle\EventListener\ActivityListener">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="old_sound_rabbit_mq.main_producer" />
+            <tag name="kernel.event_listener" event="tb.route_like" method="onRouteLike" />
+        </service>
+        
+        <!-- Register Event Listener to create an Activity Feed Item when a Route like gets undone -->
+        <service id="tb.activity.route_undolike_listener" class="TB\Bundle\FrontendBundle\EventListener\ActivityListener">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="old_sound_rabbit_mq.main_producer" />
+            <tag name="kernel.event_listener" event="tb.route_undolike" method="onRouteUndoLike" />
+        </service>
 
         <!--  Register activity feed generator and as service -->
         <service id="activity_feed_generator" class="TB\Bundle\FrontendBundle\Util\ActivityFeedGenerator">
