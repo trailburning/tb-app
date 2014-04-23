@@ -70,6 +70,14 @@ class ActivityListener
     }
     
     /**
+     * Create a RouteUndoLikeActivity from the RouteUndoLikeEvent event
+     */ 
+    public function onRouteUndoLike()
+    {
+
+    }
+    
+    /**
      * Publishes a message to RabbitMQ
      */
     protected function publishMessage(Activity $activity)
