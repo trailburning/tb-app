@@ -62,6 +62,14 @@ class ActivityListener
     }
     
     /**
+     * Create a RouteLikeActivity from the RouteLikeEvent event
+     */ 
+    public function onRouteLike()
+    {
+
+    }
+    
+    /**
      * Publishes a message to RabbitMQ
      */
     protected function publishMessage(Activity $activity)
