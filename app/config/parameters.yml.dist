@@ -21,3 +21,4 @@ parameters:
     rabbit_mq_user: guest
     rabbit_mq_password: guest
     rabbit_mq_vhost: /
+    rabbit_mq_main_queue: main
