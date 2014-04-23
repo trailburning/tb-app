@@ -61,6 +61,7 @@ define([
       this.userProfileMap = null;
       this.bFirstSlide = true;
       this.bPlayerReady = false;
+	  this.elLikeBtn = $('.like_btn', $(this.el));
   
       this.bSlideFull = true;
 	  if (typeof TB_USER_ID != 'undefined') {
@@ -155,17 +156,49 @@ define([
         $('#trail_overlay .overlay_pull .button').removeClass('overlay_pull_hover');                
       });
             
-      $('.like_btn').click(function(evt){
-      	if ($(this).hasClass('pressed-btn-tb')) {
-      	  $('.btn-label', $(this)).text('Like');
-          $(this).removeClass('pressed-btn-tb');
-      	}
-      	else {
-      	  $('.btn-label', $(this)).text('Liked');
-          $(this).addClass('pressed-btn-tb');      		
-      	}      	
-      });
+	  function updateLikeBtn() {
+	    if (self.elLikeBtn.hasClass('pressed-btn-tb')) {
+	  	  $('.btn-label', self.elLikeBtn).text(self.elLikeBtn.attr('data-on'));
+	    }
+	    else {
+	  	  $('.btn-label', self.elLikeBtn).text(self.elLikeBtn.attr('data-off'));
+	    }
+	  }
+
+  	  $('.like_btn', $(this.el)).click(function(evt){
+  	    if ($(this).hasClass('pressed-btn-tb')) {
+      	  $(this).removeClass('pressed-btn-tb');
+      	  self.like($(this).attr('data-userid'), false);
+  	      updateLikeBtn();
+  	    }
+        else {
+      	  $(this).addClass('pressed-btn-tb');
+      	  self.like($(this).attr('data-userid'), true);
+          updateLikeBtn();
+  	    }      	
+  	  });
     },
+    like: function(nUser, bFollow){    
+      var strMethod = 'like';
+      if (!bFollow) {
+      	strMethod = 'undolike';
+      }
+    	
+      var strURL = TB_RESTAPI_BASEURL + '/v1/route/'+nUser+'/' + strMethod;      
+      $.ajax({
+        type: "PUT",
+        dataType: "json",
+        url: strURL,
+        headers: {'Trailburning-User-ID': TB_USER_ID},
+        error: function(data) {
+//          console.log('error:'+data.responseText);      
+        },
+        success: function(data) {      
+//          console.log('success');
+//          console.log(data);
+        }
+      });        
+    },    
     updatePlayerHeight: function(){
       var nPlayerHeight = 0;      
       var elContentView = $('#content_view');
