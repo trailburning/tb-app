@@ -108,11 +108,9 @@ var TB_TRAIL_ID = {{ trail.id }};
                     
 					{% if app.user %}
 						{% if app.user.id != user.id %}
-							ON
 							<div class="like"><a href="javascript:void(0)" class="btn btn-tb-action btn-tb like_btn" data-off="Like" data-on="Liked" data-userid="{{ user.id}}"><i class="icon-star icon-white"></i> <span class="btn-label">Like</span></a></div>
 						{% endif %}
 					{% else %}
-					    OFF
 						<div class="like"><a href="{{ path('fos_user_security_login') }}" class="btn btn-tb-action btn-tb like_btn" data-off="Like" data-on="Liked" data-userid="{{ user.id}}"><i class="icon-star icon-white"></i> <span class="btn-label">Like</span></a></div>
 					{% endif %}
                 </div>

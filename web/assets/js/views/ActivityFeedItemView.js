@@ -25,7 +25,7 @@ define([
 	  else {
       	this.model.set('displaySeen', 'new');	  	
 	  }
-      
+
       switch (this.model.get('verb')) {
       	case 'follow':      	
       	  this.model.set('activityURL', this.model.get('actor').url);

@@ -191,11 +191,11 @@ define([
         url: strURL,
         headers: {'Trailburning-User-ID': TB_USER_ID},
         error: function(data) {
-//          console.log('error:'+data.responseText);      
+          console.log('error:'+data.responseText);      
         },
         success: function(data) {      
-//          console.log('success');
-//          console.log(data);
+          console.log('success');
+          console.log(data);
         }
       });        
     },    
