@@ -261,7 +261,7 @@ border-width:1px;
 #step_route_edit_view {
   display: none;
   background: #FFF;
-  height: 1571px;
+  min-height: 1000px;
 }
 
 #step_route_edit_view .gallery_panel {
@@ -324,7 +324,30 @@ border-width:1px;
 }
 
 #step_route_edit_view .detail_panel .update {
-	padding-top: 12px;
+  padding-top: 12px;
+}
+
+#step_route_edit_view .detail_panel .activities {
+  margin-top: 28px;
+  text-align: center;
+}
+
+#step_route_edit_view .detail_panel .activity {
+  display: inline-block;
+  margin: 16px 11px 0px 11px;
+}
+
+#step_route_edit_view .detail_panel .activity .icon {
+  background-color: #9FDBFD;
+}
+
+#step_route_edit_view .detail_panel .activity .active {
+  background-color: #44B5F7;
+}
+
+#step_route_edit_view .detail_panel .activity:hover .icon {
+  background-color: #44B5F7;
+  cursor: pointer;
 }
 
 #step_route_edit_view .slideshow_container {

@@ -193,6 +193,45 @@ h4.tb {
   height: 100%;
 }
 
+.tb-avatar .icon {
+  position: relative;
+  margin: 4%;
+  width: 92%;
+  height: 92%;
+  border-radius: 50%;
+  overflow: hidden;	
+  background: url("../img/trailplayer/trail_run.png") #44B5F7 no-repeat top left;
+  background-size: 100%;
+}
+
+.tb-avatar .icon-run {
+  background-image: url("../img/trailplayer/trail_run.png");
+}
+
+.tb-avatar .icon-hike {
+  background-image: url("../img/trailplayer/trail_hike.png");
+}
+
+.tb-avatar .icon-bike {
+  background-image: url("../img/trailplayer/trail_bike.png");
+}
+
+.tb-avatar .icon-climb {
+  background-image: url("../img/trailplayer/trail_climb.png");
+}
+
+.tb-avatar .icon-ski {
+  background-image: url("../img/trailplayer/trail_ski.png");
+}
+
+.tb-avatar .icon-stroller {
+  background-image: url("../img/trailplayer/trail_stroller.png");
+}
+
+.tb-avatar .icon-wheelchair {
+  background-image: url("../img/trailplayer/trail_wheelchair.png");
+}
+
 .tb-avatar {
   width: 48px;
   height: 48px;
