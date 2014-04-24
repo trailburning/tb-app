@@ -258,7 +258,16 @@ class TrailController extends Controller
      */    
     public function homepageTrailsAction()
     {
+        $query = $this->getDoctrine()->getManager()
+            ->createQuery('
+                SELECT r FROM TBFrontendBundle:Route r
+                WHERE r.publish = true 
+                AND r.homepageOrder IS NOT NULL
+                ORDER BY r.homepageOrder ASC');
+        $trails = $query->getResult();  
         
-        return [];
+        return [
+            'trails' => $trails,
+        ];
     }
 }
