@@ -90,6 +90,13 @@ abstract class User extends BaseUser implements Exportable
     private $avatarGravatar;
     
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="activity_unseen_count", type="smallint", nullable=true)
+     */
+    private $activityUnseenCount;
+    
+    /**
      * @var datetime
      *
      * @ORM\Column(name="activity_last_viewed", type="datetime", nullable=true)
@@ -134,44 +141,73 @@ abstract class User extends BaseUser implements Exportable
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\OneToMany(targetEntity="RoutePublishActivity", mappedBy="routePublishActivities")
+     * @ORM\OneToMany(targetEntity="RoutePublishActivity", mappedBy="actor")
      **/
     private $routePublishActivities;
     
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\OneToMany(targetEntity="UserFollowActivity", mappedBy="userFollowActivities")
+     * @ORM\OneToMany(targetEntity="RouteLikeActivity", mappedBy="actor")
+     **/
+    private $routeLikeActivities;
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="RouteUndoLikeActivity", mappedBy="actor")
+     **/
+    private $routeUndoLikeActivities;
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="UserFollowActivity", mappedBy="actor")
      **/
     private $userFollowActivities;
     
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\OneToMany(targetEntity="UserFollowActivity", mappedBy="userFollowedActivities")
+     * @ORM\OneToMany(targetEntity="UserFollowActivity", mappedBy="object")
      **/
     private $userFollowedActivities;
     
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\OneToMany(targetEntity="UserUnfollowActivity", mappedBy="userUnfollowActivities")
+     * @ORM\OneToMany(targetEntity="UserUnfollowActivity", mappedBy="actor")
      **/
     private $userUnfollowActivities;
     
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\OneToMany(targetEntity="UserUnfollowActivity", mappedBy="userUnfollowedActivities")
+     * @ORM\OneToMany(targetEntity="UserUnfollowActivity", mappedBy="object")
      **/
     private $userUnfollowedActivities;
     
     /**
+<<<<<<< HEAD
      * @var integer
      *
      * @ORM\Column(name="homepage_order", type="smallint", nullable=true)
      */
     private $homepageOrder;
+=======
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="UserActivity", mappedBy="user")
+     **/
+    private $userActivities;
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\Route", mappedBy="userLikes")
+     */
+    private $routeLikes;
+>>>>>>> dev
     
     /**
      * Constructor
@@ -183,6 +219,8 @@ abstract class User extends BaseUser implements Exportable
         $this->editorials = new \Doctrine\Common\Collections\ArrayCollection();
         $this->iFollow = new \Doctrine\Common\Collections\ArrayCollection();
         $this->myFollower = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->routeLikeActivities = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->routeUndoLikeActivities = new \Doctrine\Common\Collections\ArrayCollection();
         parent::__construct();
     }
     
@@ -619,9 +657,9 @@ abstract class User extends BaseUser implements Exportable
     }
     
     /**
-     * Tests if the User is following a given User
+     * Checks if the User is following a given User
      *
-     * @param User $user The User to looup in the follower
+     * @param User $user The User to check in the follower
      * @return boolean returns true if the User is following, false if not
      */
     public function isFollowing(User $user)
@@ -848,5 +886,177 @@ abstract class User extends BaseUser implements Exportable
         }
         
         return $avatar;
+    }
+
+    /**
+     * Add userActivities
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\UserActivity $userActivities
+     * @return User
+     */
+    public function addUserActivity(\TB\Bundle\FrontendBundle\Entity\UserActivity $userActivities)
+    {
+        $this->userActivities[] = $userActivities;
+
+        return $this;
+    }
+
+    /**
+     * Remove userActivities
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\UserActivity $userActivities
+     */
+    public function removeUserActivity(\TB\Bundle\FrontendBundle\Entity\UserActivity $userActivities)
+    {
+        $this->userActivities->removeElement($userActivities);
+    }
+
+    /**
+     * Get userActivities
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUserActivities()
+    {
+        return $this->userActivities;
+    }
+
+    /**
+     * Set activityUnseenCount
+     *
+     * @param integer $activityUnseenCount
+     * @return User
+     */
+    public function setActivityUnseenCount($activityUnseenCount)
+    {
+        $this->activityUnseenCount = $activityUnseenCount;
+
+        return $this;
+    }
+
+    /**
+     * Get activityUnseenCount
+     *
+     * @return integer 
+     */
+    public function getActivityUnseenCount()
+    {
+        return $this->activityUnseenCount;
+    }
+
+    /**
+     * Add routeLikes
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\Route $routeLikes
+     * @return User
+     */
+    public function addRouteLike(\TB\Bundle\FrontendBundle\Entity\Route $routeLikes)
+    {
+        $this->routeLikes[] = $routeLikes;
+
+        return $this;
+    }
+
+    /**
+     * Remove routeLikes
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\Route $routeLikes
+     */
+    public function removeRouteLike(\TB\Bundle\FrontendBundle\Entity\Route $routeLikes)
+    {
+        $this->routeLikes->removeElement($routeLikes);
+    }
+
+    /**
+     * Get routeLikes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRouteLikes()
+    {
+        return $this->routeLikes;
+    }
+
+    /**
+     * Add routeLikeActivities
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\RouteLikeActivity $routeLikeActivities
+     * @return User
+     */
+    public function addRouteLikeActivity(\TB\Bundle\FrontendBundle\Entity\RouteLikeActivity $routeLikeActivities)
+    {
+        $this->routeLikeActivities[] = $routeLikeActivities;
+
+        return $this;
+    }
+
+    /**
+     * Remove routeLikeActivities
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\RouteLikeActivity $routeLikeActivities
+     */
+    public function removeRouteLikeActivity(\TB\Bundle\FrontendBundle\Entity\RouteLikeActivity $routeLikeActivities)
+    {
+        $this->routeLikeActivities->removeElement($routeLikeActivities);
+    }
+
+    /**
+     * Get routeLikeActivities
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRouteLikeActivities()
+    {
+        return $this->routeLikeActivities;
+    }
+
+    /**
+     * Add routeUndoLikeActivities
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\RouteUndoLikeActivity $routeUndoLikeActivities
+     * @return User
+     */
+    public function addRouteUndoLikeActivity(\TB\Bundle\FrontendBundle\Entity\RouteUndoLikeActivity $routeUndoLikeActivities)
+    {
+        $this->routeUndoLikeActivities[] = $routeUndoLikeActivities;
+
+        return $this;
+    }
+
+    /**
+     * Remove routeUndoLikeActivities
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\RouteUndoLikeActivity $routeUndoLikeActivities
+     */
+    public function removeRouteUndoLikeActivity(\TB\Bundle\FrontendBundle\Entity\RouteUndoLikeActivity $routeUndoLikeActivities)
+    {
+        $this->routeUndoLikeActivities->removeElement($routeUndoLikeActivities);
+    }
+
+    /**
+     * Get routeUndoLikeActivities
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRouteUndoLikeActivities()
+    {
+        return $this->routeUndoLikeActivities;
+    }
+    
+    public function setHomepageOrder($homepageOrder)
+    {
+        $this->homepageOrder = $homepageOrder;
+
+        return $this;
+    }
+
+    /**
+     * Get homepageOrder
+     *
+     * @return integer 
+     */
+    public function getHomepageOrder()
+    {
+        return $this->homepageOrder;
     }
 }

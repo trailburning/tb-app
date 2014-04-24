@@ -3,14 +3,20 @@
 namespace TB\Bundle\FrontendBundle\EventListener;
 
 use Doctrine\ORM\EntityManager;
+use OldSound\RabbitMqBundle\RabbitMq\Producer;
 
 use TB\Bundle\FrontendBundle\Event\RoutePublishEvent;
 use TB\Bundle\FrontendBundle\Event\UserFollowEvent;
 use TB\Bundle\FrontendBundle\Event\UserUnfollowEvent;
+use TB\Bundle\FrontendBundle\Event\RouteLikeEvent;
+use TB\Bundle\FrontendBundle\Event\RouteUndoLikeEvent;
 
+use TB\Bundle\FrontendBundle\Entity\Activity;
 use TB\Bundle\FrontendBundle\Entity\RoutePublishActivity;
 use TB\Bundle\FrontendBundle\Entity\UserFollowActivity;
 use TB\Bundle\FrontendBundle\Entity\UserUnfollowActivity;
+use TB\Bundle\FrontendBundle\Entity\RouteLikeActivity;
+use TB\Bundle\FrontendBundle\Entity\RouteUndoLikeActivity;
 
 /**
  * Create activity feed items from corresponding events
@@ -18,10 +24,12 @@ use TB\Bundle\FrontendBundle\Entity\UserUnfollowActivity;
 class ActivityListener
 {
     protected $em;
+    protected $producer;
 
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $em, Producer $producer)
     {
         $this->em = $em;
+        $this->producer = $producer;
     }
     
     /**
@@ -32,6 +40,7 @@ class ActivityListener
         $routePublishActivity = new RoutePublishActivity($event->getRoute(), $event->getUser());
         $this->em->persist($routePublishActivity);
         $this->em->flush();
+        $this->publishMessage($routePublishActivity);
     }
     
     /**
@@ -42,6 +51,7 @@ class ActivityListener
         $userFollowActivity = new UserFollowActivity($event->getFollowingUser(), $event->getFollowedUser());
         $this->em->persist($userFollowActivity);
         $this->em->flush();
+        $this->publishMessage($userFollowActivity);
     }
     
     /**
@@ -52,5 +62,35 @@ class ActivityListener
         $userUnfollowActivity = new UserUnfollowActivity($event->getUnfollowingUser(), $event->getUnfollowedUser());
         $this->em->persist($userUnfollowActivity);
         $this->em->flush();
+    }
+    
+    /**
+     * Create a RouteLikeActivity from the RouteLikeEvent event
+     */ 
+    public function onRouteLike(RouteLikeEvent $event)
+    {
+        $routeLikeActivity = new RouteLikeActivity($event->getRoute(), $event->getUser());
+        $this->em->persist($routeLikeActivity);
+        $this->em->flush();
+        $this->publishMessage($routeLikeActivity);
+    }
+    
+    /**
+     * Create a RouteUndoLikeActivity from the RouteUndoLikeEvent event
+     */ 
+    public function onRouteUndoLike(RouteUndoLikeEvent $event)
+    {
+        $routeUndoLikeActivity = new RouteUndoLikeActivity($event->getRoute(), $event->getUser());
+        $this->em->persist($routeUndoLikeActivity);
+        $this->em->flush();
+    }
+    
+    /**
+     * Publishes a message to RabbitMQ
+     */
+    protected function publishMessage(Activity $activity)
+    {   
+        $this->producer->setContentType('application/json');
+        $this->producer->publish(json_encode($activity->exportMessage()));
     }
 }

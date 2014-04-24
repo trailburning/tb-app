@@ -2,18 +2,11 @@
 
 namespace TB\Bundle\FrontendBundle\Tests\Entity;
 
-use Liip\FunctionalTestBundle\Test\WebTestCase;
+use TB\Bundle\FrontendBundle\Tests\AbstractFrontendTest;
 use TB\Bundle\FrontendBundle\Entity\RouteType;
 
-class RouteCategoryTest extends WebTestCase
+class RouteCategoryTest extends AbstractFrontendTest
 {
-    
-    protected static function getKernelClass()
-    {
-        require_once self::getPhpUnitXmlDir() . '/frontend/AppKernel.php';
-
-        return 'AppKernel';
-    }
     
     /**
      * Test export entity

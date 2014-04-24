@@ -2,19 +2,14 @@
 
 namespace TB\Bundle\FrontendBundle\Tests\Controller;
 
+use TB\Bundle\FrontendBundle\Tests\AbstractFrontendTest;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  *
  */
-class TrailControllerTest extends BaseFrontendTest
+class TrailControllerTest extends AbstractFrontendTest
 {
-    protected static function getKernelClass()
-    {
-        require_once self::getPhpUnitXmlDir() . '/frontend/AppKernel.php';
-
-        return 'AppKernel';
-    }
     
     /**
      * Test Trail created by UserProfile, no Event, no Editorial

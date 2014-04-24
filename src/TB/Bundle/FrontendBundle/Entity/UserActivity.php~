@@ -1,0 +1,58 @@
+<?php
+
+namespace TB\Bundle\FrontendBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Region
+ *
+ * @ORM\Table(name="user_activity")
+ * @ORM\Entity
+ */
+class UserActivity
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="user_id", type="integer")
+     */
+    private $userId;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="activity_id", type="integer")
+     */
+    private $activityId;
+    
+    /**
+     * @var \TB\Bundle\FrontendBundle\Entity\User
+     *
+     * @ORM\ManyToOne(targetEntity="TB\Bundle\FrontendBundle\Entity\User", inversedBy="userActivities")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * })
+     */
+    private $user;
+    
+    /**
+     * @var \TB\Bundle\FrontendBundle\Entity\Activity
+     *
+     * @ORM\ManyToOne(targetEntity="TB\Bundle\FrontendBundle\Entity\Activity", inversedBy="userActivities")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="activity_id", referencedColumnName="id")
+     * })
+     */
+    private $activity;
+}
+

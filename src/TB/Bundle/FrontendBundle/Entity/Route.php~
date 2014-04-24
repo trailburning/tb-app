@@ -92,7 +92,6 @@ class Route implements Exportable
      */
     private $gpxFileId;
     
-    
     /**
      * @var integer
      *
@@ -207,9 +206,31 @@ class Route implements Exportable
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\OneToMany(targetEntity="RoutePublishActivity", mappedBy="routePublishActivities")
+     * @ORM\OneToMany(targetEntity="RoutePublishActivity", mappedBy="object")
      **/
     private $routePublishActivities;
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="RouteLikeActivity", mappedBy="object")
+     **/
+    private $routeLikeActivities;
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="RouteUndoLikeActivity", mappedBy="object")
+     **/
+    private $routeUndoLikeActivities;
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\User", inversedBy="routeLikes")
+     * @ORM\JoinTable(name="route_likes")
+     */
+    private $userLikes;
 
     /**
      * Set name
@@ -532,7 +553,9 @@ class Route implements Exportable
         $this->editorials = new \Doctrine\Common\Collections\ArrayCollection();
         $this->medias = new \Doctrine\Common\Collections\ArrayCollection();
         $this->eventRoutes = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->routePoints = new \Doctrine\Common\Collections\ArrayCollection();        
+        $this->routePoints = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->routeLikeActivities = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->routeUndoLikeActivities = new \Doctrine\Common\Collections\ArrayCollection();        
     }
     
     /**
@@ -922,7 +945,6 @@ class Route implements Exportable
      */
     private $bbox;
     
-    
     /**
      * Only used by API
      */
@@ -937,7 +959,7 @@ class Route implements Exportable
     public function getBBox() 
     { 
         return $this->bbox; 
-    }    
+    }
 
     /**
      * Add routePublishActivities
@@ -986,8 +1008,7 @@ class Route implements Exportable
         
         return $data;
     }
-
-
+    
     /**
      * Set mediaId
      *
@@ -1032,5 +1053,144 @@ class Route implements Exportable
     public function getMedia()
     {
         return $this->media;
+    }
+
+    /**
+     * Add userLikes
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\User $userLikes
+     * @return Route
+     */
+    public function addUserLike(\TB\Bundle\FrontendBundle\Entity\User $userLikes)
+    {
+        $this->userLikes[] = $userLikes;
+
+        return $this;
+    }
+
+    /**
+     * Remove userLikes
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\User $userLikes
+     */
+    public function removeUserLike(\TB\Bundle\FrontendBundle\Entity\User $userLikes)
+    {
+        $this->userLikes->removeElement($userLikes);
+    }
+
+    /**
+     * Get userLikes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUserLikes()
+    {
+        return $this->userLikes;
+    }
+    
+    /**
+     * Checks a User already likes this Route
+     *
+     * @param User $user The User to check in the follower
+     * @return boolean returns true if the User likes this Route, false if not
+     */
+    public function hasUserLike(User $user)
+    {
+        foreach ($this->getUserLikes() as $likingUser) {
+            if ($likingUser->getId() === $user->getId()) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+
+    /**
+     * Add routeUndoLikeActivities
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\RouteUndoLikeActivity $routeUndoLikeActivities
+     * @return Route
+     */
+    public function addRouteUndoLikeActivity(\TB\Bundle\FrontendBundle\Entity\RouteUndoLikeActivity $routeUndoLikeActivities)
+    {
+        $this->routeUndoLikeActivities[] = $routeUndoLikeActivities;
+
+        return $this;
+    }
+
+    /**
+     * Remove routeUndoLikeActivities
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\RouteUndoLikeActivity $routeUndoLikeActivities
+     */
+    public function removeRouteUndoLikeActivity(\TB\Bundle\FrontendBundle\Entity\RouteUndoLikeActivity $routeUndoLikeActivities)
+    {
+        $this->routeUndoLikeActivities->removeElement($routeUndoLikeActivities);
+    }
+
+    /**
+     * Get routeUndoLikeActivities
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRouteUndoLikeActivities()
+    {
+        return $this->routeUndoLikeActivities;
+    }
+
+    /**
+     * Add routeLikeActivities
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\RouteLikeActivity $routeLikeActivities
+     * @return Route
+     */
+    public function addRouteLikeActivity(\TB\Bundle\FrontendBundle\Entity\RouteLikeActivity $routeLikeActivities)
+    {
+        $this->routeLikeActivities[] = $routeLikeActivities;
+
+        return $this;
+    }
+
+    /**
+     * Remove routeLikeActivities
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\RouteLikeActivity $routeLikeActivities
+     */
+    public function removeRouteLikeActivity(\TB\Bundle\FrontendBundle\Entity\RouteLikeActivity $routeLikeActivities)
+    {
+        $this->routeLikeActivities->removeElement($routeLikeActivities);
+    }
+
+    /**
+     * Get routeLikeActivities
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRouteLikeActivities()
+    {
+        return $this->routeLikeActivities;
+    }
+    
+    /**
+     * Set homepageOrder
+     *
+     * @param integer $homepageOrder
+     * @return Route
+     */
+    public function setHomepageOrder($homepageOrder)
+    {
+        $this->homepageOrder = $homepageOrder;
+        
+        return $this;
+    }
+
+    /**
+     * Get homepageOrder
+     *
+     * @return integer 
+     */
+    public function getHomepageOrder()
+    {
+        return $this->homepageOrder;
     }
 }

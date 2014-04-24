@@ -2,7 +2,7 @@
 
 namespace TB\Bundle\FrontendBundle\Tests\FOSUserbundle\Controller;
 
-use Liip\FunctionalTestBundle\Test\WebTestCase;
+use TB\Bundle\FrontendBundle\Tests\AbstractFrontendTest;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Tester\ApplicationTester;
 use Symfony\Component\Console\Output\Output;
@@ -12,15 +12,9 @@ use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 /**
  *
  */
-class ResettingControllerTest extends WebTestCase
+class ResettingControllerTest extends AbstractFrontendTest
 {
-    protected static function getKernelClass()
-    {
-        require_once self::getPhpUnitXmlDir() . '/frontend/AppKernel.php';
-
-        return 'AppKernel';
-    }
-    
+        
     /**
      * Test Trail created by UserProfile, no Event, no Editorial
      */

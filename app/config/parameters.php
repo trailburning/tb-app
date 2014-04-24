@@ -49,3 +49,18 @@ if (isset($_SERVER['MAILER_USER'])) {
 if (isset($_SERVER['MAILER_PASSWORD'])) {
     $container->setParameter('mailer_password', $_SERVER['MAILER_PASSWORD']);
 }
+if (isset($_SERVER['RABBIT_MQ_HOST'])) {
+    $container->setParameter('rabbit_mq_host', $_SERVER['RABBIT_MQ_HOST']);
+}
+if (isset($_SERVER['RABBIT_MQ_USER'])) {
+    $container->setParameter('rabbit_mq_user', $_SERVER['RABBIT_MQ_USER']);
+}
+if (isset($_SERVER['RABBIT_MQ_PASSWORD'])) {
+    $container->setParameter('rabbit_mq_password', $_SERVER['RABBIT_MQ_PASSWORD']);
+}
+if (isset($_SERVER['RABBIT_MQ_VHOST'])) {
+    $container->setParameter('rabbit_mq_vhost', $_SERVER['RABBIT_MQ_VHOST']);
+}
+if (isset($_SERVER['RABBIT_MQ_MAIN_QUEUE'])) {
+    $container->setParameter('rabbit_mq_main_queue', $_SERVER['RABBIT_MQ_MAIN_QUEUE']);
+}

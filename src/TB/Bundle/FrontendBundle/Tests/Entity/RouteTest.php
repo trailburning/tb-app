@@ -2,20 +2,13 @@
 
 namespace TB\Bundle\FrontendBundle\Tests\Entity;
 
-use Liip\FunctionalTestBundle\Test\WebTestCase;
+use TB\Bundle\FrontendBundle\Tests\AbstractFrontendTest;
 use TB\Bundle\FrontendBundle\Entity\Route;
 use TB\Bundle\FrontendBundle\Entity\GpxFile;
 use CrEOF\Spatial\PHP\Types\Geometry\Point;
 
-class RouteTest extends WebTestCase
+class RouteTest extends AbstractFrontendTest
 {
-    
-    protected static function getKernelClass()
-    {
-        require_once self::getPhpUnitXmlDir() . '/frontend/AppKernel.php';
-
-        return 'AppKernel';
-    }
     
     /**
      * Test export of entity
@@ -50,16 +43,16 @@ class RouteTest extends WebTestCase
         }
         
         $expectedJson = '{
-            "id": ' . $route->getId() . ',
             "about": "The Grunewald is a forest located in the western side of Berlin on the east side of the river Havel.", 
             "category": {
-                "id": ' . $routeCategory->getId() . ',
+                "id": ' . $routeCategory->getId() . ', 
                 "name": "Park"
             }, 
             "centroid": [
                 13.257437, 
                 52.508006
-            ],  
+            ], 
+            "id": ' . $route->getId() . ', 
             "length": 11298, 
             "name": "Grunewald", 
             "region": "Berlin", 
@@ -221,9 +214,9 @@ class RouteTest extends WebTestCase
                 "descent": 207.3
             }, 
             "type": {
-                "id": ' . $routeType->getId() . ',
+                "id": ' . $routeType->getId() . ', 
                 "name": "Marathon"
-            },
+            }, 
             "user": {
                 "avatar": "https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/mattallbeury/avatar.jpg", 
                 "name": "mattallbeury", 
@@ -399,4 +392,35 @@ class RouteTest extends WebTestCase
         $this->assertEquals($expected, $route->exportAsActivity(),
             'Route::exportAsActivity() returns the expected data array');
     }
+    
+    public function testHasUserLike()
+    {
+        $this->loadFixtures([
+            'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData',
+        ]);
+        
+        // Get Route from DB with the slug "grunewald"..
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        $user = $em
+            ->getRepository('TBFrontendBundle:User')
+            ->findOneByName('mattallbeury');
+        if (!$user) {
+            $this->fail('Missing User with name "mattallbeury" in test DB');
+        }
+        
+        $route = $em
+            ->getRepository('TBFrontendBundle:Route')
+            ->findOneBySlug('grunewald');
+        if (!$route) {
+            $this->fail('Missing Route with slug "grunewald" in test DB');
+        }
+        
+        $this->assertFalse($route->hasUserLike($user), 'User does not like the Route');
+        
+        $route->addUserLike($user);
+        $em->persist($route);
+        $em->flush();
+        
+        $this->assertTrue($route->hasUserLike($user), 'User does like the Route');
+    }   
 }
