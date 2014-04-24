@@ -15,8 +15,9 @@ define([
       app.dispatcher.on("TrailmakerDeleteTrailView:close", this.onTrailmakerDeleteTrailViewClose, this);
     	
       var self = this;
-
-  	  this.trailModel = new TrailModel();
+  	  
+	  this.trailModel = new TrailModel();
+  	  
 	  this.elLikeBtn = $('.like_btn', $(this.el));
 	  this.elCurrPanel = null;
 	
@@ -34,7 +35,7 @@ define([
 	  	// get id
 	  	self.elCurrPanel = $(this).closest('.panel');
 	  	if (self.elCurrPanel.length) {	    
-	  	  self.showDeleteDialog(self.elCurrPanel.attr('data-id'));	  		
+	  	  self.showDeleteDialog(self.elCurrPanel.attr('data-id'), self.elCurrPanel.attr('data-name'));	  		
 	  	}
 	  });
 
@@ -60,22 +61,17 @@ define([
   	    }      	
   	  });
     },
-	showDeleteDialog: function(nTrailID){		
+	showDeleteDialog: function(nTrailID, strTrailName){	  
+	  this.trailModel.set('id', nTrailID);	  
+      this.trailModel.set('trail_name', strTrailName);
+				
 	  $('#tb-content-overlay').height($('#bodyview').height());
       $('#tb-content-overlay').show();
       $('#tb-overlay-view').show();
       this.overlayView.render();
 
       this.trailmakerDeleteTrailView = new TrailmakerDeleteTrailView({ el: '#overlayContent_view', model: this.trailModel });
-  
-  var self = this;
-  
-      this.trailModel.set('id', nTrailID);
-      this.trailModel.fetch({
-        success: function () {
-	      self.trailmakerDeleteTrailView.render();
-        }      
-      });        
+	  this.trailmakerDeleteTrailView.render();
             
       $("body").animate({scrollTop:0}, '500', 'swing');      
 	},

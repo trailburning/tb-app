@@ -12,7 +12,7 @@ define([
     render: function(nProgress){
       var self = this;
       
-      if (!this.bRendered) {
+      if (!this.bRendered) {                
         var attribs = this.model.toJSON();
         
         $(this.el).html(this.template(attribs));
