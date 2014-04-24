@@ -58,32 +58,47 @@ define([
       $(this.el).append(slide.el);      
 	},    
     remove: function(id){
+      var bFound = false;
+      
       var self = this;
     	
 	  $('.slide', this.el).each(function(index) {
 	  	if ($(this).attr('data-id') == id) {
 	  	  $(this).remove();
+	  	  bFound = true;
 	  	}
 	  });
+	  if (bFound) {
+	    // if not removing def then check we have a slide
+	    if (id != -1) {
+	      this.checkSlideshow();	  	
+	    }
+        // fire event
+        app.dispatcher.trigger("TrailSlideshowView:mediaremove");                          		  	  
+	  }
+	},
+    starSlide: function(mediaID){
+	  // hide all    	
+      $('.star_marker', $(this.el)).hide();
+      // find the one to show
+      var elSlide = $('.slide[data-id='+mediaID+']', $(this.el)); 
+	  if (elSlide.length) {	  
+      	$('.star_marker', elSlide).show();
+	  }    	
+    },	
+    selectSlide: function(mediaID){
+      this.gotoSlide(mediaID);
+      // fire event
+      app.dispatcher.trigger("TrailSlideshowView:mediaclick", mediaID);
+    },           
+    selectDefSlide: function(){
 	  // select 1st element
 	  $('.slide:first', this.el).each(function(index) {
 	    self.gotoSlide($(this).attr('data-id'));
         // fire event
         app.dispatcher.trigger("TrailSlideshowView:mediaclick", $(this).attr('data-id'));
 	  });
-	  
-	  // if not removing def then check we have a slide
-	  if (id != -1) {
-	    this.checkSlideshow();	  	
-	  }
-      // fire event
-      app.dispatcher.trigger("TrailSlideshowView:mediaupdate");                          		  	  
-	},
-    selectSlide: function(mediaID){	
-      this.gotoSlide(mediaID);
-      // fire event
-      app.dispatcher.trigger("TrailSlideshowView:mediaclick", mediaID);
-    },                          		
+    },                       		
     gotoSlide: function(mediaID){
       bAnimate = true;          	
       // has the active slide changed?

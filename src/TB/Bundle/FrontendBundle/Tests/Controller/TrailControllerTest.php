@@ -129,5 +129,11 @@ class TrailControllerTest extends AbstractFrontendTest
         $this->assertGreaterThan(0,
             $crawler->filter('h2.tb-title:contains("Berlin")')->count());
     }
-    
+        
+    public function testTrails()
+    {
+        $client = static::createClient();
+
+        $crawler = $client->request('GET', '/trails');
+    }
 }

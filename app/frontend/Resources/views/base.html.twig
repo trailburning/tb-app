@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta property="og:title" content="{% block og_title %}{{ block('title') }}{% endblock %}"/>
         <meta property="og:url" content="{% block og_url %}{{ url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}{% endblock %}"/>
-        <meta property="og:image" content="{% block og_image %}http://beta.trailburning.com{% endblock %}"/>
+        <meta property="og:image" content="{% block og_image %}http://beta.trailburning.com/assets/images/social/tb_profile_icon.png{% endblock %}"/>
         <meta name="p:domain_verify" content="256bd9708ee58af0b0c1e324e5467bf1"/>
         {% block meta %}{% endblock %}
         <title>{% block title %}Trailburning{% endblock %}</title>
@@ -88,12 +88,15 @@
 			      			<div class="links">
 			      				<div class="link main"><a href="{{ path('fos_user_security_login') }}">Sign in</a></div> 
 			      			</div>
-			      			<a href="{{ path('fos_user_registration_register') }}" class="btn btn-tb-action btn-tb-large">Join</a>
+{#
+			      			<a href="{{ path('fos_user_registration_register') }}" class="btn btn-tb-action btn-tb-large">Join</a>	
+#}			      			
+			      			<a href="{{ app.request.baseUrl }}/join" class="btn btn-tb-action btn-tb-large">Join</a>
 			      		</div>
 			    	{% endif %}
 			      
 			      	<div class="links">
-						<div class="link main"><a href="{{ app.request.baseUrl }}/about">Discover Trailburning</a></div>			      	
+						<div class="link main"><a href="{{ app.request.baseUrl }}/tour">Discover Trailburning</a></div>			      	
 						<div class="link main"><a href="{{ app.request.baseUrl }}/inspire">#Inspire</a></div>			      	
 			      	</div>
 			      	<div class="discover">
@@ -132,38 +135,6 @@
         </div>      
 
 		<script type="text/template" id="activityFeedViewTemplate">
-		<!--					        	
-							        	<li class="clearfix">
-							        	<a href="{{ app.request.baseUrl }}/trail/laufbachereckweg-allgauer-alps">            	
-									 	<div class="tb-avatar"><div class="photo"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/patricktrost/avatar.jpg"></div></div>	
-							        	<div class="note"><span class="new"></span><span class="time">2 minutes ago</span><br/><strong>Christian Raimann</strong> published a new trail: <strong>Laufbachereckweg</strong>.</div>
-							        	</a></li>
-							        	<li class="clearfix">
-							        	<a href="{{ app.request.baseUrl }}/trail/chamonix">            	
-									 	<div class="tb-avatar"><div class="photo"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/reubentabner/avatar.jpg"></div></div>	
-							        	<div class="note"><span class="new"></span><span class="time">3 days ago</span><br/><strong>Reuben Tabner</strong> published a new trail: <strong>Alpine Adventure Chamonix</strong>.</div>
-							        	</a></li>
-							        	<li class="clearfix">
-							        	<a href="{{ app.request.baseUrl }}/profile/magdalenazeslawska">            	
-									 	<div class="tb-avatar"><div class="photo"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/magdalenazeslawska/avatar.jpg"></div></div>	
-							        	<div class="note"><span class="time">2 weeks ago</span><br/><strong>Magdalena Zeslawska</strong> started <strong>following</strong> your trails.</div>
-							        	</a></li>
-							        	<li class="clearfix">
-							        	<a href="#">            	
-									 	<div class="tb-avatar"><div class="photo"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/justinwilden/avatar.jpg"></div></div>	
-							        	<div class="note"><span class="time">3 weeks ago</span><br/><strong>Justin Wilden</strong> started <strong>following</strong> your trails.</div>
-							        	</a></li>
-							        	<li class="clearfix">
-							        	<a href="#">            	
-									 	<div class="tb-avatar"><div class="photo"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/reubentabner/avatar.jpg"></div></div>	
-							        	<div class="note"><span class="time">3 weeks ago</span><br/><strong>Reuben Tabner</strong> published a new trail: <strong>North Yorkshire Moors trail</strong>.</div>
-							        	</a></li>
-							        	<li class="clearfix">
-							        	<a href="#">            	
-									 	<div class="tb-avatar"><div class="photo"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/justinwilden/avatar.jpg"></div></div>	
-							        	<div class="note"><span class="time">4 weeks ago</span><br/><strong>Justin Wilden</strong> published a new trail: <strong>Yarra river trail</strong>.</div>
-							        	</a></li>					        	
-		-->					        	
 		</script>
 
 		<script type="text/template" id="activityFeedItemViewTemplate">
@@ -193,6 +164,8 @@
 
         <script src="{{ asset('assets/js/libs/imagesloaded.pkgd.min.js') }}"></script>
         <script src="{{ asset('assets/js/libs/image-scale.min.js') }}"></script>
+
+        <script src="{{ asset('assets/js/libs/jquery-dateFormat.min.js') }}"></script>
 
         {% block javascripts %}{% endblock %}
 

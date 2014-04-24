@@ -262,19 +262,27 @@ class RouteTest extends AbstractFrontendTest
             ->getRepository('TBFrontendBundle:RouteCategory')
             ->findOneByName('Mountain');
         
-        if (!$route) {
+        if (!$routeCategory) {
             $this->fail('Missing RouteCategory with name "Ultra Marathon" in test DB');
         }
         
-        $obj = new \stdClass();
-        $obj->name = 'updated name';
-        $obj->region = 'updated region';
-        $obj->about = 'updated about';
-        $obj->publish = false;
-        $obj->route_type_id =  $routeType->getId();
-        $obj->route_category_id = $routeCategory->getId();
+        // Get a Media to set as favorite Media
+        if (count($route->getMedias()) == 0) {
+            $this->fail('Missing Media for Route in test DB');
+        }
+        $media = $route->getMedias()[0];
         
-        $route->updateFromJSON(json_encode($obj));
+        $data = [
+            'name' => 'updated name',
+            'region' => 'updated region',
+            'about' => 'updated about',
+            'publish' => false,
+            'route_type_id' => $routeType->getId(),
+            'route_category_id' => $routeCategory->getId(),
+            'media_id' => $media->getId(),
+        ];   
+        
+        $route->updateFromJSON(json_encode($data));
         
         $em->persist($route);
         $em->flush();
@@ -285,6 +293,7 @@ class RouteTest extends AbstractFrontendTest
         $this->assertEquals(false, $route->getPublish());
         $this->assertEquals($routeType->getId(), $route->getRouteTypeId());
         $this->assertEquals($routeCategory->getId(), $route->getRouteCategoryId());
+        $this->assertEquals($media->getId(), $route->getMediaId());
     }
     
     /**

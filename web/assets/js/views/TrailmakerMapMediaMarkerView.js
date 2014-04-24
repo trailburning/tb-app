@@ -76,6 +76,15 @@ define([
       .setContent(this.popupContainer[0])
       .openOn(this.map);  
 
+      $('.btnStarMarker', this.popupContainer[0]).removeClass('selected');
+      if (this.model.id == this.trailModel.starID) {
+        $('.btnStarMarker', this.popupContainer[0]).addClass('selected');      	
+      }
+
+  	  // reset      
+      $('.trail_media_popup .fade_on_load').removeClass('tb-fade-in');
+      $('.trail_media_popup .image_container').css('opacity', 0);
+      
 	  // scale images when loaded
 	  var elImages = $('.trail_media_popup .scale');
 	  var imgLoad = imagesLoaded(elImages);
@@ -104,6 +113,11 @@ define([
       // Create an element to hold all your text and markup
       this.popupContainer = $('<div />');      
       // Delegate all event handling for the container itself and its contents to the container
+      this.popupContainer.on('click', '.btnStarMarker', function() {
+      	$('.btnStarMarker', self.popupContainer).addClass('selected');
+        // fire event
+        app.dispatcher.trigger("TrailMapMediaMarkerView:starmedia", self);                        
+      });
       this.popupContainer.on('click', '.btnDeleteMarker', function() {
         // fire event
         app.dispatcher.trigger("TrailMapMediaMarkerView:removemedia", self);                        
@@ -111,7 +125,7 @@ define([
         self.map.closePopup(self.popup);
         self.map.removeLayer(self.marker);
       });
-      this.popupContainer.html('<div class="trail_media_popup"><div class="image_container"><img src="http://app.resrc.it/O=80/http://s3-eu-west-1.amazonaws.com/'+versions[0].path+'" class="resrc scale"></div><div class="detail_container"><h3 class="tb">'+this.model.get('filename')+'</h3><div class="btns"><a href="javascript:void(0)" class="btnDeleteMarker button">Delete</a></div></div></div></div>');
+      this.popupContainer.html('<div class="trail_media_popup"><div class="image_container fade_on_load"><img src="http://app.resrc.it/O=80/http://s3-eu-west-1.amazonaws.com/'+versions[0].path+'" class="resrc scale"></div><div class="detail_container"><h3 class="tb">'+this.model.get('filename')+'</h3><div class="btns"><a href="javascript:void(0)" class="btnStarMarker button">Favourite</a><a href="javascript:void(0)" class="btnDeleteMarker button">Delete</a></div></div></div></div>');
 
       function onClick(e) {
       	self.showPopup();      	

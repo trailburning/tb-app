@@ -157,7 +157,7 @@ class RouteController extends AbstractRestController
      * @Route("/routes/search")
      * @Method("GET")
      */
-    public function getSearchRoutes(Request $request)
+    public function getRoutesSearch(Request $request)
     {
         $limit = $request->query->get('limit', 10);
         $offset = $request->query->get('offset', 0);

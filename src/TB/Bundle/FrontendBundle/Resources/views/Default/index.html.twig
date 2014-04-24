@@ -19,17 +19,26 @@ var TB_USER_ID = {{ app.user.id }};
 	{% if not app.user %}
   	
     <div class="hero_image">
-      <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/O=80/http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/pages/MarioColonel_Ultraks1.jpg" class="resrc scale" /></div>
+      <div class="background">
+        <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/O=80/http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/tour/home_header_background.jpg" class="resrc scale" /></div>
+	  </div>
+	  <div class="foreground">
+        <div class="image_container fade_on_load"><img src="http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/tour/home_header_foreground.png" /></div>
+	  </div>
   	</div>
   	
   	{% endif %}
 
     <div class="hero_image">
-      <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/editorial/wild/image_edited2.jpg" class="resrc scale" /></div>
+      <div class="background">
+        <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/editorial/wild/image_edited2.jpg" class="resrc scale" /></div>
+      </div>
   	</div>
 
     <div class="hero_image">
-      <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/O=80/http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/editorial/alps/Reuben_Tabner-0208_edited.jpg" class="resrc scale" /></div>
+      <div class="background">
+        <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/O=80/http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/editorial/alps/Reuben_Tabner-0208_edited.jpg" class="resrc scale" /></div>
+      </div>
   	</div>
 
 	<div class="hero_nav">
@@ -45,16 +54,18 @@ var TB_USER_ID = {{ app.user.id }};
     <div class="hero_overlay">
       <div class="left">
     	<div class="title">
-      	<h1 class="tb tb-title">Get ready for a new</h1>
+      	<h1 class="tb tb-title">Get ready</h1>
       	<br/>
-      	<h1 class="tb tb-title">trail experience</h1>
+      	<h1 class="tb tb-title">for a new Trail</h1>
       	<br/>
-      	<div class="hero_btn"><a href="join" class="btn btn-tb-action btn-tb-mega">Join Trailburning Now</a></div>
+      	<h1 class="tb tb-title">Experience</h1>
+      	<br/>
+      	<div class="hero_btn"><a href="{{ app.request.baseUrl }}/tour" class="btn btn-tb-action btn-tb-mega">How does it work?</a></div>
     	</div>
 	  </div>			  
 	  <div class="right">  
       </div>
-	  <div class="tb-credit">Photo credit: © <a href="http://matterhorn.ultraks.com" target="_blank">matterhorn.ultraks.com</a> / Mario Colonel</div>      
+	  <div class="tb-credit"></div>      
 	  <div class="sponsor_content">
 	  </div>  	
   	</div>  	
@@ -129,6 +140,30 @@ var TB_USER_ID = {{ app.user.id }};
 	  	  <h4 class="tb">Get inspired by the latest trails shared in the Trailburning Community</h4>	
 	  	</div>
 	  	<div class="trailcards ">  	
+{#
+		  <div class="trail_card_sticker">	  		
+		      <div class="panel editorial_card_panel">
+		        <div class="detail_container">
+		        <div class="title">
+		        	<div class="tb"><img src="{{ asset('assets/img/sponsor/tb.png') }}" border="0"></div>
+		        	<div class="sponsor"><a href="profile/ashmei"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/ashmei/editorial_sponsor_logo_small.png" border="0"></a></div>
+		        </div>
+		        <a href="inspire/alps">
+		        <div class="detail"><h3 class="tb">Running wild in the South Australian bush</h3></div>
+		        </a>
+		        </div>
+		        <div class="summary">
+		    	  <div class="tb-avatar">
+		      		<div class="photo"><a href="profile/mattallbeury"><img src="http://www.gravatar.com/avatar/e426b949d824bc81fe01caf1ad88abd7"></a></div>
+		    	  </div>		    	
+		          <div class="detail">
+		            by <strong>Matt Allbeury</strong>
+		            <div class="date">08/04/2014</div>
+		          </div>
+		        </div>
+		      </div>                    	    	
+	      </div>	  		
+#}	  			  		
 		  <div class="trail_card_sticker">
 			<div class="panel trail_card_panel">
 			  <div class="title"><h3 class="tb">Mountains</h3></div>
@@ -313,7 +348,7 @@ var TB_USER_ID = {{ app.user.id }};
 
 	    <div class="panels trailcards clearfix">       
 	    	
-	   	  <div class="panel event_card_panel">
+	      <div class="panel event_card_panel">
 	        <a href="event/tfor">
 	        <div class="photo tb-photo-btn">
 	          <div class="image_container fade_on_load"><img src="http://app.resrc.it/O=80/http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/events/tfor/event_header.jpg" class="resrc scale" border="0"/></div>
@@ -359,17 +394,16 @@ var TB_USER_ID = {{ app.user.id }};
 	      </div>
 	      
 	    </div>
-<!--
-	  	<div class="more_btn"><a href="" class="btn btn-tb btn-tb-small">More Events</a></div>
--->
+	  	<div class="more_btn"><a href="{{ app.request.baseUrl }}/events" class="btn btn-tb btn-tb-small">More Events</a></div>
+
 	    <div class="trailers">
 	      <h2 class="tb tb-title">Welcome new Trailburners!</h2>
 	      <div class="avatars">
-		    <div class="tb-avatar highlight_avatar"><div class="photo"><a href="profile/lizbabidge"><img src="http://www.gravatar.com/avatar/52f2c62e0d8a74c198640300c1cc9478"></a></div></div><!--	
+		    <div class="tb-avatar highlight_avatar"><div class="photo"><a href="profile/philipshipman"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/philipshipman/avatar.jpg"></a></div></div><!--	
+		 --><div class="tb-avatar highlight_avatar"><div class="photo"><a href="profile/lizbabidge"><img src="http://www.gravatar.com/avatar/52f2c62e0d8a74c198640300c1cc9478"></a></div></div><!--	
 		 --><div class="tb-avatar highlight_avatar"><div class="photo"><a href="profile/owendelaney"><img src="http://www.gravatar.com/avatar/32666bdab5c3c97a5204cdc97f2db75e"></a></div></div><!--	
 		 --><div class="tb-avatar highlight_avatar"><div class="photo"><a href="profile/christianraimann"><img src="http://www.gravatar.com/avatar/70fd072fa19618b520aead42b2d0105b"></a></div></div><!--	
-		 --><div class="tb-avatar highlight_avatar"><div class="photo"><a href="profile/reubentabner"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/reubentabner/avatar.jpg"></a></div></div><!--	
-		 --><div class="tb-avatar highlight_avatar"><div class="photo"><a href="profile/paultran"><img src="http://www.gravatar.com/avatar/5889ab29b92ea2bc3547770b9427310b"></a></div></div>	
+		 --><div class="tb-avatar highlight_avatar"><div class="photo"><a href="profile/reubentabner"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/reubentabner/avatar.jpg"></a></div></div>	
 		  </div>
 		</div>
 

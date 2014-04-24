@@ -149,13 +149,19 @@ class Postgis extends \PDO
                      rt.id AS rt_id,
                      rt.name AS rt_name, 
                      rc.id AS rc_id,
-                     rc.name AS rc_name
+                     rc.name AS rc_name,
+                     m.id AS m_id, 
+                     ST_AsText(m.coords) AS m_coords, 
+                     m.tags AS m_tags, 
+                     m.filename AS m_filename, 
+                     m.path AS m_path
               FROM routes r
               INNER JOIN route_points rp ON r.id=rp.route_id
               LEFT JOIN route_type rt ON r.route_type_id=rt.id
               LEFT JOIN route_category rc ON r.route_category_id=rc.id
+              LEFT JOIN medias m ON r.media_id=m.id
               WHERE r.id=?
-              GROUP BY r.id, length, r.tags, r.slug, r.region, r.about, rt.id, rc.id";
+              GROUP BY r.id, length, r.tags, r.slug, r.region, r.about, rt.id, rc.id, m.id";
         $pq = $this->prepare($q);
         $success = $pq->execute(array($route_id));
         if (!$success) {
@@ -175,17 +181,35 @@ class Postgis extends \PDO
             $route->setCentroid(new Point($c[0], $c[1], 4326)); 
             $tags = json_decode('{' . str_replace('"=>"', '":"', $row['rtags']) . '}', true);
             $route->setTags($tags);
-            if ($row['rc_name'] != '') {
+            if ($row['rc_id'] != '') {
                 $routeCategory = new RouteCategory();
                 $routeCategory->setId($row['rc_id']);
                 $routeCategory->setName($row['rc_name']);
                 $route->setRouteCategory($routeCategory);
             }
-            if ($row['rt_name'] != '') {
+            if ($row['rt_id'] != '') {
                 $routeType = new RouteType();
                 $routeType->setId($row['rt_id']);
                 $routeType->setName($row['rt_name']);
                 $route->setRouteType($routeType);
+            }
+            if ($row['m_id'] != '') {
+                // Attach the favorite Media, if set
+                $media = new Media();
+                $media->setId($row['m_id']);
+                $media->setPath($row['m_path']);
+                $coords = explode(" ", substr(trim($row['m_coords']), 6, -1)); 
+                $media->setCoords(new Point($coords[0], $coords[1], 4326));
+                $media->setFilename($row['m_filename']);
+                $tags = json_decode('{' . str_replace('"=>"', '":"', $row['m_tags']) . '}', true);
+                $media->setTags($tags);
+                $route->setMedia($media);
+            } else {
+                // Attach the first Media, if no favorite Media is set
+                $media = $this->getRouteMedia($route_id, 1);
+                if (count($media) > 0) {
+                    $route->setMedia(array_shift($media));
+                }
             }
         } else {
             throw (new ApiException(sprintf('Route with id "%s" does not exist', $route_id), 404));
@@ -221,10 +245,11 @@ class Postgis extends \PDO
     
     public function readRoutes($user_id, $count = null, $route_type_id = null, $route_category_id = null, $publish = null) 
     {
-        $q = 'SELECT r.id, r.name, r.slug, r.region, r.length, ST_X(r.centroid) AS long, ST_Y(r.centroid) AS lat, r.tags, rt.id AS rt_id, rt.name AS rt_name, rc.id AS rc_id, rc.name AS rc_name, r.about
+        $q = 'SELECT r.id, r.name, r.slug, r.region, r.length, ST_X(r.centroid) AS long, ST_Y(r.centroid) AS lat, r.tags, rt.id AS rt_id, rt.name AS rt_name, rc.id AS rc_id, rc.name AS rc_name, r.about, m.id AS m_id, ST_AsText(m.coords) AS m_coords, m.tags AS m_tags, m.filename AS m_filename, m.path AS m_path
               FROM routes r
               LEFT JOIN route_type rt ON r.route_type_id=rt.id
               LEFT JOIN route_category rc ON r.route_category_id=rc.id
+              LEFT JOIN medias m ON r.media_id=m.id
               WHERE r.user_id=:user_id
               AND r.slug IS NOT NULL';
         if ($route_type_id !== null) {
@@ -236,7 +261,7 @@ class Postgis extends \PDO
         if ($publish !== null) {
             $q .= ' AND publish=:publish';
         }
-        $q.= ' GROUP BY r.id, rt.id, rc.id ';
+        $q.= ' GROUP BY r.id, rt.id, rc.id, m.id ';
         if ($count !== null) {
             $q .= ' LIMIT :count';
         }
@@ -288,9 +313,23 @@ class Postgis extends \PDO
                 $routeType->setName($row['rt_name']);
                 $route->setRouteType($routeType);
             }
-            $media = $this->getRouteMedia($row['id'], 1);
-            if (count($media) > 0) {
-                $route->setMedia(array_shift($media));
+            if ($row['m_id'] != '') {
+                // Attach the favorite Media, if set
+                $media = new Media();
+                $media->setId($row['m_id']);
+                $media->setPath($row['m_path']);
+                $coords = explode(" ", substr(trim($row['m_coords']), 6, -1)); 
+                $media->setCoords(new Point($coords[0], $coords[1], 4326));
+                $media->setFilename($row['m_filename']);
+                $tags = json_decode('{' . str_replace('"=>"', '":"', $row['m_tags']) . '}', true);
+                $media->setTags($tags);
+                $route->setMedia($media);
+            } else {
+                // Attach the first Media, if no favorite Media is set
+                $media = $this->getRouteMedia($row['id'], 1);
+                if (count($media) > 0) {
+                    $route->setMedia(array_shift($media));
+                }
             }
             
             $routes[] = $route;
@@ -315,14 +354,15 @@ class Postgis extends \PDO
         $routes = array();
         if ($row = $pq->fetch(\PDO::FETCH_ASSOC)) {
             $count = $row['count'];
-            $q = 'SELECT r.id, r.name, r.slug, r.region, r.length, ST_X(r.centroid) AS long, ST_Y(r.centroid) AS lat, r.tags, rt.id AS rt_id, rt.name AS rt_name, rc.id AS rc_id, rc.name AS rc_name, r.about, u.id AS user_id, u.name AS user_name, u.discr, u.first_name, u.last_name, u.display_name, u.avatar, u.avatar_gravatar
+            $q = 'SELECT r.id, r.name, r.slug, r.region, r.length, ST_X(r.centroid) AS long, ST_Y(r.centroid) AS lat, r.tags, rt.id AS rt_id, rt.name AS rt_name, rc.id AS rc_id, rc.name AS rc_name, r.about, u.id AS user_id, u.name AS user_name, u.discr, u.first_name, u.last_name, u.display_name, u.avatar, u.avatar_gravatar, m.id AS m_id, ST_AsText(m.coords) AS m_coords, m.tags AS m_tags, m.filename AS m_filename, m.path AS m_path
                   FROM routes r
                   INNER JOIN fos_user u ON r.user_id=u.id
                   LEFT JOIN route_type rt ON r.route_type_id=rt.id
                   LEFT JOIN route_category rc ON r.route_category_id=rc.id
+                  LEFT JOIN medias m ON r.media_id=m.id
                   WHERE r.slug IS NOT NULL
                   AND r.publish = true
-                  GROUP BY r.id, rt.id, rc.id , u.id
+                  GROUP BY r.id, rt.id, rc.id , u.id, m.id
                   ORDER BY r.id DESC
                   LIMIT :limit OFFSET :offset';
             $pq = $this->prepare($q);
@@ -371,9 +411,24 @@ class Postgis extends \PDO
                     $user->setAvatarGravatar($row['avatar_gravatar']);
                 }
                 $route->setUser($user);
-                $media = $this->getRouteMedia($row['id'], 1);
-                if (count($media) > 0) {
-                    $route->setMedia(array_shift($media));
+                
+                if ($row['m_id'] != '') {
+                    // Attach the favorite Media, if set
+                    $media = new Media();
+                    $media->setId($row['m_id']);
+                    $media->setPath($row['m_path']);
+                    $coords = explode(" ", substr(trim($row['m_coords']), 6, -1)); 
+                    $media->setCoords(new Point($coords[0], $coords[1], 4326));
+                    $media->setFilename($row['m_filename']);
+                    $tags = json_decode('{' . str_replace('"=>"', '":"', $row['m_tags']) . '}', true);
+                    $media->setTags($tags);
+                    $route->setMedia($media);
+                } else {
+                    // Attach the first Media, if no favorite Media is set
+                    $media = $this->getRouteMedia($row['id'], 1);
+                    if (count($media) > 0) {
+                        $route->setMedia(array_shift($media));
+                    }
                 }
     
                 $routes[] = $route;

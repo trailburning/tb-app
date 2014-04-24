@@ -17,7 +17,66 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        return array();
+        return [];
     }           
 
+    /**
+     * @Route("/tour", name="tour")
+     * @Template()
+     */
+    public function tourAction()
+    {
+        return [];
+    }
+    
+    /**
+     * @Route("/about", name="about")
+     * @Template()
+     */
+    public function aboutAction()
+    {
+      	$breadcrumb[] = [
+            'name' => 'about',
+            'label' => 'Discover Trailburning', 
+            'params' => [],
+        ];
+        
+        return array(
+            'breadcrumb' => $breadcrumb
+        );    	
+    }
+    
+    /**
+     * @Route("/competition", name="competition")
+     * @Template()
+     */
+    public function competitionAction()
+    {
+      	$breadcrumb[] = [
+            'name' => 'competition',
+            'label' => 'Competition', 
+            'params' => [],
+        ];
+        
+        return array(
+            'breadcrumb' => $breadcrumb
+        );    	
+    }
+    
+    /**
+     * @Route("/presskit", name="presskit")
+     * @Template()
+     */
+    public function presskitAction()
+    {
+      	$breadcrumb[] = [
+            'name' => 'presskit',
+            'label' => 'Press Kit', 
+            'params' => [],
+        ];
+        
+        return array(
+            'breadcrumb' => $breadcrumb
+        );    	
+    }
 }

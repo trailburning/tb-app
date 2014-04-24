@@ -65,7 +65,7 @@ var TB_USER_LAT = {{ user.location.latitude }};
 	  	  	
           {% if unpublishedRoutes %}
 			  {% for route in unpublishedRoutes %}
-	   	      <div class="panel trail_card trail_card_panel">
+	   	      <div class="panel trail_card trail_card_panel" data-id="{{ route.id }}">
 		        <div class="title"><h3 class="tb">{{ route.category.name}}</h3></div>
 	            <a href="{{ path('trail', {'trailSlug': route.slug}) }}">
 	            <div class="photo tb-photo-btn">
@@ -85,7 +85,7 @@ var TB_USER_LAT = {{ user.location.latitude }};
 	            <div class="draft"></div>
 	          	</a>
 		      	<div class="summary">
-		      	  <div class="cntrls"><a class="btn btn-tb" href="{{ path('trailmaker', {id: route.id}) }}">Edit Trail</a></div>
+		      	  <div class="cntrls"><a class="btn btn-tb" href="{{ path('trailmaker', {id: route.id}) }}">Edit Trail</a><a href="javascript:void(0)" class="btnDeleteTrail button">Delete</a></div>
 		        </div>
 	          </div>
 			  {% endfor %}
@@ -93,7 +93,7 @@ var TB_USER_LAT = {{ user.location.latitude }};
     			
           {% if publishedRoutes %}
 			  {% for route in publishedRoutes %}
-	   	      <div class="panel trail_card trail_card_panel">
+	   	      <div class="panel trail_card trail_card_panel" data-id="{{ route.id }}">
 		        <div class="title"><h3 class="tb">{{ route.category.name}}</h3></div>
 	            <a href="{{ path('trail', {'trailSlug': route.slug}) }}">
 	            <div class="photo tb-photo-btn">
@@ -112,7 +112,7 @@ var TB_USER_LAT = {{ user.location.latitude }};
 	            </div>
 	          	</a>
 		      	<div class="summary">
-		      	  <div class="cntrls"><a class="btn btn-tb" href="{{ path('trailmaker', {id: route.id}) }}">Edit Trail</a></div>
+		      	  <div class="cntrls"><a class="btn btn-tb" href="{{ path('trailmaker', {id: route.id}) }}">Edit Trail</a><a href="javascript:void(0)" class="btnDeleteTrail button">Delete</a></div>
 		        </div>
 	          </div>
 			  {% endfor %}
@@ -258,6 +258,10 @@ var TB_USER_LAT = {{ user.location.latitude }};
     	</div>
 	</div>
 </div>
+
+<div id='tb-content-overlay'></div>	
+<div id='tb-overlay-view'></div>    
+
 {% endblock %}
 
 {% block javascripts %}
@@ -265,6 +269,43 @@ var TB_USER_LAT = {{ user.location.latitude }};
 <script type="text/template" id="profileMapViewTemplate">
 	<div id='profile_map'></div>
 	<div id='profile_map_overlay'></div>
+</script>
+
+<script type="text/template" id="overlayViewTemplate">
+  <div id="overlayContent_view"></div>
+</script>
+
+<script type="text/template" id="trailmakerDeleteTrailViewTemplate">
+    <div class="panel_content">
+        <div class="panel">
+            <div class="content">      
+                <h1 class="tb">Remove</h1>
+                <div class="confirm_action">
+	                <div class="desc">
+	                    <h4 class="tb">
+	                        Are you sure you wish to remove the trail: <strong><%= value.route.name %></strong>?
+	                        <br /><br />
+	                        This action <strong>cannot</strong> be undone.
+	                    </h4>
+	                </div> 
+	                <div class="next_step"><a href="javascript:void(0)" class="btn btn-tb-action btn-tb-large proceed">Yes</a><a href="javascript:void(0)" class="btn btn-tb-action btn-tb-large cancel">No</a></div>
+                </div>
+                <div class="action_confirmed">
+	                <div class="desc">
+	                    <h4 class="tb">
+	                        Your trail has been removed!
+	                        <br /><br />
+	                        If you have any questions please contact Trailburning <a href="mailto:support@trailburning.com">support</a>.
+	                    </h4>
+	                </div> 
+	                <div class="next_step"><a href="javascript:void(0)" class="btn btn-tb-action btn-tb-large complete">Return to profile</a></div>
+                </div>
+            </div>
+        </div>
+		<div class="step_marker_container">
+			<div class="tb-step-marker tb-step"><div class="photo"><img src="{{ asset('assets/img/steps') }}/step_publish.jpg"></div></div>
+		</div>	                
+    </div>    
 </script>
 
 {% endblock %}

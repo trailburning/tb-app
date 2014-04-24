@@ -41,8 +41,8 @@ var TB_USER_ID = {{ app.user.id }}
         <div id="step_route_remove_view"></div>
     </div>
 
-    <div id='content_overlay'></div>	
-    <div id='overlay_view'></div>    
+    <div id='tb-content-overlay'></div>	
+    <div id='tb-overlay-view'></div>    
 </div>    
 
 {% endblock %}
@@ -73,7 +73,7 @@ var TB_USER_ID = {{ app.user.id }}
       </div>
     </div>
 	<div class="step_marker_container">
-		<div class="step_marker tb-step"><div class="photo"><img src="{{ asset('assets/img/steps') }}/step_gps.jpg"></div></div>
+		<div class="tb-step-marker tb-step"><div class="photo"><img src="{{ asset('assets/img/steps') }}/step_gps.jpg"></div></div>
 	</div>	                
   </div>    
 </script>
@@ -159,7 +159,7 @@ var TB_USER_ID = {{ app.user.id }}
                 		<div class="title"><h3 class="tb trail_card_category"></h3></div>
                         <a href="{{ app.request.baseUrl }}/trail/<%= id %>" target="_blank">
                             <div class="photo tb-photo-btn">
-                                <div class="image_container"></div>
+                                <div class="image_container fade_on_load"></div>
                                 <div class="card_title">
                                     <h1 class="trail_card_title"></h1>
                                     <br />
@@ -197,7 +197,6 @@ var TB_USER_ID = {{ app.user.id }}
                 Make sure you chose your favourite  picture on the map, by using the star icon. If you’re ok with it, then let’s share your trail!      	
                 </h4>      
                 <div class="publish"><span class="btn btn-tb-action btn-tb-large submit">Publish Trail</span></div>
-                <div class="delete"><a href="javascript:void(0)" class="btnDeleteTrail button">Delete</a></div>                	
                 </div>                
             </div>
         </div>
@@ -230,7 +229,7 @@ var TB_USER_ID = {{ app.user.id }}
             </div>
         </div>
 		<div class="step_marker_container">
-			<div class="step_marker tb-step"><div class="photo"><img src="{{ asset('assets/img/steps') }}/step_photo.jpg"></div></div>
+			<div class="tb-step-marker tb-step"><div class="photo"><img src="{{ asset('assets/img/steps') }}/step_photo.jpg"></div></div>
 		</div>	                
     </div>    
 </script>
@@ -240,7 +239,8 @@ var TB_USER_ID = {{ app.user.id }}
 
 <script type="text/template" id="slideshowSlideViewTemplate">
   <div class="photo">
-  	<div class="image_container"><img src="http://app.resrc.it/O=80/http://s3-eu-west-1.amazonaws.com/<%= versionLargePath%>" class="resrc scale"></div>
+  	<div class="image_container fade_on_load"><img src="http://app.resrc.it/O=80/http://s3-eu-west-1.amazonaws.com/<%= versionLargePath%>" class="resrc scale"></div>
+  	<div class="star_marker"></div>
   </div>  	
 </script>
 
@@ -260,7 +260,7 @@ var TB_USER_ID = {{ app.user.id }}
             </div>
         </div>
 		<div class="step_marker_container">
-			<div class="step_marker tb-step"><div class="photo"><img src="{{ asset('assets/img/steps') }}/step_publish.jpg"></div></div>
+			<div class="tb-step-marker tb-step"><div class="photo"><img src="{{ asset('assets/img/steps') }}/step_publish.jpg"></div></div>
 		</div>	                
     </div>    
 </script>
@@ -281,7 +281,7 @@ var TB_USER_ID = {{ app.user.id }}
             </div>
         </div>
 		<div class="step_marker_container">
-			<div class="step_marker tb-step"><div class="photo"><img src="{{ asset('assets/img/steps') }}/step_publish.jpg"></div></div>
+			<div class="tb-step-marker tb-step"><div class="photo"><img src="{{ asset('assets/img/steps') }}/step_publish.jpg"></div></div>
 		</div>	                
     </div>    
 </script>
