@@ -25,7 +25,7 @@ define([
 	  else {
       	this.model.set('displaySeen', 'new');	  	
 	  }
-      
+
       switch (this.model.get('verb')) {
       	case 'follow':      	
       	  this.model.set('activityURL', this.model.get('actor').url);
@@ -38,6 +38,12 @@ define([
       	  this.model.set('preVerbDisplayName', 'has');
       	  this.model.set('verbDisplayName', 'published');      	
       	  this.model.set('subjectDisplayName', ' a new trail: ' + this.model.get('object').displayName);      	
+      	  break;
+      	case 'like':      	      	
+      	  this.model.set('activityURL', this.model.get('actor').url);
+      	  this.model.set('preVerbDisplayName', 'likes');
+      	  this.model.set('verbDisplayName', 'your');      	
+      	  this.model.set('subjectDisplayName', ' trail: ' + this.model.get('object').displayName);      	
       	  break;
       	default:      	
       	  break;

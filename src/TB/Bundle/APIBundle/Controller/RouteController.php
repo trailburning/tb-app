@@ -4,9 +4,10 @@ namespace TB\Bundle\APIBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-
 use TB\Bundle\APIBundle\Util\ApiException;
 use Symfony\Component\HttpFoundation\Request;
+use TB\Bundle\FrontendBundle\Event\RouteLikeEvent;
+use TB\Bundle\FrontendBundle\Event\RouteUndoLikeEvent;
 
 class RouteController extends AbstractRestController
 {
@@ -173,6 +174,106 @@ class RouteController extends AbstractRestController
             'totalCount' => $count,    
         ]];
 
+        return $this->getRestResponse($output);
+    }
+    
+    /**
+     * Like a Trail
+     *
+     * @Route("/route/{routeId}/like", requirements={"userIdToFollow" = "\d+"})
+     * @Method("PUT")
+     */
+    public function putRouteLike($routeId)
+    {
+        $request = $this->getRequest();
+        if (!$request->headers->has('Trailburning-User-ID')) {
+            throw new ApiException('Header Trailburning-User-ID is not set', 400);
+        }
+        $userId = $request->headers->get('Trailburning-User-ID');
+        $user = $this->getDoctrine()
+            ->getRepository('TBFrontendBundle:User')
+            ->findOneById($userId);
+
+        if (!$user) {
+            throw new ApiException(sprintf('User with id "%s" does not exist', $userId), 404);
+        }
+
+        $route = $this->getDoctrine()
+            ->getRepository('TBFrontendBundle:Route')
+            ->findOneById($routeId);
+
+        if (!$route) {
+            throw new ApiException(sprintf('Route with id "%s" does not exist', $routeId), 404);
+        }
+        
+        //check if user is already following
+        if ($route->hasUserLike($user)) {
+            throw new ApiException(sprintf('User %s already likes Trail %s', $user->getId(), $route->getId()), 400);
+        }
+
+        $route->addUserLike($user);
+        
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($route);
+        $em->flush();
+        
+        // dispatch tb.route_like event
+        $event = new RouteLikeEvent($route, $user);
+        $dispatcher = $this->container->get('event_dispatcher'); 
+        $dispatcher->dispatch('tb.route_like', $event);
+        
+        $output = array('usermsg' => 'success');
+        
+        return $this->getRestResponse($output);
+    }
+    
+    /**
+     * Unfollow a user
+     *
+     * @Route("/route/{routeId}/undolike", requirements={"userIdToUnfollow" = "\d+"})
+     * @Method("PUT")
+     */
+    public function putRouteUndoLike($routeId)
+    {
+        $request = $this->getRequest();
+        if (!$request->headers->has('Trailburning-User-ID')) {
+            throw new ApiException('Header Trailburning-User-ID is not set', 400);
+        }
+        $userId = $request->headers->get('Trailburning-User-ID');
+        $user = $this->getDoctrine()
+            ->getRepository('TBFrontendBundle:User')
+            ->findOneById($userId);
+
+        if (!$user) {
+            throw new ApiException(sprintf('User with id "%s" does not exist', $userId), 404);
+        }
+        
+        $route = $this->getDoctrine()
+            ->getRepository('TBFrontendBundle:Route')
+            ->findOneById($routeId);
+
+        if (!$route) {
+            throw new ApiException(sprintf('Route with id "%s" does not exist', $routeId), 404);
+        }
+        
+        //check if User is likes the Route
+        if (!$route->hasUserLike($user)) {
+            throw new ApiException(sprintf('User %s does not like Route %s', $user->getId(), $route->getId()), 400);
+        }
+        
+        $route->removeUserLike($user);
+        
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($route);
+        $em->flush();
+        
+        // dispath tb.route_undolike event
+        $event = new RouteUndoLikeEvent($route, $user);
+        $dispatcher = $this->container->get('event_dispatcher'); 
+        $dispatcher->dispatch('tb.route_undolike', $event);
+        
+        $output = array('usermsg' => 'success');
+        
         return $this->getRestResponse($output);
     }
     

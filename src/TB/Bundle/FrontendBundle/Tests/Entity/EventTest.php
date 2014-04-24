@@ -2,10 +2,10 @@
 
 namespace TB\Bundle\FrontendBundle\Tests\Entity;
 
-use Liip\FunctionalTestBundle\Test\WebTestCase;
+use TB\Bundle\FrontendBundle\Tests\AbstractFrontendTest;
 use TB\Bundle\FrontendBundle\Entity\RouteType;
 
-class EventTest extends WebTestCase
+class EventTest extends AbstractFrontendTest
 {
     
     protected static function getKernelClass()

@@ -17,3 +17,8 @@ parameters:
     s3_client_class: Aws\S3\S3Client
     aws_accesskey: 
     aws_secretkey:     
+    rabbit_mq_host: localhost
+    rabbit_mq_user: guest
+    rabbit_mq_password: guest
+    rabbit_mq_vhost: /
+    rabbit_mq_main_queue: main

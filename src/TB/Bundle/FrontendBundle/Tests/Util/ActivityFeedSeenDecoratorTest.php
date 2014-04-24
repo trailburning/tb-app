@@ -2,19 +2,12 @@
 
 namespace TB\Bundle\FrontendBundle\Tests\Util;
 
-use Liip\FunctionalTestBundle\Test\WebTestCase;
+use TB\Bundle\FrontendBundle\Tests\AbstractFrontendTest;
 use TB\Bundle\FrontendBundle\Util\ActivityFeedSeenDecorator;
 use TB\Bundle\FrontendBundle\Entity\UserProfile;
 
-class ActivityFeedSeenDecoratorTest extends WebTestCase
+class ActivityFeedSeenDecoratorTest extends AbstractFrontendTest
 {
-    
-    protected static function getKernelClass()
-    {
-        require_once self::getPhpUnitXmlDir() . '/frontend/AppKernel.php';
-        
-        return 'AppKernel';
-    }
 
     /**
      * Test that decorate() adds the seen flag to to activity feed data array

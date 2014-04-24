@@ -2,7 +2,7 @@
 
 namespace TB\Bundle\APIBundle\Tests\Controller;
 
-use Liip\FunctionalTestBundle\Test\WebTestCase;
+use TB\Bundle\APIBundle\Tests\AbstractApiTestCase;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Tester\ApplicationTester;
 use Symfony\Component\Console\Output\Output;

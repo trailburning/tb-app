@@ -2,20 +2,13 @@
 
 namespace TB\Bundle\FrontendBundle\Tests\Entity;
 
-use Liip\FunctionalTestBundle\Test\WebTestCase;
+use TB\Bundle\FrontendBundle\Tests\AbstractFrontendTest;
 use TB\Bundle\FrontendBundle\Util\MediaImporter;
 use CrEOF\Spatial\PHP\Types\Geometry\Point;
 
-class TBExtensionTest extends WebTestCase
+class TBExtensionTest extends AbstractFrontendTest
 {
-    
-    protected static function getKernelClass()
-    {
-        require_once self::getPhpUnitXmlDir() . '/frontend/AppKernel.php';
-
-        return 'AppKernel';
-    }
-    
+        
     public function setUp()
     {
         $this->extension = $this->getContainer()->get('tb.twig.tb_extension');
@@ -92,6 +85,37 @@ class TBExtensionTest extends WebTestCase
         $em->flush();
         
         $this->assertTrue($this->extension->userIsFollowing($user1, $user2), 'user1 is following user2');
+    }
+    
+    public function testRouteHasUserLike()
+    {
+        $this->loadFixtures([
+            'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData',
+        ]);
+        
+        // Get Route from DB with the slug "grunewald"..
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        $route = $em
+            ->getRepository('TBFrontendBundle:Route')
+            ->findOneBySlug('grunewald');
+        if (!$route) {
+            $this->fail('Missing Route with slug "grunewald" in test DB');
+        }
+        
+        $user = $em
+            ->getRepository('TBFrontendBundle:User')
+            ->findOneByName('mattallbeury');
+        if (!$user) {
+            $this->fail('Missing User with name "mattallbeury" in test DB');
+        }
+        
+        $this->assertFalse($this->extension->routeHasUserLike($route, $user), 'route is not liked by user');
+        
+        $route->adduserLike($user);
+        $em->persist($route);
+        $em->flush();
+        
+        $this->assertTrue($this->extension->routeHasUserLike($route, $user), 'route is not liked by user');
     }
     
 }

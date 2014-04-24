@@ -1,6 +1,6 @@
 <?php
  
-namespace TB\Bundle\FrontendBundle\Tests\Controller;
+namespace TB\Bundle\FrontendBundle\Tests;
 
 use Liip\FunctionalTestBundle\Test\WebTestCase; 
 use Symfony\Bundle\FrameworkBundle\Console\Application;
@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Session\Storage\MockFileSessionStorage;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
  
  
-abstract class BaseFrontendTest extends WebTestCase 
+abstract class AbstractFrontendTest extends WebTestCase 
 {
     
     protected static function getKernelClass()
@@ -29,7 +29,7 @@ abstract class BaseFrontendTest extends WebTestCase
     protected function logIn($client, $username)
     {
         $response = new Response();
-        $storage = new MockFileSessionStorage(__dir__.'/../../../../../../app/frontend/cache/test/sessions/');
+        $storage = new MockFileSessionStorage(__dir__.'/../../../../../app/frontend/cache/test/sessions/');
         $session = new Session($storage);
         $session->start();
         
