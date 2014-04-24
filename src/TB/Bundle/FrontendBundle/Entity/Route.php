@@ -95,6 +95,13 @@ class Route implements Exportable
     /**
      * @var integer
      *
+     * @ORM\Column(name="media_id", type="integer", nullable=true)
+     */
+    private $mediaId;
+    
+    /**
+     * @var integer
+     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -155,6 +162,11 @@ class Route implements Exportable
      **/
     private $medias;
     
+    /**
+     * @ORM\OneToOne(targetEntity="Media")
+     * @ORM\JoinColumn(name="media_id", referencedColumnName="id", onDelete="SET NULL")
+     **/
+    private $media;
     
     /**
      * @var string
@@ -807,6 +819,7 @@ class Route implements Exportable
             'publish' => 'publish',
             'route_type_id' => 'routeTypeId',
             'route_category_id' => 'routeCategoryId',
+            'media_id' => 'mediaId',
         ];
           
         foreach ($fields as $apiName => $entityName) {
@@ -928,11 +941,6 @@ class Route implements Exportable
     /**
      * Only used by API
      */
-    private $media;
-    
-    /**
-     * Only used by API
-     */
     public function setBBox($bbox) 
     { 
         $this->bbox = $bbox; 
@@ -945,23 +953,6 @@ class Route implements Exportable
     { 
         return $this->bbox; 
     }
-    
-    /**
-     * Only used by API
-     */
-    public function setMedia($media) 
-    { 
-        $this->media = $media; 
-    }
-    
-    /**
-     * Only used by API
-     */
-    public function getMedia() 
-    { 
-        return $this->media; 
-    }
-    
 
     /**
      * Add routePublishActivities
@@ -1009,6 +1000,52 @@ class Route implements Exportable
         ];
         
         return $data;
+    }
+    
+    /**
+     * Set mediaId
+     *
+     * @param integer $mediaId
+     * @return Route
+     */
+    public function setMediaId($mediaId)
+    {
+        $this->mediaId = $mediaId;
+
+        return $this;
+    }
+
+    /**
+     * Get mediaId
+     *
+     * @return integer 
+     */
+    public function getMediaId()
+    {
+        return $this->mediaId;
+    }
+
+    /**
+     * Set media
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\Media $media
+     * @return Route
+     */
+    public function setMedia(\TB\Bundle\FrontendBundle\Entity\Media $media = null)
+    {
+        $this->media = $media;
+
+        return $this;
+    }
+
+    /**
+     * Get media
+     *
+     * @return \TB\Bundle\FrontendBundle\Entity\Media 
+     */
+    public function getMedia()
+    {
+        return $this->media;
     }
 
     /**
