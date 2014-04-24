@@ -115,6 +115,13 @@ class Route implements Exportable
      * @ORM\Column(name="publish", type="boolean", options={"default" = false})
      */
     private $publish = false;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="homepage_order", type="smallint", nullable=true)
+     */
+    private $homepageOrder;    
 
     /**
      * @var \TB\Bundle\FrontendBundle\Entity\GpxFile
@@ -165,7 +172,7 @@ class Route implements Exportable
     
     /**
      * @ORM\OneToOne(targetEntity="Media")
-     * @ORM\JoinColumn(name="media_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="media_id", referencedColumnName="id", onDelete="SET NULL")
      **/
     private $media;
     
@@ -796,6 +803,7 @@ class Route implements Exportable
             'publish' => 'publish',
             'route_type_id' => 'routeTypeId',
             'route_category_id' => 'routeCategoryId',
+            'media_id' => 'mediaId',
         ];
           
         foreach ($fields as $apiName => $entityName) {
@@ -979,4 +987,50 @@ class Route implements Exportable
         return $data;
     }
 
+
+    /**
+     * Set mediaId
+     *
+     * @param integer $mediaId
+     * @return Route
+     */
+    public function setMediaId($mediaId)
+    {
+        $this->mediaId = $mediaId;
+
+        return $this;
+    }
+
+    /**
+     * Get mediaId
+     *
+     * @return integer 
+     */
+    public function getMediaId()
+    {
+        return $this->mediaId;
+    }
+
+    /**
+     * Set media
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\Media $media
+     * @return Route
+     */
+    public function setMedia(\TB\Bundle\FrontendBundle\Entity\Media $media = null)
+    {
+        $this->media = $media;
+
+        return $this;
+    }
+
+    /**
+     * Get media
+     *
+     * @return \TB\Bundle\FrontendBundle\Entity\Media 
+     */
+    public function getMedia()
+    {
+        return $this->media;
+    }
 }

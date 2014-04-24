@@ -115,6 +115,13 @@ class Route implements Exportable
      * @ORM\Column(name="publish", type="boolean", options={"default" = false})
      */
     private $publish = false;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="homepage_order", type="smallint", nullable=true)
+     */
+    private $homepageOrder;    
 
     /**
      * @var \TB\Bundle\FrontendBundle\Entity\GpxFile
@@ -1025,5 +1032,28 @@ class Route implements Exportable
     public function getMedia()
     {
         return $this->media;
+    }
+
+    /**
+     * Set homepageOrder
+     *
+     * @param integer $homepageOrder
+     * @return Route
+     */
+    public function setHomepageOrder($homepageOrder)
+    {
+        $this->homepageOrder = $homepageOrder;
+
+        return $this;
+    }
+
+    /**
+     * Get homepageOrder
+     *
+     * @return integer 
+     */
+    public function getHomepageOrder()
+    {
+        return $this->homepageOrder;
     }
 }

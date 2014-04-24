@@ -173,6 +173,13 @@ class Event implements Exportable
      * @ORM\OneToMany(targetEntity="EventRoute", mappedBy="event")
      **/
     private $eventRoutes;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="homepage_order", type="smallint", nullable=true)
+     */
+    private $homepageOrder;
 
     /**
      * Get id
@@ -816,5 +823,28 @@ class Event implements Exportable
         }
         
         return $data;
+    }
+
+    /**
+     * Set homepageOrder
+     *
+     * @param integer $homepageOrder
+     * @return Event
+     */
+    public function setHomepageOrder($homepageOrder)
+    {
+        $this->homepageOrder = $homepageOrder;
+
+        return $this;
+    }
+
+    /**
+     * Get homepageOrder
+     *
+     * @return integer 
+     */
+    public function getHomepageOrder()
+    {
+        return $this->homepageOrder;
     }
 }

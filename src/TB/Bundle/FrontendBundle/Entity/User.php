@@ -167,6 +167,13 @@ abstract class User extends BaseUser implements Exportable
     private $userUnfollowedActivities;
     
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="homepage_order", type="smallint", nullable=true)
+     */
+    private $homepageOrder;
+    
+    /**
      * Constructor
      */
     public function __construct()
@@ -841,5 +848,28 @@ abstract class User extends BaseUser implements Exportable
         }
         
         return $avatar;
+    }
+
+    /**
+     * Set homepageOrder
+     *
+     * @param integer $homepageOrder
+     * @return User
+     */
+    public function setHomepageOrder($homepageOrder)
+    {
+        $this->homepageOrder = $homepageOrder;
+
+        return $this;
+    }
+
+    /**
+     * Get homepageOrder
+     *
+     * @return integer 
+     */
+    public function getHomepageOrder()
+    {
+        return $this->homepageOrder;
     }
 }

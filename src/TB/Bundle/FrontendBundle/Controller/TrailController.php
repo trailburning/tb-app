@@ -252,4 +252,13 @@ class TrailController extends Controller
         
         return [];
     }
+    
+    /**
+     * @Template()
+     */    
+    public function homepageTrailsAction()
+    {
+        
+        return [];
+    }
 }

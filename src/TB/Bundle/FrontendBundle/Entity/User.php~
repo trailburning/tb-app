@@ -167,6 +167,13 @@ abstract class User extends BaseUser implements Exportable
     private $userUnfollowedActivities;
     
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="homepage_order", type="smallint", nullable=true)
+     */
+    private $homepageOrder;
+    
+    /**
      * Constructor
      */
     public function __construct()
@@ -794,13 +801,52 @@ abstract class User extends BaseUser implements Exportable
     }
     
     public function export()
-    {
+    {   
         $data = [
             'name' => $this->getName(),
             'title' => $this->getTitle(),
-            'avatar' => $this->getAvatar(),
+            'avatar' => $this->getMainAvatar(),
         ];
 
         return $data;
+    }
+
+    /**
+     * Set activityLastViewed
+     *
+     * @param \DateTime $activityLastViewed
+     * @return User
+     */
+    public function setActivityLastViewed($activityLastViewed)
+    {
+        $this->activityLastViewed = $activityLastViewed;
+
+        return $this;
+    }
+
+    /**
+     * Get activityLastViewed
+     *
+     * @return \DateTime 
+     */
+    public function getActivityLastViewed()
+    {
+        return $this->activityLastViewed;
+    }
+    
+    /**
+     * Gets the best avatar for this user
+     */
+    public function getMainAvatar()
+    {
+        if ($this->getAvatar()) {
+            $avatar = sprintf('https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/%s/avatar.jpg', $this->getName());
+        } elseif ($this->getAvatarGravatar()) {
+            $avatar = $this->getAvatarGravatar();
+        } else {
+            $avatar = 'assets/img/avatar_man.jpg';
+        }
+        
+        return $avatar;
     }
 }

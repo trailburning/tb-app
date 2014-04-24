@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="event")
  * @ORM\Entity
  */
-class Event
+class Event implements Exportable
 {
     /**
      * @var integer
@@ -173,6 +173,13 @@ class Event
      * @ORM\OneToMany(targetEntity="EventRoute", mappedBy="event")
      **/
     private $eventRoutes;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="homepage_order", type="smallint", nullable=true)
+     */
+    private $homepageOrder;
 
     /**
      * Get id
@@ -786,5 +793,35 @@ class Event
     public function getLogoSmall()
     {
         return $this->logoSmall;
+    }
+    
+    public function export() 
+    {
+        $data = [
+            'id' => $this->getId(),
+            'about' => $this->getAbout(),
+            'slug' => $this->getSlug(),
+            'title' => $this->getTitle(),
+            'title2' => $this->getTitle2(),
+            'date' => $this->getDate()->format('Y-m-d'),
+            'date_to' => ($this->getDateTo() instanceof \DateTime) ? $this->getDateTo()->format('Y-m-d') : null,
+            'subtitle' => $this->getSubtitle(),
+            'synopsis' => $this->getSynopsis(),
+            'location' => [
+                $this->getLocation()->getLongitude(), 
+                $this->getLocation()->getLatitude(),
+            ],
+            'logo' => $this->getLogo(),
+            'logo_small' => $this->getLogoSmall(),
+            'image' => $this->getImage(),
+            'image_credit' => $this->getImageCredit(),
+            'link' => $this->getLink(),
+        ];                       
+        
+        if ($this->getRegion() !== null) {
+            $data['region'] = $this->getRegion()->export();
+        }
+        
+        return $data;
     }
 }
