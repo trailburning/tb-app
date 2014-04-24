@@ -87,7 +87,7 @@ class RouteLikeActivity extends Activity
         $data = [
             'published' => $this->getFormatedPublishedDate(),
             'actor' => $this->getActor()->exportAsActivity(),
-            'verb' => 'publish',
+            'verb' => 'like',
             'object' => $this->getObject()->exportAsActivity(),
         ];
         
