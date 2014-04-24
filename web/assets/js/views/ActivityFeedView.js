@@ -42,22 +42,14 @@ define([
       return this;
     },
     renderItems: function(jsonItems){
-      var nUnseen = 0, activityItemFeedView = null, elItem, model;
+      var activityItemFeedView = null, elItem, model;
       for (var nItem=0; nItem < jsonItems.items.length; nItem++) {
         model = new Backbone.Model(jsonItems.items[nItem]);
         activityFeedItemView = new ActivityFeedItemView({ model: model });
         this.arrActivityItems.push(activityFeedItemView);
-        if (!model.get('seen')) {
-          nUnseen++;
-        }
         elItem = activityFeedItemView.render();
         $(this.el).append(elItem.el);
 	  }    	
-	  // do we have unseen activity?
-	  if (nUnseen) {
-	  	$('.profile .activity').html(nUnseen);
-	  	$('.profile .activity').show();
-	  }
 	  this.checkIfMoreItems();
     },
     scrollItems: function(){
