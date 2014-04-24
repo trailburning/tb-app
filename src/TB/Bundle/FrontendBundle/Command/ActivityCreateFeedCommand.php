@@ -28,7 +28,7 @@ class ActivityCreateFeedCommand extends ContainerAwareCommand
         if ($activity) {
             $this->getContainer()->get('activity_feed_generator')->createFeedFromActivity($activity);   
         } else {
-            throw new Exception(sprintf('Activity with id %s not found', $id));
+            throw new \Exception(sprintf('Activity with id %s not found', $id));
         }
 
         $output->writeln('OK');

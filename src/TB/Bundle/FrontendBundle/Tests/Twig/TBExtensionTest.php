@@ -87,4 +87,35 @@ class TBExtensionTest extends AbstractFrontendTest
         $this->assertTrue($this->extension->userIsFollowing($user1, $user2), 'user1 is following user2');
     }
     
+    public function testRouteHasUserLike()
+    {
+        $this->loadFixtures([
+            'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData',
+        ]);
+        
+        // Get Route from DB with the slug "grunewald"..
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        $route = $em
+            ->getRepository('TBFrontendBundle:Route')
+            ->findOneBySlug('grunewald');
+        if (!$route) {
+            $this->fail('Missing Route with slug "grunewald" in test DB');
+        }
+        
+        $user = $em
+            ->getRepository('TBFrontendBundle:User')
+            ->findOneByName('mattallbeury');
+        if (!$user) {
+            $this->fail('Missing User with name "mattallbeury" in test DB');
+        }
+        
+        $this->assertFalse($this->extension->routeHasUserLike($route, $user), 'route is not liked by user');
+        
+        $route->adduserLike($user);
+        $em->persist($route);
+        $em->flush();
+        
+        $this->assertTrue($this->extension->routeHasUserLike($route, $user), 'route is not liked by user');
+    }
+    
 }

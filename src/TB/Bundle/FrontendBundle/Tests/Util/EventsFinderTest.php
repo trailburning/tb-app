@@ -2,9 +2,9 @@
 
 namespace TB\Bundle\FrontendBundle\Tests\Entity;
 
-use Liip\FunctionalTestBundle\Test\WebTestCase;
+use TB\Bundle\FrontendBundle\Tests\AbstractFrontendTest;
 
-class EventsFinderTest extends WebTestCase
+class EventsFinderTest extends AbstractFrontendTest
 {
     
     protected static function getKernelClass()

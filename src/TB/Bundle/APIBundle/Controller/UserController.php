@@ -141,11 +141,15 @@ class UserController extends AbstractRestController
             throw new ApiException(sprintf('User with id "%s" does not exist', $userId), 404);
         }
         
+        $feedGenerator = $this->get('activity_feed_generator');
+        
         $user->setActivityLastViewed(new \DateTime("now"));
         
         $em = $this->getDoctrine()->getManager();
         $em->persist($user);
         $em->flush();
+        
+        $feedGenerator->updateUserActivityUnseenCount($user);
         
         $output = array('usermsg' => 'success');
         

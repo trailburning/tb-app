@@ -104,7 +104,7 @@ class MainConsumer extends Consumer
         $output = fread($handle, 2096);
         
         // The script outputs 'OK' for success, test only the last 2 characters to handle php error messages and other debug output of the command
-        return (substr($output, -2) == 'OK') ? true : false;
+        return (substr(trim($output), -2) == 'OK') ? true : false;
     }
     
 }

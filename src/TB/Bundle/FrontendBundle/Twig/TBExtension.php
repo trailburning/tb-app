@@ -4,6 +4,7 @@ namespace TB\Bundle\FrontendBundle\Twig;
 
 use Symfony\Bundle\TwigBundle\Loader\FilesystemLoader;
 use TB\Bundle\FrontendBundle\Entity\User;
+use TB\Bundle\FrontendBundle\Entity\Route;
 
 /**
 * 
@@ -111,7 +112,7 @@ class TBExtension extends \Twig_Extension
     }
     
     /**
-     * test if a given User A is following a given User B
+     * Test if a given User A is following a given User B
      * 
      * @param User $userA The User to lookup
      * @param User $userB The User to test for following 
@@ -120,6 +121,18 @@ class TBExtension extends \Twig_Extension
     public function userIsFollowing(User $userA, User $userB)
     {
         return $userA->isFollowing($userB);
+    }
+    
+    /**
+     * Test if a Route is liked by a User
+     * 
+     * @param Route $route The Route to check
+     * @param User $user The User to test for like
+     * @return boolean true is the the user likes the Route, false if not
+     */
+    public function routeHasUserLike(Route $route, User $user)
+    {
+        return $route->hasUserLike($user);
     }
 
     public function getName()
