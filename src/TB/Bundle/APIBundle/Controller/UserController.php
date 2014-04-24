@@ -46,7 +46,7 @@ class UserController extends AbstractRestController
         
         //check if user is already following
         if ($user->isFollowing($userToFollow)) {
-            throw new ApiException(sprintf('User %s is alreaddy following user %s', $user->getId(), $userToFollow->getId()), 400);
+            throw new ApiException(sprintf('User %s is already following user %s', $user->getId(), $userToFollow->getId()), 400);
         }
 
         $user->addIFollow($userToFollow);
@@ -55,7 +55,7 @@ class UserController extends AbstractRestController
         $em->persist($user);
         $em->flush();
         
-        // dispath tb.user_follow event
+        // dispatch tb.user_follow event
         $event = new UserFollowEvent($user, $userToFollow);
         $dispatcher = $this->container->get('event_dispatcher'); 
         $dispatcher->dispatch('tb.user_follow', $event);
@@ -141,11 +141,15 @@ class UserController extends AbstractRestController
             throw new ApiException(sprintf('User with id "%s" does not exist', $userId), 404);
         }
         
+        $feedGenerator = $this->get('activity_feed_generator');
+        
         $user->setActivityLastViewed(new \DateTime("now"));
         
         $em = $this->getDoctrine()->getManager();
         $em->persist($user);
         $em->flush();
+        
+        $feedGenerator->updateUserActivityUnseenCount($user);
         
         $output = array('usermsg' => 'success');
         

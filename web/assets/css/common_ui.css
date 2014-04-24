@@ -509,7 +509,6 @@ h4.tb {
 }
 
 #headerview .right .profile .activity {
-  display: none; 
   position: absolute;
   top: 15px;
   left: 46px;  

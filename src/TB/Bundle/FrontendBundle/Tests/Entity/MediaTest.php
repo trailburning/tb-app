@@ -2,21 +2,14 @@
 
 namespace TB\Bundle\FrontendBundle\Tests\Entity;
 
-use Liip\FunctionalTestBundle\Test\WebTestCase;
+use TB\Bundle\FrontendBundle\Tests\AbstractFrontendTest;
 use TB\Bundle\FrontendBundle\Entity\Media;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Gaufrette\File;
 use CrEOF\Spatial\PHP\Types\Geometry\Point;
 
-class MediaTest extends WebTestCase
+class MediaTest extends AbstractFrontendTest
 {
-    
-    protected static function getKernelClass()
-    {
-        require_once self::getPhpUnitXmlDir() . '/frontend/AppKernel.php';
-
-        return 'AppKernel';
-    }
     
     /**
      * Test the filesystem with uploading, and deleting a file

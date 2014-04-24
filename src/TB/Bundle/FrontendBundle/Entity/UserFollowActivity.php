@@ -5,7 +5,7 @@ namespace TB\Bundle\FrontendBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /** @ORM\Entity */
-class UserFollowActivity extends AbstractActivity
+class UserFollowActivity extends Activity
 {
 
     /**

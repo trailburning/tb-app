@@ -7,13 +7,13 @@ use Doctrine\ORM\Mapping as ORM;
 /** 
  * @ORM\Entity 
  */
-class UserUnfollowActivity extends Activity
+class RouteLikeActivity extends Activity
 {
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToOne(targetEntity="TB\Bundle\FrontendBundle\Entity\User", inversedBy="userUnfollowActivities")
+     * @ORM\ManyToOne(targetEntity="TB\Bundle\FrontendBundle\Entity\User", inversedBy="routeLikeActivities")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="actor_id", referencedColumnName="id")
      * })
@@ -23,24 +23,24 @@ class UserUnfollowActivity extends Activity
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToOne(targetEntity="TB\Bundle\FrontendBundle\Entity\User", inversedBy="userUnfollowedActivities")
+     * @ORM\ManyToOne(targetEntity="TB\Bundle\FrontendBundle\Entity\Route", inversedBy="routeLikeActivities")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="object_id", referencedColumnName="id")
      * })
      **/
     protected $object;
 
-    public function __construct(User $unfollowingUser, User $unfollowedUser)
+    public function __construct(Route $route, User $user)
     {
-        $this->setActor($unfollowingUser);
-        $this->setObject($unfollowedUser);
+        $this->setActor($user);
+        $this->setObject($route);
     }
 
     /**
      * Set actor
      *
      * @param \TB\Bundle\FrontendBundle\Entity\User $actor
-     * @return UserUnfollowActivity
+     * @return RouteLikeActivity
      */
     public function setActor(\TB\Bundle\FrontendBundle\Entity\User $actor = null)
     {
@@ -62,10 +62,10 @@ class UserUnfollowActivity extends Activity
     /**
      * Set object
      *
-     * @param \TB\Bundle\FrontendBundle\Entity\User $object
-     * @return UserUnfollowActivity
+     * @param \TB\Bundle\FrontendBundle\Entity\Route $object
+     * @return RouteLikeActivity
      */
-    public function setObject(\TB\Bundle\FrontendBundle\Entity\User $object = null)
+    public function setObject(\TB\Bundle\FrontendBundle\Entity\Route $object = null)
     {
         $this->object = $object;
 
@@ -75,19 +75,19 @@ class UserUnfollowActivity extends Activity
     /**
      * Get object
      *
-     * @return \TB\Bundle\FrontendBundle\Entity\User 
+     * @return \TB\Bundle\FrontendBundle\Entity\Route 
      */
     public function getObject()
     {
         return $this->object;
     }
-    
+
     public function export()
     {
         $data = [
             'published' => $this->getFormatedPublishedDate(),
             'actor' => $this->getActor()->exportAsActivity(),
-            'verb' => 'unfollow',
+            'verb' => 'like',
             'object' => $this->getObject()->exportAsActivity(),
         ];
         

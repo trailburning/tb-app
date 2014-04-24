@@ -2,20 +2,13 @@
 
 namespace TB\Bundle\APIBundle\Tests\EventListener;
 
-use Liip\FunctionalTestBundle\Test\WebTestCase;
+use TB\Bundle\FrontendBundle\Tests\AbstractFrontendTest;
 use TB\Bundle\FrontendBundle\Entity\GpxFile;
 use TB\Bundle\FrontendBundle\Entity\Route;
 use CrEOF\Spatial\PHP\Types\Geometry\Point;
 
-class EntityEventSubscriberTest extends WebTestCase
+class EntityEventSubscriberTest extends AbstractFrontendTest
 {
-    
-    protected static function getKernelClass()
-    {
-        require_once self::getPhpUnitXmlDir() . '/frontend/AppKernel.php';
-
-        return 'AppKernel';
-    }
 
     protected function setUp()
     {

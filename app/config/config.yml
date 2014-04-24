@@ -140,4 +140,20 @@ services:
             -
                 key: %aws_accesskey%
                 secret: %aws_secretkey%
+
+old_sound_rabbit_mq:
+    connections:
+        default:
+            host:     %rabbit_mq_host%
+            port:     5672
+            user:     %rabbit_mq_user%
+            password: %rabbit_mq_password%
+            vhost:    %rabbit_mq_vhost%
+            lazy:     false                
         
+    producers:
+        main:
+            connection:       default
+            exchange_options: {name: %rabbit_mq_main_queue%, type: direct}
+            queue_options:    {name: %rabbit_mq_main_queue%}
+            
