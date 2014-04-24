@@ -1,22 +1,26 @@
-<div class="trail_card_sticker">	  		
-    <div class="panel editorial_card_panel">
-        <div class="detail_container">
-            <div class="title">
-                <div class="tb"><img src="{{ asset('assets/img/sponsor/tb.png') }}" border="0"></div>
-            	<div class="sponsor"><a href="profile/ashmei"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/ashmei/editorial_sponsor_logo_small.png" border="0"></a></div>
+<div class="panel trail_card_panel">
+    <div class="title"><h3 class="tb">{{ trail.routeCategory.name }}</h3></div>
+    <a href="{{ path('trail', {'trailSlug': trail.slug}) }}">
+    <div class="photo tb-photo-btn">
+        <div class="image_container fade_on_load"><img src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/trailburning-media/72f5660f673dd97f92ed8c2b7ab1d4fc998632e5.jpg" class="resrc scale" border="0"/></div>
+      	<div class="card_title">
+            <h1>{{ trail.shortName ? trail.shortName : trail.name }}</h1>
+            <br />
+            <h1>{{ trail.region }}</h1>
+    	</div>
+    </div>
+    </a>
+    <div class="summary">
+        {{ include('TBFrontendBundle:Profile:_userAvatar.html.twig', {'user': trail.user}) }}
+        <div class="detail">
+        by <strong>{{ user.title }}</strong>
+            <div class="stars">
+                <div class="star_full"></div>
+                <div class="star_full"></div>
+                <div class="star_full"></div>
+                <div class="star_full"></div>
+                <div class="star"></div>
             </div>
-            <a href="inspire/alps">
-            <div class="detail"><h3 class="tb">Running wild in the South Australian bush</h3></div>
-            </a>
-        </div>
-        <div class="summary">
-          <div class="tb-avatar">
-        	<div class="photo"><a href="profile/mattallbeury"><img src="http://www.gravatar.com/avatar/e426b949d824bc81fe01caf1ad88abd7"></a></div>
-          </div>		    	
-          <div class="detail">
-            by <strong>Matt Allbeury</strong>
-            <div class="date">08/04/2014</div>
-          </div>
         </div>
     </div>
 </div>

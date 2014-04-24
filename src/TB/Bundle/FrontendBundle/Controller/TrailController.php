@@ -260,7 +260,8 @@ class TrailController extends Controller
     {
         $query = $this->getDoctrine()->getManager()
             ->createQuery('
-                SELECT r FROM TBFrontendBundle:Route r
+                SELECT r, u FROM TBFrontendBundle:Route r
+                JOIN r.user u WITH r.userId = u.id 
                 WHERE r.publish = true 
                 AND r.homepageOrder IS NOT NULL
                 ORDER BY r.homepageOrder ASC');
