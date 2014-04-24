@@ -168,23 +168,24 @@ define([
   	  $('.like_btn', $(this.el)).click(function(evt){
   	    if ($(this).hasClass('pressed-btn-tb')) {
       	  $(this).removeClass('pressed-btn-tb');
-      	  self.like($(this).attr('data-userid'), false);
+      	  self.like($(this).attr('data-trailid'), false);
   	      updateLikeBtn();
   	    }
         else {
       	  $(this).addClass('pressed-btn-tb');
-      	  self.like($(this).attr('data-userid'), true);
+      	  self.like($(this).attr('data-trailid'), true);
           updateLikeBtn();
   	    }      	
   	  });
     },
-    like: function(nUser, bFollow){    
+    like: function(nTrail, bFollow){    
       var strMethod = 'like';
       if (!bFollow) {
       	strMethod = 'undolike';
       }
     	
-      var strURL = TB_RESTAPI_BASEURL + '/v1/route/'+nUser+'/' + strMethod;      
+      var strURL = TB_RESTAPI_BASEURL + '/v1/route/'+nTrail+'/' + strMethod;
+      console.log(strURL);      
       $.ajax({
         type: "PUT",
         dataType: "json",

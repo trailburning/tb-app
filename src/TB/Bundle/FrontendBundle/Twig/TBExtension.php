@@ -40,6 +40,7 @@ class TBExtension extends \Twig_Extension
     {
         return array(
             new \Twig_SimpleFunction('user_is_following',  array($this, 'userIsFollowing')),
+            new \Twig_SimpleFunction('route_has_user_like',  array($this, 'routeHasUserLike')),
             new \Twig_SimpleFunction('extract_entity',  array($this, 'extractEntity')),
         );
     }
