@@ -188,13 +188,13 @@ abstract class User extends BaseUser implements Exportable
     private $userUnfollowedActivities;
     
     /**
-<<<<<<< HEAD
      * @var integer
      *
      * @ORM\Column(name="homepage_order", type="smallint", nullable=true)
      */
     private $homepageOrder;
-=======
+
+    /**
      * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\OneToMany(targetEntity="UserActivity", mappedBy="user")
@@ -207,7 +207,6 @@ abstract class User extends BaseUser implements Exportable
      * @ORM\ManyToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\Route", mappedBy="userLikes")
      */
     private $routeLikes;
->>>>>>> dev
     
     /**
      * Constructor
