@@ -82,15 +82,8 @@ class UserProfileTest extends AbstractFrontendTest
         $this->loadFixtures([
             'TB\Bundle\FrontendBundle\DataFixtures\ORM\UserProfileData',
         ]);
-            
-        // Get Route from DB with the slug "grunewald"..
-        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $user = $em
-            ->getRepository('TBFrontendBundle:User')
-            ->findOneByName('mattallbeury');
-        if (!$user) {
-            $this->fail('Missing User with name "mattallbeury" in test DB');
-        }
+        
+        $user = $this->getUser('mattallbeury');
         
         $expected = [
             'url' => '/profile/mattallbeury',

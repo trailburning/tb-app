@@ -45,11 +45,7 @@ class RegistrationControllerTest extends AbstractFrontendTest
         $this->assertEquals(Response::HTTP_OK,  $client->getResponse()->getStatusCode());
         
         // check that user was created
-        // Get Route from DB with the slug "grunewald"..
-        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $user = $em
-            ->getRepository('TBFrontendBundle:User')
-            ->findOneByName('firstlast');
+        $user = $this->getUser('firstlast');
         if (!$user) {
             $this->fail('user was not created in registration');
         }

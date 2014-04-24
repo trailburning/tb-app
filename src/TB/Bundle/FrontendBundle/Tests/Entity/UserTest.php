@@ -97,19 +97,9 @@ class UserTest extends AbstractFrontendTest
         
         // Get Route from DB with the slug "grunewald"..
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $user1 = $em
-            ->getRepository('TBFrontendBundle:User')
-            ->findOneByName('mattallbeury');
-        if (!$user1) {
-            $this->fail('Missing User with name "mattallbeury" in test DB');
-        }
+        $user1 = $this->getUser('mattallbeury');
         
-        $user2 = $em
-            ->getRepository('TBFrontendBundle:User')
-            ->findOneByName('paultran');
-        if (!$user2) {
-            $this->fail('Missing User to follow with name "paultran" in test DB');
-        }
+        $user2 = $this->getUser('paultran');
         
         $this->assertFalse($user1->isFollowing($user2), 'user1 is not following user2');
         

@@ -28,15 +28,7 @@ class GpxFileControllerTest extends AbstractApiTestCase
             'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData',
         ]);
         
-        // Get User from DB with the slug "mattallbeury"..
-        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $user = $em
-            ->getRepository('TBFrontendBundle:User')
-            ->findOneByName('mattallbeury');
-        
-        if (!$user) {
-            $this->fail('Missing User with name "mattallbeury" in test DB');
-        }   
+        $user = $this->getUser('mattallbeury');
         
         $gpxfile = new UploadedFile(
             realpath(__DIR__ . '/../../DataFixtures/GPX/example.gpx'),

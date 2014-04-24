@@ -62,21 +62,9 @@ class TBExtensionTest extends AbstractFrontendTest
             'TB\Bundle\FrontendBundle\DataFixtures\ORM\UserProfileData',
         ]);
         
-        // Get Route from DB with the slug "grunewald"..
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $user1 = $em
-            ->getRepository('TBFrontendBundle:User')
-            ->findOneByName('mattallbeury');
-        if (!$user1) {
-            $this->fail('Missing User with name "mattallbeury" in test DB');
-        }
-        
-        $user2 = $em
-            ->getRepository('TBFrontendBundle:User')
-            ->findOneByName('paultran');
-        if (!$user2) {
-            $this->fail('Missing User to follow with name "paultran" in test DB');
-        }
+        $user1 = $this->getUser('mattallbeury');
+        $user2 = $this->getUser('paultran');
         
         $this->assertFalse($this->extension->userIsFollowing($user1, $user2), 'user1 is not following user2');
         
@@ -93,21 +81,9 @@ class TBExtensionTest extends AbstractFrontendTest
             'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData',
         ]);
         
-        // Get Route from DB with the slug "grunewald"..
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $route = $em
-            ->getRepository('TBFrontendBundle:Route')
-            ->findOneBySlug('grunewald');
-        if (!$route) {
-            $this->fail('Missing Route with slug "grunewald" in test DB');
-        }
-        
-        $user = $em
-            ->getRepository('TBFrontendBundle:User')
-            ->findOneByName('mattallbeury');
-        if (!$user) {
-            $this->fail('Missing User with name "mattallbeury" in test DB');
-        }
+        $route = $this->getRoute('grunewald');
+        $user = $this->getUser('mattallbeury');
         
         $this->assertFalse($this->extension->routeHasUserLike($route, $user), 'route is not liked by user');
         

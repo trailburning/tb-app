@@ -44,18 +44,8 @@ class MediaImporterTest extends AbstractFrontendTest
             'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData'
         ]);
         
-        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $mediaImporter = new MediaImporter($em);
-        
-        // Get Route from DB with the slug "grunewald"..
-        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $route = $em
-            ->getRepository('TBFrontendBundle:Route')
-            ->findOneBySlug('grunewald');
-        if (!$route) {
-            $this->fail('Missing Route with slug "grunewald" in test DB');
-        }        
-
+        $mediaImporter = $this->getContainer()->get('tb.media.importer');
+        $route = $this->getRoute('grunewald');
         $timezone = $mediaImporter->getRouteTimezone($route);
         
         $this->assertEquals('Europe/Berlin', $timezone, 'Route::getTimezone() return the correct timezone "Europe/Berlin"');
@@ -71,16 +61,9 @@ class MediaImporterTest extends AbstractFrontendTest
             'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData',           
         ]);
         
-        // Get Route from DB with the slug "grunewald"..
-        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $mediaImporter = new MediaImporter($em);
+        $mediaImporter = $this->getContainer()->get('tb.media.importer');
         
-        $route = $em
-            ->getRepository('TBFrontendBundle:Route')
-            ->findOneBySlug('grunewald');
-        if (!$route) {
-            $this->fail('Missing Route with slug "grunewald" in test DB');
-        }
+        $route = $this->getRoute('grunewald');
         
         $this->assertEquals(7200, $mediaImporter->getRouteTimezoneOffset($route), 
             'The datetimezone offset from this Route to UTC is 7200');
@@ -95,16 +78,9 @@ class MediaImporterTest extends AbstractFrontendTest
             'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData',           
         ]);
         
-        // Get Route from DB with the slug "grunewald"..
-        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $mediaImporter = new MediaImporter($em);
+        $mediaImporter = $this->getContainer()->get('tb.media.importer');
         
-        $route = $em
-            ->getRepository('TBFrontendBundle:Route')
-            ->findOneBySlug('grunewald');
-        if (!$route) {
-            $this->fail('Missing Route with slug "grunewald" in test DB');
-        }
+        $route = $this->getRoute('grunewald');
 
         $routePoint = $mediaImporter->getNearestRoutePointByTime($route, 1376731062);
         $this->assertInstanceOf('TB\Bundle\FrontendBundle\Entity\RoutePoint', $routePoint, 
@@ -134,12 +110,7 @@ class MediaImporterTest extends AbstractFrontendTest
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         $mediaImporter = new MediaImporter($em);
         
-        $route = $em
-            ->getRepository('TBFrontendBundle:Route')
-            ->findOneBySlug('grunewald');
-        if (!$route) {
-            $this->fail('Missing Route with slug "grunewald" in test DB');
-        }
+        $route = $this->getRoute('grunewald');
         
         $point = new Point(13.249617, 52.501565, 4326);
         $routePoint = $mediaImporter->getNearestRoutePointByGeoPoint($route, $point);
@@ -164,16 +135,9 @@ class MediaImporterTest extends AbstractFrontendTest
             'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData',           
         ]);
         
-        // Get Route from DB with the slug "grunewald"..
-        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $mediaImporter = new MediaImporter($em);
+        $mediaImporter = $this->getContainer()->get('tb.media.importer');
         
-        $route = $em
-            ->getRepository('TBFrontendBundle:Route')
-            ->findOneBySlug('grunewald');
-        if (!$route) {
-            $this->fail('Missing Route with slug "grunewald" in test DB');
-        }
+        $route = $this->getRoute('grunewald');
 
         $routePoint = $mediaImporter->getFirstRoutePoint($route);
         $this->assertInstanceOf('TB\Bundle\FrontendBundle\Entity\RoutePoint', $routePoint, 

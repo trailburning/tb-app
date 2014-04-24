@@ -26,21 +26,9 @@ class RouteControllerTest extends AbstractApiTestCase
             'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData',
         ]);
         
-        // Get Route from DB with the slug "grunewald"..
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $user = $em
-            ->getRepository('TBFrontendBundle:User')
-            ->findOneByName('mattallbeury');
-        if (!$user) {
-            $this->fail('Missing User with name "mattallbeury" in test DB');
-        }
-        
-        $route = $em
-            ->getRepository('TBFrontendBundle:Route')
-            ->findOneBySlug('grunewald');
-        if (!$route) {
-            $this->fail('Missing Route slug "grunewald" in test DB');
-        }
+        $user = $this->getUser('mattallbeury');
+        $route = $this->getRoute('grunewald');
         
         // Test Trailburning-User-ID not set
         $client = $this->createClient();
@@ -95,21 +83,8 @@ class RouteControllerTest extends AbstractApiTestCase
             'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData',
         ]);
         
-        // Get Route from DB with the slug "grunewald"..
-        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $user = $em
-            ->getRepository('TBFrontendBundle:User')
-            ->findOneByName('mattallbeury');
-        if (!$user) {
-            $this->fail('Missing User with name "mattallbeury" in test DB');
-        }
-        
-        $route = $em
-            ->getRepository('TBFrontendBundle:Route')
-            ->findOneBySlug('grunewald');
-        if (!$route) {
-            $this->fail('Missing Route with slug "grunewald" in test DB');
-        }
+        $user = $this->getUser('mattallbeury');
+        $route = $this->getRoute('grunewald');
         
         // set flag to false
         $this->eventDispatched = false;
@@ -149,19 +124,8 @@ class RouteControllerTest extends AbstractApiTestCase
         ]);
         
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $user = $em
-            ->getRepository('TBFrontendBundle:User')
-            ->findOneByName('mattallbeury');
-        if (!$user) {
-            $this->fail('Missing User with name "mattallbeury" in test DB');
-        }
-        
-        $route = $em
-            ->getRepository('TBFrontendBundle:Route')
-            ->findOneBySlug('grunewald');
-        if (!$route) {
-            $this->fail('Missing Route with slug "grunewald" in test DB');
-        }
+        $user = $this->getUser('mattallbeury');
+        $route = $this->getRoute('grunewald');
         
         // Test Trailburning-User-ID not set
         $client = $this->createClient();
@@ -221,21 +185,9 @@ class RouteControllerTest extends AbstractApiTestCase
             'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData',
         ]);
         
-        // Get Route from DB with the slug "grunewald"..
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $user = $em
-            ->getRepository('TBFrontendBundle:User')
-            ->findOneByName('mattallbeury');
-        if (!$user) {
-            $this->fail('Missing User with name "mattallbeury" in test DB');
-        }
-        
-        $route = $em
-            ->getRepository('TBFrontendBundle:Route')
-            ->findOneBySlug('grunewald');
-        if (!$route) {
-            $this->fail('Missing Route to like with slug "grunewald" in test DB');
-        }
+        $user = $this->getUser('mattallbeury');
+        $route = $this->getRoute('grunewald');
                 
         // create following user
         $route->addUserLike($user);
@@ -280,14 +232,7 @@ class RouteControllerTest extends AbstractApiTestCase
             'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData',
         ]);
         
-        // Get Route from DB with the slug "grunewald"..
-        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $route = $em
-            ->getRepository('TBFrontendBundle:Route')
-            ->findOneBySlug('grunewald');
-        if (!$route) {
-            $this->fail('Missing Route with slug "grunewald" in test DB');
-        }
+        $route = $this->getRoute('grunewald');
         
         // Get same Route from API
         $client = $this->createClient();
@@ -395,15 +340,7 @@ class RouteControllerTest extends AbstractApiTestCase
             'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData',
         ]);
         
-        // Get User from DB with the slug "mattallbeury"..
-        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $user = $em
-            ->getRepository('TBFrontendBundle:User')
-            ->findOneByName('mattallbeury');
-        
-        if (!$user) {
-            $this->fail('Missing User with name "mattallbeury" in test DB');
-        }
+        $user = $this->getUser('mattallbeury');
         
         $client = $this->createClient();
         $crawler = $client->request('GET', '/v1/routes/user/' . $user->getId());
@@ -483,15 +420,7 @@ class RouteControllerTest extends AbstractApiTestCase
             'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData',
         ]);
         
-        // Get User from DB with the slug "mattallbeury"..
-        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $user = $em
-            ->getRepository('TBFrontendBundle:User')
-            ->findOneByName('mattallbeury');
-        
-        if (!$user) {
-            $this->fail('Missing User with name "mattallbeury" in test DB');
-        }
+        $user = $this->getUser('mattallbeury');
         
         $client = $this->createClient();
         $crawler = $client->request('GET', '/v1/routes/my', [], [], ['HTTP_Trailburning_User_ID' => $user->getId()]);

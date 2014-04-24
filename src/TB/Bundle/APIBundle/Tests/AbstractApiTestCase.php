@@ -30,4 +30,32 @@ abstract class AbstractApiTestCase extends WebTestCase
             'Response is Valid JSON');
     }
     
+    protected function getUser($name)
+    {
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        $user = $em
+            ->getRepository('TBFrontendBundle:User')
+            ->findOneByName($name);
+        
+        if (!$user) {
+            $this->fail(sprintf('Missing User with name "%s" in test DB', $name));
+        }
+        
+        return $user;
+    }
+    
+    protected function getRoute($slug)
+    {
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        $route = $em
+            ->getRepository('TBFrontendBundle:Route')
+            ->findOneBySlug($slug);
+        
+        if (!$route) {
+            $this->fail(sprintf('Missing Route with slug "%s" in test DB', $slug));
+        }
+        
+        return $route;
+    }
+    
 }

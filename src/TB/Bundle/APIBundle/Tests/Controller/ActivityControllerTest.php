@@ -24,20 +24,8 @@ class ActivityControllerTest extends AbstractApiTestCase
             'TB\Bundle\FrontendBundle\DataFixtures\ORM\ActivityStreamData',
         ]);
 
-        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $user = $em
-            ->getRepository('TBFrontendBundle:User')
-            ->findOneByName('paultran');
-        if (!$user) {
-            $this->fail('Missing User with name "mattallbeury" in test DB');
-        }
-        
-        $user2 = $em
-            ->getRepository('TBFrontendBundle:User')
-            ->findOneByName('mattallbeury');
-        if (!$user) {
-            $this->fail('Missing User with name "mattallbeury" in test DB');
-        }
+        $user = $this->getUser('paultran');        
+        $user2 = $this->getUser('mattallbeury');
         
         // Test Trailburning-User-ID not set
         $client = $this->createClient();

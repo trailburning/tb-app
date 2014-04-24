@@ -385,7 +385,7 @@ class Media implements Exportable
         return $this->filename;
     }
 
-    public function export() 
+    public function export()
     {
         $data = [
             'id' => $this->getId(),
@@ -403,5 +403,14 @@ class Media implements Exportable
         ];
         
         return $data;
+    }
+    
+    public function getAbsolutePath()
+    {
+        if ($this->getPath() != '') {
+            return sprintf('http://s3-eu-west-1.amazonaws.com/%s', $this->getPath());
+        } else {
+            return null;
+        }
     }
 }

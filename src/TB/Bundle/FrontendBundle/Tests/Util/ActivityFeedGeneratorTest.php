@@ -20,10 +20,7 @@ class ActivityFeedGeneratorTest extends AbstractFrontendTest
         ]); 
         
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-    
-        $user = $em
-            ->getRepository('TBFrontendBundle:User')
-            ->findOneByName('paultran');
+        $user = $this->getUser('paultran');
     
         $activities = $em
             ->getRepository('TBFrontendBundle:Activity')

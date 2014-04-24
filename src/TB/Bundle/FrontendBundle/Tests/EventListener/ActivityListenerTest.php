@@ -34,12 +34,7 @@ class ActivityListenerTest extends AbstractFrontendTest
             
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         
-        $route = $em
-            ->getRepository('TBFrontendBundle:Route')
-            ->findOneBySlug('grunewald');
-        if (!$route) {
-            $this->fail('Missing Route with slug "grunewald" in test DB');
-        }
+        $route= $this->getRoute('grunewald');
         
         //  get the event dispatcher and dispathe the tb.route_publish manually
         $dispatcher = $this->getContainer()->get('event_dispatcher');
@@ -70,21 +65,9 @@ class ActivityListenerTest extends AbstractFrontendTest
             'TB\Bundle\FrontendBundle\DataFixtures\ORM\UserProfileData',
         ]);
             
-        // Get Route from DB with the slug "grunewald"..
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $user = $em
-            ->getRepository('TBFrontendBundle:User')
-            ->findOneByName('mattallbeury');
-        if (!$user) {
-            $this->fail('Missing User with name "mattallbeury" in test DB');
-        }
-        
-        $userToFollow = $em
-            ->getRepository('TBFrontendBundle:User')
-            ->findOneByName('paultran');
-        if (!$userToFollow) {
-            $this->fail('Missing User to follow with name "paultran" in test DB');
-        }
+        $user = $this->getUser('mattallbeury');
+        $userToFollow = $this->getUser('paultran');
         
         // Replace the RabbitMQ Producer Service with a Stub
         $producer = $this->getMockBuilder('OldSound\RabbitMqBundle\RabbitMq\Producer')
@@ -124,22 +107,10 @@ class ActivityListenerTest extends AbstractFrontendTest
         $this->loadFixtures([
             'TB\Bundle\FrontendBundle\DataFixtures\ORM\UserProfileData',
         ]);
-            
-        // Get Route from DB with the slug "grunewald"..
-        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $user = $em
-            ->getRepository('TBFrontendBundle:User')
-            ->findOneByName('mattallbeury');
-        if (!$user) {
-            $this->fail('Missing User with name "mattallbeury" in test DB');
-        }
         
-        $userToUnfollow = $em
-            ->getRepository('TBFrontendBundle:User')
-            ->findOneByName('paultran');
-        if (!$userToUnfollow) {
-            $this->fail('Missing User to follow with name "paultran" in test DB');
-        }
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        $user = $this->getUser('mattallbeury');
+        $userToUnfollow = $this->getUser('paultran');
         
         // Replace the RabbitMQ Producer Service with a Stub
         $producer = $this->getMockBuilder('OldSound\RabbitMqBundle\RabbitMq\Producer')
@@ -180,21 +151,9 @@ class ActivityListenerTest extends AbstractFrontendTest
             'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData',
         ]);
             
-        // Get Route from DB with the slug "grunewald"..
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $user = $em
-            ->getRepository('TBFrontendBundle:User')
-            ->findOneByName('mattallbeury');
-        if (!$user) {
-            $this->fail('Missing User with name "mattallbeury" in test DB');
-        }
-        
-        $route = $em
-            ->getRepository('TBFrontendBundle:Route')
-            ->findOneBySlug('grunewald');
-        if (!$route) {
-            $this->fail('Missing Route to like with slug "grunewald" in test DB');
-        }
+        $user = $this->getUser('mattallbeury');
+        $route = $this->getRoute('grunewald');
         
         // Replace the RabbitMQ Producer Service with a Stub
         $producer = $this->getMockBuilder('OldSound\RabbitMqBundle\RabbitMq\Producer')
@@ -235,21 +194,9 @@ class ActivityListenerTest extends AbstractFrontendTest
             'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData',
         ]);
             
-        // Get Route from DB with the slug "grunewald"..
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $user = $em
-            ->getRepository('TBFrontendBundle:User')
-            ->findOneByName('mattallbeury');
-        if (!$user) {
-            $this->fail('Missing User with name "mattallbeury" in test DB');
-        }
-        
-        $route = $em
-            ->getRepository('TBFrontendBundle:Route')
-            ->findOneBySlug('grunewald');
-        if (!$route) {
-            $this->fail('Missing Route to undo like with slug "grunewald" in test DB');
-        }
+        $user = $this->getUser('mattallbeury');
+        $route = $this->getRoute('grunewald');
         
         // Replace the RabbitMQ Producer Service with a Stub
         $producer = $this->getMockBuilder('OldSound\RabbitMqBundle\RabbitMq\Producer')

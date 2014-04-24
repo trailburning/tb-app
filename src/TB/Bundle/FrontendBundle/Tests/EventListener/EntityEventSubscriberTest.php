@@ -21,37 +21,19 @@ class EntityEventSubscriberTest extends AbstractFrontendTest
             'TB\Bundle\FrontendBundle\DataFixtures\ORM\UserProfileData',
         ]);
         
-        // Get Route from DB with the slug "grunewald"..
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $user1 = $em
-            ->getRepository('TBFrontendBundle:User')
-            ->findOneByName('mattallbeury');
-        if (!$user1) {
-            $this->fail('Missing User with name "mattallbeury" in test DB');
-        }
-        
-        $user2 = $em
-            ->getRepository('TBFrontendBundle:User')
-            ->findOneByName('paultran');
-        if (!$user2) {
-            $this->fail('Missing User to follow with name "paultran" in test DB');
-        }
+        $user1 = $this->getUser('mattallbeury');
+        $user2 = $this->getUser('paultran');
         
         $user1->addIFollow($user2);
         $em->persist($user1);
         $em->flush();
-        
     }
     
     
-    protected function getRoute()
+    protected function getTestRoute()
     {
-        $user = $this->em
-            ->getRepository('TBFrontendBundle:User')
-            ->findOneByName('mattallbeury');
-        if (!$user) {
-            $this->fail('Missing User with name "mattallbeury" in test DB');
-        }
+        $user = $this->getUser('mattallbeury');
         
         $gpxFile = new GpxFile();
         $gpxFile->setPath('path');
@@ -101,7 +83,7 @@ class EntityEventSubscriberTest extends AbstractFrontendTest
             $this->eventDispatched = true;
         });
         
-        $route = $this->getRoute();
+        $route = $this->getTestRoute();
         $route->setPublish(true);
         
         $this->em->persist($route);
@@ -130,7 +112,7 @@ class EntityEventSubscriberTest extends AbstractFrontendTest
             $this->eventDispatched = true;
         });
         
-        $route = $this->getRoute();
+        $route = $this->getTestRoute();
         $route->setPublish(false);
         
         $this->em->persist($route);
@@ -166,7 +148,7 @@ class EntityEventSubscriberTest extends AbstractFrontendTest
             $this->eventDispatched = true;
         });
         
-        $route = $this->getRoute();
+        $route = $this->getTestRoute();
         $route->setPublish(false);
         
         $this->em->persist($route);
@@ -199,7 +181,7 @@ class EntityEventSubscriberTest extends AbstractFrontendTest
             $this->eventDispatched = true;
         });
         
-        $route = $this->getRoute();
+        $route = $this->getTestRoute();
         $route->setPublish(false);
         
         $this->em->persist($route);
@@ -222,7 +204,7 @@ class EntityEventSubscriberTest extends AbstractFrontendTest
             'TB\Bundle\FrontendBundle\DataFixtures\ORM\UserProfileData',
         ]);
         
-        $route = $this->getRoute();
+        $route = $this->getTestRoute();
         $route->setPublish(true);
         
         $this->em->persist($route);
