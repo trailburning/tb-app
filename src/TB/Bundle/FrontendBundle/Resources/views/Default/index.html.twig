@@ -151,6 +151,9 @@ var TB_USER_ID = {{ app.user.id }};
   	<div class="content">
 
         {% if app.user %}
+        
+			<div class="tb-avatar"><div class="photo"><img src="{{ asset('assets/img/avatar_man.jpg') }}"></div></div>        
+        
             {{ render(controller('TBFrontendBundle:Trail:homepageuserTrails')) }}
         {% endif %}
 
