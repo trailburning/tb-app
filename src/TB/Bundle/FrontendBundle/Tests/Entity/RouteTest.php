@@ -4,6 +4,7 @@ namespace TB\Bundle\FrontendBundle\Tests\Entity;
 
 use TB\Bundle\FrontendBundle\Tests\AbstractFrontendTest;
 use TB\Bundle\FrontendBundle\Entity\Route;
+use TB\Bundle\FrontendBundle\Entity\Media;
 use TB\Bundle\FrontendBundle\Entity\GpxFile;
 use CrEOF\Spatial\PHP\Types\Geometry\Point;
 
@@ -20,13 +21,7 @@ class RouteTest extends AbstractFrontendTest
         ]); 
 
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $route = $em
-            ->getRepository('TBFrontendBundle:Route')
-            ->findOneBySlug('grunewald');
-        
-        if (!$route) {
-            $this->fail('Missing Route with slug "grunewald" in test DB');
-        }
+        $route = $this->getRoute('grunewald');
         
         $routeCategory = $em
             ->getRepository('TBFrontendBundle:RouteCategory')
@@ -238,14 +233,7 @@ class RouteTest extends AbstractFrontendTest
         ]);        
         
         // get Route to update
-        // Get Route from DB with the slug "grunewald"..
-        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $route = $em
-            ->getRepository('TBFrontendBundle:Route')
-            ->findOneBySlug('grunewald');
-        if (!$route) {
-            $this->fail('Missing Route with slug "grunewald" in test DB');
-        }
+        $route = $this->getRoute('grunewald');
         
         // Get RouteType for Ttst
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
@@ -315,13 +303,7 @@ class RouteTest extends AbstractFrontendTest
         ]); 
  
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $user = $em
-            ->getRepository('TBFrontendBundle:User')
-            ->findOneByName('mattallbeury');
-        
-        if (!$user) {
-            $this->fail('Missing User with name "mattallbeury" in test DB');
-        }
+        $user = $this->getUser('mattallbeury');
         
         $gpxFile = new GpxFile();
         $gpxFile->setPath('path');
@@ -373,14 +355,7 @@ class RouteTest extends AbstractFrontendTest
             'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData',
         ]);
             
-        // Get Route from DB with the slug "grunewald"..
-        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $route = $em
-            ->getRepository('TBFrontendBundle:Route')
-            ->findOneBySlug('grunewald');
-        if (!$route) {
-            $this->fail('Missing Route with slug "grunewald" in test DB');
-        }
+        $route = $this->getRoute('grunewald');
         
         $expected = [
             'url' => '/trail/grunewald',
@@ -399,21 +374,9 @@ class RouteTest extends AbstractFrontendTest
             'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData',
         ]);
         
-        // Get Route from DB with the slug "grunewald"..
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $user = $em
-            ->getRepository('TBFrontendBundle:User')
-            ->findOneByName('mattallbeury');
-        if (!$user) {
-            $this->fail('Missing User with name "mattallbeury" in test DB');
-        }
-        
-        $route = $em
-            ->getRepository('TBFrontendBundle:Route')
-            ->findOneBySlug('grunewald');
-        if (!$route) {
-            $this->fail('Missing Route with slug "grunewald" in test DB');
-        }
+        $user = $this->getUser('mattallbeury');
+        $route = $this->getRoute('grunewald');
         
         $this->assertFalse($route->hasUserLike($user), 'User does not like the Route');
         
@@ -423,4 +386,21 @@ class RouteTest extends AbstractFrontendTest
         
         $this->assertTrue($route->hasUserLike($user), 'User does like the Route');
     }   
+    
+    public function testGetFavouriteMedia()
+    {   
+        $route = new Route();
+        $media1 = new Media();
+        $media2 = new Media();
+        
+        $this->assertNull($route->getFavouriteMedia(), 'Route::getFavouriteMedia() returns null for no Media set');
+        
+        $route->addMedia($media1);
+        $route->addMedia($media2);
+        $this->assertSame($media1, $route->getFavouriteMedia(), 'Route::getFavouriteMedia() returns the  first Media'); 
+        
+        $route->setMedia($media2);
+        $this->assertSame($media2, $route->getFavouriteMedia(), 'Route::getFavouriteMedia() returns Media set as favourite'); 
+    }
+    
 }

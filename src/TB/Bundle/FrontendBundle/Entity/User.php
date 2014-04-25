@@ -188,6 +188,13 @@ abstract class User extends BaseUser implements Exportable
     private $userUnfollowedActivities;
     
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="homepage_order", type="smallint", nullable=true)
+     */
+    private $homepageOrder;
+
+    /**
      * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\OneToMany(targetEntity="UserActivity", mappedBy="user")
@@ -1033,5 +1040,22 @@ abstract class User extends BaseUser implements Exportable
     public function getRouteUndoLikeActivities()
     {
         return $this->routeUndoLikeActivities;
+    }
+    
+    public function setHomepageOrder($homepageOrder)
+    {
+        $this->homepageOrder = $homepageOrder;
+
+        return $this;
+    }
+
+    /**
+     * Get homepageOrder
+     *
+     * @return integer 
+     */
+    public function getHomepageOrder()
+    {
+        return $this->homepageOrder;
     }
 }

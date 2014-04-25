@@ -114,6 +114,13 @@ class Route implements Exportable
      * @ORM\Column(name="publish", type="boolean", options={"default" = false})
      */
     private $publish = false;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="homepage_order", type="smallint", nullable=true)
+     */
+    private $homepageOrder;    
 
     /**
      * @var \TB\Bundle\FrontendBundle\Entity\GpxFile
@@ -1162,5 +1169,44 @@ class Route implements Exportable
     public function getRouteLikeActivities()
     {
         return $this->routeLikeActivities;
+    }
+    
+    /**
+     * Set homepageOrder
+     *
+     * @param integer $homepageOrder
+     * @return Route
+     */
+    public function setHomepageOrder($homepageOrder)
+    {
+        $this->homepageOrder = $homepageOrder;
+        
+        return $this;
+    }
+
+    /**
+     * Get homepageOrder
+     *
+     * @return integer 
+     */
+    public function getHomepageOrder()
+    {
+        return $this->homepageOrder;
+    }
+    
+    /**
+     * Retruns the Media that is set as favourite Media, or the first Media. Returns null if no Media for this Route exists
+     *
+     * @return Media
+     */
+    public function getFavouriteMedia()
+    {
+        if ($this->getMedia() !== null) {
+            return $this->getMedia();
+        } elseif (count($this->getMedias()) > 0) {
+            return $this->getMedias()[0];
+        } else {
+            return null;
+        }
     }
 }

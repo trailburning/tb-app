@@ -1,0 +1,6 @@
+<div class="trailcards ">  	
+    {% for trail in trails %}
+        {{ include('TBFrontendBundle:Trail:_trailcard.html.twig', {'trail': trail}) }}
+    {% endfor %}  	
+</div>	
+            

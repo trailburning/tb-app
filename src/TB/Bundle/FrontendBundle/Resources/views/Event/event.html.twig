@@ -96,7 +96,7 @@ var TB_EVENT_MAP_ZOOM = {{ event.mapZoom }};
                             <h3 class="tb">{{ route.routeType ? route.routeType.name : 'Run' }}</h3>
                             <a href="{{ path('trail', {trailSlug: route.slug}) }}">
                                 <div class="photo tb-photo-btn">
-                                    <div class="image_container"><img src="http://app.resrc.it/http://s3-eu-west-1.amazonaws.com/{{ route.medias[0].path }}" class="resrc scale" border="0"/></div>
+                                    <div class="image_container"><img src="http://app.resrc.it/{{ route.favouriteMedia.absolutePath }}" class="resrc scale" border="0"/></div>
                                     <div class="card_title">
                                         {% if route.eventRoutes[0].date %}
                                             <h1>{{ route.eventRoutes[0].date|date('d.m.y') }}</h1>

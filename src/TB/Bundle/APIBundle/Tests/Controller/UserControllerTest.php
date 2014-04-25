@@ -27,19 +27,9 @@ class UserControllerTest extends AbstractApiTestCase
         
         // Get Route from DB with the slug "grunewald"..
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $user = $em
-            ->getRepository('TBFrontendBundle:User')
-            ->findOneByName('mattallbeury');
-        if (!$user) {
-            $this->fail('Missing User with name "mattallbeury" in test DB');
-        }
+        $user = $this->getUser('mattallbeury');
         
-        $userToFollow = $em
-            ->getRepository('TBFrontendBundle:User')
-            ->findOneByName('paultran');
-        if (!$userToFollow) {
-            $this->fail('Missing User to follow with name "paultran" in test DB');
-        }
+        $userToFollow = $this->getUser('paultran');
         
         // Test Trailburning-User-ID not set
         $client = $this->createClient();
@@ -99,21 +89,8 @@ class UserControllerTest extends AbstractApiTestCase
             'TB\Bundle\FrontendBundle\DataFixtures\ORM\UserProfileData',
         ]);
         
-        // Get Route from DB with the slug "grunewald"..
-        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $user = $em
-            ->getRepository('TBFrontendBundle:User')
-            ->findOneByName('mattallbeury');
-        if (!$user) {
-            $this->fail('Missing User with name "mattallbeury" in test DB');
-        }
-        
-        $userToFollow = $em
-            ->getRepository('TBFrontendBundle:User')
-            ->findOneByName('paultran');
-        if (!$userToFollow) {
-            $this->fail('Missing User to follow with name "paultran" in test DB');
-        }
+        $user = $this->getUser('mattallbeury');
+        $userToFollow = $this->getUser('paultran');
         
         // set flag to false
         $this->eventDispatched = false;
@@ -152,21 +129,9 @@ class UserControllerTest extends AbstractApiTestCase
             'TB\Bundle\FrontendBundle\DataFixtures\ORM\UserProfileData',
         ]);
         
-        // Get Route from DB with the slug "grunewald"..
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $user = $em
-            ->getRepository('TBFrontendBundle:User')
-            ->findOneByName('mattallbeury');
-        if (!$user) {
-            $this->fail('Missing User with name "mattallbeury" in test DB');
-        }
-        
-        $userToUnfollow = $em
-            ->getRepository('TBFrontendBundle:User')
-            ->findOneByName('paultran');
-        if (!$userToUnfollow) {
-            $this->fail('Missing User to follow with name "paultran" in test DB');
-        }
+        $user = $this->getUser('mattallbeury');
+        $userToUnfollow = $this->getUser('paultran');
         
         // Test Trailburning-User-ID not set
         $client = $this->createClient();
@@ -231,21 +196,9 @@ class UserControllerTest extends AbstractApiTestCase
             'TB\Bundle\FrontendBundle\DataFixtures\ORM\UserProfileData',
         ]);
         
-        // Get Route from DB with the slug "grunewald"..
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $user = $em
-            ->getRepository('TBFrontendBundle:User')
-            ->findOneByName('mattallbeury');
-        if (!$user) {
-            $this->fail('Missing User with name "mattallbeury" in test DB');
-        }
-        
-        $userToUnfollow = $em
-            ->getRepository('TBFrontendBundle:User')
-            ->findOneByName('paultran');
-        if (!$userToUnfollow) {
-            $this->fail('Missing User to follow with name "paultran" in test DB');
-        }
+        $user = $this->getUser('mattallbeury');
+        $userToUnfollow = $this->getUser('paultran');
                 
         // create following user
         $user->addIFollow($userToUnfollow);
@@ -290,14 +243,8 @@ class UserControllerTest extends AbstractApiTestCase
             'TB\Bundle\FrontendBundle\DataFixtures\ORM\UserProfileData',
         ]);
         
-        // Get Route from DB with the slug "grunewald"..
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $user = $em
-            ->getRepository('TBFrontendBundle:User')
-            ->findOneByName('mattallbeury');
-        if (!$user) {
-            $this->fail('Missing User with name "mattallbeury" in test DB');
-        }
+        $user = $this->getUser('mattallbeury');
 
         $this->assertEquals(null, $user->getActivityLastViewed(),
             'The activityLastViewed field is empty');

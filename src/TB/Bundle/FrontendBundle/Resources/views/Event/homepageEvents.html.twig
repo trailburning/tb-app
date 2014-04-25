@@ -1,0 +1,3 @@
+<div class="panels trailcards clearfix">       
+    {% for event in events %}{{ include('TBFrontendBundle:Event:_eventcard.html.twig', {'event': event}) }}{% endfor %}
+</div>

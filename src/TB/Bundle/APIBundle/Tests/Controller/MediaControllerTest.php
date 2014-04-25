@@ -23,15 +23,7 @@ class MediaControllerTest extends AbstractApiTestCase
             'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData',
         ]);
         
-        // Get Route from DB with the slug "grunewald"..
-        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $route = $em
-            ->getRepository('TBFrontendBundle:Route')
-            ->findOneBySlug('grunewald');
-        
-        if (!$route) {
-            $this->fail('Missing Route with slug "grunewald" in test DB');
-        }
+        $route = $this->getRoute('grunewald');
         
         $client = $this->createClient();
         $crawler = $client->request('GET', '/v1/route/' . $route->getId() . '/medias');
@@ -65,20 +57,11 @@ class MediaControllerTest extends AbstractApiTestCase
      */
     public function testPostRouteMedias()
     {
-        
         $this->loadFixtures([
             'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData',
         ]);
         
-        // Get Route from DB with the slug "grunewald"..
-        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $route = $em
-            ->getRepository('TBFrontendBundle:Route')
-            ->findOneBySlug('grunewald');
-        
-        if (!$route) {
-            $this->fail('Missing Route with slug "grunewald" in test DB');
-        }
+        $route = $this->getRoute('grunewald');
         
         $mediaFile = new UploadedFile(
             realpath(__DIR__ . '/../../DataFixtures/Media/grunewald/P5250773.jpg'),
@@ -117,15 +100,7 @@ class MediaControllerTest extends AbstractApiTestCase
             'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData',
         ]);
         
-        // Get Route from DB with the slug "grunewald"..
-        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $route = $em
-            ->getRepository('TBFrontendBundle:Route')
-            ->findOneBySlug('grunewald');
-        
-        if (!$route) {
-            $this->fail('Missing Route with slug "grunewald" in test DB');
-        }
+        $route = $this->getRoute('grunewald');
         
         $mediaFile1 = new UploadedFile(
             realpath(__DIR__ . '/../../DataFixtures/Media/grunewald/P5250773.jpg'),
@@ -160,13 +135,7 @@ class MediaControllerTest extends AbstractApiTestCase
         
         // Get Route from DB with the slug "grunewald"..
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $route = $em
-            ->getRepository('TBFrontendBundle:Route')
-            ->findOneBySlug('grunewald');
-        
-        if (!$route) {
-            $this->fail('Missing Route with slug "grunewald" in test DB');
-        }
+        $route = $this->getRoute('grunewald');
         
         $media = $em
             ->getRepository('TBFrontendBundle:Media')
@@ -200,9 +169,7 @@ class MediaControllerTest extends AbstractApiTestCase
         
         // Get Route from DB with the slug "grunewald"..
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $route = $em
-            ->getRepository('TBFrontendBundle:Route')
-            ->findOneBySlug('grunewald');
+        $route = $this->getRoute('grunewald');
         
         if (!$route) {
             $this->fail('Missing Route with slug "grunewald" in test DB');

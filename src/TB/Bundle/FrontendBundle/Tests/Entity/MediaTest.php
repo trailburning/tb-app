@@ -33,14 +33,7 @@ class MediaTest extends AbstractFrontendTest
             'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData',
         ]);        
         
-        // Get Route from DB with the slug "grunewald"..
-        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $route = $em
-            ->getRepository('TBFrontendBundle:Route')
-            ->findOneBySlug('grunewald');
-        if (!$route) {
-            $this->fail('Missing Route with slug "grunewald" in test DB');
-        }
+        $route = $this->getRoute('grunewald');
         
         $mediaImporter = $this->getContainer()->get('tb.media.importer');
         
@@ -77,14 +70,8 @@ class MediaTest extends AbstractFrontendTest
             'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData',
         ]);        
         
-        // Get Route from DB with the slug "grunewald"..
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $route = $em
-            ->getRepository('TBFrontendBundle:Route')
-            ->findOneBySlug('grunewald');
-        if (!$route) {
-            $this->fail('Missing Route with slug "grunewald" in test DB');
-        }
+        $route = $this->getRoute('grunewald');
         
         $mediaImporter = $this->getContainer()->get('tb.media.importer');
         
@@ -107,13 +94,7 @@ class MediaTest extends AbstractFrontendTest
         ]);        
         
         // Get Route from DB with the slug "grunewald"..
-        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $route = $em
-            ->getRepository('TBFrontendBundle:Route')
-            ->findOneBySlug('grunewald');
-        if (!$route) {
-            $this->fail('Missing Route with slug "grunewald" in test DB');
-        }
+        $route = $this->getRoute('grunewald');
         
         $filesystem = $this->getContainer()->get('trail_media_files_filesystem');
         $media = new Media();
