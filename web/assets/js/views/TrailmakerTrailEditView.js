@@ -51,12 +51,26 @@ define([
       this.trailUploadPhotoView.render();          
 
 	  this.renderTrailDetail();
-            
+      
       $('.submit', $(this.el)).click(function(evt) {
         // fire event
-        app.dispatcher.trigger("TrailEditView:submitclick", self);                        
+        app.dispatcher.trigger('TrailEditView:submitclick', self);                        
       });
 
+	  $('#form_trail_name').keyup(function() {
+        // fire event
+        app.dispatcher.trigger('TrailEditView:fieldkeypress', self);                        
+	  });
+	  
+	  $('.activity').click(function(evt){
+	  	if ($(this).hasClass('active')) {
+	  	  $(this).removeClass('active');
+	  	}
+	  	else {
+	  	  $(this).addClass('active');
+	  	}
+	  });
+	  
       return this;
     },
     renderTrailDetail: function(){   

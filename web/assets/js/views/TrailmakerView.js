@@ -22,6 +22,7 @@ define([
       app.dispatcher.on("TrailEditView:galleryphotoclick", this.onTrailEditViewGalleryPhotoClick, this);
       app.dispatcher.on("TrailEditView:updatedetailsclick", this.onTrailEditViewUpdateDetailsClick, this);
       app.dispatcher.on("TrailEditView:updatestarphoto", this.onTrailEditViewUpdateStarPhoto, this);
+      app.dispatcher.on("TrailEditView:fieldkeypress", this.onTrailEditViewFieldKeypress, this);
       app.dispatcher.on("TrailEditView:submitclick", this.onTrailEditViewSubmitClick, this);
       app.dispatcher.on("TrailEditView:submitclick", this.onTrailPublishedViewSubmitClick, this);
 
@@ -134,7 +135,8 @@ define([
           self.trailMapView.render();          
           self.getTrailMedia();
           self.showTitle();                 
-          self.trailEditView.render();      	
+          self.trailEditView.render();
+		  self.validateTrailForPublish();      	
         }      
       });        
     },
@@ -151,9 +153,38 @@ define([
 		    self.mediaCollection.add(model);
 	      });
 	      self.trailEditView.renderSlideshow();
+	      self.validateTrailForPublish();   
         }
       });
     },
+    validateTrailForPublish: function(){
+      var bValid = true;
+
+      $('.publish .err-msg span').hide();
+      // check enough photos
+      if (this.mediaCollection.length < 3) {
+      	$('.publish .err-msg span.photos').show();
+      	bValid = false;
+	  }
+      // check fields
+      if ($('#form_trail_name').val() == '') {
+      	$('.publish .err-msg span.name').show();
+      	bValid = false;
+      }
+      
+      if (bValid) {
+        $('.publish .err-msg').hide();
+        $('.publish .submit').attr('disabled', false);      	
+      }
+      else {
+        $('.publish .err-msg').show();
+        $('.publish .submit').attr('disabled', true);      	
+      }
+      return bValid;
+    },   
+    onTrailEditViewFieldKeypress: function(trailEditView){
+      this.validateTrailForPublish();
+    },    
     onTrailCreateViewGPXUploaded: function(trailCreateView){
 	  $('#trail_map_view').removeClass('map_large');
 	  $('#trail_map_view').addClass('map_small');
@@ -181,11 +212,14 @@ define([
 	  this.trailEditView.renderSlideshow();	  
 	  // select slide
 	  this.trailEditView.selectSlideshowSlide(model.id);
+	  
+	  this.validateTrailForPublish();
     },    
     onTrailEditViewGalleryPhotoClick: function(mediaID){
       this.trailMapView.selectMarker(mediaID);    
 	},    
     onTrailEditViewRemoveMedia: function(trailEditView){
+      this.validateTrailForPublish();
 	},    
     onTrailEditViewUpdateStarPhoto: function(trailEditView){
       var self = this;
@@ -238,7 +272,11 @@ define([
         }
       });
 	},    		
-    onTrailEditViewSubmitClick: function(trailEditView){
+    onTrailEditViewSubmitClick: function(trailEditView){    	
+      if (!this.validateTrailForPublish()) {
+      	return;
+      }
+    	
       var jsonObj = {'publish':true};
       var postData = JSON.stringify(jsonObj);
       var postArray = {json:postData};

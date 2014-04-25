@@ -146,9 +146,13 @@ var TB_USER_ID = {{ app.user.id }}
                 </div>      
             </form>
 
+            <div class="bar_title">
+              <div class="left"></div>
+              <div class="title"><h4 class="tb">This trail is suitabe for</h4></div>
+              <div class="right"></div>
+            </div>
             <div class="activities">
-              <h4 class="tb">Trail suitability</h4>
-			  <div class="activity tb-avatar tb-avatar-highlight"><div class="icon icon-run active"></div></div>
+			  <div class="activity tb-avatar tb-avatar-highlight active"><div class="icon icon-run"></div></div>
 			  <div class="activity tb-avatar tb-avatar-highlight"><div class="icon icon-bike"></div></div>		    	
 			  <div class="activity tb-avatar tb-avatar-highlight"><div class="icon icon-ski"></div></div>		    	
 			  <div class="activity tb-avatar tb-avatar-highlight"><div class="icon icon-stroller"></div></div>		    	
@@ -203,7 +207,10 @@ var TB_USER_ID = {{ app.user.id }}
                 <h4 class="tb">
                 Make sure you chose your favourite  picture on the map, by using the star icon. If you’re ok with it, then let’s share your trail!      	
                 </h4>      
-                <div class="publish"><span class="btn btn-tb-action btn-tb-large submit">Publish Trail</span></div>
+                <div class="publish">
+                	<span class="btn btn-tb-action btn-tb-large submit" disabled="disabled">Publish Trail</span>
+                	<div class="err-msg"><span class="name">You must name your trail before publishing.</span><span class="photos">You must upload a minimum of 3 pictures before publishing.</span></div>
+                </div>
                 </div>                
             </div>
         </div>
