@@ -150,9 +150,12 @@ var TB_USER_ID = {{ app.user.id }};
   	<div class="line_break"></div>
   	<div class="content">
 
+        {% if app.user %}
+            {{ render(controller('TBFrontendBundle:Trail:homepageuserTrails')) }}
+        {% endif %}
+
 {#
-      <h2 class="tb tb-title">Trailburners you follow</h2>
-      <div class="desc"><h4 class="tb">The latest trails from the people you follow</h4></div>      
+           
 	  
 	    <div class="panels trailcards clearfix">       
 

@@ -117,7 +117,7 @@ class ActivityFeedGenerator
             $q = 'SELECT COUNT(ua.userId) FROM TBFrontendBundle:UserActivity ua 
                   INNER JOIN ua.activity a WITH a.id = ua.activityId
                   WHERE ua.userId = :userId
-                  AND a.published > :lastViewed';
+                  AND (a.published > :lastViewed)';
             $query = $this->em
                 ->createQuery($q)
                 ->setParameter('userId', $user->getId())
@@ -130,6 +130,7 @@ class ActivityFeedGenerator
         }
         
         $count = $query->getSingleScalarResult();
+        
         $user->setActivityUnseenCount($count);
         $this->em->persist($user);
         $this->em->flush($user);
