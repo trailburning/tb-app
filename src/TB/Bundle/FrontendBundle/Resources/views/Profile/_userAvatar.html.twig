@@ -1,5 +1,8 @@
 {# Display a user avatar and that links to the users profile #}
-<div class="tb-avatar">
+{% if class is not defined  %}
+    {% set class = '' %}
+{% endif %}
+<div class="tb-avatar {{ class }}">
     <div class="photo">
         <a href="{{ path('profile', {'name': user.name}) }}">		          	
             {% if user.avatar %}

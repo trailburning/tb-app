@@ -124,4 +124,21 @@ class ProfileController extends Controller
         }
         
     }
+    
+    /**
+     * @Template()
+     */
+    public function homepageUserAction()
+    {
+        $query = $this->getDoctrine()->getManager()
+            ->createQuery('
+                SELECT u FROM TBFrontendBundle:User u
+                WHERE u.homepageOrder IS NOT NULL
+                ORDER BY u.homepageOrder ASC');
+        $users = $query->getResult();  
+        
+        return [
+            'users' => $users,
+        ];
+    }
 }

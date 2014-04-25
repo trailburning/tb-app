@@ -405,12 +405,18 @@ class Media implements Exportable
         return $data;
     }
     
+    /**
+     * Constructs the absolute path to the media file at Amazon S3
+     *
+     * @return The absolute path to the media file
+     * @throws Exception when the path field, that is needed to construct the path, is not set 
+     */
     public function getAbsolutePath()
     {
         if ($this->getPath() != '') {
             return sprintf('http://s3-eu-west-1.amazonaws.com/%s', $this->getPath());
         } else {
-            return null;
+            throw new \Exception('Missing path for media');
         }
     }
 }

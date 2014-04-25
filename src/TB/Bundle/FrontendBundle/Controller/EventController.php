@@ -68,4 +68,21 @@ class EventController extends Controller
         
         return [];
     }
+    
+    /**
+     * @Template()
+     */
+    public function homepageEventsAction()
+    {
+        $query = $this->getDoctrine()->getManager()
+            ->createQuery('
+                SELECT e FROM TBFrontendBundle:Event e
+                WHERE e.homepageOrder IS NOT NULL
+                ORDER BY e.homepageOrder ASC');
+        $events = $query->getResult();  
+        
+        return [
+            'events' => $events,
+        ];
+    }
 }

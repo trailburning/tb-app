@@ -42,7 +42,6 @@ class TBExtension extends \Twig_Extension
             new \Twig_SimpleFunction('user_is_following',  array($this, 'userIsFollowing')),
             new \Twig_SimpleFunction('route_has_user_like',  array($this, 'routeHasUserLike')),
             new \Twig_SimpleFunction('extract_entity',  array($this, 'extractEntity')),
-            new \Twig_SimpleFunction('route_get_favourite_media',  array($this, 'routeGetFavouriteMedia')),
         );
     }
     
@@ -123,11 +122,6 @@ class TBExtension extends \Twig_Extension
     public function userIsFollowing(User $userA, User $userB)
     {
         return $userA->isFollowing($userB);
-    }
-    
-    public function routeGetFavouriteMedia(Route $route)
-    {
-        return $route->getFavouriteMedia();
     }
     
     /**
