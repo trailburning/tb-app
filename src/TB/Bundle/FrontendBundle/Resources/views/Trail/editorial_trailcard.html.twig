@@ -13,7 +13,7 @@
         </a>
         <div class="summary">
         {% if route.eventRoutes and route.eventRoutes|length() > 0 %}
-	        <div class="sponsor"><a href="{{ path('event', {slug: route.eventRoutes[0].event.slug}) }}"><img src="http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/event/{{ route.eventRoutes[0].event.slug }}/{{ route.eventRoutes[0].event.logoSmall }}"></a></div>	       		
+	        <div class="sponsor"><a href="{{ path('event', {slug: route.eventRoutes[0].event.slug}) }}"><img src="http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/events/{{ route.eventRoutes[0].event.slug }}/card_trail_logo.png"></a></div>	       		
         {% elseif route.user and route.user.name != 'admin'  %}
        		<div class="tb-avatar"><div class="photo"><a href="{{ path('profile', {'name': route.user.name}) }}">		          	
     	  	{% if route.user.avatar %}
@@ -27,10 +27,10 @@
 	        <div class="detail">
 	            by <strong>{{ route.user.title }}</strong>
 	            <div class="stars">
-	            	<div class="star_full"></div>
-	              	<div class="star_full"></div>
-	              	<div class="star_full"></div>
-	              	<div class="star_half"></div>
+	            	<div class="star"></div>
+	              	<div class="star"></div>
+	              	<div class="star"></div>
+	              	<div class="star"></div>
 	              	<div class="star"></div>
 	           	</div>
 	      	</div>

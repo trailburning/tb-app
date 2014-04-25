@@ -25,9 +25,9 @@ var TB_TRAIL_ID = {{ trail.id }};
 {% if editorial %}
 	<div id="small_sponsor_bar">
 		<div class="sponsor_content">
-			<div class="link"><a href="{{ path('editorial', {slug: editorial.slug}) }}"><img src="{{ asset('assets/img/sponsor/arrow_small.png') }}">&nbsp;&nbsp;&nbsp;&nbsp;Back to #Inspire</a></div>
+			<div class="link"><a href="{{ path('editorial', {slug: editorial.slug}) }}"><img src="{{ asset('assets/img/sponsor/arrow_small.png') }}">&nbsp;&nbsp;&nbsp;&nbsp;Back to Inspire</a></div>
 			<div class="brand">
-				<div class="strap">#Inspire brought to you by</div>
+				<div class="strap">brought to you by</div>
 				<div class="logo"><a href="{{ path('profile', {'name': 'ashmei'}) }}"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/ashmei/editorial_sponsor_logo_small.png" border="0"></a></div>
 			</div>
 		</div>
@@ -184,7 +184,7 @@ var TB_TRAIL_ID = {{ trail.id }};
     		  				<div class="editorial_header">
     			  				<div class="header"><h3 class="tb">{{ editorial.title }}</h3></div>
     			  				<div class="line"></div>
-    			  				<div class="author"><h4 class="tb">Discover more trails from #Inspire by <strong>{{ editorial.user.title }}</strong>&nbsp;&nbsp;&nbsp;<span class="date">{{ editorial.date|date('d/m/Y') }}</span></h4></div>
+    			  				<div class="author"><h4 class="tb">Discover more trails from Inspire by <strong>{{ editorial.user.title }}</strong>&nbsp;&nbsp;&nbsp;<span class="date">{{ editorial.date|date('d/m/Y') }}</span></h4></div>
                     		</div>
                 	
     				    	<div class="editorial_cards clearfix">
@@ -195,7 +195,7 @@ var TB_TRAIL_ID = {{ trail.id }};
                         </div>
                     {% endif %}
                 </div>                                
-            </div>                
+            </div>
         	<div class="line_break"></div>            
         </div>
   

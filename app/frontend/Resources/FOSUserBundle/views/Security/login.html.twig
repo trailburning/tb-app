@@ -36,8 +36,10 @@ var TB_APP = 'BaseApp';
             	{% if error %}
                 	<div class="error">{{ error|trans }}</div>
             	{% endif %}
-{#            	
-                <div><a href="{{ path('fos_user_resetting_request') }}">Forgotten your password?</a><br/>Don't have an account? <a href="{{ path('fos_user_registration_register') }}">Join now</a></div>
+            	
+                <div><a href="{{ path('fos_user_resetting_request') }}">Forgotten your password?</a>
+{#                	
+                	<br/>Don't have an account? <a href="{{ path('fos_user_registration_register') }}">Join now</a></div>
 #}                
             </form>
             </div>

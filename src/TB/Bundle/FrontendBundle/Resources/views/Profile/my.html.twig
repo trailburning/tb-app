@@ -65,7 +65,7 @@ var TB_USER_LAT = {{ user.location.latitude }};
 	  	  	
           {% if unpublishedRoutes %}
 			  {% for route in unpublishedRoutes %}
-	   	      <div class="panel trail_card trail_card_panel" data-id="{{ route.id }}">
+	   	      <div class="panel trail_card trail_card_panel" data-id="{{ route.id }}" data-name="{{ route.name }}">
 		        <div class="title"><h3 class="tb">{{ route.category.name}}</h3></div>
 	            <a href="{{ path('trail', {'trailSlug': route.slug}) }}">
 	            <div class="photo tb-photo-btn">
@@ -93,7 +93,7 @@ var TB_USER_LAT = {{ user.location.latitude }};
     			
           {% if publishedRoutes %}
 			  {% for route in publishedRoutes %}
-	   	      <div class="panel trail_card trail_card_panel" data-id="{{ route.id }}">
+	   	      <div class="panel trail_card trail_card_panel" data-id="{{ route.id }}" data-name="{{ route.name }}">
 		        <div class="title"><h3 class="tb">{{ route.category.name}}</h3></div>
 	            <a href="{{ path('trail', {'trailSlug': route.slug}) }}">
 	            <div class="photo tb-photo-btn">
@@ -283,7 +283,7 @@ var TB_USER_LAT = {{ user.location.latitude }};
                 <div class="confirm_action">
 	                <div class="desc">
 	                    <h4 class="tb">
-	                        Are you sure you wish to remove the trail: <strong><%= value.route.name %></strong>?
+	                        Are you sure you wish to remove the trail: <strong><%= trail_name %></strong>?
 	                        <br /><br />
 	                        This action <strong>cannot</strong> be undone.
 	                    </h4>

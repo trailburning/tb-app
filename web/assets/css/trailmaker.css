@@ -327,7 +327,24 @@ border-width:1px;
   padding-top: 12px;
 }
 
+#step_route_edit_view .detail_panel .bar_title {	
+  margin-top: 28px;
+}
+
+#step_route_edit_view .detail_panel .bar_title .title {
+  float: left;
+  width: 40%;	
+}
+
+#step_route_edit_view .detail_panel .bar_title .left, #step_route_edit_view .detail_panel .bar_title .right {
+  float: left;
+  width: 30%;
+  height: 14px;
+  border-bottom: 1px solid #989898;
+}
+
 #step_route_edit_view .detail_panel .activities {
+  clear: both;
   margin-top: 28px;
   text-align: center;
 }
@@ -341,7 +358,7 @@ border-width:1px;
   background-color: #9FDBFD;
 }
 
-#step_route_edit_view .detail_panel .activity .active {
+#step_route_edit_view .detail_panel .active .icon {
   background-color: #44B5F7;
 }
 
@@ -453,6 +470,11 @@ border-width:1px;
 #step_route_edit_view .trailcard_panel .content .publish {
   float: left;
   margin-top: 32px;  
+}
+
+#step_route_edit_view .trailcard_panel .content .publish .err-msg {
+  display: none;
+  margin-top: 12px;
 }
 
 #step_route_edit_view .trailcard_panel .content .delete {

@@ -33,7 +33,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* APP */
 /******************************************/
-#appview {
+#appview, #big_sponsor_bar, #small_sponsor_bar {
   min-width: 1200px;
 }
 
@@ -1120,12 +1120,9 @@ form label {
   form label {
     font-size: 18px;
   }      
-  #appview {
+  #headerview, #appview, #big_sponsor_bar, #small_sponsor_bar {
     min-width: 992px;
-  }    
-  #headerview {
-    min-width: 992px;
-  }  
+  }      
   .tb-avatar-feature {
     width: 112px;
     height: 112px;
