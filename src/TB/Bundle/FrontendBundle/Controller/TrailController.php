@@ -270,4 +270,33 @@ class TrailController extends Controller
             'trails' => $trails,
         ];
     }
+    
+    /**
+     * @Template()
+     */    
+    public function homepageUserTrailsAction()
+    {
+        if (!$this->getUser()) {
+            throw new \Exception('For this action the user is required to login');
+        }
+        $trails = [];
+        $followingIds = [];
+        foreach ($this->getUser()->getIFollow() as $iFollow) {
+            $followingIds[] = $iFollow->getId();
+        }    
+        
+        if (count($followingIds) > 0) {
+            $query = $this->getDoctrine()->getManager()
+                ->createQuery('
+                    SELECT r FROM TBFrontendBundle:Route r
+                    WHERE r.publish = true
+                    AND r.userId IN (:following)')
+                ->setParameter('following', $followingIds);
+            $trails = $query->setMaxResults(3)->getResult();  
+        }
+        
+        return [
+            'trails' => $trails,
+        ];
+    }
 }

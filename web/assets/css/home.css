@@ -241,6 +241,11 @@ html.touch .hero_nav .button {
 
 /* TRAILS */
 /******************************************/
+.trails_content .trailcards {
+  margin-top: 26px;
+  margin-bottom: 24px;
+}
+
 .trails_content .content {
   padding-top: 44px;
   margin: 0px auto 54px auto;
