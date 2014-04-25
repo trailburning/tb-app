@@ -289,10 +289,10 @@ class TrailController extends Controller
             $query = $this->getDoctrine()->getManager()
                 ->createQuery('
                     SELECT r FROM TBFrontendBundle:Route r
-                    INNER JOIN r.routePublishActivities a WITH r.id = a.objectId
-                    WHERE a.actorId IN (:following)')
+                    WHERE r.publish = true
+                    AND r.userId IN (:following)')
                 ->setParameter('following', $followingIds);
-            $trails = $query->getResult();  
+            $trails = $query->setMaxResults(3)->getResult();  
         }
         
         return [
