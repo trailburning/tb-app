@@ -166,11 +166,13 @@ define([
       	$('.publish .err-msg span.photos').show();
       	bValid = false;
 	  }
-      // check fields
-      if ($('#form_trail_name').val() == '') {
-      	$('.publish .err-msg span.name').show();
-      	bValid = false;
-      }
+	  if (bValid) {
+        // check fields
+        if ($('#form_trail_name').val() == '') {
+      	  $('.publish .err-msg span.name').show();
+      	  bValid = false;
+        }	  	
+	  }
       
       if (bValid) {
         $('.publish .err-msg').hide();
