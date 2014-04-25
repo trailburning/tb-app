@@ -30,7 +30,7 @@ class RegistrationFormType extends BaseType
             ],
         ]);
         
-        $builder->add('newsletter', 'checkbox', ['label' => 'Receive Trailburning newsletter']);
+        $builder->add('newsletter', 'checkbox', ['label' => 'Receive Trailburning newsletter', 'required' => false]);
         
         $builder->remove('username');
     }
