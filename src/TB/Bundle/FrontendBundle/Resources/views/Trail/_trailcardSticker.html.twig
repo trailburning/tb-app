@@ -1,0 +1,28 @@
+<div class="trail_card_sticker">	  		
+	<div class="panel trail_card_panel">
+	    <div class="title"><h3 class="tb">{{ trail.routeCategory.name }}</h3></div>
+	    <a href="{{ path('trail', {'trailSlug': trail.slug}) }}">
+	    <div class="photo tb-photo-btn">
+	        <div class="image_container fade_on_load"><img src="http://app.resrc.it/o=80/{{ trail.favouriteMedia.absolutePath }}" class="resrc scale" border="0"/></div>
+	      	<div class="card_title">
+	            <h1>{{ trail.shortName ? trail.shortName : trail.name }}</h1>
+	            <br />
+	            <h1>{{ trail.region }}</h1>
+	    	</div>
+	    </div>
+	    </a>
+	    <div class="summary">
+	        {{ include('TBFrontendBundle:Profile:_userAvatar.html.twig', {user: trail.user}) }}
+	        <div class="detail">
+	        by <strong>{{ trail.user.title }}</strong>
+	            <div class="stars">
+	                <div class="star"></div>
+	                <div class="star"></div>
+	                <div class="star"></div>
+	                <div class="star"></div>
+	                <div class="star"></div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+</div>

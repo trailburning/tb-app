@@ -1,5 +1,10 @@
 {% if trails %}
     <h2 class="tb tb-title">Trailburners you follow</h2>
     <div class="desc"><h4 class="tb">The latest trails from the people you follow</h4></div>
-    {{ include('TBFrontendBundle:Trail:homepageTrails.html.twig', {'trails': trails}) }}
+    
+	<div class="trailcards ">  	
+	    {% for trail in trails %}
+	        {{ include('TBFrontendBundle:Trail:_trailcard.html.twig', {'trail': trail}) }}
+	    {% endfor %}  	
+	</div>	                
 {% endif %}
