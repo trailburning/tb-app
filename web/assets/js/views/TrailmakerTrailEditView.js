@@ -68,7 +68,7 @@ define([
       
       $('.update_details', $(this.el)).click(function(evt) {      	      
         var btn = $(this);
-        btn.text('Update Story');
+        btn.text('Update Details');
         btn.button('loading');
         setTimeout(function () {
             btn.button('reset');
