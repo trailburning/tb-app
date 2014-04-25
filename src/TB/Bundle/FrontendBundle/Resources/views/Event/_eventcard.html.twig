@@ -6,6 +6,11 @@
         </div>
     </a>
     <div class="summary">
-        <strong>{{ event.title }} {{ event.title2 }}</strong><br />Event - {{ event.date|date('d.m.Y') }} {% if event.dateTo  %} to {{ event.date|date('d.m.Y') }}{% endif %}
+        <strong>{{ event.title }} {{ event.title2 }}</strong><br />Event -        
+        {% if event.dateTo  %}
+          {{ event.date|date('d M') }} to {{ event.dateTo|date('d M Y') }}
+        {% else %}
+          {{ event.date|date('d M Y') }}
+        {% endif %}
     </div>
 </div>
