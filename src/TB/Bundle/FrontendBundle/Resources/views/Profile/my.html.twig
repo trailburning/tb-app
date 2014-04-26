@@ -66,8 +66,10 @@ var TB_USER_LAT = {{ user.location.latitude }};
           {% if unpublishedRoutes %}
 			  {% for route in unpublishedRoutes %}
 	   	      <div class="panel trail_card trail_card_panel" data-id="{{ route.id }}" data-name="{{ route.name }}">
-		        <div class="title"><h3 class="tb">{{ route.category.name}}</h3></div>
-	            <a href="{{ path('trail', {'trailSlug': route.slug}) }}">
+		        <div class="title"><h3 class="tb">{% if route.category is defined %}{{ route.category.name}}{% endif %}</h3></div>
+                {% if route.slug %}
+                    <a href="{{ path('trail', {'trailSlug': route.slug}) }}">
+                {% endif %}
 	            <div class="photo tb-photo-btn">
                   <div class="image_container fade_on_load">
                   {% if route.media is defined %}
