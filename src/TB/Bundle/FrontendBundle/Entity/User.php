@@ -19,6 +19,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 abstract class User extends BaseUser implements Exportable
 {
+
+    const GENDER_NONE = 0;
+    const GENDER_MALE = 1;
+    const GENDER_FEMALE = 2;
     
     /**
      * @var integer
@@ -207,6 +211,20 @@ abstract class User extends BaseUser implements Exportable
      * @ORM\ManyToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\Route", mappedBy="userLikes")
      */
     private $routeLikes;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="gender", type="smallint")
+     */
+    private $gender = 0;    
+    
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="newsletter", type="boolean", options={"default" = false})
+     */
+    private $newsletter = false;
     
     /**
      * Constructor
@@ -1057,5 +1075,51 @@ abstract class User extends BaseUser implements Exportable
     public function getHomepageOrder()
     {
         return $this->homepageOrder;
+    }
+
+    /**
+     * Set gender
+     *
+     * @param integer $gender
+     * @return User
+     */
+    public function setGender($gender)
+    {
+        $this->gender = $gender;
+
+        return $this;
+    }
+
+    /**
+     * Get gender
+     *
+     * @return integer 
+     */
+    public function getGender()
+    {
+        return $this->gender;
+    }
+
+    /**
+     * Set newsletter
+     *
+     * @param boolean $newsletter
+     * @return User
+     */
+    public function setNewsletter($newsletter)
+    {
+        $this->newsletter = $newsletter;
+
+        return $this;
+    }
+
+    /**
+     * Get newsletter
+     *
+     * @return boolean 
+     */
+    public function getNewsletter()
+    {
+        return $this->newsletter;
     }
 }

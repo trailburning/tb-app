@@ -29,16 +29,20 @@ class RegistrationControllerTest extends AbstractFrontendTest
         // User is authenticated anonymously
         $this->assertTrue($client->getContainer()->get('security.context')->isGranted('IS_AUTHENTICATED_ANONYMOUSLY'));
                 
-        $form = $crawler->filter('#signup')->form(array(
+        $form = $crawler->filter('#signup')->form([
             'fos_user_registration_form[email]' => 'test@trailburning.com',
             'fos_user_registration_form[plainPassword][first]' => 'password',
             'fos_user_registration_form[plainPassword][second]' => 'password',
             'fos_user_registration_form[firstName]' => 'first',
             'fos_user_registration_form[lastName]' => 'last',
             'fos_user_registration_form[location]' => '(52.5234051, 13.4113999)',
-            ));     
+            'fos_user_registration_form[about]' => 'about me text',
+            'fos_user_registration_form[gender]' => 1,
+            'fos_user_registration_form[newsletter]' => 1,
+            ]);     
             
         $client->submit($form);
+
         $this->assertTrue($client->getResponse()->isRedirect('/register/confirmed'));
         
         $crawler = $client->followRedirect();
@@ -52,6 +56,10 @@ class RegistrationControllerTest extends AbstractFrontendTest
         
         // user is authenticated with role ROLE_USER after registration
         $this->assertTrue($client->getContainer()->get('security.context')->isGranted('ROLE_USER'));
+        $this->assertEquals('about me text', $user->getAbout());
+        $this->assertEquals(1, $user->getNewsletter());
+        $this->assertEquals(1, $user->getGender());
+
         
     }    
 
