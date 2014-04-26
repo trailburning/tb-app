@@ -22,7 +22,6 @@ class RegistrationFormType extends BaseType
         $builder->add('about', 'textarea', ['label' => 'Tell us a little bit about yourself']);
         $builder->add('gender', 'choice', [
             'label' => 'What gender are you?',
-            'mapped'  => false,
             'choices' => [
                 User::GENDER_NONE => 'I\'d rather not say',
                 User::GENDER_MALE => 'Male',

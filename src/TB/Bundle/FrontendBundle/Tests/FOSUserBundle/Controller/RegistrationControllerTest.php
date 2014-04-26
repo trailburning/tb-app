@@ -56,6 +56,10 @@ class RegistrationControllerTest extends AbstractFrontendTest
         
         // user is authenticated with role ROLE_USER after registration
         $this->assertTrue($client->getContainer()->get('security.context')->isGranted('ROLE_USER'));
+        $this->assertEquals('about me text', $user->getAbout());
+        $this->assertEquals(1, $user->getNewsletter());
+        $this->assertEquals(1, $user->getGender());
+
         
     }    
 
