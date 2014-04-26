@@ -165,9 +165,6 @@ border-width:1px;
   text-align: left;
 }
 
-#step_detail_view .form-group label {
-}
-
 #step_detail_view input {
   display: block;  
   width: 324px;
@@ -297,9 +294,6 @@ border-width:1px;
   width: 324px;
   margin: 14px auto 0px auto;  
   text-align: left;
-}
-
-#step_route_edit_view .detail_panel .form-group label {
 }
 
 #step_route_edit_view .detail_panel input {
