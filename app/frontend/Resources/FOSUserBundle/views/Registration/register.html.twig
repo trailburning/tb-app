@@ -34,17 +34,7 @@ var TB_APP = 'SignupApp';
 	        {{ form_row(form.lastName) }}
             {{ form_row(form.location) }}
             {{ form_row(form.about) }}
-{#
             {{ form_row(form.gender) }}	
-#}                        
-			<div>
-				<label for="fos_user_registration_form_gender" class="required">What gender are you?</label>
-				<select id="fos_user_registration_form_gender" name="fos_user_registration_form[gender]" class="selectpicker">
-					<option value="0">I'd rather not say</option>
-					<option value="1">Male</option>
-					<option value="2">Female</option>
-				</select>
-			</div>                        
             {{ form_row(form.newsletter) }}
 	
 			<div class="next_step"><button type="submit" id="signup" name="submit" class="btn btn-tb-action btn-tb-large">Sign up</button></div>

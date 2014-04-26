@@ -10,7 +10,7 @@ define([
   var initialize = function() {
     var self = this;
     
-	$('.selectpicker').selectpicker();
+	$('select').selectpicker();
     
     $(window).resize(function() {
       handleResize(); 
