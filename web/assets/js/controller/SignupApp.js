@@ -10,6 +10,8 @@ define([
   var initialize = function() {
     var self = this;
     
+	$('.selectpicker').selectpicker();
+    
     $(window).resize(function() {
       handleResize(); 
     });    
@@ -36,8 +38,7 @@ define([
       $("img.scale_image_ready").imageScale();
     }
     
-    $('#footerview').show();
-    
+    $('#footerview').show();    
 
     // add input text element for the location autlosuggest
     $('#fos_user_registration_form_location').parent().append('<input type="text" id="location_autosuggest" name="" />');

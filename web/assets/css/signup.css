@@ -5,7 +5,6 @@
 border-style:solid;
 border-width:1px;
 */  
-  min-width: 1200px;
 }
 
 body {
@@ -27,7 +26,7 @@ a:active {
 #contentview {
   position: relative;
   margin-top: 63px;      
-  min-height: 600px;
+  min-height: 800px;
 }
 
 /* PANEL CONTENT */
@@ -84,7 +83,7 @@ a:active {
 
 .panel_content form div {
   width: 324px;
-  margin: 14px auto 0px auto;  
+  margin: 0px auto 0px auto;
   text-align: left;
 }
 
@@ -105,6 +104,26 @@ a:active {
   padding: 0px;
 }
 
+.panel_content button.selectpicker {
+  font-size: 22px;
+  line-height: 32px;
+  color: #979797;
+  text-shadow: none;
+  background-image: none;
+  background-color: #F0F0F0;
+  border: 1px solid #ccc;
+}
+
+.dropdown-menu>li>a {
+display: block;
+padding: 3px 20px;
+clear: both;
+font-weight: normal;
+line-height: 20px;
+color: #333;
+white-space: nowrap;
+}
+
 .panel_content textarea {
   display: block;  
   resize: none;
@@ -121,6 +140,7 @@ a:active {
 
 .panel_content .next_step {
   margin-top: 24px;
+  margin-bottom: 14px;  
 }
 
 .msg {

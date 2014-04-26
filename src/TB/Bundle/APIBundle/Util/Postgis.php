@@ -250,8 +250,7 @@ class Postgis extends \PDO
               LEFT JOIN route_type rt ON r.route_type_id=rt.id
               LEFT JOIN route_category rc ON r.route_category_id=rc.id
               LEFT JOIN medias m ON r.media_id=m.id
-              WHERE r.user_id=:user_id
-              AND r.slug IS NOT NULL';
+              WHERE r.user_id=:user_id';
         if ($route_type_id !== null) {
             $q  .= ' AND r.route_type_id=:route_type_id';
         }      
@@ -343,8 +342,7 @@ class Postgis extends \PDO
         $q = 'SELECT COUNT(r.id) AS count
               FROM routes r
               INNER JOIN fos_user u ON r.user_id=u.id
-              WHERE r.slug IS NOT NULL
-              AND r.publish = true';
+              WHERE r.publish = true';
         $pq = $this->prepare($q);
         $success = $pq->execute();
         if (!$success) {
@@ -360,8 +358,7 @@ class Postgis extends \PDO
                   LEFT JOIN route_type rt ON r.route_type_id=rt.id
                   LEFT JOIN route_category rc ON r.route_category_id=rc.id
                   LEFT JOIN medias m ON r.media_id=m.id
-                  WHERE r.slug IS NOT NULL
-                  AND r.publish = true
+                  WHERE r.publish = true
                   GROUP BY r.id, rt.id, rc.id , u.id, m.id
                   ORDER BY r.id DESC
                   LIMIT :limit OFFSET :offset';
