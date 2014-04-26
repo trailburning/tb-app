@@ -13,6 +13,9 @@
 
 <script>
 var TB_APP = 'SignupApp';
+{% if app.user %}		
+var TB_USER_ID = {{ app.user.id }};
+{% endif %}
 </script>
 
 <div id="contentview" class="clearfix">    
@@ -29,6 +32,9 @@ var TB_APP = 'SignupApp';
 	        {{ form_errors(form) }}
 	
 	        {{ form_row(form.email) }}
+	        <div>
+	        To use a personal avatar please register this email address at <a href="http://www.gravatar.com" target="_blank">Gravatar</a>.	
+	        </div>
 	        {{ form_row(form.plainPassword) }}
 	        {{ form_row(form.firstName) }}
 	        {{ form_row(form.lastName) }}

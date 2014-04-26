@@ -87,6 +87,10 @@ a:active {
   text-align: left;
 }
 
+.panel_content form label {
+  margin-top: 5px;
+}
+
 .panel_content input[type="text"],
 .panel_content input[type="email"],
 .panel_content input[type="password"] {

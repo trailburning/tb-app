@@ -3,8 +3,9 @@ var app = app || {};
 define([
   'underscore', 
   'backbone',
+  'views/ActivityFeedView',      
   'gmaps'
-], function(_, Backbone, Gmaps){
+], function(_, Backbone, ActivityFeedView, Gmaps){
   app.dispatcher = _.clone(Backbone.Events);
   
   var initialize = function() {
@@ -16,6 +17,12 @@ define([
       handleResize(); 
     });    
     handleResize();        
+
+    if (typeof TB_USER_ID != 'undefined') {
+  	  this.activityFeedView = new ActivityFeedView({ el: '#activity_feed_view' });
+  	  this.activityFeedView.render();
+  	  this.activityFeedView.getActivity();	  	
+    }
 
     $('#search_field').focus(function(evt) {
       $('#search_field').val('not just yet...');

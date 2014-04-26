@@ -41,15 +41,26 @@ define([
                         
       return this;
     },
-    renderItems: function(jsonItems){
+    renderItems: function(jsonItems){    	
       var activityItemFeedView = null, elItem, model;
+      
+	  // add default msg
+	  if (jsonItems.items.length == 0) {
+        model = new Backbone.Model();
+	    model.set('verb', 'tb_welcome');
+        activityFeedItemView = new ActivityFeedItemView({ model: model });
+        this.arrActivityItems.push(activityFeedItemView);
+        elItem = activityFeedItemView.render();
+        $(this.el).append(elItem.el);
+	  }
+      
       for (var nItem=0; nItem < jsonItems.items.length; nItem++) {
         model = new Backbone.Model(jsonItems.items[nItem]);
         activityFeedItemView = new ActivityFeedItemView({ model: model });
         this.arrActivityItems.push(activityFeedItemView);
         elItem = activityFeedItemView.render();
         $(this.el).append(elItem.el);
-	  }    	
+	  }    		  
 	  this.checkIfMoreItems();
     },
     scrollItems: function(){
