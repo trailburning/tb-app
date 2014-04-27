@@ -11,6 +11,9 @@
 
 <script>
 var TB_APP = 'BaseApp';
+{% if app.user %}		
+var TB_USER_ID = {{ app.user.id }};
+{% endif %}
 </script>
 
 <div id="contentview" class="clearfix">    
@@ -23,12 +26,14 @@ var TB_APP = 'BaseApp';
             	{% if app.session is not empty %}
                 	{% set targetUrl = app.session.get('_security.' ~ app.security.token.providerKey ~ '.target_path') %}
                 	{% if targetUrl is not empty %}<p><a href="{{ targetUrl }}">{{ 'registration.back'|trans }}</a></p>{% endif %}
-            	{% endif %}          		
+            	{% endif %}
+            	
+				<div class="next_step"><a href="{{ app.request.baseUrl }}/tour" class="btn btn-tb btn-tb-large">Discover Trailburning</a></div>            	          		
         	</div>        
             </div>
         </div>
     	<div class="step_marker_container">
-    		<div class="step_marker step_marker_join"></div>  
+    		<div class="step_marker tb-step"><div class="photo"><img src="{{ asset('assets/img/steps') }}/step_signin.jpg"></div></div>
     	</div>	                
     </div>
 </div>      
