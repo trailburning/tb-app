@@ -19,6 +19,15 @@ define([
       this.elHeroRight = $('.right', $(this.elOverlay));
       this.elCredit = $('.tb-credit', $(this.elOverlay));
       this.elSponsor = $('.sponsor_content', $(this.elOverlay));
+
+	  // allow overlay to handle click      
+      $(this.elOverlay).click(function(evt){
+      	window.location = $(this).attr('data-url'); 
+      });
+	  // don't let sponsor click get to overlay
+      $('.sponsor_content', this.elOverlay).click(function(evt){
+      	evt.stopPropagation();
+	  });
       
       return this;    	
 	},
