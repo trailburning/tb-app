@@ -9,9 +9,9 @@
 
 {% block title %}
 {% if event %}
-	{{ trail.name }} {{ trail.region }}
+	{{ trail.name }}, {{ trail.region }}
 {% else %}
-	{{ trail.name }} {{ trail.region }} by {{ user.firstName }} {{ user.lastName }}
+	{{ trail.name }}, {{ trail.region }} by {{ user.firstName }} {{ user.lastName }}
 {% endif %}
 {% endblock %}
 
