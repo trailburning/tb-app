@@ -62,4 +62,21 @@ var TB_USER_ID = {{ app.user.id }};
     </div>
 </script>
 
+<script type="text/template" id="trailsTrailEventCardViewTemplate">
+    <div class="title"><h3 class="tb"><%= category.name %></h3></div>
+    <a href="trail/<%= slug %>">
+    <div class="photo tb-photo-btn">
+      <div class="image_container fade_on_load"><img src="http://app.resrc.it/O=80/http://s3-eu-west-1.amazonaws.com/<%= versionLargePath %>" class="resrc scale" border="0"/></div>
+      <div class="card_title">
+        <h1><%= name %></h1>
+        <br/>
+        <h1><%= region %></h1>
+      </div>
+    </div>
+    </a>
+    <div class="summary">
+      <div class="sponsor"><a href="events/<%= eventURL %>"><img src="http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/events/<%= eventURL %>/card_trail_logo.png"></a></div>
+    </div>
+</script>
+
 {% endblock %}
