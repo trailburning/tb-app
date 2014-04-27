@@ -676,6 +676,36 @@ html.touch #trailplayer #view_map_btns {
   margin: 24px 0px 22px 0px;  
 }
 
+/* TRAIL ACTIVITY PANEL */
+/******************************************/
+.activity_panel {
+  float: left;
+  width: 100%;	
+  margin-top: 28px;
+}
+
+.activity_panel .bar_title .title {
+  float: left;
+  width: 45%;	
+}
+
+.activity_panel  .bar_title .right {
+  float: left;
+  width: 55%;
+  height: 14px;
+  border-bottom: 1px solid #989898;
+}
+
+.activity_panel  .activities {
+  clear: both;
+  margin-top: 28px;
+}
+
+.activity_panel  .activity {
+  float: left;
+  margin: 16px 22px 0px 0px;
+}
+
 /* TRAIL WEATHER PANEL */
 /******************************************/
 .trail_weather_panel {

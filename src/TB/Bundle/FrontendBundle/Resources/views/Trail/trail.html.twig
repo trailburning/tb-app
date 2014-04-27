@@ -121,12 +121,27 @@ var TB_TRAIL_ID = {{ trail.id }};
                 <div class="panels clearfix">     
                     <div class="two_col_panels">
                         <div class="left">
-                            <div class="panel trail_detail_panel">
+                            <div class="panel trail_detail_panel clearfix">
                                 <div class="content">
                                     <h3 class="tb">About the trail</h3>
                                     <h4 class="tb">{{ trail.about|nl2br }}</h4>
                                 </div>
                             </div>
+                            <div class="activity_panel">
+					            <div class="bar_title">
+					              <div class="title"><h4 class="tb">This trail is suitable for</h4></div>
+					              <div class="right"></div>
+					            </div>
+					            <div class="activities">
+								  <div class="activity tb-avatar tb-avatar-highlight"><div class="icon icon-run"></div></div>
+{#
+								  <div class="activity tb-avatar tb-avatar-highlight"><div class="icon icon-bike"></div></div>		    	
+								  <div class="activity tb-avatar tb-avatar-highlight"><div class="icon icon-ski"></div></div>		    	
+								  <div class="activity tb-avatar tb-avatar-highlight"><div class="icon icon-stroller"></div></div>		    	
+								  <div class="activity tb-avatar tb-avatar-highlight"><div class="icon icon-wheelchair"></div></div>		    	
+#}								  
+					            </div>                
+							</div>                                            
                         </div>  
                         <div class="right">
                             <div id="trail_weather_view" class="panel trail_weather_panel"></div>
