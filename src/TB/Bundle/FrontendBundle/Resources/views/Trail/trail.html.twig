@@ -7,7 +7,13 @@
 {% endif %}
 {% endblock %}
 
-{% block title %}{{ trail.name }} {{ trail.region }}{% endblock %}
+{% block title %}
+{% if event %}
+	{{ trail.name }}, {{ trail.region }}
+{% else %}
+	{{ trail.name }}, {{ trail.region }} by {{ user.firstName }} {{ user.lastName }}
+{% endif %}
+{% endblock %}
 
 {% block stylesheets %}
 <link href="{{ asset('assets/css/trail.css') }}" rel="stylesheet" type="text/css">
@@ -106,24 +112,42 @@ var TB_TRAIL_ID = {{ trail.id }};
                     {{ include('TBFrontendBundle:Default:breadcrumb.html.twig', breadcrumb) }}
                     {{ include('TBFrontendBundle:Default:share.html.twig') }}
                     
-					{% if app.user %}
-						{% if app.user.id != user.id %}
-							<div class="like"><a href="javascript:void(0)" class="btn btn-tb-action btn-tb like_btn{% if route_has_user_like(trail, app.user) %} pressed-btn-tb{% endif %}" data-off="Like" data-on="Liked" data-trailid="{{ trail.id}}"><i class="icon-star icon-white"></i> <span class="btn-label">{% if route_has_user_like(trail, app.user) %}Liked{% else %}Like{% endif %}</span></a></div>
-						{% endif %}
+					{% if event %}
 					{% else %}
-						<div class="like"><a href="{{ path('fos_user_security_login') }}" class="btn btn-tb-action btn-tb like_btn" data-off="Like" data-on="Liked" data-trailid="{{ trail.id}}"><i class="icon-star icon-white"></i> <span class="btn-label">Like</span></a></div>
+						{% if app.user %}
+							{% if app.user.id != user.id %}
+								<div class="like"><a href="javascript:void(0)" class="btn btn-tb-action btn-tb like_btn{% if route_has_user_like(trail, app.user) %} pressed-btn-tb{% endif %}" data-off="Like" data-on="Liked" data-trailid="{{ trail.id}}"><i class="icon-star icon-white"></i> <span class="btn-label">{% if route_has_user_like(trail, app.user) %}Liked{% else %}Like{% endif %}</span></a></div>
+							{% endif %}
+						{% else %}
+							<div class="like"><a href="{{ path('fos_user_security_login') }}" class="btn btn-tb-action btn-tb like_btn" data-off="Like" data-on="Liked" data-trailid="{{ trail.id}}"><i class="icon-star icon-white"></i> <span class="btn-label">Like</span></a></div>
+						{% endif %}					
 					{% endif %}
                 </div>
 
                 <div class="panels clearfix">     
                     <div class="two_col_panels">
                         <div class="left">
-                            <div class="panel trail_detail_panel">
+                            <div class="panel trail_detail_panel clearfix">
                                 <div class="content">
                                     <h3 class="tb">About the trail</h3>
                                     <h4 class="tb">{{ trail.about|nl2br }}</h4>
                                 </div>
                             </div>
+                            <div class="activity_panel">
+					            <div class="bar_title">
+					              <div class="title"><h4 class="tb">This trail is suitable for</h4></div>
+					              <div class="right"></div>
+					            </div>
+					            <div class="activities">
+								  <div class="activity tb-avatar tb-avatar-highlight"><div class="icon icon-run"></div></div>
+{#
+								  <div class="activity tb-avatar tb-avatar-highlight"><div class="icon icon-bike"></div></div>		    	
+								  <div class="activity tb-avatar tb-avatar-highlight"><div class="icon icon-ski"></div></div>		    	
+								  <div class="activity tb-avatar tb-avatar-highlight"><div class="icon icon-stroller"></div></div>		    	
+								  <div class="activity tb-avatar tb-avatar-highlight"><div class="icon icon-wheelchair"></div></div>		    	
+#}								  
+					            </div>                
+							</div>                                            
                         </div>  
                         <div class="right">
                             <div id="trail_weather_view" class="panel trail_weather_panel"></div>
@@ -197,6 +221,19 @@ var TB_TRAIL_ID = {{ trail.id }};
                 </div>                                
             </div>
         	<div class="line_break"></div>            
+        	
+			{% if editorial and editorialTrails %}        	
+            	<div id="editorial_sponsor_bar">
+					<div class="sponsor_content">
+						<div class="link"></div>
+						<div class="brand">
+							<div class="strap">brought to you by</div>
+							<div class="logo"><a href="{{ path('profile', {'name': 'ashmei'}) }}"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/ashmei/editorial_sponsor_logo_small.png" border="0"></a></div>
+						</div>
+						<div class="inspire_logo"><img src="{{ asset('assets/img/sponsor/inspire_logo.png') }}"></div>						
+					</div>
+                </div>
+        	{% endif %}        	
         </div>
   
         <div id="trail_overlay">

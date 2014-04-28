@@ -39,8 +39,26 @@ html.touch #small_sponsor_bar {
   margin: 6px 22px 0px 40px;
 }
 
+#editorial_sponsor_bar .sponsor_content {
+  margin: 6px 22px 0px 40px;
+}
+
 /* SPONSOR CONTENT */
 /******************************************/
+#editorial_sponsor_bar .sponsor_content {
+  position: relative;
+  padding-top: 128px;
+}
+
+#editorial_sponsor_bar .sponsor_content .inspire_logo {
+  position: absolute;
+  left: 50%;
+  margin-top: -6px;
+  margin-left: -105px;
+  width: 211px;
+  height: 54px;  
+}
+
 .sponsor_content {	
   font-size: 14px;
   line-height: 1em;
@@ -623,6 +641,10 @@ html.touch #trailplayer #view_map_btns {
   width: 1112px;
 }
 
+.sponsor_header .panel_content {
+  margin-bottom: 0px;
+}
+
 .panels {
   clear: left;
   width: 100%;
@@ -652,6 +674,36 @@ html.touch #trailplayer #view_map_btns {
 
 .trail_detail_panel .content h4 {
   margin: 24px 0px 22px 0px;  
+}
+
+/* TRAIL ACTIVITY PANEL */
+/******************************************/
+.activity_panel {
+  float: left;
+  width: 100%;	
+  margin-top: 28px;
+}
+
+.activity_panel .bar_title .title {
+  float: left;
+  width: 45%;	
+}
+
+.activity_panel  .bar_title .right {
+  float: left;
+  width: 55%;
+  height: 14px;
+  border-bottom: 1px solid #989898;
+}
+
+.activity_panel  .activities {
+  clear: both;
+  margin-top: 28px;
+}
+
+.activity_panel  .activity {
+  float: left;
+  margin: 16px 22px 0px 0px;
 }
 
 /* TRAIL WEATHER PANEL */
@@ -972,6 +1024,14 @@ html.touch #trailplayer #view_map_btns {
 
 .editorial_panel .date {
   font-size: 14px;	
+}
+
+#editorial_sponsor_bar {
+  margin-top: -82px;
+  margin-bottom: 106px;
+  width: 100%;
+  height: 224px;
+  background-color: #202020;
 }
 
 /* EDITORIAL CARDS */

@@ -2,8 +2,9 @@ define([
   'underscore', 
   'backbone',
   'views/ActivityFeedView',
-  'views/TrailsTrailCardView'
-], function (_, Backbone, ActivityFeedView, TrailsTrailCardView){
+  'views/TrailsTrailCardView',
+  'views/TrailsTrailEventCardView',  
+], function (_, Backbone, ActivityFeedView, TrailsTrailCardView, TrailsTrailEventCardView){
 
   var TrailsView = Backbone.View.extend({
     initialize: function(){
@@ -47,10 +48,43 @@ define([
 	      $('.tb-loader').hide();
 
           if (data.value.routes.length) {
-            var model, trailsTrailCardView;
+            var model, trailsTrailCardView, bEvent;
       	    $.each(data.value.routes, function(key, card) {
+      	      bEvent = false;
 	          model = new Backbone.Model(card);    	
-      		  trailsTrailCardView = new TrailsTrailCardView({ model: model});
+	          // mla - switch based on route
+	          switch (model.get('slug')) {
+	          	case '16km':
+	          	case '30km':
+	          	case '46km':
+	          	  bEvent = true;	          	
+	          	  model.set('eventURL', 'ultraks');
+	          	  break;	          	  
+	          	case 'e16':
+	          	case 'e51':
+	          	case 'e101':
+	          	  bEvent = true;	          	
+	          	  model.set('eventURL', 'eiger');
+	          	  break;	          	  
+	          	case 'ttm':
+	          	  bEvent = true;	          	
+	          	  model.set('eventURL', 'tfor');
+	          	  break;	          	  
+	          	case 'marathon':
+	          	  bEvent = true;	          	
+	          	  model.set('eventURL', 'aom');
+	          	  break;	          	  
+	          	case 'ultramarathon':
+	          	  bEvent = true;	          	
+	          	  model.set('eventURL', 'laugavegur');
+	          	  break;	          	  
+	          }
+	          if (bEvent) {
+	            trailsTrailCardView = new TrailsTrailEventCardView({ model: model});
+	          }
+	          else {
+	            trailsTrailCardView = new TrailsTrailCardView({ model: model});
+	          }	          
     		  $('#trailCards').append(trailsTrailCardView.render().el);      	  	
       	    });           
           }
