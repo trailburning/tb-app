@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "67644824ec513e905b5e46b2da333b54",
+    "hash": "6cbb5c69a01644c2d254bd07f43fc766",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -2529,6 +2529,51 @@
                 "rabbitmq"
             ],
             "time": "2013-06-17 19:25:27"
+        },
+        {
+            "name": "webfactory/exceptions-bundle",
+            "version": "3.1.0",
+            "target-dir": "Webfactory/Bundle/ExceptionsBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/webfactory/exceptions-bundle.git",
+                "reference": "5dc76bd3f6e37347a89d266cb02bbb5eb3eed8b6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/webfactory/exceptions-bundle/zipball/5dc76bd3f6e37347a89d266cb02bbb5eb3eed8b6",
+                "reference": "5dc76bd3f6e37347a89d266cb02bbb5eb3eed8b6",
+                "shasum": ""
+            },
+            "require": {
+                "symfony/twig-bundle": "~2.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-default": "3.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Webfactory\\Bundle\\ExceptionsBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "webfactory GmbH",
+                    "email": "info@webfactory.de",
+                    "homepage": "http://www.webfactory.de",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A simple controller to display error pages during development plus some building blocks for more user-friendly error pages.",
+            "homepage": "http://inside.webfactory.de/de/blog/symfony2-exception-handling-and-custom-error-pages-explained.html",
+            "time": "2014-02-13 14:53:15"
         }
     ],
     "packages-dev": [
@@ -3333,6 +3378,7 @@
         "knplabs/gaufrette": 20,
         "knplabs/knp-gaufrette-bundle": 20,
         "oldsound/rabbitmq-bundle": 20,
+        "webfactory/exceptions-bundle": 0,
         "phpunit/phpunit": 0,
         "sami/sami": 20,
         "liip/functional-test-bundle": 20

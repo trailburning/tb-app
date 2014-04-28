@@ -33,7 +33,8 @@
         "stof/doctrine-extensions-bundle": "~1.1@dev",
         "knplabs/gaufrette": "dev-master",
         "knplabs/knp-gaufrette-bundle": "dev-master",
-        "oldsound/rabbitmq-bundle": "1.2.*@dev"
+        "oldsound/rabbitmq-bundle": "1.2.*@dev",
+        "webfactory/exceptions-bundle": "@stable"
     },
     "repositories": [
         {
