@@ -8,13 +8,6 @@ use TB\Bundle\FrontendBundle\Entity\RouteType;
 class EventTest extends AbstractFrontendTest
 {
     
-    protected static function getKernelClass()
-    {
-        require_once self::getPhpUnitXmlDir() . '/frontend/AppKernel.php';
-
-        return 'AppKernel';
-    }
-    
     /**
      * Test export entity
      */

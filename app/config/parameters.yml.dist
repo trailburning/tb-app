@@ -22,3 +22,4 @@ parameters:
     rabbit_mq_password: guest
     rabbit_mq_vhost: /
     rabbit_mq_main_queue: main
+    mailproxy_email_server: http://augmentedmediaprojectsltd.createsend.com/t/t/s/zjdkk/

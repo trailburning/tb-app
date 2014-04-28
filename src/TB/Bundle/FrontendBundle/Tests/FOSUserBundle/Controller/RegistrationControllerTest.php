@@ -42,7 +42,7 @@ class RegistrationControllerTest extends AbstractFrontendTest
             ]);     
             
         $client->submit($form);
-
+        
         $this->assertTrue($client->getResponse()->isRedirect('/register/confirmed'));
         
         $crawler = $client->followRedirect();
@@ -59,8 +59,8 @@ class RegistrationControllerTest extends AbstractFrontendTest
         $this->assertEquals('about me text', $user->getAbout());
         $this->assertEquals(1, $user->getNewsletter());
         $this->assertEquals(1, $user->getGender());
-
-        
-    }    
-
+        $this->assertEquals(1, $user->getGender());
+        $this->assertNotNull($user->getRegisteredAt()->format('Y-m-d'));
+    }
+    
 }

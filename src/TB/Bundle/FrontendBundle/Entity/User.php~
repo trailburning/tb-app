@@ -222,9 +222,17 @@ abstract class User extends BaseUser implements Exportable
     /**
      * @var boolean
      *
-     * @ORM\Column(name="newsletter", type="boolean", nullable=true)
+     * @ORM\Column(name="newsletter", type="boolean", options={"default" = false})
      */
-    private $newsletter;
+    private $newsletter = false;
+    
+    /**
+     * @var datetime $registered_at
+     *
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime")
+     */
+    protected $registeredAt;
     
     /**
      * Constructor

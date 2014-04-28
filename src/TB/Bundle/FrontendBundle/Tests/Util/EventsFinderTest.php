@@ -1,18 +1,11 @@
 <?php 
 
-namespace TB\Bundle\FrontendBundle\Tests\Entity;
+namespace TB\Bundle\FrontendBundle\Tests\Util;
 
 use TB\Bundle\FrontendBundle\Tests\AbstractFrontendTest;
 
 class EventsFinderTest extends AbstractFrontendTest
 {
-    
-    protected static function getKernelClass()
-    {
-        require_once self::getPhpUnitXmlDir() . '/frontend/AppKernel.php';
-
-        return 'AppKernel';
-    }
     
     public function testSearch()
     {

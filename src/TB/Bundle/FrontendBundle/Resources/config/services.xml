@@ -33,6 +33,12 @@
             <tag name="kernel.event_subscriber" />
         </service>
         
+        <!-- Register event listener to post the email to mailproxy after registration -->
+        <service id="registration_completed" class="TB\Bundle\FrontendBundle\EventListener\RegistrationCompletedListener">
+            <argument type="service" id="service_container" />
+            <tag name="kernel.event_listener" event="fos_user.registration.completed" method="onRegistrationCompleted" />  
+        </service>
+        
         <!-- Register Event Listener to update the user gravatar avatar on every login --> 
         <service id="tb.security.login_listener" class="TB\Bundle\FrontendBundle\EventListener\AuthenticationSuccessListener">  
             <argument type="service" id="service_container" />  
@@ -89,6 +95,11 @@
         <service id="old_sound_rabbit_mq.main_consumer" class="TB\Bundle\FrontendBundle\Util\MainConsumer">
             <argument type="service" id="old_sound_rabbit_mq.connection.default" />
             <argument type="service" id="service_container" />
+        </service>
+
+        <service id="tb.mailproxy" class="TB\Bundle\FrontendBundle\Util\Mailproxy">
+            <argument type="service" id="service_container" />
+            <argument type="service" id="http_client" />
         </service>
 
     </services>
