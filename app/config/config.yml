@@ -140,6 +140,13 @@ services:
             -
                 key: %aws_accesskey%
                 secret: %aws_secretkey%
+                
+    rest_client:
+        class:      %rest_client_class%
+        arguments:  [%api_host%]
+        
+    http_client:
+        class:      Guzzle\Http\Client
 
 old_sound_rabbit_mq:
     connections:

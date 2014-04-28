@@ -4,13 +4,6 @@ imports:
     - { resource: "../../config/parameters.php" }	
     - { resource: "../../config/config.yml" }
     - { resource: security.yml }
-
-services:
-    rest_client:
-        class:      %rest_client_class%
-        arguments:  [%api_host%]
-    http_client:
-        class:      Guzzle\Http\Client
         
 framework:
     translator: ~        
