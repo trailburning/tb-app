@@ -52,6 +52,10 @@
   padding-top: 24px;
 }
 
+.panel_intro .feature_btn {
+  margin-top: 18px;
+}
+
 /* PANEL */
 /******************************************/
 .panel .image_container {
