@@ -12,9 +12,14 @@ define([
     render: function(nProgress){
       var self = this;
       
-      if (!this.bRendered) {                
-        var attribs = this.model.toJSON();
-        
+      if (!this.bRendered) {          
+      	var strTitle = this.model.get('trail_name');
+      	if (strTitle != '') {
+      	  strTitle = ' ' + strTitle; 
+      	}      	    
+      	this.model.set('trail_title', strTitle);
+      	  
+        var attribs = this.model.toJSON();        
         $(this.el).html(this.template(attribs));
 
         $('.proceed', $(this.el)).click(function(evt) {
