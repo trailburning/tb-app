@@ -16,7 +16,10 @@ define([
       if (!this.bRendered) {
       	if (this.model) {
           var versions = this.model.get('media').versions;
-      	  this.model.set('versionLargePath', versions[0].path);	
+      	  this.model.set('versionLargePath', versions[0].path);
+		  if (this.model.get('category') == undefined) {
+		  	this.model.set('category', '');
+      	  }
       	}
 
         var attribs = this.model.toJSON();
