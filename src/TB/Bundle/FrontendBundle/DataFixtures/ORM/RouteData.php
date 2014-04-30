@@ -40,6 +40,7 @@ class RouteData extends AbstractFixture implements FixtureInterface, DependentFi
         $route->setSlug('grunewald');
         $route->setAbout('The Grunewald is a forest located in the western side of Berlin on the east side of the river Havel.');
         $route->setPublish(true);
+        $route->addAttribute($this->getReference('Attribute-run'));
 
         $manager->persist($route);
         $this->addReference('Route-grunewald', $route);
@@ -195,6 +196,7 @@ The scenery along the footpath; including locks, bridges, forestry and the river
             'TB\Bundle\FrontendBundle\DataFixtures\ORM\BrandProfileData',
             'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteTypeData',
             'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteCategoryData',
+            'TB\Bundle\FrontendBundle\DataFixtures\ORM\AttributeData',
         ];
     }
 }

@@ -277,4 +277,76 @@ class RouteController extends AbstractRestController
         return $this->getRestResponse($output);
     }
     
+    /**
+     * @Route("/route/{routeId}/attribute/{attributeId}")
+     * @Method("PUT")
+     */
+    public function putRouteAttribute($routeId, $attributeId)
+    {
+        $request = $this->getRequest();
+        
+        $route = $this->getDoctrine()
+            ->getRepository('TBFrontendBundle:Route')
+            ->findOneById($routeId);
+
+        if (!$route) {
+            throw new ApiException(sprintf('Route with id "%s" does not exist', $routeId), 404);
+        }
+        
+        $attribute = $this->getDoctrine()
+            ->getRepository('TBFrontendBundle:Attribute')
+            ->findOneById($attributeId);
+
+        if (!$attribute) {
+            throw new ApiException(sprintf('Attribute with id "%s" does not exist', $attributeId), 404);
+        }
+        
+        // Only add Attribute when the Route not already has this Attribute to prevebt errors in the Client
+        if (!$route->hasAttribute($attribute)) {
+            $route->addAttribute($attribute);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($route);
+            $em->flush();
+        }
+        
+        $output = array('usermsg' => 'success');
+
+        return $this->getRestResponse($output);
+    }
+    
+    /**
+     * @Route("/route/{routeId}/attribute/{attributeId}")
+     * @Method("DELETE")
+     */
+    public function deleteRouteAttribute($routeId, $attributeId)
+    {
+        $request = $this->getRequest();
+        
+        $route = $this->getDoctrine()
+            ->getRepository('TBFrontendBundle:Route')
+            ->findOneById($routeId);
+
+        if (!$route) {
+            throw new ApiException(sprintf('Route with id "%s" does not exist', $routeId), 404);
+        }
+        
+        $attribute = $this->getDoctrine()
+            ->getRepository('TBFrontendBundle:Attribute')
+            ->findOneById($attributeId);
+
+        if (!$attribute) {
+            throw new ApiException(sprintf('Attribute with id "%s" does not exist', $attributeId), 404);
+        }
+        
+        $route->removeAttribute($attribute);
+        
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($route);
+        $em->flush();
+        
+        $output = array('usermsg' => 'success');
+
+        return $this->getRestResponse($output);
+    }
+    
 }

@@ -58,4 +58,22 @@ abstract class AbstractApiTestCase extends WebTestCase
         return $route;
     }
     
+    protected function getAttribute($name, $type)
+    {
+        $query = $this->getContainer()->get('doctrine.orm.entity_manager')
+            ->createQuery('
+                SELECT a FROM TBFrontendBundle:Attribute a
+                WHERE a.type=:type
+                AND a.name=:name')
+            ->setParameter('type', $type)
+            ->setParameter('name', $name);
+
+        $attribute = $query->getSingleResult();
+        
+        if (!$attribute) {
+            $this->fail(sprintf('Missing Attribute with name "%s" and type "%s" in test DB', $name, $type‚));
+        }
+        
+        return $attribute;
+    }
 }

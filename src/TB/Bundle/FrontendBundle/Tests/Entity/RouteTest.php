@@ -403,4 +403,23 @@ class RouteTest extends AbstractFrontendTest
         $this->assertSame($media2, $route->getFavouriteMedia(), 'Route::getFavouriteMedia() returns Media set as favourite'); 
     }
     
+    public function testAttribute()
+    {
+        $this->loadFixtures([
+            'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData',
+        ]);
+        
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        $attribute = $this->getAttribute('cycle', 'activity');
+        $route = $this->getRoute('grunewald');
+        
+        $this->assertFalse($route->hasAttribute($attribute), 'Route does not have this Attribute');
+        
+        $route->addAttribute($attribute);
+        $em->persist($route);
+        $em->flush();
+        
+        $this->assertTrue($route->hasAttribute($attribute), 'Route does have this Attribute');
+    }
+    
 }

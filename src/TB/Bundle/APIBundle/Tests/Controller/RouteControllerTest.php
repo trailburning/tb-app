@@ -32,23 +32,23 @@ class RouteControllerTest extends AbstractApiTestCase
         
         // Test Trailburning-User-ID not set
         $client = $this->createClient();
-        $crawler = $client->request('PUT', '/v1/route/' . $route->getId() . '/like');
+        $client->request('PUT', '/v1/route/' . $route->getId() . '/like');
         $this->assertEquals(Response::HTTP_BAD_REQUEST,  $client->getResponse()->getStatusCode());
         $this->assertJsonResponse($client);
         
         // Test not existing user
-        $crawler = $client->request('PUT', '/v1/route/' . $route->getId() . '/like', [], [], ['HTTP_Trailburning_User_ID' => 999999999]);
+        $client->request('PUT', '/v1/route/' . $route->getId() . '/like', [], [], ['HTTP_Trailburning_User_ID' => 999999999]);
         $this->assertEquals(Response::HTTP_NOT_FOUND,  $client->getResponse()->getStatusCode());
         $this->assertJsonResponse($client);
                 
         // Test not existing route to like
-        $crawler = $client->request('PUT', '/v1/route/999999999/like', [], [], ['HTTP_Trailburning_User_ID' => $user->getId()]);
+        $client->request('PUT', '/v1/route/999999999/like', [], [], ['HTTP_Trailburning_User_ID' => $user->getId()]);
         $this->assertEquals(Response::HTTP_NOT_FOUND,  $client->getResponse()->getStatusCode());
         $this->assertJsonResponse($client);
         
         // Test route like
         $client = $this->createClient();
-        $crawler = $client->request('PUT', '/v1/route/' . $route->getId() . '/like', [], [], ['HTTP_Trailburning_User_ID' => $user->getId()]);
+        $client->request('PUT', '/v1/route/' . $route->getId() . '/like', [], [], ['HTTP_Trailburning_User_ID' => $user->getId()]);
         $this->assertEquals(Response::HTTP_OK,  $client->getResponse()->getStatusCode());
         $this->assertJsonResponse($client);
         
@@ -69,7 +69,7 @@ class RouteControllerTest extends AbstractApiTestCase
         
         // Test user like already liking route
         $client = $this->createClient();
-        $crawler = $client->request('PUT', '/v1/route/' . $route->getId() . '/like', [], [], ['HTTP_Trailburning_User_ID' => $user->getId()]);
+        $client->request('PUT', '/v1/route/' . $route->getId() . '/like', [], [], ['HTTP_Trailburning_User_ID' => $user->getId()]);
         $this->assertEquals(Response::HTTP_BAD_REQUEST,  $client->getResponse()->getStatusCode());
         $this->assertJsonResponse($client);
     }
@@ -107,7 +107,7 @@ class RouteControllerTest extends AbstractApiTestCase
         });
         
         // execute route like request
-        $crawler = $client->request('PUT', '/v1/route/' . $route->getId() . '/like', [], [], ['HTTP_Trailburning_User_ID' => $user->getId()]);
+        $client->request('PUT', '/v1/route/' . $route->getId() . '/like', [], [], ['HTTP_Trailburning_User_ID' => $user->getId()]);
         $this->assertEquals(Response::HTTP_OK,  $client->getResponse()->getStatusCode());
         
         // test fails when the event gets not dispatched
@@ -129,23 +129,23 @@ class RouteControllerTest extends AbstractApiTestCase
         
         // Test Trailburning-User-ID not set
         $client = $this->createClient();
-        $crawler = $client->request('PUT', '/v1/route/' . $route->getId() . '/undolike');
+        $client->request('PUT', '/v1/route/' . $route->getId() . '/undolike');
         $this->assertEquals(Response::HTTP_BAD_REQUEST,  $client->getResponse()->getStatusCode());
         $this->assertJsonResponse($client);
         
         // Test not existing user
-        $crawler = $client->request('PUT', '/v1/route/' . $route->getId() . '/undolike', [], [], ['HTTP_Trailburning_User_ID' => 999999999]);
+        $client->request('PUT', '/v1/route/' . $route->getId() . '/undolike', [], [], ['HTTP_Trailburning_User_ID' => 999999999]);
         $this->assertEquals(Response::HTTP_NOT_FOUND,  $client->getResponse()->getStatusCode());
         $this->assertJsonResponse($client);
         
         // Test not existing route to like
-        $crawler = $client->request('PUT', '/v1/route/999999999/undolike', [], [], ['HTTP_Trailburning_User_ID' => $user->getId()]);
+        $client->request('PUT', '/v1/route/999999999/undolike', [], [], ['HTTP_Trailburning_User_ID' => $user->getId()]);
         $this->assertEquals(Response::HTTP_NOT_FOUND,  $client->getResponse()->getStatusCode());
         $this->assertJsonResponse($client);
         
         // Test route unfollow not existing like
         $client = $this->createClient();
-        $crawler = $client->request('PUT', '/v1/route/' . $route->getId() . '/undolike', [], [], ['HTTP_Trailburning_User_ID' => $user->getId()]);
+        $client->request('PUT', '/v1/route/' . $route->getId() . '/undolike', [], [], ['HTTP_Trailburning_User_ID' => $user->getId()]);
         $this->assertEquals(Response::HTTP_BAD_REQUEST,  $client->getResponse()->getStatusCode());
         $this->assertJsonResponse($client);
         
@@ -156,7 +156,7 @@ class RouteControllerTest extends AbstractApiTestCase
         $em->flush();
         
         $client = $this->createClient();
-        $crawler = $client->request('PUT', '/v1/route/' . $route->getId() . '/undolike', [], [], ['HTTP_Trailburning_User_ID' => $user->getId()]);
+        $client->request('PUT', '/v1/route/' . $route->getId() . '/undolike', [], [], ['HTTP_Trailburning_User_ID' => $user->getId()]);
         $this->assertEquals(Response::HTTP_OK,  $client->getResponse()->getStatusCode());
         $this->assertJsonResponse($client);
         
@@ -215,7 +215,7 @@ class RouteControllerTest extends AbstractApiTestCase
             $this->eventDispatched = true;
         });
 
-        $crawler = $client->request('PUT', '/v1/route/' . $route->getId() . '/undolike', [], [], ['HTTP_Trailburning_User_ID' => $user->getId()]);
+        $client->request('PUT', '/v1/route/' . $route->getId() . '/undolike', [], [], ['HTTP_Trailburning_User_ID' => $user->getId()]);
         $this->assertEquals(Response::HTTP_OK,  $client->getResponse()->getStatusCode());
         
         // test fails when the event gets not dispatched
@@ -236,7 +236,7 @@ class RouteControllerTest extends AbstractApiTestCase
         
         // Get same Route from API
         $client = $this->createClient();
-        $crawler = $client->request('GET', '/v1/route/' . $route->getId());
+        $client->request('GET', '/v1/route/' . $route->getId());
         $this->assertEquals(Response::HTTP_OK,  $client->getResponse()->getStatusCode());
         
         $this->assertJsonResponse($client);
@@ -257,7 +257,7 @@ class RouteControllerTest extends AbstractApiTestCase
         
         // Get Route from the API that does not exist
         $client = $this->createClient();
-        $crawler = $client->request('GET', '/v1/route/1');
+        $client->request('GET', '/v1/route/1');
         // Check HTTP Status Code
         $this->assertEquals(Response::HTTP_NOT_FOUND,  $client->getResponse()->getStatusCode());
         // Verify JSON Response
@@ -289,7 +289,7 @@ class RouteControllerTest extends AbstractApiTestCase
         
         // Delete that Route per API
         $client = $this->createClient();
-        $crawler = $client->request('DELETE', '/v1/route/' . $route->getId());
+        $client->request('DELETE', '/v1/route/' . $route->getId());
         $this->assertEquals(Response::HTTP_OK,  $client->getResponse()->getStatusCode());
 
         $this->assertJsonResponse($client);
@@ -319,7 +319,7 @@ class RouteControllerTest extends AbstractApiTestCase
         
         // Delete Route from the API that does not exist
         $client = $this->createClient();
-        $crawler = $client->request('DELETE', '/v1/route/1');
+        $client->request('DELETE', '/v1/route/1');
         // Check HTTP Status Code
         $this->assertEquals(Response::HTTP_NOT_FOUND,  $client->getResponse()->getStatusCode());
         // Verify JSON Response
@@ -343,7 +343,7 @@ class RouteControllerTest extends AbstractApiTestCase
         $user = $this->getUser('mattallbeury');
         
         $client = $this->createClient();
-        $crawler = $client->request('GET', '/v1/routes/user/' . $user->getId());
+        $client->request('GET', '/v1/routes/user/' . $user->getId());
         $this->assertEquals(Response::HTTP_OK,  $client->getResponse()->getStatusCode());
           
         $this->assertJsonResponse($client);
@@ -367,7 +367,7 @@ class RouteControllerTest extends AbstractApiTestCase
         }
         
         $client = $this->createClient();
-        $crawler = $client->request('GET', '/v1/routes/user/1');
+        $client->request('GET', '/v1/routes/user/1');
 
         // Check HTTP Status Code
         $this->assertEquals(Response::HTTP_NOT_FOUND,  $client->getResponse()->getStatusCode());
@@ -406,7 +406,7 @@ class RouteControllerTest extends AbstractApiTestCase
         
         // Get same Route from API
         $client = $this->createClient();
-        $crawler = $client->request('PUT', '/v1/route/1', array('json' => $json));
+        $client->request('PUT', '/v1/route/1', array('json' => $json));
         
         $this->assertJsonResponse($client);
     }
@@ -423,7 +423,7 @@ class RouteControllerTest extends AbstractApiTestCase
         $user = $this->getUser('mattallbeury');
         
         $client = $this->createClient();
-        $crawler = $client->request('GET', '/v1/routes/my', [], [], ['HTTP_Trailburning_User_ID' => $user->getId()]);
+        $client->request('GET', '/v1/routes/my', [], [], ['HTTP_Trailburning_User_ID' => $user->getId()]);
         $this->assertEquals(Response::HTTP_OK,  $client->getResponse()->getStatusCode());
           
         $this->assertJsonResponse($client);
@@ -437,7 +437,7 @@ class RouteControllerTest extends AbstractApiTestCase
         $this->loadFixtures([]);
                 
         $client = $this->createClient();
-        $crawler = $client->request('GET', '/v1/routes/my');
+        $client->request('GET', '/v1/routes/my');
         $this->assertEquals(Response::HTTP_BAD_REQUEST,  $client->getResponse()->getStatusCode(), 
             'Response returns Status Code 400');
           
@@ -454,10 +454,97 @@ class RouteControllerTest extends AbstractApiTestCase
         ]);
         
         $client = $this->createClient();
-        $crawler = $client->request('GET', '/v1/routes/search');
+        $client->request('GET', '/v1/routes/search');
         $this->assertEquals(Response::HTTP_OK,  $client->getResponse()->getStatusCode());
           
         $this->assertJsonResponse($client);
     }
-
+    
+    /**
+     * Test the PUT /route/{routeId}/attribute/{attributeId} action
+     */
+    public function testPutRouteAttribute()
+    {
+        $this->loadFixtures([
+            'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData',
+        ]);
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        
+        $route = $this->getRoute('grunewald');
+        $attribute = $this->getAttribute('cycle', 'activity');
+        
+        $hasNewAttribute = false;
+        foreach ($route->getAttributes() as $routeAttribute) {
+            if ($attribute->getId() == $routeAttribute->getId()) {
+                $hasNewAttribute = true;
+                break;
+            }
+        }
+        $this->assertFalse($hasNewAttribute, 'The Route does not contain the Attribute to add');
+        
+        $client = $this->createClient();
+        $client->request('PUT', '/v1/route/' . $route->getId() . '/attribute/' . $attribute->getId());
+        $this->assertEquals(Response::HTTP_OK,  $client->getResponse()->getStatusCode());
+        $this->assertJsonResponse($client);
+        
+        $em->refresh($route);
+        
+        $hasNewAttribute = false;
+        foreach ($route->getAttributes() as $routeAttribute) {
+            if ($attribute->getId() == $routeAttribute->getId()) {
+                $hasNewAttribute = true;
+                break;
+            }
+        }
+        $this->assertTrue($hasNewAttribute, 'The Attribute was added to the Route');
+        
+        // Test that adding existing Attribute returns no error
+        $client->request('PUT', '/v1/route/' . $route->getId() . '/attribute/' . $attribute->getId());
+        $this->assertEquals(Response::HTTP_OK,  $client->getResponse()->getStatusCode());
+    }
+    
+    /**
+     * Test the DELETE /route/{routeId}/attribute/{attributeId} action
+     */
+    public function testDeleteRouteAttribute()
+    {
+        $this->loadFixtures([
+            'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData',
+        ]);
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        
+        $route = $this->getRoute('grunewald');
+        $attribute = $this->getAttribute('run', 'activity');
+        
+        $hasAttribute = false;
+        foreach ($route->getAttributes() as $routeAttribute) {
+            if ($attribute->getId() == $routeAttribute->getId()) {
+                $hasAttribute = true;
+                break;
+            }
+        }
+        $this->assertTrue($hasAttribute, 'The Route contains the Attribute to delete');
+        
+        $client = $this->createClient();
+        $crawler = $client->request('DELETE', '/v1/route/' . $route->getId() . '/attribute/' . $attribute->getId());
+        $this->assertEquals(Response::HTTP_OK,  $client->getResponse()->getStatusCode());
+        $this->assertJsonResponse($client);
+        
+        $em->refresh($route);
+        
+        $hasAttribute = false;
+        foreach ($route->getAttributes() as $routeAttribute) {
+            if ($attribute->getId() == $routeAttribute->getId()) {
+                $hasAttribute = true;
+                break;
+            }
+        }
+        $this->assertFalse($hasAttribute, 'The Attribute was deleted from the Route');
+        
+        // Test that removing not associated Attribute returns no error
+        $client = $this->createClient();
+        $client->request('DELETE', '/v1/route/' . $route->getId() . '/attribute/' . $attribute->getId());
+        $this->assertEquals(Response::HTTP_OK,  $client->getResponse()->getStatusCode());
+    }
+    
 }

@@ -1250,4 +1250,21 @@ class Route implements Exportable
     {
         return $this->attributes;
     }
+    
+    /**
+     * Checks a User already likes this Route
+     *
+     * @param Attribute $$attribute The Attribute to check
+     * @return boolean returns true if the Route has this Attribute, false if not
+     */
+    public function hasAttribute(Attribute $attribute)
+    {
+        foreach ($this->getAttributes() as $routeAttribute) {
+            if ($routeAttribute->getId() === $attribute->getId()) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
 }
