@@ -231,6 +231,13 @@ class Route implements Exportable
      * @ORM\JoinTable(name="route_likes")
      */
     private $userLikes;
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\Attribute", inversedBy="routes")
+     */
+    private $attributes;
 
     /**
      * Set name
@@ -556,6 +563,7 @@ class Route implements Exportable
         $this->routePoints = new \Doctrine\Common\Collections\ArrayCollection();
         $this->routeLikeActivities = new \Doctrine\Common\Collections\ArrayCollection();
         $this->routeUndoLikeActivities = new \Doctrine\Common\Collections\ArrayCollection();        
+        $this->attributes = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**
@@ -1208,5 +1216,38 @@ class Route implements Exportable
         } else {
             return null;
         }
+    }
+
+    /**
+     * Add attributes
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\Attribute $attributes
+     * @return Route
+     */
+    public function addAttribute(\TB\Bundle\FrontendBundle\Entity\Attribute $attributes)
+    {
+        $this->attributes[] = $attributes;
+
+        return $this;
+    }
+
+    /**
+     * Remove attributes
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\Attribute $attributes
+     */
+    public function removeAttribute(\TB\Bundle\FrontendBundle\Entity\Attribute $attributes)
+    {
+        $this->attributes->removeElement($attributes);
+    }
+
+    /**
+     * Get attributes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAttributes()
+    {
+        return $this->attributes;
     }
 }

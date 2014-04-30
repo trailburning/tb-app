@@ -1,0 +1,47 @@
+<?php
+
+namespace TB\Bundle\FrontendBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * RouteType
+ *
+ * @ORM\Table(name="route_tag")
+ * @ORM\Entity
+ */
+class RouteTag implements Exportable
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=50)
+     */
+    private $name;
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\Route", mappedBy="tags")
+     */
+    private $routes;
+
+    public function export()
+    {
+        $data = [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+        ];
+        
+        return $data;
+    }
+}
