@@ -37,8 +37,17 @@ class RouteTest extends AbstractFrontendTest
             $this->fail('Missing RouteType with name "Marathon" in test DB');
         }
         
+        $attribute = $this->getAttribute('run', 'activity');
+        
         $expectedJson = '{
             "about": "The Grunewald is a forest located in the western side of Berlin on the east side of the river Havel.", 
+            "attributes": [
+                {
+                    "id": ' . $attribute->getId() . ', 
+                    "name": "run", 
+                    "type": "activity"
+                }
+            ], 
             "category": {
                 "id": ' . $routeCategory->getId() . ', 
                 "name": "Park"

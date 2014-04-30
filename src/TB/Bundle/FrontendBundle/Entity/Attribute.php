@@ -74,6 +74,20 @@ class Attribute implements Exportable
     {
         return $this->id;
     }
+    
+    /**
+     * Set id
+     *
+     * @param int $id
+     * @return Attribute
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+    
 
     /**
      * Set name

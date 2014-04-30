@@ -7,6 +7,7 @@ use TB\Bundle\FrontendBundle\Entity\RouteType;
 use TB\Bundle\FrontendBundle\Entity\RouteCategory;
 use TB\Bundle\FrontendBundle\Entity\RoutePoint;
 use TB\Bundle\FrontendBundle\Entity\Media;
+use TB\Bundle\FrontendBundle\Entity\Attribute;
 use TB\Bundle\FrontendBundle\Entity\UserProfile;
 use TB\Bundle\FrontendBundle\Entity\BrandProfile;
 use CrEOF\Spatial\PHP\Types\Geometry\Point;
@@ -210,6 +211,10 @@ class Postgis extends \PDO
                 if (count($media) > 0) {
                     $route->setMedia(array_shift($media));
                 }
+            }
+            $attributes = $this->getRouteAttributes($route_id);
+            foreach ($attributes as $attribute) {
+                $route->addAttribute($attribute);
             }
         } else {
             throw (new ApiException(sprintf('Route with id "%s" does not exist', $route_id), 404));
@@ -649,6 +654,34 @@ class Postgis extends \PDO
             $hstore .= '"'.$k.'" => "'.$v.'"';
         }
         return $hstore;
+    }
+    
+    public function getRouteAttributes($route_id) 
+    {
+        $q = "SELECT a.id, a.name, a.type
+              FROM attribute a
+              INNER JOIN route_attribute ra
+              ON a.id=ra.attribute_id
+              WHERE ra.route_id = :route_id"; 
+
+        $pq = $this->prepare($q);
+        $pq->bindParam('route_id', $route_id, \PDO::PARAM_INT);
+        
+        $success = $pq->execute();
+        if (!$success) {
+            throw (new ApiException("Failed to retrieve attributes from the database", 500));
+        }
+
+        $attributes = array();
+        while ($row = $pq->fetch(\PDO::FETCH_ASSOC)) {
+            $attribute = new Attribute();
+            $attribute->setId($row['id']);
+            $attribute->setName($row['name']);
+            $attribute->setType($row['type']);
+            $attributes[] = $attribute;    
+        }
+        
+        return $attributes;
     }
     
 }

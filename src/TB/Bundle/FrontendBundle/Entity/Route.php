@@ -944,6 +944,13 @@ class Route implements Exportable
         if ($this->media !== null) {
             $data['media'] = $this->media->export();
         }
+    
+        if (count($this->getAttributes()) > 0) {
+            $data['attributes'] = [];
+            foreach ($this->getAttributes() as $attribute) {
+                $data['attributes'][] = $attribute->export();
+            }
+        }
         
         return $data;
     }
