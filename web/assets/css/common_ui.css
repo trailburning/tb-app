@@ -212,8 +212,8 @@ h4.tb {
   background-image: url("../img/trailplayer/trail_hike.png");
 }
 
-.tb-avatar .icon-bike {
-  background-image: url("../img/trailplayer/trail_bike.png");
+.tb-avatar .icon-cycle {
+  background-image: url("../img/trailplayer/trail_cycle.png");
 }
 
 .tb-avatar .icon-climb {
@@ -224,8 +224,8 @@ h4.tb {
   background-image: url("../img/trailplayer/trail_ski.png");
 }
 
-.tb-avatar .icon-stroller {
-  background-image: url("../img/trailplayer/trail_stroller.png");
+.tb-avatar .icon-buggy {
+  background-image: url("../img/trailplayer/trail_buggy.png");
 }
 
 .tb-avatar .icon-wheelchair {

@@ -145,20 +145,12 @@ var TB_USER_ID = {{ app.user.id }}
                     <div class="update"><span class="btn btn-tb-action btn-tb-large update_details" data-loading-text="Saving...">{% if id %}Update{% else %}Add{% endif %} Details</span></div>
                 </div>      
             </form>
-{#
             <div class="bar_title">
               <div class="left"></div>
               <div class="title"><h4 class="tb">This trail is suitable for</h4></div>
               <div class="right"></div>
             </div>
-            <div class="activities">
-			  <div class="activity tb-avatar tb-avatar-highlight active"><div class="icon icon-run"></div></div>
-			  <div class="activity tb-avatar tb-avatar-highlight"><div class="icon icon-bike"></div></div>		    	
-			  <div class="activity tb-avatar tb-avatar-highlight"><div class="icon icon-ski"></div></div>		    	
-			  <div class="activity tb-avatar tb-avatar-highlight"><div class="icon icon-stroller"></div></div>		    	
-			  <div class="activity tb-avatar tb-avatar-highlight"><div class="icon icon-wheelchair"></div></div>		    	
-            </div>                
-#}
+            <div id="trailactivities_view" class="activities"></div>                
         </div>
     </div>
 
@@ -256,6 +248,10 @@ var TB_USER_ID = {{ app.user.id }}
   	<div class="image_container fade_on_load"><img src="http://app.resrc.it/O=80/http://s3-eu-west-1.amazonaws.com/<%= versionLargePath%>" class="resrc scale"></div>
   	<div class="star_marker"></div>
   </div>  	
+</script>
+
+<script type="text/template" id="trailActivityViewTemplate">
+  <div class="icon icon-<%= name %>"></div>
 </script>
 
 <script type="text/template" id="stepPublishedViewTemplate">

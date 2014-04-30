@@ -133,21 +133,13 @@ var TB_TRAIL_ID = {{ trail.id }};
                                     <h4 class="tb">{{ trail.about|nl2br }}</h4>
                                 </div>
                             </div>
-{#                            
                             <div class="activity_panel">
 					            <div class="bar_title">
 					              <div class="title"><h4 class="tb">This trail is suitable for</h4></div>
 					              <div class="right"></div>
 					            </div>
-					            <div class="activities">
-								  <div class="activity tb-avatar tb-avatar-highlight"><div class="icon icon-run"></div></div>
-								  <div class="activity tb-avatar tb-avatar-highlight"><div class="icon icon-bike"></div></div>		    	
-								  <div class="activity tb-avatar tb-avatar-highlight"><div class="icon icon-ski"></div></div>		    	
-								  <div class="activity tb-avatar tb-avatar-highlight"><div class="icon icon-stroller"></div></div>		    	
-								  <div class="activity tb-avatar tb-avatar-highlight"><div class="icon icon-wheelchair"></div></div>		    	
-					            </div>                
+					            <div  id="trailactivities_view" class="activities"></div>                
 							</div>    
-#}								  							                                        
                         </div>  
                         <div class="right">
                             <div id="trail_weather_view" class="panel trail_weather_panel"></div>
@@ -325,6 +317,10 @@ var TB_TRAIL_ID = {{ trail.id }};
       <div class="icon"></div>
     </div>
   </div>
+</script>
+
+<script type="text/template" id="trailActivityViewTemplate">
+  <div class="icon icon-<%= name %>"></div>
 </script>
 
 {% endblock %}

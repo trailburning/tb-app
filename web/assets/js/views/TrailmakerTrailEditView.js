@@ -4,8 +4,9 @@ define([
   'views/OverlayView',  
   'views/TrailUploadPhotoView',
   'views/TrailUploadPhotoProgressView',
-  'views/TrailSlideshowView'  
-], function(_, Backbone, OverlayView, TrailUploadPhotoView, TrailUploadPhotoProgressView, TrailSlideshowView){
+  'views/TrailSlideshowView',
+  'views/TrailActivitiesView',  
+], function(_, Backbone, OverlayView, TrailUploadPhotoView, TrailUploadPhotoProgressView, TrailSlideshowView, TrailActivitiesView){
 
   var STATE_UPLOAD = 0;
 
@@ -47,6 +48,7 @@ define([
       this.overlayView = new OverlayView({ el: '#tb-overlay-view', model: this.model });
       this.trailUploadPhotoView = new TrailUploadPhotoView({ el: '#uploadPhoto_view', model: this.model });
       this.trailSlideshowView = new TrailSlideshowView({ el: '#slideshow_view', collection: this.options.mediaCollection });
+      this.trailActivitiesView = new TrailActivitiesView({ el: '#trailactivities_view', model: this.model });
 
       this.trailUploadPhotoView.render();          
 
@@ -61,16 +63,7 @@ define([
         // fire event
         app.dispatcher.trigger('TrailEditView:fieldkeypress', self);                        
 	  });
-	  
-	  $('.activity').click(function(evt){
-	  	if ($(this).hasClass('active')) {
-	  	  $(this).removeClass('active');
-	  	}
-	  	else {
-	  	  $(this).addClass('active');
-	  	}
-	  });
-	  
+	  	  
       return this;
     },
     renderTrailDetail: function(){   
@@ -106,7 +99,7 @@ define([
         dataType: "json",
         url: strURL,
         error: function(data) {
-          console.log('error:'+data.responseText);      
+//          console.log('error:'+data.responseText);      
         },
         success: function(data) {      
           // populate list
@@ -137,7 +130,9 @@ define([
 	  	  
 	  	  self.renderTrailCard();                      
         }
-      });            
+      });      
+      
+      this.trailActivitiesView.render();            
     },
     renderTrailCard: function(){
       $('.trailcard_panel .trail_card_title', $(this.el)).html(this.model.get('value').route.name);
@@ -265,9 +260,6 @@ define([
       var postData = JSON.stringify(model.toJSON());
       var postArray = {json:postData};
 
-//	  console.log('onTrailMapViewMoveMedia:');
-//      console.log(postData);
-      
       var strURL = TB_RESTAPI_BASEURL + '/v1/media/' + mediaID;      
       $.ajax({
         type: "PUT",

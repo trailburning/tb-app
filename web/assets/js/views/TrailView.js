@@ -9,8 +9,9 @@ define([
   'views/TrailMapView',  
   'views/TrailStatsView',  
   'views/TrailAltitudeView',
-  'views/TrailWeatherView'
-], function(_, Backbone, TrailMediaModel, ActivityFeedView, TrailMiniMapView, TrailMiniSlidesView, TrailSlidesView, TrailMapView, TrailStatsView, TrailAltitudeView, TrailWeatherView){
+  'views/TrailWeatherView',
+  'views/TrailActivitiesView'
+], function(_, Backbone, TrailMediaModel, ActivityFeedView, TrailMiniMapView, TrailMiniSlidesView, TrailSlidesView, TrailMapView, TrailStatsView, TrailAltitudeView, TrailWeatherView, TrailActivitiesView){
 
   var MIN_HEIGHT = 540;
   var PLAYER_REDUCE_HEIGHT = 50;
@@ -79,6 +80,7 @@ define([
       this.trailMapView = new TrailMapView({ el: '#trail_map_view', elCntrls: '#view_map_btns', model: this.model });
       
       this.trailWeatherView = new TrailWeatherView({ el: '#trail_weather_view', model: this.model });
+      this.trailActivitiesView = new TrailActivitiesView({ el: '#trailactivities_view', model: this.model, bReadonly: true });
       
       this.buildBtns();      
       this.updatePlayerHeight();
@@ -265,6 +267,12 @@ define([
       $('#trail_stats_view').addClass('tb-move-vert');
       $('#trail_altitude_view').addClass('tb-move-vert');            
       $('#trail_mini_view').addClass('tb-move-vert');      
+      
+      // render activities
+      this.trailActivitiesView.render();
+      if (this.model.get('value').route.attributes != undefined) {
+        $('.activity_panel').show();
+      }
       
       var self = this;          
       this.nTickleTimer = setInterval(function() {

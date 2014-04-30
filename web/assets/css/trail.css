@@ -679,6 +679,7 @@ html.touch #trailplayer #view_map_btns {
 /* TRAIL ACTIVITY PANEL */
 /******************************************/
 .activity_panel {
+  display: none;
   float: left;
   width: 100%;	
   margin-top: 28px;
@@ -702,8 +703,13 @@ html.touch #trailplayer #view_map_btns {
 }
 
 .activity_panel  .activity {
+  display: none;
   float: left;
   margin: 16px 22px 0px 0px;
+}
+
+.activity_panel  .active {
+  display: inherit;
 }
 
 /* TRAIL WEATHER PANEL */
