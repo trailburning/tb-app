@@ -335,7 +335,7 @@ class RouteTest extends AbstractFrontendTest
  
     /**
      * @expectedException Exception
-     * @@expectedExceptionMessage Before publishing a Route, the name field must be set
+     * @expectedExceptionMessage Before publishing a Route, the name field must be set
      */
     public function testSetPublishThrowsException()
     {

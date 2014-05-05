@@ -3,6 +3,9 @@
 namespace TB\Bundle\FrontendBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use TB\Bundle\FrontendBundle\Exception\ActivityActorNotFoundException;
+use TB\Bundle\FrontendBundle\Exception\ActivityObjectNotFoundException;
+use Doctrine\ORM\EntityNotFoundException;
 
 /** @ORM\Entity */
 class UserFollowActivity extends Activity
@@ -80,13 +83,32 @@ class UserFollowActivity extends Activity
         return $this->object;
     }
     
+    /**
+     * Returns a data array that represents this activity item
+     *
+     * @throws ActivityActorNotFoundException When the related actor entity is missing
+     * @throws ActivityObjectNotFoundException When the related object entity is missing
+     * @return array
+     */
     public function export()
     {
+        try {
+            $actorData = $this->getActor()->exportAsActivity();
+        } catch (EntityNotFoundException $e) {
+            throw new ActivityActorNotFoundException(sprintf('User Entity not found with id %s', $this->getActorId()));
+        }
+        
+        try {
+            $objectData = $this->getObject()->exportAsActivity();
+        } catch (EntityNotFoundException $e) {
+            throw new ActivityObjectNotFoundException(sprintf('User Entity not found with id %s', $this->getObjectId()));
+        }
+        
         $data = [
             'published' => $this->getFormatedPublishedDate(),
-            'actor' => $this->getActor()->exportAsActivity(),
+            'actor' => $actorData,
             'verb' => 'follow',
-            'object' => $this->getObject()->exportAsActivity(),
+            'object' => $objectData,
         ];
         
         return $data;
