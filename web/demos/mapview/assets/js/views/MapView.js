@@ -1,5 +1,5 @@
 //TB_RESTAPI_BASEURL = 'http://localhost:8888/trailburning_api';
-TB_RESTAPI_BASEURL = 'http://trailburning.herokuapp.com/api';
+TB_RESTAPI_BASEURL = 'http://www.trailburning.com/api';
 
 define([
   'underscore', 
@@ -38,7 +38,6 @@ define([
       	nHeight = $(window).height(); 
       }
       
-      console.log('R');
       $('#bodyview').height(nHeight);
       $('#map').height(nHeight);
     },
@@ -101,10 +100,8 @@ define([
       	this.currTrailCardView.selected(false);
       }    	
       trailCardView.selected(true);
-      console.log(trailCardView.model.cid);
       
       var nY = parseInt($(trailCardView.el).css('top'), 10) + parseInt($(trailCardView.el).css('margin-top'), 10) - 83;
-      console.log('y:'+nY);
 
 	  $('#cardsview').animate({scrollTop:nY}, 2000);        
 	  $('.panel').removeClass('selected');
