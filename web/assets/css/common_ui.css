@@ -650,7 +650,9 @@ h4.tb {
 
 #headerview .dropdown-menu li {
   width: 362px;
+  height: 80px;
   background: #F2F2F2;
+  overflow: hidden;
 }
 
 #headerview .dropdown-menu li>a {
