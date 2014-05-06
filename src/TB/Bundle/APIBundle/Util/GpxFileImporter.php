@@ -12,7 +12,7 @@ use CrEOF\Spatial\PHP\Types\Geometry\Point;
 
 class GpxFileImporter
 {
-    private $namespace = FALSE;
+    private $namespace = false;
     private $nss = ''; // Name-space string. eg 'georss:'
 
     /**

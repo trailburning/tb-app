@@ -57,7 +57,7 @@ class GpxFileController extends AbstractRestController
         }
         $file = $request->files->get('gpxfile');
         
-        $importer = new GpxFileImporter();
+        $importer = $this->get('tb.gpxfile.importer');
         try {
             $routes = $importer->parse(file_get_contents($file->getPathname()));
         } catch (\Exception $e) {

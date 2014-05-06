@@ -7,8 +7,12 @@
     <services>
         
         <!-- Register media importer service -->
-        <service id="media_importer" class="TB\Bundle\FrontendBundle\Util\MediaImporter">
+        <service id="tb.media.importer" class="TB\Bundle\FrontendBundle\Util\MediaImporter">
             <argument type="service" id="doctrine.orm.entity_manager" />
+        </service>
+        
+        <!-- Register GPX importer service -->
+        <service id="tb.gpxfile.importer" class="TB\Bundle\APIBundle\Util\GpxFileImporter">
         </service>
         
     </services>

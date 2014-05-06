@@ -67,7 +67,7 @@ class MediaController extends AbstractRestController
             );
         }
         
-        $mediaImporter = $this->get('media_importer');
+        $mediaImporter = $this->get('tb.media.importer');
         $filesystem = $this->get('trail_media_files_filesystem');
         $medias = [];
         

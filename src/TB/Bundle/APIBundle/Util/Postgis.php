@@ -13,6 +13,9 @@ use TB\Bundle\FrontendBundle\Entity\BrandProfile;
 use CrEOF\Spatial\PHP\Types\Geometry\Point;
 use TB\Bundle\APIBundle\Util;
 
+/**
+ *
+ */
 class Postgis extends \PDO
 {
     
@@ -28,10 +31,8 @@ class Postgis extends \PDO
         }
     }
 
-    private function updateRouteLength($route_id) 
+    private function updateRouteLength($routeId) 
     {
-        $this->beginTransaction();
-
         $q = "UPDATE routes 
               SET length = (
                 SELECT ST_Length(ST_MakeLine(rp.coords ORDER BY rp.point_number ASC)::geography)
@@ -40,32 +41,25 @@ class Postgis extends \PDO
               )
               WHERE routes.id=?;";
         $pq = $this->prepare($q);
-        $success = $pq->execute(array($route_id));
+        $success = $pq->execute(array($routeId));
         if (!$success) {
-            $this->rollBack();
-            throw (new ApiException('Failed to insert the track into the database - Problem calculating length', 500));
+            throw new ApiException('Failed to insert the track into the database - Problem calculating length', 500);
         }
-
-        $this->commit();
     }
 
-    private function updateRouteCentroid($route_id) 
+    private function updateRouteCentroid($routeId) 
     {
-        $this->beginTransaction();
         $q = "UPDATE routes 
         SET centroid = (
         SELECT ST_SetSRID(ST_Centroid(ST_MakeLine(rp.coords ORDER BY rp.point_number ASC)), 4326)
         FROM route_points rp
         WHERE routes.id = rp.route_id )
-        WHERE id=?;";
+        WHERE id=?";
         $pq = $this->prepare($q);
-        $success = $pq->execute(array($route_id));
+        $success = $pq->execute(array($routeId));
         if (!$success) {
-            $this->rollBack();
-            throw (new ApiException('Failed to insert the track into the database - Problem calculating centroid', 500));
+            throw new ApiException('Failed to insert the track into the database - Problem calculating centroid', 500);
         }
-
-        $this->commit();
     }
 
     public function importGpxFile($path) 
@@ -87,7 +81,7 @@ class Postgis extends \PDO
 
     public function writeRoute($route) 
     {
-        $route_id = 0;
+        $routeId = 0;
         $route->calculateAscentDescent();
         $tags = self::hstoreFromMap($route->getTags());
 
@@ -100,7 +94,7 @@ class Postgis extends \PDO
             throw (new ApiException("Failed to insert the route into the database", 500));
         }
 
-        $route_id = intval($this->lastInsertId("routes_id_seq"));
+        $routeId = intval($this->lastInsertId("routes_id_seq"));
 
         $q = "INSERT INTO route_points (route_id, point_number, coords, tags) VALUES (?, ?, ST_SetSRID(ST_MakePoint(?, ?), 4326), ?)";
         $pq = $this->prepare($q);
@@ -116,7 +110,7 @@ class Postgis extends \PDO
             $tags = self::hstoreFromMap($rptags);
 
             $success = $pq->execute(array(
-            $route_id, 
+            $routeId, 
             $pointnumber,
             $rpcoords->getLongitude(),
             $rpcoords->getLatitude(), 
@@ -127,14 +121,44 @@ class Postgis extends \PDO
                 throw (new ApiException("Failed to insert routepoints into the database".$rpcoordswkt, 500));
             }
         }
+        
+        try {
+            $this->isValidRoute($routeId);
+            $this->updateRouteCentroid($routeId);
+            $this->updateRouteLength($routeId);
+        } catch (ApiException $e) {
+            $this->rollback();
+            // Delete gpx_files record as well because it is a one-to-one relation
+            $stmt = $this->prepare('DELETE FROM gpx_files WHERE id=:id');
+            $stmt->bindValue('id', $route->getGpxFileId(), \PDO::PARAM_INT);
+            $stmt->execute();
+            throw $e;
+        }
+        
         $this->commit();
-        $this->updateRouteCentroid($route_id);
-        $this->updateRouteLength($route_id);
 
-        return $route_id;
+        return $routeId;
+    }
+    
+    protected function isValidRoute($routeId)
+    {
+        // Check if route is valid (a valid LINESTRING), if nott rollback
+        $q = 'SELECT ST_IsValid(ST_MakeLine(rp.coords ORDER BY rp.point_number ASC)) as valid 
+              FROM routes r
+              INNER JOIN route_points rp ON r.id=rp.route_id
+              WHERE r.id=?';
+        $pq = $this->prepare($q);
+        $pq->execute(array($routeId));
+        $row = $pq->fetch(\PDO::FETCH_ASSOC);
+        
+        if ($row['valid'] != 1) {
+            throw (new ApiException('Problem with GPX file, not a valid Trail', 400));
+        }
+        
+        return true;
     }
 
-    public function readRoute($route_id) 
+    public function readRoute($routeId) 
     {
         $route = new Route();
 
@@ -145,7 +169,7 @@ class Postgis extends \PDO
                      r.length as length,
                      r.tags as rtags,
                      r.about,
-                     ST_AsText(ST_Centroid(ST_MakeLine(rp.coords ORDER BY rp.point_number ASC))) as centroid,
+                     ST_AsText(r.centroid) AS centroid,
                      ST_AsText(Box2D(ST_MakeLine(rp.coords ORDER BY rp.point_number ASC))) as bbox,
                      rt.id AS rt_id,
                      rt.name AS rt_name, 
@@ -164,7 +188,7 @@ class Postgis extends \PDO
               WHERE r.id=?
               GROUP BY r.id, length, r.tags, r.slug, r.region, r.about, rt.id, rc.id, m.id";
         $pq = $this->prepare($q);
-        $success = $pq->execute(array($route_id));
+        $success = $pq->execute(array($routeId));
         if (!$success) {
             $this->rollBack();
             throw (new ApiException("Failed to fetch route from Database", 500));
@@ -207,17 +231,17 @@ class Postgis extends \PDO
                 $route->setMedia($media);
             } else {
                 // Attach the first Media, if no favorite Media is set
-                $media = $this->getRouteMedia($route_id, 1);
+                $media = $this->getRouteMedia($routeId, 1);
                 if (count($media) > 0) {
                     $route->setMedia(array_shift($media));
                 }
             }
-            $attributes = $this->getRouteAttributes($route_id);
+            $attributes = $this->getRouteAttributes($routeId);
             foreach ($attributes as $attribute) {
                 $route->addAttribute($attribute);
             }
         } else {
-            throw (new ApiException(sprintf('Route with id "%s" does not exist', $route_id), 404));
+            throw (new ApiException(sprintf('Route with id "%s" does not exist', $routeId), 404));
         }
 
         $this->beginTransaction();
@@ -229,7 +253,7 @@ class Postgis extends \PDO
               ORDER BY rp.point_number ASC
               ";
         $pq = $this->prepare($q);
-        $success = $pq->execute(array($route_id));
+        $success = $pq->execute(array($routeId));
         if (!$success) {
             $this->rollBack();
             throw (new ApiException('Failed to fetch route from Database', 500));
@@ -440,23 +464,23 @@ class Postgis extends \PDO
         return $routes;
     }
 
-    public function deleteRoute($route_id) 
+    public function deleteRoute($routeId) 
     {
         $this->beginTransaction();
         $q = "DELETE FROM routes WHERE routes.id = ?";
         $pq = $this->prepare($q);
-        $success = $pq->execute(array($route_id));
+        $success = $pq->execute(array($routeId));
         if (!$success) {
             $this->rollBack();
-            throw (new ApiException(sprintf('Failed to delete route %s', $route_id), 500));
+            throw (new ApiException(sprintf('Failed to delete route %s', $routeId), 500));
         }
         if ($pq->rowCount() < 1) {
-            throw (new ApiException(sprintf('Failed to delete non existing route with id "%s"', $route_id), 404));
+            throw (new ApiException(sprintf('Failed to delete non existing route with id "%s"', $routeId), 404));
         }
         $this->commit();
     }
 
-    public function readRouteAsJSON($route_id, $format) 
+    public function readRouteAsJSON($routeId, $format) 
     {
         $this->beginTransaction();
         $q = "SELECT r.id AS route_id,
@@ -466,7 +490,7 @@ class Postgis extends \PDO
               WHERE r.id=? AND rp.route_id=r.id
               GROUP BY r.id";
         $pq = $this->prepare($q);
-        $success = $pq->execute(array($route_id));
+        $success = $pq->execute(array($routeId));
         if (!$success) {
             throw (new ApiException("Failed to fetch route from Database", 500));
         }
@@ -475,7 +499,7 @@ class Postgis extends \PDO
     }
 
 
-    public function getRouteMedia($route_id, $count = null) 
+    public function getRouteMedia($routeId, $count = null) 
     {
         $q = "SELECT id, ST_AsText(m.coords) AS coords, tags, filename, path
               FROM medias m
@@ -484,7 +508,7 @@ class Postgis extends \PDO
               LIMIT :count"; 
 
         $pq = $this->prepare($q);
-        $pq->bindParam('route_id', $route_id, \PDO::PARAM_INT);
+        $pq->bindParam('route_id', $routeId, \PDO::PARAM_INT);
         $pq->bindParam('count', $count, \PDO::PARAM_INT);
         
         $success = $pq->execute();
@@ -508,7 +532,7 @@ class Postgis extends \PDO
         return $medias;
     }
 
-    public function attachMediaToRoute($route_id, $media, $linear_position=0) 
+    public function attachMediaToRoute($routeId, $media, $linear_position=0) 
     {
         if ($linear_position == 0) {
             $this->beginTransaction();
@@ -525,7 +549,7 @@ class Postgis extends \PDO
             $success = $pq->execute(array(
                 $coords['long'], 
                 $coords['lat'], 
-                $route_id
+                $routeId
             ));
 
             if (!$success) {
@@ -544,7 +568,7 @@ class Postgis extends \PDO
         $q = "INSERT INTO route_medias (route_id, media_id, linear_position) VALUES (?, ?, ?)";
         $pq = $this->prepare($q);
         $success = $pq->execute(array(
-            $route_id,
+            $routeId,
             $media->getId(), 
             $linear_position
         ));
@@ -568,7 +592,7 @@ class Postgis extends \PDO
         }
         
         if ($pq->rowCount() < 1) {
-            throw (new ApiException("Failed to delete non existing media $route_id", 404));
+            throw (new ApiException("Failed to delete non existing media $routeId", 404));
         }
         
         $this->commit();
@@ -656,7 +680,7 @@ class Postgis extends \PDO
         return $hstore;
     }
     
-    public function getRouteAttributes($route_id) 
+    public function getRouteAttributes($routeId) 
     {
         $q = "SELECT a.id, a.name, a.type
               FROM attribute a
@@ -665,7 +689,7 @@ class Postgis extends \PDO
               WHERE ra.route_id = :route_id"; 
 
         $pq = $this->prepare($q);
-        $pq->bindParam('route_id', $route_id, \PDO::PARAM_INT);
+        $pq->bindParam('route_id', $routeId, \PDO::PARAM_INT);
         
         $success = $pq->execute();
         if (!$success) {

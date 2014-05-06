@@ -125,7 +125,7 @@ class Route implements Exportable
     /**
      * @var \TB\Bundle\FrontendBundle\Entity\GpxFile
      *
-     * @ORM\ManyToOne(targetEntity="TB\Bundle\FrontendBundle\Entity\GpxFile")
+     * @ORM\OneToOne(targetEntity="TB\Bundle\FrontendBundle\Entity\GpxFile")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="gpx_file_id", referencedColumnName="id")
      * })
