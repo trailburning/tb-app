@@ -39,6 +39,21 @@ class PostgisTest extends AbstractApiTestCase
         $this->assertEquals(0, $row['count'], 'gpx_files record was deleted');
     }
     
+    public function testSearchRoutes()
+    {
+        $this->loadFixtures([
+            'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData',
+        ]); 
+        $postgis = $this->getContainer()->get('postgis');
+        $routes = $postgis->searchRoutes(1, 0, $count);
+        $this->assertInternalType('array', $routes, 
+            'searchRoutes returns an array of Routes');   
+        $this->assertEquals(1, count($routes),
+            'searchRoutes returns one route');
+        $this->assertEquals(2, $count,
+            'the total number of results is 2');
+    }
+    
     protected function importRoute($file)
     {
         $this->loadFixtures([

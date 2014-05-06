@@ -125,7 +125,7 @@ class Route implements Exportable
     /**
      * @var \TB\Bundle\FrontendBundle\Entity\GpxFile
      *
-     * @ORM\ManyToOne(targetEntity="TB\Bundle\FrontendBundle\Entity\GpxFile")
+     * @ORM\OneToOne(targetEntity="TB\Bundle\FrontendBundle\Entity\GpxFile")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="gpx_file_id", referencedColumnName="id")
      * })
@@ -235,9 +235,16 @@ class Route implements Exportable
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\RouteTag", inversedBy="routes")
+     * @ORM\ManyToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\Attribute", inversedBy="routes")
      */
-    private $routeTags;
+    private $attributes;
+    
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="approved", type="boolean", options={"default" = true})
+     */
+    private $approved = true;
 
     /**
      * Set name
@@ -563,6 +570,7 @@ class Route implements Exportable
         $this->routePoints = new \Doctrine\Common\Collections\ArrayCollection();
         $this->routeLikeActivities = new \Doctrine\Common\Collections\ArrayCollection();
         $this->routeUndoLikeActivities = new \Doctrine\Common\Collections\ArrayCollection();        
+        $this->attributes = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**
@@ -943,6 +951,13 @@ class Route implements Exportable
         if ($this->media !== null) {
             $data['media'] = $this->media->export();
         }
+    
+        if (count($this->getAttributes()) > 0) {
+            $data['attributes'] = [];
+            foreach ($this->getAttributes() as $attribute) {
+                $data['attributes'][] = $attribute->export();
+            }
+        }
         
         return $data;
     }
@@ -1216,4 +1231,55 @@ class Route implements Exportable
             return null;
         }
     }
+
+    /**
+     * Add attributes
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\Attribute $attributes
+     * @return Route
+     */
+    public function addAttribute(\TB\Bundle\FrontendBundle\Entity\Attribute $attributes)
+    {
+        $this->attributes[] = $attributes;
+
+        return $this;
+    }
+
+    /**
+     * Remove attributes
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\Attribute $attributes
+     */
+    public function removeAttribute(\TB\Bundle\FrontendBundle\Entity\Attribute $attributes)
+    {
+        $this->attributes->removeElement($attributes);
+    }
+
+    /**
+     * Get attributes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAttributes()
+    {
+        return $this->attributes;
+    }
+    
+    /**
+     * Checks a User already likes this Route
+     *
+     * @param Attribute $$attribute The Attribute to check
+     * @return boolean returns true if the Route has this Attribute, false if not
+     */
+    public function hasAttribute(Attribute $attribute)
+    {
+        foreach ($this->getAttributes() as $routeAttribute) {
+            if ($routeAttribute->getId() === $attribute->getId()) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+
 }

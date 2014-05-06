@@ -371,7 +371,7 @@ class Postgis extends \PDO
         $q = 'SELECT COUNT(r.id) AS count
               FROM routes r
               INNER JOIN fos_user u ON r.user_id=u.id
-              WHERE r.publish = true';
+              WHERE r.publish = true AND approved = true';
         $pq = $this->prepare($q);
         $success = $pq->execute();
         if (!$success) {
@@ -387,7 +387,7 @@ class Postgis extends \PDO
                   LEFT JOIN route_type rt ON r.route_type_id=rt.id
                   LEFT JOIN route_category rc ON r.route_category_id=rc.id
                   LEFT JOIN medias m ON r.media_id=m.id
-                  WHERE r.publish = true
+                  WHERE r.publish = true AND approved = true
                   GROUP BY r.id, rt.id, rc.id , u.id, m.id
                   ORDER BY r.id DESC
                   LIMIT :limit OFFSET :offset';

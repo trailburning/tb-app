@@ -238,6 +238,13 @@ class Route implements Exportable
      * @ORM\ManyToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\Attribute", inversedBy="routes")
      */
     private $attributes;
+    
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="approved", type="boolean", options={"default" = true})
+     */
+    private $approved = true;
 
     /**
      * Set name
@@ -1273,5 +1280,28 @@ class Route implements Exportable
         }
         
         return false;
+    }
+
+    /**
+     * Set approved
+     *
+     * @param boolean $approved
+     * @return Route
+     */
+    public function setApproved($approved)
+    {
+        $this->approved = $approved;
+
+        return $this;
+    }
+
+    /**
+     * Get approved
+     *
+     * @return boolean 
+     */
+    public function getApproved()
+    {
+        return $this->approved;
     }
 }
