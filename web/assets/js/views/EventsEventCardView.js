@@ -32,7 +32,7 @@ define([
         var attribs = this.model.toJSON();
         $(this.el).html(this.template(attribs));
         $(this.el).addClass('event_card_panel');
-      
+	      
         var imgLoad = imagesLoaded($('.scale', $(this.el)));
         imgLoad.on('always', function(instance) {
           for ( var i = 0, len = imgLoad.images.length; i < len; i++ ) {
@@ -43,9 +43,9 @@ define([
           // fade in - delay adding class to ensure image is ready  
           $('.fade_on_load', $(self.el)).addClass('tb-fade-in');
           $('.image_container', $(self.el)).css('opacity', 1);
-          // force update to fix blurry bug
-	      resrc.resrcAll();
         });
+		// invoke resrc      
+	    resrc.resrc($('.scale', $(this.el)));        
 	  }
       this.bRendered = true;
                        
