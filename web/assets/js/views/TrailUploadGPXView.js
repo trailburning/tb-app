@@ -66,6 +66,10 @@ define([
       };   
       
       $('#uploadGPXForm').upload(strURL, function(res) {
+      	// this will be the error event when when the backend is ready
+        // fire event
+//        app.dispatcher.trigger("TrailUploadGPXView:error", self);                
+      	
         // fire event
         app.dispatcher.trigger("TrailUploadGPXView:uploaded", self);                
       },function(data) {

@@ -3,10 +3,11 @@ define([
   'backbone',
   'views/TrailUploadGPXView',
   'views/TrailUploadGPXProgressView',  
+  'views/TrailUploadGPXErrorView',
   'views/TrailUploadPhotoView',
   'views/TrailUploadPhotoProgressView',
   'views/TrailSlideshowView'  
-], function(_, Backbone, TrailUploadGPXView, TrailUploadGPXProgressView, TrailUploadPhotoView, TrailUploadPhotoProgressView, TrailSlideshowView){
+], function(_, Backbone, TrailUploadGPXView, TrailUploadGPXProgressView, TrailUploadGPXErrorView, TrailUploadPhotoView, TrailUploadPhotoProgressView, TrailSlideshowView){
 
   var STATE_UPLOAD = 0;
 
@@ -16,6 +17,7 @@ define([
       
       app.dispatcher.on("TrailUploadGPXView:uploaded", this.onTrailUploadGPXViewUploaded, this);
       app.dispatcher.on("TrailUploadGPXView:uploadProgress", this.onTrailUploadGPXViewUploadProgress, this);
+      app.dispatcher.on("TrailUploadGPXView:error", this.onTrailUploadGPXViewError, this);
       
       app.dispatcher.on("TrailUploadPhotoView:uploaded", this.onTrailUploadPhotoViewUploaded, this);
       app.dispatcher.on("TrailUploadPhotoView:uploadProgress", this.onTrailUploadPhotoViewUploadProgress, this);
@@ -40,6 +42,7 @@ define([
               
       this.trailUploadGPXView = new TrailUploadGPXView({ el: '#uploadGPX_view', model: this.model });
       this.trailUploadGPXProgressView = new TrailUploadGPXProgressView({ el: '#uploadGPXprogress_view', model: this.model });
+      this.trailUploadGPXErrorView = new TrailUploadGPXErrorView({ el: '#uploadGPXerror_view', model: this.model });
 
       this.trailUploadGPXView.render();
       
@@ -48,9 +51,7 @@ define([
         app.dispatcher.trigger("TrailCreateView:submitclick", self);                        
       });
 
-      // mla test
       if (TB_TRAIL_ID) {
-         this.model.set('id', 148);
          $('#step_route_view .panel_container').hide();      
          $('.map_step_container', $(this.el)).show();  
           // fire event
@@ -68,7 +69,13 @@ define([
     },
     onTrailUploadGPXViewUploadProgress: function(nProgress){
       this.trailUploadGPXProgressView.render(nProgress);
-    }
+    },
+    onTrailUploadGPXViewError: function(){
+      $('#uploadGPX_view').hide();
+      $('#uploadGPXprogress_view').hide();
+      $('#uploadGPXerror_view').show();
+      this.trailUploadGPXErrorView.render(0);
+	}    
     
   });
 

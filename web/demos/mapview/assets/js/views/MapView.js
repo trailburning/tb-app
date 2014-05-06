@@ -1,5 +1,5 @@
-//TB_RESTAPI_BASEURL = 'http://localhost:8888/trailburning_api';
-TB_RESTAPI_BASEURL = 'http://www.trailburning.com/api';
+TB_RESTAPI_BASEURL = 'http://localhost:8888/trailburning_api';
+//TB_RESTAPI_BASEURL = 'http://www.trailburning.com/api';
 
 define([
   'underscore', 

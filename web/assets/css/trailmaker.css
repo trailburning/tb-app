@@ -225,7 +225,7 @@ border-width:1px;
   text-align: center;
 }
 
-#step_route_view #uploadGPX_view .btn {
+#step_route_view .btn {
   margin-top: 24px;  
 }
 
@@ -251,6 +251,10 @@ border-width:1px;
 
 #step_route_view #uploadGPXprogress_view .ui-progressbar-value {
   background: #f83d3d;
+}
+
+#step_route_view #uploadGPXerror_view {
+  display: none;
 }
 
 /* STEP ROUTE EDIT */
