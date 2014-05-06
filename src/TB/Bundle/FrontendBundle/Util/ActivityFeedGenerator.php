@@ -8,6 +8,8 @@ use TB\Bundle\FrontendBundle\Entity\UserActivity;
 use TB\Bundle\FrontendBundle\Entity\User;
 use TB\Bundle\FrontendBundle\Entity\RouteLikeActivity;
 use TB\Bundle\FrontendBundle\Entity\RouteUndoLikeActivity;
+use TB\Bundle\FrontendBundle\Exception\ActivityActorNotFoundException;
+use TB\Bundle\FrontendBundle\Exception\ActivityObjectNotFoundException;
 
 /**
  * 
@@ -54,7 +56,15 @@ class ActivityFeedGenerator
         $decorator = new ActivityFeedSeenDecorator($user);
         
         foreach ($results as $result) {
-            $activityItem = $result->export();
+            // Skip activities with missing actor or object relations to prevent
+            try {
+                $activityItem = $result->export();
+            } catch (ActivityActorNotFoundException $e) {
+                continue;
+            } catch (ActivityObjectNotFoundException $e) {
+                continue;
+            }
+            
             $activityItem = $decorator->decorate($activityItem);
             if (isset($activityItem['seen']) && $activityItem['seen'] === false) {
                 $feedData['newItems']++;
