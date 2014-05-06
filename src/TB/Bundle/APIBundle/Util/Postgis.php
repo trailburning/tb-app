@@ -142,7 +142,7 @@ class Postgis extends \PDO
     
     protected function isValidRoute($routeId)
     {
-        // Check if route is valid (a valid LINESTRING), if nott rollback
+        // Check if route is valid (a valid LINESTRING), if not rollback
         $q = 'SELECT ST_IsValid(ST_MakeLine(rp.coords ORDER BY rp.point_number ASC)) as valid 
               FROM routes r
               INNER JOIN route_points rp ON r.id=rp.route_id
