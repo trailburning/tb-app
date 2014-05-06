@@ -27,7 +27,8 @@ define([
       return this;
     },
     upload: function(){
-      var self = this;
+      var bValid = true;
+      var self = this;      
         
       var strURL = TB_RESTAPI_BASEURL + '/v1/import/gpx';      
         
@@ -53,7 +54,7 @@ define([
             processData: false,
             complete : function(res) {
 //              console.log('complete');              
-              if(successFn) successFn(res);
+              if(bValid && successFn) successFn(res);
             },
             success: function(data) {
 //              console.log(data);
@@ -61,15 +62,17 @@ define([
                 self.model.set('id', data.value.route_ids[0]);  
               }                            
             },
+            error: function(data) {
+//              console.log('error');
+              bValid = false;
+        	  // fire event
+        	  app.dispatcher.trigger("TrailUploadGPXView:error", self);                
+            }
           });
         });
       };   
       
       $('#uploadGPXForm').upload(strURL, function(res) {
-      	// this will be the error event when when the backend is ready
-        // fire event
-//        app.dispatcher.trigger("TrailUploadGPXView:error", self);                
-      	
         // fire event
         app.dispatcher.trigger("TrailUploadGPXView:uploaded", self);                
       },function(data) {
