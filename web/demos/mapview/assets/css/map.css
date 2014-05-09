@@ -8,9 +8,11 @@ border-width:1px;
 }
 
 #bodyview {
+  position: absolute;
+  top: 63px;
   min-height: 600px;
   width: 100%;
-  height: 100%;
+  height: 600px;
 }
 
 #mapview {
@@ -22,7 +24,7 @@ border-width:1px;
 #cardsview {
   position: absolute;
   top: 0px;
-  width: 570px;
+  width: 300px;
   height: 100%;	
   overflow: scroll;
 }
@@ -31,16 +33,18 @@ border-width:1px;
   position: absolute;
   top: 0px;
 }
-
+/*
 #cardsview .panel {
+  position: relative;
   float: none;
-  margin: 20px 0px 0px 20px;  
+  margin: 10px 0px 10px 20px;  
   width: 260px;
   overflow: inherit;
 }
-
-#cardsview .panel:first-child {
-  margin-top: 206px;
+*/
+#cardsview .panel {
+  position: relative;
+  overflow: inherit;
 }
 
 #cardsview .panel.selected .select_top {
@@ -61,6 +65,23 @@ border-width:1px;
   background: url("../img/select_bottom.png") no-repeat top left;
 }
 
+#cardsview .summary {
+  position: relative;
+}
+
+#cardsview .summary .location {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 27px;
+  height: 35px;
+  background: url(https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/icons/sm_location.png) no-repeat top left;
+}
+
+#cardsview .summary .location:hover {
+  cursor: pointer;
+}
+
 #map {
   width: 100%; 
   height: 400px; 	
@@ -70,13 +91,36 @@ border-width:1px;
   width: 440px;
 }
 
-.item {
-  margin: 5px;
-  width: 200px;
-  height: 200px;
-  background: #44B6F7;
+.leaflet-popup-content-wrapper {
+  background: none;
+  box-shadow: none;
 }
 
-.item2 {
-  height: 240px;	
+.leaflet-popup-content {
+  margin: 0px 0px 10px 0px;
+  padding: 0px;	
+}
+
+.leaflet-popup-tip-container {
+  display: none;
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (max-width: 1199px) {  
+  #cardsview .panel.selected .select_top {
+    left: 204px;
+  }
+}
+
+/* VIEW CNTRLS */
+/******************************************/
+#view_map_btns {
+  display: none;
+  position: absolute;
+  top: 34px;
+  right: 152px;
+}
+
+html.touch #view_map_btns {
+  top: 26px;
 }

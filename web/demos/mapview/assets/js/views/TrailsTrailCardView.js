@@ -7,8 +7,9 @@ define([
   	className: "panel",
     initialize: function(){
       this.template = _.template($('#trailsTrailCardViewTemplate').text());        
-            
+                        
       this.bRendered = false;
+	  this.mapRouteMarkerView = null;
     },            
     render: function(){
       var self = this;
@@ -20,12 +21,34 @@ define([
 		  if (this.model.get('category') == undefined) {
 		  	this.model.set('category', '');
       	  }
+      	        	  
+          var versions = this.model.get('media').versions;
+      	  this.model.set('versionLargePath', versions[0].path);
+		  if (this.model.get('category') == undefined) {
+		  	this.model.set('category', '');
+      	  }
+      
+          // add to map
+          function onClick(e) {
+		    // fire event
+            app.dispatcher.trigger("TrailsTrailCardView:markerclick", self);                
+	      }
+        
+	      this.marker = L.marker(new L.LatLng(this.model.get('centroid')[1], this.model.get('centroid')[0])).on('click', onClick);			  
+	      this.marker.setIcon(L.divIcon({className: 'tb-map-marker', html: '<div class="marker"></div>', iconSize: [20, 20]}));      	  
+		  this.options.mapCluster.addLayer(this.marker);      	  
       	}
 
         var attribs = this.model.toJSON();
         $(this.el).html(this.template(attribs));
         $(this.el).addClass('trail_card_panel');
         $(this.el).attr('data-id', this.model.cid);
+      
+      	$('.location', this.el).click(function(evt){
+		  // fire event
+          app.dispatcher.trigger("TrailsTrailCardView:cardmarkerclick", self);                
+      	});
+      	
       
         var imgLoad = imagesLoaded($('.scale', $(this.el)));
         imgLoad.on('always', function(instance) {
@@ -37,25 +60,15 @@ define([
           // fade in - delay adding class to ensure image is ready  
           $('.fade_on_load', $(self.el)).addClass('tb-fade-in');
           $('.image_container', $(self.el)).css('opacity', 1);
-          // force update to fix blurry bug
-	      resrc.resrcAll();
-        });
-        
-        // add to map
-        function onClick(e) {
-		  // fire event
-          app.dispatcher.trigger("TrailCardView:markerclick", self);                
-	  	}
-        
-	    this.marker = L.marker(new L.LatLng(this.model.get('centroid')[1], this.model.get('centroid')[0])).on('click', onClick);			  
-		this.marker.setIcon(L.divIcon({className: 'tb-map-marker', html: '<div class="marker"></div>', iconSize: [20, 20]}));
-		this.options.mapCluster.addLayer(this.marker);
+        });        
+		// invoke resrc      
+	    resrc.resrc($('.scale', $(this.el)));                
 	  }
       this.bRendered = true;
                        
       return this;
     },
-	selected: function(bSelected){
+	selected: function(bSelected){		
 	  if (bSelected) {
         this.marker.setIcon(L.divIcon({className: 'tb-map-marker selected', html: '<div class="marker"></div>', iconSize: [20, 20]}));	  	
 	  }
