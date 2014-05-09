@@ -12,6 +12,7 @@
 		"php": ">=5.3.3",
         "ext-bcmath": "*",
         "ext-memcached": "*",
+        "ext-gd": "*",
 		"symfony/symfony": "~2.4",
 		"doctrine/orm": "~2.2,>=2.2.3",
 		"doctrine/doctrine-bundle": "~1.2",
