@@ -23,3 +23,9 @@ parameters:
     rabbit_mq_vhost: /
     rabbit_mq_main_queue: main
     mailproxy_email_server: http://augmentedmediaprojectsltd.createsend.com/t/t/s/zjdkk/
+    session_prefix: sess_  
+    session_expire: 86400
+    memcached_host: 127.0.0.1
+    memcached_port: 11211
+    memcached_username: 
+    memcached_password:    
