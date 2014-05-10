@@ -12,12 +12,12 @@ if (class_exists('\\Memcached')) {
         '%memcached_port%',
     ]);
 
-    // Only set SASL authenfification when parameters are set
-    if ($container->getParameter('memcached_username') != '') {
+    // Only set SASL authenfification when parameters are set (local Memcached may not support SASL authenfification) 
+    if ($container->getParameter('memcached_username') != '') {        
         $memcached->addMethodCall('setSaslAuthData', [
             '%memcached_username%',
             '%memcached_password%',
-        ])->addMethodCall('setOption', [
+        ])->addMethodCall('setOption', [ // MemCachier needs this option to be 'true'
             \Memcached::OPT_BINARY_PROTOCOL,
             true,
         ]);
@@ -34,7 +34,7 @@ if (class_exists('\\Memcached')) {
         ],
     ]);
 } else {
-    // Otherwise use the default session handler
+    // Otherwise use the default session handler (filesystem)
     $container->loadFromExtension('framework', [
         'session' => null
     ]);
