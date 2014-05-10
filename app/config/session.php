@@ -10,9 +10,7 @@ if (class_exists('\\Memcached')) {
     ))->addMethodCall('addServer', [
         '%memcached_host%',
         '%memcached_port%',
-    ]);
-    
-    $memcached-addMethodCall('setOption', [
+    ])->addMethodCall('setOption', [
         \Memcached::OPT_BINARY_PROTOCOL,
         true,
     ]);
