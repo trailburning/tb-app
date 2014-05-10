@@ -10,9 +10,6 @@ if (class_exists('\\Memcached')) {
     ))->addMethodCall('addServer', [
         '%memcached_host%',
         '%memcached_port%',
-    ])->addMethodCall('setOption', [
-        \Memcached::OPT_BINARY_PROTOCOL,
-        true,
     ]);
 
     // Only set SASL authenfification when parameters are set
@@ -20,6 +17,9 @@ if (class_exists('\\Memcached')) {
         $memcached->addMethodCall('setSaslAuthData', [
             '%memcached_username%',
             '%memcached_password%',
+        ])->addMethodCall('setOption', [
+            \Memcached::OPT_BINARY_PROTOCOL,
+            true,
         ]);
     }
 
