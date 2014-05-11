@@ -110,6 +110,14 @@ class ActivityFeedGenerator
             $updatedUsers[] = $user;
             $this->em->persist($userActivity);
             $this->em->flush();
+        } elseif ($activity instanceof \TB\Bundle\FrontendBundle\Entity\UserRegisterActivity) {
+            $userActivity = new UserActivity();
+            $userActivity->setActivity($activity);
+            $user = $activity->getActor();
+            $userActivity->setUser($user);
+            $updatedUsers[] = $user;
+            $this->em->persist($userActivity);
+            $this->em->flush();
         } elseif ($activity instanceof \TB\Bundle\FrontendBundle\Entity\RouteUndoLikeActivity) {
             // No UserActivity is created for RouteUndoLikeActivity
         } else {

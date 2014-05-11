@@ -61,6 +61,7 @@ class RegistrationControllerTest extends AbstractFrontendTest
         $this->assertEquals(1, $user->getGender());
         $this->assertEquals(1, $user->getGender());
         $this->assertNotNull($user->getRegisteredAt()->format('Y-m-d'));
+        $this->assertNotNull($user->getUserRegisterActivity());
     }
     
 }

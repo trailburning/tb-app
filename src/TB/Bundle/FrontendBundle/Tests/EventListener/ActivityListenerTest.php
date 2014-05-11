@@ -8,8 +8,9 @@ use TB\Bundle\FrontendBundle\Event\UserFollowEvent;
 use TB\Bundle\FrontendBundle\Event\UserUnfollowEvent;
 use TB\Bundle\FrontendBundle\Event\RouteLikeEvent;
 use TB\Bundle\FrontendBundle\Event\RouteUndoLikeEvent;
+use FOS\UserBundle\Event\FilterUserResponseEvent;
 
-class ActivityListenerTest extends AbstractFrontendTest
+class ActivityEventSubscriberTest extends AbstractFrontendTest
 {
 
     /**
@@ -52,7 +53,7 @@ class ActivityListenerTest extends AbstractFrontendTest
         $this->assertEquals($route->getId(), $activity->getObject()->getId(), 
             'RoutePublishActivity with excpected objectId was created');
         $this->assertEquals($route->getUser()->getId(), $activity->getActor()->getId(),
-            'RoutePublishActivity with excpected targetId was created');
+            'RoutePublishActivity with excpected actorId was created');
         
     }
     
@@ -95,7 +96,7 @@ class ActivityListenerTest extends AbstractFrontendTest
         $this->assertEquals($userToFollow->getId(), $activity->getObject()->getId(), 
             'UserFollowActivity with excpected objectId was created');
         $this->assertEquals($user->getId(), $activity->getActor()->getId(),
-            'UserFollowActivity with excpected targetId was created');
+            'UserFollowActivity with excpected actorId was created');
         
     }
     
@@ -138,7 +139,7 @@ class ActivityListenerTest extends AbstractFrontendTest
         $this->assertEquals($userToUnfollow->getId(), $activity->getObject()->getId(), 
             'UserUnfollowActivity with excpected objectId was created');
         $this->assertEquals($user->getId(), $activity->getActor()->getId(),
-            'UserUnfollowActivity with excpected targetId was created');
+            'UserUnfollowActivity with excpected actorId was created');
         
     }
     
@@ -181,7 +182,7 @@ class ActivityListenerTest extends AbstractFrontendTest
         $this->assertEquals($route->getId(), $activity->getObject()->getId(), 
             'RouteLikeActivity with excpected objectId was created');
         $this->assertEquals($user->getId(), $activity->getActor()->getId(),
-            'RouteLikeActivity with excpected targetId was created');
+            'RouteLikeActivity with excpected actorId was created');
         
     }
     
@@ -224,7 +225,48 @@ class ActivityListenerTest extends AbstractFrontendTest
         $this->assertEquals($route->getId(), $activity->getObject()->getId(), 
             'RouteUndoLikeActivity with excpected objectId was created');
         $this->assertEquals($user->getId(), $activity->getActor()->getId(),
-            'RouteUndoLikeActivity with excpected targetId was created');
+            'RouteUndoLikeActivity with excpected actorId was created');
+        
+    }
+    
+    /**
+     * Test that a UserRegisterActivity is created when the fos_user.registration.completed event gets dispatched
+     */
+    public function testOnUserRegister()
+    {
+        $this->loadFixtures([
+            'TB\Bundle\FrontendBundle\DataFixtures\ORM\UserProfileData',
+        ]);
+            
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        $user = $this->getUser('mattallbeury');
+        
+        // Replace the ActivityFeedgenerator Service with a Stub
+        $generator = $this->getMockBuilder('TB\Bundle\FrontendBundle\Util\ActivityFeedGenerator')
+            ->disableOriginalConstructor()
+            ->getMock();
+        // Test that the createFeedFromActivity() method gets called exactly once
+        $generator->expects($this->once())
+            ->method('createFeedFromActivity');
+        $this->getContainer()->set('tb.activity.feed.generator', $generator);
+        
+        //  get the event dispatcher and dispathe the tb.route_publish manually
+        $client = static::createClient();
+        $client->request('GET', '/');
+        $dispatcher = $this->getContainer()->get('event_dispatcher');
+        $event = new FilterUserResponseEvent($user, $client->getRequest(), $client->getResponse());
+        $dispatcher->dispatch('fos_user.registration.completed', $event);
+        
+        $activity = $em
+            ->getRepository('TBFrontendBundle:UserRegisterActivity')
+            ->findOneByActorId($user->getId());
+        
+        if (!$activity) {
+            $this->fail('UserRegisterActivity was not created for fos_user.registration.completed event');
+        }
+        
+        $this->assertEquals($user->getId(), $activity->getActor()->getId(),
+            'UserRegisterActivity with excpected actorId was created');
         
     }
     

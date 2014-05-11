@@ -235,6 +235,13 @@ abstract class User extends BaseUser implements Exportable
     protected $registeredAt;
     
     /**
+     * @var UserRegisterActivity
+     *
+     * @ORM\OneToOne(targetEntity="UserRegisterActivity", mappedBy="actor")
+     **/
+    private $userRegisterActivity;
+    
+    /**
      * Constructor
      */
     public function __construct()
@@ -1152,5 +1159,28 @@ abstract class User extends BaseUser implements Exportable
     public function getRegisteredAt()
     {
         return $this->registeredAt;
+    }
+
+    /**
+     * Set userRegisterActivity
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\UserRegisterActivity $userRegisterActivity
+     * @return User
+     */
+    public function setUserRegisterActivity(\TB\Bundle\FrontendBundle\Entity\UserRegisterActivity $userRegisterActivity = null)
+    {
+        $this->userRegisterActivity = $userRegisterActivity;
+
+        return $this;
+    }
+
+    /**
+     * Get userRegisterActivity
+     *
+     * @return \TB\Bundle\FrontendBundle\Entity\UserRegisterActivity 
+     */
+    public function getUserRegisterActivity()
+    {
+        return $this->userRegisterActivity;
     }
 }
