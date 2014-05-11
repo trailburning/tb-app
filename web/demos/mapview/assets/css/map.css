@@ -24,7 +24,7 @@ border-width:1px;
 #cardsview {
   position: absolute;
   top: 0px;
-  width: 300px;
+  width: 280px;
   height: 100%;	
   overflow: scroll;
 }
@@ -71,11 +71,11 @@ border-width:1px;
 
 #cardsview .summary .location {
   position: absolute;
-  top: 14px;
+  top: 12px;
   right: 14px;
-  width: 27px;
-  height: 35px;
-  background: url(https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/icons/sm_location.png) no-repeat top left;
+  width: 36px;
+  height: 47px;
+  background: url(../icons/location.png) no-repeat top left;
 }
 
 #cardsview .summary .location:hover {
@@ -105,12 +105,6 @@ border-width:1px;
   display: none;
 }
 
-/* Medium devices (desktops, 992px and up) */
-@media (max-width: 1199px) {  
-  #cardsview .panel.selected .select_top {
-    left: 204px;
-  }
-}
 
 /* VIEW CNTRLS */
 /******************************************/
@@ -118,9 +112,22 @@ border-width:1px;
   display: none;
   position: absolute;
   top: 34px;
-  right: 152px;
+  right: 85px;
 }
 
 html.touch #view_map_btns {
   top: 26px;
+}
+
+#view_btns {
+  position: absolute;
+  top: 22px;
+  right: 22px;
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (max-width: 1199px) {  
+  #cardsview .panel.selected .select_top {
+    left: 204px;
+  }
 }

@@ -193,6 +193,19 @@ h4.tb {
   height: 100%;
 }
 
+.tb-cntrl {
+  width: 54px;
+  height: 54px;
+  box-shadow: 1px 1px 1px #888888;
+  background: #FFF;
+  border-radius: 50%;
+  overflow: hidden;		
+}
+
+.tb-cntrl.icon-cards {
+  background-image: url("../icons/buttons/cards.gif");
+}
+
 .tb-avatar .icon {
   position: relative;
   margin: 4%;
