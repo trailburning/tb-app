@@ -26,7 +26,7 @@ class ActivityCreateFeedCommand extends ContainerAwareCommand
         
         $activity = $em->getRepository('TBFrontendBundle:Activity')->findOneById($id);
         if ($activity) {
-            $this->getContainer()->get('activity_feed_generator')->createFeedFromActivity($activity);   
+            $this->getContainer()->get('tb.activity.feed.generator')->createFeedFromActivity($activity);   
         } else {
             throw new \Exception(sprintf('Activity with id %s not found', $id));
         }

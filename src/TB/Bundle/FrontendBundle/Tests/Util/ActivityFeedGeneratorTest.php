@@ -6,6 +6,7 @@ use TB\Bundle\FrontendBundle\Tests\AbstractFrontendTest;
 use TB\Bundle\FrontendBundle\Entity\RoutePublishActivity;
 use TB\Bundle\FrontendBundle\Entity\UserFollowActivity;
 use TB\Bundle\FrontendBundle\Entity\UserUnfollowActivity;
+use TB\Bundle\FrontendBundle\Entity\UserRegisterActivity;
 
 class ActivityFeedGeneratorTest extends AbstractFrontendTest
 {
@@ -21,7 +22,7 @@ class ActivityFeedGeneratorTest extends AbstractFrontendTest
         
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         $user = $this->getUser('paultran');
-    
+        
         $activities = $em
             ->getRepository('TBFrontendBundle:Activity')
             ->findAll();
@@ -30,7 +31,7 @@ class ActivityFeedGeneratorTest extends AbstractFrontendTest
             $this->fail('Missing Activity items in test DB');
         }
         
-        $generator = $this->getContainer()->get('activity_feed_generator');
+        $generator = $this->getContainer()->get('tb.activity.feed.generator');
         
         foreach ($activities as $activity) {
             $generator->createFeedFromActivity($activity);
@@ -61,7 +62,7 @@ class ActivityFeedGeneratorTest extends AbstractFrontendTest
             $this->fail('No RoutePublishActivity found in Test DB');
         }
         
-        $generator = $this->getContainer()->get('activity_feed_generator');
+        $generator = $this->getContainer()->get('tb.activity.feed.generator');
         
         $generator->createFeedFromActivity($activity);
         
@@ -93,7 +94,7 @@ class ActivityFeedGeneratorTest extends AbstractFrontendTest
             $this->fail('No UserFollowActivity found in Test DB');
         }
         
-        $generator = $this->getContainer()->get('activity_feed_generator');
+        $generator = $this->getContainer()->get('tb.activity.feed.generator');
         
         $generator->createFeedFromActivity($activity);
         
@@ -122,7 +123,7 @@ class ActivityFeedGeneratorTest extends AbstractFrontendTest
             $this->fail('No RouteLikeActivity found in Test DB');
         }
         
-        $generator = $this->getContainer()->get('activity_feed_generator');
+        $generator = $this->getContainer()->get('tb.activity.feed.generator');
         
         $generator->createFeedFromActivity($activity);
         
@@ -136,6 +137,30 @@ class ActivityFeedGeneratorTest extends AbstractFrontendTest
         $this->assertEquals($activity->getId(), $notifiedUser->getUserActivities()[0]->getActivity()->getId(),
             'The UserActivity was created');    
         $this->assertEquals(1, $notifiedUser->getActivityUnseenCount(),
+                'The followed Users activityUnseenCount was upated');
+    }
+    
+    public function testCreateFeedFromUserRegisterActivity()
+    {
+        $this->loadFixtures([
+            'TB\Bundle\FrontendBundle\DataFixtures\ORM\UserProfileData',
+        ]);
+        
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        $user = $this->getUser('mattallbeury');
+        
+        $activity = new UserRegisterActivity($user);
+        $em->persist($activity);
+        $em->flush();
+        
+        $generator = $this->getContainer()->get('tb.activity.feed.generator');
+        $generator->createFeedFromActivity($activity);
+        
+        $em->refresh($user);
+        
+        $this->assertEquals($activity->getId(), $user->getUserActivities()[0]->getActivity()->getId(),
+            'The UserActivity was created');    
+        $this->assertEquals(1, $user->getActivityUnseenCount(),
                 'The followed Users activityUnseenCount was upated');
     }
     

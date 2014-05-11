@@ -19,7 +19,7 @@ class RegistrationCompletedListener
     }
     
     /**
-     * 
+     * Post the users email to createsend mailinglist when the newsletter checkbox is ticked.
      */ 
     public function onRegistrationCompleted(FilterUserResponseEvent $event)
     {

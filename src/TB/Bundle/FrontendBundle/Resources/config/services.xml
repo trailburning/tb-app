@@ -56,6 +56,7 @@
         <service id="tb.activity.route_publish_listener" class="TB\Bundle\FrontendBundle\EventListener\ActivityListener">
             <argument type="service" id="doctrine.orm.entity_manager" />
             <argument type="service" id="old_sound_rabbit_mq.main_producer" />
+            <argument type="service" id="tb.activity.feed.generator" />
             <tag name="kernel.event_listener" event="tb.route_publish" method="onRoutePublish" />
         </service>
         
@@ -63,6 +64,7 @@
         <service id="tb.activity.user_follow_listener" class="TB\Bundle\FrontendBundle\EventListener\ActivityListener">
             <argument type="service" id="doctrine.orm.entity_manager" />
             <argument type="service" id="old_sound_rabbit_mq.main_producer" />
+            <argument type="service" id="tb.activity.feed.generator" />
             <tag name="kernel.event_listener" event="tb.user_follow" method="onUserFollow" />
         </service>
         
@@ -70,6 +72,7 @@
         <service id="tb.activity.user_unfollow_listener" class="TB\Bundle\FrontendBundle\EventListener\ActivityListener">
             <argument type="service" id="doctrine.orm.entity_manager" />
             <argument type="service" id="old_sound_rabbit_mq.main_producer" />
+            <argument type="service" id="tb.activity.feed.generator" />
             <tag name="kernel.event_listener" event="tb.user_unfollow" method="onUserUnfollow" />
         </service>
         
@@ -77,6 +80,7 @@
         <service id="tb.activity.route_like_listener" class="TB\Bundle\FrontendBundle\EventListener\ActivityListener">
             <argument type="service" id="doctrine.orm.entity_manager" />
             <argument type="service" id="old_sound_rabbit_mq.main_producer" />
+            <argument type="service" id="tb.activity.feed.generator" />
             <tag name="kernel.event_listener" event="tb.route_like" method="onRouteLike" />
         </service>
         
@@ -84,11 +88,20 @@
         <service id="tb.activity.route_undolike_listener" class="TB\Bundle\FrontendBundle\EventListener\ActivityListener">
             <argument type="service" id="doctrine.orm.entity_manager" />
             <argument type="service" id="old_sound_rabbit_mq.main_producer" />
+            <argument type="service" id="tb.activity.feed.generator" />
             <tag name="kernel.event_listener" event="tb.route_undolike" method="onRouteUndoLike" />
+        </service>
+        
+        <!-- Register event listener to create an Activity Feed Item when a user registers -->
+        <service id="tb.activity.user_register" class="TB\Bundle\FrontendBundle\EventListener\ActivityListener">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="old_sound_rabbit_mq.main_producer" />
+            <argument type="service" id="tb.activity.feed.generator" />
+            <tag name="kernel.event_listener" event="fos_user.registration.completed" method="onUserRegister" />  
         </service>
 
         <!--  Register activity feed generator and as service -->
-        <service id="activity_feed_generator" class="TB\Bundle\FrontendBundle\Util\ActivityFeedGenerator">
+        <service id="tb.activity.feed.generator" class="TB\Bundle\FrontendBundle\Util\ActivityFeedGenerator">
             <argument type="service" id="doctrine.orm.entity_manager" />
         </service>
                 

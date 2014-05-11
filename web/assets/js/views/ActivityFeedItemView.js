@@ -59,6 +59,15 @@ define([
       	  	  this.model.set('verbDisplayName', '');      	
       	  	  this.model.set('subjectDisplayName', this.model.get('object').displayName);      	
       	  	  break;
+      		case 'register':      	      	
+	      	  this.model.set('activityURL', '/tour');
+	      	  this.model.set('actorAvatarURL', 'https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/trailburning/avatar.jpg');
+	      	  
+	      	  this.model.set('actorDisplayName', 'Trailburning');
+	      	  this.model.set('preVerbDisplayName', 'welcomes you to a');
+	      	  this.model.set('verbDisplayName', 'new trail experience');
+	      	  this.model.set('subjectDisplayName', '');
+      	  	  break;
       		default:      	
       	  	  break;
       	  }       

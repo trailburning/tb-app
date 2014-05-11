@@ -141,7 +141,7 @@ class UserController extends AbstractRestController
             throw new ApiException(sprintf('User with id "%s" does not exist', $userId), 404);
         }
         
-        $feedGenerator = $this->get('activity_feed_generator');
+        $feedGenerator = $this->get('tb.activity.feed.generator');
         
         $user->setActivityLastViewed(new \DateTime("now"));
         

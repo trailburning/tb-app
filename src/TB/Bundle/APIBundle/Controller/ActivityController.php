@@ -29,7 +29,7 @@ class ActivityController extends AbstractRestController
             throw new ApiException(sprintf('User with id "%s" does not exist', $userId), 404);
         }
         
-        $activityFeedGenerator = $this->get('activity_feed_generator');
+        $activityFeedGenerator = $this->get('tb.activity.feed.generator');
         
         $feed = $activityFeedGenerator->getFeedForUser($user->getId());
         

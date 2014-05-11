@@ -16,6 +16,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *    "route_publish" = "RoutePublishActivity",
  *    "route_like" = "RouteLikeActivity",
  *    "route_undolike" = "RouteUndoLikeActivity",
+ *    "user_registration" = "UserRegisterActivity",
  * })
  */
 abstract class Activity implements Exportable
@@ -48,7 +49,7 @@ abstract class Activity implements Exportable
     /**
      * @var integer
      *
-     * @ORM\Column(name="object_id", type="integer")
+     * @ORM\Column(name="object_id", type="integer", nullable=true)
      */
     protected $objectId;
     

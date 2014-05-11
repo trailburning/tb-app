@@ -222,17 +222,24 @@ abstract class User extends BaseUser implements Exportable
     /**
      * @var boolean
      *
-     * @ORM\Column(name="newsletter", type="boolean", options={"default" = false})
+     * @ORM\Column(name="newsletter", type="boolean", options={"default" = true})
      */
-    private $newsletter = false;
+    private $newsletter = true;
     
     /**
-     * @var datetime $registered_at
+     * @var datetime
      *
      * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(name="registered_at", type="datetime")
      */
     protected $registeredAt;
+    
+    /**
+     * @var UserRegisterActivity
+     *
+     * @ORM\OneToOne(targetEntity="UserRegisterActivity", mappedBy="actor")
+     **/
+    private $userRegisterActivity;
     
     /**
      * Constructor
@@ -1129,5 +1136,28 @@ abstract class User extends BaseUser implements Exportable
     public function getNewsletter()
     {
         return $this->newsletter;
+    }
+
+    /**
+     * Set registeredAt
+     *
+     * @param \DateTime $registeredAt
+     * @return User
+     */
+    public function setRegisteredAt($registeredAt)
+    {
+        $this->registeredAt = $registeredAt;
+
+        return $this;
+    }
+
+    /**
+     * Get registeredAt
+     *
+     * @return \DateTime 
+     */
+    public function getRegisteredAt()
+    {
+        return $this->registeredAt;
     }
 }
