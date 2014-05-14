@@ -61,6 +61,15 @@ if (isset($_SERVER['RABBIT_MQ_PASSWORD'])) {
 if (isset($_SERVER['RABBIT_MQ_VHOST'])) {
     $container->setParameter('rabbit_mq_vhost', $_SERVER['RABBIT_MQ_VHOST']);
 }
-if (isset($_SERVER['RABBIT_MQ_MAIN_QUEUE'])) {
-    $container->setParameter('rabbit_mq_main_queue', $_SERVER['RABBIT_MQ_MAIN_QUEUE']);
+if (isset($_SERVER['MEMCACHED_HOST'])) {
+    $container->setParameter('memcached_host', $_SERVER['MEMCACHED_HOST']);
+}
+if (isset($_SERVER['MEMCACHED_PORT'])) {
+    $container->setParameter('memcached_port', $_SERVER['MEMCACHED_PORT']);
+}
+if (isset($_SERVER['MEMCACHED_USERNAME'])) {
+    $container->setParameter('memcached_username', $_SERVER['MEMCACHED_USERNAME']);
+}
+if (isset($_SERVER['MEMCACHED_PASSWORD'])) {
+    $container->setParameter('memcached_password', $_SERVER['MEMCACHED_PASSWORD']);
 }
