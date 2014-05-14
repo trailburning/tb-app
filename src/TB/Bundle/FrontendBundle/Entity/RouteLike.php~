@@ -1,0 +1,59 @@
+<?php
+
+namespace TB\Bundle\FrontendBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * RouteLike
+ *
+ * @ORM\Table(name="route_like")
+ * @ORM\Entity
+ */
+class RouteLike
+{
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="route_id", type="integer")
+     * @ORM\Id
+     */
+    private $routeId;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="user_id", type="integer")
+     * @ORM\Id
+     */
+    private $userId;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date", type="date")
+     */
+    private $date;
+
+    /**
+     * @var Route
+     *
+     * @ORM\ManyToOne(targetEntity="Route", inversedBy="routesLikes")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="route_id", referencedColumnName="id", onDelete="CASCADE")
+     * })
+     */
+    private $route;
+
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="routesLikes")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
+     * })
+     */
+    private $user;
+
+}
