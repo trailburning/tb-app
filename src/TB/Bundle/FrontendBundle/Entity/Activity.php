@@ -16,7 +16,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *    "route_publish" = "RoutePublishActivity",
  *    "route_like" = "RouteLikeActivity",
  *    "route_undolike" = "RouteUndoLikeActivity",
- *    "user_registration" = "UserRegisterActivity",
+ *    "user_register" = "UserRegisterActivity",
  * })
  */
 abstract class Activity implements Exportable
