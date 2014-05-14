@@ -14,21 +14,24 @@ var TB_USER_ID = {{ app.user.id }};
 {% endif %}
 </script>
 
-  <div class="trails_content">
-  	<div class="content">
-  		
-      <h2 class="tb tb-title">Discover Trails</h2>
-      <div class="desc"><h4 class="tb">Discover the latest trails from the Trailburning community</h4></div>      
+<div class="trails_content">
+	<div class="content">	
+  		<h2 class="tb tb-title">Discover Trails</h2>
+  		<div class="desc"><h4 class="tb">Discover the latest trails from the Trailburning community</h4></div>      
 
-	  <div class="panels trailcards clearfix">
-	  	<div id="trailCards"></div>
-	  </div>
-	  <div class="nav">       
-	    <div class="more_btn"><a href="javascript:void(0)" class="btn btn-tb btn-tb-small">More Trails</a></div>	  
-	    <div class="tb-loader"><div class="spinner"></div><div class="middle">...</div></div>
-	  </div>	    		
-  	</div>
-  </div>
+  		<div class="panels trailcards clearfix">
+  			<div id="trailCards"></div>
+  		</div>
+  		<div class="nav">       
+    		<div class="more_btn"><a href="javascript:void(0)" class="btn btn-tb btn-tb-small">More Trails</a></div>	  
+    		<div class="tb-loader"><div class="spinner"></div><div class="middle">...</div></div>
+  		</div>	    		
+	</div>
+</div>
+
+<div id="view_btns">
+	<div id="view_toggle"><a href="{{ app.request.baseUrl }}/map/trails"><div class="tb-cntrl icon-cards"></div></a></div>
+</div>  
 
 {% endblock %}
 

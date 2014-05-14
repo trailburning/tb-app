@@ -24,7 +24,7 @@ border-width:1px;
 #cardsview {
   position: absolute;
   top: 0px;
-  width: 280px;
+  width: 290px;
   height: 100%;	
   overflow: scroll;
 }
@@ -33,15 +33,7 @@ border-width:1px;
   position: absolute;
   top: 0px;
 }
-/*
-#cardsview .panel {
-  position: relative;
-  float: none;
-  margin: 10px 0px 10px 20px;  
-  width: 260px;
-  overflow: inherit;
-}
-*/
+
 #cardsview .panel {
   position: relative;
   overflow: inherit;
