@@ -1303,5 +1303,5 @@ class Route implements Exportable
     public function getApproved()
     {
         return $this->approved;
-    }    
+    }
 }
