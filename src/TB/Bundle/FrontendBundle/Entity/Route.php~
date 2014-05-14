@@ -235,13 +235,6 @@ class Route implements Exportable
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\OneToMany(targetEntity="RouteLike", mappedBy="route")
-     **/
-    private $routeLikes;
-    
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
      * @ORM\ManyToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\Attribute", inversedBy="routes")
      */
     private $attributes;
@@ -1289,26 +1282,4 @@ class Route implements Exportable
         return false;
     }
 
-    /**
-     * Set approved
-     *
-     * @param boolean $approved
-     * @return Route
-     */
-    public function setApproved($approved)
-    {
-        $this->approved = $approved;
-
-        return $this;
-    }
-
-    /**
-     * Get approved
-     *
-     * @return boolean 
-     */
-    public function getApproved()
-    {
-        return $this->approved;
-    }
 }
