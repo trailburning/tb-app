@@ -1,12 +1,10 @@
-TB_RESTAPI_BASEURL = 'http://localhost:8888/trailburning_api';
-//TB_RESTAPI_BASEURL = 'http://www.trailburning.com/api';
-
 define([
   'underscore', 
   'backbone',
+  'views/ActivityFeedView',
   'views/MapTrailCardView',
-  'views/MapTrailEventCardView'  
-], function(_, Backbone, MapTrailCardView, MapTrailEventCardView){
+  'views/MapTrailEventCardView'    
+], function(_, Backbone, ActivityFeedView, MapTrailCardView, MapTrailEventCardView){
 
   var MAP_STREET_VIEW = 0;
   var MAP_SAT_VIEW = 1;
@@ -17,6 +15,12 @@ define([
     	
       app.dispatcher.on("MapTrailCardView:markerclick", self.onTrailCardViewMarkerClick, this);
       app.dispatcher.on("MapTrailCardView:cardmarkerclick", self.onTrailCardViewCardMarkerClick, this);
+  	  
+	  if (typeof TB_USER_ID != 'undefined') {
+      	this.activityFeedView = new ActivityFeedView({ el: '#activity_feed_view' });
+      	this.activityFeedView.render();
+      	this.activityFeedView.getActivity();	  	
+	  }
       
       this.PageSize = 50;
 	  this.nPage = 0;
@@ -135,7 +139,7 @@ define([
 
       var self = this;
             
-	  this.markerCluster = new L.MarkerClusterGroup({ showCoverageOnHover: false,
+	  this.markerCluster = new L.MarkerClusterGroup({ showCoverageOnHover: false, 
     	iconCreateFunction: function(cluster) {
     	  var nSize = 40;
     	  var strClass = 'tb-map-marker small';
@@ -202,11 +206,19 @@ define([
 	  	
 	  $(this.elCntrls).show();         
 	  
+	  $('#cardsview .trail_card_panel .link').click(function(evt){
+	  	window.location = $(this).attr('data-url');	  	
+	    // save
+	    $.cookie('route_id', $(this).attr('data-id'));	  	  	
+	  });	  
+	  
 	  // do we have a route to select?
 	  var nRouteID = $.cookie('route_id');
 	  if (nRouteID != undefined) {
 	  	var model = this.collection.get(nRouteID);
 	  	this.trailCardSelectMarker(model.mapTrailCardView);
+	  	// remove
+	  	$.removeCookie('route_id');
 	  }   	        
     },
     trailCardSelectMarker: function(trailCardView){	  
@@ -240,9 +252,6 @@ define([
 	  $('.panel[data-id='+trailCardView.model.cid+']').addClass('selected');
 	  
 	  this.currTrailCardView = trailCardView;      	    
-	  // save
-	  $.cookie('route_id', trailCardView.model.id);	  
-
 	},    
     onTrailCardViewCardMarkerClick: function(trailCardView){	  
 	  this.markerCluster.zoomToShowLayer(trailCardView.marker, function() {});
@@ -250,8 +259,8 @@ define([
     },
     onTrailCardViewMarkerClick: function(trailCardView){
       this.trailCardViewMarkerClick(trailCardView, true);    	
-    }
-    
+    }    
+       
   });
 
   return MapView;
