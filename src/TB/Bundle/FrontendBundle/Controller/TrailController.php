@@ -301,7 +301,7 @@ class TrailController extends Controller
     }
     
     /**
-     * @Route("/map/trails", name="trails")
+     * @Route("/map/trails", name="map_trails")
      * @Template()
      */    
     public function mapTrailsAction(Request $request)

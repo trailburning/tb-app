@@ -235,6 +235,13 @@ class Route implements Exportable
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
+     * @ORM\OneToMany(targetEntity="RouteLike", mappedBy="route")
+     **/
+    private $routeLikes;
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
      * @ORM\ManyToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\Attribute", inversedBy="routes")
      */
     private $attributes;
@@ -1303,5 +1310,38 @@ class Route implements Exportable
     public function getApproved()
     {
         return $this->approved;
+    }
+
+    /**
+     * Add routeLikes
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\RouteLike $routeLikes
+     * @return Route
+     */
+    public function addRouteLike(\TB\Bundle\FrontendBundle\Entity\RouteLike $routeLikes)
+    {
+        $this->routeLikes[] = $routeLikes;
+
+        return $this;
+    }
+
+    /**
+     * Remove routeLikes
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\RouteLike $routeLikes
+     */
+    public function removeRouteLike(\TB\Bundle\FrontendBundle\Entity\RouteLike $routeLikes)
+    {
+        $this->routeLikes->removeElement($routeLikes);
+    }
+
+    /**
+     * Get routeLikes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRouteLikes()
+    {
+        return $this->routeLikes;
     }
 }

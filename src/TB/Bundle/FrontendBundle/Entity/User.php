@@ -208,8 +208,8 @@ abstract class User extends BaseUser implements Exportable
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\Route", mappedBy="userLikes")
-     */
+     * @ORM\OneToMany(targetEntity="RouteLike", mappedBy="user")
+     **/
     private $routeLikes;
     
     /**
