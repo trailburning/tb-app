@@ -194,8 +194,8 @@ h4.tb {
 }
 
 .tb-cntrl {
-  width: 54px;
-  height: 54px;
+  width: 52px;
+  height: 52px;
   box-shadow: 1px 1px 1px #888888;
   background: #FFF;
   border-radius: 50%;
@@ -204,6 +204,10 @@ h4.tb {
 
 .tb-cntrl.icon-cards {
   background-image: url("../icons/buttons/cards.gif");
+}
+
+.tb-cntrl.icon-map {
+  background-image: url("../icons/buttons/map.gif");
 }
 
 .tb-avatar .icon {
