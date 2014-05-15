@@ -7,6 +7,8 @@ define([
     initialize: function(){
       this.template = _.template($('#trailUploadPhotoViewTemplate').text());
       
+	  console.log('TrailUploadPhotoView');
+      
       this.photoData = null;
     },            
     render: function(){
@@ -56,6 +58,7 @@ define([
             contentType: false,
             processData: false,
             complete : function(res) {
+              console.log('complete');
               if(successFn) successFn(res);
             },
             success: function(data) {
