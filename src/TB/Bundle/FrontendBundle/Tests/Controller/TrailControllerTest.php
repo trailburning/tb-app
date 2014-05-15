@@ -125,4 +125,11 @@ class TrailControllerTest extends AbstractFrontendTest
 
         $crawler = $client->request('GET', '/trails');
     }
+    
+    public function testMapTrails()
+    {
+        $client = static::createClient();
+
+        $crawler = $client->request('GET', '/map/trails');
+    }
 }
