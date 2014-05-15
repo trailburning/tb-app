@@ -41,16 +41,17 @@ define([
           var formData = new FormData();
       	  var arrFiles = $('input[type="file"]', this)[0].files;
       	  // multi upload?
-      	  if (arrFiles.length > 1) {
-      	  	self.bMultiUpload = true;
-      	  }
+//      	  if (arrFiles.length > 1) {
+//      	  	self.bMultiUpload = true;
+//      	  }
       	  // fire event
           app.dispatcher.trigger("TrailUploadPhotoView:upload", self);                
           
           // add files
-          for (var nFile=0; nFile < arrFiles.length; nFile++) {
-            formData.append('medias[]', arrFiles[nFile]);          	
-          }          
+//          for (var nFile=0; nFile < arrFiles.length; nFile++) {
+//            formData.append('medias[]', arrFiles[nFile]);          	
+//          }          
+            formData.append('medias[]', arrFiles[0]);          	
   
           $.ajax({
             url: remote,
