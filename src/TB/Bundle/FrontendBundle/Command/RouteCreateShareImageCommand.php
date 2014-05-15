@@ -8,14 +8,14 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class ActivityCreateFeedCommand extends ContainerAwareCommand
+class RouteCreateShareImageCommand extends ContainerAwareCommand
 {
     protected function configure()
     {
         $this
-            ->setName('activity:create-feed')
-            ->setDescription('Create the UserActivity feed for an Activity item')
-            ->addArgument('id', InputArgument::REQUIRED, 'The id of the Activity item')
+            ->setName('route:create-share-image')
+            ->setDescription('Create the Routes share image')
+            ->addArgument('id', InputArgument::REQUIRED, 'The id of the Route')
         ;
     }
 
@@ -24,12 +24,13 @@ class ActivityCreateFeedCommand extends ContainerAwareCommand
         $id = $input->getArgument('id');
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         
-        $activity = $em->getRepository('TBFrontendBundle:Activity')->findOneById($id);
-        if (!$activity) {
-            throw new \Exception(sprintf('Activity with id %s not found', $id));
+        $route = $em->getRepository('TBFrontendBundle:Route')->findOneById($id);
+        if (!$route) {
+            throw new \Exception(sprintf('Route with id %s not found', $id));
         }
         
-        $this->getContainer()->get('tb.activity.feed.generator')->createFeedFromActivity($activity);   
+        $imageGenerator = $this->getContainer()->get('tb.image.generator');   
+        $imageGenerator->createRouteShareImage($route);
 
         $output->writeln('OK');
     }

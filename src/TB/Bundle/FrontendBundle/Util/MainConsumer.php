@@ -87,6 +87,9 @@ class MainConsumer extends Consumer
             case 'activity':
                 $isSuccess = $this->callCommand(sprintf('activity:create-feed %s', $obj->id));
                 break;
+            case 'routeShareImage':
+                $isSuccess = $this->callCommand(sprintf('activity:create-feed %s', $obj->id));
+                break;
             default:
                 $isSuccess = false;
                 break;
