@@ -225,7 +225,7 @@ var TB_USER_ID = {{ app.user.id }}
             <i class="glyphicon glyphicon-plus"></i>
             <span>Add Pictures</span>
             <!-- The file input field used as target for the file upload widget -->
-            <input type="file" id="photofileupload" name="medias[]">
+            <input type="file" id="photofileupload" name="medias[]" multiple="multiple">
         </span>
     </form>        
 </script>
@@ -234,9 +234,9 @@ var TB_USER_ID = {{ app.user.id }}
     <div class="panel_content">
         <div class="panel">
             <div class="content">      
-                <h1 class="tb">Upload Photo</h1>
+                <h1 class="tb">Upload Photos</h1>
                 <div class="desc">
-                    <h4 class="tb">Now adding photo...</h4>
+                    <h4 class="tb msg" data-singular="Now adding photo..." data-plural="Now adding photos...">Now adding photo...</h4>
                 </div>        
                 <div class="progress_container">
                     <div class="progressbar"></div>  
@@ -255,7 +255,7 @@ var TB_USER_ID = {{ app.user.id }}
 
 <script type="text/template" id="slideshowSlideViewTemplate">
   <div class="photo">
-  	<div class="image_container fade_on_load"><img src="http://app.resrc.it/O=80/http://s3-eu-west-1.amazonaws.com/<%= versionLargePath%>" class="resrc scale"></div>
+  	<div class="image_container fade_on_load"><img data-src="http://app.resrc.it/O=80/http://s3-eu-west-1.amazonaws.com/<%= versionLargePath%>" class="resrc scale"></div>
   	<div class="star_marker"></div>
   </div>  	
 </script>
