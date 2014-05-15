@@ -66,6 +66,10 @@ define([
         	  // fire event
         	  app.dispatcher.trigger("TrailUploadPhotoView:uploaded", self);                
             },
+            error: function(data) {
+              console.log('error');
+              console.log(data);
+            }
           });
         });
       };      
