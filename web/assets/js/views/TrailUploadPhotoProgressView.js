@@ -14,11 +14,11 @@ define([
         var attribs = this.model.toJSON();
         $(this.el).html(this.template(attribs));      	
         // set upload text
-//        var elTitle = $('.msg', $(this.el));
-//        elTitle.text(elTitle.attr('data-singular'));
-//        if (this.options.bMultiUpload) {
-//          elTitle.text(elTitle.attr('data-plural'));
-//        }
+        var elTitle = $('.msg', $(this.el));
+        elTitle.text(elTitle.attr('data-singular'));
+        if (this.options.bMultiUpload) {
+          elTitle.text(elTitle.attr('data-plural'));
+        }
       }
       $('.progressbar', this.el).progressbar({value: nProgress});      
       $('.percent', this.el).html(nProgress);      

@@ -7,10 +7,12 @@ define([
     initialize: function(){
       this.template = _.template($('#trailUploadPhotoViewTemplate').text());
       
-	  console.log('TrailUploadPhotoView');
-      
       this.photoData = null;
+      this.bMultiUpload = false;
     },            
+    multiUpload: function(){
+      return this.bMultiUpload;
+    },
     render: function(){
       var self = this;
 
@@ -31,16 +33,24 @@ define([
     },    
     upload: function(){
       var self = this;
-        
-      // fire event
-      app.dispatcher.trigger("TrailUploadPhotoView:upload", this);                
                         
       var strURL = TB_RESTAPI_BASEURL + '/v1/route/'+this.model.get('id')+'/medias/add';      
         
       $.fn.upload = function(remote,successFn,progressFn) {
         return this.each(function() {    
           var formData = new FormData();
-          formData.append('medias[]', $('input[type="file"]', this)[0].files[0]);
+      	  var arrFiles = $('input[type="file"]', this)[0].files;
+      	  // multi upload?
+      	  if (arrFiles.length > 1) {
+      	  	self.bMultiUpload = true;
+      	  }
+      	  // fire event
+          app.dispatcher.trigger("TrailUploadPhotoView:upload", self);                
+          
+          // add files
+          for (var nFile=0; nFile < arrFiles.length; nFile++) {
+            formData.append('medias[]', arrFiles[nFile]);          	
+          }          
   
           $.ajax({
             url: remote,
@@ -58,13 +68,9 @@ define([
             contentType: false,
             processData: false,
             complete : function(res) {
-              console.log('complete');
               if(successFn) successFn(res);
             },
             success: function(data) {
-              console.log('success');
-              console.log(data);
-              
               self.photoData = data;
 
         	  $('#uploadPhotoprogress_view').hide();      	
@@ -73,9 +79,12 @@ define([
         	  app.dispatcher.trigger("TrailUploadPhotoView:uploaded", self);                
             },
             error: function(data) {
-              console.log('error');
-              console.log(data);
-            }
+//              console.log('error');
+        	  $('#uploadPhotoprogress_view').hide();      	
+        	  $('#uploadPhoto_view').show();
+        	  // fire event
+        	  app.dispatcher.trigger("TrailUploadPhotoView:uploaded", self);                
+			}            
           });
         });
       };      
