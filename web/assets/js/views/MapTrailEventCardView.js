@@ -3,10 +3,10 @@ define([
   'backbone'
 ], function(_, Backbone){
 
-  var TrailsTrailCardView = Backbone.View.extend({
+  var MapTrailEventCardView = Backbone.View.extend({
   	className: "panel",
     initialize: function(){
-      this.template = _.template($('#trailsTrailCardViewTemplate').text());        
+      this.template = _.template($('#mapTrailEventCardViewTemplate').text());        
                         
       this.bRendered = false;
 	  this.mapRouteMarkerView = null;
@@ -31,7 +31,7 @@ define([
           // add to map
           function onClick(e) {
 		    // fire event
-            app.dispatcher.trigger("TrailsTrailCardView:markerclick", self);                
+            app.dispatcher.trigger("MapTrailCardView:markerclick", self);                
 	      }
         
 	      this.marker = L.marker(new L.LatLng(this.model.get('centroid')[1], this.model.get('centroid')[0])).on('click', onClick);			  
@@ -46,7 +46,7 @@ define([
       
       	$('.location', this.el).click(function(evt){
 		  // fire event
-          app.dispatcher.trigger("TrailsTrailCardView:cardmarkerclick", self);                
+          app.dispatcher.trigger("MapTrailCardView:cardmarkerclick", self);                
       	});
       	
       
@@ -79,5 +79,5 @@ define([
 
   });
 
-  return TrailsTrailCardView;
+  return MapTrailEventCardView;
 });

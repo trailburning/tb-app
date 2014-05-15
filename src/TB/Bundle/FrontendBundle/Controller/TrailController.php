@@ -299,4 +299,14 @@ class TrailController extends Controller
             'trails' => $trails,
         ];
     }
+    
+    /**
+     * @Route("/map/trails", name="map_trails")
+     * @Template()
+     */    
+    public function mapTrailsAction(Request $request)
+    {
+        
+        return [];
+    }
 }
