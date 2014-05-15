@@ -59,6 +59,9 @@ define([
               if(successFn) successFn(res);
             },
             success: function(data) {
+              console.log('success');
+              console.log(data);
+              
               self.photoData = data;
 
         	  $('#uploadPhotoprogress_view').hide();      	
