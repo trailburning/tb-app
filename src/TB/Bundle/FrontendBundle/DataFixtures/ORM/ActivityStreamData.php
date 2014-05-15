@@ -9,6 +9,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 use TB\Bundle\FrontendBundle\Entity\UserFollowActivity;
 use TB\Bundle\FrontendBundle\Entity\RouteLikeActivity;
+use TB\Bundle\FrontendBundle\Entity\RouteLike;
 
 class ActivityStreamData extends AbstractFixture implements FixtureInterface, DependentFixtureInterface
 {
@@ -32,8 +33,10 @@ class ActivityStreamData extends AbstractFixture implements FixtureInterface, De
         $manager->persist($activity2);
         
         // User Paul likes User matt's Route grunewald
-        $route->adduserLike($userB);
-        $manager->persist($route);
+        $routeLike = new RouteLike();        
+        $routeLike->setRoute($route);
+        $routeLike->setUser($userB);
+        $manager->persist($routeLike);
         $activity3 = new RouteLikeActivity($route, $userB);
         $manager->persist($activity3);
         

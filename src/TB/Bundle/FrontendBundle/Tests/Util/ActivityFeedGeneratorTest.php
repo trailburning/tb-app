@@ -130,8 +130,8 @@ class ActivityFeedGeneratorTest extends AbstractFrontendTest
         $route = $activity->getObject();
         $notifiedUser = $route->getUser();
         
-        $this->assertEquals(1, count($route->getUserLikes()),
-            'THe liked Route has one UserActivity');
+        $this->assertEquals(1, count($route->getRouteLikes()),
+            'The liked Route has one UserActivity');
         $activities = $route->getRouteLikeActivities();
         
         $this->assertEquals($activity->getId(), $notifiedUser->getUserActivities()[0]->getActivity()->getId(),

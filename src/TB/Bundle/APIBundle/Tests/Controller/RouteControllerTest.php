@@ -8,7 +8,7 @@ use Symfony\Component\Console\Tester\ApplicationTester;
 use Symfony\Component\Console\Output\Output;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
-
+use TB\Bundle\FrontendBundle\Entity\RouteLike;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
@@ -56,8 +56,8 @@ class RouteControllerTest extends AbstractApiTestCase
         
         // check if user is following
         $isLiking = false;
-        foreach ($route->getUserLikes() as $likingUser) {
-            if ($likingUser->getId() == $user->getId()) {
+        foreach ($route->getRouteLikes() as $routeLike) {
+            if ($routeLike->getUserId() == $user->getId()) {
                 $isLiking = true;
                 break;
             }
@@ -150,9 +150,11 @@ class RouteControllerTest extends AbstractApiTestCase
         $this->assertJsonResponse($client);
         
         // Test route undolike
-        $route->addUserLike($user);
+        $routeLike = new RouteLike();
+        $routeLike->setRoute($route);
+        $routeLike->setUser($user);
         
-        $em->persist($route);
+        $em->persist($routeLike);
         $em->flush();
         
         $client = $this->createClient();
@@ -164,8 +166,8 @@ class RouteControllerTest extends AbstractApiTestCase
         
         // check if user is following
         $isLiking = false;
-        foreach ($route->getUserLikes() as $likingUser) {
-            if ($likingUser->getId() == $user->getId()) {
+        foreach ($route->getRouteLikes() as $routeLike) {
+            if ($routeLike->getUserId() == $user->getId()) {
                 $isLiking = true;
                 break;
             }
@@ -190,9 +192,11 @@ class RouteControllerTest extends AbstractApiTestCase
         $route = $this->getRoute('grunewald');
                 
         // create following user
-        $route->addUserLike($user);
+        $routeLike = new RouteLike();
+        $routeLike->setRoute($route);
+        $routeLike->setUser($user);
         
-        $em->persist($route);
+        $em->persist($routeLike);
         $em->flush();
         
         // set flag to false

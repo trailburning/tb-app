@@ -3,11 +3,12 @@
 namespace TB\Bundle\FrontendBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * RouteLike
  *
- * @ORM\Table(name="route_like")
+ * @ORM\Table(name="route_likes")
  * @ORM\Entity
  */
 class RouteLike
@@ -16,23 +17,26 @@ class RouteLike
     /**
      * @var integer
      *
-     * @ORM\Column(name="route_id", type="integer")
      * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\Column(name="route_id", type="integer")
      */
     private $routeId;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="user_id", type="integer")
      * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\Column(name="user_id", type="integer")
      */
     private $userId;
 
     /**
-     * @var \DateTime
+     * @var datetime
      *
-     * @ORM\Column(name="date", type="date")
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(name="registered_at", type="datetime")
      */
     private $date;
 
@@ -55,7 +59,6 @@ class RouteLike
      * })
      */
     private $user;
-
 
     /**
      * Set routeId
@@ -135,7 +138,8 @@ class RouteLike
     public function setRoute(\TB\Bundle\FrontendBundle\Entity\Route $route = null)
     {
         $this->route = $route;
-
+        $this->setRouteId($route->getId());
+        
         return $this;
     }
 
@@ -158,6 +162,7 @@ class RouteLike
     public function setUser(\TB\Bundle\FrontendBundle\Entity\User $user = null)
     {
         $this->user = $user;
+        $this->setUserId($user->getId());
 
         return $this;
     }

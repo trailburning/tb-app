@@ -1,10 +1,11 @@
 <?php 
 
-namespace TB\Bundle\FrontendBundle\Tests\Entity;
+namespace TB\Bundle\FrontendBundle\Twig\Entity;
 
 use TB\Bundle\FrontendBundle\Tests\AbstractFrontendTest;
 use TB\Bundle\FrontendBundle\Util\MediaImporter;
 use CrEOF\Spatial\PHP\Types\Geometry\Point;
+use TB\Bundle\FrontendBundle\Entity\RouteLike;
 
 class TBExtensionTest extends AbstractFrontendTest
 {
@@ -87,9 +88,13 @@ class TBExtensionTest extends AbstractFrontendTest
         
         $this->assertFalse($this->extension->routeHasUserLike($route, $user), 'route is not liked by user');
         
-        $route->adduserLike($user);
-        $em->persist($route);
+        $routeLike = new RouteLike();
+        $routeLike->setUser($user);
+        $routeLike->setRoute($route);
+        
+        $em->persist($routeLike);
         $em->flush();
+        $em->refresh($route);
         
         $this->assertTrue($this->extension->routeHasUserLike($route, $user), 'route is not liked by user');
     }
