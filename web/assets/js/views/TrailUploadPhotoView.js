@@ -39,7 +39,7 @@ define([
       $.fn.upload = function(remote,successFn,progressFn) {
         return this.each(function() {    
           var formData = new FormData();
-      	  var arrFiles = $('input[type="file"]', this)[0].files;
+//      	  var arrFiles = $('input[type="file"]', this)[0].files;
       	  // multi upload?
 //      	  if (arrFiles.length > 1) {
 //      	  	self.bMultiUpload = true;
@@ -51,7 +51,8 @@ define([
 //          for (var nFile=0; nFile < arrFiles.length; nFile++) {
 //            formData.append('medias[]', arrFiles[nFile]);          	
 //          }          
-            formData.append('medias[]', arrFiles[0]);          	
+//            formData.append('medias[]', arrFiles[0]);          	
+          formData.append('medias[]', $('input[type="file"]', this)[0].files[0]);          	
   
           $.ajax({
             url: remote,
