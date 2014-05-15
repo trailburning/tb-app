@@ -207,7 +207,8 @@ define([
       $('#tb-content-overlay').show();      
       $('#tb-overlay-view').show();
       this.overlayView.render();      
-      this.trailUploadPhotoProgressView = new TrailUploadPhotoProgressView({ el: '#overlayContent_view', model: this.model, bMultiUpload: trailUploadPhotoView.multiUpload() });
+//      this.trailUploadPhotoProgressView = new TrailUploadPhotoProgressView({ el: '#overlayContent_view', model: this.model, bMultiUpload: trailUploadPhotoView.multiUpload() });
+      this.trailUploadPhotoProgressView = new TrailUploadPhotoProgressView({ el: '#overlayContent_view', model: this.model });
       this.trailUploadPhotoProgressView.render();
     },
     onTrailUploadPhotoViewUploaded: function(trailUploadPhotoView){
