@@ -244,6 +244,13 @@ class Route implements Exportable
      * @ORM\Column(name="approved", type="boolean", options={"default" = true})
      */
     private $approved = true;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="rating", type="smallint", nullable=true)
+     */
+    private $rating;    
 
     /**
      * Set name
