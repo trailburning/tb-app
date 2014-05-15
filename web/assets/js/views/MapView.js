@@ -1,11 +1,10 @@
-//TB_RESTAPI_BASEURL = 'http://localhost:8888/trailburning_api';
-TB_RESTAPI_BASEURL = 'http://www.trailburning.com/api';
-
 define([
   'underscore', 
   'backbone',
-  'views/TrailsTrailCardView'  
-], function(_, Backbone, TrailsTrailCardView){
+  'views/ActivityFeedView',
+  'views/MapTrailCardView',
+  'views/MapTrailEventCardView'    
+], function(_, Backbone, ActivityFeedView, MapTrailCardView, MapTrailEventCardView){
 
   var MAP_STREET_VIEW = 0;
   var MAP_SAT_VIEW = 1;
@@ -14,8 +13,14 @@ define([
     initialize: function(){
       var self = this;
     	
-      app.dispatcher.on("TrailsTrailCardView:markerclick", self.onTrailCardViewMarkerClick, this);
-      app.dispatcher.on("TrailsTrailCardView:cardmarkerclick", self.onTrailCardViewCardMarkerClick, this);
+      app.dispatcher.on("MapTrailCardView:markerclick", self.onTrailCardViewMarkerClick, this);
+      app.dispatcher.on("MapTrailCardView:cardmarkerclick", self.onTrailCardViewCardMarkerClick, this);
+  	  
+	  if (typeof TB_USER_ID != 'undefined') {
+      	this.activityFeedView = new ActivityFeedView({ el: '#activity_feed_view' });
+      	this.activityFeedView.render();
+      	this.activityFeedView.getActivity();	  	
+	  }
       
       this.PageSize = 50;
 	  this.nPage = 0;
@@ -134,7 +139,7 @@ define([
 
       var self = this;
             
-	  this.markerCluster = new L.MarkerClusterGroup({ showCoverageOnHover: false,
+	  this.markerCluster = new L.MarkerClusterGroup({ showCoverageOnHover: false, 
     	iconCreateFunction: function(cluster) {
     	  var nSize = 40;
     	  var strClass = 'tb-map-marker small';
@@ -150,25 +155,77 @@ define([
     	}
 	  });
       
-      var model;
+      var model, cardViewModel, bEvent;
       $.each(data.value.routes, function(key, card) {      	    	
-	    model = new Backbone.Model(card);	          
-	    self.collection.add(model);
-	          			  
-	    trailsTrailCardView = new TrailsTrailCardView({ model: model, map: self.map, mapCluster: self.markerCluster});
-    	$('#trailCards').append(trailsTrailCardView.render().el);      	  				  
+      	bEvent = false;
+	    model = new Backbone.Model(card);	    
+	    
+	    // mla - switch based on route
+	    switch (model.get('slug')) {
+	      case '16km':
+	        case '30km':
+	        case '46km':
+	          bEvent = true;	          	
+	          model.set('eventURL', 'ultraks');
+	          break;	          	  
+	        case 'e16':
+	        case 'e51':
+	        case 'e101':
+	          bEvent = true;	          	
+	          model.set('eventURL', 'eiger');
+	          break;	          	  
+	        case 'ttm':
+	          bEvent = true;	          	
+	          model.set('eventURL', 'tfor');
+	          break;	          	  
+	        case 'marathon':
+	          bEvent = true;	          	
+	          model.set('eventURL', 'aom');
+	          break;	          	  
+	        case 'ultramarathon':
+	          bEvent = true;	          	
+	          model.set('eventURL', 'laugavegur');
+	          break;	          	  
+	    }
+        if (bEvent) {
+          mapTrailCardView = new MapTrailEventCardView({ model: model, map: self.map, mapCluster: self.markerCluster });
+        }
+        else {
+          mapTrailCardView = new MapTrailCardView({ model: model, map: self.map, mapCluster: self.markerCluster });
+        }	          
+    	$('#trailCards').append(mapTrailCardView.render().el);   
+    	
+    	cardViewModel = new Backbone.Model();
+    	cardViewModel.id = model.id;
+    	cardViewModel.mapTrailCardView = mapTrailCardView; 
+    	self.collection.add(cardViewModel);   	  				  
       });       
 	  this.map.addLayer(this.markerCluster);
 	  this.map.fitBounds(this.markerCluster.getBounds());
 //	  this.map.setMaxBounds(this.markerCluster.getBounds());
 	  	
-	  $(this.elCntrls).show();            	        
+	  $(this.elCntrls).show();         
+	  
+	  $('#cardsview .trail_card_panel .link').click(function(evt){
+	  	window.location = $(this).attr('data-url');	  	
+	    // save
+	    $.cookie('route_id', $(this).attr('data-id'));	  	  	
+	  });	  
+	  
+	  // do we have a route to select?
+	  var nRouteID = $.cookie('route_id');
+	  if (nRouteID != undefined) {
+	  	var model = this.collection.get(nRouteID);
+	  	this.trailCardSelectMarker(model.mapTrailCardView);
+	  	// remove
+	  	$.removeCookie('route_id');
+	  }   	        
     },
-    onTrailCardViewCardMarkerClick: function(trailCardView){	  
-	  this.markerCluster.zoomToShowLayer(trailCardView.marker, function() { console.log('z'); });
-      this.onTrailCardViewMarkerClick(trailCardView);      
-    },
-    onTrailCardViewMarkerClick: function(trailCardView){
+    trailCardSelectMarker: function(trailCardView){	  
+	  this.markerCluster.zoomToShowLayer(trailCardView.marker, function() {});
+	  this.trailCardViewMarkerClick(trailCardView, false);
+	},    
+    trailCardViewMarkerClick: function(trailCardView, bScroll){	  
       if (this.currTrailCardView) {
       	this.currTrailCardView.selected(false);
       }    	
@@ -185,13 +242,25 @@ define([
 	  	nDuration = 3000;
 	  }
 
-	  $('#cardsview').animate({scrollTop:nY}, nDuration);        
+	  if (bScroll) {
+	    $('#cardsview').animate({scrollTop:nY}, nDuration);        	  	
+	  }
+	  else {
+	  	$('#cardsview').scrollTop(nY);
+	  }
 	  $('.panel').removeClass('selected');
 	  $('.panel[data-id='+trailCardView.model.cid+']').addClass('selected');
 	  
-	  this.currTrailCardView = trailCardView;      	        
-    }
-    
+	  this.currTrailCardView = trailCardView;      	    
+	},    
+    onTrailCardViewCardMarkerClick: function(trailCardView){	  
+	  this.markerCluster.zoomToShowLayer(trailCardView.marker, function() {});
+      this.onTrailCardViewMarkerClick(trailCardView);      
+    },
+    onTrailCardViewMarkerClick: function(trailCardView){
+      this.trailCardViewMarkerClick(trailCardView, true);    	
+    }    
+       
   });
 
   return MapView;
