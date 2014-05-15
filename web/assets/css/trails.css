@@ -11,6 +11,7 @@ border-width:1px;
 /******************************************/
 .trails_content {
   margin-top: 63px;
+  position: relative;
 }
 
 .trails_content .content {
@@ -41,6 +42,14 @@ border-width:1px;
 .tb-loader {
   top: 0px;
   margin-top: 0px;
+}
+
+/* VIEW CNTRLS */
+/******************************************/
+#view_btns {
+  position: absolute;
+  top: 22px;
+  right: 22px;
 }
 
 /* RESPONSIVE */
