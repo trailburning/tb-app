@@ -234,7 +234,7 @@ class Media implements Exportable
             throw new \Exception('The Route must be persisted before uploading a file');
         }
         
-        if (filesize($this->file->getPathname()) < 11 || exif_imagetype($this->file->getPathname()) != 2) {
+        if (exif_imagetype($this->file->getPathname()) != 2) {
             throw new \Exception('Only JPEG files are supported');
         }
         
