@@ -16,6 +16,11 @@ define([
 
       if (!this.bRendered) {
       	if (this.model) {
+      	  // mla - all avatar urls should be http based
+      	  if (this.model.get('user').avatar.substr(0, 4) != 'http') {
+      	    this.model.get('user').avatar = 'http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/default/' + this.model.get('user').avatar;
+      	  }
+      		
           var versions = this.model.get('media').versions;
       	  this.model.set('versionLargePath', versions[0].path);
 		  if (this.model.get('category') == undefined) {

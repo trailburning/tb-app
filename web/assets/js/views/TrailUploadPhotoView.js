@@ -18,16 +18,12 @@ define([
 
       var attribs = this.model.toJSON();
       $(this.el).html(this.template(attribs));
-      
-      $('#photofileupload').change(function(){
+
+      $('#photofileupload').change(function(evt){
         $('#uploadPhoto_view').hide();
         $('#uploadPhotoprogress_view').show();      	
         self.upload();
       }); 
-      
-      $(".upload", $('#uploadPhotoForm')).on('click', function () {
-        self.upload();      
-      });
             
       return this;
     },    
@@ -40,6 +36,7 @@ define([
         return this.each(function() {    
           var formData = new FormData();
       	  var arrFiles = $('input[type="file"]', this)[0].files;
+      	  
       	  // multi upload?
       	  if (arrFiles.length > 1) {
       	  	self.bMultiUpload = true;

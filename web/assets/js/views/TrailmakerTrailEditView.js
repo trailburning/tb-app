@@ -212,7 +212,10 @@ define([
     },
     onTrailUploadPhotoViewUploaded: function(trailUploadPhotoView){
       $('#tb-content-overlay').hide();      
-      $('#tb-overlay-view').hide();
+      $('#tb-overlay-view').hide();      
+      // render again to re-attach change event
+      this.trailUploadPhotoView.render();
+            
       // fire event
       app.dispatcher.trigger("TrailEditView:photouploaded", trailUploadPhotoView);
     },
