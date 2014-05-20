@@ -13,7 +13,7 @@ class ActivityCreateFeedCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('activity:create-feed')
+            ->setName('tb:activity:create-feed')
             ->setDescription('Create the UserActivity feed for an Activity item')
             ->addArgument('id', InputArgument::REQUIRED, 'The id of the Activity item')
         ;

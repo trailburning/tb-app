@@ -13,7 +13,7 @@ class RouteCreateShareImageCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('route:create-share-image')
+            ->setName('tb:route:create-share-image')
             ->setDescription('Create the Routes share image')
             ->addArgument('id', InputArgument::REQUIRED, 'The id of the Route')
         ;
