@@ -20,10 +20,16 @@ class RoutePublishListener
     }
     
     /**
-     * Send a message to RabbitMQ to create a Facebook share image
+     * Send a message to RabbitMQ to create a Facebook share image,
+     * set the published date to the route
      */ 
     public function onRoutePublish(RoutePublishEvent $event)
     {   
+        $route = $event->getRoute();
+        $route->setPublishedDate(new \DateTime("now"));
+        $this->em->persist($route);
+        $this->em->flush();
+        
         $message = [
             'type' => 'routeShareImage',
             'id' => $event->getRoute()->getId(),
