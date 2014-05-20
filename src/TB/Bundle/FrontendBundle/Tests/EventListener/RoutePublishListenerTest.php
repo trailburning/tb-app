@@ -10,7 +10,7 @@ use TB\Bundle\FrontendBundle\Event\RouteLikeEvent;
 use TB\Bundle\FrontendBundle\Event\RouteUndoLikeEvent;
 use FOS\UserBundle\Event\FilterUserResponseEvent;
 
-class RouteListenerTest extends AbstractFrontendTest
+class RoutePublishListenerTest extends AbstractFrontendTest
 {
 
     /**
@@ -34,14 +34,17 @@ class RouteListenerTest extends AbstractFrontendTest
         ]);
             
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        
         $route= $this->getRoute('grunewald');
+        // The published date is null bofore RoutePublishEvent
+        $route->setPublishedDate(null);
         
         //  get the event dispatcher and dispathe the tb.route_publish manually
         $dispatcher = $this->getContainer()->get('event_dispatcher');
         $event = new RoutePublishEvent($route, $route->getUser());
         $dispatcher->dispatch('tb.route_publish', $event);
         
+        $em->refresh($route);
+        $this->assertNotNull($route->getPublishedDate());
     }
     
     /**

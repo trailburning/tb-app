@@ -395,7 +395,7 @@ class Postgis extends \PDO
                   LEFT JOIN medias m ON r.media_id=m.id
                   WHERE r.publish = true AND approved = true
                   GROUP BY r.id, rt.id, rc.id , u.id, m.id
-                  ORDER BY r.id DESC
+                  ORDER BY r.published_date DESC
                   LIMIT :limit OFFSET :offset';
             $pq = $this->prepare($q);
             $pq->bindParam('limit', $limit, \PDO::PARAM_INT);
