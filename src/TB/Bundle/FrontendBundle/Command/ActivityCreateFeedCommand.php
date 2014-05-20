@@ -13,7 +13,7 @@ class ActivityCreateFeedCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('activity:create-feed')
+            ->setName('tb:activity:create-feed')
             ->setDescription('Create the UserActivity feed for an Activity item')
             ->addArgument('id', InputArgument::REQUIRED, 'The id of the Activity item')
         ;
@@ -25,11 +25,11 @@ class ActivityCreateFeedCommand extends ContainerAwareCommand
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         
         $activity = $em->getRepository('TBFrontendBundle:Activity')->findOneById($id);
-        if ($activity) {
-            $this->getContainer()->get('tb.activity.feed.generator')->createFeedFromActivity($activity);   
-        } else {
+        if (!$activity) {
             throw new \Exception(sprintf('Activity with id %s not found', $id));
         }
+        
+        $this->getContainer()->get('tb.activity.feed.generator')->createFeedFromActivity($activity);   
 
         $output->writeln('OK');
     }

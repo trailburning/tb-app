@@ -19,8 +19,6 @@ class ActivityFeedGenerator
     
     protected $em;
     
-    protected $serializer;
-    
     public function __construct(EntityManager $em)
     {
         $this->em = $em;

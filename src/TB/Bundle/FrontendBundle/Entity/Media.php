@@ -18,6 +18,10 @@ use TB\Bundle\FrontendBundle\Util\MediaImporter;
  */
 class Media implements Exportable
 {
+    
+    const BUCKET_NAME = 'trailburning-media';
+    const S3_SERVER = 'http://s3-eu-west-1.amazonaws.com/';
+    
     /**
      * @var integer
      *
@@ -47,6 +51,13 @@ class Media implements Exportable
      * @ORM\Column(name="path", type="string", length=100)
      */
     private $path;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="share_path", type="string", length=100, nullable=true)
+     */
+    private $sharePath;
     
     /**
      * @var string
@@ -200,8 +211,6 @@ class Media implements Exportable
         }
         
         $adapter->write($filename, file_get_contents($this->file->getPathname()));
-        // Add the S3 Bucket name to the filename, this should not be part of the path, fix when possible
-        $filename = 'trailburning-media' . $filename;
         
         $this->setPath($filename);
         $this->setFilename($this->file->getClientOriginalName());
@@ -234,7 +243,7 @@ class Media implements Exportable
             throw new \Exception('The Route must be persisted before uploading a file');
         }
         
-        if (filesize($this->file->getPathname()) < 11 || exif_imagetype($this->file->getPathname()) != 2) {
+        if (exif_imagetype($this->file->getPathname()) != 2) {
             throw new \Exception('Only JPEG files are supported');
         }
         
@@ -359,7 +368,8 @@ class Media implements Exportable
      */
     public function getPath()
     {
-        return $this->path;
+        // Strip the bucket name from the path that was stored in the DB for some files
+        return str_replace(self::BUCKET_NAME, '', $this->path);
     }
 
     /**
@@ -392,7 +402,7 @@ class Media implements Exportable
             'filename' => $this->getFilename(),
             'mimetype' => 'image/jpeg',
             'versions' => [[
-                'path' => $this->getPath(),
+                'path' => self::BUCKET_NAME . $this->getPath(),
                 'size' => 0,
             ]],
             'coords' => [
@@ -414,9 +424,60 @@ class Media implements Exportable
     public function getAbsolutePath()
     {
         if ($this->getPath() != '') {
-            return sprintf('http://s3-eu-west-1.amazonaws.com/%s', $this->getPath());
+            return sprintf('%s%s%s', self::S3_SERVER, self::BUCKET_NAME, $this->getPath());
         } else {
             throw new \Exception('Missing path for media');
         }
+    }
+
+    /**
+     * Set sharePath
+     *
+     * @param string $sharePath
+     * @return Media
+     */
+    public function setSharePath($sharePath)
+    {
+        $this->sharePath = $sharePath;
+
+        return $this;
+    }
+
+    /**
+     * Get sharePath
+     *
+     * @return string 
+     */
+    public function getSharePath()
+    {
+        return $this->sharePath;
+    }
+
+    /**
+     * Constructs the absolute path to the share media file at Amazon S3
+     *
+     * @return The absolute path to the media file
+     * @throws Exception when the path field, that is needed to construct the path, is not set 
+     */
+    public function getAbsoluteSharePath()
+    {
+        if ($this->getPath() != '') {
+            return sprintf('%s%s%s', self::S3_SERVER, self::BUCKET_NAME, $this->getPath());
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Set routeId
+     *
+     * @param integer $routeId
+     * @return Media
+     */
+    public function setRouteId($routeId)
+    {
+        $this->routeId = $routeId;
+
+        return $this;
     }
 }

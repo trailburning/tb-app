@@ -3,7 +3,6 @@
 {% block title %}My Profile{% endblock %}
 
 {% block stylesheets %}
-<link href="{{ asset('assets/css/common_cards.css') }}" rel="stylesheet" type="text/css">
 <link href="{{ asset('assets/css/user.css') }}" rel="stylesheet" type="text/css">
 {% endblock %}
 
@@ -44,7 +43,7 @@ var TB_USER_LAT = {{ user.location.latitude }};
     	</div>
 
     	<div class="mytrails_content fixed_content">    	
-	  	  <div class="panels clearfix">
+	  	  <div class="trailcards panels clearfix">
 	  	  	
 	   	    <div class="panel trail_card trail_card_panel">
 		      <div class="title"><h3 class="tb">New Trail</h3></div>
@@ -142,7 +141,7 @@ var TB_USER_LAT = {{ user.location.latitude }};
 	    {% if user.id == 2 %}
       		<h2 class="tb">Trails I Like</h2>
       		<div class="desc"><h4 class="tb">Discover my favourite Trails from the Trailburning Community</h4></div>      
-		  	<div class="panels">  	
+		  	<div class="trailcards panels">  	
 			  <div class="trail_card_sticker">
 				<div class="panel trail_card trail_card_panel">
 				  <div class="title"><h3 class="tb">Mountains</h3></div>
@@ -233,7 +232,7 @@ var TB_USER_LAT = {{ user.location.latitude }};
 		{% else %}    	
       		<h2 class="tb">Trails I Like</h2>
       		<div class="desc"><h4 class="tb">Discover my favourite Trails from the Trailburning Community</h4></div>      
-		  	<div class="panels">  	
+		  	<div class="trailcards panels">  	
 			  <div class="trail_card_sticker">
 				<div class="panel trail_card trail_card_panel">
 				  <div class="title"><h3 class="tb">I'm a Trail</h3></div>
@@ -256,7 +255,7 @@ var TB_USER_LAT = {{ user.location.latitude }};
 			 	</div>						 	
 			  </div>
 			</div>
-      		<div class="discover"><a href="{{ app.request.baseUrl }}/trails" class="btn btn-tb btn-tb-mega">Discover Trails</a></div>                        
+      		<div class="discover"><a href="{{ app.request.baseUrl }}/map/trails" class="btn btn-tb btn-tb-mega">Discover Trails</a></div>                        
 		{% endif %}    	
 		  </div>    		
     	</div>

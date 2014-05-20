@@ -226,6 +226,10 @@ class RouteTest extends AbstractFrontendTest
                 "avatar": "https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/mattallbeury/avatar.jpg", 
                 "name": "mattallbeury", 
                 "title": "Matt Allbeury"
+            },
+            "share_media": {
+                "mimetype": "image/jpeg", 
+                "path": "trailburning-media/d7bc334a55c629e69ace79e5b64d14a6a36bec22.jpg"
             }
         }';
         
