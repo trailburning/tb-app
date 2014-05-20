@@ -20,6 +20,7 @@ class Media implements Exportable
 {
     
     const BUCKET_NAME = 'trailburning-media';
+    const S3_SERVER = 'http://s3-eu-west-1.amazonaws.com/';
     
     /**
      * @var integer
@@ -423,7 +424,7 @@ class Media implements Exportable
     public function getAbsolutePath()
     {
         if ($this->getPath() != '') {
-            return sprintf('http://s3-eu-west-1.amazonaws.com/%s/%s', self::BUCKET_NAME, $this->getPath());
+            return sprintf('%s%s%s', self::S3_SERVER, self::BUCKET_NAME, $this->getPath());
         } else {
             throw new \Exception('Missing path for media');
         }
@@ -450,6 +451,21 @@ class Media implements Exportable
     public function getSharePath()
     {
         return $this->sharePath;
+    }
+
+    /**
+     * Constructs the absolute path to the share media file at Amazon S3
+     *
+     * @return The absolute path to the media file
+     * @throws Exception when the path field, that is needed to construct the path, is not set 
+     */
+    public function getAbsoluteSharePath()
+    {
+        if ($this->getPath() != '') {
+            return sprintf('%s%s%s', self::S3_SERVER, self::BUCKET_NAME, $this->getPath());
+        } else {
+            return null;
+        }
     }
 
     /**
