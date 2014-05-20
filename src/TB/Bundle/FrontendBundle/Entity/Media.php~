@@ -6,6 +6,9 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Gaufrette\Filesystem;
+use Gaufrette\Adapter\MetadataSupporter;
+use Gaufrette\Adapter\AwsS3;
+use TB\Bundle\FrontendBundle\Util\MediaImporter;
 
 /**
  * Media
@@ -13,8 +16,11 @@ use Gaufrette\Filesystem;
  * @ORM\Table(name="medias")
  * @ORM\Entity
  */
-class Media
+class Media implements Exportable
 {
+    
+    const BUCKET_NAME = 'trailburning-media';
+    
     /**
      * @var integer
      *
@@ -48,9 +54,16 @@ class Media
     /**
      * @var string
      *
-     * @ORM\Column(name="original_name", type="string", length=100)
+     * @ORM\Column(name="share_path", type="string", length=100, nullable=true)
      */
-    private $originalName;
+    private $sharePath;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="filename", type="string", length=100)
+     */
+    private $filename;
     
     /**
      * @var integer
@@ -64,7 +77,7 @@ class Media
      *
      * @ORM\ManyToOne(targetEntity="TB\Bundle\FrontendBundle\Entity\Route", inversedBy="medias")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="route_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="route_id", referencedColumnName="id", onDelete="CASCADE")
      * })
      */
     private $route;
@@ -162,43 +175,141 @@ class Media
     
     /**
      * Move the file to the provided Filesystem
-     * Sets the filename to the path field
+     * Sets the path and filename field
      *
      * @param Filesystem $filesystem where the file gets uploaded to
      * @param Int $routeId the ID of the associated Route for the path
      * @return the name of the uploaded file
      */
-    public function upload(Filesystem $filesystem, $routeId)
+    public function upload(Filesystem $filesystem)
     {
-        // the file property can be empty if the field is not required
-        if (null === $this->getFile()) {
+        if ($this->getFile() === null) {
             throw new \Exception('file is empty');
+        }
+        
+        if ($this->getRoute() === null) {
+            throw new \Exception('Route must be set before uploading a file');
+        }
+        
+        if ($this->getRoute()->getId() == 0) {
+            throw new \Exception('The Route must be persisted before uploading a file');
         }
         
         $file = $this->getFile();
         
-        $filename = sprintf('/%s.gpx', $routeId, uniqid());
+        if (filesize($this->file->getPathname()) < 11 || exif_imagetype($this->file->getPathname()) != 2) {
+            throw new \Exception('Only JPEG files are allowed');
+        }
+        
+        $filename = sprintf('/%s/%s.%s', $this->getRoute()->getId(), sha1_file($this->file->getPathname()), $this->file->getClientOriginalExtension());
         
         $adapter = $filesystem->getAdapter();
-        // $adapter->setMetadata($filename, array('contentType' => $file->getClientMimeType())); // doesn't work with in_memory adapter
-        $adapter->write($filename, file_get_contents($file->getPathname()));
+        // Store Metadata to S3 (doesn't work in unit tests when using memory filesystem)
+        if ($adapter instanceof MetadataSupporter) {
+            $adapter->setMetadata($filename, array('ContentType' => 'image/jpeg', 'ACL' => 'public-read'));
+        }
+        
+        $adapter->write($filename, file_get_contents($this->file->getPathname()));
+        
         $this->setPath($filename);
+        $this->setFilename($this->file->getClientOriginalName());
         
         // clean up the file property as you won't need it anymore
         $this->file = null;
         
         return $filename;
     }
+    
+    /**
+     * Extract Metadata from a provided Jpeg image and sets filesize, datetime, width and height, latitude as tags 
+     * and longitude, latidute as coords
+     *
+     * @param MediaImporter $mediImporter media importer helper class
+     * @throws Excpetion when the route field is empty, the Route was not persisted before, the image field is not set
+     * @throws Excpetion No DateTime metadata is found
+     */
+    public function readMetadata(MediaImporter $mediaImporter)
+    {
+        if ($this->getFile() === null) {
+            throw new \Exception('file is empty');
+        }
+        
+        if ($this->getRoute() === null) {
+            throw new \Exception('Route must be set before uploading a file');
+        }
+        
+        if ($this->getRoute()->getId() == 0) {
+            throw new \Exception('The Route must be persisted before uploading a file');
+        }
+        
+        if (filesize($this->file->getPathname()) < 11 || exif_imagetype($this->file->getPathname()) != 2) {
+            throw new \Exception('Only JPEG files are supported');
+        }
+        
+        $tags = $this->getTags();
+        $exiftags = exif_read_data($this->file->getPathname());
+
+        if (isset($exiftags['FileSize'])) { 
+            $tags['filesize'] = $exiftags['FileSize']; 
+        }
+        
+        $geoPoint = $mediaImporter->getGeometryPointFromExif($exiftags);
+        
+        
+        if ($geoPoint) {
+            // When the image has GPS data, get the datetime from the nearest RoutePoint by GPS
+            $routePoint = $mediaImporter->getNearestRoutePointByGeoPoint($this->getRoute(), $geoPoint);
+            $datetime = $routePoint->getTags()['datetime'];
+        } else {
+            // When the image has no GPS data, get the datetime from the image
+            if (isset($exiftags['DateTimeOriginal'])) {
+                $datetime = intval(strtotime($exiftags['DateTimeOriginal']));
+            } elseif (isset($exiftags['DateTime'])) {
+                $datetime = intval(strtotime($exiftags['DateTime']));
+            } else {
+                // When the image has no datetime, get the datetimt from the first RoutePoint
+                $routePoint = $mediaImporter->getFirstRoutePoint($this->getRoute());
+                if (!isset($routePoint->getTags()['datetime'])) {
+                    throw new \Exception('Image and first RoutePoint have no datetime information');
+                }
+                $datetime = $routePoint->getTags()['datetime'];
+            }
+            // the image contains no information about the timezone where the image was taken, the routes timezone is UTC.
+            // get a timezone offset by the related Route and substract it from the datetime of the image to get a UTC datetime.
+            $timezoneOffset = $mediaImporter->getRouteTimezoneOffset($this->getRoute());
+            $datetime = $datetime - $timezoneOffset;
+        }
+        
+        $tags['datetime'] = $datetime;
+       
+        
+        if (isset($exiftags['COMPUTED']) && isset($exiftags['COMPUTED']['Width'])) {
+            $tags['width'] = $exiftags['COMPUTED']['Width']; 
+        }
+        
+        if (isset($exiftags['COMPUTED']) && isset($exiftags['COMPUTED']['Height'])) {
+            $tags['height'] = $exiftags['COMPUTED']['Height']; 
+        }    
+        
+        //get the longitude, latitude and altitude from the nearest RoutePoint by datetime
+        $routePoint = $mediaImporter->getNearestRoutePointByTime($this->getRoute(), $datetime);
+        $this->setCoords($routePoint->getCoords());
+        if (isset($routePoint->getTags()['altitude'])) {
+            $tags['altitude'] = $routePoint->getTags()['altitude'];
+        }
+        
+        $this->setTags($tags);
+    }
 
     /**
-     * Set routeId
+     * Set id
      *
      * @param integer $routeId
      * @return Media
      */
-    public function setRouteId($routeId)
+    public function setId($id)
     {
-        $this->routeId = $routeId;
+        $this->id = $id;
 
         return $this;
     }
@@ -256,6 +367,65 @@ class Media
      */
     public function getPath()
     {
-        return $this->path;
+        // Strip the bucket name from the path that was stored in the DB for some files
+        return str_replace(self::BUCKET_NAME, '', $this->path);
+    }
+
+    /**
+     * Set filename
+     *
+     * @param string $filename
+     * @return Media
+     */
+    public function setFilename($filename)
+    {
+        $this->filename = $filename;
+
+        return $this;
+    }
+
+    /**
+     * Get filename
+     *
+     * @return string 
+     */
+    public function getFilename()
+    {
+        return $this->filename;
+    }
+
+    public function export()
+    {
+        $data = [
+            'id' => $this->getId(),
+            'filename' => $this->getFilename(),
+            'mimetype' => 'image/jpeg',
+            'versions' => [[
+                'path' => self::BUCKET_NAME . $this->getPath(),
+                'size' => 0,
+            ]],
+            'coords' => [
+                'long' => $this->getCoords()->getLongitude(),
+                'lat' => $this->getCoords()->getLatitude(),
+            ],
+            'tags' => $this->getTags(),
+        ];
+        
+        return $data;
+    }
+    
+    /**
+     * Constructs the absolute path to the media file at Amazon S3
+     *
+     * @return The absolute path to the media file
+     * @throws Exception when the path field, that is needed to construct the path, is not set 
+     */
+    public function getAbsolutePath()
+    {
+        if ($this->getPath() != '') {
+            return sprintf('http://s3-eu-west-1.amazonaws.com/%s/%s', self::BUCKET_NAME, $this->getPath());
+        } else {
+            throw new \Exception('Missing path for media');
+        }
     }
 }

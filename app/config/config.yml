@@ -116,6 +116,10 @@ knp_gaufrette:
                 bucket_name:  trailburning-media
                 options:
                     create: true
+                    
+        debug:
+            local:
+                directory: %kernel.root_dir%/logs/debug_filesystem                    
                 
     filesystems:
         gpx_files:
@@ -124,7 +128,10 @@ knp_gaufrette:
         trail_media_files:
             adapter:    trail_media_files
             alias:      trail_media_files_filesystem             
-            
+        debug:
+            adapter:    debug
+            alias:      debug_filesystem      
+        
 services:
     s3_client:
         class:      %s3_client_class% 

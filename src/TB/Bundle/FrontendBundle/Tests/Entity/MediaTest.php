@@ -105,11 +105,11 @@ class MediaTest extends AbstractFrontendTest
         $media->setRoute($route);
         $filename = $media->upload($filesystem);
         
-        $this->assertTrue($filesystem->has(str_replace('trailburning-media', '', $filename)), 
+        $this->assertTrue($filesystem->has($filename), 
             'The file exists on the provided filesystem');
         $this->assertRegExp('/\/' . $route->getId() . '\/[\d\w]+\.jpg/', $filename,
             'The files path retuned by the upload() method');    
-        $this->assertRegExp('/trailburning-media\/' . $route->getId() . '\/[\d\w]+\.jpg/', $media->getPath(),
+        $this->assertRegExp('/\/' . $route->getId() . '\/[\d\w]+\.jpg/', $media->getPath(),
             'The files path on the provided filesystem was set to the media object');
         $this->assertEquals('P5250773.jpg', $media->getFilename(),
             'The files original name was set to the media objecs');
@@ -120,8 +120,7 @@ class MediaTest extends AbstractFrontendTest
         $media = new Media();
         $media->setId(1);
         $media->setFilename('file.jpg');
-        $media->setPath('path/file.jpg');
-        $media->setPath('path/file.jpg');
+        $media->setPath('/path/file.jpg');
         $media->setCoords(new Point(13.257437, 52.508006, 4326));
         $media->setTags(['key' => 'val']);
         
@@ -131,7 +130,7 @@ class MediaTest extends AbstractFrontendTest
             "mimetype":"image\/jpeg",
             "versions":[
                 {
-                    "path":"path\/file.jpg",
+                    "path":"trailburning-media\/path\/file.jpg",
                     "size":0
                 }
             ],

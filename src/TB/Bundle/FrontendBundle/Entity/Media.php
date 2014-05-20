@@ -18,6 +18,9 @@ use TB\Bundle\FrontendBundle\Util\MediaImporter;
  */
 class Media implements Exportable
 {
+    
+    const BUCKET_NAME = 'trailburning-media';
+    
     /**
      * @var integer
      *
@@ -47,6 +50,13 @@ class Media implements Exportable
      * @ORM\Column(name="path", type="string", length=100)
      */
     private $path;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="share_path", type="string", length=100, nullable=true)
+     */
+    private $sharePath;
     
     /**
      * @var string
@@ -200,8 +210,6 @@ class Media implements Exportable
         }
         
         $adapter->write($filename, file_get_contents($this->file->getPathname()));
-        // Add the S3 Bucket name to the filename, this should not be part of the path, fix when possible
-        $filename = 'trailburning-media' . $filename;
         
         $this->setPath($filename);
         $this->setFilename($this->file->getClientOriginalName());
@@ -359,7 +367,8 @@ class Media implements Exportable
      */
     public function getPath()
     {
-        return $this->path;
+        // Strip the bucket name from the path that was stored in the DB for some files
+        return str_replace(self::BUCKET_NAME, '', $this->path);
     }
 
     /**
@@ -392,7 +401,7 @@ class Media implements Exportable
             'filename' => $this->getFilename(),
             'mimetype' => 'image/jpeg',
             'versions' => [[
-                'path' => $this->getPath(),
+                'path' => self::BUCKET_NAME . $this->getPath(),
                 'size' => 0,
             ]],
             'coords' => [
@@ -414,9 +423,45 @@ class Media implements Exportable
     public function getAbsolutePath()
     {
         if ($this->getPath() != '') {
-            return sprintf('http://s3-eu-west-1.amazonaws.com/%s', $this->getPath());
+            return sprintf('http://s3-eu-west-1.amazonaws.com/%s/%s', self::BUCKET_NAME, $this->getPath());
         } else {
             throw new \Exception('Missing path for media');
         }
+    }
+
+    /**
+     * Set sharePath
+     *
+     * @param string $sharePath
+     * @return Media
+     */
+    public function setSharePath($sharePath)
+    {
+        $this->sharePath = $sharePath;
+
+        return $this;
+    }
+
+    /**
+     * Get sharePath
+     *
+     * @return string 
+     */
+    public function getSharePath()
+    {
+        return $this->sharePath;
+    }
+
+    /**
+     * Set routeId
+     *
+     * @param integer $routeId
+     * @return Media
+     */
+    public function setRouteId($routeId)
+    {
+        $this->routeId = $routeId;
+
+        return $this;
     }
 }
