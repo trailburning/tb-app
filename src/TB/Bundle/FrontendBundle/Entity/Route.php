@@ -245,6 +245,13 @@ class Route implements Exportable
      * @ORM\Column(name="approved", type="boolean", options={"default" = true})
      */
     private $approved = true;
+    
+    /**
+     * @var datetime
+     *
+     * @ORM\Column(name="published_date", type="datetime", nullable=true)
+     */
+    private $publishedDate;
 
     /**
      * Set name
@@ -951,6 +958,19 @@ class Route implements Exportable
         if ($this->media !== null) {
             $data['media'] = $this->media->export();
         }
+        
+        foreach ($this->getMedias() as $media) {
+            if ($media->getSharePath() !== null) {
+                $sharemedia = $media;
+                break;
+            }
+        }
+        if (isset($sharemedia)) {
+            $data['share_media'] = [
+                'mimetype' => 'image/jpeg',
+                'path' => Media::BUCKET_NAME . $media->getPath(),
+            ];
+        }
     
         if (count($this->getAttributes()) > 0) {
             $data['attributes'] = [];
@@ -1303,5 +1323,28 @@ class Route implements Exportable
     public function getApproved()
     {
         return $this->approved;
+    }
+
+    /**
+     * Set publishedDate
+     *
+     * @param \DateTime $publishedDate
+     * @return Route
+     */
+    public function setPublishedDate($publishedDate)
+    {
+        $this->publishedDate = $publishedDate;
+
+        return $this;
+    }
+
+    /**
+     * Get publishedDate
+     *
+     * @return \DateTime 
+     */
+    public function getPublishedDate()
+    {
+        return $this->publishedDate;
     }
 }

@@ -179,7 +179,8 @@ class Postgis extends \PDO
                      ST_AsText(m.coords) AS m_coords, 
                      m.tags AS m_tags, 
                      m.filename AS m_filename, 
-                     m.path AS m_path
+                     m.path AS m_path,
+                     m.share_path AS m_share_path
               FROM routes r
               INNER JOIN route_points rp ON r.id=rp.route_id
               LEFT JOIN route_type rt ON r.route_type_id=rt.id
@@ -218,11 +219,16 @@ class Postgis extends \PDO
                 $routeType->setName($row['rt_name']);
                 $route->setRouteType($routeType);
             }
+            $medias = $this->getRouteMedia($routeId, 1);
+            foreach ($medias as $media) {
+                $route->addMedia($media);
+            }
             if ($row['m_id'] != '') {
                 // Attach the favorite Media, if set
                 $media = new Media();
                 $media->setId($row['m_id']);
                 $media->setPath($row['m_path']);
+                $media->setSharePath($row['m_share_path']);
                 $coords = explode(" ", substr(trim($row['m_coords']), 6, -1)); 
                 $media->setCoords(new Point($coords[0], $coords[1], 4326));
                 $media->setFilename($row['m_filename']);
@@ -231,11 +237,11 @@ class Postgis extends \PDO
                 $route->setMedia($media);
             } else {
                 // Attach the first Media, if no favorite Media is set
-                $media = $this->getRouteMedia($routeId, 1);
-                if (count($media) > 0) {
-                    $route->setMedia(array_shift($media));
+                if (count($medias) > 0) {
+                    $route->setMedia(array_shift($medias));
                 }
             }
+            
             $attributes = $this->getRouteAttributes($routeId);
             foreach ($attributes as $attribute) {
                 $route->addAttribute($attribute);
@@ -389,7 +395,7 @@ class Postgis extends \PDO
                   LEFT JOIN medias m ON r.media_id=m.id
                   WHERE r.publish = true AND approved = true
                   GROUP BY r.id, rt.id, rc.id , u.id, m.id
-                  ORDER BY r.id DESC
+                  ORDER BY r.published_date DESC
                   LIMIT :limit OFFSET :offset';
             $pq = $this->prepare($q);
             $pq->bindParam('limit', $limit, \PDO::PARAM_INT);
@@ -501,7 +507,7 @@ class Postgis extends \PDO
 
     public function getRouteMedia($routeId, $count = null) 
     {
-        $q = "SELECT id, ST_AsText(m.coords) AS coords, tags, filename, path
+        $q = "SELECT id, ST_AsText(m.coords) AS coords, tags, filename, path, share_path
               FROM medias m
               WHERE m.route_id=:route_id
               ORDER BY m.tags->'datetime' ASC   
@@ -521,6 +527,7 @@ class Postgis extends \PDO
             $media = new Media();
             $media->setId($row['id']);
             $media->setPath($row['path']);
+            $media->setSharePath($row['share_path']);
             $coords = explode(" ", substr(trim($row['coords']), 6, -1)); 
             $media->setCoords(new Point($coords[0], $coords[1], 4326));
             $media->setFilename($row['filename']);

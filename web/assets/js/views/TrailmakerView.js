@@ -280,11 +280,17 @@ define([
       if (!this.validateTrailForPublish()) {
       	return;
       }
+    
+      // also update details
+      this.model.get('value').route.name = $('#form_trail_name').val();
+      this.model.get('value').route.region = $('#form_trail_region').val();
+      this.model.get('value').route.about = $('#form_trail_notes').val();
+	  this.model.get('value').route.route_category_id = $('#trail_types').find('[data-bind="label"]').attr('data-id');
     	
-      var jsonObj = {'publish':true};
+      var jsonObj = {'publish':true,'name':this.model.get('value').route.name, 'region':this.model.get('value').route.region, 'about':this.model.get('value').route.about, 'route_category_id':this.model.get('value').route.route_category_id};
       var postData = JSON.stringify(jsonObj);
       var postArray = {json:postData};
-
+      
       var strURL = TB_RESTAPI_BASEURL + '/v1/route/' + this.model.id;      
       $.ajax({
         type: "PUT",
