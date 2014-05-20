@@ -951,6 +951,19 @@ class Route implements Exportable
         if ($this->media !== null) {
             $data['media'] = $this->media->export();
         }
+        
+        foreach ($this->getMedias() as $media) {
+            if ($media->getSharePath() !== null) {
+                $sharemedia = $media;
+                break;
+            }
+        }
+        if (isset($sharemedia)) {
+            $data['share_media'] = [
+                'mimetype' => 'image/jpeg',
+                'path' => Media::BUCKET_NAME . $media->getPath(),
+            ];
+        }
     
         if (count($this->getAttributes()) > 0) {
             $data['attributes'] = [];
