@@ -39,6 +39,8 @@ define([
           $('.fade_on_load', $(self.el)).addClass('tb-fade-in');
           $('.image_container', $(self.el)).css('opacity', 1);
         });
+	    // invoke resrc      
+        resrc.resrc($('.scale', $(this.el)));                
 
 		// store id for reference	    
 	    $(this.el).attr("data-id", this.model.id);

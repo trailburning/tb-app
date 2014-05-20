@@ -206,14 +206,16 @@ define([
     onTrailUploadPhotoViewUpload: function(trailUploadPhotoView){
       $('#tb-content-overlay').show();      
       $('#tb-overlay-view').show();
-      this.overlayView.render();
-      
-      this.trailUploadPhotoProgressView = new TrailUploadPhotoProgressView({ el: '#overlayContent_view', model: this.model });
+      this.overlayView.render();      
+      this.trailUploadPhotoProgressView = new TrailUploadPhotoProgressView({ el: '#overlayContent_view', model: this.model, bMultiUpload: trailUploadPhotoView.multiUpload() });
       this.trailUploadPhotoProgressView.render();
     },
     onTrailUploadPhotoViewUploaded: function(trailUploadPhotoView){
       $('#tb-content-overlay').hide();      
-      $('#tb-overlay-view').hide();
+      $('#tb-overlay-view').hide();      
+      // render again to re-attach change event
+      this.trailUploadPhotoView.render();
+            
       // fire event
       app.dispatcher.trigger("TrailEditView:photouploaded", trailUploadPhotoView);
     },
@@ -267,12 +269,12 @@ define([
         url: strURL,
         data: postArray,
         error: function(data) {
-          console.log('error:'+data.responseText);      
-          console.log(data);      
+//          console.log('error:'+data.responseText);      
+//          console.log(data);      
         },
         success: function(data) {      
-          console.log('success');
-          console.log(data);
+//          console.log('success');
+//          console.log(data);
         }
       });        
     },    

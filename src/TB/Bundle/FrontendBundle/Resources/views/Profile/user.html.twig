@@ -3,7 +3,6 @@
 {% block title %}{{ user.title }}{% endblock %}
 
 {% block stylesheets %}
-<link href="{{ asset('assets/css/common_cards.css') }}" rel="stylesheet" type="text/css">
 <link href="{{ asset('assets/css/user.css') }}" rel="stylesheet" type="text/css">
 {% endblock %}
 
@@ -44,7 +43,7 @@ var TB_USER_LAT = {{ user.location.latitude }};
 
     	<div class="mytrails_content fixed_content">    		
           {% if routes %}
-	  		<div class="panels clearfix">
+	  		<div class="trailcards panels clearfix">
 			  {% for route in routes %}
 	   	      <div class="panel trail_card trail_card_panel">
 		        <div class="title"><h3 class="tb">{{ route.category.name}}</h3></div>
@@ -95,7 +94,7 @@ var TB_USER_LAT = {{ user.location.latitude }};
 			<div class="panel profile_detail_panel">
 			  <div class="content">
 				<div class="title">About Me</div>
-		        <h1>{{ user.about }}</h1>
+		        <h1>{{ user.about|nl2br }}</h1>
 			  </div>
 			</div>
     	
@@ -109,7 +108,7 @@ var TB_USER_LAT = {{ user.location.latitude }};
   		  <div class="fixed_content">
       		<h2 class="tb">Trails I Like</h2>
       		<div class="desc"><h4 class="tb">Discover my favourite Trails from the Trailburning Community</h4></div>      
-		  	<div class="panels">  	
+		  	<div class="trailcards panels">  	
 			  <div class="trail_card_sticker">
 				<div class="panel trail_card trail_card_panel">
 				  <div class="title"><h3 class="tb">Mountains</h3></div>
