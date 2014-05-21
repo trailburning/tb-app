@@ -125,6 +125,10 @@ border-width:1px;
   position: relative;
 }
 
+.trailcards .panel {
+  float: left;
+}
+
 .mytrails_content .draft {
   position: absolute;
   top: -1px;

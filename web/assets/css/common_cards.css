@@ -1,26 +1,32 @@
 /* TRAIL CARD */
 /******************************************/
-.trail_card {
+.trailcards .panel {
+  display: inline-block;
+  float: none;
   text-align: left;
   vertical-align: top;
   width: 260px;
   margin: 11px 11px 11px 11px;
   line-height: 1em;
   color: #FFFFFF;
-  overflow: visible;
 }  
 
-.trail_card .summary {  
+.trailcards .panel .summary {  
   font-size: 16px;
   font-weight: 300;
   color: #666666;
 }
 
-.trail_card .summary strong {
+.trailcards .panel .summary .tb-avatar {
+  float: left;
+  margin-top: 5px;
+}
+
+.trailcards .panel .summary strong {
   font-weight: 700;
 }
 
-.trail_card .image_container {
+.trailcards .panel .image_container {
   position: relative;
   opacity: 0;
   width: 100%;
@@ -214,20 +220,22 @@
 
 .trail_card_panel .photo .card_title {
   position: absolute;
-  bottom: 14px;
-  left: 14px;
+  margin: 0px 15px 0px 0px;
+  bottom: 10px;
+  left: 19px;
   color: #FFFFFF;
 }
 
 .trail_card_panel .photo .card_title h1 {
-  display: inline-block;
-  margin: 8px 0px 0px 0px;
-  padding: 5px 10px 5px 5px;
+  margin: 0px;
+  padding: 2px 0px 2px 0px;
+  display: inline;
   font-weight: 400;
   font-size: 26px;
-  line-height: 1em;  
+  line-height: 1.7em;    
   background-color: #000;  
   background: rgba(0, 0, 0, 0.6);  
+  box-shadow: 10px 0 0 rgba(0, 0, 0, 0.6), -5px 0 0 rgba(0, 0, 0, 0.6);      
 }
 
 .trail_card_panel .summary {  
@@ -272,15 +280,15 @@
 }
  
 /* Medium devices (desktops, 992px and up) */
-@media (max-width: 1199px) {  
-  .panel {
+@media (max-width: 1199px) {
+  .trailcards .panel {
     width: 226px;
     margin: 10px 10px 10px 10px;
   }    
-  .panel .summary {  
+  .trailcards .panel .summary {  
     font-size: 14px;
   }  
-  .panel .image_container {
+  .trailcards .panel .image_container {
     height: 190px;
   }
   .trail_card_sticker {

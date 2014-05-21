@@ -204,18 +204,20 @@ define([
       $('#trail_map_overlay', $(this.el)).hide();
       $('#view_map_btns', $(this.el)).show();
     },    
-    onTrailEditViewPhotoUploaded: function(trailUploadPhotoView){    	
-	  var data = trailUploadPhotoView.photoData.value[0];	  
-      var model = new Backbone.Model(data);
+    onTrailEditViewPhotoUploaded: function(trailUploadPhotoView){
+	  for (var nPhoto=0; nPhoto < trailUploadPhotoView.photoData.value.length; nPhoto++) {
+	    var data = trailUploadPhotoView.photoData.value[nPhoto];	  
+        var model = new Backbone.Model(data);
 	  
-	  this.mediaCollection.add(model);	  
-	  this.trailMapView.addMarker(model, true, "");
+	    this.mediaCollection.add(model);	  
+	    this.trailMapView.addMarker(model, true, "");
 	  
-	  this.trailEditView.renderSlideshow();	  
-	  // select slide
-	  this.trailEditView.selectSlideshowSlide(model.id);
+	    this.trailEditView.renderSlideshow();	  
+	    // select slide
+	    this.trailEditView.selectSlideshowSlide(model.id);
 	  
-	  this.validateTrailForPublish();
+	    this.validateTrailForPublish();	  	
+	  }    	    	
     },    
     onTrailEditViewGalleryPhotoClick: function(mediaID){
       this.trailMapView.selectMarker(mediaID);    
@@ -278,11 +280,17 @@ define([
       if (!this.validateTrailForPublish()) {
       	return;
       }
+    
+      // also update details
+      this.model.get('value').route.name = $('#form_trail_name').val();
+      this.model.get('value').route.region = $('#form_trail_region').val();
+      this.model.get('value').route.about = $('#form_trail_notes').val();
+	  this.model.get('value').route.route_category_id = $('#trail_types').find('[data-bind="label"]').attr('data-id');
     	
-      var jsonObj = {'publish':true};
+      var jsonObj = {'publish':true,'name':this.model.get('value').route.name, 'region':this.model.get('value').route.region, 'about':this.model.get('value').route.about, 'route_category_id':this.model.get('value').route.route_category_id};
       var postData = JSON.stringify(jsonObj);
       var postArray = {json:postData};
-
+      
       var strURL = TB_RESTAPI_BASEURL + '/v1/route/' + this.model.id;      
       $.ajax({
         type: "PUT",
