@@ -15,6 +15,13 @@
 {% endif %}
 {% endblock %}
 
+{% block description %}
+{% if event %}
+{% else %}
+	{{ trail.about }}
+{% endif %}
+{% endblock %}
+
 {% block stylesheets %}
 <link href="{{ asset('assets/css/trail.css') }}" rel="stylesheet" type="text/css">
 {% endblock %}
