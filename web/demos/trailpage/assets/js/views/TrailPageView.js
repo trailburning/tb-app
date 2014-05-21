@@ -30,9 +30,12 @@ define([
           $('#trail_player_container').addClass('tb-size');
           $('#trail_player_container .hero').addClass('tb-move-vert');
       	
-      	  $('#trail_player_container').height(486);      
+      	  $('#trail_player_container').height(486);
+      	        
+//      	  $('#trail_player_container .hero').css('top', 0);
+//      	  $('#trail_player_container .player').css('top', -50);
       	  $('#trail_player_container .hero').css('top', 0);
-      	  $('#trail_player_container .player').css('top', -50);
+      	  $('#trail_player_container .player').css('top', 486);
         }
         else {
       	  self.bPlayer = true;
@@ -42,7 +45,9 @@ define([
       	
       	  self.updatePlayerHeight();
       	
-      	  $('#trail_player_container .hero').css('top', self.nPlayerHeight + 50);
+//      	  $('#trail_player_container .hero').css('top', self.nPlayerHeight + 50);
+//      	  $('#trail_player_container .player').css('top', 0);      	      	
+      	  $('#trail_player_container .hero').css('top', -50);
       	  $('#trail_player_container .player').css('top', 0);      	      	
       	
       	  $("img.scale_image_ready").imageScale();
@@ -106,7 +111,7 @@ define([
       // force height update for imageScale
       $('#trail_player_container .player .image_container').height(this.nPlayerHeight);
       
-      $('#trail_player_container .hero').css('top', this.nPlayerHeight);      
+//      $('#trail_player_container .hero').css('top', this.nPlayerHeight);      
       
       $("img.scale_image_ready").imageScale();	      	
     },
