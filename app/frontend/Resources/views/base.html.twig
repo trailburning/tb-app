@@ -5,6 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta property="og:title" content="{% block og_title %}{{ block('title') }}{% endblock %}"/>
+        <meta property="og:description" content="{% block og_description %}{{ block('description') }}{% endblock %}"/>
         <meta property="og:url" content="{% block og_url %}{{ url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}{% endblock %}"/>
         <meta property="og:image" content="{% block og_image %}http://www.trailburning.com/assets/img/social/tb_profile_icon.png{% endblock %}"/>
         <meta name="p:domain_verify" content="256bd9708ee58af0b0c1e324e5467bf1"/>
