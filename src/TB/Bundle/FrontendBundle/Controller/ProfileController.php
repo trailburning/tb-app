@@ -32,6 +32,23 @@ class ProfileController extends Controller
             );
         } 
         
+        // Get trail i like for the UserProfile Page
+        if ($user instanceof \TB\Bundle\FrontendBundle\Entity\UserProfile) {
+       
+            $query = $this->getDoctrine()->getManager()
+                ->createQuery('
+                    SELECT r FROM TBFrontendBundle:Route r
+                    INNER JOIN r.routeLikes ul WITH r.id = ul.routeId
+                    WHERE r.publish = true
+                    AND ul.userId = :userId
+                    ORDER BY ul.date DESC')
+                ->setParameter('userId', $user->getId());
+            $trailsILike = $query->setMaxResults(3)->getResult();              
+       
+        } else {
+            $trailsILike = [];
+        }
+        
         if ($this->getUser() !== null && $this->getUser()->getId() == $user->getId()) {
             // Display the users "My Profile" view when he is signed in and visits his own profile
             
@@ -69,7 +86,7 @@ class ProfileController extends Controller
                     'publishedRoutes' => $publishedRoutes, 
                     'unpublishedRoutes' => $unpublishedRoutes, 
                     'breadcrumb' => $breadcrumb, 
-                    'breadcrumb' => $breadcrumb,
+                    'trailsILike' => $trailsILike,
                 ]
             );
         } elseif ($user instanceof \TB\Bundle\FrontendBundle\Entity\UserProfile) {            
@@ -96,7 +113,8 @@ class ProfileController extends Controller
                 'TBFrontendBundle:Profile:user.html.twig', [
                     'user' => $user, 
                     'routes' => $routes, 
-                    'breadcrumb' => $breadcrumb
+                    'breadcrumb' => $breadcrumb,
+                    'trailsILike' => $trailsILike,
                 ]
             );
         } elseif ($user instanceof \TB\Bundle\FrontendBundle\Entity\BrandProfile) {
