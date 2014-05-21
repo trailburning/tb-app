@@ -295,7 +295,7 @@ class Postgis extends \PDO
         if ($publish !== null) {
             $q .= ' AND publish=:publish';
         }
-        $q.= ' GROUP BY r.id, rt.id, rc.id, m.id ';
+        $q.= ' GROUP BY r.id, rt.id, rc.id, m.id ORDER BY r.publish ASC, published_date DESC ';
         if ($count !== null) {
             $q .= ' LIMIT :count';
         }
