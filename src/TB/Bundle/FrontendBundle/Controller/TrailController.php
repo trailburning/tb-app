@@ -291,7 +291,7 @@ class TrailController extends Controller
                     SELECT r FROM TBFrontendBundle:Route r
                     WHERE r.publish = true
                     AND r.userId IN (:following)
-                    ORDER BY r.publishedDate')
+                    ORDER BY r.publishedDate DESC')
                 ->setParameter('following', $followingIds);
             $trails = $query->setMaxResults(3)->getResult();  
         }
