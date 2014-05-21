@@ -952,12 +952,19 @@ class Route implements Exportable
             $data['media'] = $this->media->export();
         }
         
-        foreach ($this->getMedias() as $media) {
-            if ($media->getSharePath() !== null) {
-                $sharemedia = $media;
-                break;
+        // Check the favourite Media for a share image, otherwise pick the first media that has a share image
+        $media = $this->getFavouriteMedia();
+        if ($media->getSharePath() !== null) {
+            $sharemedia = $media;
+        } else {
+            foreach ($this->getMedias() as $media) {
+                if ($media->getSharePath() !== null) {
+                    $sharemedia = $media;
+                    break;
+                }
             }
         }
+        
         if (isset($sharemedia)) {
             $data['share_media'] = [
                 'mimetype' => 'image/jpeg',
@@ -1239,7 +1246,12 @@ class Route implements Exportable
         if ($this->getMedia() !== null) {
             return $this->getMedia();
         } elseif (count($this->getMedias()) > 0) {
-            return $this->getMedias()[0];
+            $medias = [];
+            foreach ($this->getMedias() as $media) {
+                $medias[$media->getId()] = $media;
+            }
+            ksort($medias);
+            return $medias[0];
         } else {
             return null;
         }
