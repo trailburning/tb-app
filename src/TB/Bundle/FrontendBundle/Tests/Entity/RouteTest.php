@@ -230,7 +230,8 @@ class RouteTest extends AbstractFrontendTest
             "share_media": {
                 "mimetype": "image/jpeg", 
                 "path": "trailburning-media/d7bc334a55c629e69ace79e5b64d14a6a36bec22.jpg"
-            }
+            },
+            "rating": null
         }';
         
         $this->assertJsonStringEqualsJsonString($expectedJson, json_encode($route->export()),

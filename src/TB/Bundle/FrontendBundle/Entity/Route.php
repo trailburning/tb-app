@@ -937,6 +937,7 @@ class Route implements Exportable
             ],
             'tags' => $this->getTags(),
             'route_points' => [],
+            'rating' => $this->getRating(),
         ];                       
         
         if (count($this->getRoutePoints()) > 0) {
@@ -1350,5 +1351,28 @@ class Route implements Exportable
     public function getPublishedDate()
     {
         return $this->publishedDate;
+    }
+
+    /**
+     * Set rating
+     *
+     * @param integer $rating
+     * @return Route
+     */
+    public function setRating($rating)
+    {
+        $this->rating = $rating;
+
+        return $this;
+    }
+
+    /**
+     * Get rating
+     *
+     * @return integer 
+     */
+    public function getRating()
+    {
+        return $this->rating;
     }
 }
