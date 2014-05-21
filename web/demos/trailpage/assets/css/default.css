@@ -1,0 +1,118 @@
+/* APP */
+/******************************************/
+#appview {
+/*  
+border-style:solid;
+border-width:1px;
+*/  
+}
+
+#bodyview {
+  position: relative;  
+  top: 63px;
+}
+
+/* TRAIL PLAYER CONTAINER */
+/******************************************/
+#trail_player_container {
+  width: 100%;
+  height: 486px;
+  overflow: hidden;
+}
+
+#trail_player_container .hero {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  height: 486px;
+}
+
+#trail_player_container .hero .background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+#trail_player_container .hero .background .image_container {
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#trail_player_container .hero .background .image_container img {	
+  -webkit-filter: blur(10px);
+}
+
+#trail_player_container .hero .foreground {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+#trail_player_container .hero .foreground .image_container {
+  position: relative;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
+#trail_player_container .hero .foreground .image_container img {
+  display: block;
+  margin: 0 auto;     	
+  height: 100%;
+}
+
+#trail_player_container .player {
+  position: absolute;
+/*  
+  top: -50px;
+*/  
+  top: 486px;
+  width: 100%;
+  height: 100%;
+}
+
+#trail_player_container .player .foreground {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+#trail_player_container .player .foreground .image_container {
+  position: relative;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
+#trail_player_container .player .foreground .image_container img {
+  display: block;
+  margin: 0 auto;     	
+  height: 100%;
+}
+
+/* TRAIL DETAIL CONTAINER */
+/******************************************/
+#trail_detail_container {
+  position: relative;
+  width: 100%;
+  height: 500px;	
+  background: #F0F0F0;
+}
+
+#trail_detail_container .line_break {
+  z-index: 100;
+  position: absolute;
+  top: 0px;
+  height: 8px;
+  background: url(../img/trailplayer/trans_line.png) repeat-x top left;
+}
+
+.cntrls {
+  position: absolute;
+  top: 50px;
+  left: 50px;	
+}
