@@ -62,6 +62,7 @@ class EntityEventSubscriber implements EventSubscriber
                 $dispatcher = $this->container->get('event_dispatcher'); 
                 $dispatcher->dispatch('tb.route_update', $event);
             }        
+            
         }
     }
 }
