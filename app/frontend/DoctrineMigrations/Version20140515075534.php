@@ -15,9 +15,9 @@ class Version20140515075534 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != "postgresql", "Migration can only be executed safely on 'postgresql'.");
         
-        $this->addSql("ALTER TABLE route_likes ADD registered_at TIMESTAMP(0) WITHOUT TIME ZONE NULL");
-        $this->addSql("UPDATE route_likes SET registered_at = NOW()");
-        $this->addSql("ALTER TABLE route_likes ALTER registered_at SET NOT NULL");
+        $this->addSql("ALTER TABLE route_likes ADD date TIMESTAMP(0) WITHOUT TIME ZONE NULL");
+        $this->addSql("UPDATE route_likes SET date = NOW()");
+        $this->addSql("ALTER TABLE route_likes ALTER date SET NOT NULL");
         $this->addSql("ALTER TABLE routes ADD rating SMALLINT DEFAULT NULL");
     }
 
@@ -26,7 +26,7 @@ class Version20140515075534 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != "postgresql", "Migration can only be executed safely on 'postgresql'.");
         
-        $this->addSql("ALTER TABLE route_likes DROP registered_at");
+        $this->addSql("ALTER TABLE route_likes DROP date");
         $this->addSql("ALTER TABLE routes DROP rating");
     }
 }

@@ -13,7 +13,7 @@ class RouteRatingCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('route:rating')
+            ->setName('tb:route:set-rating')
             ->setDescription('Calculates a rating for all Routes based on user likes')
         ;
     }
@@ -21,25 +21,34 @@ class RouteRatingCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $max = 0;
-        $min = null;
-        $ratings = [];
-        $routes = $em->getRepository('TBFrontendBundle:Route')->findAll();
-        $query = $this->getDoctrine()->getManager()
-            ->createQuery('
-                SELECT r.id, r.id, rl.date FROM TBFrontendBundle:Route r
+        // $routes = $em->getRepository('TBFrontendBundle:Route')->findAll();
+        $query = $em->createQuery('
+                SELECT r, rl FROM TBFrontendBundle:Route r
                 LEFT JOIN r.routeLikes rl WITH r.id = rl.routeId');
-        $trails = $query->getResult();  
+        $routes = $query->getResult();  
         foreach ($routes as $route) {
-            $count = $route->getRouteLikes()->count()
-            if ($count > $max) {
-                $max = $count;
+            $count = $route->getRouteLikes()->count();
+            if ($count >= 25) {
+                $rating = 5;
+            } elseif ($count >= 15) {
+                $rating = 4;
+            } elseif ($count >= 10) {
+                $rating = 3;
+            } elseif ($count >= 5) {
+                $rating = 2;
+            } elseif ($count >= 1) {
+                $rating = 1;
+            } else {
+                $rating = null;
             }
-            if ($min === null || $count < $min) {
-                $min = $count;
-            }
-            $ratings[$route->getId()] = $count;
+            
+            $em->createQuery('UPDATE TBFrontendBundle:Route r SET r.rating = :rating WHERE r.id = :id')
+                ->setParameter('rating', $rating)
+                ->setParameter('id', $route->getId())
+                ->execute();
+
         }
+        
         
     }
 }

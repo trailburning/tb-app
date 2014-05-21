@@ -36,14 +36,14 @@ class RouteLike
      * @var datetime
      *
      * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(name="registered_at", type="datetime")
+     * @ORM\Column(name="date", type="datetime")
      */
     private $date;
 
     /**
      * @var Route
      *
-     * @ORM\ManyToOne(targetEntity="Route", inversedBy="routesLikes")
+     * @ORM\ManyToOne(targetEntity="Route", inversedBy="routeLikes")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="route_id", referencedColumnName="id", onDelete="CASCADE")
      * })
@@ -53,7 +53,7 @@ class RouteLike
     /**
      * @var User
      *
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="routesLikes")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="routeLikes")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
      * })
