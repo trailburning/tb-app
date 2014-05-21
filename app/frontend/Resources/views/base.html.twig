@@ -5,14 +5,15 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta property="og:title" content="{% block og_title %}{{ block('title') }}{% endblock %}"/>
+        <meta property="og:description" content="{% block og_description %}{{ block('description') }}{% endblock %}"/>
         <meta property="og:url" content="{% block og_url %}{{ url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}{% endblock %}"/>
-        <meta property="og:image" content="{% block og_image %}http://beta.trailburning.com/assets/img/social/tb_profile_icon.png{% endblock %}"/>
+        <meta property="og:image" content="{% block og_image %}http://www.trailburning.com/assets/img/social/tb_profile_icon.png{% endblock %}"/>
         <meta name="p:domain_verify" content="256bd9708ee58af0b0c1e324e5467bf1"/>
         {% block meta %}{% endblock %}
         <title>{% block title %}Trailburning{% endblock %}</title>
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
         <link href="http://fonts.googleapis.com/css?family=Signika:400,300,700" rel="stylesheet">
-        <link href="http://api.tiles.mapbox.com/mapbox.js/v1.6.0/mapbox.css" rel="stylesheet">
+        <link href="http://api.tiles.mapbox.com/mapbox.js/v1.6.3/mapbox.css" rel="stylesheet">
         
         <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
         <link href="{{ asset('assets/css/bootstrap-responsive.min.css') }}" rel="stylesheet">
@@ -168,7 +169,7 @@
         <script src="{{ asset('assets/js/libs/bootstrap-filestyle.min.js') }}"> </script>
         <script src="{{ asset('assets/js/libs/bootstrap-select.min.js') }}"></script>
 
-        <script src='http://api.tiles.mapbox.com/mapbox.js/v1.6.1/mapbox.js'></script>
+        <script src='http://api.tiles.mapbox.com/mapbox.js/v1.6.3/mapbox.js'></script>
         <script src='http://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js'></script>
 
         <script src="{{ asset('assets/js/libs/imagesloaded.pkgd.min.js') }}"></script>
