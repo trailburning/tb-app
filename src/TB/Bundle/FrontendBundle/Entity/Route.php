@@ -975,7 +975,7 @@ class Route implements Exportable
         if (isset($sharemedia)) {
             $data['share_media'] = [
                 'mimetype' => 'image/jpeg',
-                'path' => $media->getPath(),
+                'path' => $media->getSharePath(),
             ];
         }
     
