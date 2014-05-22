@@ -1,0 +1,16 @@
+{% if trailsILike %}
+
+<div class="likedtrails_content">
+  <div class="fixed_content">
+
+    <h2 class="tb">Trails I Like</h2>
+    <div class="desc"><h4 class="tb">Discover my favourite Trails from the Trailburning Community</h4></div>      
+    <div class="trailcards panels">  	
+      {% for trail in trailsILike %}
+          {{ include('TBFrontendBundle:Trail:_trailcardSticker.html.twig', {'trail': trail}) }}
+      {% endfor %}  	
+    </div>
+    
+  </div>	   	
+</div>    
+{% endif %}
