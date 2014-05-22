@@ -206,7 +206,7 @@ class Media implements Exportable
         
         $adapter = $filesystem->getAdapter();
         // Store Metadata to S3 (doesn't work in unit tests when using memory filesystem)
-        if ($adapter instanceof MetadataSupporter) {
+        if ($adapter instanceof \Gaufrette\Adapter\MetadataSupporter) {
             $adapter->setMetadata($filename, array('ContentType' => 'image/jpeg', 'ACL' => 'public-read'));
         }
         

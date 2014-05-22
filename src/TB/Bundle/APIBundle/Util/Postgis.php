@@ -221,7 +221,7 @@ class Postgis extends \PDO
                 $routeType->setName($row['rt_name']);
                 $route->setRouteType($routeType);
             }
-            $medias = $this->getRouteMedia($routeId, 1);
+            $medias = $this->getRouteMedia($routeId);
             foreach ($medias as $media) {
                 $route->addMedia($media);
             }
@@ -237,11 +237,6 @@ class Postgis extends \PDO
                 $tags = json_decode('{' . str_replace('"=>"', '":"', $row['m_tags']) . '}', true);
                 $media->setTags($tags);
                 $route->setMedia($media);
-            } else {
-                // Attach the first Media, if no favorite Media is set
-                if (count($medias) > 0) {
-                    $route->setMedia(array_shift($medias));
-                }
             }
             
             $attributes = $this->getRouteAttributes($routeId);
