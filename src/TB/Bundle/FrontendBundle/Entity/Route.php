@@ -1386,10 +1386,9 @@ class Route implements Exportable
      */
     public function getShareMedia()
     {
-        $shareMedia = null;
         $favouriteMedia = $this->getFavouriteMedia();
-        if ($favouriteMedia && $favouriteMedia->getSharePath() !== '') {
-            $shareMedia = $favouriteMedia;
+        if ($favouriteMedia && $favouriteMedia->getSharePath()) {
+            return $favouriteMedia;
         } else {
             $medias = [];
             foreach ($this->getMedias() as $media) {
@@ -1397,13 +1396,12 @@ class Route implements Exportable
             }
             ksort($medias);
             foreach ($medias as $media) {
-                if ($media->getSharePath() !== '') {
-                    $sharemedia = $media;
-                    break;
+                if ($media->getSharePath()) {
+                    return $media;
                 }
             }
         }
-        
-        return $shareMedia;
+
+        return null;
     }
 }
