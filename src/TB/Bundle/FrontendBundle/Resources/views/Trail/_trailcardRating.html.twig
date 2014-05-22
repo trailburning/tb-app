@@ -4,23 +4,35 @@
   {% else %}
 	<div class="star"></div>
   {% endif %}
-  {% if trail.rating > 1 %}
+
+  {% if trail.rating >= 2 %}
     <div class="star_full"></div>
+  {% elseif trail.rating >= 1.5 %}
+    <div class="star_half"></div>
   {% else %}
 	<div class="star"></div>
   {% endif %}
-  {% if trail.rating > 2 %}
+
+  {% if trail.rating >= 3 %}
     <div class="star_full"></div>
+  {% elseif trail.rating >= 2.5 %}
+    <div class="star_half"></div>
   {% else %}
 	<div class="star"></div>
   {% endif %}
-  {% if trail.rating > 3 %}
+
+  {% if trail.rating >= 4 %}
     <div class="star_full"></div>
+  {% elseif trail.rating >= 3.5 %}
+    <div class="star_half"></div>
   {% else %}
 	<div class="star"></div>
   {% endif %}
-  {% if trail.rating > 3 %}
+
+  {% if trail.rating >= 5 %}
     <div class="star_full"></div>
+  {% elseif trail.rating >= 4.5 %}
+    <div class="star_half"></div>
   {% else %}
 	<div class="star"></div>
   {% endif %}

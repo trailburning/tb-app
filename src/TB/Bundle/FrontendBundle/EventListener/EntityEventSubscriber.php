@@ -9,6 +9,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use TB\Bundle\FrontendBundle\Entity\Route;
 
 use TB\Bundle\FrontendBundle\Event\RoutePublishEvent;
+use TB\Bundle\FrontendBundle\Event\RouteUpdateEvent;
 
 /**
  * Listen for Dcotrine postPersist and postUpdate events
@@ -44,16 +45,24 @@ class EntityEventSubscriber implements EventSubscriber
         $em = $args->getEntityManager();
 
         if ($entity instanceof Route) {
+            $event = new RouteUpdateEvent($entity, $entity->getUser());
+            $dispatcher = $this->container->get('event_dispatcher'); 
+            $dispatcher->dispatch('tb.route_update', $event);
+            
             // Create custom Event RoutePublishEvent named tb.route_publish when a Route gets published
             $uow = $em->getUnitOfWork();
             $uow->computeChangeSets();
             // Test that publish was set from false to true  by computing a changeset
             $changeset = $uow->getEntityChangeSet($entity);
             // publish is in the changeset, the new differs from the old value, publish is true
-            if (isset($changeset['publish']) && $changeset['publish'][0] !== $changeset['publish'][1] && $entity->getPublish() === true) {
+            if (isset($changeset['publish']) && $entity->getPublish() === true && $changeset['publish'][0] !== $changeset['publish'][1]) {
+                // published is changed from false to true
                 $event = new RoutePublishEvent($entity, $entity->getUser());
                 $dispatcher = $this->container->get('event_dispatcher'); 
                 $dispatcher->dispatch('tb.route_publish', $event);
+                $event = new RouteUpdateEvent($entity, $entity->getUser());
+                $dispatcher = $this->container->get('event_dispatcher'); 
+                $dispatcher->dispatch('tb.route_update', $event);
             }        
         }
     }

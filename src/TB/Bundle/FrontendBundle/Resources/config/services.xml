@@ -122,6 +122,13 @@
             <tag name="kernel.event_listener" event="tb.route_publish" method="onRoutePublish" />
         </service>
 
+        <!-- Register Event Listener to create a facebook shareimage when a Route gets updated -->
+        <service id="tb.route.update_listener" class="TB\Bundle\FrontendBundle\EventListener\RouteUpdateListener">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="old_sound_rabbit_mq.main_producer" />
+            <tag name="kernel.event_listener" event="tb.route_update" method="onRouteUpdate" />
+        </service>
+
         <!--  Register image generator as service -->
         <service id="tb.image.generator" class="TB\Bundle\FrontendBundle\Util\ImageGenerator">
             <argument type="service" id="doctrine.orm.entity_manager" />

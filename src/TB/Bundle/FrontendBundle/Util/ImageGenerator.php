@@ -92,7 +92,12 @@ class ImageGenerator
         ob_end_clean();
         
         // Store the new image data to the filesystem, overwrite if file exists
-        $this->filesystem->write($shareImageFilepath, $shareImageData, true);
+        $adapter = $this->filesystem->getAdapter();
+        // Set Metadata to S3 (doesn't work in unit tests when using memory filesystem)
+        if ($adapter instanceof \Gaufrette\Adapter\MetadataSupporter) {
+            $adapter->setMetadata($shareImageFilepath, array('ContentType' => 'image/jpeg', 'ACL' => 'public-read'));
+        }
+        $adapter->write($shareImageFilepath, $shareImageData);
         
         // Update the Media object and set the share image path
         $media->setSharePath($shareImageFilepath);
