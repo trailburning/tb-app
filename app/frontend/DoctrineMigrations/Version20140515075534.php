@@ -18,7 +18,7 @@ class Version20140515075534 extends AbstractMigration
         $this->addSql("ALTER TABLE route_likes ADD date TIMESTAMP(0) WITHOUT TIME ZONE NULL");
         $this->addSql("UPDATE route_likes SET date = NOW()");
         $this->addSql("ALTER TABLE route_likes ALTER date SET NOT NULL");
-        $this->addSql("ALTER TABLE routes ADD rating SMALLINT DEFAULT NULL");
+        $this->addSql("ALTER TABLE routes ADD rating NUMERIC(5, 3) DEFAULT NULL");
     }
 
     public function down(Schema $schema)

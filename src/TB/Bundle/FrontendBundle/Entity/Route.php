@@ -248,7 +248,7 @@ class Route implements Exportable
     /**
      * @var integer
      *
-     * @ORM\Column(name="rating", type="smallint", nullable=true)
+     * @ORM\Column(name="rating", type="decimal", precision=5, scale=3, nullable=true)
      */
     private $rating;    
 
@@ -966,23 +966,16 @@ class Route implements Exportable
             $data['media'] = $this->media->export();
         }
         
-        // Check the favourite Media for a share image, otherwise pick the first media that has a share image
-        $media = $this->getFavouriteMedia();
-        if ($media->getSharePath() !== null) {
-            $sharemedia = $media;
-        } else {
-            foreach ($this->getMedias() as $media) {
-                if ($media->getSharePath() !== null) {
-                    $sharemedia = $media;
-                    break;
-                }
+        foreach ($this->getMedias() as $media) {
+            if ($media->getSharePath() !== null) {
+                $sharemedia = $media;
+                break;
             }
         }
-        
         if (isset($sharemedia)) {
             $data['share_media'] = [
                 'mimetype' => 'image/jpeg',
-                'path' => Media::BUCKET_NAME . $media->getSharePath(),
+                'path' => $media->getSharePath(),
             ];
         }
     
@@ -1227,12 +1220,7 @@ class Route implements Exportable
         if ($this->getMedia() !== null) {
             return $this->getMedia();
         } elseif (count($this->getMedias()) > 0) {
-            $medias = [];
-            foreach ($this->getMedias() as $media) {
-                $medias[$media->getId()] = $media;
-            }
-            ksort($medias);
-            return $medias[0];
+            return $this->getMedias()[0];
         } else {
             return null;
         }

@@ -33,23 +33,47 @@ define([
           	  }
           	  break;
           	case 1:
-          	  if (nRating > 1) {
-          	    $(this).addClass('star_full');          	  	
+          	  if (nRating >= 2) {
+          	    $(this).addClass('star_full');          	  	          	  
+          	  }
+          	  else if (nRating >= 1.5) {
+          	    $(this).addClass('star_half');          	  	          	  
+          	  }
+          	  else {
+          	    $(this).addClass('star');          	  	          	  
           	  }
           	  break;
           	case 2:
-          	  if (nRating > 2) {
-          	    $(this).addClass('star_full');          	  	
+          	  if (nRating >= 3) {
+          	    $(this).addClass('star_full');          	  	          	  
+          	  }
+          	  else if (nRating >= 2.5) {
+          	    $(this).addClass('star_half');          	  	          	  
+          	  }
+          	  else {
+          	    $(this).addClass('star');          	  	          	  
           	  }
           	  break;
           	case 3:
-          	  if (nRating > 3) {
-          	    $(this).addClass('star_full');          	  	
+          	  if (nRating >= 4) {
+          	    $(this).addClass('star_full');          	  	          	  
+          	  }
+          	  else if (nRating >= 3.5) {
+          	    $(this).addClass('star_half');          	  	          	  
+          	  }
+          	  else {
+          	    $(this).addClass('star');          	  	          	  
           	  }
           	  break;
           	case 4:
-          	  if (nRating > 4) {
-          	    $(this).addClass('star_full');          	  	
+          	  if (nRating >= 5) {
+          	    $(this).addClass('star_full');          	  	          	  
+          	  }
+          	  else if (nRating >= 4.5) {
+          	    $(this).addClass('star_half');          	  	          	  
+          	  }
+          	  else {
+          	    $(this).addClass('star');          	  	          	  
           	  }
           	  break;
           }
