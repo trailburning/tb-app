@@ -972,10 +972,10 @@ class Route implements Exportable
                 break;
             }
         }
-        if (isset($sharemedia)) {
+        if ($sharemedia = $this->getShareMedia()) {
             $data['share_media'] = [
                 'mimetype' => 'image/jpeg',
-                'path' => $media->getSharePath(),
+                'path' => $sharemedia->getSharePath(),
             ];
         }
     
@@ -1220,7 +1220,12 @@ class Route implements Exportable
         if ($this->getMedia() !== null) {
             return $this->getMedia();
         } elseif (count($this->getMedias()) > 0) {
-            return $this->getMedias()[0];
+            $medias = [];
+            foreach ($this->getMedias() as $media) {
+                $medias[$media->getId()] = $media;
+            }
+            ksort($medias);
+            return array_shift($medias);
         } else {
             return null;
         }
@@ -1374,5 +1379,31 @@ class Route implements Exportable
     public function getRating()
     {
         return $this->rating;
+    }
+    
+    /**
+     * Find the media that has the most recent share image
+     */
+    public function getShareMedia()
+    {
+        $shareMedia = null;
+        $favouriteMedia = $this->getFavouriteMedia();
+        if ($favouriteMedia && $favouriteMedia->getSharePath() !== '') {
+            $shareMedia = $favouriteMedia;
+        } else {
+            $medias = [];
+            foreach ($this->getMedias() as $media) {
+                $medias[$media->getId()] = $media;
+            }
+            ksort($medias);
+            foreach ($medias as $media) {
+                if ($media->getSharePath() !== '') {
+                    $sharemedia = $media;
+                    break;
+                }
+            }
+        }
+        
+        return $shareMedia;
     }
 }

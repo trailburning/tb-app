@@ -22,8 +22,8 @@
 {% endif %}
 {% endblock %}
 
-{% if trail.favouriteMedia.sharePath %}
-	{% block og_image %}http://media.trailburning.com/{{ trail.favouriteMedia.sharePath }}{% endblock %}
+{% if trail.shareMedia %}
+	{% block og_image %}http://media.trailburning.com/{{ trail.shareMedia.sharePath }}{% endblock %}
 {% endif %}
 
 {% block stylesheets %}
