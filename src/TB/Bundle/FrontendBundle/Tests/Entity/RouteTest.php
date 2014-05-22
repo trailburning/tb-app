@@ -229,7 +229,7 @@ class RouteTest extends AbstractFrontendTest
             },
             "share_media": {
                 "mimetype": "image/jpeg", 
-                "path": "trailburning-media/d7bc334a55c629e69ace79e5b64d14a6a36bec22.jpg"
+                "path": "/cb88c97a09a59aa2452c0d0cdfdd2f4ccc211a53_share.jpg"
             },
             "rating": null
         }';
@@ -415,11 +415,7 @@ class RouteTest extends AbstractFrontendTest
         $this->assertNull($route->getFavouriteMedia(), 'Route::getFavouriteMedia() returns null for no Media set');
         
         $route->addMedia($media1);
-        $route->addMedia($media2);
         $this->assertSame($media1, $route->getFavouriteMedia(), 'Route::getFavouriteMedia() returns the  first Media'); 
-        
-        $route->setMedia($media2);
-        $this->assertSame($media2, $route->getFavouriteMedia(), 'Route::getFavouriteMedia() returns Media set as favourite'); 
     }
     
     public function testAttribute()

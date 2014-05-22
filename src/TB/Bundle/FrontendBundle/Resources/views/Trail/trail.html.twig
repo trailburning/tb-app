@@ -16,15 +16,12 @@
 {% endblock %}
 
 {% block description %}
-{% if event %}
-{% else %}
-	{{ trail.about }}
-{% endif %}
+{% if event %}{% else %}{{ trail.about }}{% endif %}
 {% endblock %}
 
-{% if trail.favouriteMedia.sharePath %}
-	{% block og_image %}http://media.trailburning.com/{{ trail.favouriteMedia.sharePath }}{% endblock %}
-{% endif %}
+{% block og_image %}
+{% if trail.shareMedia is not null %}http://media.trailburning.com{{ trail.shareMedia.sharePath }}{% else %}http://www.trailburning.com/assets/img/social/tb_profile_icon.png{% endif %}
+{% endblock %}
 
 {% block stylesheets %}
 <link href="{{ asset('assets/css/trail.css') }}" rel="stylesheet" type="text/css">
