@@ -248,7 +248,7 @@ class Route implements Exportable
     /**
      * @var integer
      *
-     * @ORM\Column(name="rating", type="smallint", nullable=true)
+     * @ORM\Column(name="rating", type="decimal", precision=5, scale=3, nullable=true)
      */
     private $rating;    
 
