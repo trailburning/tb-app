@@ -14,13 +14,7 @@
         {{ include('TBFrontendBundle:Profile:_userAvatar.html.twig', {user: trail.user}) }}
         <div class="detail">
         by <strong>{{ trail.user.title }}</strong>
-            <div class="stars">
-                <div class="star"></div>
-                <div class="star"></div>
-                <div class="star"></div>
-                <div class="star"></div>
-                <div class="star"></div>
-            </div>
+	    {{ include('TBFrontendBundle:Trail:_trailcardRating.html.twig', {'trail': trail}) }}
         </div>
     </div>
 </div>

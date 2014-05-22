@@ -75,13 +75,7 @@ var TB_USER_LAT = {{ user.location.latitude }};
 		          </a></div></div>
 		          <div class="detail">
 		            by <strong>{{ user.firstName }} {{ user.lastName }}</strong>
-		            <div class="stars">
-		              <div class="star"></div>
-		              <div class="star"></div>
-		              <div class="star"></div>
-		              <div class="star"></div>
-		              <div class="star"></div>
-		            </div>
+		            {{ include('TBFrontendBundle:Trail:_trailcardRating.html.twig', {'trail': route}) }}		            
 		          </div>
 		        </div>
 	          </div>
