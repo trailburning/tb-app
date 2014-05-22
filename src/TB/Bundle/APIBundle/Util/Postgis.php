@@ -169,6 +169,7 @@ class Postgis extends \PDO
                      r.length as length,
                      r.tags as rtags,
                      r.about,
+                     r.rating,
                      ST_AsText(r.centroid) AS centroid,
                      ST_AsText(Box2D(ST_MakeLine(rp.coords ORDER BY rp.point_number ASC))) as bbox,
                      rt.id AS rt_id,
@@ -203,6 +204,7 @@ class Postgis extends \PDO
             $route->setBBox($row['bbox']);
             $route->setLength($row['length']);
             $route->setAbout($row['about']);
+            $route->setRating($row['rating']);
             $c = explode(" ", substr(trim($row['centroid']),6,-1));
             $route->setCentroid(new Point($c[0], $c[1], 4326)); 
             $tags = json_decode('{' . str_replace('"=>"', '":"', $row['rtags']) . '}', true);
@@ -275,7 +277,7 @@ class Postgis extends \PDO
     
     public function readRoutes($user_id, $count = null, $route_type_id = null, $route_category_id = null, $publish = null) 
     {
-        $q = 'SELECT r.id, r.name, r.slug, r.region, r.length, ST_X(r.centroid) AS long, ST_Y(r.centroid) AS lat, r.tags, rt.id AS rt_id, rt.name AS rt_name, rc.id AS rc_id, rc.name AS rc_name, r.about, m.id AS m_id, ST_AsText(m.coords) AS m_coords, m.tags AS m_tags, m.filename AS m_filename, m.path AS m_path
+        $q = 'SELECT r.id, r.name, r.slug, r.region, r.length, ST_X(r.centroid) AS long, ST_Y(r.centroid) AS lat, r.tags, r.rating, rt.id AS rt_id, rt.name AS rt_name, rc.id AS rc_id, rc.name AS rc_name, r.about, m.id AS m_id, ST_AsText(m.coords) AS m_coords, m.tags AS m_tags, m.filename AS m_filename, m.path AS m_path
               FROM routes r
               LEFT JOIN route_type rt ON r.route_type_id=rt.id
               LEFT JOIN route_category rc ON r.route_category_id=rc.id
@@ -290,7 +292,7 @@ class Postgis extends \PDO
         if ($publish !== null) {
             $q .= ' AND publish=:publish';
         }
-        $q.= ' GROUP BY r.id, rt.id, rc.id, m.id ';
+        $q.= ' GROUP BY r.id, rt.id, rc.id, m.id ORDER BY r.publish ASC, published_date DESC ';
         if ($count !== null) {
             $q .= ' LIMIT :count';
         }
@@ -328,6 +330,7 @@ class Postgis extends \PDO
             $route->setLength($row['length']);
             $route->setCentroid(new Point($row['long'], $row['lat'], 4326)); 
             $route->setAbout($row['about']);
+            $route->setRating($row['rating']);
             $tags = json_decode('{' . str_replace('"=>"', '":"', $row['tags']) . '}', true);
             $route->setTags($tags);
             if ($row['rc_name'] != '') {
@@ -382,7 +385,7 @@ class Postgis extends \PDO
         $routes = array();
         if ($row = $pq->fetch(\PDO::FETCH_ASSOC)) {
             $count = $row['count'];
-            $q = 'SELECT r.id, r.name, r.slug, r.region, r.length, ST_X(r.centroid) AS long, ST_Y(r.centroid) AS lat, r.tags, rt.id AS rt_id, rt.name AS rt_name, rc.id AS rc_id, rc.name AS rc_name, r.about, u.id AS user_id, u.name AS user_name, u.discr, u.first_name, u.last_name, u.display_name, u.avatar, u.avatar_gravatar, m.id AS m_id, ST_AsText(m.coords) AS m_coords, m.tags AS m_tags, m.filename AS m_filename, m.path AS m_path
+            $q = 'SELECT r.id, r.name, r.slug, r.region, r.length, ST_X(r.centroid) AS long, ST_Y(r.centroid) AS lat, r.tags, r.rating, rt.id AS rt_id, rt.name AS rt_name, rc.id AS rc_id, rc.name AS rc_name, r.about, u.id AS user_id, u.name AS user_name, u.discr, u.first_name, u.last_name, u.display_name, u.avatar, u.avatar_gravatar, m.id AS m_id, ST_AsText(m.coords) AS m_coords, m.tags AS m_tags, m.filename AS m_filename, m.path AS m_path
                   FROM routes r
                   INNER JOIN fos_user u ON r.user_id=u.id
                   LEFT JOIN route_type rt ON r.route_type_id=rt.id
@@ -390,7 +393,7 @@ class Postgis extends \PDO
                   LEFT JOIN medias m ON r.media_id=m.id
                   WHERE r.publish = true AND approved = true
                   GROUP BY r.id, rt.id, rc.id , u.id, m.id
-                  ORDER BY r.id DESC
+                  ORDER BY r.published_date DESC
                   LIMIT :limit OFFSET :offset';
             $pq = $this->prepare($q);
             $pq->bindParam('limit', $limit, \PDO::PARAM_INT);
@@ -411,6 +414,7 @@ class Postgis extends \PDO
                 $route->setLength($row['length']);
                 $route->setCentroid(new Point($row['long'], $row['lat'], 4326)); 
                 $route->setAbout($row['about']);
+                $route->setRating($row['rating']);
                 $tags = json_decode('{' . str_replace('"=>"', '":"', $row['tags']) . '}', true);
                 $route->setTags($tags);
                 if ($row['rc_name'] != '') {

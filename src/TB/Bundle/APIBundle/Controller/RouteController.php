@@ -6,6 +6,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use TB\Bundle\APIBundle\Util\ApiException;
 use Symfony\Component\HttpFoundation\Request;
+use TB\Bundle\FrontendBundle\Entity\RouteLike;
 use TB\Bundle\FrontendBundle\Event\RouteLikeEvent;
 use TB\Bundle\FrontendBundle\Event\RouteUndoLikeEvent;
 
@@ -211,10 +212,12 @@ class RouteController extends AbstractRestController
             throw new ApiException(sprintf('User %s already likes Trail %s', $user->getId(), $route->getId()), 400);
         }
 
-        $route->addUserLike($user);
+        $routeLike = new RouteLike();
+        $routeLike->setRoute($route);
+        $routeLike->setUser($user);
         
         $em = $this->getDoctrine()->getManager();
-        $em->persist($route);
+        $em->persist($routeLike);
         $em->flush();
         
         // dispatch tb.route_like event
@@ -261,10 +264,14 @@ class RouteController extends AbstractRestController
             throw new ApiException(sprintf('User %s does not like Route %s', $user->getId(), $route->getId()), 400);
         }
         
-        $route->removeUserLike($user);
+        foreach ($route->getRouteLikes() as $routeLike) {
+            if ($routeLike->getUserId() == $user->getId()) {
+                break;
+            }
+        }
         
         $em = $this->getDoctrine()->getManager();
-        $em->persist($route);
+        $em->remove($routeLike);
         $em->flush();
         
         // dispath tb.route_undolike event

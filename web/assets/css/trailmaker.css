@@ -576,6 +576,45 @@ border-width:1px;
 
 #step_published_view .next_step {
   margin-top: 24px;
+  margin-bottom: 24px;  
+}
+
+#step_published_view .social {
+  margin-top: 16px;
+  text-align: center;
+}
+
+#step_published_view .social div {
+  position: relative;  
+  display: inline-block;
+  margin: 0px 8px 0px 8px; 
+  width:76px;
+  height:76px;
+}
+
+#step_published_view .button {
+  position: absolute;
+  left: 0px;
+  line-height:20px; 
+  text-indent: -10000px;  
+  background-repeat:no-repeat;
+  background-position:top center;
+  overflow: hidden;   
+  text-decoration: none;
+  width:76px;
+  height:76px;
+}
+
+#step_published_view .button:hover {
+  background-position: 0 -76px;  
+}
+
+#step_published_view .facebook {
+  background: url("../icons/share/share_facebook_big.png") no-repeat top left;	
+}
+
+#step_published_view .twitter {
+  background: url("../icons/share/share_twitter_big.png") no-repeat top left;	
 }
 
 /* PANEL */

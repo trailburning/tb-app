@@ -1,0 +1,122 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta property="og:title" content="Trailburning"/>
+        <meta property="og:url" content="http://www.trailburning.com/demos/trailpage"/>
+        <meta property="og:image" content="http://media.trailburning.com/test_share.jpg"/>
+        <meta property="og:description" content="This is a test from Trailburning."/>
+        <meta name="p:domain_verify" content="256bd9708ee58af0b0c1e324e5467bf1"/>
+		<title>Trailburning</title>
+        <link rel="icon" type="image/x-icon" href="/trailburning/favicon.ico" />
+        <link href="http://fonts.googleapis.com/css?family=Signika:400,300,700" rel="stylesheet">
+        <link href="http://api.tiles.mapbox.com/mapbox.js/v1.6.0/mapbox.css" rel="stylesheet">
+        <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="assets/css/bootstrap-responsive.min.css" rel="stylesheet">
+        <link href="assets/css/bootstrap-select.min.css" rel="stylesheet">
+        
+        <link href="assets/css/common_ui.css" rel="stylesheet" type="text/css">
+        <link href="assets/css/default.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <div id="appview">
+        	
+			<div id="headerview">
+                <div class="left">
+                    <a href="/trailburning/app_dev.php/"><img src="http://www.trailburning.com/assets/img/header/tb_logo.gif" width="102" height="46" border="0"></a>
+                </div>    
+                
+			    <div class="right navbar">
+					<div class="profile">
+				    <ul class="nav pull-right">
+						<li class="dropdown">
+						<a href="#" class="dropdown-toggle show_activity" data-toggle="dropdown">
+						<div class="tb-avatar"><div class="photo"><img src="http://www.gravatar.com/avatar/e426b949d824bc81fe01caf1ad88abd7"></div></div>			
+						</a>
+						<ul class="dropdown-menu activity-menu">
+							<div class="header">
+						    	<div class="title"><h4 class="tb">Activity</h4></div>
+						    	<div class="viewprofile"><a href="/trailburning/app_dev.php/profile/mattallbeury">View profile</a></div>
+						    </div>						        	
+						    <div class="activity_list_container">
+						    	<div id="activity_feed_view" class="activity_list tb-move"></div>
+						    </div>
+				        	<div class="footer">
+				  				<div class="profile_btn"><a href="javascript:void(0)" class="btn btn-tb btn-tb-small more_btn" disabled="disabled">More notifications</a></div>
+				        		<div class="signout"><a href="/trailburning/app_dev.php/logout">Sign out</a></div>
+				        	</div>
+				        </ul>
+				    	</li>
+		    		</ul>
+			      	</div>
+			      	<div class="links">
+						<div class="link main"><a href="/trailburning/app_dev.php/tour">Discover Trailburning</a></div>			      	
+						<div class="link main"><a href="/trailburning/app_dev.php/inspire">Inspire</a></div>			      	
+			      	</div>
+			      	<div class="discover"></div>
+			    </div>    
+                <div class="trans-line"></div>
+            </div>    
+                    	      
+			<div id="bodyview">
+				<div id="trail_player_container" class="tb-size">
+			  		
+					<div class="hero tb-move-vert">
+		      			<div class="background">
+		        			<div class="image_container fade_on_load"><img data-src="http://app.resrc.it/O=10/http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/test/test1.jpg" class="resrc scale" /></div>
+			  			</div>					
+		      			<div class="foreground">
+		        			<div class="image_container fade_on_load"><img data-src="http://app.resrc.it/O=80/http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/test/test1.jpg" class="resrc" /></div>
+			  			</div>
+			  		</div>
+
+			  		<div class="player tb-move-vert">
+		      			<div class="foreground">
+		        			<div class="image_container fade_on_load"><img data-src="http://app.resrc.it/O=80/http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/test/test2.jpg" class="resrc scale" /></div>
+			  			</div>
+			  		</div>
+			  		
+		  			<div class="cntrls">
+		  				<a href="javascript:void(0)" class="btn btn-tb-action btnPlayer">Transition</a>
+		  				&nbsp;&nbsp;
+		  				<a href="http://www.facebook.com/share.php?u=www.trailburning.com/demos/trailpage" class="btn btn-tb-action btnPlayer" target="_blank">Facebook</a>
+		  				&nbsp;&nbsp;
+		  				<a href="https://plus.google.com/share?url=www.trailburning.com/demos/trailpage" class="btn btn-tb-action btnPlayer" target="_blank">Google+</a>
+		  			</div>			  		
+				</div>
+				<div id="trail_detail_container">
+					<div class="line_break"></div>					
+				</div>		
+            </div>
+        </div>      
+
+        <script>
+        resrc = {
+          options: {
+            server: "app.resrc.it",
+            resrcOnLoad: true,
+            resrcOnResize: true,
+            resrcOnPinch: false    
+          }
+        };
+        </script>
+		<script src="//use.resrc.it"></script>
+
+        <script src="assets/js/libs/jquery-1.8.3.min.js"></script>
+        <script src="assets/js/libs/bootstrap.min.js"></script>
+        <script src="assets/js/libs/bootstrap-filestyle.min.js"> </script>
+        <script src="assets/js/libs/bootstrap-select.min.js"></script>
+
+        <script src='http://api.tiles.mapbox.com/mapbox.js/v1.6.1/mapbox.js'></script>
+
+        <script src="assets/js/libs/imagesloaded.pkgd.min.js"></script>
+        <script src="assets/js/libs/image-scale.min.js"></script>
+
+        <script src="assets/js/libs/jquery-dateFormat.min.js"></script>
+
+        <script data-main="assets/js/main" src="assets/js/libs/require.js"></script>        
+    </body>
+</html>

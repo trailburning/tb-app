@@ -6,6 +6,7 @@ use TB\Bundle\FrontendBundle\Tests\AbstractFrontendTest;
 use TB\Bundle\FrontendBundle\Entity\Route;
 use TB\Bundle\FrontendBundle\Entity\Media;
 use TB\Bundle\FrontendBundle\Entity\GpxFile;
+use TB\Bundle\FrontendBundle\Entity\RouteLike;
 use CrEOF\Spatial\PHP\Types\Geometry\Point;
 
 class RouteTest extends AbstractFrontendTest
@@ -229,7 +230,8 @@ class RouteTest extends AbstractFrontendTest
             "share_media": {
                 "mimetype": "image/jpeg", 
                 "path": "trailburning-media/d7bc334a55c629e69ace79e5b64d14a6a36bec22.jpg"
-            }
+            },
+            "rating": null
         }';
         
         $this->assertJsonStringEqualsJsonString($expectedJson, json_encode($route->export()),
@@ -393,9 +395,13 @@ class RouteTest extends AbstractFrontendTest
         
         $this->assertFalse($route->hasUserLike($user), 'User does not like the Route');
         
-        $route->addUserLike($user);
-        $em->persist($route);
+        $routeLike = new RouteLike();
+        $routeLike->setUser($user);
+        $routeLike->setRoute($route);
+        
+        $em->persist($routeLike);
         $em->flush();
+        $em->refresh($route);
         
         $this->assertTrue($route->hasUserLike($user), 'User does like the Route');
     }   

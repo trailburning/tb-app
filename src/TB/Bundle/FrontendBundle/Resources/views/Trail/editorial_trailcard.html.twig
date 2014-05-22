@@ -26,13 +26,7 @@
           	</a></div></div>
 	        <div class="detail">
 	            by <strong>{{ route.user.title }}</strong>
-	            <div class="stars">
-	            	<div class="star"></div>
-	              	<div class="star"></div>
-	              	<div class="star"></div>
-	              	<div class="star"></div>
-	              	<div class="star"></div>
-	           	</div>
+				{{ include('TBFrontendBundle:Trail:_trailcardRating.html.twig', {'trail': route}) }}
 	      	</div>
         {% endif %}
         </div>

@@ -227,10 +227,9 @@ class Route implements Exportable
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\User", inversedBy="routeLikes")
-     * @ORM\JoinTable(name="route_likes")
-     */
-    private $userLikes;
+     * @ORM\OneToMany(targetEntity="RouteLike", mappedBy="route")
+     **/
+    private $routeLikes;
     
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -245,6 +244,20 @@ class Route implements Exportable
      * @ORM\Column(name="approved", type="boolean", options={"default" = true})
      */
     private $approved = true;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="rating", type="smallint", nullable=true)
+     */
+    private $rating;    
+
+    /**
+     * @var datetime
+     *
+     * @ORM\Column(name="published_date", type="datetime", nullable=true)
+     */
+    private $publishedDate;
 
     /**
      * Set name
@@ -924,6 +937,7 @@ class Route implements Exportable
             ],
             'tags' => $this->getTags(),
             'route_points' => [],
+            'rating' => $this->getRating(),
         ];                       
         
         if (count($this->getRoutePoints()) > 0) {
@@ -1096,39 +1110,6 @@ class Route implements Exportable
     {
         return $this->media;
     }
-
-    /**
-     * Add userLikes
-     *
-     * @param \TB\Bundle\FrontendBundle\Entity\User $userLikes
-     * @return Route
-     */
-    public function addUserLike(\TB\Bundle\FrontendBundle\Entity\User $userLikes)
-    {
-        $this->userLikes[] = $userLikes;
-
-        return $this;
-    }
-
-    /**
-     * Remove userLikes
-     *
-     * @param \TB\Bundle\FrontendBundle\Entity\User $userLikes
-     */
-    public function removeUserLike(\TB\Bundle\FrontendBundle\Entity\User $userLikes)
-    {
-        $this->userLikes->removeElement($userLikes);
-    }
-
-    /**
-     * Get userLikes
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getUserLikes()
-    {
-        return $this->userLikes;
-    }
     
     /**
      * Checks a User already likes this Route
@@ -1138,8 +1119,8 @@ class Route implements Exportable
      */
     public function hasUserLike(User $user)
     {
-        foreach ($this->getUserLikes() as $likingUser) {
-            if ($likingUser->getId() === $user->getId()) {
+        foreach ($this->getRouteLikes() as $routeLike) {
+            if ($routeLike->getUserId() === $user->getId()) {
                 return true;
             }
         }
@@ -1328,5 +1309,82 @@ class Route implements Exportable
     public function getApproved()
     {
         return $this->approved;
+    }
+
+    /**
+     * Add routeLikes
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\RouteLike $routeLikes
+     * @return Route
+     */
+    public function addRouteLike(\TB\Bundle\FrontendBundle\Entity\RouteLike $routeLikes)
+    {
+        $this->routeLikes[] = $routeLikes;
+
+        return $this;
+    }
+
+    /**
+     * Remove routeLikes
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\RouteLike $routeLikes
+     */
+    public function removeRouteLike(\TB\Bundle\FrontendBundle\Entity\RouteLike $routeLikes)
+    {
+        $this->routeLikes->removeElement($routeLikes);
+    }
+
+    /**
+     * Get routeLikes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRouteLikes()
+    {
+        return $this->routeLikes;
+    }
+    
+    /**
+     * Set publishedDate
+     *
+     * @param \DateTime $publishedDate
+     * @return Route
+     */
+    public function setPublishedDate($publishedDate)
+    {
+        $this->publishedDate = $publishedDate;
+    }
+    
+    /* 
+     * Get publishedDate
+     *
+     * @return \DateTime 
+     */
+    public function getPublishedDate()
+    {
+        return $this->publishedDate;
+    }
+
+    /**
+     * Set rating
+     *
+     * @param integer $rating
+     * @return Route
+     */
+    public function setRating($rating)
+    {
+        $this->rating = $rating;
+
+        return $this;
+    }
+
+    /**
+     * Get rating
+     *
+     * @return integer 
+     */
+    public function getRating()
+    {
+        return $this->rating;
     }
 }

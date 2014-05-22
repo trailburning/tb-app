@@ -15,8 +15,9 @@ class EventRoute
     /**
      * @var integer
      *
-     * @ORM\Column(name="event_id", type="integer")
      * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\Column(name="event_id", type="integer")
      */
     private $eventId;
 
@@ -24,8 +25,9 @@ class EventRoute
     /**
      * @var integer
      *
-     * @ORM\Column(name="route_id", type="integer")
      * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\Column(name="route_id", type="integer")
      */
     private $routeId;
 
@@ -56,16 +58,6 @@ class EventRoute
      * })
      */
     private $route;
-
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 
     /**
      * Set date
@@ -145,6 +137,7 @@ class EventRoute
     public function setEvent(\TB\Bundle\FrontendBundle\Entity\Event $event = null)
     {
         $this->event = $event;
+        $this->setEventId($event->getId());
 
         return $this;
     }
@@ -168,6 +161,7 @@ class EventRoute
     public function setRoute(\TB\Bundle\FrontendBundle\Entity\Route $route = null)
     {
         $this->route = $route;
+        $this->setRouteId($route->getId());
 
         return $this;
     }

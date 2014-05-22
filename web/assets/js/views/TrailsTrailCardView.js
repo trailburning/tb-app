@@ -14,17 +14,46 @@ define([
       var self = this;
 
       if (!this.bRendered) {
-      	if (this.model) {
-          var versions = this.model.get('media').versions;
-      	  this.model.set('versionLargePath', versions[0].path);
-		  if (this.model.get('category') == undefined) {
-		  	this.model.set('category', '');
-      	  }
+        var versions = this.model.get('media').versions;
+      	this.model.set('versionLargePath', versions[0].path);
+		if (this.model.get('category') == undefined) {
+		  this.model.set('category', '');
       	}
 
         var attribs = this.model.toJSON();
         $(this.el).html(this.template(attribs));
         $(this.el).addClass('trail_card_panel');
+        
+        var nRating = this.model.get('rating');
+        $.each($('.star', $(this.el)), function(index, value){
+          switch (index) {
+          	case 0:
+          	  if (nRating > 0) {
+          	    $(this).addClass('star_full');          	  	
+          	  }
+          	  break;
+          	case 1:
+          	  if (nRating > 1) {
+          	    $(this).addClass('star_full');          	  	
+          	  }
+          	  break;
+          	case 2:
+          	  if (nRating > 2) {
+          	    $(this).addClass('star_full');          	  	
+          	  }
+          	  break;
+          	case 3:
+          	  if (nRating > 3) {
+          	    $(this).addClass('star_full');          	  	
+          	  }
+          	  break;
+          	case 4:
+          	  if (nRating > 4) {
+          	    $(this).addClass('star_full');          	  	
+          	  }
+          	  break;
+          }
+        });
       
         var imgLoad = imagesLoaded($('.scale', $(this.el)));
         imgLoad.on('always', function(instance) {

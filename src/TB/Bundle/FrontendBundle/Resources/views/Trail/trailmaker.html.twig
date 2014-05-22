@@ -64,7 +64,7 @@ var TB_USER_ID = {{ app.user.id }}
   <div class="panel_content">
   	<div class="panel">
       <div class="content">      
-        <h1 class="tb">Trail Map</h1>
+        <h2 class="tb">Trail Map</h2>
         <div id="uploadGPX_view"></div>
         <div id="uploadGPXprogress_view"></div>
         <div id="uploadGPXerror_view"></div>        
@@ -78,7 +78,7 @@ var TB_USER_ID = {{ app.user.id }}
 
 <script type="text/template" id="trailUploadGPXViewTemplate">
     <div class="desc">
-        <h4 class="tb">Make sure you have your GPX file handy, save it to your computer from your GPX tracking device, and then upload.</h4>
+        <h4 class="tb">Make sure you have your GPX file handy.  If you need help getting a GPX file then please contact Trailburning <a href="mailto:support@trailburning.com">support</a> for assistance.</h4>
     </div>        
     <form id="uploadGPXForm">      
         <span class="btn btn-tb-action btn-tb-large fileinput-button">
@@ -231,7 +231,7 @@ var TB_USER_ID = {{ app.user.id }}
     <div class="panel_content">
         <div class="panel">
             <div class="content">      
-                <h1 class="tb">Upload Photos</h1>
+                <h2 class="tb">Upload Photos</h2>
                 <div class="desc">
                     <h4 class="tb msg" data-singular="Now adding photo..." data-plural="Now adding photos...">Now adding photo...</h4>
                 </div>        
@@ -265,15 +265,18 @@ var TB_USER_ID = {{ app.user.id }}
     <div class="panel_content">
         <div class="panel">
             <div class="content">      
-                <h1 class="tb">Published</h1>
+                <h2 class="tb">Congratulations!</h2>
                 <div class="desc">
                     <h4 class="tb">
-                        Congratulations, your Trail Card has now been published!
-                        <br /><br />
-                        If you have any questions then please do not hesitate to contact Trailburning <a href="mailto:support@trailburning.com">support</a>.
+                        Your Trail Card has now been published.  Please contact <a href="mailto:support@trailburning.com">support</a> if you have any questions.
+						<div class="next_step"><a href="{{ app.request.baseUrl }}/trail/<%= id %>" class="btn btn-tb-action btn-tb-large submit">View your Trail</a></div>                        
+                        Now share share it with the world!
+                        <div class="social">
+							<div><a href="http://www.facebook.com/share.php?u=www.trailburning.com/trail/<%= id %>" class="button facebook" target="_blank">Facebook</a></div><!--
+						 --><div><a href="http://twitter.com/share?text=I&apos;m %23Trailburning!&url={{ app.request.baseUrl }}/trail/<%= id %>" class="button twitter" target="_blank">Twitter</a></div>
+                        </div>                        
                     </h4>
-                </div> 
-                <div class="next_step"><a href="{{ app.request.baseUrl }}/trail/<%= id %>" class="btn btn-tb-action btn-tb-large submit">View your Trail Card</a></div>
+                </div>                 
             </div>
         </div>
 		<div class="step_marker_container">
