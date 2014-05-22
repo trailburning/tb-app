@@ -16,10 +16,7 @@
 {% endblock %}
 
 {% block description %}
-{% if event %}
-{% else %}
-	{{ trail.about }}
-{% endif %}
+{% if event %}{% else %}{{ trail.about }}{% endif %}
 {% endblock %}
 
 {% block og_image %}
