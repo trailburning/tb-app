@@ -21,61 +21,37 @@ border-width:1px;
   height: 100%; 	
 }
 
-#cardsview {
+/* CARDS CONTAINER VIEW */
+/******************************************/
+#cards_container_view {
   position: absolute;
-  top: 0px;
-  width: 290px;
-  height: 100%;	
-  overflow: scroll;
+  top: 164px;
+  left: 40px;	
 }
 
-#trailCards {
-  position: absolute;
-  top: 0px;
+#cards_container_view .nav:hover {
+  cursor: pointer;  	
 }
 
-#cardsview .panel {
+.trailcards .panel {
+  margin: 0px;
+}
+
+.panel_content {
+  width: 100%;
+}
+
+.trail_card_panel {
   position: relative;
-  overflow: inherit;
+  overflow: visible;
 }
 
-#cardsview .trail_card_panel .link:hover {
+#cardsview .link:hover {
   cursor: pointer;  
-}
-
-#cardsview .panel.selected .select_top {
-  position: absolute;
-  top: -5px;
-  left: 240px;
-  width: 25px;
-  height: 25px;
-  background: url("../img/select_top.png") no-repeat top left;
-}
-
-#cardsview .panel.selected .select_bottom {
-  position: absolute;
-  bottom: -5px;
-  left: -5px;
-  width: 25px;
-  height: 25px;
-  background: url("../img/select_bottom.png") no-repeat top left;
 }
 
 #cardsview .summary {
   position: relative;
-}
-
-#cardsview .summary .location {
-  position: absolute;
-  top: 12px;
-  right: 14px;
-  width: 36px;
-  height: 47px;
-  background: url(../icons/location.png) no-repeat top left;
-}
-
-#cardsview .summary .location:hover {
-  cursor: pointer;
 }
 
 #map {
