@@ -32,10 +32,9 @@ define([
       	
       	  $('#trail_player_container').height(486);
       	        
-//      	  $('#trail_player_container .hero').css('top', 0);
-//      	  $('#trail_player_container .player').css('top', 486);
       	  $('#trail_player_container .player').css('top', -100);
       	  $('#trail_player_container .hero').css('top', 0);
+		  $('#trail_player_container .hero .foreground').css('top', 0);
       	            
           $('#trail_player_container .info-hero').css('left', 0);
       	  $('#trail_player_container .info-hero .trail_title').css('left', 180);                                	  
@@ -48,15 +47,15 @@ define([
 
           $('#trail_player_container').addClass('tb-size');
           $('#trail_player_container .hero').addClass('tb-move-vert');
+          $('#trail_player_container .hero .foreground').addClass('tb-move-vert');
       	
 		  $('#trail_player_container .player').show();
       	
       	  self.updatePlayerHeight();
       	
-//      	  $('#trail_player_container .hero').css('top', -50);
-//      	  $('#trail_player_container .player').css('top', 0);
       	  $('#trail_player_container .player').css('top', 0);
       	  $('#trail_player_container .hero').css('top', self.nPlayerHeight + 100);
+      	  $('#trail_player_container .hero .foreground').css('top', 200);
 
           $('#trail_player_container .info-player').css('left', 0);
       	  $('#trail_player_container .info-player .trail_title').css('left', 20);                                	  
@@ -127,14 +126,13 @@ define([
       // force height update for imageScale
       $('#trail_player_container .player .image_container').height(this.nPlayerHeight);
       
-//      $('#trail_player_container .hero').css('top', this.nPlayerHeight);      
-      
       $("img.scale_image_ready").imageScale();	      	
     },
     handleResize: function(){
       // remove transition to avoid seeing grey beneath image when resizing
       $('#trail_player_container').removeClass('tb-size');
       $('#trail_player_container .hero').removeClass('tb-move-vert');
+      $('#trail_player_container .hero .foreground').removeClass('tb-move-vert');
       
       this.updatePlayerHeight();
       
