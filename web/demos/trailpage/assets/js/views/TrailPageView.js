@@ -33,9 +33,15 @@ define([
       	  $('#trail_player_container').height(486);
       	        
 //      	  $('#trail_player_container .hero').css('top', 0);
-//      	  $('#trail_player_container .player').css('top', -50);
+//      	  $('#trail_player_container .player').css('top', 486);
+      	  $('#trail_player_container .player').css('top', -100);
       	  $('#trail_player_container .hero').css('top', 0);
-      	  $('#trail_player_container .player').css('top', 486);
+      	            
+          $('#trail_player_container .info-hero').css('left', 0);
+      	  $('#trail_player_container .info-hero .trail_title').css('left', 180);                                	  
+          
+          $('#trail_player_container .info-player').css('left', -400);      	  
+      	  $('#trail_player_container .info-player .trail_title').css('left', -100);                                	  
         }
         else {
       	  self.bPlayer = true;
@@ -43,12 +49,20 @@ define([
           $('#trail_player_container').addClass('tb-size');
           $('#trail_player_container .hero').addClass('tb-move-vert');
       	
+		  $('#trail_player_container .player').show();
+      	
       	  self.updatePlayerHeight();
       	
-//      	  $('#trail_player_container .hero').css('top', self.nPlayerHeight + 50);
-//      	  $('#trail_player_container .player').css('top', 0);      	      	
-      	  $('#trail_player_container .hero').css('top', -50);
-      	  $('#trail_player_container .player').css('top', 0);      	      	
+//      	  $('#trail_player_container .hero').css('top', -50);
+//      	  $('#trail_player_container .player').css('top', 0);
+      	  $('#trail_player_container .player').css('top', 0);
+      	  $('#trail_player_container .hero').css('top', self.nPlayerHeight + 100);
+
+          $('#trail_player_container .info-player').css('left', 0);
+      	  $('#trail_player_container .info-player .trail_title').css('left', 20);                                	  
+          
+          $('#trail_player_container .info-hero').css('left', -400);
+      	  $('#trail_player_container .info-hero .trail_title').css('left', -100);                
       	
       	  $("img.scale_image_ready").imageScale();
         }
@@ -65,6 +79,9 @@ define([
         // fade in - delay adding class to ensure image is ready  
         $('.hero .fade_on_load').addClass('tb-fade-in');
         $('.hero .image_container').css('opacity', 1);
+        
+      	$('#trail_player_container .info-hero').css('left', 0);      
+      	$('#trail_player_container .info-hero .trail_title').css('left', 180);      
       });
 	  // invoke resrc      
       resrc.resrc($('.hero .scale'));        
@@ -90,7 +107,6 @@ define([
       var nPlayerHeight = 0;      
       var elContentView = $('#bodyview');
       var nContentY = elContentView.position().top;
-      console.log('t:'+nContentY);
       
       nPlayerHeight = Math.round(elContentView.width() * 0.746875);                  
       // check height fits
