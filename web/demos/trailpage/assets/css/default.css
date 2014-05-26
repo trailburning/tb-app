@@ -41,11 +41,7 @@ border-width:1px;
 }
 
 #trail_player_container .hero .background .image_container img {
-  -webkit-filter: blur(10px);
-}
-
-#trail_player_container .hero .background.test1 .image_container img {
-  -webkit-filter: blur(0px);
+  -webkit-filter: blur(8px);
 }
 
 #trail_player_container .hero .foreground {
