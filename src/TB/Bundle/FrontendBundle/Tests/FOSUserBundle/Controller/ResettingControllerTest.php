@@ -35,7 +35,8 @@ class ResettingControllerTest extends AbstractFrontendTest
         ));     
             
         $client->submit($form);
-        $this->assertTrue($client->getResponse()->isRedirect('/resetting/check-email?email=...%40mattallbeury'));
+        
+        $this->assertTrue($client->getResponse()->isRedirect('/resetting/check-email?email=...%40trailburning.com'));
         
         // get mailer collector to check the resetting mail    
         $mailCollector = $client->getProfile()->getCollector('swiftmailer');
@@ -75,6 +76,7 @@ class ResettingControllerTest extends AbstractFrontendTest
         ));     
         
         $client->submit($form);
+        
         $this->assertTrue($client->getResponse()->isRedirect('/'));
         
         // check redirect to homepage after reset
