@@ -45,10 +45,16 @@ define([
       $("img.scale_image_ready").imageScale();
     }
     
-    $('#footerview').show();    
+    $('#footerview').show();
 
     // add input text element for the location autlosuggest
-    $('#fos_user_registration_form_location').parent().append('<input type="text" id="location_autosuggest" name="" />');
+    var locationAutosuggest = document.createElement('input');
+    locationAutosuggest.type = 'text';
+    locationAutosuggest.id = 'location_autosuggest';
+    locationAutosuggest.value = '';
+    locationAutosuggest.placeholder = '';
+    
+    $('#fos_user_profile_form_location').parent().append(locationAutosuggest);
     
 	$('#location_autosuggest').keydown(function (e) {
   		if (e.which == 13 && $('.pac-container:visible').length) {
@@ -56,11 +62,30 @@ define([
   		}
 	});
     
-    // set a high tabindex so the user doesn't tab to the field when tabbing through the register form
-    $('#fos_user_registration_form_location').attr('tabindex', 999)
+    geocoder = new google.maps.Geocoder();
     
+    var input = document.getElementById('fos_user_profile_form_location').value;
+    input = input.replace('(','');
+    input = input.replace(')','');
+    var latlngStr = input.split(',', 2);
+    var lat = parseFloat(latlngStr[0]);
+    var lng = parseFloat(latlngStr[1]);
+    var latlng = new google.maps.LatLng(lat, lng);
+    
+    geocoder.geocode({'latLng': latlng}, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+            if (results[1]) {
+                var locationValue = results[1].address_components[2].long_name;
+                locationAutosuggest.value = locationValue;
+            }
+        } 
+    });
+        
+    // set a high tabindex so the user doesn't tab to the field when tabbing through the register form
+    $('#fos_user_profile_form_location').attr('tabindex', 999)
+        
     // remove html5 checking because the field gets hidden from the user
-    $('#fos_user_registration_form_location').removeAttr('required');
+    $('#fos_user_profile_form_location').removeAttr('required');
     
     // Create the autocomplete object, restricting the search
     // to geographical location types.
@@ -72,8 +97,8 @@ define([
     google.maps.event.addListener(autocomplete, 'place_changed', function() {
         var place = autocomplete.getPlace();
         if (place.geometry != undefined) {
-		  $('#fos_user_registration_form_location').val(place.geometry.location.toString());        	
-        }        
+        	$('#fos_user_profile_form_location').val(place.geometry.location.toString());
+        }
     });
     
     // sets the users current location as preferred area within which to return Place result

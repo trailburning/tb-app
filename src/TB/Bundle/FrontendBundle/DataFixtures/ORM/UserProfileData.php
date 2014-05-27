@@ -17,7 +17,7 @@ class UserProfileData extends AbstractFixture implements FixtureInterface
         $user = new UserProfile();
         $user->setFirstName('Matt');
         $user->setLastName('Allbeury');
-        $user->setEmail('email@mattallbeury');
+        $user->setEmail('mattallbeury@trailburning.com');
         $user->setPlainPassword('password');
         $user->setAbout('For me Trailburning is about connecting with nature, sharing great trail experiences with other like minded individuals. It\'s also about discovery but at the end of the day it\'s about just getting out there!');
         $user->setAvatar('avatar_ma.png');
@@ -32,7 +32,7 @@ class UserProfileData extends AbstractFixture implements FixtureInterface
         $user = new UserProfile();
         $user->setFirstName('Paul');
         $user->setLastName('Tran');
-        $user->setEmail('email@paultran');
+        $user->setEmail('paultran@trailburning.com');
         $user->setPlainPassword('password');
         $user->setAbout('I get so much joy out of running trails that I want to share it with others.');
         $user->setAvatar('avatar_pt.png');

@@ -60,9 +60,12 @@ abstract class AbstractFrontendTest extends WebTestCase
     protected function getUser($name)
     {
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $user = $em
-            ->getRepository('TBFrontendBundle:User')
-            ->findOneByName($name);
+        
+        $query = $this->getContainer()->get('doctrine.orm.entity_manager')
+            ->createQuery('SELECT u FROM TBFrontendBundle:User u WHERE u.name = :name')
+            ->setParameter('name', $name);
+
+        $user = $query->getSingleResult();
         
         if (!$user) {
             $this->fail(sprintf('Missing User with name "%s" in test DB', $name));

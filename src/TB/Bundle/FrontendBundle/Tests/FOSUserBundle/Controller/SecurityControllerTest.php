@@ -33,7 +33,7 @@ class SecurityControllerTest extends AbstractFrontendTest
             'User is authenticated anonymously');
                 
         $form = $crawler->filter('#_submit')->form(array(
-            '_username'  => 'email@mattallbeury',
+            '_username'  => 'mattallbeury@trailburning.com',
             '_password' => 'password',
             ));     
             
