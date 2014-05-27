@@ -202,6 +202,11 @@ h4.tb {
   overflow: hidden;		
 }
 
+a:hover .tb-cntrl,
+a:active .tb-cntrl {
+  background-position: 0 -52px;    
+}
+
 .tb-cntrl.icon-cards {
   background-image: url("../icons/buttons/cards.gif");
 }

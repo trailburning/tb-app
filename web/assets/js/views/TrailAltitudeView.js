@@ -18,6 +18,7 @@ define([
       this.currElMarker = null;
       
       this.objTrailMarginRect = new Object();
+      this.strLineColour = '#44B6FC';
       this.objTrailMarginRect.left = 75;// allow space to alt title
       this.objTrailMarginRect.right = 50;
       this.objTrailMarginRect.top = 40;
@@ -238,7 +239,7 @@ define([
         this.context.lineTo(nXOffset + self.objTrailMarginRect.left + self.nDrawWidth, nY);
       }        
       this.context.lineWidth = 4;
-      this.context.strokeStyle = 'rgba(68,182,252,1)';
+      this.context.strokeStyle = this.strLineColour;
       this.context.stroke();      
     },
     renderMarkers: function() {

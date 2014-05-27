@@ -1,0 +1,48 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+{% trans_default_domain 'FOSUserBundle' %}
+{% form_theme form 'TBFrontendBundle:Form:default.html.twig' %}
+
+{% block stylesheets %}
+<link href="{{ asset('assets/css/signup.css') }}" rel="stylesheet" type="text/css">
+{% endblock %}
+
+
+{% block fos_user_content %}
+
+{% set breadcrumb = [] %}
+
+<script>
+var TB_APP = 'EditProfileApp';
+{% if app.user %}		
+var TB_USER_ID = {{ app.user.id }};
+{% endif %}
+</script>
+
+<div id="contentview" class="clearfix">
+	<div class="panel_content">
+    	<div class="panel">
+      		<div class="content">
+        	<h1 class="tb">Edit profile</h1>
+			<form id="profile_edit_form" action="{{ path('fos_user_profile_edit') }}" {{ form_enctype(form) }} method="POST" class="fos_user_profile_edit">
+	                    
+	        {{ form_errors(form) }}
+
+	        {{ form_row(form.firstName) }}
+	        {{ form_row(form.lastName) }}
+            {{ form_row(form.location) }}
+            {{ form_row(form.about) }}
+            {{ form_row(form.gender) }}	
+            {{ form_row(form.newsletter) }}
+
+			<div class="next_step"><button type="submit" id="signup" name="submit" class="btn btn-tb-action btn-tb-large">Save profile</button></div>
+	        {{ form_row(form._token) }}
+	        </form>
+      		</div>
+    	</div>
+    	<div class="step_marker_container">
+    		<div class="step_marker tb-step"><div class="photo"><img src="{{ asset('assets/img/steps') }}/step_signin.jpg"></div></div>
+    	</div>	                    	
+	</div>
+</div>
+
+{% endblock fos_user_content %}
