@@ -56,6 +56,12 @@ define([
     
     $('#fos_user_profile_form_location').parent().append(locationAutosuggest);
     
+	$('#location_autosuggest').keydown(function (e) {
+  		if (e.which == 13 && $('.pac-container:visible').length) {
+  			return false;
+  		}
+	});
+    
     geocoder = new google.maps.Geocoder();
     
     var input = document.getElementById('fos_user_profile_form_location').value;
@@ -74,16 +80,10 @@ define([
             }
         } 
     });
-    
-    // hide the location input field that will hold the raw long tat value of the location
-    $('#fos_user_profile_form_location')
-        .css('position', 'absolute')
-        .css('top', '-9999px')
-        .css('left', '-9999px');
-    
+        
     // set a high tabindex so the user doesn't tab to the field when tabbing through the register form
     $('#fos_user_profile_form_location').attr('tabindex', 999)
-    
+        
     // remove html5 checking because the field gets hidden from the user
     $('#fos_user_profile_form_location').removeAttr('required');
     
@@ -96,7 +96,9 @@ define([
     // When the user selects an address from the dropdown, set the location
     google.maps.event.addListener(autocomplete, 'place_changed', function() {
         var place = autocomplete.getPlace();
-        $('#fos_user_profile_form_location').val(place.geometry.location.toString());
+        if (place.geometry != undefined) {
+        	$('#fos_user_profile_form_location').val(place.geometry.location.toString());
+        }
     });
     
     // sets the users current location as preferred area within which to return Place result

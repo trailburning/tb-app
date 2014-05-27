@@ -50,11 +50,11 @@ define([
     // add input text element for the location autlosuggest
     $('#fos_user_registration_form_location').parent().append('<input type="text" id="location_autosuggest" name="" />');
     
-    // hide the location input field that will hold the raw long tat value of the location
-    $('#fos_user_registration_form_location')
-        .css('position', 'absolute')
-        .css('top', '-9999px')
-        .css('left', '-9999px');
+	$('#location_autosuggest').keydown(function (e) {
+  		if (e.which == 13 && $('.pac-container:visible').length) {
+  			return false;
+  		}
+	});
     
     // set a high tabindex so the user doesn't tab to the field when tabbing through the register form
     $('#fos_user_registration_form_location').attr('tabindex', 999)
@@ -71,7 +71,9 @@ define([
     // When the user selects an address from the dropdown, set the location
     google.maps.event.addListener(autocomplete, 'place_changed', function() {
         var place = autocomplete.getPlace();
-        $('#fos_user_registration_form_location').val(place.geometry.location.toString());
+        if (place.geometry != undefined) {
+		  $('#fos_user_registration_form_location').val(place.geometry.location.toString());        	
+        }        
     });
     
     // sets the users current location as preferred area within which to return Place result

@@ -29,6 +29,12 @@ a:active {
   min-height: 800px;
 }
 
+#fos_user_registration_form_location, #fos_user_profile_form_location {
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+}
+
 /* PANEL CONTENT */
 /******************************************/
 .panel_content {
@@ -119,13 +125,13 @@ a:active {
 }
 
 .dropdown-menu>li>a {
-display: block;
-padding: 3px 20px;
-clear: both;
-font-weight: normal;
-line-height: 20px;
-color: #333;
-white-space: nowrap;
+  display: block;
+  padding: 3px 20px;
+  clear: both;
+  font-weight: normal;
+  line-height: 20px;
+  color: #333;
+  white-space: nowrap;
 }
 
 .panel_content textarea {
@@ -136,6 +142,7 @@ white-space: nowrap;
   background: #F0F0F0;
   color: #979797;
   font-size: 22px;
+  line-height: 1.2em;
 }
 
 .panel_content .option_text {
