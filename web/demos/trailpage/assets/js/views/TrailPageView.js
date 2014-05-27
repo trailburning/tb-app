@@ -32,11 +32,13 @@ define([
           $('#trail_player_container .hero').addClass('tb-move-vert');
       	
       	  $('#trail_player_container').height(486);
-      	        
-  		  $('#trail_player_container .player').css('top', 486);
+      	  
       	  $('#trail_player_container .hero').css('top', 0);      	  
-      	  $('#trail_player_container .break').css('top', 486);
-      	  $('#trail_player_container .break').height(600);
+      	  $('#trail_player_container .hero .mask').height(486);
+      	        
+  		  $('#trail_player_container .player').css('top', 486);  		 
+      	  $('#trail_player_container .player .foreground').css('top', -200);      	        	            
+      	  $('#trail_player_container .player .mask').css('top', 200);
       	            
           $('#trail_player_container .info-hero').css('left', 0);
       	  $('#trail_player_container .info-hero .trail_title').css('left', 180);                                	  
@@ -49,17 +51,21 @@ define([
 
           $('#trail_player_container').addClass('tb-size');
           $('#trail_player_container .player').addClass('tb-move-vert');
+          $('#trail_player_container .player .foreground').addClass('tb-move-vert');
+          $('#trail_player_container .player .mask').addClass('move-vert-size');
           $('#trail_player_container .hero').addClass('tb-move-vert');
           $('#trail_player_container .hero .foreground').addClass('tb-move-vert');
       	
       	  self.updatePlayerHeight();
       	
       	  $('#trail_player_container .player').css('visibility', 'visible');
+
+      	  $('#trail_player_container .hero').css('top', -200);
+      	  $('#trail_player_container .hero .mask').height(100);
       	
       	  $('#trail_player_container .player').css('top', 0);
-      	  $('#trail_player_container .hero').css('top', -686);
-      	  $('#trail_player_container .break').css('top', -500);
-      	  $('#trail_player_container .break').height(500);
+		  $('#trail_player_container .player .foreground').css('top', 0);
+      	  $('#trail_player_container .player .mask').css('top', 0);
 
           $('#trail_player_container .info-player').css('left', 0);
       	  $('#trail_player_container .info-player .trail_title').css('left', 20);                                	  

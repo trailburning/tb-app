@@ -18,6 +18,7 @@ border-width:1px;
   width: 100%;
   height: 486px;
   overflow: hidden;
+  background: #FFF;
 }
 
 #trail_player_container .hero {
@@ -27,11 +28,19 @@ border-width:1px;
   height: 486px;
 }
 
-#trail_player_container .hero .background {
+#trail_player_container .hero .mask {
   position: absolute;
   top: 0px;
   width: 100%;
   height: 100%;
+  overflow: hidden;
+}
+
+#trail_player_container .hero .background {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  height: 486px;
   overflow: hidden;
 }
 
@@ -49,7 +58,7 @@ border-width:1px;
   position: absolute;
   top: 0px;
   width: 100%;
-  height: 100%;
+  height: 486px;
 }
 
 #trail_player_container .hero .foreground .image_container {
@@ -66,14 +75,6 @@ border-width:1px;
   height: 100%;
 }
 
-#trail_player_container .break {
-  position: absolute;
-  top: 486px;
-  width: 100%;
-  height: 600px;
-  background: #202020;
-}
-
 #trail_player_container .player {
   visibility: hidden;
   position: absolute;
@@ -82,8 +83,17 @@ border-width:1px;
   height: 100%;
 }
 
+#trail_player_container .player .mask {
+  position: absolute;
+  top: 200px;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
 #trail_player_container .player .foreground {
   position: absolute;
+  top: -200px;
   width: 100%;
   height: 100%;
 }
@@ -173,14 +183,6 @@ border-width:1px;
   -o-transition: left 2s;
   transition: left 2s;    
   -webkit-transform:translate3d(0,0,0);              
-}
-
-.move-vert-size {
-  -webkit-transition: top 2s, height 2s;
-  -moz-transition: top 2s, height 2s;
-  -o-transition: top 2s, height 2s;
-  transition: top 2s, height 2s;    
-  -webkit-transform:translate3d(0,0,0);
 }
 
 .move-vert-size {
