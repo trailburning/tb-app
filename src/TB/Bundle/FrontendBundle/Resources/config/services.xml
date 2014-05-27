@@ -39,6 +39,12 @@
             <tag name="kernel.event_subscriber" />
         </service>
         
+        <!-- Register event listener to redirect to the user profile page after editing the profile -->
+        <service id="change_password_complete" class="TB\Bundle\FrontendBundle\EventListener\ProfileEditSuccessListener">
+            <argument type="service" id="router" />
+            <tag name="kernel.event_subscriber" />
+        </service>
+        
         <!-- Register event listener to post the email to mailproxy after registration -->
         <service id="registration_completed" class="TB\Bundle\FrontendBundle\EventListener\RegistrationCompletedListener">
             <argument type="service" id="service_container" />

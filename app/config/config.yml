@@ -91,6 +91,9 @@ fos_user:
     registration:
         form:
             type: tb_user_registration
+    profile:
+        form:
+            type: tb_user_profile
     from_email:
             address:        email@trailburning.com
             sender_name:    email@trailburning.com
