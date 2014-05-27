@@ -39,11 +39,11 @@ class TBExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('user_is_following',  array($this, 'userIsFollowing')),
-            new \Twig_SimpleFunction('route_has_user_like',  array($this, 'routeHasUserLike')),
-            new \Twig_SimpleFunction('extract_entity',  array($this, 'extractEntity')),
-            new \Twig_SimpleFunction('get_share_media',  array($this, 'getShareMedia')),
-            new \Twig_SimpleFunction('get_user_avatar_url',  array($this, 'getUserAvatarUrl')),
+            new \Twig_SimpleFunction('user_is_following', array($this, 'userIsFollowing')),
+            new \Twig_SimpleFunction('route_has_user_like', array($this, 'routeHasUserLike')),
+            new \Twig_SimpleFunction('extract_entity', array($this, 'extractEntity')),
+            new \Twig_SimpleFunction('get_share_media', array($this, 'getShareMedia')),
+            new \Twig_SimpleFunction('get_user_avatar_url', array($this, 'getUserAvatarUrl')),
         );
     }
     
@@ -146,17 +146,8 @@ class TBExtension extends \Twig_Extension
     public function getUserAvatarUrl(User $user)
     {
         $url = '';
-        if ($user->getAvatar()) {
-            $url = sprintf('http://assets.trailburning.com/images/profile/%s/%s', $user->getName(), $user->getAvatar());
-        } elseif ($user->getAvatarGravatar()) {
-            $url = $user->getAvatarGravatar();
-        } elseif($user->getGender() === User::GENDER_FEMALE) {
-            $url = 'http://assets.trailburning.com/images/icons/avatars/avatar_woman.jpg';
-        } else {
-            $url = 'http://assets.trailburning.com/images/icons/avatars/avatar_man.jpg';
-        }
         
-        return $url;
+        return $user->getAvatarUrl();
     }
 
     public function getName()

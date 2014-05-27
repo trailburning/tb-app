@@ -2,13 +2,7 @@
 	<div id='profile_map_view'></div>  
 	<div class="profile_info">		
     	<div class="tb-avatar tb-avatar-feature"><div class="photo">
-            {% if user.avatar %}
-                <img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/{{ user.name }}/avatar.jpg">
-            {% elseif user.avatarGravatar %}
-                <img src="{{ user.avatarGravatar }}">
-            {% else %}
-                <img src="{{ asset('assets/img/avatar_man.jpg') }}">
-            {% endif %}
+            <img src="{{ get_user_avatar_url(user) }}">
         </div></div>		    	
 		<div class="profile_title">
 	    <h2 class="tb tb-title">{{ user.firstName }}</h2>
