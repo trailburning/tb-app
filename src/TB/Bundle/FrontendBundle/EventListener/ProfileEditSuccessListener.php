@@ -7,6 +7,7 @@ use FOS\UserBundle\Event\FormEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Redirect to the homepage after editing the profile
@@ -14,9 +15,11 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class ProfileEditSuccessListener implements EventSubscriberInterface
 {
     private $router;
+    private $container;
 
-    public function __construct(UrlGeneratorInterface $router)
+    public function __construct(ContainerInterface $container, UrlGeneratorInterface $router)
     {
+        $this->container = $container;
         $this->router = $router;
     }
 
@@ -32,7 +35,8 @@ class ProfileEditSuccessListener implements EventSubscriberInterface
 
     public function onProfileEditSuccess(FormEvent $event)
     {
-        $url = $this->router->generate('homepage');
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        $url = $this->router->generate('profile', ['name' => $user->getName()]);
 
         $event->setResponse(new RedirectResponse($url));
     }

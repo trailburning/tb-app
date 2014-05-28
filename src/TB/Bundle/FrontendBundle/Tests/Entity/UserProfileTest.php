@@ -91,7 +91,7 @@ class UserProfileTest extends AbstractFrontendTest
             'id' => $user->getId(),
             'displayName' => 'Matt Allbeury',
             'image' => [
-                'url' => 'https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/mattallbeury/avatar.jpg',
+                'url' => 'http://assets.trailburning.com/images/profile/mattallbeury/avatar_ma.png',
             ],
         ];
         
