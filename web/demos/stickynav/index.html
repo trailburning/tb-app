@@ -1,0 +1,395 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta property="og:title" content="Running wild in the
+South Australian bush"/>
+        <meta property="og:description" content=""/>
+        <meta property="og:url" content="http://localhost:8888/trailburning/app_dev.php/inspire/wild"/>
+        <meta property="og:image" content="http://www.trailburning.com/assets/img/social/tb_profile_icon.png"/>
+        <meta name="p:domain_verify" content="256bd9708ee58af0b0c1e324e5467bf1"/>
+                <title>Running wild in the
+South Australian bush</title>
+        <link rel="icon" type="image/x-icon" href="/trailburning/favicon.ico" />
+        <link href="http://fonts.googleapis.com/css?family=Signika:400,300,700" rel="stylesheet">
+        <link href="http://api.tiles.mapbox.com/mapbox.js/v1.6.3/mapbox.css" rel="stylesheet">
+        
+        <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="assets/css/bootstrap-responsive.min.css" rel="stylesheet">
+        <link href="assets/css/bootstrap-select.min.css" rel="stylesheet">
+        
+        <link href="assets/css/common_ui.css" rel="stylesheet" type="text/css">
+        <link href="assets/css/common_cards.css" rel="stylesheet" type="text/css">
+        
+		<link href='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css' rel='stylesheet' />
+		<link href='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css' rel='stylesheet' />    
+        
+        <link href="assets/css/editorial.css" rel="stylesheet" type="text/css">
+        <script>
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-45211566-1']);
+            _gaq.push(['_trackPageview']);
+            
+            (function() {
+              var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+              ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+              var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+
+            function trackOutboundLink(link, category, action) { 
+              try { _gaq.push(['_trackEvent', category , action]); } catch(err){}   
+              setTimeout(function() {window.open(link.href, '_blank');}, 100);
+            }
+            var TB_RESTAPI_BASEURL = 'http://localhost:8888/trailburning_api/app_dev.php';
+                        var TB_RESTAPI_USER = {"id":2,"name":"mattallbeury","firstName":"Matt","lastName":"Allbeury","location":{}};
+                    </script>
+    </head>
+    <body>
+        <div id="appview">      
+            <div id="headerview">
+                <div class="left">
+                    <a href="/trailburning/app_dev.php/"><img src="/trailburning/assets/img/header/tb_logo.gif" width="102" height="46" border="0"></a>
+                </div>    
+                
+			    <div class="right navbar">
+                					    	<div class="profile">
+				    		<ul class="nav pull-right">
+						    	<li class="dropdown">
+						    	<a href="#" class="dropdown-toggle show_activity" data-toggle="dropdown">
+						    	<div class="tb-avatar"><div class="photo">        
+		            	  		    <img src="http://www.gravatar.com/avatar/e426b949d824bc81fe01caf1ad88abd7">
+								</div></div>			
+								 		        		
+						    	</a>
+						        <ul class="dropdown-menu activity-menu">
+						        	<div class="header">
+						        		<div class="title"><h4 class="tb">Activity</h4></div>
+						        		<div class="viewprofile"><a href="/trailburning/app_dev.php/profile/mattallbeury">View profile</a></div>
+						        	</div>
+						        	
+						        	<div class="activity_list_container">
+						        	  <div id="activity_feed_view" class="activity_list tb-move"></div>
+						        	</div>
+						
+						        	<div class="footer">
+						  				<div class="profile_btn"><a href="javascript:void(0)" class="btn btn-tb btn-tb-small more_btn" disabled="disabled">More notifications</a></div>
+						        		<div class="signout"><a href="/trailburning/app_dev.php/logout">Sign out</a></div>
+						        	</div>
+						        </ul>
+						    	</li>
+				    		</ul>
+				      	</div>
+			    				      
+			      	<div class="links">
+						<div class="link main"><a href="/trailburning/app_dev.php/tour">Discover Trailburning</a></div>			      	
+						<div class="link main"><a href="/trailburning/app_dev.php/inspire">Inspire</a></div>			      	
+			      	</div>
+			      	<div class="discover">
+			<!--      	
+			        <form id="search_form">
+			        <input type="text" id="search_field" name="discover">
+			        <input type="submit" class="search-btn">        
+			        </form>
+			-->        
+			    	</div>
+			    </div>    
+                
+                <div class="trans-line"></div>        
+            </div>    
+
+			<div id="bodyview">
+            <script>
+var TB_APP = 'EditorialApp';
+		
+var TB_USER_ID = 2;
+var TB_EDITORIAL_TRAILS = [
+            { long: 138.717525129, lat: -34.9165088553, short_name: "Yurrebilla", region: "Adelaide Hills", url: "/trailburning/app_dev.php/inspire/wild/trail/yurrebilla" },          
+            { long: 138.707998709, lat: -34.904788908, short_name: "Morialta Loop", region: "Adelaide Hills", url: "/trailburning/app_dev.php/inspire/wild/trail/morialtaloop" },          
+            { long: 138.687771561, lat: -34.9566380904, short_name: "Chambers Gully", region: "Adelaide Hills", url: "/trailburning/app_dev.php/inspire/wild/trail/chambers-gully-adelaide-hills" },          
+    ];
+</script>
+
+<div id="big_sponsor_bar">
+	<div class="sponsor_content">
+		<div class="link"><a href="/trailburning/app_dev.php/inspire"><img src="/trailburning/assets/img/sponsor/arrow_big.png">&nbsp;&nbsp;&nbsp;&nbsp;Back to Inspire</a></div>
+		<div class="brand">
+			<div class="strap">brought to you by</div>
+			<div class="logo"><a href="/trailburning/app_dev.php/profile/ashmei"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/ashmei/editorial_sponsor_logo_big.png" border="0"></a></div>
+		</div>
+		<div class="inspire_logo"><img src="/trailburning/assets/img/sponsor/inspire_logo.png"></div>						
+	</div>
+</div>
+
+<div id="small_sponsor_bar">
+	<div class="sponsor_content">
+		<div class="link"><a href="/trailburning/app_dev.php/inspire"><img src="/trailburning/assets/img/sponsor/arrow_small.png">&nbsp;&nbsp;&nbsp;&nbsp;Back to Inspire</a></div>
+		<div class="brand">
+			<div class="strap">brought to you by</div>
+			<div class="logo"><a href="/trailburning/app_dev.php/profile/ashmei"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/ashmei/editorial_sponsor_logo_small.png" border="0"></a></div>
+		</div>
+	</div>
+</div>
+
+<div class="panel_content">          
+	<div class="panels clearfix">               	
+		<div class="panel editorial_panel">
+	  		<div class="header clearfix">
+	  			<div class="title"><h1 class="tb">Running wild in the<br />
+South Australian bush</h1></div>
+	  			<div class="tb-avatar tb-avatar-feature"><div class="photo"><a href="/trailburning/app_dev.php/profile/mattallbeury">
+            	<img src="http://www.gravatar.com/avatar/e426b949d824bc81fe01caf1ad88abd7">
+	  			</a></div></div>
+	  		</div>
+	  		<div class="hero">
+				<div class="image_container fade_on_load"><img src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/editorial/wild/image_edited2.jpg" class="scale"></div>
+							</div>
+	  		<div class="content">
+	  			<div class="content_header">
+		  			<div class="header">by <strong>Matt Allbeury</strong>&nbsp;&nbsp;&nbsp;<span class="date">08/04/2014</span></div>
+		  			<div class="line"></div>
+		  			<div class="share_bar">
+      					        
+<div class="compact_share btn-group dropup">
+  <a class="btn btn-primary btn-tb-action btn-tb dropdown-toggle" data-toggle="dropdown" href="#">Share <span class="caret"></span></a>
+  <ul class="dropdown-menu pull-right">
+	<li class="clearfix"><a href="http://www.facebook.com/share.php?u=localhost%3A8888%2Ftrailburning%2Fapp_dev.php%2Finspire%2Fwild" target="_blank" class="clearfix"><div class="logo"><img src="/trailburning/assets/icons/share/share_facebook.png"></div><div class="detail">Facebook</div></a></li>
+	<li class="clearfix"><a href="https://plus.google.com/share?url=localhost%3A8888%2Ftrailburning%2Fapp_dev.php%2Finspire%2Fwild" target="_blank" class="clearfix"><div class="logo"><img src="/trailburning/assets/icons/share/share_googleplus.png"></div><div class="detail">Google+</div></a></li>
+	<li class="clearfix"><a href="http://twitter.com/share?text=Are+you+trailburning%3F&url=localhost%3A8888%2Ftrailburning%2Fapp_dev.php%2Finspire%2Fwild" target="_blank" class="clearfix"><div class="logo"><img src="/trailburning/assets/icons/share/share_twitter.png"></div><div class="detail">Twitter</div></a></li>
+  </ul>
+</div>                    
+ 	  				
+		  			</div>
+	  			</div>	  			
+	  			
+				<div id="column_wrapper_intro" class="column_wrapper">
+	  			<div class="columns">
+								<h4 class="tb">				  				
+It was just after dawn and there was a heavy mist covering the hills as we pushed deeper into the bush, but then our run became something unexpected as we glimpsed our first kangaroo through the mist, and then another, and another.  We were running through a herd of wild kangaroo and our hearts raced, it was something almost primeval.  There we were running amongst wild animals with a sense that we too were wild.  At that moment I felt I understood what it means to run - it’s not about speed, distance or the finish line; to run is to run wild, as wild as an animal.
+				</h4>
+				<p>
+I was running with Paul Tran and it was our first serious trail run in the Adelaide Hills.  Both of us had spent many years in the shadows of the hills, Paul as a native Adelaidean and myself as a long term resident, and yet neither of us had spent a great deal of time in them.  Certainly never off the ‘beaten track’ as we were on this misty morning anyway.
+				</p>
+				<p>
+I was back in Adelaide from Europe where I’d recently discovered a passion for trail running in the Alps and wanted to explore an area that had been on my doorstep for the many years I’d been an Adelaide resident, Paul was training for a triathlon and was on one of his first trail runs.  We researched a half marathon route and started at the base of the hills in the suburb of Burnside, climbing up to just over 700 metres to Mt Lofty before heading back via Chambers Gully, looping back to our start point down in the suburbs.
+				</p>
+				<p>
+This run was to affect both of us quite profoundly.  Paul has since gone on to competitive finishes in both the Yurrebilla 56 km and Heysen 105 km trail events.  He can be found at dawn every Thursday in the Adelaide Hills, running with a bunch of likeminded individuals.
+				</p>
+				<p>
+Myself, well for me this is where Trailburning started.  I felt that such was the experience of running wild, running purely for the enjoyment of it, that there should be a platform to share such experiences.  What if there was a way for anyone to share their trail, inspiring others to discover the hidden treasures of their own backyard, what if?
+				</p>
+								
+	  			</div>	  			
+	  			</div>	  			
+	  			
+	  			<div id="trail_header" class="section_header clearfix">
+		  			<div class="header"><h2 class="tb">Discover the Trails</h2></div>
+		  			<div class="line"></div>
+	  			</div>
+
+				
+				<div class="single_region">		  				
+
+				<div id="editorial_region_view">		  				
+					<div id="editorial_map_view" class="editorial_map"></div>		  				
+	            	<div class='border_top'></div>
+	            	<div class='border_left'></div>
+  				</div>
+
+				<div class="editorial_cards clearfix">
+                                							<div class="editorial_card">
+							<div class="sticker_container">			
+							<div class="trail_card_sticker">
+	<div class="panel trail_card_panel">
+		<div class="title"><h3 class="tb">Bush</h3></div>
+        <a href="/trailburning/app_dev.php/inspire/wild/trail/yurrebilla">
+        <div class="photo tb-photo-btn">
+        	<div class="image_container"><img src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/trailburning-media/4018a342d24e80d9b6c456422557339de1f2adde.jpg" class="resrc scale" border="0"/></div>
+          	<div class="card_title">
+            <h1>Yurrebilla</h1>
+            <br />
+            <h1>Adelaide Hills</h1>
+        	</div>
+       	</div>
+        </a>
+        <div class="summary">
+               		<div class="tb-avatar"><div class="photo"><a href="/trailburning/app_dev.php/profile/paultran">		          	
+    	  	<img src="http://www.gravatar.com/avatar/5889ab29b92ea2bc3547770b9427310b">
+          	</a></div></div>
+	        <div class="detail">
+	            by <strong>Paul Tran</strong>
+				<div class="stars">
+      <div class="star_full"></div>
+  
+      <div class="star_half"></div>
+  
+  	<div class="star"></div>
+  
+  	<div class="star"></div>
+  
+  	<div class="star"></div>
+  </div>
+
+	      	</div>
+                </div>
+ 	</div>						 	
+</div> 
+							</div>
+						</div>							
+                    						<div class="editorial_card">
+							<div class="sticker_container">			
+							<div class="trail_card_sticker">
+	<div class="panel trail_card_panel">
+		<div class="title"><h3 class="tb">Bush</h3></div>
+        <a href="/trailburning/app_dev.php/inspire/wild/trail/morialtaloop">
+        <div class="photo tb-photo-btn">
+        	<div class="image_container"><img src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/trailburning-media/5e8aed09b86ea4565604e9591882d2c324f1812d.jpg" class="resrc scale" border="0"/></div>
+          	<div class="card_title">
+            <h1>Morialta Loop</h1>
+            <br />
+            <h1>Adelaide Hills</h1>
+        	</div>
+       	</div>
+        </a>
+        <div class="summary">
+               		<div class="tb-avatar"><div class="photo"><a href="/trailburning/app_dev.php/profile/paultran">		          	
+    	  	<img src="http://www.gravatar.com/avatar/5889ab29b92ea2bc3547770b9427310b">
+          	</a></div></div>
+	        <div class="detail">
+	            by <strong>Paul Tran</strong>
+				<div class="stars">
+      <div class="star_full"></div>
+  
+      <div class="star_half"></div>
+  
+  	<div class="star"></div>
+  
+  	<div class="star"></div>
+  
+  	<div class="star"></div>
+  </div>
+
+	      	</div>
+                </div>
+ 	</div>						 	
+</div> 
+							</div>
+						</div>							
+                    						<div class="editorial_card">
+							<div class="sticker_container">			
+							<div class="trail_card_sticker">
+	<div class="panel trail_card_panel">
+		<div class="title"><h3 class="tb">Bush</h3></div>
+        <a href="/trailburning/app_dev.php/inspire/wild/trail/chambers-gully-adelaide-hills">
+        <div class="photo tb-photo-btn">
+        	<div class="image_container"><img src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/trailburning-media/164/ea3f2f941c5ae02d4f7234381df401ff5a313c0e.jpg" class="resrc scale" border="0"/></div>
+          	<div class="card_title">
+            <h1>Chambers Gully</h1>
+            <br />
+            <h1>Adelaide Hills</h1>
+        	</div>
+       	</div>
+        </a>
+        <div class="summary">
+               		<div class="tb-avatar"><div class="photo"><a href="/trailburning/app_dev.php/profile/mattallbeury">		          	
+    	  	<img src="http://www.gravatar.com/avatar/e426b949d824bc81fe01caf1ad88abd7">
+          	</a></div></div>
+	        <div class="detail">
+	            by <strong>Matt Allbeury</strong>
+				<div class="stars">
+      <div class="star_full"></div>
+  
+  	<div class="star"></div>
+  
+  	<div class="star"></div>
+  
+  	<div class="star"></div>
+  
+  	<div class="star"></div>
+  </div>
+
+	      	</div>
+                </div>
+ 	</div>						 	
+</div> 
+							</div>
+						</div>							
+                    								</div>
+				
+				</div>							
+				
+				
+	  		</div>		  		
+	  	</div>
+	</div>
+</div>  
+
+            </div>
+
+            <div id="footerview">
+                <div class="left">
+                  <div class="copyright">Copyright © 2014, Augmented Media Projects Ltd</div>    
+                  <div class="links">
+                    <div class="link"><a href="/trailburning/app_dev.php/about">About</a></div>
+                    <div class="link"><a href="/trailburning/app_dev.php/presskit">Press Kit</a></div>
+                  </div>
+                </div>
+                <div class="right">
+                    <div class="social email"><a href="mailto:hello@trailburning.com" class="button btnEmail">Email</a></div>
+                    <div class="social facebook"><a href="http://www.facebook.com/trailburning" target="_blank" class="button btnFacebook">Facebook</a></div>
+                    <div class="social twitter"><a href="http://www.twitter.com/trailburning" target="_blank" class="button btnTwitter">Twitter</a></div>
+                    <div class="social googleplus"><a href="https://plus.google.com/+Trailburning/posts" target="_blank" class="button btnGooglePlus">Google+</a></div>          
+                    <div class="social pinterest"><a href="https://www.pinterest.com/trailburning/" target="_blank" class="button btnPinterest">Pinterest</a></div>          
+                </div>
+            </div>     
+        </div>      
+
+		<script type="text/template" id="activityFeedViewTemplate">
+		</script>
+
+		<script type="text/template" id="activityFeedItemViewTemplate">
+    	  <a href="/trailburning/app_dev.php<%=  activityURL%>">            	
+	 	  <div class="tb-avatar"><div class="photo"><img src="<%= actorAvatarURL%>"></div></div>	
+    	  <div class="note"><span class="seen <%= displaySeen%>"></span><span class="time"><%= displayPublished%></span><br/><strong> <%= actorDisplayName%></strong> <%= preVerbDisplayName%> <strong><%= verbDisplayName%></strong> <%= subjectDisplayName%>.</div>
+    	  </a>
+		</script>
+
+        <script>
+        resrc = {
+          options: {
+            server: "app.resrc.it",
+            resrcOnLoad: true,
+            resrcOnResize: true,
+            resrcOnPinch: false    
+          }
+        };
+        </script>
+		<script src="//use.resrc.it"></script>
+
+        <script src="assets/js/libs/jquery-1.8.3.min.js"></script>
+        <script src="assets/js/libs/bootstrap.min.js"></script>
+        <script src="assets/js/libs/bootstrap-filestyle.min.js"> </script>
+        <script src="assets/js/libs/bootstrap-select.min.js"></script>
+
+        <script src='http://api.tiles.mapbox.com/mapbox.js/v1.6.3/mapbox.js'></script>
+        <script src='http://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js'></script>
+
+        <script src="assets/js/libs/imagesloaded.pkgd.min.js"></script>
+        <script src="assets/js/libs/image-scale.min.js"></script>
+
+        <script src="assets/js/libs/jquery-dateFormat.min.js"></script>
+
+        <script type="text/template" id="editorialMapViewTemplate">
+  <div id='map'></div>  
+</script>
+<script src="assets/js/libs/jquery.columnizer.js"></script>
+
+
+        <script data-main="assets/js/main" src="assets/js/libs/require.js"></script>        
+    
+<div id="sfwdt3a5565" class="sf-toolbar" style="display: none"></div><script>/*<![CDATA[*/    Sfjs = (function() {        "use strict";        var noop = function() {},            profilerStorageKey = 'sf2/profiler/',            request = function(url, onSuccess, onError, payload, options) {                var xhr = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');                options = options || {};                options.maxTries = options.maxTries || 0;                xhr.open(options.method || 'GET', url, true);                xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');                xhr.onreadystatechange = function(state) {                    if (4 !== xhr.readyState) {                        return null;                    }                    if (xhr.status == 404 && options.maxTries > 1) {                        setTimeout(function(){                            options.maxTries--;                            request(url, onSuccess, onError, payload, options);                        }, 500);                        return null;                    }                    if (200 === xhr.status) {                        (onSuccess || noop)(xhr);                    } else {                        (onError || noop)(xhr);                    }                };                xhr.send(payload || '');            },            hasClass = function(el, klass) {                return el.className.match(new RegExp('\\b' + klass + '\\b'));            },            removeClass = function(el, klass) {                el.className = el.className.replace(new RegExp('\\b' + klass + '\\b'), ' ');            },            addClass = function(el, klass) {                if (!hasClass(el, klass)) { el.className += " " + klass; }            },            getPreference = function(name) {                if (!window.localStorage) {                    return null;                }                return localStorage.getItem(profilerStorageKey + name);            },            setPreference = function(name, value) {                if (!window.localStorage) {                    return null;                }                localStorage.setItem(profilerStorageKey + name, value);            };        return {            hasClass: hasClass,            removeClass: removeClass,            addClass: addClass,            getPreference: getPreference,            setPreference: setPreference,            request: request,            load: function(selector, url, onSuccess, onError, options) {                var el = document.getElementById(selector);                if (el && el.getAttribute('data-sfurl') !== url) {                    request(                        url,                        function(xhr) {                            el.innerHTML = xhr.responseText;                            el.setAttribute('data-sfurl', url);                            removeClass(el, 'loading');                            (onSuccess || noop)(xhr, el);                        },                        function(xhr) { (onError || noop)(xhr, el); },                        '',                        options                    );                }                return this;            },            toggle: function(selector, elOn, elOff) {                var i,                    style,                    tmp = elOn.style.display,                    el = document.getElementById(selector);                elOn.style.display = elOff.style.display;                elOff.style.display = tmp;                if (el) {                    el.style.display = 'none' === tmp ? 'none' : 'block';                }                return this;            }        }    })();/*]]>*/</script><script>/*<![CDATA[*/    (function () {                Sfjs.load(            'sfwdt3a5565',            '/trailburning/app_dev.php/_wdt/3a5565',            function(xhr, el) {                el.style.display = -1 !== xhr.responseText.indexOf('sf-toolbarreset') ? 'block' : 'none';                if (el.style.display == 'none') {                    return;                }                if (Sfjs.getPreference('toolbar/displayState') == 'none') {                    document.getElementById('sfToolbarMainContent-3a5565').style.display = 'none';                    document.getElementById('sfToolbarClearer-3a5565').style.display = 'none';                    document.getElementById('sfMiniToolbar-3a5565').style.display = 'block';                } else {                    document.getElementById('sfToolbarMainContent-3a5565').style.display = 'block';                    document.getElementById('sfToolbarClearer-3a5565').style.display = 'block';                    document.getElementById('sfMiniToolbar-3a5565').style.display = 'none';                }            },            function(xhr) {                if (xhr.status !== 0) {                    confirm('An error occurred while loading the web debug toolbar (' + xhr.status + ': ' + xhr.statusText + ').\n\nDo you want to open the profiler?') && (window.location = '/trailburning/app_dev.php/_profiler/3a5565');                }            },            {'maxTries': 5}        );    })();/*]]>*/</script>
+</body>
+</html>
