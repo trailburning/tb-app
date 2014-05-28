@@ -77,4 +77,18 @@ class PostgisTest extends AbstractApiTestCase
         return $route;
     }
     
+    public function testRelatedRoutes()
+    {
+        $this->loadFixtures([
+            'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData',
+        ]); 
+        $postgis = $this->getContainer()->get('postgis');
+        $route = $this->getRoute('grunewald');
+        $routes = $postgis->relatedRoutes($route->getId());
+        $this->assertInternalType('array', $routes, 
+            'relatedRoutes returns an array of Routes');   
+        $this->assertEquals(1, count($routes),
+            'relatedRoutes returns one route');
+    }
+    
 }    

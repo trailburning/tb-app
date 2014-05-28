@@ -356,4 +356,27 @@ class RouteController extends AbstractRestController
         return $this->getRestResponse($output);
     }
     
+    /**
+     * @Route("/route/{routeId}/related")
+     * @Method("GET")
+     */
+    public function getRelatedRoutes($routeId)
+    {
+        $request = $this->getRequest();
+        $count = $request->query->get('count', 3);
+        
+        $postgis = $this->get('postgis');
+        $routes = $postgis->relatedRoutes($routeId, $count);
+        $routesExport = [];
+        foreach ($routes as $route) {
+            $routesExport[] = $route->export();
+        }
+        
+        $output = ['usermsg' => 'success', "value" => [
+            'routes' => $routesExport,
+        ]];
+
+        return $this->getRestResponse($output);
+    }
+    
 }

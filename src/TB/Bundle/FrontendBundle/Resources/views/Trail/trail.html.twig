@@ -211,6 +211,19 @@ var TB_TRAIL_ID = {{ trail.id }};
     				    	</div>  
                         </div>
                     {% endif %}
+                    
+                    
+                    {% if relatedTrails %}
+                        <div class="panel trailcards">
+                	
+    				    	<div class=" clearfix">
+                                {% for relatedTrail in relatedTrails %}
+                                     {{ include('TBFrontendBundle:Trail:_trailcardSticker.html.twig', {trail: relatedTrail}) }} 
+                                {% endfor %}
+    				    	</div>  
+                        </div>
+                    {% endif %}
+                    
                 </div>                                
             </div>
         	<div class="line_break"></div>            
