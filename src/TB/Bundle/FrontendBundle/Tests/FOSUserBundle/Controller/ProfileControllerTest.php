@@ -44,7 +44,7 @@ class ProfileControllerTest extends AbstractFrontendTest
             
         $client->submit($form);
         
-        $this->assertTrue($client->getResponse()->isRedirect('/'));
+        $this->assertTrue($client->getResponse()->isRedirect('/profile/mattallbeury'));
         
         $crawler = $client->followRedirect();
         $this->assertEquals(Response::HTTP_OK,  $client->getResponse()->getStatusCode());
