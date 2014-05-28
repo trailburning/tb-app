@@ -875,7 +875,7 @@ abstract class User extends BaseUser implements Exportable
         $data = [
             'name' => $this->getName(),
             'title' => $this->getTitle(),
-            'avatar' => $this->getMainAvatar(),
+            'avatar' => $this->getAvatarUrl(),
         ];
 
         return $data;
@@ -907,17 +907,19 @@ abstract class User extends BaseUser implements Exportable
     /**
      * Gets the best avatar for this user
      */
-    public function getMainAvatar()
+    public function getAvatarUrl()
     {
         if ($this->getAvatar()) {
-            $avatar = sprintf('https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/%s/avatar.jpg', $this->getName());
+            $url = sprintf('http://assets.trailburning.com/images/profile/%s/%s', $this->getName(), $this->getAvatar());
         } elseif ($this->getAvatarGravatar()) {
-            $avatar = $this->getAvatarGravatar();
+            $url = $this->getAvatarGravatar();
+        } elseif($this->getGender() === User::GENDER_FEMALE) {
+            $url = 'http://assets.trailburning.com/images/icons/avatars/avatar_woman.jpg';
         } else {
-            $avatar = 'assets/img/avatar_man.jpg';
+            $url = 'http://assets.trailburning.com/images/icons/avatars/avatar_man.jpg';
         }
         
-        return $avatar;
+        return $url;
     }
 
     /**

@@ -61,13 +61,7 @@
 						    	<li class="dropdown">
 						    	<a href="#" class="dropdown-toggle show_activity" data-toggle="dropdown">
 						    	<div class="tb-avatar"><div class="photo">        
-		            	  		{% if app.user.avatar %}
-		                			<img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/{{ app.user.name }}/avatar.jpg">
-		            	  		{% elseif app.user.avatarGravatar %}
-		                			<img src="{{ app.user.avatarGravatar }}">
-		            	  		{% else %}
-		                			<img src="{{ asset('assets/img/avatar_man.jpg') }}">
-		            	  		{% endif %}
+		            	  		    <img src="{{ get_user_avatar_url(app.user) }}">
 								</div></div>			
 								{% if app.user.activityUnseenCount > 0 %}
 								  <div class="activity">{{ app.user.activityUnseenCount }}</div>

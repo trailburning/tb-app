@@ -39,10 +39,11 @@ class TBExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('user_is_following',  array($this, 'userIsFollowing')),
-            new \Twig_SimpleFunction('route_has_user_like',  array($this, 'routeHasUserLike')),
-            new \Twig_SimpleFunction('extract_entity',  array($this, 'extractEntity')),
-            new \Twig_SimpleFunction('get_share_media',  array($this, 'getShareMedia')),
+            new \Twig_SimpleFunction('user_is_following', array($this, 'userIsFollowing')),
+            new \Twig_SimpleFunction('route_has_user_like', array($this, 'routeHasUserLike')),
+            new \Twig_SimpleFunction('extract_entity', array($this, 'extractEntity')),
+            new \Twig_SimpleFunction('get_share_media', array($this, 'getShareMedia')),
+            new \Twig_SimpleFunction('get_user_avatar_url', array($this, 'getUserAvatarUrl')),
         );
     }
     
@@ -140,6 +141,13 @@ class TBExtension extends \Twig_Extension
     public function getShareMedia(Route $route)
     {
         return $route->getShareMedia();
+    }
+    
+    public function getUserAvatarUrl(User $user)
+    {
+        $url = '';
+        
+        return $user->getAvatarUrl();
     }
 
     public function getName()
