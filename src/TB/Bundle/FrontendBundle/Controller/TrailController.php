@@ -64,6 +64,7 @@ class TrailController extends Controller
         $event = null;
         $eventTrails = null;
         $editorialTrails = null;
+        $relatedTrails = null;
         
         $trail = $this->getDoctrine()
             ->getRepository('TBFrontendBundle:Route')
@@ -102,6 +103,9 @@ class TrailController extends Controller
                 ->setParameter('editorialId', $editorial->getId())
                 ->setParameter('routeId', $trail->getId());
             $editorialTrails = $query->getResult();  
+        } else {
+            $postgis = $this->get('postgis');
+            $relatedTrails = $postgis->relatedRoutes($trail->getId());
         } 
         
         if (count($trail->getEventRoutes()) > 0) {
@@ -162,6 +166,7 @@ class TrailController extends Controller
             'breadcrumb' => $breadcrumb,
             'eventTrails' => $eventTrails,
             'editorialTrails' => $editorialTrails,
+            'relatedTrails' => $relatedTrails,
         ];
     }
 

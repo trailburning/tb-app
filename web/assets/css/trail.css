@@ -996,6 +996,43 @@ html.touch #trailplayer #view_map_btns {
   line-height: 56px;
 }
 
+/* RECOMMEND PANEL */
+/******************************************/
+.recommend_panel {
+  margin: 24px 0px 0px 0px;
+  width: 100%;
+}
+
+.recommend_panel .recommend_header {
+  margin: 80px 85px 0px 85px;
+  padding-bottom: 20px;
+}
+
+.recommend_panel .header {
+  float: left;
+}
+
+.recommend_panel .header h3 {
+  color: #6D6E71;
+  line-height: 1em;
+}
+
+.recommend_panel .line {
+  float: right;
+}
+
+.recommend_panel .author {
+  clear: both;
+  margin-left: 2px;
+  padding-top: 12px;  
+}
+
+.recommend_panel .trailcards {
+  clear: both;
+  margin-left: 85px;
+  margin-bottom: 46px;
+}
+
 /* EDITORIAL PANEL */
 /******************************************/
 .editorial_panel {
@@ -1032,6 +1069,12 @@ html.touch #trailplayer #view_map_btns {
   font-size: 14px;	
 }
 
+.editorial_panel .trailcards {
+  clear: both;
+  margin-left: 85px;
+  margin-bottom: 46px;
+}
+
 #editorial_sponsor_bar {
   margin-top: -82px;
   margin-bottom: 106px;
@@ -1042,6 +1085,7 @@ html.touch #trailplayer #view_map_btns {
 
 /* EDITORIAL CARDS */
 /******************************************/
+/*
 .editorial_cards {
   clear: both;
   margin-left: 85px;
@@ -1076,7 +1120,7 @@ html.touch #trailplayer #view_map_btns {
   height: 220px;
   overflow: hidden;
 }
-
+*/
 /* TRAIL CARD PANEL */
 /******************************************/
 .trail_card_sticker {
