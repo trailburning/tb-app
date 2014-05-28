@@ -28,11 +28,16 @@ doctrine:
         
 liip_functional_test: ~
     
-# Call API in test enviroment
 services:
+    # Call API in test enviroment
     rest_client:
         class:      %rest_client_class%
-        arguments:  [%api_host%/app_test.php]        
+        arguments:  [%api_host%/app_test.php]       
+    
+    # Use Test DB in test enviroment
+    postgis:
+        class:      %postgis_class%
+        arguments:  [%database_host%, %database_port%, %database_name%_test, %database_user%, %database_password%]         
         
 # Use in memory file adapter in test enviroment
 knp_gaufrette:
