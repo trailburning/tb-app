@@ -23,7 +23,7 @@ define([
         var attribs = this.model.toJSON();
         $(this.el).html(this.template(attribs));
         $(this.el).addClass('trail_card_panel');
-        
+                
         var nRating = this.model.get('rating');
         $.each($('.star', $(this.el)), function(index, value){
           switch (index) {
