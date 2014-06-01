@@ -33,12 +33,29 @@ border-width:1px;
   cursor: pointer;  	
 }
 
+#cardsview {
+  position: relative;	
+}
+
 .trailcards .panel {
   margin: 0px;
+  height: 372px;
+  overflow: hidden;
 }
 
 .panel_content {
+  position: absolute;
+  top: 0px;
+  left: 400px;
   width: 100%;
+}
+
+.panel_content.move {
+  -webkit-transition: left 0.5s;
+  -moz-transition: left 0.5s;
+  -o-transition: left 0.5s;
+  transition: left 0.5s;    
+  -webkit-transform:translate3d(0,0,0);              
 }
 
 .trail_card_panel {

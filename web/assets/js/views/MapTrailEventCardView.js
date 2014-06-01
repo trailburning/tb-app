@@ -9,6 +9,7 @@ define([
       this.template = _.template($('#mapTrailEventCardViewTemplate').text());        
                         
       this.bRendered = false;
+      this.hideTimer = null;
     },            
     render: function(){
       var self = this;
@@ -57,6 +58,25 @@ define([
       resrc.resrc($('.scale', $(this.el)));                
                        
       return this;
+    },
+    show: function(){
+      if (this.hideTimer) {
+        clearTimeout(this.hideTimer);      	
+      }      
+      $(this.el).css('left', 400);
+      $(this.el).addClass('move');
+	  // invoke resrc      
+      resrc.resrc($('.scale', $(this.el)));                
+      $(this.el).css('left', 0);
+    },
+    hide: function(){
+      var self = this;
+      $(this.el).css('left', -400);
+      
+	  this.hideTimer = setTimeout(function() {
+	  	$(self.el).removeClass('move');
+	  	$(self.el).remove();
+	  }, 1000);            
     }
 
   });

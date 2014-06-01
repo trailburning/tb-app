@@ -293,15 +293,17 @@ define([
 	},    
     onTrailMarkerClick: function(trailCardMarker){
       if (this.currCardModel) {
-      	this.currCardModel.mapTrailMarker.selected(false);
+      	this.currCardModel.mapTrailMarker.selected(false);      	
+      	this.currCardModel.mapTrailCardView.hide();      	
       }
     	    	
       var cardModel = this.collection.get(trailCardMarker.model.id);
-      $('#cardsview').html(cardModel.mapTrailCardView.render().el);
+      $('#cardsview').append(cardModel.mapTrailCardView.render().el);
       
 	  // select marker      
       this.markerCluster.zoomToShowLayer(cardModel.mapTrailMarker.marker, function() {});
       cardModel.mapTrailMarker.selected(true);
+	  cardModel.mapTrailCardView.show();
       
 	  this.currCardModel = cardModel;      	          
       
