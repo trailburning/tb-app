@@ -1,5 +1,9 @@
 /* APP */
 /******************************************/
+.stop_scroll {
+  overflow: hidden;
+}
+
 #appview {
 /*  
 border-style:solid;
@@ -18,7 +22,7 @@ border-width:1px;
 #mapview {
   position: relative;
   width: 100%; 
-  height: 100%; 	
+  height: 600px;
 }
 
 /* CARDS CONTAINER VIEW */
@@ -34,7 +38,7 @@ border-width:1px;
 }
 
 #cardsview {
-  position: relative;	
+  position: relative;
 }
 
 .trailcards .panel {
@@ -45,16 +49,15 @@ border-width:1px;
 
 .panel_content {
   position: absolute;
-  top: 0px;
-  left: 400px;
+  left: 0px;
   width: 100%;
 }
 
 .panel_content.move {
-  -webkit-transition: left 0.5s;
-  -moz-transition: left 0.5s;
-  -o-transition: left 0.5s;
-  transition: left 0.5s;    
+  -webkit-transition: top 1s;
+  -moz-transition: top 1s;
+  -o-transition: top 1s;
+  transition: top 1s;    
   -webkit-transform:translate3d(0,0,0);              
 }
 

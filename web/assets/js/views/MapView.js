@@ -25,7 +25,7 @@ define([
 	  }
       
       this.bFlipLock = false;
-      this.PageSize = 50;
+      this.PageSize = 100;
 	  this.nPage = 0;
 	  this.nCurrCard = -1;
 	  this.currCardModel = null;
@@ -41,6 +41,27 @@ define([
 	  this.getResults();
 	  this.buildBtns();
 	  
+	  this.scrollTimer = null;
+
+	  $('#cardsview').bind('mouseover', function(e){
+	  	$('body').addClass('stop_scroll');
+	  });
+
+	  $('#cardsview').bind('mouseout', function(e){
+	  	$('body').removeClass('stop_scroll');
+	  });
+
+	  $('#cardsview').bind('mousewheel', function(evt){
+//	  	console.log('w:'+evt.originalEvent.wheelDelta+' : '+evt.originalEvent.detail);
+	  	
+	  	if (evt.originalEvent.wheelDelta > 0) {
+	  	  self.prevCard();
+	  	}
+	  	else {
+	  	  self.nextCard();
+	  	}
+	  });
+		  	  
 	  $('.nav .prev').click(function(evt){
 	  	self.prevCard();
 	  });
@@ -144,10 +165,25 @@ define([
         }
       });        
     },
+    selectCard: function(nId, bMoveForward){
+      if (this.currCardModel) {
+      	this.currCardModel.mapTrailCardView.hide(bMoveForward);      	
+      }
+    	    	
+      var cardModel = this.collection.get(nId);
+	  cardModel.mapTrailCardView.init(bMoveForward);                        
+      $('#cardsview').append(cardModel.mapTrailCardView.render().el);      
+	  cardModel.mapTrailCardView.show();
+      
+	  this.currCardModel = cardModel;      	          
+      
+      this.nCurrCard = this.collection.indexOf(cardModel);
+    },
     prevCard: function(){
       if (this.bFlipLock) {
       	return;
       }
+      this.bFlipLock = true;
     	
       if (this.currCardModel) {
       	this.currCardModel.mapTrailMarker.selected(false);
@@ -160,18 +196,23 @@ define([
         this.nCurrCard--;
       }
       var cardModel = this.collection.at(this.nCurrCard);      
-      $('#cardsview').html(cardModel.mapTrailCardView.render().el);
-                	
-	  // select marker      
-      this.markerCluster.zoomToShowLayer(cardModel.mapTrailMarker.marker, function() {});
-      cardModel.mapTrailMarker.selected(true);
-      
-	  this.currCardModel = cardModel;      	          
+	  this.selectCard(cardModel.id, false);
+
+	  var self = this;
+	  if (!this.scrollTimer) {
+        this.scrollTimer = setTimeout(function() {
+	      clearTimeout(self.scrollTimer);
+	      self.scrollTimer = null;
+	      console.log('e');
+	      self.bFlipLock = false;
+	  	}, 1000);	  			  	    
+	 }                	
     },    
     nextCard: function(){
       if (this.bFlipLock) {
       	return;
       }
+      this.bFlipLock = true;
       
       if (this.currCardModel) {
       	this.currCardModel.mapTrailMarker.selected(false);
@@ -183,14 +224,19 @@ define([
       else {
         this.nCurrCard++;
       }
-      var cardModel = this.collection.at(this.nCurrCard);
-      $('#cardsview').html(cardModel.mapTrailCardView.render().el);
-    	
-	  // select marker      
-      this.markerCluster.zoomToShowLayer(cardModel.mapTrailMarker.marker, function() {});
-      cardModel.mapTrailMarker.selected(true);
       
-	  this.currCardModel = cardModel;      	          
+      var cardModel = this.collection.at(this.nCurrCard);      
+	  this.selectCard(cardModel.id, true);	  
+	  
+	  var self = this;
+	  if (!this.scrollTimer) {
+        this.scrollTimer = setTimeout(function() {
+	      clearTimeout(self.scrollTimer);
+	      self.scrollTimer = null;
+	      console.log('e');
+	      self.bFlipLock = false;
+	  	}, 1000);	  			  	    
+	 }
     },
     onTrailCardsResult: function(data){
 	  if (!data.value.routes.length) {
@@ -294,16 +340,15 @@ define([
     onTrailMarkerClick: function(trailCardMarker){
       if (this.currCardModel) {
       	this.currCardModel.mapTrailMarker.selected(false);      	
-      	this.currCardModel.mapTrailCardView.hide();      	
       }
+    	
+      this.selectCard(trailCardMarker.model.id, true);
     	    	
       var cardModel = this.collection.get(trailCardMarker.model.id);
-      $('#cardsview').append(cardModel.mapTrailCardView.render().el);
       
 	  // select marker      
       this.markerCluster.zoomToShowLayer(cardModel.mapTrailMarker.marker, function() {});
       cardModel.mapTrailMarker.selected(true);
-	  cardModel.mapTrailCardView.show();
       
 	  this.currCardModel = cardModel;      	          
       

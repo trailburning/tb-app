@@ -59,19 +59,32 @@ define([
                        
       return this;
     },
+    init: function(bMoveForward){
+      var nY =  500;
+	  if (!bMoveForward) {
+	    nY =  -500;	
+	  }    	
+
+      $(this.el).removeClass('move');     
+      $(this.el).css('top', nY);    	
+    },
     show: function(){
       if (this.hideTimer) {
         clearTimeout(this.hideTimer);      	
-      }      
-      $(this.el).css('left', 400);
+      } 
       $(this.el).addClass('move');
 	  // invoke resrc      
       resrc.resrc($('.scale', $(this.el)));                
-      $(this.el).css('left', 0);
+      $(this.el).css('top', 0);
     },
-    hide: function(){
+    hide: function(bMoveForward){
+      var nY =  -500;
+	  if (!bMoveForward) {
+	    nY =  500;	
+	  }    	
+    	
       var self = this;
-      $(this.el).css('left', -400);
+      $(this.el).css('top', nY);
       
 	  this.hideTimer = setTimeout(function() {
 	  	$(self.el).removeClass('move');

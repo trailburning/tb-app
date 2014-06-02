@@ -25,6 +25,10 @@ define([
                        
       return this;
     },
+	select: function(){
+	  // fire event
+      app.dispatcher.trigger("MapTrailMarker:click", this);                
+	},		
 	selected: function(bSelected){		
 	  if (bSelected) {
         this.marker.setIcon(L.divIcon({className: 'tb-map-marker selected', html: '<div class="marker"></div>', iconSize: [20, 20]}));	  	
