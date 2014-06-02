@@ -198,6 +198,10 @@ define([
       var cardModel = this.collection.at(this.nCurrCard);      
 	  this.selectCard(cardModel.id, false);
 
+	  // pan to marker
+	  this.map.setZoom(3, {zoomAnimation: false});
+	  this.map.panTo(cardModel.mapTrailMarker.marker.getLatLng());        	  	
+
 	  var self = this;
 	  if (!this.scrollTimer) {
         this.scrollTimer = setTimeout(function() {
@@ -227,6 +231,10 @@ define([
       
       var cardModel = this.collection.at(this.nCurrCard);      
 	  this.selectCard(cardModel.id, true);	  
+	  	  
+	  // pan to marker
+	  this.map.setZoom(3, {zoomAnimation: false});
+	  this.map.panTo(cardModel.mapTrailMarker.marker.getLatLng());        	  	
 	  
 	  var self = this;
 	  if (!this.scrollTimer) {
@@ -245,7 +253,7 @@ define([
 
       var self = this;
             
-	  this.markerCluster = new L.MarkerClusterGroup({ showCoverageOnHover: false, 
+	  this.markerCluster = new L.MarkerClusterGroup({ showCoverageOnHover: false, spiderfyDistanceMultiplier: 10,
     	iconCreateFunction: function(cluster) {
     	  var nSize = 40;
     	  var strClass = 'tb-map-marker small';
@@ -341,13 +349,13 @@ define([
       if (this.currCardModel) {
       	this.currCardModel.mapTrailMarker.selected(false);      	
       }
-    	
+
       this.selectCard(trailCardMarker.model.id, true);
     	    	
       var cardModel = this.collection.get(trailCardMarker.model.id);
       
 	  // select marker      
-      this.markerCluster.zoomToShowLayer(cardModel.mapTrailMarker.marker, function() {});
+//      this.markerCluster.zoomToShowLayer(cardModel.mapTrailMarker.marker, function() {});
       cardModel.mapTrailMarker.selected(true);
       
 	  this.currCardModel = cardModel;      	          
