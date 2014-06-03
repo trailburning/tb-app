@@ -1,0 +1,217 @@
+/* APP */
+/******************************************/
+.stop_scroll {
+  overflow: hidden;
+}
+
+#appview {
+/*  
+border-style:solid;
+border-width:1px;
+*/  
+}
+
+#bodyview {
+  position: absolute;
+  top: 63px;
+  min-height: 600px;
+  width: 100%;
+  height: 600px;
+}
+
+#mapview {
+  position: relative;
+  width: 100%; 
+  height: 100%;
+}
+
+#overlay_view {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 400px;
+  height: 100%;
+  background: url(../img/back_shape.png) no-repeat top left;	
+}
+
+#overlay_view .maintitle {
+  position: absolute;
+  top: 8px;
+  left: 40px;
+}
+
+/* WELCOME VIEW */
+/******************************************/
+#welcome_view {
+  position: absolute;
+  top: 192px;
+  left: 40px;	
+}
+
+#welcome_view .title {
+  font-size: 32px;
+  line-height: 1.1em;
+  color: #FFF;
+  text-shadow: 1px 1px #000000;  
+}
+
+#welcome_view .go {
+  margin-top: 12px;
+}
+
+/* CARDS CONTAINER VIEW */
+/******************************************/
+#cards_container_view {
+  display: none;
+  position: absolute;
+  top: 192px;
+  left: 40px;	
+}
+
+#cards_container_view .nav {  
+  position: relative;	
+  margin-top: 14px;
+  width: 100%;
+  text-align: center;
+}
+
+#cards_container_view .nav .title {
+  display: inline-block;
+  margin: 0px 12px 0px 12px;
+  font-size: 32px;
+  line-height: 1.1em;
+  color: #FFF;
+  text-shadow: 1px 1px #000000;
+}
+
+#cards_container_view .button {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  margin-top: 2px;
+  line-height:24px; 
+  text-indent: -10000px;  
+  background-repeat:no-repeat;
+  background-position:top center;
+  overflow: hidden;   
+  text-decoration: none;
+  width: 24px;
+  height: 24px;
+}
+
+#cards_container_view .nav .prev {	
+  display: inline-block;
+  position: relative;
+  width: 24px;
+  height: 24px;
+}
+
+#cards_container_view .nav .prev .button {	
+  background: url("../img/arrow_nav_left.png") no-repeat top left;
+}
+
+#cards_container_view .nav .next {	
+  display: inline-block;
+  position: relative;
+  width: 24px;  
+  height: 24px;
+}
+
+#cards_container_view .nav .next .button {	
+  background: url("../img/arrow_nav_right.png") no-repeat top left;
+}
+
+#cardsview {
+  position: relative;
+}
+
+.trailcards .panel {
+  margin: 0px;
+  height: 372px;
+  overflow: hidden;
+}
+
+.panel_content {
+  position: absolute;
+  left: 0px;
+  width: 100%;
+}
+
+.panel_content.move {
+  -webkit-transition: top 1s;
+  -moz-transition: top 1s;
+  -o-transition: top 1s;
+  transition: top 1s;    
+  -webkit-transform:translate3d(0,0,0);              
+}
+
+.trail_card_panel {
+  position: relative;
+  overflow: visible;
+}
+
+#cardsview .link:hover {
+  cursor: pointer;  
+}
+
+#cardsview .summary {
+  position: relative;
+}
+
+#cardsview .summary .location {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  width: 36px;
+  height: 47px;
+  background: url(../icons/location.png) no-repeat top left;
+}
+
+#map {
+  width: 100%; 
+  height: 400px; 	
+}
+
+#container {
+  width: 440px;
+}
+
+.leaflet-popup-content-wrapper {
+  background: none;
+  box-shadow: none;
+}
+
+.leaflet-popup-content {
+  margin: 0px 0px 10px 0px;
+  padding: 0px;	
+}
+
+.leaflet-popup-tip-container {
+  display: none;
+}
+
+/* VIEW CNTRLS */
+/******************************************/
+#view_map_btns {
+  display: none;
+  position: absolute;
+  top: 34px;
+  right: 85px;
+}
+
+html.touch #view_map_btns {
+  top: 26px;
+}
+
+#view_btns {
+  position: absolute;
+  top: 22px;
+  right: 22px;
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (max-width: 1199px) {  
+  #cardsview .panel.selected .select_top {
+    left: 204px;
+  }
+}
