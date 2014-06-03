@@ -280,7 +280,7 @@ define([
           return new L.DivIcon({ className: strClass, html: '<div class="marker">' + cluster.getChildCount() + '</div>', iconSize: [nSize, nSize] });
     	}
 	  });
-      
+        
       var model, cardViewModel, bEvent;
       $.each(data.value.routes, function(key, card) {
       	bEvent = false;
