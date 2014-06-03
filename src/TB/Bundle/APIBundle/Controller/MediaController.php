@@ -67,25 +67,39 @@ class MediaController extends AbstractRestController
             );
         }
         
+        $validator = $this->get('validator');
         $mediaImporter = $this->get('tb.media.importer');
         $filesystem = $this->get('trail_media_files_filesystem');
         $medias = [];
+        $export = [];
         
         foreach ($mediaFiles as $mediaFile) {
             $media = new Media();    
             $media->setRoute($route);
             $media->setFile($mediaFile);
             $media->readMetadata($mediaImporter);
-            $media->upload($filesystem);
-        
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($media);
-            $em->flush();    
             
-            $medias[] = $media->export();
+            $errors = $validator->validate($media);
+            if (count($errors) > 0) {
+                $errorsStrings = [];
+                foreach ($errors as $error) {
+                    $errorsStrings[] = $error->getMessage();
+                }
+                throw (new ApiException(implode(' ', $errorsStrings), 400));
+            }
+            
+            $medias[] = $media;
         }
         
-        $output = ['usermsg' => 'success', 'value' => $medias];
+        foreach ($medias as $media) {
+            $media->upload($filesystem);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($media);
+            $em->flush();
+            $export[] = $media->export();
+        }    
+        
+        $output = ['usermsg' => 'success', 'value' => $export];
 
        return $this->getRestResponse($output);
     }
