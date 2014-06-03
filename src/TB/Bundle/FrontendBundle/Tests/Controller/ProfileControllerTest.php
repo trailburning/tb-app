@@ -16,6 +16,8 @@ class ProfileControllerTest extends AbstractFrontendTest
 
         $client = $this->createClient();
         $crawler = $client->request('GET', '/profile/mattallbeury');
+        // echo $client->getResponse()->getContent();
+        // exit;
         $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());   
         $this->assertGreaterThan(0,
             $crawler->filter('h2.tb-title:contains("Matt")')->count());

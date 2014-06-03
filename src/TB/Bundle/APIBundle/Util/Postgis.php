@@ -385,7 +385,7 @@ class Postgis extends \PDO
         $routes = array();
         if ($row = $pq->fetch(\PDO::FETCH_ASSOC)) {
             $count = $row['count'];
-            $q = 'SELECT r.id, r.name, r.slug, r.region, r.length, ST_X(r.centroid) AS long, ST_Y(r.centroid) AS lat, r.tags, r.rating, rt.id AS rt_id, rt.name AS rt_name, rc.id AS rc_id, rc.name AS rc_name, r.about, u.id AS user_id, u.name AS user_name, u.discr, u.first_name, u.last_name, u.display_name, u.avatar, u.avatar_gravatar, m.id AS m_id, ST_AsText(m.coords) AS m_coords, m.tags AS m_tags, m.filename AS m_filename, m.path AS m_path
+            $q = 'SELECT r.id, r.name, r.slug, r.region, r.length, ST_X(r.centroid) AS long, ST_Y(r.centroid) AS lat, r.tags, r.rating, rt.id AS rt_id, rt.name AS rt_name, rc.id AS rc_id, rc.name AS rc_name, r.about, u.id AS user_id, u.name AS user_name, u.discr, u.first_name, u.last_name, u.display_name, u.avatar, u.avatar_gravatar, u.gender, m.id AS m_id, ST_AsText(m.coords) AS m_coords, m.tags AS m_tags, m.filename AS m_filename, m.path AS m_path
                   FROM routes r
                   INNER JOIN fos_user u ON r.user_id=u.id
                   LEFT JOIN route_type rt ON r.route_type_id=rt.id
@@ -434,6 +434,7 @@ class Postgis extends \PDO
                     $user->setLastName($row['last_name']);
                     $user->setAvatar($row['avatar']);
                     $user->setAvatarGravatar($row['avatar_gravatar']);
+                    $user->setGender($row['gender']);
                 } elseif ($row['discr'] == 'brand') {
                     $user = new BrandProfile();
                     $user->setName($row['user_name']);
@@ -712,6 +713,118 @@ class Postgis extends \PDO
         }
         
         return $attributes;
+    }
+    
+    public function relatedRoutes($routeId, $count = 3) 
+    {
+        $q = 'SELECT ST_X(r.centroid) AS long, ST_Y(r.centroid) AS lat FROM routes r WHERE r.id=:routeId';
+        
+        $pq = $this->prepare($q);
+        $pq->bindParam('routeId', $routeId, \PDO::PARAM_INT);
+        $success = $pq->execute();
+        if (!$success) {
+            $this->rollBack();
+            throw (new ApiException('Failed to fetch route from Database', 500));
+        }
+        
+        if ($row = $pq->fetch(\PDO::FETCH_ASSOC)) {
+            $long = $row['long'];
+            $lat = $row['lat'];
+        } else {
+            throw (new ApiException(sprintf('Route with id %s not found', $routeId), 404));
+        }
+        
+        $q = 'SELECT r.id, r.name, r.slug, r.region, r.length, ST_X(r.centroid) AS long, ST_Y(r.centroid) AS lat, r.tags, r.rating, rt.id AS rt_id, rt.name AS rt_name, rc.id AS rc_id, rc.name AS rc_name, r.about, m.id AS m_id, ST_AsText(m.coords) AS m_coords, m.tags AS m_tags, m.filename AS m_filename, m.path AS m_path, u.id AS user_id, u.name AS user_name, u.discr, u.first_name, u.last_name, u.display_name, u.avatar, u.avatar_gravatar, u.gender
+              FROM routes r
+              INNER JOIN fos_user u ON r.user_id=u.id
+              LEFT JOIN route_type rt ON r.route_type_id=rt.id
+              LEFT JOIN route_category rc ON r.route_category_id=rc.id
+              LEFT JOIN medias m ON r.media_id=m.id
+              WHERE r.publish = true 
+              AND r.id != :routeId
+              AND ST_Distance_Sphere(ST_Centroid(r.centroid), ST_GeomFromText(\'POINT(' . $long . ' ' . $lat . ')\',4326)) <= 50000
+              GROUP BY r.id, rt.id, rc.id, m.id, u.id ORDER BY published_date DESC ';
+        if ($count !== null) {
+            $q .= ' LIMIT :count';
+        }
+        
+        $pq = $this->prepare($q);
+        $pq->bindParam('routeId', $routeId, \PDO::PARAM_INT);
+        if ($count !== null) {
+            $pq->bindParam('count', $count, \PDO::PARAM_INT);
+        }
+        
+        $success = $pq->execute();
+        if (!$success) {
+            throw (new ApiException('Failed to fetch route from Database', 500));
+        }
+
+        $routes = array();
+        
+        while ($row = $pq->fetch(\PDO::FETCH_ASSOC)) {
+            
+            $route = new Route();
+            $route->setId($row['id']);
+            $route->setName($row['name']);
+            $route->setSlug($row['slug']);
+            $route->setRegion($row['region']);
+            $route->setLength($row['length']);
+            $route->setCentroid(new Point($row['long'], $row['lat'], 4326)); 
+            $route->setAbout($row['about']);
+            $route->setRating($row['rating']);
+            $tags = json_decode('{' . str_replace('"=>"', '":"', $row['tags']) . '}', true);
+            $route->setTags($tags);
+            if ($row['rc_name'] != '') {
+                $routeCategory = new RouteCategory();
+                $routeCategory->setId($row['rc_id']);
+                $routeCategory->setName($row['rc_name']);
+                $route->setRouteCategory($routeCategory);
+            }
+            if ($row['rt_name'] != '') {
+                $routeType = new RouteType();
+                $routeType->setId($row['rt_id']);
+                $routeType->setName($row['rt_name']);
+                $route->setRouteType($routeType);
+            }
+            if ($row['m_id'] != '') {
+                // Attach the favorite Media, if set
+                $media = new Media();
+                $media->setId($row['m_id']);
+                $media->setPath($row['m_path']);
+                $coords = explode(" ", substr(trim($row['m_coords']), 6, -1)); 
+                $media->setCoords(new Point($coords[0], $coords[1], 4326));
+                $media->setFilename($row['m_filename']);
+                $tags = json_decode('{' . str_replace('"=>"', '":"', $row['m_tags']) . '}', true);
+                $media->setTags($tags);
+                $route->setMedia($media);
+            } else {
+                // Attach the first Media, if no favorite Media is set
+                $media = $this->getRouteMedia($row['id'], 1);
+                if (count($media) > 0) {
+                    $route->setMedia(array_shift($media));
+                }
+            }
+            if ($row['discr'] == 'user') {
+                $user = new UserProfile();
+                $user->setName($row['user_name']);
+                $user->setFirstName($row['first_name']);
+                $user->setLastName($row['last_name']);
+                $user->setAvatar($row['avatar']);
+                $user->setAvatarGravatar($row['avatar_gravatar']);
+                $user->setGender($row['gender']);
+            } elseif ($row['discr'] == 'brand') {
+                $user = new BrandProfile();
+                $user->setName($row['user_name']);
+                $user->setDisplayName($row['display_name']);
+                $user->setAvatar($row['avatar']);
+                $user->setAvatarGravatar($row['avatar_gravatar']);
+            }
+            $route->setUser($user);
+            
+            $routes[] = $route;
+        }
+        
+        return $routes;
     }
     
 }

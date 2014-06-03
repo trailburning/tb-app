@@ -4,6 +4,7 @@ namespace TB\Bundle\FrontendBundle\Tests\Entity;
 
 use TB\Bundle\FrontendBundle\Tests\AbstractFrontendTest;
 use CrEOF\Spatial\PHP\Types\Geometry\Point;
+use TB\Bundle\FrontendBundle\Entity\User;
 
 class UserTest extends AbstractFrontendTest
 {
@@ -120,18 +121,39 @@ class UserTest extends AbstractFrontendTest
         
     }
     
-    public function testGetMainAvatar()
+    public function testGetAvatarUrl()
     {
-        $stub = $this->getMockForAbstractClass('TB\\Bundle\\FrontendBundle\\Entity\\User');
-        $this->assertEquals('assets/img/avatar_man.jpg', $stub->getMainAvatar());
+        $this->loadFixtures([]);
         
-        $stub->setAvatarGravatar('gravatar');
-        $this->assertEquals('gravatar', $stub->getMainAvatar());
+        $user = $this->getMockForAbstractClass('TB\\Bundle\\FrontendBundle\\Entity\\User');
+        $this->assertEquals('http://assets.trailburning.com/images/icons/avatars/avatar_man.jpg', $user->getAvatarUrl($user),
+            'Returns the avatar_man.jpg image with no avatar and gender set');
         
-        $stub->setName('test');
-        $stub->setAvatar('avatar.png');
-        $this->assertEquals('https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/test/avatar.jpg', $stub->getMainAvatar());
+        $user = $this->getMockForAbstractClass('TB\\Bundle\\FrontendBundle\\Entity\\User');
+        $user->setGender(User::GENDER_NONE);
+        $this->assertEquals('http://assets.trailburning.com/images/icons/avatars/avatar_man.jpg', $user->getAvatarUrl($user),
+                'Returns the avatar_man.jpg image with no avatar and gender set to none');
         
+        $user = $this->getMockForAbstractClass('TB\\Bundle\\FrontendBundle\\Entity\\User');
+        $user->setGender(User::GENDER_MALE);
+        $this->assertEquals('http://assets.trailburning.com/images/icons/avatars/avatar_man.jpg', $user->getAvatarUrl($user),
+                'Returns the avatar_man.jpg image with no avatar and gender set to male');
+                
+        $user = $this->getMockForAbstractClass('TB\\Bundle\\FrontendBundle\\Entity\\User');
+        $user->setGender(User::GENDER_FEMALE);
+        $this->assertEquals('http://assets.trailburning.com/images/icons/avatars/avatar_woman.jpg', $user->getAvatarUrl($user),
+                'Returns the avatar_woman.jpg image with no avatar and gender set to female');        
+                
+        $user = $this->getMockForAbstractClass('TB\\Bundle\\FrontendBundle\\Entity\\User');
+        $user->setAvatarGravatar('gravatar.jpg');
+        $this->assertEquals('gravatar.jpg', $user->getAvatarUrl($user),
+                'Returns the gravatar.jpg image with gravatar image set');
         
+        $user = $this->getMockForAbstractClass('TB\\Bundle\\FrontendBundle\\Entity\\User');
+        $user->setName('name');
+        $user->setAvatar('avatar.jpg');
+        $this->assertEquals('http://assets.trailburning.com/images/profile/name/avatar.jpg', $user->getAvatarUrl($user),
+                'Returns the avatar.jpg image with avatar image set');    
+                
     }
 }

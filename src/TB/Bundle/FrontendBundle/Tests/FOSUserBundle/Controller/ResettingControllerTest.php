@@ -31,11 +31,12 @@ class ResettingControllerTest extends AbstractFrontendTest
         
         // submit the resetting request form
         $form = $crawler->filter('.fos_user_resetting_request')->form(array(
-            'username' => 'email@mattallbeury'
+            'username' => 'mattallbeury@trailburning.com'
         ));     
             
         $client->submit($form);
-        $this->assertTrue($client->getResponse()->isRedirect('/resetting/check-email?email=...%40mattallbeury'));
+        
+        $this->assertTrue($client->getResponse()->isRedirect('/resetting/check-email?email=...%40trailburning.com'));
         
         // get mailer collector to check the resetting mail    
         $mailCollector = $client->getProfile()->getCollector('swiftmailer');
@@ -49,7 +50,7 @@ class ResettingControllerTest extends AbstractFrontendTest
         $this->assertInstanceOf('Swift_Message', $message);
         $this->assertEquals('Reset Password', $message->getSubject());
         $this->assertEquals('email@trailburning.com', key($message->getFrom()));
-        $this->assertEquals('email@mattallbeury', key($message->getTo()));
+        $this->assertEquals('mattallbeury@trailburning.com', key($message->getTo()));
 
         //extract link to reset page
         $body = $message->getBody();
@@ -75,6 +76,7 @@ class ResettingControllerTest extends AbstractFrontendTest
         ));     
         
         $client->submit($form);
+        
         $this->assertTrue($client->getResponse()->isRedirect('/'));
         
         // check redirect to homepage after reset

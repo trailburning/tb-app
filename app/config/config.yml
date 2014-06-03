@@ -91,6 +91,9 @@ fos_user:
     registration:
         form:
             type: tb_user_registration
+    profile:
+        form:
+            type: tb_user_profile
     from_email:
             address:        email@trailburning.com
             sender_name:    email@trailburning.com
@@ -156,6 +159,10 @@ services:
         
     http_client:
         class:      Guzzle\Http\Client
+        
+    postgis:
+        class:      %postgis_class%
+        arguments:  [%database_host%, %database_port%, %database_name%, %database_user%, %database_password%]        
 
 old_sound_rabbit_mq:
     connections:

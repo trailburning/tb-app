@@ -69,14 +69,7 @@ var TB_TRAIL_ID = {{ trail.id }};
         	{% if event %}
         	{% else %}
 	            <div class="trail_avatar">
-	            	<div class="tb-avatar tb-avatar-feature"><div class="photo"><a href="{{ path('profile', {'name': user.name}) }}">                	
-	            {% if user.avatar %}
-	            	<img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/{{ user.name }}/avatar.jpg">                		               
-	            {% elseif user.avatarGravatar %}
-	                <img src="{{ user.avatarGravatar }}">                	
-        	  	{% else %}
-            		<img src="{{ asset('assets/img/avatar_man.jpg') }}">	                
-	            {% endif %}
+	            	<div class="tb-avatar tb-avatar-feature"><div class="photo"><a href="{{ path('profile', {'name': user.name}) }}">                	         <img src="{{ get_user_avatar_url(user) }}">
 	            	</a></div></div>
 	            </div>
             {% endif %}
@@ -211,13 +204,30 @@ var TB_TRAIL_ID = {{ trail.id }};
     			  				<div class="author"><h4 class="tb">Discover more trails from Inspire by <strong>{{ editorial.user.title }}</strong>&nbsp;&nbsp;&nbsp;<span class="date">{{ editorial.date|date('d/m/Y') }}</span></h4></div>
                     		</div>
                 	
-    				    	<div class="editorial_cards clearfix">
+    				    	<div class="trailcards clearfix">
                                 {% for editorialTrail in editorialTrails %}
                                      {{ include('TBFrontendBundle:Trail:editorial_trailcard.html.twig', {route: editorialTrail, editorial: editorial}) }} 
                                 {% endfor %}
     				    	</div>  
                         </div>
                     {% endif %}
+                    
+                    {% if relatedTrails %}
+                        <div class="panel recommend_panel">                	
+    		  				<div class="recommend_header">
+    			  				<div class="header"><h3 class="tb">Discover more trails from the region</h3></div>
+    			  				<div class="line"></div>
+    			  				<div class="author"><h4 class="tb">These trails are within 50km of the <strong>{{ trail.name }}</strong> trail.</h4></div>
+                    		</div>
+                	
+    				    	<div class="trailcards clearfix">
+	                            {% for relatedTrail in relatedTrails %}
+	                                 {{ include('TBFrontendBundle:Trail:_trailcardSticker.html.twig', {trail: relatedTrail}) }} 
+	                            {% endfor %}
+	                        </div>
+                        </div>
+                    {% endif %}
+                    
                 </div>                                
             </div>
         	<div class="line_break"></div>            

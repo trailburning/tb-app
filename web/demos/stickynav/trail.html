@@ -1,0 +1,463 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta property="og:title" content="	Yurrebilla - Ambers Gully to Cleland, Adelaide Hills by Paul Tran
+"/>
+        <meta property="og:description" content="Wind your way through National Parks and Conservation Reserves with great views over the city and ample wildlife spotting opportunities."/>
+        <meta property="og:url" content="http://localhost:8888/trailburning/app_dev.php/inspire/wild/trail/yurrebilla"/>
+        <meta property="og:image" content="http://media.trailburning.com/56/4018a342d24e80d9b6c456422557339de1f2adde_share.jpg"/>
+        <meta name="p:domain_verify" content="256bd9708ee58af0b0c1e324e5467bf1"/>
+        <link rel="canonical" href="http://localhost:8888/trailburning/app_dev.php/trail/yurrebilla"/>
+        <title>	Yurrebilla - Ambers Gully to Cleland, Adelaide Hills by Paul Tran
+</title>
+        <link rel="icon" type="image/x-icon" href="/trailburning/favicon.ico" />
+        <link href="http://fonts.googleapis.com/css?family=Signika:400,300,700" rel="stylesheet">
+        <link href="http://api.tiles.mapbox.com/mapbox.js/v1.6.3/mapbox.css" rel="stylesheet">
+        
+        <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="assets/css/bootstrap-responsive.min.css" rel="stylesheet">
+        <link href="assets/css/bootstrap-select.min.css" rel="stylesheet">
+        
+        <link href="assets/css/common_ui.css" rel="stylesheet" type="text/css">
+        <link href="assets/css/common_cards.css" rel="stylesheet" type="text/css">
+        
+		<link href='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css' rel='stylesheet' />
+		<link href='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css' rel='stylesheet' />    
+        
+        <link href="assets/css/trail.css" rel="stylesheet" type="text/css">
+        <script>
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-45211566-1']);
+            _gaq.push(['_trackPageview']);
+            
+            (function() {
+              var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+              ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+              var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+
+            function trackOutboundLink(link, category, action) { 
+              try { _gaq.push(['_trackEvent', category , action]); } catch(err){}   
+              setTimeout(function() {window.open(link.href, '_blank');}, 100);
+            }
+            var TB_RESTAPI_BASEURL = 'http://www.trailburning.com/api';
+                        var TB_RESTAPI_USER = {"id":2,"name":"mattallbeury","firstName":"Matt","lastName":"Allbeury","location":{}};
+                    </script>
+    </head>
+    <body>
+        <div id="appview">      
+            <div id="headerview">
+                <div class="left">
+                    <a href="/trailburning/app_dev.php/"><img src="assets/img/header/tb_logo.gif" width="102" height="46" border="0"></a>
+                </div>    
+                
+			    <div class="right navbar">
+                					    	<div class="profile">
+				    		<ul class="nav pull-right">
+						    	<li class="dropdown">
+						    	<a href="#" class="dropdown-toggle show_activity" data-toggle="dropdown">
+						    	<div class="tb-avatar"><div class="photo">        
+		            	  		    <img src="http://www.gravatar.com/avatar/e426b949d824bc81fe01caf1ad88abd7">
+								</div></div>			
+								 		        		
+						    	</a>
+						        <ul class="dropdown-menu activity-menu">
+						        	<div class="header">
+						        		<div class="title"><h4 class="tb">Activity</h4></div>
+						        		<div class="viewprofile"><a href="/trailburning/app_dev.php/profile/mattallbeury">View profile</a></div>
+						        	</div>
+						        	
+						        	<div class="activity_list_container">
+						        	  <div id="activity_feed_view" class="activity_list tb-move"></div>
+						        	</div>
+						
+						        	<div class="footer">
+						  				<div class="profile_btn"><a href="javascript:void(0)" class="btn btn-tb btn-tb-small more_btn" disabled="disabled">More notifications</a></div>
+						        		<div class="signout"><a href="/trailburning/app_dev.php/logout">Sign out</a></div>
+						        	</div>
+						        </ul>
+						    	</li>
+				    		</ul>
+				      	</div>
+			    				      
+			      	<div class="links">
+						<div class="link main"><a href="/trailburning/app_dev.php/tour">Discover Trailburning</a></div>			      	
+						<div class="link main"><a href="/trailburning/app_dev.php/inspire">Inspire</a></div>			      	
+			      	</div>
+			      	<div class="discover">
+			<!--      	
+			        <form id="search_form">
+			        <input type="text" id="search_field" name="discover">
+			        <input type="submit" class="search-btn">        
+			        </form>
+			-->        
+			    	</div>
+			    </div>    
+                
+                <div class="trans-line"></div>        
+            </div>    
+
+			<div id="bodyview">
+            <script>
+var TB_APP = 'TrailApp';
+		
+var TB_USER_ID = 2;
+var TB_TRAIL_ID = 56;
+</script>
+
+	<div id="small_sponsor_bar">
+		<div class="sponsor_content">
+			<div class="link"><a href="/trailburning/app_dev.php/inspire/wild"><img src="assets/img/sponsor/arrow_small.png">&nbsp;&nbsp;&nbsp;&nbsp;Back to Inspire</a></div>
+			<div class="brand">
+				<div class="strap">brought to you by</div>
+				<div class="logo"><a href="/trailburning/app_dev.php/profile/ashmei"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/ashmei/editorial_sponsor_logo_small.png" border="0"></a></div>
+			</div>
+		</div>
+	</div>
+
+<div id="content_view" class="sponsor_header">
+	
+    <div id="trailplayer">
+        <div id="trail_views">        
+            <div id="trail_map_view"></div>
+            <div id="trail_slides_view"></div>
+        </div>
+        
+        <div id="tb-loader-overlay">
+  	  	  <div class="back"></div>
+  	  	  <div class="tb-loader"><div class="spinner"></div><div class="middle">...</div></div>
+  	  	</div>        
+        
+        <div id="trail_info">   
+        	
+        		            <div class="trail_avatar">
+	            	<div class="tb-avatar tb-avatar-feature"><div class="photo"><a href="/trailburning/app_dev.php/profile/paultran">                	         <img src="http://www.gravatar.com/avatar/5889ab29b92ea2bc3547770b9427310b">
+	            	</a></div></div>
+	            </div>
+                        <div class="trail_title">
+                                    <h2 class="tb tb-title">Yurrebilla - Ambers Gully to Cleland</h2>
+                    <br/>
+                    <h2 class="tb tb-title">Adelaide Hills</h2>
+                                                    <br/> 
+                                            <div class="author">by <strong>Paul Tran</strong></div>
+                                                </div>
+        </div>
+        <div id="view_map_btns">        
+            <div class='controls'>
+                <span class="btn btn-tb zoomin_btn">+</span>          
+                <span class="btn btn-tb zoomout_btn">-</span>
+                <span class="btn btn-tb view_btn">Satellite</span>          
+            </div>    
+        </div>    
+        <div id="view_player_btns">
+            <div id="slideshow_toggle"><span class="button"></span></div>
+            <div id="view_toggle"><span id="view_toggle_btn" class="button">Change View</span></div>
+        </div>
+    </div>
+  
+    <div class="panel_container">       
+        <div class="panel_content_container">       
+            <div class="panel_content">       
+                <div id="bigbar">
+                    <div class="crumbs">
+    <div class="crumb_lead"><a href="/trailburning/app_dev.php/">Home</a></div>
+        <div class="crumb_links">
+                    <a href="/trailburning/app_dev.php/inspire/wild">Running wild in the
+South Australian bush</a>
+            &nbsp;/&nbsp;                    <a href="/trailburning/app_dev.php/inspire/wild/trail/yurrebilla">Yurrebilla - Ambers Gully to Cleland</a>
+                        </div>
+    </div>
+                            
+<div class="compact_share btn-group dropup">
+  <a class="btn btn-primary btn-tb-action btn-tb dropdown-toggle" data-toggle="dropdown" href="#">Share <span class="caret"></span></a>
+  <ul class="dropdown-menu pull-right">
+	<li class="clearfix"><a href="http://www.facebook.com/share.php?u=localhost%3A8888%2Ftrailburning%2Fapp_dev.php%2Finspire%2Fwild%2Ftrail%2Fyurrebilla" target="_blank" class="clearfix"><div class="logo"><img src="assets/icons/share/share_facebook.png"></div><div class="detail">Facebook</div></a></li>
+	<li class="clearfix"><a href="https://plus.google.com/share?url=localhost%3A8888%2Ftrailburning%2Fapp_dev.php%2Finspire%2Fwild%2Ftrail%2Fyurrebilla" target="_blank" class="clearfix"><div class="logo"><img src="assets/icons/share/share_googleplus.png"></div><div class="detail">Google+</div></a></li>
+	<li class="clearfix"><a href="http://twitter.com/share?text=Are+you+trailburning%3F&url=localhost%3A8888%2Ftrailburning%2Fapp_dev.php%2Finspire%2Fwild%2Ftrail%2Fyurrebilla" target="_blank" class="clearfix"><div class="logo"><img src="assets/icons/share/share_twitter.png"></div><div class="detail">Twitter</div></a></li>
+  </ul>
+</div>                    
+
+                    
+																										<div class="like"><a href="javascript:void(0)" class="btn btn-tb-action btn-tb like_btn pressed-btn-tb" data-off="Like" data-on="Liked" data-trailid="56"><i class="icon-star icon-white"></i> <span class="btn-label">Liked</span></a></div>
+																		
+					                </div>
+
+                <div class="panels clearfix">     
+                    <div class="two_col_panels">
+                        <div class="left">
+                            <div class="panel trail_detail_panel clearfix">
+                                <div class="content">
+                                    <h3 class="tb">About the trail</h3>
+                                    <h4 class="tb">Wind your way through National Parks and Conservation Reserves with great views over the city and ample wildlife spotting opportunities.</h4>
+                                </div>
+                            </div>
+                            <div class="activity_panel">
+					            <div class="bar_title">
+					              <div class="title"><h4 class="tb">This trail is suitable for</h4></div>
+					              <div class="right"></div>
+					            </div>
+					            <div  id="trailactivities_view" class="activities"></div>                
+							</div>    
+                        </div>  
+                        <div class="right">
+                            <div id="trail_weather_view" class="panel trail_weather_panel"></div>
+                                                    </div>  
+                    </div>
+                    
+                                            <div class="panel editorial_panel">
+                	
+    		  				<div class="editorial_header">
+    			  				<div class="header"><h3 class="tb">Running wild in the
+South Australian bush</h3></div>
+    			  				<div class="line"></div>
+    			  				<div class="author"><h4 class="tb">Discover more trails from Inspire by <strong>Matt Allbeury</strong>&nbsp;&nbsp;&nbsp;<span class="date">08/04/2014</span></h4></div>
+                    		</div>
+                	
+    				    	<div class="trailcards clearfix">
+                                                                     <div class="trail_card_sticker">
+	<div class="panel trail_card_panel">
+		<div class="title"><h3 class="tb">Bush</h3></div>
+        <a href="/trailburning/app_dev.php/inspire/wild/trail/morialtaloop">
+        <div class="photo tb-photo-btn">
+        	<div class="image_container"><img src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/trailburning-media/5e8aed09b86ea4565604e9591882d2c324f1812d.jpg" class="resrc scale" border="0"/></div>
+          	<div class="card_title">
+            <h1>Morialta Loop</h1>
+            <br />
+            <h1>Adelaide Hills</h1>
+        	</div>
+       	</div>
+        </a>
+        <div class="summary">
+               		<div class="tb-avatar"><div class="photo"><a href="/trailburning/app_dev.php/profile/paultran">		          	
+    	  	<img src="http://www.gravatar.com/avatar/5889ab29b92ea2bc3547770b9427310b">
+          	</a></div></div>
+	        <div class="detail">
+	            by <strong>Paul Tran</strong>
+				<div class="stars">
+      <div class="star_full"></div>
+  
+      <div class="star_half"></div>
+  
+  	<div class="star"></div>
+  
+  	<div class="star"></div>
+  
+  	<div class="star"></div>
+  </div>
+
+	      	</div>
+                </div>
+ 	</div>						 	
+</div>  
+                                                                     <div class="trail_card_sticker">
+	<div class="panel trail_card_panel">
+		<div class="title"><h3 class="tb">Bush</h3></div>
+        <a href="/trailburning/app_dev.php/inspire/wild/trail/chambers-gully-adelaide-hills">
+        <div class="photo tb-photo-btn">
+        	<div class="image_container"><img src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/trailburning-media/164/ea3f2f941c5ae02d4f7234381df401ff5a313c0e.jpg" class="resrc scale" border="0"/></div>
+          	<div class="card_title">
+            <h1>Chambers Gully</h1>
+            <br />
+            <h1>Adelaide Hills</h1>
+        	</div>
+       	</div>
+        </a>
+        <div class="summary">
+               		<div class="tb-avatar"><div class="photo"><a href="/trailburning/app_dev.php/profile/mattallbeury">		          	
+    	  	<img src="http://www.gravatar.com/avatar/e426b949d824bc81fe01caf1ad88abd7">
+          	</a></div></div>
+	        <div class="detail">
+	            by <strong>Matt Allbeury</strong>
+				<div class="stars">
+      <div class="star_full"></div>
+  
+  	<div class="star"></div>
+  
+  	<div class="star"></div>
+  
+  	<div class="star"></div>
+  
+  	<div class="star"></div>
+  </div>
+
+	      	</div>
+                </div>
+ 	</div>						 	
+</div>  
+                                    				    	</div>  
+                        </div>
+                                        
+                                        
+                </div>                                
+            </div>
+        	<div class="line_break"></div>            
+        	
+			        	
+            	<div id="editorial_sponsor_bar">
+					<div class="sponsor_content">
+						<div class="link"></div>
+						<div class="brand">
+							<div class="strap">brought to you by</div>
+							<div class="logo"><a href="/trailburning/app_dev.php/profile/ashmei"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/ashmei/editorial_sponsor_logo_small.png" border="0"></a></div>
+						</div>
+						<div class="inspire_logo"><img src="assets/img/sponsor/inspire_logo.png"></div>						
+					</div>
+                </div>
+        	        	
+        </div>
+  
+        <div id="trail_overlay">
+            <div class="overlay_content">
+                <div id="trail_stats_view" class="trailstats_panel"></div>
+                    <div id="trail_altitude_view" class="trail_altitude_panel"></div>
+                    <div id="trail_mini_view">
+                    <div id="trail_minimap_view" class="trail_minimap"></div>
+                    <div id="trail_minislides_view" class="trail_minislides"></div>
+                    <div class='border_top'></div>
+                    <div class='border_left'></div>
+                    <div class='toggle_view_button'></div>          
+                </div>
+            </div>
+            <div class="overlay_pull"><span class="button"></span></div>
+        </div>
+    </div>  
+</div>  
+          
+            </div>
+
+            <div id="footerview">
+                <div class="left">
+                  <div class="copyright">Copyright © 2014, Augmented Media Projects Ltd</div>    
+                  <div class="links">
+                    <div class="link"><a href="/trailburning/app_dev.php/about">About</a></div>
+                    <div class="link"><a href="/trailburning/app_dev.php/presskit">Press Kit</a></div>
+                  </div>
+                </div>
+                <div class="right">
+                    <div class="social email"><a href="mailto:hello@trailburning.com" class="button btnEmail">Email</a></div>
+                    <div class="social facebook"><a href="http://www.facebook.com/trailburning" target="_blank" class="button btnFacebook">Facebook</a></div>
+                    <div class="social twitter"><a href="http://www.twitter.com/trailburning" target="_blank" class="button btnTwitter">Twitter</a></div>
+                    <div class="social googleplus"><a href="https://plus.google.com/+Trailburning/posts" target="_blank" class="button btnGooglePlus">Google+</a></div>          
+                    <div class="social pinterest"><a href="https://www.pinterest.com/trailburning/" target="_blank" class="button btnPinterest">Pinterest</a></div>          
+                </div>
+            </div>     
+        </div>      
+
+		<script type="text/template" id="activityFeedViewTemplate">
+		</script>
+
+		<script type="text/template" id="activityFeedItemViewTemplate">
+    	  <a href="/trailburning/app_dev.php<%=  activityURL%>">            	
+	 	  <div class="tb-avatar"><div class="photo"><img src="<%= actorAvatarURL%>"></div></div>	
+    	  <div class="note"><span class="seen <%= displaySeen%>"></span><span class="time"><%= displayPublished%></span><br/><strong> <%= actorDisplayName%></strong> <%= preVerbDisplayName%> <strong><%= verbDisplayName%></strong> <%= subjectDisplayName%>.</div>
+    	  </a>
+		</script>
+
+        <script>
+        resrc = {
+          options: {
+            server: "app.resrc.it",
+            resrcOnLoad: true,
+            resrcOnResize: true,
+            resrcOnPinch: false    
+          }
+        };
+        </script>
+		<script src="//use.resrc.it"></script>
+
+        <script src="assets/js/libs/jquery-1.8.3.min.js"></script>
+        <script src="assets/js/libs/bootstrap.min.js"></script>
+        <script src="assets/js/libs/bootstrap-filestyle.min.js"> </script>
+        <script src="assets/js/libs/bootstrap-select.min.js"></script>
+
+        <script src='http://api.tiles.mapbox.com/mapbox.js/v1.6.3/mapbox.js'></script>
+        <script src='http://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js'></script>
+
+        <script src="assets/js/libs/imagesloaded.pkgd.min.js"></script>
+        <script src="assets/js/libs/image-scale.min.js"></script>
+
+        <script src="assets/js/libs/jquery-dateFormat.min.js"></script>
+
+        
+<script src="assets/js/libs/jquery.ui.widget.js"></script>
+<script src="assets/js/libs/jquery.touchwipe.min.js"></script>
+
+<script type="text/template" id="trailStatsViewTemplate">
+  <div class="content">
+    <div class="length"></div>
+    <div class="terrain"></div>          
+  </div>
+</script>
+
+<script type="text/template" id="trailMiniMapViewTemplate">
+  <div id='minimap'></div>  
+</script>
+
+<script type="text/template" id="trailMiniSlidesViewTemplate">
+  <div id='minislides'>
+    <div class="photos_container"></div>
+  </div>
+</script>
+
+<script type="text/template" id="trailSlidesViewTemplate">
+  <div class="photos_container"></div>
+  <div class="slide_btns">
+    <div class="left"></div>
+    <div class="right"></div>
+  </div>  
+  <div class="loader_container">
+    <div class="loader"></div>
+  </div>  
+</script>
+
+<script type="text/template" id="trailSlideViewTemplate">
+  <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/O=80/http://s3-eu-west-1.amazonaws.com/<%= versionLargePath%>" class="resrc scale" /></div>  
+</script>
+
+<script type="text/template" id="trailMapViewTemplate">
+  <div class="map_container">
+    <div id='map_large'></div>
+  </div>
+</script>
+
+<script type="text/template" id="traiAltitudeViewTemplate">
+  <div class="profile">
+    <canvas id="graph"></canvas>
+    <div class="location"></div>      
+  </div>
+</script>
+
+<script type="text/template" id="trailMediaMarkerViewTemplate">
+  <div class="marker_container">
+    <div class="marker"></div>
+    <div class="alt"></div>  
+  </div>
+</script>
+
+<script type="text/template" id="trailWeatherViewTemplate">
+  <div class="content">
+    <h3 class="tb">Today&#39;s weather</h3>
+    <div class="desc"></div>
+    <div class="detail clearfix">                  
+      <div class="text">
+        <div class="temp"></div>
+        <div class="wind"></div>
+      </div>
+      <div class="icon"></div>
+    </div>
+  </div>
+</script>
+
+<script type="text/template" id="trailActivityViewTemplate">
+  <div class="icon icon-<%= name %>"></div>
+</script>
+
+
+        <script data-main="assets/js/main" src="assets/js/libs/require.js"></script>        
+    
+</body>
+</html>

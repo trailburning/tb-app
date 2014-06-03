@@ -551,4 +551,23 @@ class RouteControllerTest extends AbstractApiTestCase
         $this->assertEquals(Response::HTTP_OK,  $client->getResponse()->getStatusCode());
     }
     
+    /**
+     * Test the GET /route/{routeId}/related action
+     */
+    public function testGetRelatedRoutes()
+    {
+        $this->loadFixtures([
+            'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData',
+        ]);
+        
+        $route = $this->getRoute('grunewald');
+        
+        $client = $this->createClient();
+        $client->request('GET', '/v1/route/' . $route->getId() . '/related');
+        $this->assertEquals(Response::HTTP_OK,  $client->getResponse()->getStatusCode());
+          
+        $this->assertJsonResponse($client);
+    }
+    
+    
 }

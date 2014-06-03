@@ -43,13 +43,7 @@ var TB_USER_ID = {{ app.user.id }};
         			<div class="editorial clearfix">
         				<div class="title"><h2 class="tb">{{ editorial.title|nl2br }}</h2></div>
 						<div class="tb-avatar tb-avatar-feature"><div class="photo"><a href="{{ path('profile', {name: editorial.user.name}) }}">
-	            	  	{% if editorial.user.avatar %}
-	                		<img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/{{ editorial.user.name }}/avatar.jpg">
-	            	  	{% elseif editorial.user.avatarGravatar %}
-	                		<img src="{{ editorial.user.avatarGravatar }}">
-	            	  	{% else %}
-	                		<img src="{{ asset('assets/img/avatar_man.jpg') }}">
-	            	  	{% endif %}
+	            	  	<img src="{{ get_user_avatar_url(editorial.user) }}">
         				</a></div></div>
         				<div class="hero">
         					<a href="{{ path('editorial', {slug: editorial.slug}) }}">
@@ -70,13 +64,7 @@ var TB_USER_ID = {{ app.user.id }};
                 {% else %}
         			<div class="editorial sub clearfix">
 						<div class="tb-avatar tb-avatar-feature"><div class="photo"><a href="{{ path('profile', {name: editorial.user.name}) }}">
-	            	  	{% if editorial.user.avatar %}
-	                		<img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/{{ editorial.user.name }}/avatar.jpg">
-	            	  	{% elseif editorial.user.avatarGravatar %}
-	                		<img src="{{ editorial.user.avatarGravatar }}">
-	            	  	{% else %}
-	                		<img src="{{ asset('assets/img/avatar_man.jpg') }}">
-	            	  	{% endif %}
+	            	  	<img src="{{ get_user_avatar_url(editorial.user) }}">
         				</a></div></div>
         				<div class="title"><h2 class="tb">{{ editorial.title|nl2br }}</h2></div>
         				<div class="hero">

@@ -17,6 +17,12 @@
             <argument>%fos_user.model.user.class%</argument>
         </service>
         
+        <!-- Register custom user profile form as service -->
+        <service id="tb_user.profile.form.type" class="TB\Bundle\FrontendBundle\Form\Type\ProfileFormType">
+            <tag name="form.type" alias="tb_user_profile" />
+            <argument>%fos_user.model.user.class%</argument>
+        </service>
+        
         <!-- Register media importer service -->
         <service id="tb.media.importer" class="TB\Bundle\FrontendBundle\Util\MediaImporter">
             <argument type="service" id="doctrine.orm.entity_manager" />
@@ -29,6 +35,13 @@
         
         <!-- Register event listener to redirect to the homepage after resetting password -->
         <service id="change_password_complete" class="TB\Bundle\FrontendBundle\EventListener\ResettingResetSuccessListener">
+            <argument type="service" id="router" />
+            <tag name="kernel.event_subscriber" />
+        </service>
+        
+        <!-- Register event listener to redirect to the user profile page after editing the profile -->
+        <service id="profile_edit_complete" class="TB\Bundle\FrontendBundle\EventListener\ProfileEditSuccessListener">
+            <argument type="service" id="service_container" />
             <argument type="service" id="router" />
             <tag name="kernel.event_subscriber" />
         </service>

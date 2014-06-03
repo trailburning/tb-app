@@ -72,7 +72,7 @@ class TrailControllerTest extends AbstractFrontendTest
         ]);
  
         $client = $this->createClient();
-        $this->logIn($client, 'email@mattallbeury');
+        $this->logIn($client, 'mattallbeury@trailburning.com');
         $crawler = $client->request('GET', '/trailmaker');
         $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
     }
@@ -87,7 +87,7 @@ class TrailControllerTest extends AbstractFrontendTest
         
  
         $client = $this->createClient();
-        $this->logIn($client, 'email@mattallbeury');
+        $this->logIn($client, 'mattallbeury@trailburning.com');
         $crawler = $client->request('GET', '/trailmaker/' . $route->getId());
         $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
     }
