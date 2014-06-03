@@ -36,7 +36,7 @@ define([
         $(this.el).html(this.template(attribs));
         $(this.el).attr('data-id', this.model.id);
         $(this.el).removeClass('move');     
-      
+            
 	    $('.link', $(this.el)).click(function(evt){
 		  // fire event
           app.dispatcher.trigger("MapTrailCardView:click", self);                	      
@@ -97,6 +97,11 @@ define([
           }
         });      
 	  }
+	  
+      $('.location', this.el).click(function(evt){
+		// fire event
+        app.dispatcher.trigger("MapTrailCardView:cardmarkerclick", self);                
+      });
 	  
       $('.fade_on_load', $(self.el)).removeClass('tb-fade-in');
       $('.image_container', $(self.el)).css('opacity', 0);

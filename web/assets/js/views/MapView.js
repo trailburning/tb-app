@@ -17,6 +17,7 @@ define([
       app.dispatcher.on("MapTrailMarker:click", self.onTrailMarkerClick, this);
       app.dispatcher.on("MapTrailCardView:click", self.onTrailCardViewClick, this);
       app.dispatcher.on("MapTrailEventCardView:click", self.onTrailCardViewClick, this);
+      app.dispatcher.on("MapTrailCardView:cardmarkerclick", self.onTrailCardViewCardMarkerClick, this);
   	  
 	  if (typeof TB_USER_ID != 'undefined') {
       	this.activityFeedView = new ActivityFeedView({ el: '#activity_feed_view' });
@@ -34,9 +35,10 @@ define([
 	  this.collection = new Backbone.Collection();
       
       this.map = L.mapbox.map('map', null, {dragging: true, touchZoom: false, scrollWheelZoom:false, doubleClickZoom:false, boxZoom:false, tap:false, zoomControl:false, zoomAnimation:false, attributionControl:false});
-      this.layer_street = L.mapbox.tileLayer('mallbeury.map-omeomj70');
+      this.layer_street = L.mapbox.tileLayer('mallbeury.idjhlejc');            
       this.layer_sat = L.mapbox.tileLayer('mallbeury.map-eorpnyp3');      
       this.map.addLayer(this.layer_street);
+	  this.currMarkerOrCluster = null;      
                           
 	  this.getResults();
 	  this.buildBtns();
@@ -52,8 +54,6 @@ define([
 	  });
 
 	  $('#cardsview').bind('mousewheel', function(evt){
-//	  	console.log('w:'+evt.originalEvent.wheelDelta+' : '+evt.originalEvent.detail);
-	  	
 	  	if (evt.originalEvent.wheelDelta > 0) {
 	  	  self.prevCard();
 	  	}
@@ -67,6 +67,10 @@ define([
 	  });
 
 	  $('.nav .next').click(function(evt){
+	  	self.nextCard();
+	  });
+
+	  $('.go .btn').click(function(evt){
 	  	self.nextCard();
 	  });
 	  
@@ -165,7 +169,10 @@ define([
         }
       });        
     },
-    selectCard: function(nId, bMoveForward){
+    selectCard: function(nId, bMoveForward){    	
+      $('#welcome_view').hide();
+      $('#cards_container_view').show();
+    	
       if (this.currCardModel) {
       	this.currCardModel.mapTrailCardView.hide(bMoveForward);      	
       }
@@ -197,17 +204,13 @@ define([
       }
       var cardModel = this.collection.at(this.nCurrCard);      
 	  this.selectCard(cardModel.id, false);
-
-	  // pan to marker
-	  this.map.setZoom(3, {zoomAnimation: false});
-	  this.map.panTo(cardModel.mapTrailMarker.marker.getLatLng());        	  	
+	  this.panMap(cardModel);
 
 	  var self = this;
 	  if (!this.scrollTimer) {
         this.scrollTimer = setTimeout(function() {
 	      clearTimeout(self.scrollTimer);
 	      self.scrollTimer = null;
-	      console.log('e');
 	      self.bFlipLock = false;
 	  	}, 1000);	  			  	    
 	 }                	
@@ -231,20 +234,29 @@ define([
       
       var cardModel = this.collection.at(this.nCurrCard);      
 	  this.selectCard(cardModel.id, true);	  
-	  	  
-	  // pan to marker
-	  this.map.setZoom(3, {zoomAnimation: false});
-	  this.map.panTo(cardModel.mapTrailMarker.marker.getLatLng());        	  	
-	  
+	  this.panMap(cardModel);
+	  	  	  
 	  var self = this;
 	  if (!this.scrollTimer) {
         this.scrollTimer = setTimeout(function() {
 	      clearTimeout(self.scrollTimer);
 	      self.scrollTimer = null;
-	      console.log('e');
 	      self.bFlipLock = false;
 	  	}, 1000);	  			  	    
 	 }
+    },
+    panMap: function(cardModel){    
+	  // pan to marker
+	  this.map.setZoom(3, {zoomAnimation: false});
+	  this.map.panTo(cardModel.mapTrailMarker.marker.getLatLng());        	  	
+	  
+	  if (this.currMarkerOrCluster) {
+	  	$(this.currMarkerOrCluster._icon).removeClass('selected');
+	  }
+	  this.currMarkerOrCluster = this.markerCluster.getVisibleParent(cardModel.mapTrailMarker.marker);
+	  if (this.currMarkerOrCluster) {
+	    $(this.currMarkerOrCluster._icon).addClass('selected');	  	
+	  }
     },
     onTrailCardsResult: function(data){
 	  if (!data.value.routes.length) {
@@ -252,8 +264,8 @@ define([
 	  }
 
       var self = this;
-            
-	  this.markerCluster = new L.MarkerClusterGroup({ showCoverageOnHover: false, spiderfyDistanceMultiplier: 10,
+
+	  this.markerCluster = new L.MarkerClusterGroup({ showCoverageOnHover: false, spiderfyOnMaxZoom: false,
     	iconCreateFunction: function(cluster) {
     	  var nSize = 40;
     	  var strClass = 'tb-map-marker small';
@@ -270,10 +282,12 @@ define([
 	  });
       
       var model, cardViewModel, bEvent;
-      $.each(data.value.routes, function(key, card) {      	    	
+      $.each(data.value.routes, function(key, card) {
       	bEvent = false;
 	    model = new Backbone.Model(card);	    
-	    
+	    // mla test      	      	    	
+//	    if (model.get('user').name == 'lucamanetti') {
+	    		    
 	    // mla - switch based on route
 	    switch (model.get('slug')) {
 	      case '16km':
@@ -315,7 +329,10 @@ define([
     	cardViewModel.id = model.id;
     	cardViewModel.mapTrailCardView = mapTrailCardView;
     	cardViewModel.mapTrailMarker = mapTrailMarker; 
-    	self.collection.add(cardViewModel);   	  				  
+    	self.collection.add(cardViewModel);   	  	
+    
+//	    }
+    				  
       });       
 	  this.map.addLayer(this.markerCluster);
 	  this.map.fitBounds(this.markerCluster.getBounds());
@@ -345,7 +362,25 @@ define([
 	  $.cookie('route_id', $(trailCardView.el).attr('data-id'));	  	  	
 	  window.location = $('.link', trailCardView.el).attr('data-url');	  	
 	},    
+    onTrailCardViewCardMarkerClick: function(trailCardView){
+	  if (this.currMarkerOrCluster) {
+	  	$(this.currMarkerOrCluster._icon).removeClass('selected');
+	  	this.currMarkerOrCluster = null;
+	  }
+    	
+      var cardModel = this.collection.get(trailCardView.model.id);
+
+      cardModel.mapTrailMarker.selected(true);
+	  
+	  this.markerCluster.zoomToShowLayer(cardModel.mapTrailMarker.marker, function() {});
+	  this.map.panTo(cardModel.mapTrailMarker.marker.getLatLng(), {animate: false});	
+    },      		
     onTrailMarkerClick: function(trailCardMarker){
+	  if (this.currMarkerOrCluster) {
+	  	$(this.currMarkerOrCluster._icon).removeClass('selected');
+	  	this.currMarkerOrCluster = null;
+	  }
+
       if (this.currCardModel) {
       	this.currCardModel.mapTrailMarker.selected(false);      	
       }
@@ -355,7 +390,6 @@ define([
       var cardModel = this.collection.get(trailCardMarker.model.id);
       
 	  // select marker      
-//      this.markerCluster.zoomToShowLayer(cardModel.mapTrailMarker.marker, function() {});
       cardModel.mapTrailMarker.selected(true);
       
 	  this.currCardModel = cardModel;      	          

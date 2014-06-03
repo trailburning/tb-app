@@ -312,6 +312,10 @@ h4.tb {
   overflow: hidden;
 }
 
+.tb-map-marker.selected .marker {
+  color: #ed1c24;
+}
+
 .tb-map-marker.small {
   width: 40px;
   height: 40px;

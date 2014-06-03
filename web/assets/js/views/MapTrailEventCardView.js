@@ -40,6 +40,11 @@ define([
  	  }
       this.bRendered = true;
                        
+      $('.location', this.el).click(function(evt){
+		// fire event
+        app.dispatcher.trigger("MapTrailCardView:cardmarkerclick", self);                
+      });
+                       
       $('.fade_on_load', $(self.el)).removeClass('tb-fade-in');
       $('.image_container', $(self.el)).css('opacity', 0);
 	  

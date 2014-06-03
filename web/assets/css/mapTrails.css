@@ -22,19 +22,103 @@ border-width:1px;
 #mapview {
   position: relative;
   width: 100%; 
-  height: 600px;
+  height: 100%;
+}
+
+#overlay_view {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 400px;
+  height: 100%;
+  background: url(../img/back_shape.png) no-repeat top left;	
+}
+
+#overlay_view .maintitle {
+  position: absolute;
+  top: 8px;
+  left: 40px;
+}
+
+/* WELCOME VIEW */
+/******************************************/
+#welcome_view {
+  position: absolute;
+  top: 192px;
+  left: 40px;	
+}
+
+#welcome_view .title {
+  font-size: 32px;
+  line-height: 1.1em;
+  color: #FFF;
+  text-shadow: 1px 1px #000000;  
+}
+
+#welcome_view .go {
+  margin-top: 12px;
 }
 
 /* CARDS CONTAINER VIEW */
 /******************************************/
 #cards_container_view {
+  display: none;
   position: absolute;
-  top: 164px;
+  top: 192px;
   left: 40px;	
 }
 
-#cards_container_view .nav:hover {
-  cursor: pointer;  	
+#cards_container_view .nav {  
+  position: relative;	
+  margin-top: 14px;
+  width: 100%;
+  text-align: center;
+}
+
+#cards_container_view .nav .title {
+  display: inline-block;
+  margin: 0px 12px 0px 12px;
+  font-size: 32px;
+  line-height: 1.1em;
+  color: #FFF;
+  text-shadow: 1px 1px #000000;
+}
+
+#cards_container_view .button {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  margin-top: 2px;
+  line-height:24px; 
+  text-indent: -10000px;  
+  background-repeat:no-repeat;
+  background-position:top center;
+  overflow: hidden;   
+  text-decoration: none;
+  width: 24px;
+  height: 24px;
+}
+
+#cards_container_view .nav .prev {	
+  display: inline-block;
+  position: relative;
+  width: 24px;
+  height: 24px;
+}
+
+#cards_container_view .nav .prev .button {	
+  background: url("../img/arrow_nav_left.png") no-repeat top left;
+}
+
+#cards_container_view .nav .next {	
+  display: inline-block;
+  position: relative;
+  width: 24px;  
+  height: 24px;
+}
+
+#cards_container_view .nav .next .button {	
+  background: url("../img/arrow_nav_right.png") no-repeat top left;
 }
 
 #cardsview {
