@@ -85,7 +85,7 @@ class Media implements Exportable
     
     
     /**
-     * @Assert\File(maxSize="12m")
+     * @Assert\File(maxSize="4M")
      */
     private $file;
 
