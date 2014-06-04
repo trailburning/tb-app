@@ -45,13 +45,34 @@ class PostgisTest extends AbstractApiTestCase
             'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData',
         ]); 
         $postgis = $this->getContainer()->get('postgis');
-        $routes = $postgis->searchRoutes(1, 0, $count);
+        $params = [];
+        $routes = $postgis->searchRoutes($params, 1, 0, $count);
         $this->assertInternalType('array', $routes, 
             'searchRoutes returns an array of Routes');   
         $this->assertEquals(1, count($routes),
             'searchRoutes returns one route');
         $this->assertEquals(2, $count,
             'the total number of results is 2');
+            
+        // Limit search to a radius around a point
+        $params = ['radius' => 100, 'long' => 13.2, 'lat' => 52.5];
+        $routes = $postgis->searchRoutes($params, 1, 0, $count);
+        $this->assertInternalType('array', $routes, 
+            'searchRoutes returns an array of Routes');   
+        $this->assertEquals(1, count($routes),
+            'searchRoutes returns one route');
+        $this->assertEquals(2, $count,
+            'the total number of results is 2');            
+            
+        // Order results nearest to a point
+        $params = ['order' => 'distance', 'long' => 13.2, 'lat' => 52.5];
+        $routes = $postgis->searchRoutes($params, 1, 0, $count);
+        $this->assertInternalType('array', $routes, 
+            'searchRoutes returns an array of Routes');   
+        $this->assertEquals(1, count($routes),
+            'searchRoutes returns one route');
+        $this->assertEquals(2, $count,
+            'the total number of results is 2');            
     }
     
     protected function importRoute($file)
@@ -89,6 +110,83 @@ class PostgisTest extends AbstractApiTestCase
             'relatedRoutes returns an array of Routes');   
         $this->assertEquals(1, count($routes),
             'relatedRoutes returns one route');
+    }
+    
+    protected function validateSearchParams()
+    {
+        $postgis = $this->getContainer()->get('postgis');
+        
+        $params = ['invalid' => 'value'];
+        try {
+            $postgis->validateSearchParams($params);
+            $this->fail('No Exception was thrown for invalid parameter');
+        } catch (ApiException $e) {
+            $this->pass('ApiException was thrown for invalid parameter');
+        } finally {
+            $this->fail('No ApiException was thrown for invalid parameter');
+        }
+        
+        $params = ['invalid' => 'value'];
+        try {
+            $postgis->validateSearchParams($params);
+            $this->fail('No Exception was thrown for valid parameter');
+        } catch (\Exception $e) {
+            $this->pass('An Exception was thrown for valid parameter');
+        }
+        
+        $params = ['order' => 'invalidValue'];
+        try {
+            $postgis->validateSearchParams($params);
+            $this->fail('No Exception was thrown for invalid parameter value');
+        } catch (ApiException $e) {
+            $this->pass('ApiException was thrown for invalid parameter value');
+        } finally {
+            $this->fail('No ApiException was thrown for invalid parameter value');
+        }
+        
+        $params = ['order' => 'date'];
+        try {
+            $postgis->validateSearchParams($params);
+            $this->fail('No Exception was thrown for valid parameter value');
+        } catch (\Exception $e) {
+            $this->pass('An Exception was thrown for valid parameter value');
+        }
+        
+        $params = ['order' => 'distance'];
+        try {
+            $postgis->validateSearchParams($params);
+            $this->fail('No Exception was thrown for missing parameter dependency');
+        } catch (ApiException $e) {
+            $this->pass('ApiException was thrown for missing parameter dependency');
+        } finally {
+            $this->fail('No ApiException was thrown for missing parameter dependency');
+        }
+        
+        $params = ['order' => 'distance', 'lat' => 51, 'long' => 13];
+        try {
+            $postgis->validateSearchParams($params);
+            $this->fail('No Exception was thrown for valid search parameter');
+        } catch (\Exception $e) {
+            $this->pass('An Exception was thrown for valid search parameter');
+        }
+        
+        $params = ['radius' => 50];
+        try {
+            $postgis->validateSearchParams($params);
+            $this->fail('No Exception was thrown for missing parameter dependency');
+        } catch (ApiException $e) {
+            $this->pass('ApiException was thrown for missing parameter dependency');
+        } finally {
+            $this->fail('No ApiException was thrown for missing parameter dependency');
+        }
+        
+        $params = ['radius' => 50, 'lat' => 51, 'long' => 13];
+        try {
+            $postgis->validateSearchParams($params);
+            $this->fail('No Exception was thrown for valid search parameter');
+        } catch (\Exception $e) {
+            $this->pass('An Exception was thrown for valid search parameter');
+        }
     }
     
 }    

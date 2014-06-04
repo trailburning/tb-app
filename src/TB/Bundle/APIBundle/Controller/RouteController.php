@@ -163,8 +163,16 @@ class RouteController extends AbstractRestController
         $limit = $request->query->get('limit', 10);
         $offset = $request->query->get('offset', 0);
         
+        $validParams = ['order', 'lat', 'long', 'radius'];
+        $params = [];
+        foreach ($validParams as $key) {
+            if ($request->query->has($key)) {
+                $params[$key] = $request->query->get($key);
+            }
+        }
+        
         $postgis = $this->get('postgis');
-        $routes = $postgis->searchRoutes($limit, $offset, $count);
+        $routes = $postgis->searchRoutes($params, $limit, $offset, $count);
         $routesExport = [];
         foreach ($routes as $route) {
             $routesExport[] = $route->export();

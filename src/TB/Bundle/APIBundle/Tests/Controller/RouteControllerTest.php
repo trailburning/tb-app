@@ -459,8 +459,29 @@ class RouteControllerTest extends AbstractApiTestCase
         
         $client = $this->createClient();
         $client->request('GET', '/v1/routes/search');
-        $this->assertEquals(Response::HTTP_OK,  $client->getResponse()->getStatusCode());
-          
+        $this->assertEquals(Response::HTTP_OK,  $client->getResponse()->getStatusCode());  
+        $this->assertJsonResponse($client);
+        
+        
+        // Limit search to a radius around a point
+        $params = ['radius' => 100, 'long' => 13.2, 'lat' => 52.5];          
+        $query = [];
+        foreach ($params as $key => $value) {
+            $query[] = $key . '=' . $value;    
+        }
+        $client->request('GET', '/v1/routes/search?' . implode('&', $query));
+        $this->assertEquals(Response::HTTP_OK,  $client->getResponse()->getStatusCode());  
+        $this->assertJsonResponse($client);
+            
+            
+        // Order results nearest to a point
+        $params = ['order' => 'distance', 'long' => 13.2, 'lat' => 52.5];
+        $query = [];
+        foreach ($params as $key => $value) {
+            $query[] = $key . '=' . $value;    
+        }
+        $client->request('GET', '/v1/routes/search?' . implode('&', $query));
+        $this->assertEquals(Response::HTTP_OK,  $client->getResponse()->getStatusCode());  
         $this->assertJsonResponse($client);
     }
     
