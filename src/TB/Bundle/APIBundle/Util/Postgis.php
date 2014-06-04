@@ -773,7 +773,7 @@ class Postgis extends \PDO
               LEFT JOIN route_type rt ON r.route_type_id=rt.id
               LEFT JOIN route_category rc ON r.route_category_id=rc.id
               LEFT JOIN medias m ON r.media_id=m.id
-              WHERE r.publish = true 
+              WHERE r.publish = true AND approved = true 
               AND r.id != :routeId
               AND ST_Distance_Sphere(ST_Centroid(r.centroid), ST_GeomFromText(\'POINT(' . $long . ' ' . $lat . ')\',4326)) <= 50000
               GROUP BY r.id, rt.id, rc.id, m.id, u.id ORDER BY published_date DESC ';
