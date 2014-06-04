@@ -389,7 +389,7 @@ class Postgis extends \PDO
         if (isset($params['radius'])) {
              $pq->bindValue('point', 'POINT(' . $params['long'] . ' ' . $params['lat'] . ')', \PDO::PARAM_STR);
              // Convert kilometers to meters for 'radius'
-             $pq->bindValue('radius', ($params['radius'] * 100), \PDO::PARAM_INT);
+             $pq->bindValue('radius', ($params['radius'] * 1000), \PDO::PARAM_INT);
         }
         
         $success = $pq->execute();
@@ -428,7 +428,7 @@ class Postgis extends \PDO
             
             if (isset($params['radius'])) {
                 // Convert kilometers to meters for 'radius'
-                $pq->bindValue('radius', ($params['radius'] * 100), \PDO::PARAM_INT);
+                $pq->bindValue('radius', ($params['radius'] * 1000), \PDO::PARAM_INT);
             }
 
             $success = $pq->execute();

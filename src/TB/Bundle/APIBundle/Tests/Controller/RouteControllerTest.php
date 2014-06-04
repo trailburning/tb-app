@@ -464,7 +464,7 @@ class RouteControllerTest extends AbstractApiTestCase
         
         
         // Limit search to a radius around a point
-        $params = ['radius' => 100, 'long' => 13.2, 'lat' => 52.5];          
+        $params = ['radius' => 20, 'long' => 13.2, 'lat' => 52.5];          
         $query = [];
         foreach ($params as $key => $value) {
             $query[] = $key . '=' . $value;    

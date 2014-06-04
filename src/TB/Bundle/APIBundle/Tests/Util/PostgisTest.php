@@ -55,7 +55,7 @@ class PostgisTest extends AbstractApiTestCase
             'the total number of results is 2');
             
         // Limit search to a radius around a point
-        $params = ['radius' => 100, 'long' => 13.2, 'lat' => 52.5];
+        $params = ['radius' => 20, 'long' => 13.2, 'lat' => 52.5];
         $routes = $postgis->searchRoutes($params, 1, 0, $count);
         $this->assertInternalType('array', $routes, 
             'searchRoutes returns an array of Routes');   
