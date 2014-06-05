@@ -185,9 +185,9 @@ class Route implements Exportable
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\Editorial", mappedBy="routes")
-     */
-    private $editorials;
+     * @ORM\OneToMany(targetEntity="EditorialRoute", mappedBy="route")
+     **/
+    private $editorialRoutes;
     
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -1403,5 +1403,38 @@ class Route implements Exportable
         }
 
         return null;
+    }
+
+    /**
+     * Add editorialRoutes
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\EditorialRoute $editorialRoutes
+     * @return Route
+     */
+    public function addEditorialRoute(\TB\Bundle\FrontendBundle\Entity\EditorialRoute $editorialRoutes)
+    {
+        $this->editorialRoutes[] = $editorialRoutes;
+
+        return $this;
+    }
+
+    /**
+     * Remove editorialRoutes
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\EditorialRoute $editorialRoutes
+     */
+    public function removeEditorialRoute(\TB\Bundle\FrontendBundle\Entity\EditorialRoute $editorialRoutes)
+    {
+        $this->editorialRoutes->removeElement($editorialRoutes);
+    }
+
+    /**
+     * Get editorialRoutes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEditorialRoutes()
+    {
+        return $this->editorialRoutes;
     }
 }

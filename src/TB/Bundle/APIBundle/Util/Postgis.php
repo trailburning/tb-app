@@ -370,13 +370,28 @@ class Postgis extends \PDO
         return $routes;
     }
     
-    public function searchRoutes($limit = 10, $offset = 0, &$count = 0) 
+    /**
+     * Valid parameters: order, lat, long, radius
+     */
+    public function searchRoutes(array $params, $limit = 10, $offset = 0, &$count = 0) 
     {
+        $this->validateSearchParams($params);
+        
         $q = 'SELECT COUNT(r.id) AS count
               FROM routes r
               INNER JOIN fos_user u ON r.user_id=u.id
               WHERE r.publish = true AND approved = true';
+        if (isset($params['radius'])) {
+            $q .= ' AND ST_Distance_Sphere(ST_Centroid(r.centroid), ST_GeomFromText(:point,4326)) <= :radius';
+        }
+          
         $pq = $this->prepare($q);
+        if (isset($params['radius'])) {
+             $pq->bindValue('point', 'POINT(' . $params['long'] . ' ' . $params['lat'] . ')', \PDO::PARAM_STR);
+             // Convert kilometers to meters for 'radius'
+             $pq->bindValue('radius', ($params['radius'] * 1000), \PDO::PARAM_INT);
+        }
+        
         $success = $pq->execute();
         if (!$success) {
             throw (new ApiException('Failed to fetch route from Database', 500));
@@ -391,13 +406,30 @@ class Postgis extends \PDO
                   LEFT JOIN route_type rt ON r.route_type_id=rt.id
                   LEFT JOIN route_category rc ON r.route_category_id=rc.id
                   LEFT JOIN medias m ON r.media_id=m.id
-                  WHERE r.publish = true AND approved = true
-                  GROUP BY r.id, rt.id, rc.id , u.id, m.id
-                  ORDER BY r.published_date DESC
-                  LIMIT :limit OFFSET :offset';
+                  WHERE r.publish = true AND approved = true';
+            if (isset($params['radius'])) {
+                $q .= ' AND ST_Distance_Sphere(ST_Centroid(r.centroid), ST_GeomFromText(:point,4326)) <= :radius';
+            }
+            $q .= ' GROUP BY r.id, rt.id, rc.id , u.id, m.id';
+            if (isset($params['order']) && $params['order'] == 'distance') {
+                $q .= ' ORDER BY ST_Distance_Sphere(ST_Centroid(r.centroid), ST_GeomFromText(:point,4326)) ASC';
+            } else {
+                $q .= ' ORDER BY r.published_date DESC';
+            }
+                  
+            $q .= ' LIMIT :limit OFFSET :offset';
             $pq = $this->prepare($q);
             $pq->bindParam('limit', $limit, \PDO::PARAM_INT);
             $pq->bindParam('offset', $offset, \PDO::PARAM_INT);
+            
+            if (isset($params['radius']) || (isset($params['order']) && $params['order'] == 'distance')) {
+                 $pq->bindValue('point', 'POINT(' . $params['long'] . ' ' . $params['lat'] . ')', \PDO::PARAM_STR);
+            }
+            
+            if (isset($params['radius'])) {
+                // Convert kilometers to meters for 'radius'
+                $pq->bindValue('radius', ($params['radius'] * 1000), \PDO::PARAM_INT);
+            }
 
             $success = $pq->execute();
             if (!$success) {
@@ -469,6 +501,7 @@ class Postgis extends \PDO
         
         return $routes;
     }
+
 
     public function deleteRoute($routeId) 
     {
@@ -740,7 +773,7 @@ class Postgis extends \PDO
               LEFT JOIN route_type rt ON r.route_type_id=rt.id
               LEFT JOIN route_category rc ON r.route_category_id=rc.id
               LEFT JOIN medias m ON r.media_id=m.id
-              WHERE r.publish = true 
+              WHERE r.publish = true AND approved = true 
               AND r.id != :routeId
               AND ST_Distance_Sphere(ST_Centroid(r.centroid), ST_GeomFromText(\'POINT(' . $long . ' ' . $lat . ')\',4326)) <= 50000
               GROUP BY r.id, rt.id, rc.id, m.id, u.id ORDER BY published_date DESC ';
@@ -825,6 +858,42 @@ class Postgis extends \PDO
         }
         
         return $routes;
+    }
+    
+    protected function validateSearchParams(array $params)
+    {
+        $validParams = [
+            'order' => ['distance', 'date'],
+            'lat' => null,
+            'long' => null,
+            'radius' => null,
+        ];
+        
+        foreach ($params as $paramName => $paramValue) {
+            // Check if parameter is valid
+            if (!array_key_exists($paramName, $validParams)) {
+                throw new ApiException(sprintf('Invalid parameter \'%s\'', $paramName));
+            }
+            
+            // Check if parameter value is valid
+            if (is_array($validParams[$paramName])) {
+                if (!in_array($paramValue, $validParams[$paramName])) {
+                    throw new ApiException(sprintf('Invalid parameter value \'%s\' for parameter \'%s\'', $paramValue, $paramName));
+                }
+            }
+        }
+        
+        // When 'order' is set to 'distance', the parameters 'long' and 'lat' must be set 
+        if (isset($params['order']) && $params['order'] == 'distance' && (!isset($params['long']) || !isset($params['lat']))) {
+            throw new ApiException('Sort order \'distance\' requires the parameters \'long\' and \'lat\' to be set.', 400);
+        }
+        
+        // When 'radius' is set, the parameters 'long' and 'lat' must be set 
+        if (isset($params['radius']) && (!isset($params['long']) || !isset($params['lat']))) {
+            throw new ApiException('The parameter \'radius\' requires the parameters \'long\' and \'lat\' to be set.', 400);
+        }
+        
+        return true;
     }
     
 }

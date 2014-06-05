@@ -1,0 +1,76 @@
+<?php
+
+namespace TB\Bundle\FrontendBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+
+/**
+ * RouteLike
+ *
+ * @ORM\Table(name="editorial_route")
+ * @ORM\Entity
+ */
+class EditorialRoute
+{
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\Column(name="editorial_id", type="integer")
+     */
+    private $editorialId;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\Column(name="route_id", type="integer")
+     */
+    private $routeId;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="order", type="smallint", nullable=true)
+     */
+    private $order;    
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="synopsis", type="text", nullable=true)
+     */
+    private $synopsis;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="text", type="text", nullable=true)
+     */
+    private $text;
+
+    /**
+     * @var Editorial
+     *
+     * @ORM\ManyToOne(targetEntity="Editorial", inversedBy="editorialRoutes")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="editorial_id", referencedColumnName="id", onDelete="CASCADE")
+     * })
+     */
+    private $editorial;
+
+    /**
+     * @var Route
+     *
+     * @ORM\ManyToOne(targetEntity="Route", inversedBy="editorialRoutes")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="route_id", referencedColumnName="id", onDelete="CASCADE")
+     * })
+     */
+    private $route;
+
+}

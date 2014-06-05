@@ -80,11 +80,11 @@ class TrailController extends Controller
             $query = $this->getDoctrine()->getManager()
                 ->createQuery('
                     SELECT e FROM TBFrontendBundle:Editorial e
-                    JOIN e.routes r
+                    JOIN e.editorialRoutes er
                     WHERE e.slug = :editorialSlug
-                    AND r.id = :trailId')
+                    AND er.routeId = :routeId')
                 ->setParameter('editorialSlug', $editorialSlug)
-                ->setParameter('trailId', $trail->getId());
+                ->setParameter('routeId', $trail->getId());
             try {
                 $editorial = $query->getSingleResult();
             } catch (\Doctrine\ORM\NoResultException $e) {
@@ -96,8 +96,8 @@ class TrailController extends Controller
             $query = $this->getDoctrine()->getManager()
                 ->createQuery('
                     SELECT r FROM TBFrontendBundle:Route r
-                    JOIN r.editorials e
-                    WHERE e.id=:editorialId
+                    JOIN r.editorialRoutes er
+                    WHERE er.editorialId=:editorialId
                     AND r.id!=:routeId                    
                     ORDER BY r.id')
                 ->setParameter('editorialId', $editorial->getId())
