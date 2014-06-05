@@ -36,7 +36,7 @@ class MediaFixDoubleReferencesCommand extends ContainerAwareCommand
             }
             
             if ($newPath != $oldPath) {
-                $adapter->setMetadata($shareImageFilepath, array('ContentType' => 'image/jpeg', 'ACL' => 'public-read'));
+                $adapter->setMetadata($newPath, array('ContentType' => 'image/jpeg', 'ACL' => 'public-read'));
                 $adapter->write($newPath, $filesystem->read($oldPath));
                 $media->setPath($newPath);
                 $em->persist($media);
