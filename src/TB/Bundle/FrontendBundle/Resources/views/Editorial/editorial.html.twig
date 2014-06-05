@@ -53,7 +53,7 @@ var TB_EDITORIAL_TRAILS = [
 	  		<div class="hero">
 				<div class="image_container fade_on_load"><img src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/editorial/{{ editorial.slug }}/{{ editorial.image }}" class="scale"></div>
 				{% if editorial.imageCredit is not null %}				
-				  <div class="tb-credit">Photo credit: © <a href="http://reubentabner.co.uk" onClick="trackOutboundLink(this, 'Outbound Links', '{{ editorial.imageCreditUrl | url_truncate }}'); return false;">{{ editorial.imageCredit }}</a></div>
+				  <div class="tb-credit">Photo credit: © <a href="{{ editorial.imageCreditURL }}" onClick="trackOutboundLink(this, 'Outbound Links', '{{ editorial.imageCreditUrl | url_truncate }}'); return false;">{{ editorial.imageCredit }}</a></div>
 				{% endif %}
 			</div>
 	  		<div class="content">
