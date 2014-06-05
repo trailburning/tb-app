@@ -32,7 +32,7 @@ class MediaFixDoubleReferencesCommand extends ContainerAwareCommand
             foreach ($medias as $media) {    
                 $newPath = '/' . $media->getId() . $oldPath;
                 $filesystem->write($newPath, $filesystem->read($oldPath));
-                $media->setPath($newPath);‚
+                $media->setPath($newPath);
                 $em->persist($media);
                 $em->flush();
             }
