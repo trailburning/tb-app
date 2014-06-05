@@ -21,23 +21,29 @@ class MediaFixDoubleReferencesCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $filesystem = $this->getContainer()->get('trail_media_files_filesystem');
+        $adapter = $filesystem->getAdapter();
+        
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         
-        $query = $em->createQuery('SELECT m.path FROM TBFrontendBundle:Media m GROUP BY m.path HAVING COUNT(m.id) > 1');
-        $mediaQuery = $em->createQuery('SELECT m FROM TBFrontendBundle:Media m WHERE m.path = :path');
-        
-        foreach ($query->getResult() as $result) {
-            $medias = $mediaQuery->setParameter('path', $result['path'])->getResult();
-            $oldPath = $result['path'];
-            foreach ($medias as $media) {    
-                $newPath = '/' . $media->getId() . $oldPath;
-                $filesystem->write($newPath, $filesystem->read($oldPath));
+        $query = $em->createQuery('SELECT m FROM TBFrontendBundle:Media m');
+            
+        foreach ($query->getResult() as $media) {    
+            $oldPath = $media->getPath();
+            if (preg_match('/[^\/]+$/', $oldPath, $match)) {
+                $newPath = sprintf('/%s/%s', $media->getRouteId(), $match[0]);
+            } else {
+                throw new Exception('unable to parse path');
+            }
+            
+            if ($newPath != $oldPath) {
+                $adapter->setMetadata($shareImageFilepath, array('ContentType' => 'image/jpeg', 'ACL' => 'public-read'));
+                $adapter->write($newPath, $filesystem->read($oldPath));
                 $media->setPath($newPath);
                 $em->persist($media);
                 $em->flush();
             }
-        }  
-        
+            
+        }
         
     }
     
