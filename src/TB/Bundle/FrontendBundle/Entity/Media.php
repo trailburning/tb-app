@@ -368,8 +368,7 @@ class Media implements Exportable
      */
     public function getPath()
     {
-        // Strip the bucket name from the path that was stored in the DB for some files
-        return str_replace(self::BUCKET_NAME, '', $this->path);
+        return $this->path;
     }
 
     /**

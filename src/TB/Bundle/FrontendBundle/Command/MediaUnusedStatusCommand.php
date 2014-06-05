@@ -33,18 +33,14 @@ class MediaUnusedStatusCommand extends ContainerAwareCommand
                 $query = $em
                     ->createQuery('
                         SELECT m FROM TBFrontendBundle:Media m
-                        WHERE m.path = :path 
-                        OR m.path = :altpath')
-                    ->setParameter('path', '/' . $path)    
-                    ->setParameter('altpath', 'trailburning-media/' . $path); 
+                        WHERE m.path = :path')
+                    ->setParameter('path', '/' . $path); 
             } else {
                 $query = $em
                     ->createQuery('
                         SELECT m FROM TBFrontendBundle:Media m
-                        WHERE m.sharePath = :path 
-                        OR m.sharePath = :altpath')
-                    ->setParameter('path', '/' . $path)    
-                    ->setParameter('altpath', 'trailburning-media/' . $path);
+                        WHERE m.sharePath = :path')
+                    ->setParameter('path', '/' . $path);
             }
             
             try {
@@ -66,11 +62,8 @@ class MediaUnusedStatusCommand extends ContainerAwareCommand
     
     public function getFileSize($path)
     {
-        if (strpos($path, 'trailburning-media') === false) {
-            $url = 'http://s3-eu-west-1.amazonaws.com/trailburning-media/' . $path;
-        } else {
-            $url = 'http://s3-eu-west-1.amazonaws.com/' . $path;
-        }
+        $url = 'http://s3-eu-west-1.amazonaws.com/trailburning-media' . $path;
+        
         // Assume failure.
         $result = -1;
 

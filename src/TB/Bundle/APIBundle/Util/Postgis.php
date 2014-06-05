@@ -605,53 +605,6 @@ class Postgis extends \PDO
         $this->commit();
     }
 
-    public function importPicture($picture) 
-    {
-        $this->beginTransaction();
-
-        $coords = $picture->getCoords();
-
-        if (sizeof($coords) < 2) {
-            $coords['long'] = 0;
-            $coords['lat'] = 0;
-        }
-
-        $tags = self::hstoreFromMap($picture->getTags());
-
-        $q = "INSERT INTO medias (coords, tags) VALUES (ST_SetSRID(ST_MakePoint(?, ?), 4326), ?)";
-        $pq = $this->prepare($q);
-        $success = $pq->execute(array(
-            $coords['long'],
-            $coords['lat'],
-            $tags
-        ));
-        if (!$success) {
-            $this->rollBack();
-            throw (new ApiException('Failed to insert media in db', 500));
-        }
-
-        $picture_id = intval($this->lastInsertId("medias_id_seq"));
-        $picture_s3_path = 'trailburning-media/'.sha1_file($picture->getTmpPath()).'.jpg';
-
-        $q = "INSERT INTO media_versions (media_id, version_size, path) VALUES (?,?,?)";
-        $pq = $this->prepare($q);
-        $success = $pq->execute(array(
-            $picture_id,
-            0, // ORIGINAL
-            $picture_s3_path
-        ));
-        if (!$success) {
-            $this->rollBack();
-            throw (new ApiException("Failed to upload version of media", 500));
-        }
-        $this->commit();
-
-        $picture->setId($picture_id);
-        $picture->addVersion(0, $picture_s3_path);
-
-        return $picture_id;
-    }
-
     public function getTimezone($long, $lat) 
     {
         $this->beginTransaction();
