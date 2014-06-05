@@ -112,6 +112,7 @@ var TB_USER_ID = {{ app.user.id }}
 <script type="text/template" id="stepRouteEditViewTemplate">
     <div id="uploadPhoto_view"></div>
     <div id="uploadPhotoprogress_view"></div>
+    <div id="uploadPhotoerror_view"></div>
   
     <div class="gallery_panel">  	
         <div class="slideshow_container">
@@ -233,6 +234,25 @@ var TB_USER_ID = {{ app.user.id }}
                     <div class="progressbar"></div>  
                 </div>  
                 <h4 class="tb"><span class="percent">0</span>%</h4>
+            </div>
+        </div>
+		<div class="step_marker_container">
+			<div class="tb-step-marker tb-step"><div class="photo"><img src="{{ asset('assets/img/steps') }}/step_photo.jpg"></div></div>
+		</div>	                
+    </div>    
+</script>
+
+<script type="text/template" id="trailUploadPhotoErrorViewTemplate">
+    <div class="panel_content">
+        <div class="panel">
+            <div class="content">      
+                <h2 class="tb">Upload Photos</h2>
+                <div class="desc">
+                    <h4 class="tb msg">
+					There was an error with your upload, the maximum file size of a photo is <strong>4Mb</strong>.  Please contact Trailburning <a href="mailto:support@trailburning.com">support</a> if you need assistance.
+					</h4>
+                </div>
+            	<div class="next_step"><a href="javascript:void(0)" class="btn btn-tb-action btn-tb-large submit">Return to Trail Maker</a></div>                    
             </div>
         </div>
 		<div class="step_marker_container">
