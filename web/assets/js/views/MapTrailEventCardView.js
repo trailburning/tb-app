@@ -73,11 +73,15 @@ define([
       $(this.el).removeClass('move');     
       $(this.el).css('top', nY);    	
     },
-    show: function(){
+    show: function(bAnimate){
       if (this.hideTimer) {
         clearTimeout(this.hideTimer);      	
       } 
-      $(this.el).addClass('move');
+      
+      if (bAnimate) {
+        $(this.el).addClass('move');	
+      }
+      
 	  // invoke resrc      
       resrc.resrc($('.scale', $(this.el)));                
       $(this.el).css('top', 0);
@@ -87,6 +91,7 @@ define([
 	  if (!bMoveForward) {
 	    nY =  500;	
 	  }    	
+	  $(this.el).addClass('move');
     	
       var self = this;
       $(this.el).css('top', nY);

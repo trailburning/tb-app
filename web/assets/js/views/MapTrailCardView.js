@@ -32,7 +32,9 @@ define([
         $(this.el).attr('data-id', this.model.id);
         $(this.el).removeClass('move');     
             
+            console.log('attach');
 	    $('.link', $(this.el)).click(function(evt){
+	    	console.log('sel');
 		  // fire event
           app.dispatcher.trigger("MapTrailCardView:click", self);                	      
 	    });
@@ -126,23 +128,45 @@ define([
       $(this.el).removeClass('move');     
       $(this.el).css('top', nY);    	
     },
-    show: function(){
+    show: function(bAnimate){
       if (this.hideTimer) {
         clearTimeout(this.hideTimer);      	
       } 
-      $(this.el).addClass('move');
+      
+	  var self = this;
+      
+      console.log('a:'+bAnimate);
+      if (bAnimate) {      	
+        $(this.el).addClass('move');	
+        
+	  setTimeout(function() {
+        $(self.el).css('top', 0);        	
+	  }, 100);            
+        
+      }
+      else {
+        $(this.el).css('top', 0);      	
+      }
+      
 	  // invoke resrc      
       resrc.resrc($('.scale', $(this.el)));                
-      $(this.el).css('top', 0);
+//      $(this.el).css('top', 0);
     },
     hide: function(bMoveForward){
       var nY =  -500;
 	  if (!bMoveForward) {
 	    nY =  500;	
 	  }    	
-    	
+
       var self = this;
-      $(this.el).css('top', nY);
+
+      $(this.el).addClass('move');	
+	  
+	  setTimeout(function() {
+        $(self.el).css('top', nY);        	
+	  }, 100);            
+	  
+//      $(this.el).css('top', nY);
       
 	  this.hideTimer = setTimeout(function() {
 	  	$(self.el).removeClass('move');
