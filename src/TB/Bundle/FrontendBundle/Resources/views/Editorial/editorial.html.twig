@@ -13,7 +13,8 @@ var TB_APP = 'EditorialApp';
 var TB_USER_ID = {{ app.user.id }};
 {% endif %}
 var TB_EDITORIAL_TRAILS = [
-    {% for route in routes %}
+    {% for editorialRoute in editorialRoutes %}
+        {% set route = editorialRoute.route %}
         { long: {{ route.centroid.longitude }}, lat: {{ route.centroid.latitude }}, short_name: "{{ route.shortName }}", region: "{{ route.region }}", url: "{{ path('editorial_trail', {trailSlug: route.slug, editorialSlug: editorial.slug}) }}" },          
     {% endfor %}
 ];
@@ -51,8 +52,8 @@ var TB_EDITORIAL_TRAILS = [
 	  		</div>
 	  		<div class="hero">
 				<div class="image_container fade_on_load"><img src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/editorial/{{ editorial.slug }}/{{ editorial.image }}" class="scale"></div>
-				{% if editorial.id == 1 %}				
-				  <div class="tb-credit">Photo credit: © <a href="http://reubentabner.co.uk" onClick="trackOutboundLink(this, 'Outbound Links', 'reubentabner.co.uk'); return false;">Reuben Tabner</a></div>
+				{% if editorial.imageCredit is not null %}				
+				  <div class="tb-credit">Photo credit: © <a href="{{ editorial.imageCreditURL }}" onClick="trackOutboundLink(this, 'Outbound Links', '{{ editorial.imageCreditUrl | url_truncate }}'); return false;">{{ editorial.imageCredit }}</a></div>
 				{% endif %}
 			</div>
 	  		<div class="content">
@@ -66,44 +67,10 @@ var TB_EDITORIAL_TRAILS = [
 	  			
 				<div id="column_wrapper_intro" class="column_wrapper">
 	  			<div class="columns">
-				{% if editorial.id == 1 %}	  				
-	  			<h4 class="tb">	  				
-Trailburning Inspire is our new section that pulls together a collection of trails into a single story. By featuring multiple Trail Cards in an Inspire article Trailburning becomes greater than the sum of its parts.
-				</h4>
-	  			<h4 class="tb">	  				
-Expect to read editorialised journeys by those who trek the trails alongside articles that inspire people to get out there and run in an event or travel to distant trail regions.
-				</h4>
-				<p>
-It's a simple idea, we just want an easy way to present trails. If Inspire starts to function as a trail runner's to-do list or a hiker's weekend guide –  job done!
-				</p>
-				<p>
-Each article in Inspire will have a common theme to stir your wanderlust, which brings me to the first Inspire – the Alps. When the team decided to feature the Alps all I could think about was getting lost, getting off the beaten track in the foothills of the Alps on a hike.  
-				</p>
-				<p>
-But by getting lost, I really mean getting found. I want to find the lake halfway up the mountainside captured by a fellow trailburner or take the trail in Reuban's beautiful photo so I can pat the cow (see below). 
-				</p>
-				<p>
-So as a dedication to all those who would also like to pat the cow and ‘get lost’, the Trailburning team presents Inspire. Enjoy!
-				</p>
-				
-				{% elseif editorial.id == 6 %}
-				<h4 class="tb">				  				
-It was just after dawn and there was a heavy mist covering the hills as we pushed deeper into the bush, but then our run became something unexpected as we glimpsed our first kangaroo through the mist, and then another, and another.  We were running through a herd of wild kangaroo and our hearts raced, it was something almost primeval.  There we were running amongst wild animals with a sense that we too were wild.  At that moment I felt I understood what it means to run - it’s not about speed, distance or the finish line; to run is to run wild, as wild as an animal.
-				</h4>
-				<p>
-I was running with Paul Tran and it was our first serious trail run in the Adelaide Hills.  Both of us had spent many years in the shadows of the hills, Paul as a native Adelaidean and myself as a long term resident, and yet neither of us had spent a great deal of time in them.  Certainly never off the ‘beaten track’ as we were on this misty morning anyway.
-				</p>
-				<p>
-I was back in Adelaide from Europe where I’d recently discovered a passion for trail running in the Alps and wanted to explore an area that had been on my doorstep for the many years I’d been an Adelaide resident, Paul was training for a triathlon and was on one of his first trail runs.  We researched a half marathon route and started at the base of the hills in the suburb of Burnside, climbing up to just over 700 metres to Mt Lofty before heading back via Chambers Gully, looping back to our start point down in the suburbs.
-				</p>
-				<p>
-This run was to affect both of us quite profoundly.  Paul has since gone on to competitive finishes in both the Yurrebilla 56 km and Heysen 105 km trail events.  He can be found at dawn every Thursday in the Adelaide Hills, running with a bunch of likeminded individuals.
-				</p>
-				<p>
-Myself, well for me this is where Trailburning started.  I felt that such was the experience of running wild, running purely for the enjoyment of it, that there should be a platform to share such experiences.  What if there was a way for anyone to share their trail, inspiring others to discover the hidden treasures of their own backyard, what if?
-				</p>
-				{% endif %}
-				
+    	  			<h4 class="tb">	  				
+                        {{ editorial.synopsis|nl2br }}
+    				</h4>
+                    {{ editorial.text|raw }}
 	  			</div>	  			
 	  			</div>	  			
 	  			
@@ -112,101 +79,34 @@ Myself, well for me this is where Trailburning started.  I felt that such was th
 		  			<div class="line"></div>
 	  			</div>
 
-				{% if editorial.id == 1 %}
+                {% if editorialRoutes and editorialRoutes|length > 0 %}
+
+				{% if editorialRoutes[0].text is not null %}
 
 				<div class="editorial_cards clearfix">
-                {% if routes %}
-                	{% for route in routes %}
-						{% if route.id == 144 %}
-						<div class="editorial_card">
-							<div class="sticker_container">			
-							{{ include('TBFrontendBundle:Trail:editorial_trailcard.html.twig', {route: route, editorial: editorial}) }}
-							</div>
-							
+                
+                	{% for editorialRoute in editorialRoutes %}
+                        {% set route = editorialRoute.route %}
+						<div class="editorial_card{% if loop.index0 is odd %} align_right{% endif %}">
+                            {% if loop.index0 is even %}
+    							<div class="sticker_container">			
+    							{{ include('TBFrontendBundle:Trail:editorial_trailcard.html.twig', {route: route, editorial: editorial}) }}
+    							</div>
+                            {% endif %}
 							<div class="card_column_wrapper column_wrapper">
 				  			<div class="columns">							
-				  			<h4 class="tb">The gentle sound of distant cowbells drifts around the valley as we weave up and down through the trees on this rolling alpine trail.  It’s ‘flat’ we are told by our guide, Julia, bursting lungs and crying legs suggest otherwise…  it’s alpine flat!</h4>
-							<p>
-							There are seven of us, plus Julia of <a href="http://www.tracks-and-trails.com/index.php/eng/Running-Fitness/Scheduled-Departures/Trail-Running-Camps"  onClick="trackOutboundLink(this, 'Outbound Links', 'tracks-and-trails.com'); return false;">Tracks and Trails</a>, running through the Chamonix Valley, following the route of the Mont Blanc Marathon.  We started early, buzzing alarms waking us at 6am…  The trail started out easy, but quickly got steeper, passing through alpine meadows, villages, woods and over rivers.  
-							</p>
-							<p>
-							We move quickly through the mountains, mostly climbing, but at a pace where we can talk.  The air is clean and crisp and yet despite being at over 1300 metres (4200 feet) it seems easy to breath, it is a joy to run!  Then we start climbing for real and sweat pours from us in the increasing midday heat.  
-							</p>
-							<p>
-							The views are on another level as Mont Blanc peeps out from behind the clouds and watches over as we run in her shadow.  Finally we run along a narrow ridge to the summit of L’Aguillette des Posettes where we stop for lunch.  What goes up must come down, a 1000 metre (3300 feet) descent, twisting and turning down the mountain, dropping over rocks, always losing height.
-							</p>
-							<p>
-							Eventually we reach the bottom, and in true alpine style we find a small cafe serving cake and strong coffee.  Then it’s just a matter of a 10km (6 mile) jog back to Chamonix in time for a beer, some French cuisine and a much needed bed.
-							<div class="summary">
-					        <strong>Reuben Tabner</strong>
-					        <br/>
-					        <a href="http://www.reubentabner.com" target="_blank">Trail Running Team</a>
-					        </div>
-							</p>
+				  			<h4 class="tb">{{ editorialRoute.synopsis|nl2br }}</h4>
+							{{ editorialRoute.text|raw }}
 							</div>
 							</div>
-							
-						</div>							
-			        	{% endif %}	        		
+                            {% if loop.index0 is odd %}
+    							<div class="sticker_container">			
+    							{{ include('TBFrontendBundle:Trail:editorial_trailcard.html.twig', {route: route, editorial: editorial}) }}
+    							</div>
+                            {% endif %}
+						</div>										        		        		
                     {% endfor %}
 
-                	{% for route in routes %}
-						{% if route.id == 42 %}          
-						<div class="editorial_card align_right">      	
-							<div class="card_column_wrapper column_wrapper">
-				  			<div class="columns">
-							<h4 class="tb">What I loved about this trail was the constant change of scenery and trail condition paired with beautiful views of the Matterhorn.</h4>
-							<p>
-							There is a lot of up and down packed into 46 km, you start off with a steep ascent right from the start and the trail turns technical quickly, I loved this!  You can also expect to see Marmots and herds of Zermatt’s famous Blackneck Goats.
-							</p>
-							<p>
-							If you’re looking to get into ultra running with a challenge in the vertical then this is the race for you.  The distance is optimal with plenty of refreshment stops.  Most importantly though, the scenery is breathtaking along the whole course and can’t be beat.
-							</p>
-							<p>
-							Zermatt is a car-free village so you'll need to take a train there.  Plan on coming a few days earlier to get acclimatised and stay a few days extra to take in all the natural beauty.
-							</p>
-							<p>
-							For those wanting something more relaxing, you can go skiing on the glacier, hike, paraglide or take the Glacier Express train from Zermatt to St. Moritz. 
-							<div class="summary">
-				            <strong>Christian Langenegger</strong>
-				            <br/>
-				          	<a href="http://www.dromeus.com" target="_blank">Dromeus – Discovering the Pleasure of Running</a>
-					        </div>				
-							</p>
-							</div>
-							</div>
-							<div class="sticker_container">			
-							{{ include('TBFrontendBundle:Trail:editorial_trailcard.html.twig', {route: route, editorial: editorial}) }}
-							</div>
-						</div>				
-			        	{% endif %}	        		
-                    {% endfor %}
-
-                	{% for route in routes %}
-						{% if route.id == 121 %}    
-						<div class="editorial_card">
-							<div class="sticker_container">			
-							{{ include('TBFrontendBundle:Trail:editorial_trailcard.html.twig', {route: route, editorial: editorial}) }}
-							</div>     
-							<div class="card_column_wrapper column_wrapper">
-				  			<div class="columns">
-							<h4 class="tb">Also in Switzerland and located in the Grindelwald region, the Eiger Ultra Trail race takes place in the shadow of the famous North Face of the Eiger.</h4>
-							<p>
-							Traversing the base of the North Face is both a spectacular and unforgettable experience, and with three race distances to choose from there's something for every mountain trail runner - or indeed anyone wanting to get into mountain trail running!
-							</p>
-							<p>
-							The Grindelwald is accessable by both car and train and also offers winter sports, for the more experienced there is the Eiger glacier!    																
-							</p>
-							<p>
-							<a href="http://www.uelisteck.ch" target="_blank">Ueli Steck</a> - 'The Swiss Machine' refers to the Eiger Ultra Trail as 'harder than the North Face solo'.  Considering Ueli's speed record of the <a href="http://www.youtube.com/watch?v=OmGcRIIIxK8" target="_blank">North Face</a> that certainly says something about the event!
-							</p>
-				  			</div>
-				  			</div>				
-				  		</div>		       	
-			        	{% endif %}	        		
-                    {% endfor %}
-                    
-  				{% endif %}  
   				</div>
   				
 	  			<div id="region_header" class="section_header clearfix">
@@ -220,7 +120,7 @@ Myself, well for me this is where Trailburning started.  I felt that such was th
 	            	<div class='border_left'></div>
   				</div>
   				
-				{% elseif editorial.id == 6 %}
+				{% elseif editorialRoutes[0].text is null %}
 
 				<div class="single_region">		  				
 
@@ -231,20 +131,22 @@ Myself, well for me this is where Trailburning started.  I felt that such was th
   				</div>
 
 				<div class="editorial_cards clearfix">
-                {% if routes %}
-                	{% for route in routes %}
-						<div class="editorial_card">
-							<div class="sticker_container">			
-							{{ include('TBFrontendBundle:Trail:editorial_trailcard.html.twig', {route: route, editorial: editorial}) }}
-							</div>
-						</div>							
-                    {% endfor %}
-				{% endif %}
+                
+            	{% for editorialRoute in editorialRoutes %}
+					<div class="editorial_card">
+						<div class="sticker_container">			
+						{{ include('TBFrontendBundle:Trail:editorial_trailcard.html.twig', {route: editorialRoute.route, editorial: editorial}) }}
+						</div>
+					</div>							
+                {% endfor %}
+				
 				</div>
 				
 				</div>							
 				
 				{% endif %}
+                
+                {% endif %}
 
 	  		</div>		  		
 	  	</div>

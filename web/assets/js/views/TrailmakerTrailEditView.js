@@ -4,9 +4,10 @@ define([
   'views/OverlayView',  
   'views/TrailUploadPhotoView',
   'views/TrailUploadPhotoProgressView',
+  'views/TrailUploadPhotoErrorView',
   'views/TrailSlideshowView',
   'views/TrailActivitiesView',  
-], function(_, Backbone, OverlayView, TrailUploadPhotoView, TrailUploadPhotoProgressView, TrailSlideshowView, TrailActivitiesView){
+], function(_, Backbone, OverlayView, TrailUploadPhotoView, TrailUploadPhotoProgressView, TrailUploadPhotoErrorView, TrailSlideshowView, TrailActivitiesView){
 
   var STATE_UPLOAD = 0;
 
@@ -17,6 +18,9 @@ define([
       app.dispatcher.on("TrailUploadPhotoView:upload", this.onTrailUploadPhotoViewUpload, this);      
       app.dispatcher.on("TrailUploadPhotoView:uploaded", this.onTrailUploadPhotoViewUploaded, this);
       app.dispatcher.on("TrailUploadPhotoView:uploadProgress", this.onTrailUploadPhotoViewUploadProgress, this);
+      app.dispatcher.on("TrailUploadPhotoView:error", this.onTrailUploadPhotoViewError, this);      
+      app.dispatcher.on("TrailUploadPhotoErrorView:closeclick", this.onTrailUploadPhotoErrorViewCloseClick, this);      
+
 
       app.dispatcher.on("TrailMapView:mediaclick", this.onTrailMapViewMediaClick, this);
       app.dispatcher.on("TrailMapView:removemedia", this.onTrailMapViewRemoveMedia, this);
@@ -221,6 +225,18 @@ define([
     },
     onTrailUploadPhotoViewUploadProgress: function(nProgress){
       this.trailUploadPhotoProgressView.render(nProgress);
+    },
+    onTrailUploadPhotoViewError: function(trailUploadPhotoView){
+      $('#uploadPhotoerror_view').show();
+      
+      this.trailUploadPhotoErrorView = new TrailUploadPhotoErrorView({ el: '#overlayContent_view', model: this.model, bMultiUpload: trailUploadPhotoView.multiUpload() });
+      this.trailUploadPhotoErrorView.render();
+    },
+    onTrailUploadPhotoErrorViewCloseClick: function(trailUploadPhotoErrorView){
+      $('#tb-content-overlay').hide();      
+      $('#tb-overlay-view').hide();      
+      // render again to re-attach change event
+      this.trailUploadPhotoView.render();
     },
     onTrailMapViewMediaClick: function(mediaID){
       this.trailSlideshowView.gotoSlide(mediaID);

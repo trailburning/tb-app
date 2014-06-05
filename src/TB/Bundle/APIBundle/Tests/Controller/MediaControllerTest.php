@@ -161,6 +161,34 @@ class MediaControllerTest extends AbstractApiTestCase
         }
     }
     
+    /**
+     * Test postRouteMedias() with single image
+     */
+    public function testPostRouteMediasTooLargeFile()
+    {
+        $this->loadFixtures([
+            'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData',
+        ]);
+        
+        $route = $this->getRoute('grunewald');
+        
+        $mediaFile = new UploadedFile(
+            realpath(__DIR__ . '/../../DataFixtures/Media/too_large_file.jpg'),
+            'too_large_file.jpg'
+        );
+        
+        $client = $this->createClient();
+        $client->request('POST', '/v1/route/' . $route->getId() . '/medias/add', [], ['medias' => $mediaFile]);
+        
+        $this->assertEquals(Response::HTTP_BAD_REQUEST,  $client->getResponse()->getStatusCode(),
+            'Response returns Status Code 200');
+        $this->assertJsonResponse($client);  
+        
+        $responseObj = json_decode($client->getResponse()->getContent());
+        $this->assertEquals('The file is too large (4.58 MB). Allowed maximum size is 4 MB.', $responseObj->usermsg,
+            'Too large file throws error and displays appropriate message'); 
+    }
+    
     public function testPutMedia()
     {
         $this->loadFixtures([
