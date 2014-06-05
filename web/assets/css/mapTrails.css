@@ -130,21 +130,21 @@ border-width:1px;
 
 .panel_content {
   position: absolute;
+  opacity: 0;
+  top: 0px;
   left: 0px;
   width: 100%;
-}
-
-.panel_content.move {
-  -webkit-transition: top 1s;
-  -moz-transition: top 1s;
-  -o-transition: top 1s;
-  transition: top 1s;    
-  -webkit-transform:translate3d(0,0,0);              
 }
 
 .trail_card_panel {
   position: relative;
   overflow: visible;
+}
+
+.tb-avatar .photo {
+  margin: 3px;
+  width: 42px;
+  height: 43px;
 }
 
 #cardsview .link:hover {

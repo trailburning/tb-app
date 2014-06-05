@@ -33,7 +33,6 @@ define([
       this.elCntrls = $('#view_map_btns');
 	  this.nMapView = MAP_STREET_VIEW;	        
 	  this.collection = new Backbone.Collection();
-      this.bFirstTime = true;
       this.map = L.mapbox.map('map', null, {dragging: true, touchZoom: false, scrollWheelZoom:false, doubleClickZoom:false, boxZoom:false, tap:false, zoomControl:false, zoomAnimation:false, attributionControl:false});
       this.layer_street = L.mapbox.tileLayer('mallbeury.idjhlejc');            
       this.layer_sat = L.mapbox.tileLayer('mallbeury.map-eorpnyp3');      
@@ -177,21 +176,16 @@ define([
       });        
     },
     selectCard: function(nId, bMoveForward){    	
-	  var bAnimate = !this.bFirstTime;
-	  
-	  this.bFirstTime = false;    	    	
-    	
       $('#welcome_view').hide();
       $('#cards_container_view').show();
     	
       if (this.currCardModel) {
-      	this.currCardModel.mapTrailCardView.hide(bMoveForward);      	
+      	this.currCardModel.mapTrailCardView.hide();      	
       }
 
       var cardModel = this.collection.get(nId);
-	  cardModel.mapTrailCardView.init(bMoveForward);                        
       $('#cardsview').append(cardModel.mapTrailCardView.render().el);      
-	  cardModel.mapTrailCardView.show(bAnimate);
+	  cardModel.mapTrailCardView.show();
       
 	  this.currCardModel = cardModel;      	          
       
