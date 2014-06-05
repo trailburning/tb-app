@@ -48,7 +48,7 @@ class MediaDeleteUnusedCommand extends ContainerAwareCommand
             } catch (\Doctrine\ORM\NoResultException $e) {
                 $unusedCount++;
                 $output->writeln(sprintf('delete file in path: %s', $path));
-                //$filesystem->delete($path);
+                $filesystem->delete($path);
             } catch (\Doctrine\ORM\NonUniqueResultException $e) {
                 $duplicatedCount++;
                 $output->writeln(sprintf('duplicated reference for path: %s', $path));
