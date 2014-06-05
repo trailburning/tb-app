@@ -20,7 +20,6 @@ define([
       $(this.el).html(this.template(attribs));
 
       $('#photofileupload').change(function(evt){
-        $('#uploadPhoto_view').hide();
         $('#uploadPhotoprogress_view').show();      	
         self.upload();
       }); 
@@ -28,6 +27,7 @@ define([
       return this;
     },    
     upload: function(){
+      var bValid = true;
       var self = this;
                         
       var strURL = TB_RESTAPI_BASEURL + '/v1/route/'+this.model.get('id')+'/medias/add';      
@@ -65,23 +65,23 @@ define([
             contentType: false,
             processData: false,
             complete : function(res) {
-              if(successFn) successFn(res);
+              if(bValid && successFn) successFn(res);
             },
             success: function(data) {
               self.photoData = data;
 
         	  $('#uploadPhotoprogress_view').hide();      	
-        	  $('#uploadPhoto_view').show();
         	  // fire event
         	  app.dispatcher.trigger("TrailUploadPhotoView:uploaded", self);                
             },
             error: function(data) {
 //              console.log('error');
+              bValid = false;
+              
         	  $('#uploadPhotoprogress_view').hide();      	
-        	  $('#uploadPhoto_view').show();
         	  // fire event
-        	  app.dispatcher.trigger("TrailUploadPhotoView:uploaded", self);                
-			}            
+        	  app.dispatcher.trigger("TrailUploadPhotoView:error", self);                
+            }
           });
         });
       };      
