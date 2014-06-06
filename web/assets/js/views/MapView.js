@@ -281,6 +281,7 @@ define([
 	 }
     },
     routeInit: function(cardModel){
+      this.nCurrRouteCard = 0;
       var self = this, nDistance = 0;
       
       this.routeCollection.reset();
