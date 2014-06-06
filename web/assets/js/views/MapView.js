@@ -28,8 +28,18 @@ define([
       	this.activityFeedView.getActivity();	  	
 	  }
       
+	  var RouteCollection = Backbone.Collection.extend({
+    	comparator: function(item) {
+    	  // sort by distance
+          return item.distance;
+    	}
+	  });
+      this.routeCollection = new RouteCollection();    
+      this.nCurrRouteCard = 0;
+      
       this.bFlipLock = false;
       this.PageSize = 100;
+//      this.PageSize = 5;
 	  this.nPage = 0;
 	  this.nView = WORLD_VIEW;
 	  this.nCurrCard = -1;
@@ -37,8 +47,6 @@ define([
       this.elCntrls = $('#view_map_btns');
 	  this.nMapView = MAP_STREET_VIEW;	        
 	  this.collection = new Backbone.Collection();
-	  this.collectionNotVisited = new Backbone.Collection();
-	  this.collectionVisited = new Backbone.Collection();
       this.map = L.mapbox.map('map', null, {dragging: true, touchZoom: false, scrollWheelZoom:false, doubleClickZoom:false, boxZoom:false, tap:false, zoomControl:false, zoomAnimation:false, attributionControl:false});
       this.layer_street = L.mapbox.tileLayer('mallbeury.idjhlejc');            
       this.layer_sat = L.mapbox.tileLayer('mallbeury.map-eorpnyp3');      
@@ -111,29 +119,19 @@ define([
       }      
 
       $('.zoomin_btn', $(this.elCntrls)).click(function(evt){
-        if(self.map.getZoom() < self.map.getMaxZoom()) {
-          self.map.zoomIn();                  
-          $('.zoomout_btn', $(self.elCntrls)).attr('disabled', false);
-          // fire event
-          app.dispatcher.trigger("TrailMapView:zoominclick", self);                
-        }
-        
-        if(self.map.getZoom() >= self.map.getMaxZoom()-1) {
-          $('.zoomin_btn', $(self.elCntrls)).attr('disabled', true);
-        }                
+        self.map.zoomIn();                  
+        $('.zoomout_btn', $(self.elCntrls)).attr('disabled', false);        
+        self.selectMarkerOrCluster();
+        // fire event
+        app.dispatcher.trigger("TrailMapView:zoominclick", self);
       });
 
       $('.zoomout_btn', $(this.elCntrls)).click(function(evt){
-        if(self.map.getZoom() > self.map.getMinZoom()+3) {
-          self.map.zoomOut();                  
-          $('.zoomin_btn', $(self.elCntrls)).attr('disabled', false);
-          // fire event
-          app.dispatcher.trigger("TrailMapView:zoomoutclick", self);                
-        }
-        
-        if(self.map.getZoom() <= self.map.getMinZoom()+4) {
-          $('.zoomout_btn', $(self.elCntrls)).attr('disabled', true);
-        }
+        self.map.zoomOut();                  
+        $('.zoomin_btn', $(self.elCntrls)).attr('disabled', false);
+        self.selectMarkerOrCluster();          
+        // fire event
+        app.dispatcher.trigger("TrailMapView:zoomoutclick", self);                
       });
       
       $('.view_btn', $(this.elCntrls)).click(function(evt){
@@ -283,69 +281,64 @@ define([
 	 }
     },
     routeInit: function(cardModel){
-      var self = this;
+      var self = this, nDistance = 0;
       
-	  this.collectionNotVisited.reset();
-	  this.collectionVisited.reset();
+      this.routeCollection.reset();
       
+	  var latLng = cardModel.mapTrailMarker.marker.getLatLng();
       // add all points to route
-      this.collection.each(function(model) {
-      	// don't add start point
-      	if (model.id != cardModel.id) {
-          self.collectionNotVisited.push(model);
-        }	
-      });            
-      this.collectionVisited.push(cardModel);
+      this.collection.each(function(model) {      	
+        nDistance = model.mapTrailMarker.marker.getLatLng().distanceTo(latLng);      	
+      	model.distance = nDistance; 
+        self.routeCollection.push(model);
+      });                  
+	  this.routeCollection.sort();
     },    
     routePrevPoint: function(cardModel){
-      var nearestCardModel = null;
+      if (this.nCurrRouteCard-1 < 0) {
+      	this.nCurrRouteCard = this.routeCollection.length - 1;
+	  }
+	  else {
+	    this.nCurrRouteCard--;	  	
+	  }    	
+	  var nearestCardModel = this.routeCollection.at(this.nCurrRouteCard); 	
     	
-      if (this.collectionVisited.length > 1) {
-        // move point from visited to not visited
-	    this.collectionNotVisited.push(this.collectionVisited.pop());
-        nearestCardModel = this.collectionVisited.at(this.collectionVisited.length-1);
-      }      
       return nearestCardModel;
    	},    
     routeNextPoint: function(cardModel){
-      var nearestCardModel = this.getNearestTrail(cardModel);
-      if (nearestCardModel) {
-      	// add to visited route
-      	this.collectionVisited.push(nearestCardModel);
-		// remove from route      	
-      	this.collectionNotVisited.remove(nearestCardModel);
-      }      
+      if (this.nCurrRouteCard+1 >= this.routeCollection.length) {
+      	this.nCurrRouteCard = 0;
+	  }
+	  else {
+	    this.nCurrRouteCard++;	  	
+	  }    	
+	  var nearestCardModel = this.routeCollection.at(this.nCurrRouteCard); 	
+    	
       return nearestCardModel;
     },
-    getNearestTrail: function(cardModel){
-	  var nDistance = 0, nBestDistance = -1, nearestCardModel = null;          	
-      var latLng = cardModel.mapTrailMarker.marker.getLatLng();
-
-      this.collectionNotVisited.each(function(model) {
-        nDistance = model.mapTrailMarker.marker.getLatLng().distanceTo(latLng);      	
-        if (nDistance < nBestDistance || nBestDistance == -1) {
-          nBestDistance = nDistance;
-          nearestCardModel = model;        
-	    }      	
-      });            
-      return nearestCardModel;
-    },
-    panMap: function(cardModel, bZoomWorld){
+    selectMarkerOrCluster: function(){    
       var self = this;
-
+      
 	  // allow time for pan and select again
       setTimeout(function() {
         self.selectCluster();
       }, 500);
-            
+	  this.selectCluster();
+    },
+    panMap: function(cardModel, bZoomWorld){
 	  if (bZoomWorld) {
 	    this.map.setZoom(3);	
 	  }            
+	  
+	  this.selectMarkerOrCluster();
 	  // pan to marker
 	  this.map.panTo(cardModel.mapTrailMarker.marker.getLatLng(), {duration: 0.5});        	  	
-	  this.selectCluster();
     },
     selectCluster: function(){
+      if (this.nCurrCard == -1) {
+      	return;
+      }
+
       var cardModel = this.collection.at(this.nCurrCard);      
     	
 	  if (this.currMarkerOrCluster) {
@@ -379,6 +372,10 @@ define([
     	}
 	  });
         
+	  this.markerCluster.on('clusterclick', function (a) {
+    	self.selectMarkerOrCluster();
+	  });
+	          
       var model, cardViewModel, bEvent;
       $.each(data.value.routes, function(key, card) {
       	bEvent = false;
