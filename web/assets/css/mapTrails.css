@@ -81,7 +81,7 @@ border-width:1px;
   text-shadow: 1px 1px #000000;
 }
 
-#cards_container_view .button {
+#cards_container_view a.button {
   position: absolute;
   top: 0px;
   left: 0px;
@@ -94,6 +94,10 @@ border-width:1px;
   text-decoration: none;
   width: 24px;
   height: 24px;
+}
+
+#cards_container_view .nav a.button:hover {
+  background-position: 0 -24px;
 }
 
 #cards_container_view .nav .prev {	
