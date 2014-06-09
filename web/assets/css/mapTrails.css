@@ -25,6 +25,10 @@ border-width:1px;
   height: 100%;
 }
 
+#mapview .leaflet-container {
+  background: #A4DDFE;	
+}
+
 #overlay_view {
   position: absolute;
   top: 0px;
