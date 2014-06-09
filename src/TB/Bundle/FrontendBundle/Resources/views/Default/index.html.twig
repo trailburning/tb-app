@@ -28,12 +28,13 @@ var TB_USER_ID = {{ app.user.id }};
   	</div>
   	
   	{% endif %}
-
+{#
     <div class="hero_image">
       <div class="background">
         <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/editorial/high/4c8173930a2c99ded2e59d66d2627b46825d9c24.jpg" class="resrc scale" /></div>
       </div>
   	</div>
+	#}
 
     <div class="hero_image">
       <div class="background">
@@ -49,9 +50,15 @@ var TB_USER_ID = {{ app.user.id }};
 
 	<div class="hero_nav">
 	{% if not app.user %}
-	  <div class="button" data-slide="0"></div><div class="button" data-slide="1"></div><div class="button" data-slide="2"></div><div class="button" data-slide="3"></div>
-	{% else %}  	  	  	
+{#
+	  <div class="button" data-slide="0"></div><div class="button" data-slide="1"></div><div class="button" data-slide="2"></div><div class="button" data-slide="3"></div>	
+#}	
 	  <div class="button" data-slide="0"></div><div class="button" data-slide="1"></div><div class="button" data-slide="2"></div>
+	{% else %}  	  	  	
+{#
+	  <div class="button" data-slide="0"></div><div class="button" data-slide="1"></div><div class="button" data-slide="2"></div>	
+#}	
+	  <div class="button" data-slide="0"></div><div class="button" data-slide="1"></div>
 	{% endif %}  	  	  	
 	</div>
 
@@ -77,6 +84,7 @@ var TB_USER_ID = {{ app.user.id }};
   	</div>  	
   	
   	{% endif %}
+{#
   	
     <div class="hero_overlay" data-url="{{ app.request.baseUrl }}/inspire/high">
       <div class="left">
@@ -100,11 +108,11 @@ var TB_USER_ID = {{ app.user.id }};
 	  <div class="sponsor_content">
 	    <div class="brand">
 		  <div class="strap">brought to you by</div>
-		  <div class="logo"><a href="{{ app.request.baseUrl }}/profile/ashmei"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/ashmei/editorial_sponsor_logo_big.png" border="0"></a></div>
+		  <div class="logo"><a href="http://www.likethewindmagazine.com/" target="_blank"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/likethewind/home_sponsor_logo.png" border="0"></a></div>
 	    </div>
 	  </div>  	
   	</div>
-  	
+#}  	
     <div class="hero_overlay" data-url="{{ app.request.baseUrl }}/inspire/wild">
       <div class="left">
     	<div class="title feature">
