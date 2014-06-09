@@ -39,7 +39,6 @@ define([
       
       this.bFlipLock = false;
       this.PageSize = 100;
-//      this.PageSize = 5;
 	  this.nPage = 0;
 	  this.nView = WORLD_VIEW;
 	  this.nCurrCard = -1;
@@ -250,16 +249,16 @@ define([
       
       switch (this.nView) {
       	case WORLD_VIEW:
-	      if (this.nCurrCard+1 >= this.collection.length) {
-	      	this.nCurrCard = 0;      	
-	      }
-	      else {
-	        this.nCurrCard++;
-	      }
-	      
-	      cardModel = this.collection.at(this.nCurrCard);      
-		  this.selectCard(cardModel.id, true);	  
-		  this.panMap(cardModel, true);
+      	  // start on 1st trail
+	      cardModel = this.collection.at(0);      
+      	  if (cardModel) {
+      	  	this.routeInit(cardModel);
+      	  	
+		    this.selectCard(cardModel.id, true);
+		    this.panMap(cardModel, false);
+		    
+		    this.nView = REGION_VIEW; 	        	  	
+      	  }
       	  break;
       	  
       	case REGION_VIEW:

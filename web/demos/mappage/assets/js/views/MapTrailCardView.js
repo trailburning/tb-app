@@ -9,7 +9,6 @@ define([
       this.template = _.template($('#mapTrailCardViewTemplate').text());        
                         
       this.bRendered = false;
-      this.hideTimer = null;
     },            
     render: function(){
       var self = this;
@@ -30,11 +29,9 @@ define([
         var attribs = this.model.toJSON();
         $(this.el).html(this.template(attribs));
         $(this.el).attr('data-id', this.model.id);
-        $(this.el).removeClass('move');     
+        $(this.el).addClass('tb-fade-in-no-delay');     
             
-            console.log('attach');
 	    $('.link', $(this.el)).click(function(evt){
-	    	console.log('sel');
 		  // fire event
           app.dispatcher.trigger("MapTrailCardView:click", self);                	      
 	    });
@@ -119,59 +116,13 @@ define([
                        
       return this;
     },
-    init: function(bMoveForward){
-      var nY =  500;
-	  if (!bMoveForward) {
-	    nY =  -500;	
-	  }    	
-
-      $(this.el).removeClass('move');     
-      $(this.el).css('top', nY);    	
-    },
-    show: function(bAnimate){
-      if (this.hideTimer) {
-        clearTimeout(this.hideTimer);      	
-      } 
-      
-	  var self = this;
-      
-      console.log('a:'+bAnimate);
-      if (bAnimate) {      	
-        $(this.el).addClass('move');	
-        
-	  setTimeout(function() {
-        $(self.el).css('top', 0);        	
-	  }, 100);            
-        
-      }
-      else {
-        $(this.el).css('top', 0);      	
-      }
-      
+    show: function(){
 	  // invoke resrc      
-      resrc.resrc($('.scale', $(this.el)));                
-//      $(this.el).css('top', 0);
+      resrc.resrc($('.scale', $(this.el)));
+      $(this.el).css('opacity', 1);                
     },
-    hide: function(bMoveForward){
-      var nY =  -500;
-	  if (!bMoveForward) {
-	    nY =  500;	
-	  }    	
-
-      var self = this;
-
-      $(this.el).addClass('move');	
-	  
-	  setTimeout(function() {
-        $(self.el).css('top', nY);        	
-	  }, 100);            
-	  
-//      $(this.el).css('top', nY);
-      
-	  this.hideTimer = setTimeout(function() {
-	  	$(self.el).removeClass('move');
-	  	$(self.el).remove();
-	  }, 1000);            
+    hide: function(){
+	  $(this.el).css('opacity', 0);
     }
 
   });

@@ -10,6 +10,9 @@ define([
   var MAP_STREET_VIEW = 0;
   var MAP_SAT_VIEW = 1;
 
+  var WORLD_VIEW = 0;
+  var REGION_VIEW = 1;
+
   var MapView = Backbone.View.extend({
     initialize: function(){
       var self = this;
@@ -25,15 +28,24 @@ define([
       	this.activityFeedView.getActivity();	  	
 	  }
       
+	  var RouteCollection = Backbone.Collection.extend({
+    	comparator: function(item) {
+    	  // sort by distance
+          return item.distance;
+    	}
+	  });
+      this.routeCollection = new RouteCollection();    
+      this.nCurrRouteCard = 0;
+      
       this.bFlipLock = false;
       this.PageSize = 100;
 	  this.nPage = 0;
+	  this.nView = WORLD_VIEW;
 	  this.nCurrCard = -1;
 	  this.currCardModel = null;
       this.elCntrls = $('#view_map_btns');
 	  this.nMapView = MAP_STREET_VIEW;	        
 	  this.collection = new Backbone.Collection();
-      this.bFirstTime = true;
       this.map = L.mapbox.map('map', null, {dragging: true, touchZoom: false, scrollWheelZoom:false, doubleClickZoom:false, boxZoom:false, tap:false, zoomControl:false, zoomAnimation:false, attributionControl:false});
       this.layer_street = L.mapbox.tileLayer('mallbeury.idjhlejc');            
       this.layer_sat = L.mapbox.tileLayer('mallbeury.map-eorpnyp3');      
@@ -106,29 +118,19 @@ define([
       }      
 
       $('.zoomin_btn', $(this.elCntrls)).click(function(evt){
-        if(self.map.getZoom() < self.map.getMaxZoom()) {
-          self.map.zoomIn();                  
-          $('.zoomout_btn', $(self.elCntrls)).attr('disabled', false);
-          // fire event
-          app.dispatcher.trigger("TrailMapView:zoominclick", self);                
-        }
-        
-        if(self.map.getZoom() >= self.map.getMaxZoom()-1) {
-          $('.zoomin_btn', $(self.elCntrls)).attr('disabled', true);
-        }                
+        self.map.zoomIn();                  
+        $('.zoomout_btn', $(self.elCntrls)).attr('disabled', false);        
+        self.selectMarkerOrCluster();
+        // fire event
+        app.dispatcher.trigger("TrailMapView:zoominclick", self);
       });
 
       $('.zoomout_btn', $(this.elCntrls)).click(function(evt){
-        if(self.map.getZoom() > self.map.getMinZoom()+3) {
-          self.map.zoomOut();                  
-          $('.zoomin_btn', $(self.elCntrls)).attr('disabled', false);
-          // fire event
-          app.dispatcher.trigger("TrailMapView:zoomoutclick", self);                
-        }
-        
-        if(self.map.getZoom() <= self.map.getMinZoom()+4) {
-          $('.zoomout_btn', $(self.elCntrls)).attr('disabled', true);
-        }
+        self.map.zoomOut();                  
+        $('.zoomin_btn', $(self.elCntrls)).attr('disabled', false);
+        self.selectMarkerOrCluster();          
+        // fire event
+        app.dispatcher.trigger("TrailMapView:zoomoutclick", self);                
       });
       
       $('.view_btn', $(this.elCntrls)).click(function(evt){
@@ -177,21 +179,16 @@ define([
       });        
     },
     selectCard: function(nId, bMoveForward){    	
-	  var bAnimate = !this.bFirstTime;
-	  
-	  this.bFirstTime = false;    	    	
-    	
       $('#welcome_view').hide();
       $('#cards_container_view').show();
     	
       if (this.currCardModel) {
-      	this.currCardModel.mapTrailCardView.hide(bMoveForward);      	
+      	this.currCardModel.mapTrailCardView.hide();      	
       }
 
       var cardModel = this.collection.get(nId);
-	  cardModel.mapTrailCardView.init(bMoveForward);                        
       $('#cardsview').append(cardModel.mapTrailCardView.render().el);      
-	  cardModel.mapTrailCardView.show(bAnimate);
+	  cardModel.mapTrailCardView.show();
       
 	  this.currCardModel = cardModel;      	          
       
@@ -206,17 +203,30 @@ define([
       if (this.currCardModel) {
       	this.currCardModel.mapTrailMarker.selected(false);
       }
-    	
-      if (this.nCurrCard-1 < 0) {
-      	this.nCurrCard = this.collection.length-1;      	
+    	      
+      switch (this.nView) {
+      	case WORLD_VIEW:
+      	  if (this.nCurrCard-1 < 0) {
+      		this.nCurrCard = this.collection.length-1;      	
+      	  }
+      	  else {
+        	this.nCurrCard--;
+      	  }
+	      
+	      cardModel = this.collection.at(this.nCurrCard);      
+		  this.selectCard(cardModel.id, true);	  
+		  this.panMap(cardModel, true);
+      	  break;
+      	  
+      	case REGION_VIEW:
+      	  cardModel = this.routePrevPoint(this.currCardModel);
+      	  if (cardModel) {
+		    this.selectCard(cardModel.id, true);
+		    this.panMap(cardModel, false);	  
+		  }
+      	  break;
       }
-      else {
-        this.nCurrCard--;
-      }
-      var cardModel = this.collection.at(this.nCurrCard);      
-	  this.selectCard(cardModel.id, false);
-	  this.panMap(cardModel);
-
+      
 	  var self = this;
 	  if (!this.scrollTimer) {
         this.scrollTimer = setTimeout(function() {
@@ -231,21 +241,34 @@ define([
       	return;
       }
       this.bFlipLock = true;
+      var cardModel = null;
       
       if (this.currCardModel) {
       	this.currCardModel.mapTrailMarker.selected(false);
       }
       
-      if (this.nCurrCard+1 >= this.collection.length) {
-      	this.nCurrCard = 0;      	
+      switch (this.nView) {
+      	case WORLD_VIEW:
+      	  // start on 1st trail
+	      cardModel = this.collection.at(0);      
+      	  if (cardModel) {
+      	  	this.routeInit(cardModel);
+      	  	
+		    this.selectCard(cardModel.id, true);
+		    this.panMap(cardModel, false);
+		    
+		    this.nView = REGION_VIEW; 	        	  	
+      	  }
+      	  break;
+      	  
+      	case REGION_VIEW:
+      	  cardModel = this.routeNextPoint(this.currCardModel);
+      	  if (cardModel) {
+		    this.selectCard(cardModel.id, true);
+		    this.panMap(cardModel, false);	        	  	
+      	  }
+      	  break;
       }
-      else {
-        this.nCurrCard++;
-      }
-      
-      var cardModel = this.collection.at(this.nCurrCard);      
-	  this.selectCard(cardModel.id, true);	  
-	  this.panMap(cardModel);
 	  	  	  
 	  var self = this;
 	  if (!this.scrollTimer) {
@@ -256,20 +279,66 @@ define([
 	  	}, 1000);	  			  	    
 	 }
     },
-    panMap: function(cardModel){
+    routeInit: function(cardModel){
+      this.nCurrRouteCard = 0;
+      var self = this, nDistance = 0;
+      
+      this.routeCollection.reset();
+      
+	  var latLng = cardModel.mapTrailMarker.marker.getLatLng();
+      // add all points to route
+      this.collection.each(function(model) {      	
+        nDistance = model.mapTrailMarker.marker.getLatLng().distanceTo(latLng);      	
+      	model.distance = nDistance; 
+        self.routeCollection.push(model);
+      });                  
+	  this.routeCollection.sort();
+    },    
+    routePrevPoint: function(cardModel){
+      if (this.nCurrRouteCard-1 < 0) {
+      	this.nCurrRouteCard = this.routeCollection.length - 1;
+	  }
+	  else {
+	    this.nCurrRouteCard--;	  	
+	  }    	
+	  var nearestCardModel = this.routeCollection.at(this.nCurrRouteCard); 	
+    	
+      return nearestCardModel;
+   	},    
+    routeNextPoint: function(cardModel){
+      if (this.nCurrRouteCard+1 >= this.routeCollection.length) {
+      	this.nCurrRouteCard = 0;
+	  }
+	  else {
+	    this.nCurrRouteCard++;	  	
+	  }    	
+	  var nearestCardModel = this.routeCollection.at(this.nCurrRouteCard); 	
+    	
+      return nearestCardModel;
+    },
+    selectMarkerOrCluster: function(){    
       var self = this;
-
+      
 	  // allow time for pan and select again
       setTimeout(function() {
         self.selectCluster();
       }, 500);
-            
-	  // pan to marker
-	  this.map.setZoom(3);
-	  this.map.panTo(cardModel.mapTrailMarker.marker.getLatLng(), {duration: 0.5});        	  	
 	  this.selectCluster();
     },
+    panMap: function(cardModel, bZoomWorld){
+	  if (bZoomWorld) {
+	    this.map.setZoom(3);	
+	  }            
+	  
+	  this.selectMarkerOrCluster();
+	  // pan to marker
+	  this.map.panTo(cardModel.mapTrailMarker.marker.getLatLng(), {duration: 0.5});        	  	
+    },
     selectCluster: function(){
+      if (this.nCurrCard == -1) {
+      	return;
+      }
+
       var cardModel = this.collection.at(this.nCurrCard);      
     	
 	  if (this.currMarkerOrCluster) {
@@ -303,6 +372,10 @@ define([
     	}
 	  });
         
+	  this.markerCluster.on('clusterclick', function (a) {
+    	self.selectMarkerOrCluster();
+	  });
+	          
       var model, cardViewModel, bEvent;
       $.each(data.value.routes, function(key, card) {
       	bEvent = false;
@@ -384,19 +457,24 @@ define([
 	  window.location = $('.link', trailCardView.el).attr('data-url');	  	
 	},    
     onTrailCardViewCardMarkerClick: function(trailCardView){
+      this.nView = REGION_VIEW;
+    	
 	  if (this.currMarkerOrCluster) {
 	  	$(this.currMarkerOrCluster._icon).removeClass('selected');
 	  	this.currMarkerOrCluster = null;
 	  }
     	
       var cardModel = this.collection.get(trailCardView.model.id);
-
       cardModel.mapTrailMarker.selected(true);
 	  
 	  this.markerCluster.zoomToShowLayer(cardModel.mapTrailMarker.marker, function() {});
 	  this.map.panTo(cardModel.mapTrailMarker.marker.getLatLng(), {animate: false});	
+	  
+	  this.routeInit(cardModel);
     },      		
     onTrailMarkerClick: function(trailCardMarker){
+      this.nView = REGION_VIEW;
+    	
 	  if (this.currMarkerOrCluster) {
 	  	$(this.currMarkerOrCluster._icon).removeClass('selected');
 	  	this.currMarkerOrCluster = null;
@@ -411,11 +489,12 @@ define([
       var cardModel = this.collection.get(trailCardMarker.model.id);
       
 	  // select marker      
-      cardModel.mapTrailMarker.selected(true);
-      
+      cardModel.mapTrailMarker.selected(true);      
 	  this.currCardModel = cardModel;      	          
       
       this.nCurrCard = this.collection.indexOf(cardModel);
+      
+      this.routeInit(cardModel);
     }
        
   });
