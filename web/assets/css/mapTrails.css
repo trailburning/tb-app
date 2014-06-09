@@ -131,7 +131,7 @@ border-width:1px;
 }
 
 .trailcards .panel {
-  margin: 0px;
+  margin: 0px;  
   height: 372px;
   overflow: hidden;
 }
@@ -222,5 +222,11 @@ html.touch #view_map_btns {
 @media (max-width: 1199px) {  
   #cardsview .panel.selected .select_top {
     left: 204px;
+  }
+  .trailcards .panel {
+    height: 318px;
+  }
+  #cards_container_view .nav .title {
+	font-size: 28px;
   }
 }
