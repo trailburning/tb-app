@@ -62,9 +62,6 @@ var TB_USER_ID = {{ app.user.id }};
         				<div class="line"></div>						
         			</div>
                 {% else %}
-                
-                    {% if editorial.id != 11 %}
-                
         			<div class="editorial sub clearfix">
 						<div class="tb-avatar tb-avatar-feature"><div class="photo"><a href="{{ path('profile', {name: editorial.user.name}) }}">
 	            	  	<img src="{{ get_user_avatar_url(editorial.user) }}">
@@ -90,9 +87,6 @@ var TB_USER_ID = {{ app.user.id }};
         				</div>
         				<div class="line"></div>						
         			</div>
-        			
-                    {% endif %}
-        			
                 {% endif %}
 			{% endfor %}	
 	  	</div>
