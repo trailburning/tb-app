@@ -13,8 +13,8 @@ class EditorialCreateShareImageCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('tb:editorial:create-share-image')
-            ->setDescription('Create the Editorial share images')
+            ->setName('tb:inspire:create-share-image')
+            ->setDescription('Create the inspire share images')
             ->addArgument('id', InputArgument::REQUIRED, 'The id of the Route')
         ;
     }
