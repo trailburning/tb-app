@@ -35,6 +35,8 @@ knp_gaufrette:
             in_memory: ~
         trail_media_files:
             in_memory: ~
+        asset_files:
+            in_memory: ~            
 
 # use different queue and exchange in test enviroment        
 old_sound_rabbit_mq:

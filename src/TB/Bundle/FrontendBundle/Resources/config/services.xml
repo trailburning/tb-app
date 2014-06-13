@@ -146,6 +146,7 @@
         <service id="tb.image.generator" class="TB\Bundle\FrontendBundle\Util\ImageGenerator">
             <argument type="service" id="doctrine.orm.entity_manager" />
             <argument type="service" id="trail_media_files_filesystem" />
+            <argument type="service" id="asset_files_filesystem" />
         </service>
         
     </services>

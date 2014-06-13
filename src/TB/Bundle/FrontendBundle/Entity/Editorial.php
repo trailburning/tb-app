@@ -102,6 +102,13 @@ class Editorial
     private $image;
     
     /**
+     * @var string
+     *
+     * @ORM\Column(name="share_image", type="string", length=100, nullable=true)
+     */
+    private $shareImage;
+    
+    /**
      * Get id
      *
      * @return integer 
@@ -412,5 +419,28 @@ class Editorial
     public function getEditorialRoutes()
     {
         return $this->editorialRoutes;
+    }
+
+    /**
+     * Set shareImage
+     *
+     * @param string $shareImage
+     * @return Editorial
+     */
+    public function setShareImage($shareImage)
+    {
+        $this->shareImage = $shareImage;
+
+        return $this;
+    }
+
+    /**
+     * Get shareImage
+     *
+     * @return string 
+     */
+    public function getShareImage()
+    {
+        return $this->shareImage;
     }
 }

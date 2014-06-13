@@ -4,6 +4,7 @@ namespace TB\Bundle\FrontendBundle\Util;
 
 use Doctrine\ORM\EntityManager;
 use TB\Bundle\FrontendBundle\Entity\Route;
+use TB\Bundle\FrontendBundle\Entity\Editorial;
 use Gaufrette\Filesystem;
 
 /**
@@ -13,12 +14,14 @@ class ImageGenerator
 {
     
     protected $em;
-    protected $filesystem;
+    protected $mediaFilesystem;
+    protected $assetsFilesystem;
     
-    public function __construct(EntityManager $em, Filesystem $filesystem)
+    public function __construct(EntityManager $em, Filesystem $mediaFilesystem, Filesystem $assetsFilesystem)
     {
         $this->em = $em;
-        $this->filesystem = $filesystem;
+        $this->mediaFilesystem = $mediaFilesystem;
+        $this->assetsFilesystem = $assetsFilesystem;
     }
     
     public function createRouteShareImage(Route $route)
@@ -27,11 +30,57 @@ class ImageGenerator
             return false;
         }
         
-        // Get the image to create the share image and the watermakr
+        // Get the image to create the share image and the watermark
         $media = $route->getFavouriteMedia();
-        $image = imagecreatefromstring($this->filesystem->read($media->getPath()));
+        
+        $imagePath = $media->getPath();
+        $watermarkPath = realpath(__DIR__ . '/../DataFixtures/Media/watermark/fb_share_1200x630.png');
+        // Construct the share image filepath
+        $pathParts = pathinfo($media->getPath());        
+        $shareImagePath = sprintf('/%s/%s_share.%s', $route->getId(), $pathParts['filename'], $pathParts['extension']);
+        
+        $this->createShareImage($imagePath, $shareImagePath, $watermarkPath, $this->mediaFilesystem);
+        
+        // Update the Media object and set the share image path
+        $media->setSharePath($shareImagePath);
+        $this->em->persist($media);
+        $this->em->flush($media);
 
-        $watermark = imagecreatefrompng(realpath(__DIR__ . '/../DataFixtures/Media/watermark/fb_share_1200x630.png'));
+        return true;
+    }
+    
+    public function createEditorialShareImage(Editorial $editorial)
+    {
+        if ($editorial->getImage() === null) {
+            return false;
+        }
+        
+        // Get the image to create the share image and the watermark
+        $imagePath = sprintf('images/editorial/%s/%s', $editorial->getSlug(), $editorial->getImage());
+        if (!$this->assetsFilesystem->has($imagePath)) {
+            throw new \Exception(sprintf('Missing Editorial image: %s', $path));
+        }
+        
+        // Construct the share image filepath
+        $pathParts = pathinfo($imagePath);        
+        $shareImagePath = sprintf('images/editorial/%s/%s_share.%s', $editorial->getSlug(), $pathParts['filename'], $pathParts['extension']);
+        
+        $watermarkPath = realpath(__DIR__ . '/../DataFixtures/Media/watermark/fb_share_1200x630.png');
+        
+        $this->createShareImage($imagePath, $shareImagePath, $watermarkPath, $this->assetsFilesystem);
+        
+        // Update the Media object and set the share image path
+        $editorial->setShareImage($shareImagePath);
+        $this->em->persist($editorial);
+        $this->em->flush($editorial);
+
+        return true;
+    }
+    
+    protected function createShareImage($imagePath, $shareImagePath, $watermarkPath, $filesystem)
+    {
+        $image = imagecreatefromstring($filesystem->read($imagePath));
+        $watermark = imagecreatefrompng($watermarkPath);
         $watermarkWidth = imagesx($watermark);
         $watermarkHeight = imagesy($watermark);
         $watermarkRatio = $watermarkWidth / $watermarkHeight;
@@ -78,10 +127,6 @@ class ImageGenerator
             $watermarkHeight = $imageHeight;
         }
         
-        // Construct the share image filepath
-        $pathParts = pathinfo($media->getPath());        
-        $shareImageFilepath = sprintf('/%s/%s_share.%s', $route->getId(), $pathParts['filename'], $pathParts['extension']);
-        
         // Create the share image
         imagecopy($image, $watermark, imagesx($image) - $watermarkWidth, imagesy($image) - $watermarkHeight, 0, 0, $watermarkWidth, $watermarkHeight);
         
@@ -92,18 +137,13 @@ class ImageGenerator
         ob_end_clean();
         
         // Store the new image data to the filesystem, overwrite if file exists
-        $adapter = $this->filesystem->getAdapter();
+        $adapter = $filesystem->getAdapter();
         // Set Metadata to S3 (doesn't work in unit tests when using memory filesystem)
         if ($adapter instanceof \Gaufrette\Adapter\MetadataSupporter) {
-            $adapter->setMetadata($shareImageFilepath, array('ContentType' => 'image/jpeg', 'ACL' => 'public-read'));
+            $adapter->setMetadata($shareImagePath, array('ContentType' => 'image/jpeg', 'ACL' => 'public-read'));
         }
-        $adapter->write($shareImageFilepath, $shareImageData);
+        $adapter->write($shareImagePath, $shareImageData);
         
-        // Update the Media object and set the share image path
-        $media->setSharePath($shareImageFilepath);
-        $this->em->persist($media);
-        $this->em->flush($media);
-
         return true;
     }
     

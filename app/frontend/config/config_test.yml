@@ -37,7 +37,7 @@ services:
     # Use Test DB in test enviroment
     postgis:
         class:      %postgis_class%
-        arguments:  [%database_host%, %database_port%, %database_name%_test, %database_user%, %database_password%]         
+        arguments:  [%database_host%, %database_port%, %database_name%_test, %database_user%, %database_password%]
         
 # Use in memory file adapter in test enviroment
 knp_gaufrette:
@@ -46,6 +46,8 @@ knp_gaufrette:
             in_memory: ~
         trail_media_files:
             in_memory: ~  
+        asset_files:
+            in_memory: ~               
 
 # use different queue and exchange in test enviroment        
 old_sound_rabbit_mq:

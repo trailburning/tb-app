@@ -119,7 +119,12 @@ knp_gaufrette:
                 bucket_name:  trailburning-media
                 options:
                     create: true
-                    
+        asset_files:
+            aws_s3:
+                service_id: aws_s3_client
+                bucket_name:  trailburning-assets
+                options:
+                    create: true                                        
         debug:
             local:
                 directory: %kernel.root_dir%/logs/debug_filesystem                    
@@ -131,6 +136,9 @@ knp_gaufrette:
         trail_media_files:
             adapter:    trail_media_files
             alias:      trail_media_files_filesystem             
+        asset_files:
+            adapter:    asset_files
+            alias:      asset_files_filesystem            
         debug:
             adapter:    debug
             alias:      debug_filesystem      

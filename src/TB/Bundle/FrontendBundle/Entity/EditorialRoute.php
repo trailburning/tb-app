@@ -35,7 +35,7 @@ class EditorialRoute
     /**
      * @var integer
      *
-     * @ORM\Column(name="order", type="smallint", nullable=true)
+     * @ORM\Column(name="`order`", type="smallint", nullable=true)
      */
     private $order;    
     
