@@ -164,6 +164,13 @@ h4.tb {
   color: #979797;
 }
 
+h5.tb {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.3em;
+  color: #979797;
+}
+
 /* TB COMMON STYLES */
 /******************************************/
 .tb-step-marker {
