@@ -432,21 +432,19 @@ define([
 	  // do we have a route to select?
 	  var nRouteID = $.cookie('route_id');
 	  if (nRouteID != undefined) {
-        var cardModel = this.collection.get(nRouteID);
-        $('#cardsview').html(cardModel.mapTrailCardView.render().el);    	
-        
-        this.selectCard(nRouteID, true);
-    	    	
-        var cardModel = this.collection.get(nRouteID);
-      
-	  	// select marker      
-        this.markerCluster.zoomToShowLayer(cardModel.mapTrailMarker.marker, function() {});
-        cardModel.mapTrailMarker.selected(true);
-      
-	  	this.currCardModel = cardModel;      	          
-      
-      	this.nCurrCard = this.collection.indexOf(cardModel);
-      	
+      	  // start on 1st trail
+	      cardModel = this.collection.get(nRouteID);      
+      	  if (cardModel) {
+      	  	this.routeInit(cardModel);
+      	  	
+		    this.selectCard(cardModel.id, true);
+	
+	  	    // select marker      
+        	this.markerCluster.zoomToShowLayer(cardModel.mapTrailMarker.marker, function() {});
+        	cardModel.mapTrailMarker.selected(true);
+		    
+		    this.nView = REGION_VIEW; 	        	  	
+      	  }
 	  	// remove
 	  	$.removeCookie('route_id');
 	  }   	        
