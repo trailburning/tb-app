@@ -56,7 +56,7 @@ border-width:1px;
 /******************************************/
 .panel_content {
   position: relative;
-  margin: 0px auto 80px auto;
+  margin: 0px auto 40px auto;
   width: 1112px;
 }
 
@@ -75,8 +75,6 @@ border-width:1px;
   font-weight: 700;    
 }
 
-
-
 .panel_intro {
   clear: both;
   padding-top: 30px;
@@ -91,7 +89,7 @@ border-width:1px;
 
 .panel_intro .desc {
   margin: 12px auto 0px auto;
-  width: 760px;
+  width: 782px;
   text-align: center;
 }
 
