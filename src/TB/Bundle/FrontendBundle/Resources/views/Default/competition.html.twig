@@ -23,16 +23,14 @@ var TB_USER_ID = {{ app.user.id }};
       <div class="image_container fade_on_load"><img src="http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/competition/shirt.png" /></div>
     </div>
     <div class="event_title">
-      <h1 class="tb tb-title">Create</h1>
-      <br/>
-      <h1 class="tb tb-title">a Trail Card</h1>
+      <h1 class="tb tb-title">Create a trail</h1>
       <br/>
       <h1 class="tb tb-title">and WIN!</h1>
       <br/>
 	  {% if app.user %}  	      
-  	    <a href="{{ path('profile', {'name': app.user.name}) }}" class="btn btn-tb-action btn-tb-large">Let's make a Trail Card</a></div>
+  	    <a href="{{ path('profile', {'name': app.user.name}) }}" class="btn btn-tb-action btn-tb-large">Let's make a trail</a></div>
 	  {% else %}
-  	    <a href="{{ app.request.baseUrl }}/tour" class="btn btn-tb-action btn-tb-large">Let's make a Trail Card</a></div>
+  	    <a href="{{ app.request.baseUrl }}/tour" class="btn btn-tb-action btn-tb-large">Let's make a trail</a></div>
 	  {% endif %}
     </div>      
   </div>    
@@ -41,7 +39,7 @@ var TB_USER_ID = {{ app.user.id }};
     
     <div class="panel_intro">
       <div class="desc clearfix">
-        <h3 class="tb">Why participate?</h3>        
+        <h3 class="tb">Enter the competition to Win!</h3>        
         <h4 class="tb">
         We're offering some great Trailburning running shirts from Swedish brand <a href="http://www.craft.se" onClick="trackOutboundLink(this, 'Outbound Links', 'craft.se'); return false;">Craft</a>,<br/>
         and copies of the latest <a href="http://www.likethewindmagazine.com" onClick="trackOutboundLink(this, 'Outbound Links', 'likethewindmagazine.com'); return false;">Like the Wind</a> magazine!
@@ -89,19 +87,19 @@ var TB_USER_ID = {{ app.user.id }};
       </div>
       <div class="right">
         <h4 class="tb">
-      	To win this prize pack all you need to do is <strong>create</strong> a Trail Card, <strong>share</strong> it on Facebook (you can now share when you publish in Trail Maker!) and get 6 of your friends to <strong>like</strong> the trail on Trailburning.
+      	To win this prize pack all you need to do is <strong>create</strong> a trail, <strong>share</strong> it on Facebook (you can now share when you publish in Trail Maker!) and get 6 of your friends to <strong>like</strong> the trail on Trailburning.
         <br/><br/>         
         The first five people to do this will win!
         <br/><br/>         
         </h4>      
         <h5 class="tb">
-      	The small print - only one prize pack per person, as soon as we have 5 winners you will be notified.
+      	The small print - only one prize pack per person, we will announce as soon as we have 5 winners.
         </h5>
         <div class="discover">      	
 	    {% if app.user %}  	      
-  	      <a href="{{ path('profile', {'name': app.user.name}) }}" class="btn btn-tb-action btn-tb-large">Let's make a Trail Card</a>
+  	      <a href="{{ path('profile', {'name': app.user.name}) }}" class="btn btn-tb-action btn-tb-large">Let's make a trail</a>
 	    {% else %}
-  	      <a href="{{ app.request.baseUrl }}/tour" class="btn btn-tb-action btn-tb-large">Let's make a Trail Card</a>
+  	      <a href="{{ app.request.baseUrl }}/tour" class="btn btn-tb-action btn-tb-large">Let's make a trail</a>
 	    {% endif %}
       	</div>                
       </div>
