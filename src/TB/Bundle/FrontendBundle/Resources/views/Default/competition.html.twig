@@ -1,6 +1,6 @@
 {% extends "::base.html.twig" %}
 
-{% block title %}Trailburning About{% endblock %}
+{% block title %}Trailburning Competition{% endblock %}
 
 {% block stylesheets %}
 <link href="{{ asset('assets/css/static.css') }}" rel="stylesheet" type="text/css">
@@ -28,9 +28,9 @@ var TB_USER_ID = {{ app.user.id }};
       <h1 class="tb tb-title">and WIN!</h1>
       <br/>
 	  {% if app.user %}  	      
-  	    <a href="{{ path('profile', {'name': app.user.name}) }}" class="btn btn-tb-action btn-tb-large">Let's make a trail</a></div>
+  	    <a href="{{ path('profile', {'name': app.user.name}) }}" class="btn btn-tb-action btn-tb-large">Let's make a trail</a>
 	  {% else %}
-  	    <a href="{{ app.request.baseUrl }}/tour" class="btn btn-tb-action btn-tb-large">Let's make a trail</a></div>
+  	    <a href="{{ app.request.baseUrl }}/tour" class="btn btn-tb-action btn-tb-large">Let's make a trail</a>
 	  {% endif %}
     </div>      
   </div>    
