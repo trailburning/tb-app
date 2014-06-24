@@ -147,7 +147,7 @@ define([
     },
     onHeroTimer: function(){
       this.bWaiting = true;
-      this.checkpoint();
+//      this.checkpoint();
     },
     onHomeHeroViewReady: function(homeHeroView){
       // is this the one we're waiting for?

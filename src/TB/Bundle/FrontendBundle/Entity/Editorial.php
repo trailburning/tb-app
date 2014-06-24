@@ -31,9 +31,9 @@ class Editorial
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\Route", inversedBy="editorials")
-     */
-    private $routes;
+     * @ORM\OneToMany(targetEntity="EditorialRoute", mappedBy="editorial")
+     **/
+    private $editorialRoutes;
     
     /**
      * @var string
@@ -55,6 +55,20 @@ class Editorial
      * @ORM\Column(name="text", type="text")
      */
     private $text;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="image_credit", type="string", length=150, nullable=true)
+     */
+    private $imageCredit;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="image_credit_url", type="string", length=150, nullable=true)
+     */
+    private $imageCreditUrl;
     
     /**
      * @var integer
@@ -86,6 +100,13 @@ class Editorial
      * @ORM\Column(name="image", type="string", length=50)
      */
     private $image;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="share_image", type="string", length=100, nullable=true)
+     */
+    private $shareImage;
     
     /**
      * Get id
@@ -319,5 +340,107 @@ class Editorial
     public function getImage()
     {
         return $this->image;
+    }
+
+    /**
+     * Set imageCredit
+     *
+     * @param string $imageCredit
+     * @return Editorial
+     */
+    public function setImageCredit($imageCredit)
+    {
+        $this->imageCredit = $imageCredit;
+
+        return $this;
+    }
+
+    /**
+     * Get imageCredit
+     *
+     * @return string 
+     */
+    public function getImageCredit()
+    {
+        return $this->imageCredit;
+    }
+
+    /**
+     * Set imageCreditUrl
+     *
+     * @param string $imageCreditUrl
+     * @return Editorial
+     */
+    public function setImageCreditUrl($imageCreditUrl)
+    {
+        $this->imageCreditUrl = $imageCreditUrl;
+
+        return $this;
+    }
+
+    /**
+     * Get imageCreditUrl
+     *
+     * @return string 
+     */
+    public function getImageCreditUrl()
+    {
+        return $this->imageCreditUrl;
+    }
+
+    /**
+     * Add editorialRoutes
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\EditorialRoute $editorialRoutes
+     * @return Editorial
+     */
+    public function addEditorialRoute(\TB\Bundle\FrontendBundle\Entity\EditorialRoute $editorialRoutes)
+    {
+        $this->editorialRoutes[] = $editorialRoutes;
+
+        return $this;
+    }
+
+    /**
+     * Remove editorialRoutes
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\EditorialRoute $editorialRoutes
+     */
+    public function removeEditorialRoute(\TB\Bundle\FrontendBundle\Entity\EditorialRoute $editorialRoutes)
+    {
+        $this->editorialRoutes->removeElement($editorialRoutes);
+    }
+
+    /**
+     * Get editorialRoutes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEditorialRoutes()
+    {
+        return $this->editorialRoutes;
+    }
+
+    /**
+     * Set shareImage
+     *
+     * @param string $shareImage
+     * @return Editorial
+     */
+    public function setShareImage($shareImage)
+    {
+        $this->shareImage = $shareImage;
+
+        return $this;
+    }
+
+    /**
+     * Get shareImage
+     *
+     * @return string 
+     */
+    public function getShareImage()
+    {
+        return $this->shareImage;
     }
 }

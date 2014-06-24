@@ -3,7 +3,7 @@
 use Symfony\Component\DependencyInjection\Definition;
 
 if (class_exists('\\Memcached')) {
-    // Use Memcached session handler when tho memcached module is installed
+    // Use Memcached session handler when the memcached module is installed
     $memcached = $container->setDefinition('session.memcached', new Definition(
         'Memcached',
         ['%session_prefix%']
@@ -14,12 +14,18 @@ if (class_exists('\\Memcached')) {
 
     // Only set SASL authenfification when parameters are set (local Memcached may not support SASL authenfification) 
     if ($container->getParameter('memcached_username') != '') {        
-        $memcached->addMethodCall('setSaslAuthData', [
-            '%memcached_username%',
-            '%memcached_password%',
-        ])->addMethodCall('setOption', [ // MemCachier needs this option to be 'true'
+        $memcached->addMethodCall('setOption', [
             \Memcached::OPT_BINARY_PROTOCOL,
             true,
+        ])->addMethodCall('setOption', [
+            \Memcached::OPT_AUTO_EJECT_HOSTS,
+            true,
+        ])->addMethodCall('setOption', [
+            \Memcached::OPT_NO_BLOCK,
+            true,
+        ])->addMethodCall('setSaslAuthData', [
+            '%memcached_username%',
+            '%memcached_password%',
         ]);
     }
 
