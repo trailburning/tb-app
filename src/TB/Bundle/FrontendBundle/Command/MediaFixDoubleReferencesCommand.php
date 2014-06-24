@@ -14,7 +14,7 @@ class MediaFixDoubleReferencesCommand extends ContainerAwareCommand
     {
         $this
             ->setName('tb:media:fix-double-references')
-            ->setDescription('Finds all media files not referenced in the database and outputs the total file size.')
+            ->setDescription('Finds all media files with double references in the database and creates unique files')
         ;
     }
 

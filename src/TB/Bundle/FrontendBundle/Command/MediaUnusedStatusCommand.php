@@ -28,7 +28,6 @@ class MediaUnusedStatusCommand extends ContainerAwareCommand
         $totalUsedFilesize = 0;
         
         foreach ($filesystem->keys() as $path) {
-            
             if (strpos($path, '_share') === false) {
                 $query = $em
                     ->createQuery('
@@ -62,7 +61,7 @@ class MediaUnusedStatusCommand extends ContainerAwareCommand
     
     public function getFileSize($path)
     {
-        $url = 'http://s3-eu-west-1.amazonaws.com/trailburning-media' . $path;
+        $url = 'http://s3-eu-west-1.amazonaws.com/trailburning-media/' . $path;
         
         // Assume failure.
         $result = -1;

@@ -14,7 +14,7 @@ class MediaCheckMissingFilesCommand extends ContainerAwareCommand
     {
         $this
             ->setName('tb:media:check-missing')
-            ->setDescription('Deleted unused media files.')
+            ->setDescription('Checks for missing media files.')
         ;
     }
 
