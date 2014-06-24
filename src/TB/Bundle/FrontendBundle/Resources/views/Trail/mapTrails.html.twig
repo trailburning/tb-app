@@ -15,10 +15,38 @@ var TB_USER_ID = {{ app.user.id }};
 </script>
 
 <div id="mapview">
-	<div id="map"></div>  
-		<div id="cardsview">
-  			<div id="trailCards" class="trailcards tb-move-vert"></div>
-		</div>	
+	<div id="map"></div>
+
+	  <div id="overlay_view">	
+		<div class="maintitle">
+		<h2 class="tb tb-title">Discover</h2>
+		<br/>
+		<h2 class="tb tb-title">World Trails</h2>
+		</div>
+
+	    <div id="welcome_view">
+	    	<div class="title">
+			Select trails from the<br/> 
+			map or <a href="javascript:void(0)" class="btn btn-tb btn-tb-large discover_btn">Discover</a> the<br/>			
+			latest trail.</div>
+		</div>	    	
+		
+	    <div id="cards_container_view">	
+	      <div class="trailcards">
+  	        <div class="panel trail_card_panel">
+		      <div id="cardsview"></div>
+    	    </div>
+  		  </div>
+	  
+	      <div class="nav">
+	      	<div class="prev"><a href="javascript:void(0)" class="button prev_card">Previous</a></div><!-- 
+	      	--><div class="title">Select a Trail</div><!--
+	      	--><div class="next"><a href="javascript:void(0)" class="button next_card">Next</a></div>
+	      </div>	  
+	    </div>
+	  
+	  </div>
+	
   	</div>
   	<div id="view_map_btns">        
 		<div class='controls'>
@@ -49,16 +77,14 @@ var TB_USER_ID = {{ app.user.id }};
         by <strong><%= user.title %></strong>
         <div class="stars">
           <div class="star"></div>
-          <div class="star"></div>
-          <div class="star"></div>
-          <div class="star"></div>
-          <div class="star"></div>
+          <div class="star hide"></div>
+          <div class="star hide"></div>
+          <div class="star hide"></div>
+          <div class="star hide"></div>
         </div>
       </div>
       <div class="location"></div>
     </div>
-    <div class="select_top"></div>
-    <div class="select_bottom"></div>
 </script>
 
 <script type="text/template" id="mapTrailEventCardViewTemplate">
@@ -75,10 +101,8 @@ var TB_USER_ID = {{ app.user.id }};
     </div>
     <div class="summary">
       <div class="sponsor"><a href="{{ app.request.baseUrl }}/events/<%= eventURL %>"><img src="http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/events/<%= eventURL %>/card_trail_logo.png"></a></div>
-      <div class="location"></div>      
+      <div class="location"></div>
     </div>
-    <div class="select_top"></div>
-    <div class="select_bottom"></div>    
 </script>
 
 {% endblock %}

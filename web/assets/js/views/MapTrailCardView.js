@@ -4,12 +4,11 @@ define([
 ], function(_, Backbone){
 
   var MapTrailCardView = Backbone.View.extend({
-  	className: "panel",
+  	className: "panel_content",
     initialize: function(){
       this.template = _.template($('#mapTrailCardViewTemplate').text());        
                         
       this.bRendered = false;
-	  this.mapRouteMarkerView = null;
     },            
     render: function(){
       var self = this;
@@ -27,20 +26,15 @@ define([
 		  this.model.set('category', '');
       	}
       
-        // add to map
-        function onClick(e) {
-		  // fire event
-          app.dispatcher.trigger("MapTrailCardView:markerclick", self);                
-	    }
-        
-	    this.marker = L.marker(new L.LatLng(this.model.get('centroid')[1], this.model.get('centroid')[0])).on('click', onClick);			  
-	    this.marker.setIcon(L.divIcon({className: 'tb-map-marker', html: '<div class="marker"></div>', iconSize: [20, 20]}));      	  
-		this.options.mapCluster.addLayer(this.marker);      	  
-
         var attribs = this.model.toJSON();
         $(this.el).html(this.template(attribs));
-        $(this.el).addClass('trail_card_panel');
-        $(this.el).attr('data-id', this.model.cid);
+        $(this.el).attr('data-id', this.model.id);
+        $(this.el).addClass('tb-fade-in-no-delay');     
+            
+	    $('.link', $(this.el)).click(function(evt){
+		  // fire event
+          app.dispatcher.trigger("MapTrailCardView:click", self);                	      
+	    });
       
         var nRating = this.model.get('rating');
         $.each($('.star', $(this.el)), function(index, value){
@@ -95,39 +89,41 @@ define([
           	  }
           	  break;
           }
-        });
-      
-      	$('.location', this.el).click(function(evt){
-		  // fire event
-          app.dispatcher.trigger("MapTrailCardView:cardmarkerclick", self);                
-      	});
-      	      
-        var imgLoad = imagesLoaded($('.scale', $(this.el)));
-        imgLoad.on('always', function(instance) {
-          for ( var i = 0, len = imgLoad.images.length; i < len; i++ ) {
-            $(imgLoad.images[i].img).addClass('scale_image_ready');
-            // update pos
-            $(imgLoad.images[i].img).imageScale();
-          }
-          // fade in - delay adding class to ensure image is ready  
-          $('.fade_on_load', $(self.el)).addClass('tb-fade-in');
-          $('.image_container', $(self.el)).css('opacity', 1);
-        });        
-		// invoke resrc      
-	    resrc.resrc($('.scale', $(this.el)));                
+        });      
 	  }
+	  
+      $('.location', this.el).click(function(evt){
+		// fire event
+        app.dispatcher.trigger("MapTrailCardView:cardmarkerclick", self);                
+      });
+	  
+      $('.fade_on_load', $(self.el)).removeClass('tb-fade-in');
+      $('.image_container', $(self.el)).css('opacity', 0);
+	  
+      var imgLoad = imagesLoaded($('.scale', $(this.el)));
+      imgLoad.on('always', function(instance) {
+        for ( var i = 0, len = imgLoad.images.length; i < len; i++ ) {
+          $(imgLoad.images[i].img).addClass('scale_image_ready');
+          // update pos
+          $(imgLoad.images[i].img).imageScale();
+        }
+        // fade in - delay adding class to ensure image is ready  
+        $('.fade_on_load', $(self.el)).addClass('tb-fade-in');
+        $('.image_container', $(self.el)).css('opacity', 1);
+      });        
+	  
       this.bRendered = true;
                        
       return this;
     },
-	selected: function(bSelected){		
-	  if (bSelected) {
-        this.marker.setIcon(L.divIcon({className: 'tb-map-marker selected', html: '<div class="marker"></div>', iconSize: [20, 20]}));	  	
-	  }
-	  else {
-        this.marker.setIcon(L.divIcon({className: 'tb-map-marker', html: '<div class="marker"></div>', iconSize: [20, 20]}));	  		  	
-	  }		
-	}
+    show: function(){
+	  // invoke resrc      
+      resrc.resrc($('.scale', $(this.el)));
+      $(this.el).css('opacity', 1);                
+    },
+    hide: function(){
+	  $(this.el).css('opacity', 0);
+    }
 
   });
 

@@ -88,6 +88,20 @@ abstract class AbstractFrontendTest extends WebTestCase
         return $route;
     }
     
+    protected function getEditorial($slug)
+    {
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        $editorial = $em
+            ->getRepository('TBFrontendBundle:Editorial')
+            ->findOneBySlug($slug);
+        
+        if (!$editorial) {
+            $this->fail(sprintf('Missing Editorial with slug "%s" in test DB', $slug));
+        }
+        
+        return $editorial;
+    }
+    
     protected function getAttribute($name, $type)
     {
         $query = $this->getContainer()->get('doctrine.orm.entity_manager')

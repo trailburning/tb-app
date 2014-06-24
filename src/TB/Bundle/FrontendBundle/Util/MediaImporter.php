@@ -50,7 +50,7 @@ class MediaImporter
         if ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
             $timezone = $row['tzid'];
         } else {
-            throw new \Exception(sprintf('Missing timezone for %s %s', $this->getCentroid()->getLongitude(), $this->getCentroid()->getLatitude()));
+            throw new \Exception(sprintf('Missing timezone for %s %s', $route->getCentroid()->getLongitude(), $route->getCentroid()->getLatitude()));
         }
 
         return $timezone;

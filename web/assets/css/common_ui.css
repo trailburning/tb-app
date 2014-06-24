@@ -164,6 +164,13 @@ h4.tb {
   color: #979797;
 }
 
+h5.tb {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.3em;
+  color: #979797;
+}
+
 /* TB COMMON STYLES */
 /******************************************/
 .tb-step-marker {
@@ -315,6 +322,10 @@ a:active .tb-cntrl {
   font-weight: 700;	
   color: #44B6F7;
   overflow: hidden;
+}
+
+.tb-map-marker.selected .marker {
+  color: #ed1c24;
 }
 
 .tb-map-marker.small {
@@ -531,13 +542,13 @@ a:active .tb-cntrl {
 /******************************************/
 .panel {
   float: left;  
-  overflow: hidden;
   background-color: #FFF;
   border: none;
   *zoom: 1;
+  overflow: hidden;
   -webkit-box-shadow: 2px 4px 5px 0px rgba(0, 0, 0, 0.1);
      -moz-box-shadow: 2px 4px 5px 0px rgba(0, 0, 0, 0.1);
-          box-shadow: 2px 4px 5px 0px rgba(0, 0, 0, 0.1);  
+          box-shadow: 2px 4px 5px 0px rgba(0, 0, 0, 0.1);
 }
 
 /* HEADER */

@@ -34,16 +34,16 @@ class EditorialController extends Controller
         
         $query = $this->getDoctrine()->getManager()
             ->createQuery('
-                SELECT r FROM TBFrontendBundle:Route r
-                JOIN r.editorials e
-                WHERE e.id=:editorialId
-                ORDER BY r.id')
+                SELECT er FROM TBFrontendBundle:EditorialRoute er
+                JOIN er.route r
+                WHERE er.editorialId=:editorialId
+                ORDER BY er.order ASC, r.id ASC')
             ->setParameter('editorialId', $editorial->getId());
-        $routes = $query->getResult();
+        $editorialRoutes = $query->getResult();
         
         return [
             'editorial' => $editorial,
-            'routes' => $routes,
+            'editorialRoutes' => $editorialRoutes,
         ];
     }
     
