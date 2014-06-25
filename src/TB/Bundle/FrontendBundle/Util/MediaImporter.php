@@ -34,11 +34,10 @@ class MediaImporter
             throw new \Exception('centroid is not set');
         }
         
-        $sql = "SELECT tzid FROM tz_world_mp WHERE ST_Contains(geom, ST_MakePoint(:long, :lat));";
-        
         $long = $route->getCentroid()->getLongitude();
         $lat = $route->getCentroid()->getLatitude();
         
+        $sql = "SELECT tzid FROM tz_world_mp WHERE ST_Contains(geom, ST_MakePoint(:long, :lat));";
         $stmt = $this->em->getConnection()->prepare($sql);
         $stmt->bindParam(':long', $long, \PDO::PARAM_STR);
         $stmt->bindParam(':lat', $lat, \PDO::PARAM_STR);
@@ -50,7 +49,21 @@ class MediaImporter
         if ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
             $timezone = $row['tzid'];
         } else {
-            throw new \Exception(sprintf('Missing timezone for %s %s', $route->getCentroid()->getLongitude(), $route->getCentroid()->getLatitude()));
+            // The timezone data is incomplete, searcn for the nearest timezone as faalback
+            $sql = "SELECT tzid FROM tz_world_mp ORDER BY ST_Distance_Sphere(ST_Centroid(geom), ST_MakePoint(:long, :lat)) ASC";
+            $stmt = $this->em->getConnection()->prepare($sql);
+            $stmt->bindParam(':long', $long, \PDO::PARAM_STR);
+            $stmt->bindParam(':lat', $lat, \PDO::PARAM_STR);            
+         
+            if (!$stmt->execute()) {
+                throw new \Exception('failed fetching nearest timezone for route');
+            }
+
+            if ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+                $timezone = $row['tzid'];
+            } else {
+                throw new \Exception(sprintf('Missing timezone for %s %s', $route->getCentroid()->getLongitude(), $route->getCentroid()->getLatitude()));
+            }
         }
 
         return $timezone;
