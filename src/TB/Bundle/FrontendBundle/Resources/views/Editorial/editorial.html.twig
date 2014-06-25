@@ -1,6 +1,16 @@
 {% extends "::base.html.twig" %}
 
-{% block title %}{{ editorial.title }}{% endblock %}
+{% block title %}
+{{ editorial.title }} by {{ editorial.user.firstName }} {{ editorial.user.lastName }}
+{% endblock %}
+
+{% block description %}
+{{ editorial.synopsis }}
+{% endblock %}
+
+{% block og_image %}
+{% if editorial.shareImage is not null %}http://assets.trailburning.com{{ editorial.shareImage }}{% else %}http://www.trailburning.com/assets/img/social/tb_profile_icon.png{% endif %}
+{% endblock %}
 
 {% block stylesheets %}
 <link href="{{ asset('assets/css/editorial.css') }}" rel="stylesheet" type="text/css">
@@ -77,7 +87,7 @@ var TB_EDITORIAL_TRAILS = [
 	  			
 				<div id="column_wrapper_intro" class="column_wrapper">
 	  			<div class="columns">
-    	  			<h4 class="tb">	  				
+    	  			<h4 class="tb">	 
                         {{ editorial.synopsis|nl2br }}
     				</h4>
                     {{ editorial.text|raw }}
