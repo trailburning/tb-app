@@ -14,7 +14,7 @@ class RouteRatingCommand extends ContainerAwareCommand
     {
         $this
             ->setName('tb:route:set-rating')
-            ->setDescription('Calculates a rating for all Routes based on user likes')
+            ->setDescription('Calculates the rating for all Routes based on user likes')
         ;
     }
 

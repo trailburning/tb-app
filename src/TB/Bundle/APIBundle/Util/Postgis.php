@@ -825,13 +825,13 @@ class Postgis extends \PDO
         foreach ($params as $paramName => $paramValue) {
             // Check if parameter is valid
             if (!array_key_exists($paramName, $validParams)) {
-                throw new ApiException(sprintf('Invalid parameter \'%s\'', $paramName));
+                throw new ApiException(sprintf('Invalid parameter \'%s\'', $paramName), 400);
             }
             
             // Check if parameter value is valid
             if (is_array($validParams[$paramName])) {
                 if (!in_array($paramValue, $validParams[$paramName])) {
-                    throw new ApiException(sprintf('Invalid parameter value \'%s\' for parameter \'%s\'', $paramValue, $paramName));
+                    throw new ApiException(sprintf('Invalid parameter value \'%s\' for parameter \'%s\'', $paramValue, $paramName), 400);
                 }
             }
         }

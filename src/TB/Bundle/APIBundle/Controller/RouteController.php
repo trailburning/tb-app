@@ -189,7 +189,7 @@ class RouteController extends AbstractRestController
     /**
      * Like a Trail
      *
-     * @Route("/route/{routeId}/like", requirements={"userIdToFollow" = "\d+"})
+     * @Route("/route/{routeId}/like")
      * @Method("PUT")
      */
     public function putRouteLike($routeId)
@@ -241,7 +241,7 @@ class RouteController extends AbstractRestController
     /**
      * Unfollow a user
      *
-     * @Route("/route/{routeId}/undolike", requirements={"userIdToUnfollow" = "\d+"})
+     * @Route("/route/{routeId}/undolike")
      * @Method("PUT")
      */
     public function putRouteUndoLike($routeId)
