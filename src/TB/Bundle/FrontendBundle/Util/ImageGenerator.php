@@ -34,7 +34,7 @@ class ImageGenerator
         $media = $route->getFavouriteMedia();
         
         $imagePath = $media->getPath();
-        $watermarkPath = realpath(__DIR__ . '/../DataFixtures/Media/watermark/fb_share_1200x630.png');
+        $watermarkPath = realpath(__DIR__ . '/../DataFixtures/Media/watermark/fb_share_trail_1200x630.png');
         // Construct the share image filepath
         $pathParts = pathinfo($media->getPath());        
         $shareImagePath = sprintf('/%s/%s_share.%s', $route->getId(), $pathParts['filename'], $pathParts['extension']);
@@ -65,7 +65,7 @@ class ImageGenerator
         $pathParts = pathinfo($imagePath);        
         $shareImagePath = sprintf('images/editorial/%s/%s_share.%s', $editorial->getSlug(), $pathParts['filename'], $pathParts['extension']);
         
-        $watermarkPath = realpath(__DIR__ . '/../DataFixtures/Media/watermark/fb_share_1200x630.png');
+        $watermarkPath = realpath(__DIR__ . '/../DataFixtures/Media/watermark/fb_share_inspire_1200x630.png');
         
         $this->createShareImage($imagePath, $shareImagePath, $watermarkPath, $this->assetsFilesystem);
         
