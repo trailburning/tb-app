@@ -167,9 +167,24 @@ a:active {
   display: none;
 }
 
+.cookie_error {
+  display: none;
+}
+
 .error {
   text-align: left;
   color: #CC0000;  
+}
+
+.error a,
+.error a:visited {  
+  color: inherit;
+  text-decoration: underline; 	
+}
+.error a:hover,
+.error a:active {
+  color: inherit; 
+  text-decoration: none;
 }
 
 .fail h4 {

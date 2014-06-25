@@ -23,6 +23,10 @@ define([
   	  this.activityFeedView.getActivity();	  	
     }
     
+    if ($('.cookie_error').length) {
+      checkCookies();	
+    }    
+    
     $('#search_field').focus(function(evt) {
       $('#search_field').val('not just yet...');
       event.preventDefault();
@@ -43,6 +47,14 @@ define([
       $('.fade_on_load').addClass('tb-fade-in');
       $('.image_container').css('opacity', 1);
     });
+
+    function checkCookies() {    
+	  $.cookie('test', 'trailburning');
+	  var strTest = $.cookie('test');
+	  if ($.cookie('test') == undefined) {
+	  	$('.cookie_error').show();
+	  }
+	}
     
     function handleResize() {
       $("img.scale_image_ready").imageScale();
