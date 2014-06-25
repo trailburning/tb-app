@@ -46,7 +46,7 @@ class ImageGeneratorTest extends AbstractFrontendTest
             'The share file was created');
         
         // Copy the file to a local filesystem for debug
-        // $debugFilesystem->write('share.jpg', $filesystem->read($media->getSharePath()), true);   
+        // $debugFilesystem->write('share.jpg', $filesystem->read($media->getSharePath()), true);
     }
     
     public function testCreateEditorialShareImage()
@@ -75,6 +75,6 @@ class ImageGeneratorTest extends AbstractFrontendTest
             'The share image was created');
         
         // Copy the file to a local filesystem for debug
-        $debugFilesystem->write('share.jpg', $filesystem->read($editorial->getShareImage()), true);   
+        $debugFilesystem->write('share.jpg', $filesystem->read($editorial->getShareImage()), true);
     }
 }    
