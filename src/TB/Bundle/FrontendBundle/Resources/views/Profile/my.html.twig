@@ -86,7 +86,9 @@ var TB_USER_LAT = {{ user.location.latitude }};
 		          {% endif %}
 	            </div>
 	            <div class="draft"></div>
-	          	</a>
+	          	{% if route.slug %}
+                    </a>
+                {% endif %}
 		      	<div class="summary">
 		      	  <div class="cntrls"><a class="btn btn-tb" href="{{ path('trailmaker', {id: route.id}) }}">Edit Trail</a><a href="javascript:void(0)" class="btnDeleteTrail button">Delete</a></div>
 		        </div>
