@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 use TB\Bundle\FrontendBundle\Entity\Route;
 use TB\Bundle\FrontendBundle\Entity\RoutePoint;
 use CrEOF\Spatial\PHP\Types\Geometry\Point;
+use Guzzle\Http\Client;
 
 /**
 * 
@@ -14,19 +15,21 @@ class MediaImporter
 {
 
     protected $em;
+    protected $httpClient;
     
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $em, Client $httpClient)
     {
         $this->em = $em;
+        $this->httpClient = $httpClient;
     }
     
     /**
-     * Finds the timezone for a Route by querin the tz_world_mp data
+     * Finds the timezone for a Route by looking up the google timezone api
      * 
      * @param Route $route the Route to get the timezone for
      * @throws Exception when provided Routes centroid is not set
-     * @throws Exception when no timezone was found in tz_world_mp data
-     * @return mixed the timezone when found, null when no timezone was found
+     * @throws Exception when no timezone a call to the google timezne api leads to an error
+     * @return string the timezone
      */
     public function getRouteTimezone(Route $route)
     {
@@ -34,38 +37,20 @@ class MediaImporter
             throw new \Exception('centroid is not set');
         }
         
-        $long = $route->getCentroid()->getLongitude();
-        $lat = $route->getCentroid()->getLatitude();
+        $firstRoutePoint = $this->getFirstRoutePoint($route);
+                
+        $url = sprintf('https://maps.googleapis.com/maps/api/timezone/json?location=%s,%s&timestamp=%s', $firstRoutePoint->getCoords()->getLatitude(), $firstRoutePoint->getCoords()->getLongitude(), $firstRoutePoint->getTags()['datetime']);
         
-        $sql = "SELECT tzid FROM tz_world_mp WHERE ST_Contains(geom, ST_MakePoint(:long, :lat));";
-        $stmt = $this->em->getConnection()->prepare($sql);
-        $stmt->bindParam(':long', $long, \PDO::PARAM_STR);
-        $stmt->bindParam(':lat', $lat, \PDO::PARAM_STR);
+        $request = $this->httpClient->get($url);
+        $request->send();
+        $response = $request->getResponse();
         
-        if (!$stmt->execute()) {
-            throw new \Exception('failed fetching timezone for route');
+        if ($response->getStatusCode() !== 200) {
+            throw new Exception('Unable to get timezone from google timezone api, http status code %s for URL: %s', $response->getStatusCode(), $url);
         }
-
-        if ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
-            $timezone = $row['tzid'];
-        } else {
-            // The timezone data is incomplete, searcn for the nearest timezone as faalback
-            $sql = "SELECT tzid FROM tz_world_mp ORDER BY ST_Distance_Sphere(ST_Centroid(geom), ST_MakePoint(:long, :lat)) ASC";
-            $stmt = $this->em->getConnection()->prepare($sql);
-            $stmt->bindParam(':long', $long, \PDO::PARAM_STR);
-            $stmt->bindParam(':lat', $lat, \PDO::PARAM_STR);            
-         
-            if (!$stmt->execute()) {
-                throw new \Exception('failed fetching nearest timezone for route');
-            }
-
-            if ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
-                $timezone = $row['tzid'];
-            } else {
-                throw new \Exception(sprintf('Missing timezone for %s %s', $route->getCentroid()->getLongitude(), $route->getCentroid()->getLatitude()));
-            }
-        }
-
+        
+        $timezone = $response->json()['timeZoneId'];
+        
         return $timezone;
     }
     

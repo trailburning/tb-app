@@ -193,7 +193,6 @@ The scenery along the footpath; including locks, bridges, forestry and the river
     public function getDependencies()
     {
         return [
-            'TB\Bundle\FrontendBundle\DataFixtures\ORM\TzWorldMpData',
             'TB\Bundle\FrontendBundle\DataFixtures\ORM\UserProfileData',
             'TB\Bundle\FrontendBundle\DataFixtures\ORM\BrandProfileData',
             'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteTypeData',
