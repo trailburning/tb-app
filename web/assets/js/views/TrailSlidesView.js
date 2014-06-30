@@ -30,11 +30,13 @@ define([
       this.nOldSlide = this.nCurrSlide;  
       this.nCurrSlide = nSlide;
       
-      var photoView = this.arrSlidePhotos[nSlide];
-      if (!photoView.isLoaded()) {
-	    $('#tb-loader-overlay').fadeIn();      		      	
+      if (this.arrSlidePhotos.length) {
+        var photoView = this.arrSlidePhotos[nSlide];
+        if (!photoView.isLoaded()) {
+	      $('#tb-loader-overlay').fadeIn();      		      	
+        }
+        photoView.load();      
       }
-      photoView.load();      
     },    
     addMedia: function(mediaModel){
       var photoView = new TrailSlideView({ model: mediaModel, type: 0 });
@@ -51,7 +53,7 @@ define([
         // update container width
         $('.photos_container', this.el).width($('#appview').width());        
         $('.image_container', this.el).width($('#appview').width());
-        if (this.nCurrSlide >= 0) {
+        if (this.nCurrSlide >= 0 && this.arrSlidePhotos.length) {
           var photoView = this.arrSlidePhotos[this.nCurrSlide];
           photoView.render($('#appview').width());
         }

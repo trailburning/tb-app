@@ -51,8 +51,11 @@ define([
       if (this.currMediaMarker) {
         this.currMediaMarker.setActive(false);
       }
-      this.currMediaMarker = this.arrMediaPoints[nMedia];
-      this.currMediaMarker.setActive(true);
+      
+      if (this.arrMediaPoints.length) {      
+        this.currMediaMarker = this.arrMediaPoints[nMedia];
+        this.currMediaMarker.setActive(true);
+      }
     },    
     addMedia: function(mediaModel){
       var jsonPoints = this.model.get('value').route.route_points;

@@ -139,6 +139,9 @@ define([
       this.trailActivitiesView.render();            
     },
     renderTrailCard: function(){
+      if (this.model.get('value').route.slug || this.model.get('value').route.bDetailUpdated) {
+      	$('.trailcard_panel').show();
+      }
       $('.trailcard_panel .trail_card_title', $(this.el)).html(this.model.get('value').route.name);
       $('.trailcard_panel .trail_card_region', $(this.el)).html(this.model.get('value').route.region);
 	  // trail_card_category      	

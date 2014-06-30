@@ -256,6 +256,8 @@ define([
       });	  
 	},
     onTrailEditViewUpdateDetailsClick: function(trailEditView){      
+      var self = this;
+      
       var jsonObj = {'name':this.model.get('value').route.name, 'region':this.model.get('value').route.region, 'about':this.model.get('value').route.about, 'route_category_id':this.model.get('value').route.route_category_id};
       var postData = JSON.stringify(jsonObj);
       var postArray = {json:postData};
@@ -273,6 +275,10 @@ define([
         success: function(data) {      
 //          console.log('success');
 //          console.log(data);
+		  // a slug will have been created but we don't know what it is      
+	      self.model.get('value').route.bDetailUpdated = true;		            
+          self.trailEditView.renderTrailCard();
+          self.trailEditView.renderTrailCardPhoto();
         }
       });
 	},    		

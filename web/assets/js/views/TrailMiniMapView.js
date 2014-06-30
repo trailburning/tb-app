@@ -36,8 +36,11 @@ define([
       if (this.currMapMediaView) {
         this.currMapMediaView.setActive(false);
       }
-      this.currMapMediaView = this.arrMapMediaViews[nMedia];
-      this.currMapMediaView.setActive(true);
+      
+      if (this.arrMapMediaViews.length) {
+        this.currMapMediaView = this.arrMapMediaViews[nMedia];
+        this.currMapMediaView.setActive(true);
+      }      
     },
     addMedia: function(mediaModel){
       var trailMapMediaMarkerView = new TrailMapMediaMarkerView({ size: SMALL_ICONS, map: this.map, model: mediaModel });

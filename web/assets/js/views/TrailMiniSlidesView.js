@@ -29,9 +29,11 @@ define([
        
       this.nOldSlide = this.nCurrSlide;  
       this.nCurrSlide = nSlide;
-      
-      var photoView = this.arrSlidePhotos[nSlide];
-      photoView.load();      
+
+	  if (this.arrSlidePhotos.length) {
+        var photoView = this.arrSlidePhotos[nSlide];
+        photoView.load();      
+	  }
     },    
     addMedia: function(mediaModel){
       var photoView = new TrailSlideView({ model: mediaModel, type: 1 });

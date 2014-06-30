@@ -632,6 +632,7 @@ html.touch #trailplayer #view_map_btns {
 .panel_content_container {
   z-index: 100;
   position: relative;
+  min-height: 218px;
   background: #F0F0F0;
 }
 
