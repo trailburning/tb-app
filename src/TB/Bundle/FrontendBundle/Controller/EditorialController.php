@@ -64,6 +64,7 @@ class EditorialController extends Controller
         $query = $this->getDoctrine()->getManager()
             ->createQuery('
                 SELECT e FROM TBFrontendBundle:Editorial e
+                WHERE e.publish = true
                 ORDER BY e.date DESC');
         $editorials = $query->getResult();
         

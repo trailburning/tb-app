@@ -109,6 +109,13 @@ class Editorial
     private $shareImage;
     
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="publish", type="boolean", options={"default" = false})
+     */
+    private $publish = false;
+    
+    /**
      * Get id
      *
      * @return integer 
