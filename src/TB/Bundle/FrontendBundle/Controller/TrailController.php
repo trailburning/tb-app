@@ -183,6 +183,7 @@ class TrailController extends Controller
         
         return [
             'id' => $id,
+            'route' => $route,
         ];
     }
     
