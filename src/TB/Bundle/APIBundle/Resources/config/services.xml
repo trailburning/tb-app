@@ -9,6 +9,7 @@
         <!-- Register media importer service -->
         <service id="tb.media.importer" class="TB\Bundle\FrontendBundle\Util\MediaImporter">
             <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="http_client" />
         </service>
         
         <!-- Register GPX importer service -->

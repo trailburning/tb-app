@@ -12,7 +12,8 @@ class MediaImporterTest extends AbstractFrontendTest
     public function testGetGeometryPointFromExifNoGpsImage()
     {
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $mediaImporter = new MediaImporter($em);
+        $client = $this->getContainer()->get('http_client');
+        $mediaImporter = new MediaImporter($em, $client);
         
         $exiftags = exif_read_data(realpath(__DIR__ . '/../../DataFixtures/Media/no_metadata.jpg'));
         $result = $mediaImporter->getGeometryPointFromExif($exiftags);
@@ -22,7 +23,8 @@ class MediaImporterTest extends AbstractFrontendTest
     public function testGetGeometryPointFromExif()
     {
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $mediaImporter = new MediaImporter($em);
+        $client = $this->getContainer()->get('http_client');
+        $mediaImporter = new MediaImporter($em, $client);
         
         $exiftags = exif_read_data(realpath(__DIR__ . '/../../DataFixtures/Media/gps_example/IMG_3255.JPG'));
 
@@ -38,7 +40,7 @@ class MediaImporterTest extends AbstractFrontendTest
     /**
      * Test getTimezone()
      */
-    public function testGetTimezone()
+    public function testGetRouteTimezone()
     {
         $this->loadFixtures([
             'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData'
@@ -55,7 +57,7 @@ class MediaImporterTest extends AbstractFrontendTest
     /**
      * Test getTimezoneOffset();
      */
-    public function testGetTimezoneOffset()
+    public function testGetRouteTimezoneOffset()
     {
         $this->loadFixtures([
             'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData',           
@@ -108,7 +110,8 @@ class MediaImporterTest extends AbstractFrontendTest
         
         // Get Route from DB with the slug "grunewald"..
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $mediaImporter = new MediaImporter($em);
+        $client = $this->getContainer()->get('http_client');
+        $mediaImporter = new MediaImporter($em, $client);
         
         $route = $this->getRoute('grunewald');
         
