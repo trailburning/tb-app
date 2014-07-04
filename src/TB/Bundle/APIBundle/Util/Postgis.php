@@ -728,13 +728,15 @@ class Postgis extends \PDO
               LEFT JOIN medias m ON r.media_id=m.id
               WHERE r.publish = true AND approved = true 
               AND r.id != :routeId
-              AND ST_Distance_Sphere(ST_Centroid(r.centroid), ST_GeomFromText(\'POINT(' . $long . ' ' . $lat . ')\',4326)) <= 50000
-              GROUP BY r.id, rt.id, rc.id, m.id, u.id ORDER BY published_date DESC ';
+              AND ST_Distance_Sphere(ST_Centroid(r.centroid), ST_GeomFromText(:point,4326)) <= 50000
+              GROUP BY r.id, rt.id, rc.id, m.id, u.id 
+              ORDER BY ST_Distance_Sphere(ST_Centroid(r.centroid), ST_GeomFromText(:point,4326)) ASC';
         if ($count !== null) {
             $q .= ' LIMIT :count';
         }
         
         $pq = $this->prepare($q);
+        $pq->bindValue('point', 'POINT(' . $long . ' ' . $lat . ')', \PDO::PARAM_STR);
         $pq->bindParam('routeId', $routeId, \PDO::PARAM_INT);
         if ($count !== null) {
             $pq->bindParam('count', $count, \PDO::PARAM_INT);
