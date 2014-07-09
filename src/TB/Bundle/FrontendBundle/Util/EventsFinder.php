@@ -30,7 +30,7 @@ class EventsFinder
         $query = $this->em->createQuery('
             SELECT e FROM TBFrontendBundle:Event e
             LEFT JOIN TBFrontendBundle:Region r WITH e.regionId=r.id
-            ORDER BY e.id DESC
+            ORDER BY e.date ASC
         ');
         
         $events = $query
