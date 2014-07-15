@@ -10,6 +10,8 @@ use TB\Bundle\FrontendBundle\Entity\Media;
 use TB\Bundle\FrontendBundle\Entity\Attribute;
 use TB\Bundle\FrontendBundle\Entity\UserProfile;
 use TB\Bundle\FrontendBundle\Entity\BrandProfile;
+use TB\Bundle\FrontendBundle\Entity\Event;
+use TB\Bundle\FrontendBundle\Entity\EventRoute;
 use CrEOF\Spatial\PHP\Types\Geometry\Point;
 use TB\Bundle\APIBundle\Util;
 
@@ -720,16 +722,18 @@ class Postgis extends \PDO
             throw (new ApiException(sprintf('Route with id %s not found', $routeId), 404));
         }
         
-        $q = 'SELECT r.id, r.name, r.slug, r.region, r.length, ST_X(r.centroid) AS long, ST_Y(r.centroid) AS lat, r.tags, r.rating, rt.id AS rt_id, rt.name AS rt_name, rc.id AS rc_id, rc.name AS rc_name, r.about, m.id AS m_id, ST_AsText(m.coords) AS m_coords, m.tags AS m_tags, m.filename AS m_filename, m.path AS m_path, u.id AS user_id, u.name AS user_name, u.discr, u.first_name, u.last_name, u.display_name, u.avatar, u.avatar_gravatar, u.gender
+        $q = 'SELECT r.id, r.name, r.slug, r.region, r.length, ST_X(r.centroid) AS long, ST_Y(r.centroid) AS lat, r.tags, r.rating, rt.id AS rt_id, rt.name AS rt_name, rc.id AS rc_id, rc.name AS rc_name, r.about, m.id AS m_id, ST_AsText(m.coords) AS m_coords, m.tags AS m_tags, m.filename AS m_filename, m.path AS m_path, u.id AS user_id, u.name AS user_name, u.discr, u.first_name, u.last_name, u.display_name, u.avatar, u.avatar_gravatar, u.gender, e.id AS event_id, e.title AS event_title, e.slug AS event_slug
               FROM routes r
               INNER JOIN fos_user u ON r.user_id=u.id
               LEFT JOIN route_type rt ON r.route_type_id=rt.id
               LEFT JOIN route_category rc ON r.route_category_id=rc.id
               LEFT JOIN medias m ON r.media_id=m.id
+              LEFT JOIN event_route ev ON r.id=ev.route_id
+              LEFT JOIN event e ON ev.event_id=e.id
               WHERE r.publish = true AND approved = true 
               AND r.id != :routeId
               AND ST_Distance_Sphere(ST_Centroid(r.centroid), ST_GeomFromText(:point,4326)) <= 50000
-              GROUP BY r.id, rt.id, rc.id, m.id, u.id 
+              GROUP BY r.id, rt.id, rc.id, m.id, u.id, e.id
               ORDER BY ST_Distance_Sphere(ST_Centroid(r.centroid), ST_GeomFromText(:point,4326)) ASC';
         if ($count !== null) {
             $q .= ' LIMIT :count';
@@ -773,6 +777,16 @@ class Postgis extends \PDO
                 $routeType->setId($row['rt_id']);
                 $routeType->setName($row['rt_name']);
                 $route->setRouteType($routeType);
+            }
+            if ($row['event_id'] != '') {
+                $event = new Event();
+                $event->setTitle($row['event_title']);
+                $event->setSlug($row['event_slug']);
+                $eventRoute = new EventRoute();
+                $eventRoute->setEventId($row['rt_id']);
+                $eventRoute->setRouteId($row['id']);
+                $eventRoute->setEvent($event);
+                $route->addEventRoute($eventRoute);
             }
             if ($row['m_id'] != '') {
                 // Attach the favorite Media, if set

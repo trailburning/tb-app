@@ -110,7 +110,7 @@ var TB_EDITORIAL_TRAILS = [
 						<div class="editorial_card{% if loop.index0 is odd %} align_right{% endif %}">
                             {% if loop.index0 is even %}
     							<div class="sticker_container">			
-    							{{ include('TBFrontendBundle:Trail:editorial_trailcard.html.twig', {route: route, editorial: editorial}) }}
+    							{{ include('TBFrontendBundle:Trail:_trailcardEditorial.html.twig', {route: route, editorial: editorial}) }}
     							</div>
                             {% endif %}
 							<div class="card_column_wrapper column_wrapper">
@@ -121,7 +121,7 @@ var TB_EDITORIAL_TRAILS = [
 							</div>
                             {% if loop.index0 is odd %}
     							<div class="sticker_container">			
-    							{{ include('TBFrontendBundle:Trail:editorial_trailcard.html.twig', {route: route, editorial: editorial}) }}
+    							{{ include('TBFrontendBundle:Trail:_trailcardEditorial.html.twig', {route: route, editorial: editorial}) }}
     							</div>
                             {% endif %}
 						</div>										        		        		
@@ -155,7 +155,7 @@ var TB_EDITORIAL_TRAILS = [
             	{% for editorialRoute in editorialRoutes %}
 					<div class="editorial_card">
 						<div class="sticker_container">			
-						{{ include('TBFrontendBundle:Trail:editorial_trailcard.html.twig', {route: editorialRoute.route, editorial: editorial}) }}
+						{{ include('TBFrontendBundle:Trail:_trailcardEditorial.html.twig', {route: editorialRoute.route, editorial: editorial}) }}
 						</div>
 					</div>							
                 {% endfor %}

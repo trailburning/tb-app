@@ -450,4 +450,27 @@ class Editorial
     {
         return $this->shareImage;
     }
+
+    /**
+     * Set publish
+     *
+     * @param boolean $publish
+     * @return Editorial
+     */
+    public function setPublish($publish)
+    {
+        $this->publish = $publish;
+
+        return $this;
+    }
+
+    /**
+     * Get publish
+     *
+     * @return boolean 
+     */
+    public function getPublish()
+    {
+        return $this->publish;
+    }
 }

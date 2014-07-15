@@ -109,6 +109,13 @@ class Editorial
     private $shareImage;
     
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="publish", type="boolean", options={"default" = false})
+     */
+    private $publish = false;
+    
+    /**
      * Get id
      *
      * @return integer 
@@ -419,5 +426,28 @@ class Editorial
     public function getEditorialRoutes()
     {
         return $this->editorialRoutes;
+    }
+
+    /**
+     * Set shareImage
+     *
+     * @param string $shareImage
+     * @return Editorial
+     */
+    public function setShareImage($shareImage)
+    {
+        $this->shareImage = $shareImage;
+
+        return $this;
+    }
+
+    /**
+     * Get shareImage
+     *
+     * @return string 
+     */
+    public function getShareImage()
+    {
+        return $this->shareImage;
     }
 }

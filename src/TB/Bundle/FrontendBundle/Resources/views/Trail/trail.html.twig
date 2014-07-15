@@ -211,7 +211,7 @@ var TB_TRAIL_ID = {{ trail.id }};
                 	
     				    	<div class="trailcards clearfix">
                                 {% for editorialTrail in editorialTrails %}
-                                     {{ include('TBFrontendBundle:Trail:editorial_trailcard.html.twig', {route: editorialTrail, editorial: editorial}) }} 
+                                     {{ include('TBFrontendBundle:Trail:_trailcardEditorial.html.twig', {route: editorialTrail, editorial: editorial}) }} 
                                 {% endfor %}
     				    	</div>  
                         </div>
