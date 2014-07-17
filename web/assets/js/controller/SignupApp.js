@@ -82,7 +82,9 @@ define([
             navigator.geolocation.getCurrentPosition(function(position) {
                 var geolocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
                 autocomplete.setBounds(new google.maps.LatLngBounds(geolocation, geolocation));
-            });
+            }, function() {
+                console.log('geolocation.getCurrentPosition error');
+            }, {timeout:5000});
         }
     });
        
