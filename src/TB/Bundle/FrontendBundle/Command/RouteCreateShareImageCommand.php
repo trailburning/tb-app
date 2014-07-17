@@ -32,6 +32,6 @@ class RouteCreateShareImageCommand extends ContainerAwareCommand
         $imageGenerator = $this->getContainer()->get('tb.image.generator');   
         $imageGenerator->createRouteShareImage($route);
 
-        $output->writeln('OK');
+        $output->writeln('OK');  // Don't change the output, it would break the RabbitMQ worker
     }
 }

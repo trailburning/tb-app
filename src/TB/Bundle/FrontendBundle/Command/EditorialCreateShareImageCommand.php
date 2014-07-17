@@ -32,6 +32,6 @@ class EditorialCreateShareImageCommand extends ContainerAwareCommand
         $imageGenerator = $this->getContainer()->get('tb.image.generator');   
         $imageGenerator->createEditorialShareImage($editorial);
 
-        $output->writeln('OK');
+        $output->writeln('OK');  // Don't change the output, it would break the RabbitMQ worker
     }
 }

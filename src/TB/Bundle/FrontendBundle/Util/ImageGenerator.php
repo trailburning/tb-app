@@ -5,6 +5,7 @@ namespace TB\Bundle\FrontendBundle\Util;
 use Doctrine\ORM\EntityManager;
 use TB\Bundle\FrontendBundle\Entity\Route;
 use TB\Bundle\FrontendBundle\Entity\Editorial;
+use TB\Bundle\FrontendBundle\Entity\Event;
 use Gaufrette\Filesystem;
 
 /**
@@ -58,7 +59,7 @@ class ImageGenerator
         // Get the image to create the share image and the watermark
         $imagePath = sprintf('images/editorial/%s/%s', $editorial->getSlug(), $editorial->getImage());
         if (!$this->assetsFilesystem->has($imagePath)) {
-            throw new \Exception(sprintf('Missing Editorial image: %s', $path));
+            throw new \Exception(sprintf('Missing Editorial image: %s', $imagePath));
         }
         
         // Construct the share image filepath
@@ -77,7 +78,41 @@ class ImageGenerator
         return true;
     }
     
-    protected function createShareImage($imagePath, $shareImagePath, $watermarkPath, $filesystem)
+    public function createEventShareImage(Event $event)
+    {
+        if ($event->getImage() === null) {
+            return false;
+        }
+        
+        // Get the image to create the share image and the watermark
+        $imagePath = sprintf('images/event/%s/%s', $event->getSlug(), $event->getImage());
+        if (!$this->assetsFilesystem->has($imagePath)) {
+            throw new \Exception(sprintf('Missing Event image: %s', $imagePath));
+        }
+        
+        // Construct the share image filepath
+        $pathParts = pathinfo($imagePath);        
+        $shareImagePath = sprintf('images/event/%s/%s_share.%s', $event->getSlug(), $pathParts['filename'], $pathParts['extension']);
+        
+        $watermarkPath = realpath(__DIR__ . '/../DataFixtures/Media/watermark/fb_share_event_1200x630.png');
+        $logoPath = realpath(__DIR__ . '/../DataFixtures/Media/watermark/fb_share_event_1200x630.png');
+        
+        $logoPath = sprintf('images/event/%s/%s', $event->getSlug(), $event->getLogo());
+        if (!$this->assetsFilesystem->has($logoPath)) {
+            throw new \Exception(sprintf('Missing Event logo: %s', $logoPath));
+        }
+        
+        $this->createShareImage($imagePath, $shareImagePath, $watermarkPath, $this->assetsFilesystem, $logoPath);
+        
+        // Update the Media object and set the share image path
+        $event->setShareImage($shareImagePath);
+        $this->em->persist($event);
+        $this->em->flush($event);
+
+        return true;
+    }
+    
+    protected function createShareImage($imagePath, $shareImagePath, $watermarkPath, $filesystem, $logoPath = null)
     {
         $image = imagecreatefromstring($filesystem->read($imagePath));
         $watermark = imagecreatefrompng($watermarkPath);
@@ -129,6 +164,20 @@ class ImageGenerator
         
         // Create the share image
         imagecopy($image, $watermark, imagesx($image) - $watermarkWidth, imagesy($image) - $watermarkHeight, 0, 0, $watermarkWidth, $watermarkHeight);
+        
+        if ($logoPath !== null) {
+            $logo = imagecreatefromstring($filesystem->read($logoPath));
+            $logoWidth = imagesx($logo);
+            $logoHeight = imagesy($logo);
+            if ($logoWidth < 250) {
+                // put logo in the upper right corner with a margin of 20 to top and right
+                imagecopy($image, $logo, imagesx($image) - $logoWidth - 20, 20, 0, 0, $logoWidth, $logoHeight);
+            } else {
+                // put in the center, vertically a little bit higher than the middle because of the watermark at the bottom
+                imagecopy($image, $logo, (imagesx($image) / 2) - ($logoWidth / 2), (imagesy($image) / 2) - ($logoHeight / 2) - 25, 0, 0, $logoWidth, $logoHeight);
+            }
+            
+        }
         
         // Read the share images content to a variable
         ob_start();
