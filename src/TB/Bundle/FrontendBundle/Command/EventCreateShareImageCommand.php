@@ -8,14 +8,14 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class EditorialCreateShareImageCommand extends ContainerAwareCommand
+class EventCreateShareImageCommand extends ContainerAwareCommand
 {
     protected function configure()
     {
         $this
-            ->setName('tb:inspire:create-share-image')
-            ->setDescription('Create the inspire share images')
-            ->addArgument('id', InputArgument::REQUIRED, 'The id of the Route')
+            ->setName('tb:event:create-share-image')
+            ->setDescription('Create the Event share image')
+            ->addArgument('id', InputArgument::REQUIRED, 'The id of the Event')
         ;
     }
 
@@ -24,14 +24,14 @@ class EditorialCreateShareImageCommand extends ContainerAwareCommand
         $id = $input->getArgument('id');
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         
-        $editorial = $em->getRepository('TBFrontendBundle:Editorial')->findOneById($id);
-        if (!$editorial) {
-            throw new \Exception(sprintf('Editorial with id %s not found', $id));
+        $event = $em->getRepository('TBFrontendBundle:Event')->findOneById($id);
+        if (!$event) {
+            throw new \Exception(sprintf('Event with id %s not found', $id));
         }
         
         $imageGenerator = $this->getContainer()->get('tb.image.generator');   
-        $imageGenerator->createEditorialShareImage($editorial);
+        $imageGenerator->createEventShareImage($event);
 
-        $output->writeln('OK');  // Don't change the output, it would break the RabbitMQ worker
+        $output->writeln('OK'); // Don't change the output, it would break the RabbitMQ worker
     }
 }

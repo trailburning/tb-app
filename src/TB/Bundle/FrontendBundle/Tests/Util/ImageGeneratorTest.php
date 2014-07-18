@@ -46,7 +46,7 @@ class ImageGeneratorTest extends AbstractFrontendTest
             'The share file was created');
         
         // Copy the file to a local filesystem for debug
-        // $debugFilesystem->write('share.jpg', $filesystem->read($media->getSharePath()), true);
+        $debugFilesystem->write('route_share.jpg', $filesystem->read($media->getSharePath()), true);
     }
     
     public function testCreateEditorialShareImage()
@@ -75,6 +75,38 @@ class ImageGeneratorTest extends AbstractFrontendTest
             'The share image was created');
         
         // Copy the file to a local filesystem for debug
-        $debugFilesystem->write('share.jpg', $filesystem->read($editorial->getShareImage()), true);
+        $debugFilesystem->write('inspire_share.jpg', $filesystem->read($editorial->getShareImage()), true);
+    }
+    
+    public function testCreateEventShareImage()
+    {
+        $this->loadFixtures([
+            'TB\Bundle\FrontendBundle\DataFixtures\ORM\EventData',
+        ]);
+        
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        $imageGenerator = $this->getContainer()->get('tb.image.generator');
+        $filesystem = $this->getContainer()->get('asset_files_filesystem'); 
+        $debugFilesystem = $this->getContainer()->get('debug_filesystem'); 
+        
+        $event = $this->getEvent('eiger');
+        
+        // Copy the editorial test image to the editorial filesystem at the expected path
+        $filesystem->write(sprintf('images/event/%s/%s', $event->getSlug(), $event->getImage()), file_get_contents(realpath(__DIR__ . '/../../DataFixtures/Media/event/' . $event->getImage())));
+        
+        // Copy the editorial test logo to the editorial filesystem at the expected path
+        $filesystem->write(sprintf('images/event/%s/%s', $event->getSlug(), $event->getLogo()), file_get_contents(realpath(__DIR__ . '/../../DataFixtures/Media/event/' . $event->getLogo())));
+        
+        $result = $imageGenerator->createEventShareImage($event);
+        $this->assertTrue($result, 'ImageGenerator::createEventShareImage() returns true');
+        
+        $em->refresh($event);
+        $this->assertRegExp('/.*_share.jpg$/', $event->getShareImage(), 
+            'The Event shareImage field was set');
+        $this->assertTrue($filesystem->has($event->getShareImage()),
+            'The share image was created');
+        
+        // Copy the file to a local filesystem for debug
+        $debugFilesystem->write('event_share.jpg', $filesystem->read($event->getShareImage()), true);
     }
 }    

@@ -180,6 +180,14 @@ class Event implements Exportable
      * @ORM\Column(name="homepage_order", type="smallint", nullable=true)
      */
     private $homepageOrder;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="share_image", type="string", length=100, nullable=true)
+     */
+    private $shareImage;
+    
 
     /**
      * Get id
@@ -823,5 +831,28 @@ class Event implements Exportable
         }
         
         return $data;
+    }
+
+    /**
+     * Set homepageOrder
+     *
+     * @param integer $homepageOrder
+     * @return Event
+     */
+    public function setHomepageOrder($homepageOrder)
+    {
+        $this->homepageOrder = $homepageOrder;
+
+        return $this;
+    }
+
+    /**
+     * Get homepageOrder
+     *
+     * @return integer 
+     */
+    public function getHomepageOrder()
+    {
+        return $this->homepageOrder;
     }
 }
