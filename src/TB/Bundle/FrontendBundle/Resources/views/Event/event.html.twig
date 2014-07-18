@@ -2,6 +2,10 @@
 
 {% block title %}{{ event.title }} {{ event.title2 }}{% endblock %}
 
+{% block og_image %}
+{% if event.shareImage is not null %}http://assets.trailburning.com/{{ event.shareImage }}{% else %}http://www.trailburning.com/assets/img/social/tb_profile_icon.png{% endif %}
+{% endblock %}
+
 {% block stylesheets %}
 <link href="{{ asset('assets/css/event.css') }}" rel="stylesheet" type="text/css">
 {% endblock %}
