@@ -401,6 +401,8 @@ define([
       $('#slideshow_toggle .button').removeClass('slideshow_play');
           
       this.nextSlide();
+      // mla temp
+      this.onTrailToggleViewBtnClick();
     },
     stopSlideShow: function(){
       this.nSlideShowState = SLIDESHOW_STOPPED;

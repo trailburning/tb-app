@@ -439,7 +439,6 @@ html.touch #small_sponsor_bar {
   padding: 0px;  
   width: 200px;
   height: 150px;
-
 }
 
 .leaflet-popup-content-wrapper {
@@ -1261,4 +1260,23 @@ html.touch #trailplayer #view_map_btns {
 
 /* Small devices (tablets, 768px) */
 @media (max-width: 768px) {  
+}
+
+.trail_media_popup_test {
+  z-index: 999;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100px;
+  height: 100px;
+  background: red;
+}
+
+.popup_panel {
+  position: relative;
+  top: 0px;
+  left: 0px;
+  width: 50px;
+  height: 50px;
+  background: green;	
 }
