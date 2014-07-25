@@ -9,7 +9,7 @@
 		}
     },
     "require": {
-		"php": "5.5.*",
+		"php": "5.5.10",
         "ext-bcmath": "*",
         "ext-memcached": "*",
         "ext-gd": "*",
@@ -40,7 +40,8 @@
         "knplabs/gaufrette": "dev-master",
         "knplabs/knp-gaufrette-bundle": "dev-master",
         "oldsound/rabbitmq-bundle": "1.2.*@dev",
-        "webfactory/exceptions-bundle": "@stable"
+        "webfactory/exceptions-bundle": "@stable",
+        "kakserpom/phpdaemon" : "dev-master"
     },
     "repositories": [
         {
