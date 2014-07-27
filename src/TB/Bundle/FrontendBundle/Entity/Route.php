@@ -258,6 +258,13 @@ class Route implements Exportable
      * @ORM\Column(name="published_date", type="datetime", nullable=true)
      */
     private $publishedDate;
+    
+    /**
+     * @var Point point
+     *
+     * @ORM\Column(name="start", type="point", columnDefinition="GEOMETRY(POINT,4326)", nullable=true)
+     */
+    private $start;
 
     /**
      * Set name
@@ -1436,5 +1443,28 @@ class Route implements Exportable
     public function getEditorialRoutes()
     {
         return $this->editorialRoutes;
+    }
+
+    /**
+     * Set start
+     *
+     * @param point $start
+     * @return Route
+     */
+    public function setStart($start)
+    {
+        $this->start = $start;
+
+        return $this;
+    }
+
+    /**
+     * Get start
+     *
+     * @return point 
+     */
+    public function getStart()
+    {
+        return $this->start;
     }
 }
