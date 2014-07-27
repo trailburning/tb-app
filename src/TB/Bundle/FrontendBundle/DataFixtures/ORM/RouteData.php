@@ -31,7 +31,8 @@ class RouteData extends AbstractFixture implements FixtureInterface, DependentFi
         $route->setGpxfile($gpxFile);
         $route->setName('Grunewald');
         $route->setLength(11298);    
-        $route->setCentroid(new Point(13.257437, 52.508006, 4326));
+        $route->setCentroid(new Point(13.221316, 52.489695, 4326));
+        $route->setStart(new Point(13.257437, 52.508006, 4326));
         $route->setTags(['ascent' => 223.3, 'descent' => 207.3]);
         $route->setUser($this->getReference('UserProfile-matt'));
         $route->setRouteType($this->getReference('RouteType-marathon'));
@@ -110,7 +111,8 @@ class RouteData extends AbstractFixture implements FixtureInterface, DependentFi
         $route->setGpxfile($gpxFile);
         $route->setName('Thames Trail Marathon');
         $route->setLength(41309);    
-        $route->setCentroid(new Point(13.257437, 52.508006, 4326));
+        $route->setCentroid(new Point(-1.116056442, 51.593842015, 4326));
+        $route->setStart(new Point(-1.279091835, 51.667578027, 4326));
         $route->setTags(['ascent' => 176.8, 'descent' => 187.6]);
         $route->setUser($this->getReference('BrandProfile-ashmei'));
         $route->setRouteType($this->getReference('RouteType-marathon'));

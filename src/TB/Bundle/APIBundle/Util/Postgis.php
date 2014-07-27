@@ -60,7 +60,27 @@ class Postgis extends \PDO
         $pq = $this->prepare($q);
         $success = $pq->execute(array($routeId));
         if (!$success) {
-            throw new ApiException('Failed to insert the track into the database - Problem calculating centroid', 500);
+            throw new ApiException('Failed to insert the route into the database', 500);
+        }
+    }
+
+    private function updateRouteStart($routeId) 
+    {
+        $q = "UPDATE routes
+        SET start = start_route_point.coords
+        FROM (
+        	SELECT rp.route_id, rp.coords AS coords
+        	FROM (
+        		SELECT route_id, MIN(id) AS id
+        		FROM route_points
+        		GROUP BY route_id 
+        	) start JOIN route_points rp ON rp.id = start.id
+        ) AS start_route_point
+        WHERE routes.id = ?";
+        $pq = $this->prepare($q);
+        $success = $pq->execute(array($routeId));
+        if (!$success) {
+            throw new ApiException('Failed to insert the route into the database', 500);
         }
     }
 
@@ -127,6 +147,7 @@ class Postgis extends \PDO
         try {
             $this->isValidRoute($routeId);
             $this->updateRouteCentroid($routeId);
+            $this->updateRouteStart($routeId);
             $this->updateRouteLength($routeId);
         } catch (ApiException $e) {
             $this->rollback();
@@ -173,6 +194,7 @@ class Postgis extends \PDO
                      r.about,
                      r.rating,
                      ST_AsText(r.centroid) AS centroid,
+                     ST_AsText(r.start) AS start,
                      ST_AsText(Box2D(ST_MakeLine(rp.coords ORDER BY rp.point_number ASC))) as bbox,
                      rt.id AS rt_id,
                      rt.name AS rt_name, 
@@ -207,8 +229,8 @@ class Postgis extends \PDO
             $route->setLength($row['length']);
             $route->setAbout($row['about']);
             $route->setRating($row['rating']);
-            $c = explode(" ", substr(trim($row['centroid']),6,-1));
-            $route->setCentroid(new Point($c[0], $c[1], 4326)); 
+            $route->setCentroid($this->stAsTextToPoint($row['centroid']));
+            $route->setStart($this->stAsTextToPoint($row['start'])); 
             $tags = json_decode('{' . str_replace('"=>"', '":"', $row['rtags']) . '}', true);
             $route->setTags($tags);
             if ($row['rc_id'] != '') {
@@ -279,7 +301,7 @@ class Postgis extends \PDO
     
     public function readRoutes($user_id, $count = null, $route_type_id = null, $route_category_id = null, $publish = null) 
     {
-        $q = 'SELECT r.id, r.name, r.slug, r.region, r.length, ST_X(r.centroid) AS long, ST_Y(r.centroid) AS lat, r.tags, r.rating, rt.id AS rt_id, rt.name AS rt_name, rc.id AS rc_id, rc.name AS rc_name, r.about, m.id AS m_id, ST_AsText(m.coords) AS m_coords, m.tags AS m_tags, m.filename AS m_filename, m.path AS m_path
+        $q = 'SELECT r.id, r.name, r.slug, r.region, r.length, ST_AsText(r.centroid) AS centroid, ST_AsText(r.start) AS start, r.tags, r.rating, rt.id AS rt_id, rt.name AS rt_name, rc.id AS rc_id, rc.name AS rc_name, r.about, m.id AS m_id, ST_AsText(m.coords) AS m_coords, m.tags AS m_tags, m.filename AS m_filename, m.path AS m_path
               FROM routes r
               LEFT JOIN route_type rt ON r.route_type_id=rt.id
               LEFT JOIN route_category rc ON r.route_category_id=rc.id
@@ -330,7 +352,8 @@ class Postgis extends \PDO
             $route->setSlug($row['slug']);
             $route->setRegion($row['region']);
             $route->setLength($row['length']);
-            $route->setCentroid(new Point($row['long'], $row['lat'], 4326)); 
+            $route->setCentroid($this->stAsTextToPoint($row['centroid'])); 
+            $route->setStart($this->stAsTextToPoint($row['start']));
             $route->setAbout($row['about']);
             $route->setRating($row['rating']);
             $tags = json_decode('{' . str_replace('"=>"', '":"', $row['tags']) . '}', true);
@@ -352,8 +375,7 @@ class Postgis extends \PDO
                 $media = new Media();
                 $media->setId($row['m_id']);
                 $media->setPath($row['m_path']);
-                $coords = explode(" ", substr(trim($row['m_coords']), 6, -1)); 
-                $media->setCoords(new Point($coords[0], $coords[1], 4326));
+                $media->setCoords($this->stAsTextToPoint($row['m_coords']));
                 $media->setFilename($row['m_filename']);
                 $tags = json_decode('{' . str_replace('"=>"', '":"', $row['m_tags']) . '}', true);
                 $media->setTags($tags);
@@ -402,7 +424,7 @@ class Postgis extends \PDO
         $routes = array();
         if ($row = $pq->fetch(\PDO::FETCH_ASSOC)) {
             $count = $row['count'];
-            $q = 'SELECT r.id, r.name, r.slug, r.region, r.length, ST_X(r.centroid) AS long, ST_Y(r.centroid) AS lat, r.tags, r.rating, rt.id AS rt_id, rt.name AS rt_name, rc.id AS rc_id, rc.name AS rc_name, r.about, u.id AS user_id, u.name AS user_name, u.discr, u.first_name, u.last_name, u.display_name, u.avatar, u.avatar_gravatar, u.gender, m.id AS m_id, ST_AsText(m.coords) AS m_coords, m.tags AS m_tags, m.filename AS m_filename, m.path AS m_path
+            $q = 'SELECT r.id, r.name, r.slug, r.region, r.length, ST_AsText(r.centroid) AS centroid, ST_AsText(r.start) AS start, r.tags, r.rating, rt.id AS rt_id, rt.name AS rt_name, rc.id AS rc_id, rc.name AS rc_name, r.about, u.id AS user_id, u.name AS user_name, u.discr, u.first_name, u.last_name, u.display_name, u.avatar, u.avatar_gravatar, u.gender, m.id AS m_id, ST_AsText(m.coords) AS m_coords, m.tags AS m_tags, m.filename AS m_filename, m.path AS m_path
                   FROM routes r
                   INNER JOIN fos_user u ON r.user_id=u.id
                   LEFT JOIN route_type rt ON r.route_type_id=rt.id
@@ -446,7 +468,8 @@ class Postgis extends \PDO
                 $route->setSlug($row['slug']);
                 $route->setRegion($row['region']);
                 $route->setLength($row['length']);
-                $route->setCentroid(new Point($row['long'], $row['lat'], 4326)); 
+                $route->setCentroid($this->stAsTextToPoint($row['centroid']));
+                $route->setStart($this->stAsTextToPoint($row['start']));
                 $route->setAbout($row['about']);
                 $route->setRating($row['rating']);
                 $tags = json_decode('{' . str_replace('"=>"', '":"', $row['tags']) . '}', true);
@@ -483,8 +506,7 @@ class Postgis extends \PDO
                     $media = new Media();
                     $media->setId($row['m_id']);
                     $media->setPath($row['m_path']);
-                    $coords = explode(" ", substr(trim($row['m_coords']), 6, -1)); 
-                    $media->setCoords(new Point($coords[0], $coords[1], 4326));
+                    $media->setCoords($this->stAsTextToPoint($row['m_coords']));
                     $media->setFilename($row['m_filename']);
                     $tags = json_decode('{' . str_replace('"=>"', '":"', $row['m_tags']) . '}', true);
                     $media->setTags($tags);
@@ -563,8 +585,7 @@ class Postgis extends \PDO
             $media->setId($row['id']);
             $media->setPath($row['path']);
             $media->setSharePath($row['share_path']);
-            $coords = explode(" ", substr(trim($row['coords']), 6, -1)); 
-            $media->setCoords(new Point($coords[0], $coords[1], 4326));
+            $media->setCoords($this->stAsTextToPoint($row['coords']));
             $media->setFilename($row['filename']);
             $tags = json_decode('{' . str_replace('"=>"', '":"', $row['tags']) . '}', true);
             $media->setTags($tags);
@@ -722,7 +743,7 @@ class Postgis extends \PDO
             throw (new ApiException(sprintf('Route with id %s not found', $routeId), 404));
         }
         
-        $q = 'SELECT r.id, r.name, r.slug, r.region, r.length, ST_X(r.centroid) AS long, ST_Y(r.centroid) AS lat, r.tags, r.rating, rt.id AS rt_id, rt.name AS rt_name, rc.id AS rc_id, rc.name AS rc_name, r.about, m.id AS m_id, ST_AsText(m.coords) AS m_coords, m.tags AS m_tags, m.filename AS m_filename, m.path AS m_path, u.id AS user_id, u.name AS user_name, u.discr, u.first_name, u.last_name, u.display_name, u.avatar, u.avatar_gravatar, u.gender, e.id AS event_id, e.title AS event_title, e.slug AS event_slug
+        $q = 'SELECT r.id, r.name, r.slug, r.region, r.length, ST_AsText(r.centroid) AS centroid, ST_AsText(r.start) AS start, r.tags, r.rating, rt.id AS rt_id, rt.name AS rt_name, rc.id AS rc_id, rc.name AS rc_name, r.about, m.id AS m_id, ST_AsText(m.coords) AS m_coords, m.tags AS m_tags, m.filename AS m_filename, m.path AS m_path, u.id AS user_id, u.name AS user_name, u.discr, u.first_name, u.last_name, u.display_name, u.avatar, u.avatar_gravatar, u.gender, e.id AS event_id, e.title AS event_title, e.slug AS event_slug
               FROM routes r
               INNER JOIN fos_user u ON r.user_id=u.id
               LEFT JOIN route_type rt ON r.route_type_id=rt.id
@@ -761,7 +782,8 @@ class Postgis extends \PDO
             $route->setSlug($row['slug']);
             $route->setRegion($row['region']);
             $route->setLength($row['length']);
-            $route->setCentroid(new Point($row['long'], $row['lat'], 4326)); 
+            $route->setCentroid($this->stAsTextToPoint($row['centroid']));
+            $route->setStart($this->stAsTextToPoint($row['start']));
             $route->setAbout($row['about']);
             $route->setRating($row['rating']);
             $tags = json_decode('{' . str_replace('"=>"', '":"', $row['tags']) . '}', true);
@@ -793,8 +815,7 @@ class Postgis extends \PDO
                 $media = new Media();
                 $media->setId($row['m_id']);
                 $media->setPath($row['m_path']);
-                $coords = explode(" ", substr(trim($row['m_coords']), 6, -1)); 
-                $media->setCoords(new Point($coords[0], $coords[1], 4326));
+                $media->setCoords($this->stAsTextToPoint($row['m_coords']));
                 $media->setFilename($row['m_filename']);
                 $tags = json_decode('{' . str_replace('"=>"', '":"', $row['m_tags']) . '}', true);
                 $media->setTags($tags);
@@ -864,6 +885,11 @@ class Postgis extends \PDO
         
         return true;
     }
-    
+        
+    protected function stAsTextToPoint($text)
+    {
+        $parts = explode(" ", substr(trim($text),6,-1));
+        return new Point($parts[0], $parts[1], 4326); 
+    }
 }
 

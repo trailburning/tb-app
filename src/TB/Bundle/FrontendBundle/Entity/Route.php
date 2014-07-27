@@ -945,6 +945,10 @@ class Route implements Exportable
             'tags' => $this->getTags(),
             'route_points' => [],
             'rating' => $this->getRating(),
+            'start' => [
+                $this->getStart()->getLongitude(), 
+                $this->getStart()->getLatitude(),
+            ],
         ];                       
         
         if (count($this->getRoutePoints()) > 0) {
