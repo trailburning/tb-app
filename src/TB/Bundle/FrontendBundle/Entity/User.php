@@ -599,7 +599,7 @@ abstract class User extends BaseUser implements Exportable
     public function updateAvatarGravatar()
     {
         if ($this->getEmail() == '') {
-            throw new Exception('Unable to generate gravatar profile hash, missing email firld for User');
+            throw new \Exception('Unable to generate gravatar profile hash, missing email firld for User');
         }
         $hash = md5($this->getEmail());
         $imageUrl = sprintf('http://www.gravatar.com/avatar/%s', $hash);

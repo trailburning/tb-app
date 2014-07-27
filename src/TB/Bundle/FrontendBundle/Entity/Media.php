@@ -260,6 +260,9 @@ class Media implements Exportable
         if ($geoPoint) {
             // When the image has GPS data, get the datetime from the nearest RoutePoint by GPS
             $routePoint = $mediaImporter->getNearestRoutePointByGeoPoint($this->getRoute(), $geoPoint);
+            if (!isset($routePoint->getTags()['datetime'])) {
+                 throw new \Exception(sprintf('missing datetime tag for RoutePoint with id: %s', $routePoint->getId()));
+            }
             $datetime = $routePoint->getTags()['datetime'];
         } else {
             // When the image has no GPS data, get the datetime from the image

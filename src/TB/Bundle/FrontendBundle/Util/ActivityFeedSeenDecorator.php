@@ -19,7 +19,7 @@ class ActivityFeedSeenDecorator
     public function decorate(array $activityItem)
     {
         if (!isset($activityItem['published'])) {
-            throw new Exception('missing published field in activity item');
+            throw new \Exception('missing published field in activity item');
         }
         $publishedDate = new \DateTime($activityItem['published']);
         
