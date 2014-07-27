@@ -61,7 +61,14 @@ class GpxFileController extends AbstractRestController
         try {
             $routes = $importer->parse(file_get_contents($file->getPathname()));
         } catch (\Exception $e) {
-            throw (new ApiException('Problem parsing GPX file - not a valid GPX file?', 400));
+            throw new ApiException('Problem parsing GPX file - not a valid GPX file?', 400);
+        }
+        
+        // Reject routes without datetime
+        foreach ($routes as $route) {
+            if (!isset($route->getRoutePoints()[0]->getTags()['datetime'])) {
+                throw new ApiException('The GPX file has no datetime information', 400);
+            }
         }
     
         $filesystem = $this->get('gpx_files_filesystem');
