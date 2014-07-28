@@ -46,7 +46,6 @@ define([
       }, this);
 
       var bounds = new L.LatLngBounds(arrMarkers);
-//      bounds = bounds.pad(0.05);
       bounds = bounds.pad(0.5);
       this.map.fitBounds(bounds);
 
