@@ -726,7 +726,7 @@ class Postgis extends \PDO
     
     public function relatedRoutes($routeId, $count = 3) 
     {
-        $q = 'SELECT ST_X(r.centroid) AS long, ST_Y(r.centroid) AS lat FROM routes r WHERE r.id=:routeId';
+        $q = 'SELECT ST_X(r.start) AS long, ST_Y(r.start) AS lat FROM routes r WHERE r.id=:routeId';
         
         $pq = $this->prepare($q);
         $pq->bindParam('routeId', $routeId, \PDO::PARAM_INT);
@@ -753,9 +753,9 @@ class Postgis extends \PDO
               LEFT JOIN event e ON ev.event_id=e.id
               WHERE r.publish = true AND approved = true 
               AND r.id != :routeId
-              AND ST_Distance_Sphere(ST_Centroid(r.centroid), ST_GeomFromText(:point,4326)) <= 50000
+              AND ST_Distance_Sphere(ST_Centroid(r.start), ST_GeomFromText(:point,4326)) <= 50000
               GROUP BY r.id, rt.id, rc.id, m.id, u.id, e.id
-              ORDER BY ST_Distance_Sphere(ST_Centroid(r.centroid), ST_GeomFromText(:point,4326)) ASC';
+              ORDER BY ST_Distance_Sphere(ST_Centroid(r.start), ST_GeomFromText(:point,4326)) ASC';
         if ($count !== null) {
             $q .= ' LIMIT :count';
         }
