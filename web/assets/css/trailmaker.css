@@ -18,10 +18,6 @@ border-width:1px;
   margin-top: 63px;    
 }
 
-#contentview .next_step {
-  margin-top: 24px;
-}
-
 /* TRAIL MAP */
 /******************************************/
 #trail_map_view {
@@ -225,7 +221,7 @@ border-width:1px;
 
 #step_route_view .desc {
   margin: 24px auto 0px auto;
-  width: 380px;
+  width: 420px;
   text-align: center;
 }
 
