@@ -11,7 +11,7 @@ border-width:1px;
 /******************************************/
 #big_sponsor_bar {
   position: absolute;
-  top: 63px;
+  top: 45px;
   width: 100%;
   height: 119px;
   background-color: #202020;
@@ -43,7 +43,7 @@ html.no-touch #small_sponsor_bar {
 
 html.touch #small_sponsor_bar {
   display: none;
-  top: 63px;
+  top: 45px;
 }
 
 #small_sponsor_bar .sponsor_content {

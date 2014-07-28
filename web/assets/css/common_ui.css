@@ -559,31 +559,31 @@ a:active .tb-cntrl {
   position: fixed;
   top: 0px;
   width: 100%;
-  height: 63px;  
+  height: 45px;  
   background: #000;
 }
 
 #headerview .left {
   float: left;
-  margin: 8px 0px 0px 40px;
+  margin: 0px 0px 0px 20px;
 }
 
 #headerview .right {
   float: right;
-  margin: 0px 22px 0px 0px;
+  margin: 0px 18px 0px 0px;
   font-size: 14px;  
 }
 
 #headerview .links a, 
 #headerview .links a:link, 
 #headerview .links a:visited {
-  color: #44b6f7;
+  color: #FFF;
   text-decoration: none;
 }
 
 #headerview .links a:hover, 
 #headerview .links a:active {
-  color: #FFF;
+  color: #44b6f7;
   text-decoration: none;    
 }
 
@@ -608,13 +608,19 @@ a:active .tb-cntrl {
   background-color: #4B4B4B;
 }
 
-#headerview .right .links {
-  float: right;
-  margin: 26px 0px 0px 0px;
-  line-height: 1em;
+#headerview .left .logo {
+  float: left;
+  margin: 8px 0px 0px 0px;
 }
 
-#headerview .right .link {
+#headerview .left .links {
+  float: left;
+  margin: 14px 0px 0px 0px;
+  font-size: 16px;
+  line-height: 1em;  
+}
+
+#headerview .left .link {
   float: left;
   margin: 0px 15px 0px 15px;
   color: #44b6f7;
@@ -622,7 +628,7 @@ a:active .tb-cntrl {
 
 #headerview .right .signin .links {
   float:left;
-  margin: 14px 15px 0px 30px;
+  margin: 8px 15px 0px 30px;
   line-height: 1em;
 }
 
@@ -632,11 +638,6 @@ a:active .tb-cntrl {
   color: #44b6f7;
   text-transform: none;
 }
-
-#headerview .links .main {
-  font-weight: 700;
-  text-transform: uppercase;
-}  
 
 #headerview .right .profile {  
   float: right;
@@ -682,12 +683,12 @@ a:active .tb-cntrl {
 
 #headerview .right .signin {  
   float: right;
-  margin: 12px 0px 0px 19px;
+  margin: 8px 0px 0px 19px;
 }
 
 #headerview .trans-line {
   position: absolute;
-  top: 63px;
+  top: 45px;
   width: 100%;
   height: 2px;
   background: url(../img/trans_line.png) repeat-x top left;  
