@@ -17,7 +17,7 @@ define([
           app.dispatcher.trigger("MapTrailMarker:click", self);                
 	    }
         
-	    this.marker = L.marker(new L.LatLng(this.model.get('centroid')[1], this.model.get('centroid')[0])).on('click', onClick);			  
+	    this.marker = L.marker(new L.LatLng(this.model.get('start')[1], this.model.get('start')[0])).on('click', onClick);			  
 	    this.marker.setIcon(L.divIcon({className: 'tb-map-marker', html: '<div class="marker"></div>', iconSize: [20, 20]}));      	  
 		this.options.mapCluster.addLayer(this.marker);      	  
 	  }
