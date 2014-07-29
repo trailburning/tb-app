@@ -14,7 +14,7 @@ define([
 ], function(_, Backbone, TrailMediaModel, ActivityFeedView, TrailMiniMapView, TrailMiniSlidesView, TrailSlidesView, TrailMapView, TrailStatsView, TrailAltitudeView, TrailWeatherView, TrailActivitiesView){
 
   var MIN_HEIGHT = 540;
-  var PLAYER_REDUCE_HEIGHT = 50;
+  var PLAYER_REDUCE_HEIGHT = 30;
   
   var SLIDE_VIEW = 0;
   var MAP_VIEW = 1;
