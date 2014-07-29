@@ -46,7 +46,7 @@ class MediaImporter
         $response = $request->getResponse();
         
         if ($response->getStatusCode() !== 200) {
-            throw new Exception('Unable to get timezone from google timezone api, http status code %s for URL: %s', $response->getStatusCode(), $url);
+            throw new \Exception('Unable to get timezone from google timezone api, http status code %s for URL: %s', $response->getStatusCode(), $url);
         }
         
         $timezone = $response->json()['timeZoneId'];
@@ -87,7 +87,7 @@ class MediaImporter
         }
         
         if (!isset($tags['datetime'])) {
-            throw new Exception(sprintf('missing datetime tag for RoutePoint with id: $s', $row['id']));
+            throw new \Exception(sprintf('missing datetime tag for RoutePoint with id: %s', $row['id']));
         }
         
         // get the timezone from this Route

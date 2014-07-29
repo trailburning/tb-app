@@ -30,7 +30,7 @@ class ActivityFeedGenerator
             ->getRepository('TBFrontendBundle:User')
             ->findOneById($userId);
         if (!$user) {
-            throw new Exception(sprintf('Mising user with id %s', $userId));
+            throw new \Exception(sprintf('Mising user with id %s', $userId));
         }
         
         $query = $this->em
@@ -119,7 +119,7 @@ class ActivityFeedGenerator
         } elseif ($activity instanceof \TB\Bundle\FrontendBundle\Entity\RouteUndoLikeActivity) {
             // No UserActivity is created for RouteUndoLikeActivity
         } else {
-            throw new Exception(sprintf('Unhandled activity item of type "%s"', $activity));
+            throw new \Exception(sprintf('Unhandled activity item of type "%s"', $activity));
         }
         
         foreach ($updatedUsers as $user) {

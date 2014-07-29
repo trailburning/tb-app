@@ -63,10 +63,15 @@ define([
               }                            
             },
             error: function(data) {
-//              console.log('error');
+//              console.log('error');              
               bValid = false;
+              
+              var errObj = null;              
+              if (data.responseText) {
+              	errObj = jQuery.parseJSON(data.responseText);
+              }
         	  // fire event
-        	  app.dispatcher.trigger("TrailUploadGPXView:error", self);                
+        	  app.dispatcher.trigger("TrailUploadGPXView:error", errObj);                
             }
           });
         });
