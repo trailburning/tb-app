@@ -1,0 +1,107 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}Trailburning Ambassadors{% endblock %}
+
+{% block stylesheets %}
+<link href="{{ asset('assets/css/static.css') }}" rel="stylesheet" type="text/css">
+<link href="{{ asset('assets/css/ambassadors.css') }}" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block body %}
+<script>
+var TB_APP = 'BaseApp';
+{% if app.user %}		
+var TB_USER_ID = {{ app.user.id }};
+{% endif %}
+</script>
+
+  <div id="def_header">  	
+    <div class="background">
+      <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/O=80/http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/competition/competition_background.jpg" class="resrc scale" /></div>
+    </div>
+    <div class="foreground">
+      <div class="image_container fade_on_load"><img src="http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/competition/shirt.png" /></div>
+    </div>
+    <div class="event_title">
+      <h1 class="tb tb-title">I'm #Trailburning</h1>
+      <br/>
+      <h1 class="tb tb-title">Ambassadors</h1>
+    </div>      
+  </div>    
+    
+  <div class="panel_content">          
+    <div class="panel_intro">
+      <div class="desc clearfix">
+        <h3 class="tb">Enter the competition to Win!</h3>        
+        <h4 class="tb">
+        We're offering some great Trailburning running shirts from Swedish brand <a href="http://www.craft.se" onClick="trackOutboundLink(this, 'Outbound Links', 'craft.se'); return false;">Craft</a>,<br/>
+        and copies of the latest <a href="http://www.likethewindmagazine.com" onClick="trackOutboundLink(this, 'Outbound Links', 'likethewindmagazine.com'); return false;">Like the Wind</a> magazine!
+		</h4>                
+        <div class="prizes">
+		  <div class="image_container fade_on_load"><img src="http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/competition/prize_shirt.png" /></div>
+		  <div class="image_container fade_on_load"><a href="http://www.likethewindmagazine.com" onClick="trackOutboundLink(this, 'Outbound Links', 'likethewindmagazine.com'); return false;"><img src="http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/competition/prize_likethewind.png" /></a></div>
+		</div>	
+      </div>      
+    </div>
+  </div>
+  
+  <div class="guide_content">      
+    <div class="line_break"></div>
+    <div class="content clearfix">      
+      <h2>What you need to do</h2>
+      <div class="trailcards left">            
+      
+			<div class="panel trail_card_panel">
+				<div class="title"><h3 class="tb">Mountains</h3></div>
+		        <a href="{{ app.request.baseUrl }}/inspire/high/trail/motto-della-croce-capanna-bar-capriasca">
+		        <div class="photo tb-photo-btn">
+		        	<div class="image_container fade_on_load"><img src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/trailburning-media/238/99337e0254d96cf25a4faaa24927c068547b2391.JPG" class="resrc scale" border="0"/></div>
+		        	<div class="card_title">
+		            <h1>Motto della Croce</h1>
+		            <br />
+		            <h1>Capriasca</h1>
+		        	</div>
+		       	</div>
+		        </a>
+		        <div class="summary">
+	  	    		<div class="tb-avatar"><div class="photo"><a href="{{ app.request.baseUrl }}/profile/lucamanetti"><img src="http://www.gravatar.com/avatar/c0d52d3a4d92fd9c957b47c98bce354b"></a></div></div>
+			        <div class="detail">
+			        by <strong>Luca Manetti</strong>
+			        <div class="stars">
+			        	<div class="star_full"></div>
+			            <div class="star_full"></div>
+			            <div class="star_full"></div>
+			            <div class="star_half"></div>
+			            <div class="star"></div>
+			        </div>
+			        </div>
+		        </div>
+		 	</div>		
+		 					 	
+      </div>
+      <div class="right">
+        <h4 class="tb">
+      	To win this prize pack all you need to do is <strong>create</strong> a trail, <strong>share</strong> it on Facebook (you can now share when you publish in Trail Maker!) and get 6 of your friends to <strong>like</strong> the trail on Trailburning.
+        <br/><br/>         
+        The first five people to do this will win!
+        <br/><br/>         
+        </h4>      
+        <h5 class="tb">
+      	The small print - only one prize pack per person, we will announce as soon as we have 5 winners.
+        </h5>
+        <div class="discover">      	
+	    {% if app.user %}  	      
+  	      <a href="{{ path('profile', {'name': app.user.name}) }}" class="btn btn-tb-action btn-tb-large">Let's make a trail</a>
+	    {% else %}
+  	      <a href="{{ app.request.baseUrl }}/tour" class="btn btn-tb-action btn-tb-large">Let's make a trail</a>
+	    {% endif %}
+      	</div>                
+      </div>
+    </div>                  
+  </div>
+    	
+{% endblock %}
+
+{% block javascripts %}
+
+{% endblock %}

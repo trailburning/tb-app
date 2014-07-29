@@ -61,7 +61,9 @@ define([
 	   	
         // fire event
         app.dispatcher.trigger("TrailSlideView:imageready", self);                        
-	  });      
+	  });
+	  // force resrc update
+	  resrc.resrc($('img', $(this.el)));	        
 	}
 	        
   });

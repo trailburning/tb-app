@@ -79,4 +79,22 @@ class DefaultController extends Controller
             'breadcrumb' => $breadcrumb
         );    	
     }
+    
+    /**
+     * @Route("/ambassadors", name="ambassadors")
+     * @Template()
+     */
+    public function ambassadorsAction()
+    {
+        return [];
+    }
+    
+    /**
+     * @Route("/gpxguide", name="gpxguide")
+     * @Template()
+     */
+    public function gpxguideAction()
+    {
+        return [];
+    }
 }

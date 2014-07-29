@@ -77,6 +77,8 @@ define([
         $('.trail_media_popup .fade_on_load').addClass('tb-fade-in');
         $('.trail_media_popup .image_container').css('opacity', 1);
       });
+	  // invoke resrc      
+      resrc.resrc($('.trail_media_popup  .scale'));                
     },
     hidePopup: function(){
 	  if (this.popupOverlay) {
@@ -125,7 +127,7 @@ define([
 
           // create a DOM element and put it into one of the map panes
           this._el = L.DomUtil.create('div', 'trail_media_popup_overlay leaflet-zoom-hide');
-          $(this._el).append('<div class="leaflet-popup-content-wrapper"><div class="leaflet-popup-content" style="width: 125px;"><div class="trail_media_popup"><div class="image_container fade_on_load tb-fade"><img src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/'+versions[0].path+'" class="resrc scale photo_btn" border="0"></div></div></div></div><div class="leaflet-popup-tip-container"><div class="leaflet-popup-tip"></div></div>');        
+          $(this._el).append('<div class="leaflet-popup-content-wrapper"><div class="leaflet-popup-content" style="width: 125px;"><div class="trail_media_popup"><div class="image_container fade_on_load tb-fade"><img data-src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/'+versions[0].path+'" class="resrc scale photo_btn" border="0"></div></div></div></div><div class="leaflet-popup-tip-container"><div class="leaflet-popup-tip"></div></div>');        
           map.getPanes().markerPane.appendChild(this._el);
           
           // add a viewreset event listener for updating layer's position, do the latter

@@ -88,7 +88,7 @@ class RouteController extends AbstractRestController
         }
         
         $postgis = $this->get('postgis');
-        $routes = $postgis->readRoutes($userId, 10, null, null, true);
+        $routes = $postgis->readRoutes($userId, null, null, null, true);
         $routesExport = [];
         foreach ($routes as $route) {
             $routesExport[] = $route->export();
