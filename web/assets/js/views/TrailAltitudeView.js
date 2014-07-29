@@ -206,6 +206,9 @@ define([
       var nYPercent = 0;
       var rem = 0;
       
+      var nMaxPoints = 100;
+      var nT = Math.round(jsonPoints.length / nMaxPoints)
+      
       this.context.beginPath();      
       var nStartX = 0, nStartY = 0;  
       $.each(jsonPoints, function(key, point) {
@@ -214,17 +217,11 @@ define([
           nX = nXOffset + self.objTrailMarginRect.left + Math.round(key / self.fXFactor);
           nYPercent = ((point.tags.altitude - Math.round(self.fLowAlt)) / self.fAltRange) * 100;
           nY = nYOffset + self.objTrailMarginRect.top + Math.round((self.nDrawHeight-2) - ((nYPercent * (self.nDrawHeight-2)) / 100));
-
-		  if (self.fXFactor > 1) {
-            rem = key % Math.round(self.fXFactor * 4);
-            if (rem == 0) {
-              self.context.lineTo(nX, nY);            
-            }
-		  }
-		  else {
+          
+          rem = key % nT;
+          if (rem == 0) {
             self.context.lineTo(nX, nY);            
-		  }
-
+          }
           if (!nStartX) {
             nStartX = nX;
             nStartY = nY;
@@ -269,8 +266,8 @@ define([
         nYPercent = ((viewMediaMarkerView.model.get('tags').altitude - Math.round(this.fLowAlt)) / this.fAltRange) * 100;
         nY = nYOffset + this.objTrailMarginRect.top + Math.round((this.nDrawHeight-2) - ((nYPercent * (this.nDrawHeight-2)) / 100));
               
-        nX -= 9;
-        nY -= 9;
+        nX -= 7;
+        nY -= 7;
       
         $('.marker', viewMediaMarkerView.el).css('left', nX);
         $('.marker', viewMediaMarkerView.el).css('top', nY);
