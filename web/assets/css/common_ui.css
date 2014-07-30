@@ -560,18 +560,28 @@ a:active .tb-cntrl {
   top: 0px;
   width: 100%;
   height: 45px;  
-  background: #000;
+  background: #1f1f1f;
 }
 
 #headerview .left {
   float: left;
-  margin: 0px 0px 0px 20px;
+  margin: 0px 0px 0px 16px;
 }
 
 #headerview .right {
   float: right;
   margin: 0px 18px 0px 0px;
   font-size: 14px;  
+}
+
+#headerview .links {
+  font-size: 16px;
+  line-height: 1em;
+/*  
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  font-weight: 700;
+*/  
 }
 
 #headerview .links a, 
@@ -610,14 +620,15 @@ a:active .tb-cntrl {
 
 #headerview .left .logo {
   float: left;
-  margin: 8px 0px 0px 0px;
+  margin: 13px 0px 0px 0px;  
+  width: 132px;
+  height: 17px;
+  line-height: 1em;
 }
 
 #headerview .left .links {
   float: left;
-  margin: 14px 0px 0px 0px;
-  font-size: 16px;
-  line-height: 1em;  
+  margin: 16px 0px 0px 17px;
 }
 
 #headerview .left .link {
@@ -628,8 +639,7 @@ a:active .tb-cntrl {
 
 #headerview .right .signin .links {
   float:left;
-  margin: 8px 15px 0px 30px;
-  line-height: 1em;
+  margin: 16px 15px 0px 30px;
 }
 
 #headerview .right .signin .link {
@@ -637,6 +647,10 @@ a:active .tb-cntrl {
   margin: 0px 0px 0px 0px;
   color: #44b6f7;
   text-transform: none;
+}
+
+#headerview .right .signin a {
+  margin-top: 7px;
 }
 
 #headerview .right .profile {  
@@ -683,7 +697,7 @@ a:active .tb-cntrl {
 
 #headerview .right .signin {  
   float: right;
-  margin: 8px 0px 0px 19px;
+  margin: 0px 0px 0px 19px;
 }
 
 #headerview .trans-line {
