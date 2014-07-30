@@ -576,12 +576,7 @@ a:active .tb-cntrl {
 
 #headerview .links {
   font-size: 16px;
-  line-height: 1em;
-/*  
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  font-weight: 700;
-*/  
+  line-height: 16px;
 }
 
 #headerview .links a, 
@@ -620,10 +615,26 @@ a:active .tb-cntrl {
 
 #headerview .left .logo {
   float: left;
-  margin: 13px 0px 0px 0px;  
+  margin: 14px 0px 0px 0px;
   width: 132px;
   height: 17px;
-  line-height: 1em;
+  line-height: 17px;  
+}
+
+#headerview .left .logo a {
+  float:left; 
+  display:block;
+  line-height:20px; 
+  text-indent: -10000px;  
+  overflow: hidden;   
+  text-decoration: none;
+  width:132px;
+  height:17px;
+  background: url("../img/header/tb_logo.png") no-repeat top left;
+}
+
+#headerview .left .logo a:hover {
+  background-position: 0 -17px;
 }
 
 #headerview .left .links {
@@ -655,13 +666,13 @@ a:active .tb-cntrl {
 
 #headerview .right .profile {  
   float: right;
-  margin: 6px 20px 0px 45px;  
+  margin: 3px 16px 0px 45px;
 }
 
 #headerview .right .profile .activity {
   position: absolute;
-  top: 15px;
-  left: 46px;  
+  top: 7px;
+  left: 32px;  
   width: 24px;
   height: 24px;
   line-height: 24px;
@@ -691,8 +702,8 @@ a:active .tb-cntrl {
 	
 #headerview .right .profile .dropdown-toggle .tb-avatar {
   box-shadow: none;
-  width: 50px;
-  height: 50px;
+  width: 38px;
+  height: 38px;
 }
 
 #headerview .right .signin {  
