@@ -21,7 +21,7 @@ border-width:1px;
 #def_header {
   z-index: 100;
   position: relative;
-  margin-top: 63px;
+  margin-top: 45px;
   width: 100%;
   height: 486px;
   overflow: hidden;
@@ -33,12 +33,6 @@ border-width:1px;
   width: 100%;
   height: 486px;
   overflow: hidden;
-}
-
-#def_header .foreground {
-  position: absolute;
-  bottom: 0px;
-  right: 104px;
 }
 
 #def_header .event_title {
@@ -60,71 +54,9 @@ border-width:1px;
   width: 1112px;
 }
 
-.panel_content a, 
-.panel_content a:link, 
-.panel_content a:visited {
-  color: inherit;
-  text-decoration: none;
-  font-weight: 700;
-}
-
-.panel_content a:hover, 
-.panel_content a:active {
-  color: inherit;
-  text-decoration: underline;
-  font-weight: 700;    
-}
-
-.panel_intro {
+.panel_content .panel_ambassadors {
   clear: both;
   padding-top: 30px;
-  text-align: center;
-}
-
-.panel_intro .panel {
-  float: right;
-  margin-top: 24px;  
-  margin-right: 20px;
-}
-
-.panel_intro .desc {
-  margin: 12px auto 0px auto;
-  width: 782px;
-  text-align: center;
-}
-
-.panel_intro .desc h3 {
-  padding-top: 20px;
-}
-
-.panel_intro .desc h4 {
-  padding-top: 24px;
-}
-
-.panel_intro .prizes {
-  margin-top: 32px;
-}
-
-.panel_intro .prizes .image_container {
-  float: left;
-}
-
-.panel_intro .left {
-  float: left;
-  margin-top: 48px;
-  width: 372px;
-}
-
-.panel_intro .left img {
-  margin: 16px;
-}
-
-.panel_intro .right {
-  float: left;
-  text-align: left;
-  margin-top: 48px;
-  margin-left: 32px;
-  width: 396px;
 }
 
 /* PANEL */
@@ -134,97 +66,22 @@ border-width:1px;
   opacity: 0;
 }
 
-/* GUIDE */
+/* PROMO */
 /******************************************/
-.guide_content {
+.promo_content {
   width: 100%;
   background: #F0F0F0;
 }
 
-.guide_content .content {
+.promo_content .content {
   margin: 0px auto 0px auto;
   padding-top: 86px;
   padding-bottom: 80px;
   width: 900px;
 }
 
-.guide_content .content h2 {
-  margin: 0px;
-  padding: 0px;
-  text-align: center;
-  font-weight: normal;
-  font-size: 50px;
-  line-height: 1em;
-  color: #44B6F7;  
-}
-
-.guide_content .content h4 {
-  padding-top: 0px;
-}
-
-.guide_content .content .left {
-  float: left;
-  margin-top: 48px;
-  width: 372px;
-}
-
-.guide_content .content .left img {
-/*	
-  margin-left: 24px;
-*/  
-}
-
-.guide_content .content .right {
-  float: left;
-  margin-top: 48px;
-  margin-left: 32px;
-  width: 396px;
-}
-
-.guide_content .content .discover {
-  margin-top: 32px;
-}
-
-/* FOOTER PROMOTE */
-/******************************************/
-.footer_promote {
-  z-index: 100;
-  position: relative;
-  width: 100%;
-  height: 682px;
-  overflow: overflow;  
-}
-
-.footer_promote .image_container {
-  position: relative;
-  opacity: 0;  
-  width: 100%;
-  height: 682px;
-  overflow: hidden;
-}
-
-.footer_promote .promote_title {
-  position: absolute;
-  top: 122px;
-  width: 100%;
-  text-align: center;
-}
-
-.footer_promote .desc {
-  margin-top: 18px;
-  font-size: 22px;
-  color: #FFF;
-  text-shadow: 1px 1px #000000;  
-}
-
-.footer_promote .signin {
-  margin-top: 18px;
-}
-
-.footer_promote .tb-credit {
-  position: absolute;
-  bottom: 12px;
-  left: 30px;
+.promo_content h1.tb {
+  color: #979797;	
 }
 
 /* PANEL */
@@ -232,12 +89,6 @@ border-width:1px;
 .panel .image_container {
   position: relative;
   opacity: 0;
-}
-
-/* TRAIL CARD PANEL */
-/******************************************/
-.trailcards .trail_card_panel {
-  float: right;
 }
 
 .image_container {

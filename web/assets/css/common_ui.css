@@ -1,5 +1,13 @@
 /* TB DEFAULTS */
 /******************************************/
+
+@font-face {
+  font-family: 'StrangeloveText';
+  src: url('fonts/StrangeloveText.eot?#iefix') format('embedded-opentype'),  url('fonts/StrangeloveText.woff') format('woff'), url('fonts/StrangeloveText.ttf')  format('truetype'), url('fonts/StrangeloveText.svg#StrangeloveText') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
 body {  
   margin: 0;
   padding: 0;
@@ -169,6 +177,11 @@ h5.tb {
   font-weight: 400;
   line-height: 1.3em;
   color: #979797;
+}
+
+.tb-font {
+  font-family: 'StrangeloveText';
+  font-size: 30px;
 }
 
 /* TB COMMON STYLES */
