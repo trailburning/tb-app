@@ -59,6 +59,10 @@ border-width:1px;
   padding-top: 30px;
 }
 
+.panel_content h1.tb {
+  color: #979797;	
+}
+
 /* PANEL */
 /******************************************/
 .panel .image_container {

@@ -27,11 +27,18 @@ var TB_USER_ID = {{ app.user.id }};
   </div>    
     
   <div class="panel_content">
-  	<div class="panel_ambassadors">          
-        <h4 class="tb">
-        We're offering some great Trailburning running shirts from Swedish brand <a href="http://www.craft.se" onClick="trackOutboundLink(this, 'Outbound Links', 'craft.se'); return false;">Craft</a>,<br/>
-        and copies of the latest <a href="http://www.likethewindmagazine.com" onClick="trackOutboundLink(this, 'Outbound Links', 'likethewindmagazine.com'); return false;">Like the Wind</a> magazine!
-		</h4>
+  	<div class="panel_ambassadors">
+  		
+  		<div class="ambassador">
+  			
+			<div class="tb-avatar"><div class="photo"><a href="{{ app.request.baseUrl }}/profile/lucamanetti"><img src="http://www.gravatar.com/avatar/c0d52d3a4d92fd9c957b47c98bce354b"></a></div></div>  			
+  			<div class="ambassador-profile">  			
+  				<div class="quote"><h1 class="tb tb-font">"What makes you run?"</h1></div>
+  				Trail Card
+  				
+  			</div>
+  		</div>          
+
 		
 		<div class="trailcards trail_card_sticker">      
 			<div class="panel trail_card_panel">
