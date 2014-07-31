@@ -27,40 +27,101 @@ var TB_USER_ID = {{ app.user.id }};
   </div>    
     
   <div class="panel_content">
-  	<div class="panel_ambassadors">          
-        <h4 class="tb">
-        We're offering some great Trailburning running shirts from Swedish brand <a href="http://www.craft.se" onClick="trackOutboundLink(this, 'Outbound Links', 'craft.se'); return false;">Craft</a>,<br/>
-        and copies of the latest <a href="http://www.likethewindmagazine.com" onClick="trackOutboundLink(this, 'Outbound Links', 'likethewindmagazine.com'); return false;">Like the Wind</a> magazine!
-		</h4>
-		
-		<div class="trailcards trail_card_sticker">      
-			<div class="panel trail_card_panel">
-				<div class="title"><h3 class="tb">Mountains</h3></div>
-		        <a href="{{ app.request.baseUrl }}/inspire/high/trail/motto-della-croce-capanna-bar-capriasca">
-		        <div class="photo tb-photo-btn">
-		        	<div class="image_container fade_on_load"><img src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/trailburning-media/238/99337e0254d96cf25a4faaa24927c068547b2391.JPG" class="resrc scale" border="0"/></div>
-		        	<div class="card_title">
-		            <h1>Motto della Croce</h1>
-		            <br />
-		            <h1>Capriasca</h1>
-		        	</div>
-		       	</div>
-		        </a>
-		        <div class="summary">
-	  	    		<div class="tb-avatar"><div class="photo"><a href="{{ app.request.baseUrl }}/profile/lucamanetti"><img src="http://www.gravatar.com/avatar/c0d52d3a4d92fd9c957b47c98bce354b"></a></div></div>
-			        <div class="detail">
-			        by <strong>Luca Manetti</strong>
-			        <div class="stars">
-			        	<div class="star_full"></div>
-			            <div class="star_full"></div>
-			            <div class="star_full"></div>
-			            <div class="star_half"></div>
-			            <div class="star"></div>
-			        </div>
-			        </div>
-		        </div>
-		 	</div>
-		 </div>		
+  	<div class="panel_ambassadors clearfix">
+  		
+  		<div class="ambassador clearfix">  			
+			<div class="avatar">
+				<div class="tb-avatar tb-avatar-feature"><div class="photo"><a href="{{ app.request.baseUrl }}/profile/lucamanetti"><img src="http://www.gravatar.com/avatar/c0d52d3a4d92fd9c957b47c98bce354b"></a></div></div>
+			</div>  			
+  			<div class="ambassador-profile">  			
+  				<div class="quote">
+  					<p class="fancy"><span>"No filters, just the essentials"</span></p>  					
+  				</div>
+  				<div class="ambassador-content">
+					<div class="trailcards trail_card_sticker">      
+						<div class="panel trail_card_panel">
+							<div class="title"><h3 class="tb">Mountains</h3></div>
+					        <a href="{{ app.request.baseUrl }}/trail/tamaro-lema-ticino-switzerland-1">
+					        <div class="photo tb-photo-btn">
+					        	<div class="image_container fade_on_load"><img src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/trailburning-media/349/85e7d901983ce9df64343af7f3f2e901b02b416b.JPG" class="resrc scale" border="0"/></div>
+					        	<div class="card_title">
+								<h1>Tamaro-Lema</h1>
+								<br>
+								<h1>Ticino, Switzerland</h1>
+					        	</div>
+					       	</div>
+					        </a>
+					        <div class="summary">
+				  	    		<div class="tb-avatar"><div class="photo"><a href="{{ app.request.baseUrl }}/profile/lucamanetti"><img src="http://www.gravatar.com/avatar/c0d52d3a4d92fd9c957b47c98bce354b"></a></div></div>
+						        <div class="detail">
+						        by <strong>Luca Manetti</strong>
+						        <div class="stars">
+							      <div class="star_full"></div>
+							      <div class="star_half"></div>
+						        </div>
+						        </div>
+					        </div>
+					 	</div>
+	  				</div>
+	  				<div class="details">
+	  					<h3 class="tb">Luca Manetti</h3>
+	  					<div class="home">
+	  				  		<div class="location"></div>
+	  				  		Ticino, <strong>Switzerland</strong>
+	  					</div>	  				
+						I fell in love with trail running few years ago. Go out and discover new places and trails is what I like the most. Southern Switzerland, with its lakes, rivers and mountains is my home and offers me new opportunities every day. This keeps me happy and free.
+						<div class="profile_btn"><a href="{{ app.request.baseUrl }}/profile/lucamanetti" class="btn btn-tb">Luca's Profile</a></div>					
+	  				</div>
+	  			</div>
+  			</div>
+  		</div>          
+
+  		<div class="ambassador clearfix">  			
+			<div class="avatar">
+				<div class="tb-avatar tb-avatar-feature"><div class="photo"><a href="{{ app.request.baseUrl }}/profile/paultran"><img src="http://www.gravatar.com/avatar/5889ab29b92ea2bc3547770b9427310b"></a></div></div>
+			</div>  			
+  			<div class="ambassador-profile">  			
+  				<div class="quote">
+  					<p class="fancy"><span>"Addicted to running"</span></p>  					
+  				</div>
+  				<div class="ambassador-content">
+					<div class="trailcards trail_card_sticker">      
+						<div class="panel trail_card_panel">
+							<div class="title"><h3 class="tb">Coast</h3></div>
+					        <a href="{{ app.request.baseUrl }}/trail/marion-coastal-trail-south-australia">
+					        <div class="photo tb-photo-btn">
+					        	<div class="image_container fade_on_load"><img src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/trailburning-media/312/f5198c71abb79b731e1507f79836bbce6c811945.JPG" class="resrc scale" border="0"/></div>
+					        	<div class="card_title">
+								<h1>Marion Coastal Trail</h1>
+								<br>
+								<h1>South Australia</h1>
+					        	</div>
+					       	</div>
+					        </a>
+					        <div class="summary">
+				  	    		<div class="tb-avatar"><div class="photo"><a href="{{ app.request.baseUrl }}/profile/paultran"><img src="http://www.gravatar.com/avatar/5889ab29b92ea2bc3547770b9427310b"></a></div></div>
+						        <div class="detail">
+						        by <strong>Paul Tran</strong>
+						        <div class="stars">
+							      <div class="star_full"></div>
+							      <div class="star_half"></div>
+						        </div>
+						        </div>
+					        </div>
+					 	</div>
+	  				</div>
+	  				<div class="details">
+	  					<h3 class="tb">Paul Tran</h3>
+	  					<div class="home">
+	  				  		<div class="location"></div>
+	  				  		Adelaide, <strong>South Australia</strong>
+	  					</div>	  				
+						It started as an innocent 4km run between work and home about 5 years ago and slowly progressed to road marathons, triathlons, and now trail ultras. My name is Paul and I'm addicted to running.
+						<div class="profile_btn"><a href="{{ app.request.baseUrl }}/profile/paultran" class="btn btn-tb">Paul's Profile</a></div>					
+	  				</div>
+	  			</div>
+  			</div>
+  		</div>          
 		
 	</div>                
   </div>
@@ -68,37 +129,62 @@ var TB_USER_ID = {{ app.user.id }};
   <div class="promo_content">      
     <div class="line_break"></div>
     <div class="content clearfix">      
-      	<h1 class="tb tb-font">"What makes you run?"</h1>
-      
-		<div class="trailcards trail_card_sticker">      
-	   	    <div class="panel trail_card_panel">
-		      <div class="title"><h3 class="tb">New Trail</h3></div>
-	          <a href="{{ path('trailmaker') }}">
-	          <div class="photo tb-photo-btn">
-	            <div class="image_container fade_on_load"><img src="{{ asset('assets/img/editor/create.jpg') }}" class="scale" border="0"/></div>
-		        <div class="card_title">
-				  <h1>Ready to share</h1>
-				  <br/>
-				  <h1>your adventures?</h1>
-		        </div>
-	          </div>
-	          </a>
-		      <div class="summary">
-	  	    		<div class="tb-avatar"><div class="photo"><img src="http://assets.trailburning.com/images/icons/avatars/avatar_man.jpg"></div></div>
-			        <div class="detail">
-			        by <strong>You</strong>
-			        <div class="stars">
-			        	<div class="star_full"></div>
-			            <div class="star_full"></div>
-			            <div class="star_full"></div>
-			            <div class="star_half"></div>
-			            <div class="star"></div>
-			        </div>
-			        </div>
-		        
-		      </div>
-	        </div>
-		 </div>		
+    	
+  		<div class="ambassador clearfix">  			
+			<div class="avatar">
+				<div class="tb-avatar tb-avatar-feature"><div class="photo"><img src="http://assets.trailburning.com/images/icons/avatars/avatar_man.jpg"></div></div>
+			</div>  			
+  			<div class="ambassador-profile">  			
+  				<div class="quote">
+  					<p class="fancy"><span>"What makes you run?"</span></p>  					
+  				</div>
+  				<div class="ambassador-content">
+					<div class="trailcards trail_card_sticker">      
+				   	    <div class="panel trail_card_panel">
+					      <div class="title"><h3 class="tb">New Trail</h3></div>
+						  {% if app.user %}  	      
+				            <a href="{{ path('profile', {'name': app.user.name}) }}">
+		    	  		  {% else %}
+				            <a href="{{ app.request.baseUrl }}/register">
+		    	  		  {% endif %}
+				          <div class="photo tb-photo-btn">
+				            <div class="image_container fade_on_load"><img src="{{ asset('assets/img/editor/create.jpg') }}" class="scale" border="0"/></div>
+					        <div class="card_title">
+							  <h1>Ready to share</h1>
+							  <br/>
+							  <h1>your adventures?</h1>
+					        </div>
+				          </div>
+				          </a>
+					      <div class="summary">
+				  	    		<div class="tb-avatar"><div class="photo"><img src="http://assets.trailburning.com/images/icons/avatars/avatar_woman.jpg"></div></div>
+						        <div class="detail">
+						        by <strong>You</strong>
+						        <div class="stars">
+						        	<div class="star_full"></div>
+						            <div class="star_full"></div>
+						            <div class="star_full"></div>
+						            <div class="star_half"></div>
+						            <div class="star"></div>
+						        </div>
+						        </div>					        
+					      </div>
+				        </div>
+					 </div>		
+	  				<div class="details">
+	  					<h3 class="tb">Become our next Ambassador!</h3>
+	  					<div class="home"></div>
+	  					<p>	  				
+	  					Are you evangelical about the trails you love?  Do you fancy a quality <a href="http://www.craft.se" onClick="trackOutboundLink(this, 'Outbound Links', 'craft.se'); return false;">Craft</a> Trailburning running shirt?
+	  					</p>
+	  					<p>
+	  					You may want to consider joining our ambassador programme!
+	  					</p> 
+						<div class="profile_btn"><a href="mailto:hello@trailburning.com" class="btn btn-tb-action">Apply Now</a></div>					
+	  				</div>
+	  			</div>
+  			</div>
+  		</div>          
 		 					 	
     </div>                  
   </div>
