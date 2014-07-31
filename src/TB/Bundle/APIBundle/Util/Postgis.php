@@ -76,7 +76,7 @@ class Postgis extends \PDO
         		GROUP BY route_id 
         	) start JOIN route_points rp ON rp.id = start.id
         ) AS start_route_point
-        WHERE routes.id = ?";
+        WHERE routes.id = start_route_point.route_id AND routes.id = ?";
         $pq = $this->prepare($q);
         $success = $pq->execute(array($routeId));
         if (!$success) {
