@@ -15,13 +15,11 @@ var TB_USER_ID = {{ app.user.id }};
 </script>
 
   <div id="home_header">  	
-  	{#
     <div class="hero_image">
       <div class="background">
         <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/O=80/http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/ambassadors/ambassador.jpg" class="resrc scale" /></div>
 	  </div>
   	</div>
-	#}
 
     <div class="hero_image">
       <div class="background">
@@ -42,13 +40,9 @@ var TB_USER_ID = {{ app.user.id }};
   	</div>
 
 	<div class="hero_nav">
-	  <div class="button" data-slide="0"></div><div class="button" data-slide="1"></div><div class="button" data-slide="2"></div>
-	  {#
-		<div class="button" data-slide="3"></div>	  	
-	  #}
+	  <div class="button" data-slide="0"></div><div class="button" data-slide="1"></div><div class="button" data-slide="2"></div><div class="button" data-slide="3"></div>	  	
 	</div>
 
-	{#
     <div class="hero_overlay" data-url="{{ app.request.baseUrl }}/tour">
       <div class="left">
     	<div class="title">
@@ -64,7 +58,6 @@ var TB_USER_ID = {{ app.user.id }};
 	  <div class="sponsor_content">
 	  </div>  	
   	</div>  	
-  	#}
   	  	
     <div class="hero_overlay" data-url="{{ app.request.baseUrl }}/inspire/highlands">
       <div class="left">
