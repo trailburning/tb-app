@@ -9,7 +9,7 @@
 		}
     },
     "require": {
-		"php": "5.5.10",
+		"php": "5.5.*",
         "ext-bcmath": "*",
         "ext-memcached": "*",
         "ext-gd": "*",
