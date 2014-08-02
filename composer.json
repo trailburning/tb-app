@@ -41,7 +41,7 @@
         "knplabs/knp-gaufrette-bundle": "dev-master",
         "oldsound/rabbitmq-bundle": "1.2.*@dev",
         "webfactory/exceptions-bundle": "@stable",
-        "kakserpom/phpdaemon" : "dev-master"
+        "react/child-process": "0.5.*@dev"
     },
     "repositories": [
         {
