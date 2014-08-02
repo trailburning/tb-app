@@ -1,0 +1,214 @@
+/* APP */
+/******************************************/
+body {
+  background: #FFF;	
+}
+
+#appview {
+/*  
+border-style:solid;
+border-width:1px;
+*/  
+  min-width: 1200px;
+}
+
+#bodyview {
+  min-height: 0;
+}
+
+/* DEF HEADER */
+/******************************************/
+#def_header {
+  z-index: 100;
+  position: relative;
+  margin-top: 45px;
+  width: 100%;
+  height: 486px;
+  overflow: hidden;
+}
+
+#def_header .background .image_container {
+  position: relative;
+  opacity: 0;
+  width: 100%;
+  height: 486px;
+  overflow: hidden;
+}
+
+#def_header .event_title {
+  position: absolute;
+  top: 24px;
+  left: 32px;
+  color: #44b6f7;
+}
+
+#def_header .btn {
+  margin-top: 24px;
+}
+
+/* PANELS */
+/******************************************/
+.panel_content {
+  position: relative;
+  margin: 0px auto 40px auto;
+  width: 1012px;
+}
+
+.panel_content .panel_ambassadors {
+  clear: both;
+  padding-top: 30px;
+}
+
+/* PANEL */
+/******************************************/
+.panel .image_container {
+  position: relative;
+  opacity: 0;
+}
+
+/* PROMO */
+/******************************************/
+.promo_content {
+  width: 100%;
+  background: #F0F0F0;
+}
+
+.promo_content .content {
+  position: relative;
+  margin: 0px auto 0px auto;  
+  padding-bottom: 40px;  
+  width: 1012px;
+}
+
+.promo_content .trail_card_sticker {
+  background: none;
+}
+
+/* PANEL */
+/******************************************/
+.panel .image_container {
+  position: relative;
+  opacity: 0;
+}
+
+.image_container {
+  opacity: 0;
+}
+
+/* AMBASSADOR */
+/******************************************/
+.ambassador {
+  margin-top: 24px;
+}
+
+.ambassador .avatar {
+  float: left;
+  width: 158px;	
+}
+
+.ambassador .ambassador-profile {
+  float: left;
+  width: 854px;	  	
+}
+
+.ambassador .quote {
+  width: 100%;
+  height: 100px;
+  overflow: hidden
+}
+
+.ambassador .fancy {
+  font-family: 'StrangeloveText';
+  font-size: 80px;
+  color: #979797;  
+  line-height: 108px;
+  text-align: left;
+}
+.ambassador .fancy span {
+  display: inline-block;
+  position: relative;  
+}
+.ambassador .fancy span:after {
+  content: "";
+  position: absolute;
+  height: 1px;
+  border-bottom: 1px solid #979797;
+  bottom: 44px;
+  width: 600px;
+}
+.ambassador .fancy span:after {
+  left: 100%;
+  margin-left: 15px;
+}
+
+.ambassador .ambassador-content {
+  margin-top: 10px;
+}
+
+.ambassador .trailcards {
+  float: left;
+}
+
+.ambassador .details {
+  float: left;
+  margin-top: 10px;
+  margin-left: 18px;
+  width: 400px;	
+  font-size: 22px;
+  line-height: 1.3em;
+  color: #979797;
+}
+
+.ambassador .home {
+  margin-top: 10px;
+  margin-bottom: 16px;
+  line-height: 47px;
+}
+
+.ambassador .location {
+  float: left;
+  margin-right: 14px;
+  width: 36px;
+  height: 47px;
+  background: url(../icons/location.png) no-repeat top left;
+}
+
+.ambassador .profile_btn {
+  margin-top: 20px;	
+}
+
+/* RESPONSIVE */
+/******************************************/
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+}
+ 
+/* Medium devices (desktops, 992px and up) */
+@media (max-width: 1199px) {  
+  #appview {
+    min-width: 992px;
+  }  
+  .panel_content {
+    width: 992px;
+  }
+  
+.ambassador .avatar {
+  width: 138px;	
+}
+
+.ambassador .ambassador-profile {
+  width: 854px;	  	
+}
+  
+  
+     
+}
+
+.image {
+  display: none;  
+}
+
+img {
+  max-width: none;
+}

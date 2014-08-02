@@ -59,7 +59,7 @@ define([
       $("img.scale_image_ready").imageScale();
     },
 	handleScroll: function(){
-	  var nTopY = 63;
+	  var nTopY = 45;
 	  var nTransitionOffY = 35;
 	  var nTransitionOnY = 12;
 	  var nScrollY = ($(window).scrollTop() < 0) ? 0 : $(window).scrollTop();	  

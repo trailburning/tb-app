@@ -8,6 +8,7 @@ use Symfony\Component\Console\Tester\ApplicationTester;
 use Symfony\Component\Console\Output\Output;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
+use TB\Bundle\APIBundle\Util\ApiException;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -15,8 +16,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  *
  */
 class GpxFileControllerTest extends AbstractApiTestCase
-{
-    
+{    
     
     /**
      * 
@@ -48,5 +48,29 @@ class GpxFileControllerTest extends AbstractApiTestCase
         $this->assertGreaterThan(0, count($responseObj->value->route_ids),
             'route_ids array is greater than 0');
     }
+    
+    public function testPostImportNoDatetime()
+    {
+        
+        $this->loadFixtures([
+            'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData',
+        ]);
+        
+        $user = $this->getUser('mattallbeury');
+        
+        $gpxfile = new UploadedFile(
+            realpath(__DIR__ . '/../../DataFixtures/GPX/no_datetime.gpx'),
+            'no_datetime.gpx'
+        );
+        
+        $client = $this->createClient();
+        $crawler = $client->request('POST', '/v1/import/gpx', [], ['gpxfile' => $gpxfile], ['HTTP_Trailburning_User_ID' => $user->getId()]);
+        $this->assertEquals(Response::HTTP_BAD_REQUEST,  $client->getResponse()->getStatusCode(),
+            'Response returns Status Code 400');
+        $this->assertJsonResponse($client);  
+        
+    }
+    
+    
 
 }

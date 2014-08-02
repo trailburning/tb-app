@@ -17,7 +17,7 @@ border-width:1px;
 #small_sponsor_bar {
   z-index: 199;
   position: fixed;
-  top: 63px;
+  top: 45px;
   width: 100%;
   height: 43px;
   background-color: #202020;
@@ -32,7 +32,7 @@ html.no-touch #small_sponsor_bar {
 }
 
 html.touch #small_sponsor_bar {
-  top: 63px;
+  top: 45px;
 }
 
 #small_sponsor_bar .sponsor_content {
@@ -102,12 +102,12 @@ html.touch #small_sponsor_bar {
 /******************************************/
 #content_view {
   position: relative;
-  top: 63px;  
+  top: 45px;  
   width: 100%;
 }
 
 #content_view.sponsor_header {
-  top: 106px;
+  top: 88px;
 }
 
 /* TRAIL PLAYER */
@@ -434,19 +434,29 @@ html.touch #small_sponsor_bar {
   height: 100%;
 }
 
+.trail_media_popup_overlay {
+  z-index: 999;
+  display: none;
+  position: absolute;
+  bottom: 13px;
+  left: -133px;
+  width: 266px;
+  height: 200px;  
+  transform: translate3d(709px, 270px, 0px);
+}
+
 .trail_media_popup {
   margin: 0px;
   padding: 0px;  
-  width: 200px;
-  height: 150px;
-
+  width: 266px;
+  height: 200px;
 }
 
 .leaflet-popup-content-wrapper {
   margin: 0px;
   padding: 0px;  
-  width: 200px;
-  height: 162px;
+  width: 266px;
+  height: 200px;
 }
 
 .leaflet-popup-content {  
@@ -459,8 +469,8 @@ html.touch #small_sponsor_bar {
 .trail_media_popup .image_container {
   position: relative;
   opacity: 0;
-  width: 188px;
-  height: 150px;
+  width: 254px;
+  height: 188px;
   overflow: hidden;
 }
 
@@ -1078,50 +1088,12 @@ html.touch #trailplayer #view_map_btns {
 
 #editorial_sponsor_bar {
   margin-top: -82px;
-  margin-bottom: 106px;
+  margin-bottom: 88px;
   width: 100%;
   height: 224px;
   background-color: #202020;
 }
 
-/* EDITORIAL CARDS */
-/******************************************/
-/*
-.editorial_cards {
-  clear: both;
-  margin-left: 85px;
-  margin-bottom: 46px;
-}
-
-.editorial_cards .panel {
-  display: inline-block;
-  float: none;
-  text-align: left;
-  vertical-align: top;
-  width: 260px;
-  margin: 13px 13px 13px 13px;
-  line-height: 1em;
-  color: #FFFFFF;
-}  
-
-.editorial_cards .panel .summary {  
-  font-size: 16px;
-  font-weight: 300;
-  color: #666666;
-}
-
-.editorial_cards .panel .summary strong {
-  font-weight: 700;
-}
-
-.editorial_cards .panel .image_container {
-  position: relative;
-  opacity: 0;
-  width: 100%;
-  height: 220px;
-  overflow: hidden;
-}
-*/
 /* TRAIL CARD PANEL */
 /******************************************/
 .trail_card_sticker {

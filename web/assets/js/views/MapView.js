@@ -99,7 +99,7 @@ define([
     },
     handleResize: function(){
       var nHeight = 600;
-      var nTopMargin = 63;
+      var nTopMargin = 45;
       
       if (($(window).height() - nTopMargin) > nHeight) {
       	nHeight = $(window).height() - nTopMargin; 

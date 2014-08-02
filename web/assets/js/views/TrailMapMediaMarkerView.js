@@ -13,7 +13,7 @@ define([
       this.marker = null;
       this.nSize = DEF_ICONS;
       this.bEnablePopup = false;
-      this.popup = null;
+      this.popupOverlay = null;      
       this.bActive = false;
       if (this.options.size) {
         this.nSize = this.options.size;
@@ -47,9 +47,6 @@ define([
       }
     },            
     show: function(){
-	  if (this.popup) {
-	    this.popup.update();    	
-	  }    	
       this.marker.setOpacity(1);
     },
     hide: function(){
@@ -65,11 +62,14 @@ define([
       }
     },
     showPopup: function(){
-      this.popup.openOn(this.map);
+      this.popupOverlay.show();    	
+
       var imgLoad = imagesLoaded('.trail_media_popup .scale');
       imgLoad.on('always', function(instance) {
         for ( var i = 0, len = imgLoad.images.length; i < len; i++ ) {
           $(imgLoad.images[i].img).addClass('scale_image_ready');
+          // update pos
+          $(imgLoad.images[i].img).imageScale();
         }
         // update pos
         $('.trail_media_popup img.scale_image_ready').imageScale();
@@ -77,9 +77,13 @@ define([
         $('.trail_media_popup .fade_on_load').addClass('tb-fade-in');
         $('.trail_media_popup .image_container').css('opacity', 1);
       });
+	  // invoke resrc      
+      resrc.resrc($('.trail_media_popup  .scale'));                
     },
     hidePopup: function(){
-      this.map.closePopup();
+	  if (this.popupOverlay) {
+		this.popupOverlay.hide();
+      }    	
       $('.trail_media_popup .image_container').css('opacity', 0);
     },
     setActive: function(bActive){
@@ -102,7 +106,7 @@ define([
     render: function(){
       var self = this;
       
-      this.marker = L.marker([this.model.get('coords').lat, this.model.get('coords').long], {icon: this.mediaInactiveIcon}).on('click', onClick).addTo(this.map);;
+      this.marker = L.marker([this.model.get('coords').lat, this.model.get('coords').long], {icon: this.mediaInactiveIcon, zIndexOffset: 100}).on('click', onClick).addTo(this.map);;
       function onClick(e) {       
         // fire event
         app.dispatcher.trigger("TrailMapMediaMarkerView:mediaclick", self);                        
@@ -111,22 +115,53 @@ define([
       // build popup      
       var versions = this.model.get('versions');
       
-      // Create an element to hold all your text and markup
-      var container = $('<div class="trail_media_popup" />');      
-      // Delegate all event handling for the container itself and its contents to the container
-      container.on('click', '.photo_btn', function() {
+	  var MyCustomLayer = L.Class.extend({
+
+        initialize: function (latlng) {
+          // save position of the layer or any options from the constructor
+          this._latlng = latlng;
+    	},
+
+    	onAdd: function (map) {
+          this._map = map;
+
+          // create a DOM element and put it into one of the map panes
+          this._el = L.DomUtil.create('div', 'trail_media_popup_overlay leaflet-zoom-hide');
+          $(this._el).append('<div class="leaflet-popup-content-wrapper"><div class="leaflet-popup-content" style="width: 125px;"><div class="trail_media_popup"><div class="image_container fade_on_load tb-fade"><img data-src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/'+versions[0].path+'" class="resrc scale photo_btn" border="0"></div></div></div></div><div class="leaflet-popup-tip-container"><div class="leaflet-popup-tip"></div></div>');        
+          map.getPanes().markerPane.appendChild(this._el);
+          
+          // add a viewreset event listener for updating layer's position, do the latter
+          map.on('viewreset', this._reset, this);
+          this._reset();
+    	},
+
+    	onRemove: function (map) {
+          // remove layer's DOM elements and listeners
+          map.getPanes().overlayPane.removeChild(this._el);
+          map.off('viewreset', this._reset, this);
+    	},
+
+    	show: function () {
+    	  $(this._el).fadeIn();
+		},
+
+    	hide: function () {    	
+    	  $(this._el).fadeOut();
+		},
+
+    	_reset: function () {
+          // update layer's position
+          var pos = this._map.latLngToLayerPoint(this._latlng);
+          L.DomUtil.setPosition(this._el, pos);
+    	}
+	  });   
+	  this.popupOverlay = new MyCustomLayer(this.marker.getLatLng());
+	  this.map.addLayer(this.popupOverlay);
+	  $(this.popupOverlay._el).on('click', '.photo_btn', function(evt) {
+      	evt.stopPropagation();
         // fire event
-        app.dispatcher.trigger("TrailMapMediaMarkerView:photoclick", self);                        
-      });
-      container.on('mouseover', '.photo_btn', function() {
-      	$(this).css('cursor', 'pointer');
-      });
-      
-      container.html('<div class="image_container fade_on_load tb-fade"><img src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/'+versions[0].path+'" class="resrc scale photo_btn" border="0"></div>');
-      
-      this.popup = L.popup({'closeButton': false})
-      .setLatLng([this.model.get('coords').lat, this.model.get('coords').long])
-      .setContent(container[0]);
+        app.dispatcher.trigger("TrailMapMediaMarkerView:photoclick", self);                              	  	
+	  });
       
       return this;
     }    

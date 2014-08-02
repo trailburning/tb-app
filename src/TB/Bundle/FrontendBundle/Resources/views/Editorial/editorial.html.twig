@@ -25,7 +25,7 @@ var TB_USER_ID = {{ app.user.id }};
 var TB_EDITORIAL_TRAILS = [
     {% for editorialRoute in editorialRoutes %}
         {% set route = editorialRoute.route %}
-        { long: {{ route.centroid.longitude }}, lat: {{ route.centroid.latitude }}, short_name: "{{ route.shortName }}", region: "{{ route.region }}", url: "{{ path('editorial_trail', {trailSlug: route.slug, editorialSlug: editorial.slug}) }}" },          
+        { long: {{ route.start.longitude }}, lat: {{ route.start.latitude }}, short_name: "{{ route.shortName }}", region: "{{ route.region }}", url: "{{ path('editorial_trail', {trailSlug: route.slug, editorialSlug: editorial.slug}) }}" },          
     {% endfor %}
 ];
 </script>

@@ -192,6 +192,15 @@ define([
       this.layer_sat = L.mapbox.tileLayer('mallbeury.map-eorpnyp3');      
       this.map.addLayer(this.layer_street);
 
+	  this.map.on('click', function() {
+	  	console.log('C');
+	  	
+        for (var nMedia=0; nMedia < self.arrMapMediaViews.length; nMedia++) {
+          self.arrMapMediaViews[nMedia].hidePopup();
+        }
+	  	
+	  });
+
       var data = this.model.get('value');      
       $.each(data.route.route_points, function(key, point) {
         self.arrLineCordinates.push([Number(point.coords[1]), Number(point.coords[0])]);        

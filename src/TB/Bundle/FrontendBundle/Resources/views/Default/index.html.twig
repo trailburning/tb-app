@@ -15,19 +15,17 @@ var TB_USER_ID = {{ app.user.id }};
 </script>
 
   <div id="home_header">  	
-  	
-	{% if not app.user %}
-  	
     <div class="hero_image">
       <div class="background">
-        <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/O=80/http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/tour/home_header_background.jpg" class="resrc scale" /></div>
-	  </div>
-	  <div class="foreground">
-        <div class="image_container fade_on_load"><img src="http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/tour/home_header_foreground.png" /></div>
+        <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/O=80/http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/ambassadors/ambassador.jpg" class="resrc scale" /></div>
 	  </div>
   	</div>
-  	
-  	{% endif %}
+
+    <div class="hero_image">
+      <div class="background">
+        <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/editorial/highlands/313593cc63d7cec329eaaaefe2f65eed47488abc.JPG" class="resrc scale" /></div>
+      </div>
+  	</div>
 
     <div class="hero_image">
       <div class="background">
@@ -41,30 +39,17 @@ var TB_USER_ID = {{ app.user.id }};
       </div>
   	</div>
 
-    <div class="hero_image">
-      <div class="background">
-        <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/O=80/http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/editorial/alps/Reuben_Tabner-0208_edited.jpg" class="resrc scale" /></div>
-      </div>
-  	</div>
-
 	<div class="hero_nav">
-	{% if not app.user %}
-	  <div class="button" data-slide="0"></div><div class="button" data-slide="1"></div><div class="button" data-slide="2"></div><div class="button" data-slide="3"></div>	
-	{% else %}  	  	  	
-	  <div class="button" data-slide="0"></div><div class="button" data-slide="1"></div><div class="button" data-slide="2"></div>	
-	{% endif %}  	  	  	
+	  <div class="button" data-slide="0"></div><div class="button" data-slide="1"></div><div class="button" data-slide="2"></div><div class="button" data-slide="3"></div>	  	
 	</div>
 
-	{% if not app.user %}
-
-    <div class="hero_overlay" data-url="{{ app.request.baseUrl }}/tour">
+    <div class="hero_overlay" data-url="{{ app.request.baseUrl }}/ambassadors">
       <div class="left">
     	<div class="title">
-      	<h1 class="tb tb-title">Create a trail</h1>
+      	<h1 class="tb tb-title">I'm #Trailburning</h1>
       	<br/>
-      	<h1 class="tb tb-title">and WIN!</h1>
-      	<br/>
-      	<div class="hero_btn"><a href="{{ app.request.baseUrl }}/competition" class="btn btn-tb-action btn-tb-large">View Competition</a></div>
+      	<h1 class="tb tb-title">Ambassadors</h1>
+      	<div class="hero_btn"><a href="{{ app.request.baseUrl }}/ambassadors" class="btn btn-tb-action btn-tb-large">Do you have what it takes?</a></div>
     	</div>
 	  </div>			  
 	  <div class="right">  
@@ -73,9 +58,34 @@ var TB_USER_ID = {{ app.user.id }};
 	  <div class="sponsor_content">
 	  </div>  	
   	</div>  	
-  	
-  	{% endif %}
-  	
+  	  	
+    <div class="hero_overlay" data-url="{{ app.request.baseUrl }}/inspire/highlands">
+      <div class="left">
+    	<div class="title feature">
+      	<h1 class="tb tb-title">Finding solace in the</h1>
+      	<br/>
+      	<h1 class="tb tb-title">Scottish Highlands</h1>
+      	<br/>
+	  	<div class="author">by <strong>Phil Shipman</strong></div>	      
+      	<div class="hero_btn"><a href="inspire/highlands" class="btn btn-tb-inspire"><div class="tb-logo"></div> Inspire</a></div>
+    	</div>
+	  </div>			  
+	  <div class="right">
+	  	<a href="profile/philipshipman">  
+    	<div class="tb-avatar feature_avatar">
+      		<div class="photo"><img src="http://assets.trailburning.com/images/profile/philipshipman/avatar.jpg"></div>
+    	</div>		    	
+    	</a>
+      </div>
+	  <div class="tb-credit"></div>
+	  <div class="sponsor_content">
+	    <div class="brand">
+		  <div class="strap">brought to you by</div>
+		  <div class="logo"><a href="{{ app.request.baseUrl }}/profile/ashmei"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/ashmei/editorial_sponsor_logo_big.png" border="0"></a></div>
+	    </div>
+	  </div>  	
+  	</div>
+  	  	
     <div class="hero_overlay" data-url="{{ app.request.baseUrl }}/inspire/high">
       <div class="left">
     	<div class="title feature">
@@ -122,33 +132,6 @@ var TB_USER_ID = {{ app.user.id }};
     	</a>
       </div>
 	  <div class="tb-credit"></div>
-	  <div class="sponsor_content">
-	    <div class="brand">
-		  <div class="strap">brought to you by</div>
-		  <div class="logo"><a href="{{ app.request.baseUrl }}/profile/ashmei"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/ashmei/editorial_sponsor_logo_big.png" border="0"></a></div>
-	    </div>
-	  </div>  	
-  	</div>
-
-    <div class="hero_overlay" data-url="{{ app.request.baseUrl }}/inspire/alps">
-      <div class="left">
-    	<div class="title feature">
-      	<h1 class="tb tb-title">Discover how to</h1>
-      	<br/>
-      	<h1 class="tb tb-title">'get lost' in the Alps</h1>
-      	<br/>
-	  	<div class="author">by <strong>Justin Wilden</strong></div>	      
-      	<div class="hero_btn"><a href="{{ app.request.baseUrl }}/inspire/alps" class="btn btn-tb-inspire"><div class="tb-logo"></div> Inspire</a></div>
-    	</div>
-	  </div>			  
-	  <div class="right">
-	  	<a href="profile/justinwilden">  
-    	<div class="tb-avatar feature_avatar">
-      		<div class="photo"><img src="http://www.gravatar.com/avatar/09d0c35e80c8b315752df19191ba1ccd"></div>
-    	</div>		    	
-    	</a>
-      </div>
-	  <div class="tb-credit">Photo credit: © <a href="http://reubentabner.co.uk" onClick="trackOutboundLink(this, 'Outbound Links', 'reubentabner.co.uk'); return false;">Reuben Tabner</a></div>
 	  <div class="sponsor_content">
 	    <div class="brand">
 		  <div class="strap">brought to you by</div>

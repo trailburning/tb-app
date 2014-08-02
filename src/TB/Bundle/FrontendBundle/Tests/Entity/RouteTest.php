@@ -54,9 +54,9 @@ class RouteTest extends AbstractFrontendTest
                 "name": "Park"
             }, 
             "centroid": [
-                13.257437, 
-                52.508006
-            ], 
+                13.221316,
+                52.489695
+            ],
             "id": ' . $route->getId() . ', 
             "length": 11298, 
             "name": "Grunewald", 
@@ -231,7 +231,11 @@ class RouteTest extends AbstractFrontendTest
                 "mimetype": "image/jpeg", 
                 "path": "/cb88c97a09a59aa2452c0d0cdfdd2f4ccc211a53_share.jpg"
             },
-            "rating": null
+            "rating": null,
+            "start": [
+                13.257437,
+                52.508006
+            ]
         }';
         
         $this->assertJsonStringEqualsJsonString($expectedJson, json_encode($route->export()),

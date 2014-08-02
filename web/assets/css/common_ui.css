@@ -1,5 +1,13 @@
 /* TB DEFAULTS */
 /******************************************/
+
+@font-face {
+  font-family: 'StrangeloveText';
+  src: url('fonts/StrangeloveText.eot?#iefix') format('embedded-opentype'),  url('fonts/StrangeloveText.woff') format('woff'), url('fonts/StrangeloveText.ttf')  format('truetype'), url('fonts/StrangeloveText.svg#StrangeloveText') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
 body {  
   margin: 0;
   padding: 0;
@@ -559,31 +567,36 @@ a:active .tb-cntrl {
   position: fixed;
   top: 0px;
   width: 100%;
-  height: 63px;  
-  background: #000;
+  height: 45px;  
+  background: #1f1f1f;
 }
 
 #headerview .left {
   float: left;
-  margin: 8px 0px 0px 40px;
+  margin: 0px 0px 0px 16px;
 }
 
 #headerview .right {
   float: right;
-  margin: 0px 22px 0px 0px;
+  margin: 0px 18px 0px 0px;
   font-size: 14px;  
+}
+
+#headerview .links {
+  font-size: 16px;
+  line-height: 16px;
 }
 
 #headerview .links a, 
 #headerview .links a:link, 
 #headerview .links a:visited {
-  color: #44b6f7;
+  color: #FFF;
   text-decoration: none;
 }
 
 #headerview .links a:hover, 
 #headerview .links a:active {
-  color: #FFF;
+  color: #44b6f7;
   text-decoration: none;    
 }
 
@@ -608,13 +621,36 @@ a:active .tb-cntrl {
   background-color: #4B4B4B;
 }
 
-#headerview .right .links {
-  float: right;
-  margin: 26px 0px 0px 0px;
-  line-height: 1em;
+#headerview .left .logo {
+  float: left;
+  margin: 14px 0px 0px 0px;
+  width: 132px;
+  height: 17px;
+  line-height: 17px;  
 }
 
-#headerview .right .link {
+#headerview .left .logo a {
+  float:left; 
+  display:block;
+  line-height:20px; 
+  text-indent: -10000px;  
+  overflow: hidden;   
+  text-decoration: none;
+  width:132px;
+  height:17px;
+  background: url("../img/header/tb_logo.png") no-repeat top left;
+}
+
+#headerview .left .logo a:hover {
+  background-position: 0 -17px;
+}
+
+#headerview .left .links {
+  float: left;
+  margin: 16px 0px 0px 17px;
+}
+
+#headerview .left .link {
   float: left;
   margin: 0px 15px 0px 15px;
   color: #44b6f7;
@@ -622,8 +658,7 @@ a:active .tb-cntrl {
 
 #headerview .right .signin .links {
   float:left;
-  margin: 14px 15px 0px 30px;
-  line-height: 1em;
+  margin: 16px 15px 0px 30px;
 }
 
 #headerview .right .signin .link {
@@ -633,20 +668,19 @@ a:active .tb-cntrl {
   text-transform: none;
 }
 
-#headerview .links .main {
-  font-weight: 700;
-  text-transform: uppercase;
-}  
+#headerview .right .signin a {
+  margin-top: 7px;
+}
 
 #headerview .right .profile {  
   float: right;
-  margin: 6px 20px 0px 45px;  
+  margin: 3px 16px 0px 45px;
 }
 
 #headerview .right .profile .activity {
   position: absolute;
-  top: 15px;
-  left: 46px;  
+  top: 7px;
+  left: 32px;  
   width: 24px;
   height: 24px;
   line-height: 24px;
@@ -676,18 +710,18 @@ a:active .tb-cntrl {
 	
 #headerview .right .profile .dropdown-toggle .tb-avatar {
   box-shadow: none;
-  width: 50px;
-  height: 50px;
+  width: 38px;
+  height: 38px;
 }
 
 #headerview .right .signin {  
   float: right;
-  margin: 12px 0px 0px 19px;
+  margin: 0px 0px 0px 19px;
 }
 
 #headerview .trans-line {
   position: absolute;
-  top: 63px;
+  top: 45px;
   width: 100%;
   height: 2px;
   background: url(../img/trans_line.png) repeat-x top left;  

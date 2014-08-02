@@ -103,7 +103,7 @@ var TB_USER_ID = {{ app.user.id }}
 <script type="text/template" id="trailUploadGPXErrorViewTemplate">
     <div class="desc">
         <h4 class="tb">
-        There was an error procesing your GPX file.  Please contact Trailburning <a href="mailto:support@trailburning.com">support</a> if you need assistance.
+        <%= errMsg %> and could not be processed. Please contact Trailburning <a href="mailto:support@trailburning.com">support</a> if you need assistance.
         </h4>
     </div>
 	<div class="next_step"><a href="{{ path('profile', {'name': app.user.name}) }}" class="btn btn-tb-action btn-tb-large submit">Return to profile</a></div>            

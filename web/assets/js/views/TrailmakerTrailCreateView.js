@@ -70,7 +70,11 @@ define([
     onTrailUploadGPXViewUploadProgress: function(nProgress){
       this.trailUploadGPXProgressView.render(nProgress);
     },
-    onTrailUploadGPXViewError: function(){
+    onTrailUploadGPXViewError: function(errObj){
+      this.model.set('errMsg', 'The GPX file has an error');
+      if (errObj) {
+      	this.model.set('errMsg', errObj.usermsg);	          	
+      }    	
       $('#uploadGPX_view').hide();
       $('#uploadGPXprogress_view').hide();
       $('#uploadGPXerror_view').show();
