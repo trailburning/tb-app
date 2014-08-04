@@ -1255,6 +1255,10 @@ form label {
   #headerview, #appview, #big_sponsor_bar, #small_sponsor_bar {
     min-width: 992px;
   }      
+  .tb-avatar-highlight {
+    width: 66px;
+    height: 66px;
+  }
   .tb-avatar-feature {
     width: 112px;
     height: 112px;
