@@ -4,6 +4,9 @@ define([
   'views/HomeHeroView'
 ], function(_, Backbone, HomeHeroView){
 
+  var HERO_SLIDES_PLAY = 0;
+  var HERO_SLIDES_STOP = 1;
+
   var HERO_TIMER = 10000;
 
   var HomeHerosView = Backbone.View.extend({
@@ -16,6 +19,7 @@ define([
 	  this.bHeroReady = false;
 	  this.bWaiting = false;
 	  this.bFirstHero = true;      
+	  this.nState = HERO_SLIDES_PLAY;
 	  
 	  var self = this;
 	  // nav btns
@@ -23,6 +27,8 @@ define([
         $(evt.currentTarget).css('cursor','pointer');	  	
 	  });
 	  $('.button', $(this.el)).click(function(evt){
+	  	self.nState = HERO_SLIDES_STOP;
+	  	
 	    self.bWaiting = true;     
 	    self.loadHero(Number($(this).attr('data-slide')));	  	
 	  });
@@ -48,6 +54,8 @@ define([
 	  $('.button:eq('+this.nLoadingHero+')', $(this.el)).addClass('active');    	
 	},	
     prevHero: function(){
+	  this.nState = HERO_SLIDES_STOP;
+	    	
 	  // no more slides          	    	
 	  if (this.arrHeros.length < 2) {
 	  	return;
@@ -64,6 +72,8 @@ define([
 	  this.loadHero(nHero);     	    	
     },
     nextHero: function(){
+      this.nState = HERO_SLIDES_STOP;
+    	
 	  // no more slides          	    	
 	  if (this.arrHeros.length < 2) {
 	  	return;
@@ -146,6 +156,9 @@ define([
       }, HERO_TIMER);           	    	
     },
     onHeroTimer: function(){
+      if (this.nState != HERO_SLIDES_PLAY) {
+      	return;
+      } 
       this.bWaiting = true;
       this.checkpoint();
     },
