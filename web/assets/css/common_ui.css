@@ -600,27 +600,6 @@ a:active .tb-cntrl {
   text-decoration: none;    
 }
 
-#headerview .right .discover {
-  float: right;
-  margin: 17px 0px 0px 0px;
-}
-
-#headerview .right .discover .search-btn {
-  margin: 0;
-  padding: 0;  
-  width: 18px;
-  height: 18px;
-  border: none;
-  font-size: 0;
-  background: url("../img/header/search_black.gif") no-repeat top left;
-}
-
-#headerview .right .discover input[type="text"] {
-  margin: 0px 6px 0px 0px;
-  border: 1px solid #000;
-  background-color: #4B4B4B;
-}
-
 #headerview .left .logo {
   float: left;
   margin: 14px 0px 0px 0px;
@@ -656,9 +635,66 @@ a:active .tb-cntrl {
   color: #44b6f7;
 }
 
+#headerview .right .search {
+  float:left;
+  position: relative;
+  line-height: 40px;
+}
+
+#search {
+  position: relative;
+}
+
+#search button {
+  position: absolute;
+  right: 6px;
+  top: 2px;
+  background: none;
+  border: none;
+  padding: 0;
+  overflow: hidden;
+  color: #fff;
+}
+
+.ico {
+  background-repeat: no-repeat;
+  display: inline-block;
+  position: relative;  
+}
+
+.ico[data-icon="n-search-16"] {
+  background-image: url("../img/search.png");
+  width: 16px;
+  height: 16px;
+}
+
+/* expanding input CSS only */
+#myInput {
+  position: relative;
+  top: 0px;
+  right: 0px;	
+  width: 90px;
+  font-size: 16px;
+  background: #3F3F3F;
+  height: 26px;
+  padding: 0 24px 0 8px;
+  color: #fff;
+  border: none;
+  outline: none;  
+  -webkit-transition:width 0.3s ease-in-out;
+}
+
+#myInput:focus	{
+  width:200px;
+  -webkit-transition:width 0.5s ease-in-out;  
+  box-shadow:none;
+  -webkit-box-shadow:none; 
+  border-color:#cccccc; 
+}
+
 #headerview .right .signin .links {
   float:left;
-  margin: 16px 15px 0px 30px;
+  margin: 16px 15px 0px 0px;
 }
 
 #headerview .right .signin .link {
@@ -674,7 +710,7 @@ a:active .tb-cntrl {
 
 #headerview .right .profile {  
   float: right;
-  margin: 3px 16px 0px 45px;
+  margin: 3px 16px 0px 16px;
 }
 
 #headerview .right .profile .activity {
@@ -716,7 +752,7 @@ a:active .tb-cntrl {
 
 #headerview .right .signin {  
   float: right;
-  margin: 0px 0px 0px 19px;
+  margin: 0px 0px 0px 16px;
 }
 
 #headerview .trans-line {
