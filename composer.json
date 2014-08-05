@@ -41,7 +41,8 @@
         "knplabs/knp-gaufrette-bundle": "dev-master",
         "oldsound/rabbitmq-bundle": "1.2.*@dev",
         "webfactory/exceptions-bundle": "@stable",
-        "react/child-process": "0.5.*@dev"
+        "react/child-process": "0.5.*@dev",
+        "ruflin/Elastica": "dev-master"
     },
     "repositories": [
         {
