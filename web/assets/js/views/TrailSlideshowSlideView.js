@@ -21,7 +21,7 @@ define([
       	else {
       	  this.model = new Backbone.Model();
       	  this.model.id = -1;
-      	  this.model.set('versionLargePath', 'trailburning-assets/images/default/example_trailcard.jpg');
+      	  this.model.set('versionLargePath', '/images/default/example_trailcard.jpg');
       	}        
 	    var attribs = this.model.toJSON();
 	    $(this.el).html(this.template(attribs));      	  
