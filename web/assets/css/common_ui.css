@@ -638,7 +638,7 @@ a:active .tb-cntrl {
 #headerview .right .search {
   float:left;
   position: relative;
-  line-height: 40px;
+  line-height: 42px;
 }
 
 #search {
@@ -668,8 +668,7 @@ a:active .tb-cntrl {
   height: 16px;
 }
 
-/* expanding input CSS only */
-#myInput {
+#searchBox{
   position: relative;
   top: 0px;
   right: 0px;	
@@ -681,15 +680,20 @@ a:active .tb-cntrl {
   color: #fff;
   border: none;
   outline: none;  
-  -webkit-transition:width 0.3s ease-in-out;
-}
-
-#myInput:focus	{
-  width:200px;
-  -webkit-transition:width 0.5s ease-in-out;  
   box-shadow:none;
   -webkit-box-shadow:none; 
-  border-color:#cccccc; 
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;  
+}
+
+#searchBox:focus	{
+  width: 200px;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
 }
 
 #headerview .right .signin .links {
@@ -752,7 +756,7 @@ a:active .tb-cntrl {
 
 #headerview .right .signin {  
   float: right;
-  margin: 0px 0px 0px 16px;
+  margin: 0px 0px 0px 32px;
 }
 
 #headerview .trans-line {
