@@ -1,4 +1,4 @@
-var ASSETS_BASEURL = 'https://s3-eu-west-1.amazonaws.com/trailburning-assets/';
+var ASSETS_BASEURL = 'https://asset.trailburning.com/';
 var DEF_ICONS = 0;
 var SMALL_ICONS = 1;
 

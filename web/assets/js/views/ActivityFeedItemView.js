@@ -18,7 +18,7 @@ define([
 		  this.model.set('displayPublished', 'Now');
 		  this.model.set('displaySeen', 'old');
       	  this.model.set('activityURL', '/tour');
-      	  this.model.set('actorAvatarURL', 'https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/trailburning/avatar.jpg');
+      	  this.model.set('actorAvatarURL', 'http://assets.trailburning.com/images/profile/trailburning/avatar.jpg');
       	  
       	  this.model.set('actorDisplayName', 'Trailburning');
       	  this.model.set('preVerbDisplayName', 'welcomes you to a');
@@ -61,7 +61,7 @@ define([
       	  	  break;
       		case 'register':      	      	
 	      	  this.model.set('activityURL', '/tour');
-	      	  this.model.set('actorAvatarURL', 'https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/trailburning/avatar.jpg');
+	      	  this.model.set('actorAvatarURL', 'http://assets.trailburning.com/images/profile/trailburning/avatar.jpg');
 	      	  
 	      	  this.model.set('actorDisplayName', 'Trailburning');
 	      	  this.model.set('preVerbDisplayName', 'welcomes you to a');

@@ -19,8 +19,8 @@ use TB\Bundle\FrontendBundle\Util\MediaImporter;
 class Media implements Exportable
 {
     
-    const BUCKET_NAME = 'trailburning-media';
-    const S3_SERVER = 'http://s3-eu-west-1.amazonaws.com/';
+    const BUCKET_NAME = '';
+    const S3_SERVER = 'http://media.trailburning.com';
     
     /**
      * @var integer

@@ -61,7 +61,7 @@ class MediaUnusedStatusCommand extends ContainerAwareCommand
     
     public function getFileSize($path)
     {
-        $url = 'http://s3-eu-west-1.amazonaws.com/trailburning-media/' . $path;
+        $url = 'http://media.trailburning.com/' . $path;
         
         // Assume failure.
         $result = -1;

@@ -22,7 +22,7 @@ var TB_EVENT_MAP_ZOOM = {{ event.mapZoom }};
 </script>
 
 <div id="event_header">
-    <div class="image_container fade_on_load"><img src="http://app.resrc.it/O=80/http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/event/{{ event.slug }}/{{ event.image }}" class="resrc scale" /></div>
+    <div class="image_container fade_on_load"><img src="http://app.resrc.it/O=80/http://assets.trailburning.com/images/event/{{ event.slug }}/{{ event.image }}" class="resrc scale" /></div>
     <div class="event_title">
         <h1 class="tb tb-title">{{ event.title }}</h1>
         {% if event.title2 %}
@@ -33,13 +33,13 @@ var TB_EVENT_MAP_ZOOM = {{ event.mapZoom }};
         <h1 class="tb tb-title">{{ event.date|date('d.m.y') }}</h1>
     </div>      
     <div class="event_logo">
-        <a href="{{ event.link }}" onClick="trackOutboundLink(this, 'Outbound Links', '{{ event.link | url_truncate }}'); return false;"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/event/{{ event.slug }}/{{ event.logo }}" border="0"></a>
+        <a href="{{ event.link }}" onClick="trackOutboundLink(this, 'Outbound Links', '{{ event.link | url_truncate }}'); return false;"><img src="https://assets.trailburning.com/images/event/{{ event.slug }}/{{ event.logo }}" border="0"></a>
     </div>    
     {% if event.sponsors %}
     <div class="sponsors">        
         <div class="logos">
         {% for brandProfile in event.sponsors %}
-            <a href="{{ brandProfile.link }}" onClick="trackOutboundLink(this, 'Outbound Links', '{{ brandProfile.link|url_truncate }}'); return false;"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/{{ brandProfile.name }}/{{ brandProfile.logo }}" border="0"></a>    
+            <a href="{{ brandProfile.link }}" onClick="trackOutboundLink(this, 'Outbound Links', '{{ brandProfile.link|url_truncate }}'); return false;"><img src="https://assets.trailburning.com/images/profile/{{ brandProfile.name }}/{{ brandProfile.logo }}" border="0"></a>    
         {% endfor %}            
         </div>
     </div>
@@ -72,8 +72,8 @@ var TB_EVENT_MAP_ZOOM = {{ event.mapZoom }};
                 <div class="content">
                     <h3 class="tb title">About Event Region</h3>
                     <div class="photo">
-                        <img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/region/{{ event.region.slug }}/{{ event.region.image}}">
-                        <div class="logo"><a href="{{ event.region.link }}" onClick="trackOutboundLink(this, 'Outbound Links', '{{ event.region.link | url_truncate }}'); return false;" target="_blank"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/region/{{ event.region.slug }}/{{ event.region.logo }}" border="0"></a></div>              
+                        <img src="https://assets.trailburning.com/images/region/{{ event.region.slug }}/{{ event.region.image}}">
+                        <div class="logo"><a href="{{ event.region.link }}" onClick="trackOutboundLink(this, 'Outbound Links', '{{ event.region.link | url_truncate }}'); return false;" target="_blank"><img src="https://assets.trailburning.com/images/region/{{ event.region.slug }}/{{ event.region.logo }}" border="0"></a></div>              
                     </div>            
                     <div class="detail">
                         <h4 class="tb">{{ event.region.name }}</h4>            
@@ -111,7 +111,7 @@ var TB_EVENT_MAP_ZOOM = {{ event.mapZoom }};
                                 </div>
                             </a>
                             <div class="details">
-                                <div class="logo"><!--<img src="http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/events/tfor/trail_logo_ashmei.png" border="0"/>--></div>
+                                <div class="logo"><!--<img src="http://assets.trailburning.com/images/events/tfor/trail_logo_ashmei.png" border="0"/>--></div>
                                 <div class="more"><a class="btn btn-tb" href="{{ path('trail', {trailSlug: route.slug}) }}">More</a></div>
                             </div>
                         </div>

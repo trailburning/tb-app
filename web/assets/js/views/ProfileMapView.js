@@ -26,7 +26,7 @@ define([
       });
 
       var trailIcon = L.icon({
-          iconUrl: 'https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/icons/marker_inactive.png',
+          iconUrl: 'http://assets.trailburning.com/images/icons/marker_inactive.png',
           iconSize:     [23, 24],
           iconAnchor:   [10, 10]
       });
@@ -38,7 +38,7 @@ define([
               popupAnchor:  [16, 44]
           }
       });      
-      var locationIcon = new LocationIcon({iconUrl: 'https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/icons/location.png'});
+      var locationIcon = new LocationIcon({iconUrl: 'http://assets.trailburning.com/images/icons/location.png'});
       
       var arrMarkers = [];
 
