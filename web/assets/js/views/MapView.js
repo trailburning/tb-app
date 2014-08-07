@@ -38,7 +38,7 @@ define([
       this.nCurrRouteCard = 0;
       
       this.bFlipLock = false;
-      this.PageSize = 100;
+      this.PageSize = 500;
 	  this.nPage = 0;
 	  this.nView = WORLD_VIEW;
 	  this.nCurrCard = -1;
