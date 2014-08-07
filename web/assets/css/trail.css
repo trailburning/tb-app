@@ -480,6 +480,12 @@ html.touch #small_sponsor_bar {
   background: #DEDEDE;
 }
 
+#trailplayer .event_logo {
+  position: absolute;
+  top: 77px;
+  right: 22px;
+}
+
 #trailplayer #trail_info {
   position: absolute;
   top: -300px;

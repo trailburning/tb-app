@@ -69,13 +69,18 @@ var TB_TRAIL_ID = {{ trail.id }};
   	  	  <div class="tb-loader"><div class="spinner"></div><div class="middle">...</div></div>
   	  	</div>        
         
+    	{% if event %}
+			<div class="event_logo">
+    			<a href="{{ app.request.baseUrl }}/event/{{ event.slug}}"><img src="http://assets.trailburning.com/images/event/{{ event.slug }}/{{ event.logo }}" border="0"></a>
+			</div>
+        {% endif %}
+        
         <div id="trail_info">   
         	
         	{% if event %}
         	{% else %}
 	            <div class="trail_avatar">
-	            	<div class="tb-avatar tb-avatar-feature"><div class="photo"><a href="{{ path('profile', {'name': user.name}) }}">                	         <img src="{{ get_user_avatar_url(user) }}">
-	            	</a></div></div>
+	            	<div class="tb-avatar tb-avatar-feature"><div class="photo"><a href="{{ path('profile', {'name': user.name}) }}"><img src="{{ get_user_avatar_url(user) }}"></a></div></div>
 	            </div>
             {% endif %}
             <div class="trail_title{% if event %} no_avatar{% endif %}">
