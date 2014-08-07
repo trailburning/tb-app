@@ -407,6 +407,10 @@ define([
 	          bEvent = true;	          	
 	          model.set('eventURL', 'laugavegur');
 	          break;	          	  
+          	case 'lantau-vertical-hong-kong':
+          	  bEvent = true;	          	
+          	  model.set('eventURL', 'lantauvertical');
+          	  break;	          	  	          	  
 	    }
         if (bEvent) {
           mapTrailCardView = new MapTrailEventCardView({ model: model });
