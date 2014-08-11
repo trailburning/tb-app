@@ -156,10 +156,10 @@ define([
 	  $('.image_container', elContext).removeClass('tb-fade-in').css('opacity', 0);
 	  
 	  if (this.options.mediaCollection.length) {
-  	    $('.trailcard_panel .photo .image_container', $(this.el)).html('<img src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/'+model.get('versions')[0].path+'" class="resrc scale" border="0"/>');	  	
+  	    $('.trailcard_panel .photo .image_container', $(this.el)).html('<img src="http://app.resrc.it/o=80/http://media.trailburning.com'+model.get('versions')[0].path+'" class="resrc scale" border="0"/>');	  	
 	  }
 	  else {
-  	    $('.trailcard_panel .photo .image_container', $(this.el)).html('<img src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/default/example_trailcard.jpg" class="resrc scale" border="0"/>');
+  	    $('.trailcard_panel .photo .image_container', $(this.el)).html('<img src="http://app.resrc.it/o=80/http://assets.trailburning.com/images/default/example_trailcard.jpg" class="resrc scale" border="0"/>');
 	  }
         
 	  // scale images when loaded

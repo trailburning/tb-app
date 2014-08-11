@@ -36,10 +36,10 @@ var TB_EDITORIAL_TRAILS = [
 		<div class="brand">
 		 	{% if editorial.id == 11 %}
 			<div class="strap">brought to you by</div>
-			<div class="logo"><a href="http://www.likethewindmagazine.com/" target="_blank"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/likethewind/editorial_sponsor_logo_big.png" border="0"></a></div>
+			<div class="logo"><a href="http://www.likethewindmagazine.com/" target="_blank"><img src="http://assets.trailburning.com/images/profile/likethewind/editorial_sponsor_logo_big.png" border="0"></a></div>
 		 	{% else %}		
 			<div class="strap">brought to you by</div>
-			<div class="logo"><a href="{{ path('profile', {'name': 'ashmei'}) }}"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/ashmei/editorial_sponsor_logo_big.png" border="0"></a></div>
+			<div class="logo"><a href="{{ path('profile', {'name': 'ashmei'}) }}"><img src="http://assets.trailburning.com/images/profile/ashmei/editorial_sponsor_logo_big.png" border="0"></a></div>
 			{% endif %}			
 		</div>
 		<div class="inspire_logo"><img src="{{ asset('assets/img/sponsor/inspire_logo.png') }}"></div>						
@@ -52,10 +52,10 @@ var TB_EDITORIAL_TRAILS = [
 		<div class="brand">
 		 	{% if editorial.id == 11 %}
 				<div class="strap">brought to you by</div>
-				<div class="logo"><a href="http://www.likethewindmagazine.com/" target="_blank"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/likethewind/editorial_sponsor_logo_small.png" border="0"></a></div>
+				<div class="logo"><a href="http://www.likethewindmagazine.com/" target="_blank"><img src="http://assets.trailburning.com/images/profile/likethewind/editorial_sponsor_logo_small.png" border="0"></a></div>
 		 	{% else %}		
 				<div class="strap">brought to you by</div>
-				<div class="logo"><a href="{{ path('profile', {'name': 'ashmei'}) }}"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/ashmei/editorial_sponsor_logo_small.png" border="0"></a></div>
+				<div class="logo"><a href="{{ path('profile', {'name': 'ashmei'}) }}"><img src="http://assets.trailburning.com/images/profile/ashmei/editorial_sponsor_logo_small.png" border="0"></a></div>
 			{% endif %}						
 		</div>
 	</div>
@@ -71,7 +71,7 @@ var TB_EDITORIAL_TRAILS = [
 	  			</a></div></div>
 	  		</div>
 	  		<div class="hero">
-				<div class="image_container fade_on_load"><img src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/editorial/{{ editorial.slug }}/{{ editorial.image }}" class="scale"></div>
+				<div class="image_container fade_on_load"><img src="http://app.resrc.it/o=80/http://assets.trailburning.com/images/editorial/{{ editorial.slug }}/{{ editorial.image }}" class="scale"></div>
 				{% if editorial.imageCredit is not null %}				
 				  <div class="tb-credit">Photo credit: © <a href="{{ editorial.imageCreditURL }}" onClick="trackOutboundLink(this, 'Outbound Links', '{{ editorial.imageCreditUrl | url_truncate }}'); return false;">{{ editorial.imageCredit }}</a></div>
 				{% endif %}

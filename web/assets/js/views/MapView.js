@@ -38,7 +38,7 @@ define([
       this.nCurrRouteCard = 0;
       
       this.bFlipLock = false;
-      this.PageSize = 100;
+      this.PageSize = 500;
 	  this.nPage = 0;
 	  this.nView = WORLD_VIEW;
 	  this.nCurrCard = -1;
@@ -407,6 +407,10 @@ define([
 	          bEvent = true;	          	
 	          model.set('eventURL', 'laugavegur');
 	          break;	          	  
+          	case 'lantau-vertical-hong-kong':
+          	  bEvent = true;	          	
+          	  model.set('eventURL', 'lantauvertical');
+          	  break;	          	  	          	  
 	    }
         if (bEvent) {
           mapTrailCardView = new MapTrailEventCardView({ model: model });

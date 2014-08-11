@@ -4,7 +4,7 @@ define([
 ], function(_, Backbone){
 
   var WEATHER_BASEURL = 'http://api.openweathermap.org/data/2.5/weather';
-  var WEATHER_ICONS_BASEURL = 'https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/icons/weather/';
+  var WEATHER_ICONS_BASEURL = 'http://assets.trailburning.com/images/icons/weather/';
   var UNITS_METRIC = 0;
   var UNITS_IMPERIAL = 1;
 

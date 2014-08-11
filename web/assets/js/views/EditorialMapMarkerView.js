@@ -12,7 +12,7 @@ define([
               popupAnchor:  [16, 44]
           }
       });      
-      this.locationIcon = new LocationIcon({iconUrl: 'https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/icons/location.png'});      
+      this.locationIcon = new LocationIcon({iconUrl: 'http://assets.trailburning.com/images/icons/location.png'});      
     },            
     render: function(){
       var self = this;
@@ -28,7 +28,7 @@ define([
 
       // Create an element to hold all your text and markup
       var container = $('<div class="trail_location_popup clearfix" />');      
-      container.html('<div class="icon"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/icons/mini_trailcard.png"></div><div class="detail">'+this.options.trail.short_name+'<br/>'+this.options.trail.region+'</div>');
+      container.html('<div class="icon"><img src="http://assets.trailburning.com/images/icons/mini_trailcard.png"></div><div class="detail">'+this.options.trail.short_name+'<br/>'+this.options.trail.region+'</div>');
 
       this.popup = L.popup({'offset': L.point(0, -24), 'autoPan': false, 'closeButton': false})
       .setLatLng([this.options.trail.lat, this.options.trail.long])

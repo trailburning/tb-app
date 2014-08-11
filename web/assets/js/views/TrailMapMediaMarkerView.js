@@ -1,4 +1,4 @@
-var ASSETS_BASEURL = 'https://s3-eu-west-1.amazonaws.com/trailburning-assets/';
+var ASSETS_BASEURL = 'http://assets.trailburning.com/';
 var DEF_ICONS = 0;
 var SMALL_ICONS = 1;
 
@@ -127,7 +127,7 @@ define([
 
           // create a DOM element and put it into one of the map panes
           this._el = L.DomUtil.create('div', 'trail_media_popup_overlay leaflet-zoom-hide');
-          $(this._el).append('<div class="leaflet-popup-content-wrapper"><div class="leaflet-popup-content" style="width: 125px;"><div class="trail_media_popup"><div class="image_container fade_on_load tb-fade"><img data-src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/'+versions[0].path+'" class="resrc scale photo_btn" border="0"></div></div></div></div><div class="leaflet-popup-tip-container"><div class="leaflet-popup-tip"></div></div>');        
+          $(this._el).append('<div class="leaflet-popup-content-wrapper"><div class="leaflet-popup-content" style="width: 125px;"><div class="trail_media_popup"><div class="image_container fade_on_load tb-fade"><img data-src="http://app.resrc.it/o=80/http://media.trailburning.com'+versions[0].path+'" class="resrc scale photo_btn" border="0"></div></div></div></div><div class="leaflet-popup-tip-container"><div class="leaflet-popup-tip"></div></div>');        
           map.getPanes().markerPane.appendChild(this._el);
           
           // add a viewreset event listener for updating layer's position, do the latter
