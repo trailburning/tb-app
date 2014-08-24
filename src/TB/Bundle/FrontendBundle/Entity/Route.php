@@ -17,21 +17,21 @@ class Route implements Exportable
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=50, nullable=true)
+     * @ORM\Column(name="name", type="string", length=255, nullable=true)
      */
     private $name;
     
     /**
      * @var string
      *
-     * @ORM\Column(name="short_name", type="string", length=50, nullable=true)
+     * @ORM\Column(name="short_name", type="string", length=255, nullable=true)
      */
     private $short_name;
 	
     /**
      * @var string
      *
-     * @ORM\Column(name="region", type="string", length=50, nullable=true)
+     * @ORM\Column(name="region", type="string", length=100, nullable=true)
      */
     private $region;
     
@@ -39,7 +39,7 @@ class Route implements Exportable
      * @var string
      *
      * @Gedmo\Slug(fields={"name", "region"}, separator="-")    
-     * @ORM\Column(name="slug", type="string", length=50, nullable=true)
+     * @ORM\Column(name="slug", type="string", length=255, nullable=true)
      */
     private $slug;
 
