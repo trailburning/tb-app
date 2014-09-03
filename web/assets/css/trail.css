@@ -166,7 +166,7 @@ html.touch #small_sponsor_bar {
   height: 100%;
   margin: 0px auto 0px auto;
   overflow: hidden;
-  background: rgba(255, 255, 255, 1);        
+  background: rgba(0, 0, 0, 0.6);        
 }
 
 /* TRAIL STATS VIEW */
@@ -216,7 +216,6 @@ html.touch #small_sponsor_bar {
   left: 234px;
   width: 688px;
   height: 218px;
-  background: #FFF;    
   border: none;
 }
 
