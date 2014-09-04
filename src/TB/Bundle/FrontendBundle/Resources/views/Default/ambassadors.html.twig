@@ -15,10 +15,21 @@ var TB_USER_ID = {{ app.user.id }};
 {% endif %}
 </script>
 
-  <div id="def_header">  	
-    <div class="background">
-      <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/O=80/http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/ambassadors/ambassador1.jpg" class="resrc scale" /></div>
-    </div>
+  <div id="def_header">  	  	
+	  <div id="hero_images">  	
+	    <div class="hero_image">
+	      <div class="background">
+      		<div class="image_container fade_on_load"><img data-src="http://app.resrc.it/O=80/http://assets.trailburning.com/images/ambassadors/ambassador3.jpg" class="resrc scale" /></div>
+		  </div>
+	  	</div>
+	
+	    <div class="hero_image">
+	      <div class="background">
+      		<div class="image_container fade_on_load"><img data-src="http://app.resrc.it/O=80/http://assets.trailburning.com/images/ambassadors/ambassador1.jpg" class="resrc scale" /></div>
+	      </div>
+	  	</div>
+  	</div>
+
     <div class="event_title">
       <h1 class="tb tb-title">I'm #Trailburning</h1>
       <br/>
@@ -28,6 +39,53 @@ var TB_USER_ID = {{ app.user.id }};
     
   <div class="panel_content">
   	<div class="panel_ambassadors clearfix">
+  		
+  		<div class="ambassador clearfix">  			
+			<div class="avatar">
+				<div class="tb-avatar tb-avatar-feature"><div class="photo"><a href="{{ app.request.baseUrl }}/profile/philipshipman"><img src="http://assets.trailburning.com/images/profile/philipshipman/avatar.jpg"></a></div></div>
+			</div>  			
+  			<div class="ambassador-profile">  			
+  				<div class="quote">
+  					<p class="fancy"><span>"Appreciating the fullness of the natural world"</span></p>  					
+  				</div>
+  				<div class="ambassador-content">
+					<div class="trailcards trail_card_sticker">      
+						<div class="panel trail_card_panel">
+							<div class="title"><h3 class="tb">Mountains</h3></div>
+					        <a href="{{ app.request.baseUrl }}/trail/eas-a-chual-aluinn-scottish-highlands">
+					        <div class="photo tb-photo-btn">
+					        	<div class="image_container fade_on_load"><img src="http://app.resrc.it/o=80/http://media.trailburning.com/273/204c198ad0c6fc5fee05fc0997c892de622aa293.JPG" class="resrc scale" border="0"/></div>
+					        	<div class="card_title">
+								<h1>Eas a' Chual Aluinn</h1>
+								<br>
+								<h1>Scottish Highlands</h1>
+					        	</div>
+					       	</div>
+					        </a>
+					        <div class="summary">
+				  	    		<div class="tb-avatar"><div class="photo"><a href="{{ app.request.baseUrl }}/profile/philipshipman"><img src="http://assets.trailburning.com/images/profile/philipshipman/avatar.jpg"></a></div></div>
+						        <div class="detail">
+						        by <strong>Phil Shipman</strong>
+						        <div class="stars">
+							      <div class="star_full"></div>
+							      <div class="star_half"></div>
+						        </div>
+						        </div>
+					        </div>
+					 	</div>
+	  				</div>
+	  				<div class="details">
+	  					<h3 class="tb">Phil Shipman</h3>
+	  					<div class="home">
+	  				  		<div class="location"></div>
+	  				  		Highlands, <strong>Scotland</strong>
+	  					</div>	  				
+						I'm exceptionally fortunate to call the Highlands of Scotland home - and continually seek new wilderness adventures here by foot, bike and sea kayak. Occasionally enter ultra trail events, but only to give me an extra bit of motivation to get out there and discover new trails when the weather's being typically Scottish...
+						<div class="profile_btn"><a href="{{ app.request.baseUrl }}/profile/philipshipman" class="btn btn-tb">Phil's Profile</a></div>					
+	  				</div>
+	  			</div>
+  			</div>
+  		</div>          
   		
   		<div class="ambassador clearfix">  			
 			<div class="avatar">
@@ -43,7 +101,7 @@ var TB_USER_ID = {{ app.user.id }};
 							<div class="title"><h3 class="tb">Mountains</h3></div>
 					        <a href="{{ app.request.baseUrl }}/trail/tamaro-lema-ticino-switzerland-1">
 					        <div class="photo tb-photo-btn">
-					        	<div class="image_container fade_on_load"><img src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/trailburning-media/349/85e7d901983ce9df64343af7f3f2e901b02b416b.JPG" class="resrc scale" border="0"/></div>
+					        	<div class="image_container fade_on_load"><img src="http://app.resrc.it/o=80/http://media.trailburning.com/349/85e7d901983ce9df64343af7f3f2e901b02b416b.JPG" class="resrc scale" border="0"/></div>
 					        	<div class="card_title">
 								<h1>Tamaro-Lema</h1>
 								<br>
@@ -90,7 +148,7 @@ var TB_USER_ID = {{ app.user.id }};
 							<div class="title"><h3 class="tb">Coast</h3></div>
 					        <a href="{{ app.request.baseUrl }}/trail/marion-coastal-trail-south-australia">
 					        <div class="photo tb-photo-btn">
-					        	<div class="image_container fade_on_load"><img src="http://app.resrc.it/o=80/http://s3-eu-west-1.amazonaws.com/trailburning-media/312/f5198c71abb79b731e1507f79836bbce6c811945.JPG" class="resrc scale" border="0"/></div>
+					        	<div class="image_container fade_on_load"><img src="http://app.resrc.it/o=80/http://media.trailburning.com/312/f5198c71abb79b731e1507f79836bbce6c811945.JPG" class="resrc scale" border="0"/></div>
 					        	<div class="card_title">
 								<h1>Marion Coastal Trail</h1>
 								<br>

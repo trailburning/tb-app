@@ -36,7 +36,7 @@ border-width:1px;
 #event_header .event_logo {
   position: absolute;
   top: 23px;
-  right: 34px;
+  right: 22px;
 }
 
 #event_header .event_logo img {
@@ -118,9 +118,7 @@ border-width:1px;
 
 .event_detail_panel .content {
   margin: 34px 72px 28px 24px;
-  font-size: 14px;
   font-weight: 300;
-  line-height: 1.3em;  
   color: #000000;
 }
 
@@ -140,9 +138,7 @@ border-width:1px;
 }
 
 .event_region_panel .content {
-  font-size: 14px;
   font-weight: 300;
-  line-height: 1.3em;  
   color: #000000;
 }
 
@@ -308,6 +304,11 @@ border-width:1px;
   width: 522px;
   height: 278px;
   background-color: transparent;   
+  cursor: default;
+}
+
+.event_location_panel .content .event_location_map:hover {
+  cursor: default;
 }
 
 /* RESPONSIVE */

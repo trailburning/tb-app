@@ -43,10 +43,10 @@ var TB_TRAIL_ID = {{ trail.id }};
 			<div class="brand">
 			 	{% if editorial.id == 11 %}
 					<div class="strap">brought to you by</div>
-					<div class="logo"><a href="http://www.likethewindmagazine.com/" target="_blank"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/likethewind/editorial_sponsor_logo_small.png" border="0"></a></div>
+					<div class="logo"><a href="http://www.likethewindmagazine.com/" target="_blank"><img src="http://assets.trailburning.com/images/profile/likethewind/editorial_sponsor_logo_small.png" border="0"></a></div>
 			 	{% else %}		
 					<div class="strap">brought to you by</div>
-					<div class="logo"><a href="{{ path('profile', {'name': 'ashmei'}) }}"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/ashmei/editorial_sponsor_logo_small.png" border="0"></a></div>
+					<div class="logo"><a href="{{ path('profile', {'name': 'ashmei'}) }}"><img src="http://assets.trailburning.com/images/profile/ashmei/editorial_sponsor_logo_small.png" border="0"></a></div>
 				{% endif %}						
 			</div>
 		</div>
@@ -69,13 +69,18 @@ var TB_TRAIL_ID = {{ trail.id }};
   	  	  <div class="tb-loader"><div class="spinner"></div><div class="middle">...</div></div>
   	  	</div>        
         
+    	{% if event %}
+			<div class="event_logo">
+    			<a href="{{ app.request.baseUrl }}/event/{{ event.slug}}"><img src="http://assets.trailburning.com/images/event/{{ event.slug }}/{{ event.logo }}" border="0"></a>
+			</div>
+        {% endif %}
+        
         <div id="trail_info">   
         	
         	{% if event %}
         	{% else %}
 	            <div class="trail_avatar">
-	            	<div class="tb-avatar tb-avatar-feature"><div class="photo"><a href="{{ path('profile', {'name': user.name}) }}">                	         <img src="{{ get_user_avatar_url(user) }}">
-	            	</a></div></div>
+	            	<div class="tb-avatar tb-avatar-feature"><div class="photo"><a href="{{ path('profile', {'name': user.name}) }}"><img src="{{ get_user_avatar_url(user) }}"></a></div></div>
 	            </div>
             {% endif %}
             <div class="trail_title{% if event %} no_avatar{% endif %}">
@@ -168,7 +173,7 @@ var TB_TRAIL_ID = {{ trail.id }};
 				                                </div>
 				                            </a>
 				                            <div class="details">
-				                                <div class="logo"><!--<img src="http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/events/tfor/trail_logo_ashmei.png" border="0"/>--></div>
+				                                <div class="logo"><!--<img src="http://assets.trailburning.com/images/events/tfor/trail_logo_ashmei.png" border="0"/>--></div>
 				                                <div class="more"><a class="btn btn-tb" href="{{ path('trail', {trailSlug: eventTrail.slug}) }}">More</a></div>
 				                            </div>
 				                        </div>
@@ -244,9 +249,9 @@ var TB_TRAIL_ID = {{ trail.id }};
 						<div class="brand">
 							<div class="strap">brought to you by</div>
 						 	{% if editorial.id == 11 %}
-								<div class="logo"><a href="http://www.likethewindmagazine.com/" target="_blank"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/likethewind/editorial_sponsor_logo_small.png" border="0"></a></div>
+								<div class="logo"><a href="http://www.likethewindmagazine.com/" target="_blank"><img src="http://assets.trailburning.com/images/profile/likethewind/editorial_sponsor_logo_small.png" border="0"></a></div>
 						 	{% else %}		
-								<div class="logo"><a href="{{ path('profile', {'name': 'ashmei'}) }}"><img src="https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/ashmei/editorial_sponsor_logo_small.png" border="0"></a></div>
+								<div class="logo"><a href="{{ path('profile', {'name': 'ashmei'}) }}"><img src="http://assets.trailburning.com/images/profile/ashmei/editorial_sponsor_logo_small.png" border="0"></a></div>
 							{% endif %}						
 						</div>
 						<div class="inspire_logo"><img src="{{ asset('assets/img/sponsor/inspire_logo.png') }}"></div>						
@@ -309,7 +314,7 @@ var TB_TRAIL_ID = {{ trail.id }};
 </script>
 
 <script type="text/template" id="trailSlideViewTemplate">
-  <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/O=80/http://s3-eu-west-1.amazonaws.com/<%= versionLargePath%>" class="resrc scale" /></div>  
+  <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/O=80/http://media.trailburning.com<%= versionLargePath%>" class="resrc scale" /></div>  
 </script>
 
 <script type="text/template" id="trailMapViewTemplate">

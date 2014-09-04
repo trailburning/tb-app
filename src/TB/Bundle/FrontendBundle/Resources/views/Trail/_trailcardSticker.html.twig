@@ -13,7 +13,7 @@
 	    </a>
 	    <div class="summary">
             {% if trail.eventRoutes and trail.eventRoutes|length() > 0 %}
-    	        <div class="sponsor"><a href="{{ path('event', {slug: trail.eventRoutes[0].event.slug}) }}"><img src="http://s3-eu-west-1.amazonaws.com/trailburning-assets/images/events/{{ trail.eventRoutes[0].event.slug }}/card_trail_logo.png"></a></div>	       		
+    	        <div class="sponsor"><a href="{{ path('event', {slug: trail.eventRoutes[0].event.slug}) }}"><img src="http://assets.trailburning.com/images/events/{{ trail.eventRoutes[0].event.slug }}/card_trail_logo.png"></a></div>	       		
             {% elseif trail.user and trail.user.name != 'admin'  %}
            		{{ include('TBFrontendBundle:Profile:_userAvatar.html.twig', {user: trail.user}) }}
     	        <div class="detail">

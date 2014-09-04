@@ -19,7 +19,6 @@ border-width:1px;
 /* DEF HEADER */
 /******************************************/
 #def_header {
-  z-index: 100;
   position: relative;
   margin-top: 45px;
   width: 100%;
@@ -34,6 +33,40 @@ border-width:1px;
   height: 486px;
   overflow: hidden;
 }
+
+/* HERO */
+/******************************************/
+.hero_image {
+  position: relative;
+}
+
+.hero_image{
+  visibility: hidden;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;  
+}
+
+.hero-move {
+  -webkit-transition: top 1s;
+  -moz-transition: top 1s;
+  -o-transition: top 1s;
+  transition: top 1s;    
+}
+
+/*
+
+#def_header .background .image_container {
+  position: relative;
+  opacity: 0;
+  width: 100%;
+  height: 486px;
+  overflow: hidden;
+}
+*/
 
 #def_header .event_title {
   position: absolute;

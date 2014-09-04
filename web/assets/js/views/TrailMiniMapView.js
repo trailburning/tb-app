@@ -23,7 +23,7 @@ define([
               popupAnchor:  [12, 33]
           }
       });      
-      this.locationIcon = new LocationIcon({iconUrl: 'https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/icons/sm_location.png'});
+      this.locationIcon = new LocationIcon({iconUrl: 'http://assets.trailburning.com/images/icons/sm_location.png'});
     },            
     show: function(){
       $(this.el).show();

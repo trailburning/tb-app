@@ -14,6 +14,7 @@ use TB\Bundle\FrontendBundle\Entity\Event;
 use TB\Bundle\FrontendBundle\Entity\EventRoute;
 use CrEOF\Spatial\PHP\Types\Geometry\Point;
 use TB\Bundle\APIBundle\Util;
+use PDO;
 
 /**
  *
@@ -24,13 +25,13 @@ class Postgis extends \PDO
     public function __construct($host, $port, $database, $user, $password, $driver_options=array()) 
     {
         $dsn = 'pgsql:host='.$host.';port='.$port.';dbname='.$database;
-        
         try {
             parent::__construct($dsn, $user, $password, $driver_options);
         }
         catch (PDOException $e) {
             throw (new ApiException('Failed to establish connection to Database', 500));
         }
+        $this->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
     private function updateRouteLength($routeId) 

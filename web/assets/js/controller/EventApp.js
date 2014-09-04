@@ -61,7 +61,7 @@ define([
               popupAnchor:  [16, 44]
           }
       });      
-      var startIcon = new LocationIcon({iconUrl: 'https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/icons/location.png'});
+      var startIcon = new LocationIcon({iconUrl: 'http://assets.trailburning.com/images/icons/location.png'});
       L.marker([fLat, fLng], {icon: startIcon}).addTo(map);      
 
       var latlng = new L.LatLng(fLat, fLng);
