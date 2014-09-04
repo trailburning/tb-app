@@ -151,9 +151,8 @@
         </service>
         
         <!--  Register image generator as service -->
-        <service id="tb.elasticsearch" class="\Elastica\Client">
-            <argument>%elasticsearch_host%</argument>
-            <argument>%elasticsearch_port%</argument>
+        <service id="tb.elasticsearch.client" class="Elasticsearch\Client">
+            <argument>%elasticsearch_client%</argument>
         </service>
         
     </services>
