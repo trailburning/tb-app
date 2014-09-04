@@ -42,7 +42,7 @@
         "oldsound/rabbitmq-bundle": "1.2.*@dev",
         "webfactory/exceptions-bundle": "@stable",
         "react/child-process": "0.5.*@dev",
-        "ruflin/Elastica": "dev-master"
+        "elasticsearch/elasticsearch": "~1.0"
     },
     "repositories": [
         {
