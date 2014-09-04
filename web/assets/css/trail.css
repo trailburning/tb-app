@@ -132,32 +132,7 @@ html.touch #small_sponsor_bar {
   top: 0px;
   width: 100%;
   height: 218px;
-}
-
-#trail_overlay .overlay_pull {
-  position: relative;
-  margin: -258px auto 0px auto;
-  width: 80px;
-  height: 40px;  
-}
-
-#trail_overlay .overlay_pull .button {
-  position: absolute;
-  top: 14px;
-  left: 4px;
-  line-height:20px; 
-  text-indent: -10000px;  
-  background-repeat:no-repeat;
-  background-position:top center;
-  overflow: hidden;   
-  text-decoration: none;
-  width:72px;
-  height:27px;
-  background: url("../img/trailplayer/pull.png") no-repeat top left;
-}
-
-#trail_overlay .overlay_pull .overlay_pull_hover {
-  background-position: 0 -27px;  
+  background: rgba(0, 0, 0, 0.4);        
 }
 
 #trail_overlay .overlay_content {
@@ -166,7 +141,9 @@ html.touch #small_sponsor_bar {
   height: 100%;
   margin: 0px auto 0px auto;
   overflow: hidden;
-  background: rgba(0, 0, 0, 0.6);        
+/*  
+  background: rgba(0, 0, 0, 0.3);
+*/          
 }
 
 /* TRAIL STATS VIEW */
@@ -190,8 +167,30 @@ html.touch #small_sponsor_bar {
   padding: 0px;
 }
 
+.trailstats_panel .content h2.tb {
+  font-weight: 400;
+  font-size: 42px;
+  line-height: 1em;
+  color: #FFF;
+}
+
+.trailstats_panel .content h3.tb {
+  font-weight: 400;
+  font-size: 42px;
+  line-height: 1em;
+  color: #FFF;
+}
+
 .trailstats_panel .content .terrain h2 {
   font-weight: 300;
+}
+
+.trailstats_panel .content .desc {
+  margin: 0px;
+  padding: 0px 0px 0px 2px;
+  line-height: 1.8em;  
+  font-weight: 300;
+  color: #FFF;
 }
 
 .trailstats_panel .content .desc {
@@ -229,7 +228,7 @@ html.touch #small_sponsor_bar {
   left: 0px;
   font-family: "Arial";  
   font-size: 16px;
-  color: #44B6F7;
+  color: #FFF;
   text-align: right;
 }
 
@@ -245,16 +244,6 @@ html.touch #small_sponsor_bar {
 
 .trail_altitude_panel .profile .marker_active {
   background: url(https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/icons/sm_marker_active.png) no-repeat top left;
-}
-
-.trail_altitude_panel .profile .location {
-  z-index: 1;
-  position: absolute;
-  top: 0px;
-  left: 0px;  
-  width: 27px;
-  height: 35px;
-  background: url(https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/icons/sm_location.png) no-repeat top left;    
 }
 
 /* TRAIL MINI VIEW */

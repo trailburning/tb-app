@@ -18,7 +18,7 @@ define([
       this.currElMarker = null;
       
       this.objTrailMarginRect = new Object();
-      this.strLineColour = '#44B6FC';
+      this.strLineColour = '#FFF';
       this.objTrailMarginRect.left = 75;// allow space to alt title
       this.objTrailMarginRect.right = 50;
       this.objTrailMarginRect.top = 40;
@@ -158,7 +158,7 @@ define([
       
       this.context.beginPath();
 
-      this.context.fillStyle = 'rgba(68,182,252,1)';
+      this.context.fillStyle = 'rgba(255,255,255,1)';
       this.context.font = nTextHeight + 'px Arial';
       this.context.textAlign = 'center';
       
@@ -188,8 +188,8 @@ define([
         nX += nMarkerWidth;
       }
               
-      this.context.lineWidth = 1;
-      this.context.strokeStyle = 'rgba(68,182,252,1)';
+      this.context.lineWidth = 2;
+      this.context.strokeStyle = 'rgba(255,255,255,1)';
       this.context.stroke();
     },    
     renderTrail: function(jsonPoints, fTrailLengthMetres) {
@@ -229,10 +229,6 @@ define([
       	}
       });      
       var nEndX = nX;
-      
-      // position location
-      $('.location', (this.el)).css('left', nStartX - 13);
-      $('.location', (this.el)).css('top', nStartY - 33);
       
       // draw last point
       if (jsonPoints.length) {     
