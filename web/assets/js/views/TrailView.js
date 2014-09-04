@@ -108,7 +108,8 @@ define([
           self.mediaModel.fetch({
             success: function () {
               self.handleMedia(self.mediaModel);
-              self.tickle();      
+//              self.tickle();      
+              self.showDetailOverlay();      
             }
           });        
         }      
@@ -116,6 +117,20 @@ define([
     },   
     buildBtns: function(){
       var self = this;
+
+      $(document).mousemove(function(evt){
+      	var nTopY = $('#trailplayer').offset().top;
+      	var nHeightY = $('#trailplayer').height();
+
+		if (evt.pageY < nTopY ||
+		    evt.pageY > (nTopY + nHeightY)) {
+          self.hideDetailOverlay();			
+		}
+      });
+
+      $('#trailplayer').mouseover(function(evt){
+        self.showDetailOverlay();
+      });
       
       $('#view_toggle .button').click(function(evt){
         self.onTrailToggleViewBtnClick(evt);
@@ -327,7 +342,7 @@ define([
     tickle: function(){
       this.nTickleCount++;
 
-      this.showDetailOverlay();
+//      this.showDetailOverlay();
     },
     toggleOverlay: function(){
       // add transition for effect
@@ -445,8 +460,7 @@ define([
     showDetailOverlay: function(){
       if (this.nDetailOverlayState != DETAIL_OVERLAY_OFF) {
         return;
-      }
-          
+      }          
       this.nDetailOverlayState = DETAIL_OVERLAY_ON;
       
       $('#trail_info').removeClass('delay_transition');      
@@ -489,6 +503,8 @@ define([
       }
     },
     onTickleTimer: function(){
+      return;
+    	
 //      console.log("onTickleTimer:"+this.nOldTickleCount+' : '+this.nTickleCount);
       if (this.nOldTickleCount == this.nTickleCount) {
         this.hideDetailOverlay();
