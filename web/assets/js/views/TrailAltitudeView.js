@@ -207,7 +207,11 @@ define([
       var rem = 0;
       
       var nMaxPoints = 100;
-      var nT = Math.round(jsonPoints.length / nMaxPoints)
+      var nNumPoints = jsonPoints.length;
+      
+      // ensure we have enough points
+      nNumPoints = (nNumPoints > nMaxPoints) ? nNumPoints : nMaxPoints; 
+      var nPointInterval = Math.round(nNumPoints / nMaxPoints)
       
       this.context.beginPath();      
       var nStartX = 0, nStartY = 0;  
@@ -217,8 +221,8 @@ define([
           nX = nXOffset + self.objTrailMarginRect.left + Math.round(key / self.fXFactor);
           nYPercent = ((point.tags.altitude - Math.round(self.fLowAlt)) / self.fAltRange) * 100;
           nY = nYOffset + self.objTrailMarginRect.top + Math.round((self.nDrawHeight-2) - ((nYPercent * (self.nDrawHeight-2)) / 100));
-          
-          rem = key % nT;
+
+          rem = key % nPointInterval;
           if (rem == 0) {
             self.context.lineTo(nX, nY);            
           }
