@@ -4,17 +4,16 @@ define([
   'models/TrailMediaModel',    
   'views/ActivityFeedView',
   'views/TrailMiniMapView',
-  'views/TrailMiniSlidesView',
   'views/TrailSlidesView',  
   'views/TrailMapView',  
   'views/TrailStatsView',  
   'views/TrailAltitudeView',
   'views/TrailWeatherView',
   'views/TrailActivitiesView'
-], function(_, Backbone, TrailMediaModel, ActivityFeedView, TrailMiniMapView, TrailMiniSlidesView, TrailSlidesView, TrailMapView, TrailStatsView, TrailAltitudeView, TrailWeatherView, TrailActivitiesView){
+], function(_, Backbone, TrailMediaModel, ActivityFeedView, TrailMiniMapView, TrailSlidesView, TrailMapView, TrailStatsView, TrailAltitudeView, TrailWeatherView, TrailActivitiesView){
 
   var MIN_HEIGHT = 540;
-  var PLAYER_REDUCE_HEIGHT = 30;
+  var PLAYER_REDUCE_HEIGHT = 50;
   
   var SLIDE_VIEW = 0;
   var MAP_VIEW = 1;
@@ -74,7 +73,6 @@ define([
       this.trailStatsView = new TrailStatsView({ el: '#trail_stats_view', model: this.model });
       this.trailAltitudeView = new TrailAltitudeView({ el: '#trail_altitude_view', model: this.model });
       this.trailMiniMapView = new TrailMiniMapView({ el: '#trail_minimap_view', model: this.model });
-      this.trailMiniSlidesView = new TrailMiniSlidesView({ el: '#trail_minislides_view', model: this.model });
   
       this.trailSlidesView = new TrailSlidesView({ el: '#trail_slides_view', model: this.mediaModel });
       this.trailMapView = new TrailMapView({ el: '#trail_map_view', elCntrls: '#view_map_btns', model: this.model });
@@ -108,7 +106,6 @@ define([
           self.mediaModel.fetch({
             success: function () {
               self.handleMedia(self.mediaModel);
-//              self.tickle();      
               self.showDetailOverlay();      
             }
           });        
@@ -120,10 +117,7 @@ define([
 
       $(document).mousemove(function(evt){
       	var nTopY = $('#trailplayer').offset().top;
-      	var nHeightY = $('#trailplayer').height();
-
-		if (evt.pageY < nTopY ||
-		    evt.pageY > (nTopY + nHeightY)) {
+		if (evt.pageY < nTopY) {
           self.hideDetailOverlay();			
 		}
       });
@@ -152,14 +146,6 @@ define([
         self.onTrailToggleSlideshowBtnOut(evt);
       });
 
-      $('#trail_mini_view .toggle_view_button').mouseover(function(evt){              
-        $(evt.currentTarget).css('cursor','pointer');      
-      });    
-
-      $('#trail_mini_view .toggle_view_button').click(function(evt){
-        self.onTrailToggleViewBtnClick(evt);
-      });
-            
 	  function updateLikeBtn() {
 	    if (self.elLikeBtn.hasClass('pressed-btn-tb')) {
 	  	  $('.btn-label', self.elLikeBtn).text(self.elLikeBtn.attr('data-on'));
@@ -253,8 +239,7 @@ define([
       }      
       
       if (this.bPlayerReady) {
-        this.trailSlidesView.render();
-        this.trailMiniSlidesView.render();
+        this.trailSlidesView.render();        
         this.trailStatsView.render();
         this.trailAltitudeView.render();
       }
@@ -298,7 +283,6 @@ define([
         self.trailMiniMapView.addMedia(model);
         self.trailMapView.addMedia(model);
         
-        self.trailMiniSlidesView.addMedia(model);
         self.trailSlidesView.addMedia(model);
         
         self.trailAltitudeView.addMedia(model);
@@ -430,8 +414,7 @@ define([
       }
       this.gotoMedia(nSlide);
     },    
-    gotoMedia: function(nSlide){
-      this.trailMiniSlidesView.gotoSlide(nSlide);    
+    gotoMedia: function(nSlide){          
       this.trailSlidesView.gotoSlide(nSlide);
       
       this.trailMiniMapView.gotoMedia(nSlide);
@@ -442,11 +425,9 @@ define([
       this.nCurrSlide = nSlide;    
       
       // render next slide to avoid stalling when in slide show
-      if (nSlide < this.mediaCollection.length-1) {
-        this.trailMiniSlidesView.render(nSlide+1);    
+      if (nSlide < this.mediaCollection.length-1) {            
         this.trailSlidesView.render(nSlide+1);
-      }        
-      
+      }              
       this.updatePlayerHeight();      
     },
     toggleDetailOverlay: function(){
@@ -455,6 +436,7 @@ define([
       }
       else {
       	this.tickle();
+      	this.showDetailOverlay();
       }
     },
     showDetailOverlay: function(){
@@ -581,11 +563,7 @@ define([
               $('#view_toggle .button').addClass('view_map_hover');        
             }
           }
-                    
-          this.trailMiniSlidesView.hide();
-          this.trailMiniMapView.show();
-          this.trailMiniMapView.render();
-          
+                              
           this.trailMapView.hide();
           this.trailMapView.enablePopups(false);
           this.trailSlidesView.show();
@@ -603,11 +581,7 @@ define([
             }        
           }
           
-          this.trailMiniMapView.hide();
-          this.trailMiniSlidesView.show();
-          this.trailMiniSlidesView.render();
           this.trailSlidesView.hide();
-          
           this.trailMapView.show();
           this.trailMapView.render();
           this.trailMapView.enablePopups(true);          
