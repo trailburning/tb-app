@@ -638,7 +638,7 @@ a:active .tb-cntrl {
 #headerview .right .search {
   float:left;
   position: relative;
-  line-height: 42px;
+  line-height: 41px;
 }
 
 #search {
@@ -790,6 +790,13 @@ a:active .tb-cntrl {
   width: 362px;
 }
 
+#headerview .search_list_container {
+  position: relative;
+  width: 362px;
+  height: 243px;
+  overflow: hidden;
+}
+
 #headerview .activity_list_container {
   position: relative;
   width: 362px;
@@ -864,6 +871,11 @@ a:active .tb-cntrl {
 }
 
 #headerview .dropdown-menu .footer .profile_btn {
+  float: left;
+  margin-right: 26px;
+}
+
+#headerview .dropdown-menu .footer .search_btn {
   float: left;
   margin-right: 26px;
 }

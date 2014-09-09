@@ -16,13 +16,11 @@ define([
     });    
     handleResize();        
     
-    $('#search_field').focus(function(evt) {
-      $('#search_field').val('not just yet...');
-      event.preventDefault();
-    });
-    $('#search_form').submit(function(evt) {
-      $('#search_field').val('not just yet...');
-      event.preventDefault();
+    $('#searchBox').keyup(function() {
+      var strSearch = $(this).val();
+    	if (strSearch.length > 2) {
+    	  $('.form-search').dropdown('toggle');
+    	}
     });
     
     var imgLoad1 = imagesLoaded('.discover_content .scale');
