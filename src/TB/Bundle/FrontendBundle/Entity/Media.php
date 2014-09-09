@@ -298,7 +298,8 @@ class Media implements Exportable
         //get the longitude, latitude and altitude from the nearest RoutePoint by datetime
         $routePoint = $mediaImporter->getNearestRoutePointByTime($this->getRoute(), $datetime);
         $this->setCoords($routePoint->getCoords());
-        if (isset($routePoint->getTags()['altitude'])) {
+        if (isset($routePoint->getTags()['altitude']) && $routePoint->getTags()['altitude'] != '') {
+            // empty values in attributes cauces a problem with postgres hstore field type, therefore check if not empty
             $tags['altitude'] = $routePoint->getTags()['altitude'];
         }
         
