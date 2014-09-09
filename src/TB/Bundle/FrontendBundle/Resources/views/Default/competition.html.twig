@@ -89,17 +89,19 @@ var TB_USER_ID = {{ app.user.id }};
         <h4 class="tb">
       	To win this prize pack all you need to do is <strong>create</strong> a trail, <strong>share</strong> it on Facebook (you can now share when you publish in Trail Maker!) and get 6 of your friends to <strong>like</strong> the trail on Trailburning.
         <br/><br/>         
-        The first five people to do this will win!
+        <strong>This competition is now closed!</strong>
         <br/><br/>         
         </h4>      
+<!--        
         <h5 class="tb">
       	The small print - only one prize pack per person, we will announce as soon as we have 5 winners.
         </h5>
+-->        
         <div class="discover">      	
 	    {% if app.user %}  	      
-  	      <a href="{{ path('profile', {'name': app.user.name}) }}" class="btn btn-tb-action btn-tb-large">Let's make a trail</a>
+<!--  	      <a href="{{ path('profile', {'name': app.user.name}) }}" class="btn btn-tb-action btn-tb-large">Let's make a trail</a> -->
 	    {% else %}
-  	      <a href="{{ app.request.baseUrl }}/tour" class="btn btn-tb-action btn-tb-large">Let's make a trail</a>
+<!--  	      <a href="{{ app.request.baseUrl }}/tour" class="btn btn-tb-action btn-tb-large">Let's make a trail</a> -->
 	    {% endif %}
       	</div>                
       </div>
