@@ -47,11 +47,19 @@ class SearchMappingCommand extends ContainerAwareCommand
                     ],
                     'properties' => [
                         'id' => [
-                            'type' => 'string',
+                            'type' => 'string', 
                             'analyzer' => 'standard',
                         ],
-                        'title' => [
-                            'type' => 'string',
+                        'text' => [
+                            'type' => 'text',
+                            'analyzer' => 'standard',
+                        ],
+                        'textng' => [
+                            'type' => 'text',
+                            'analyzer' => 'standard',
+                        ],
+                        'textnge' => [
+                            'type' => 'text',
                             'analyzer' => 'standard',
                         ],
                     ],
