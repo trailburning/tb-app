@@ -15,12 +15,32 @@ define([
       handleResize(); 
     });    
     handleResize();        
+
+	function handleSearchResults() {
+      var strSearch = $('#searchBox').val();
+      if (strSearch.length > 2) {
+    	$('.search .dropdown').addClass('open');
+      }
+      else {
+        $('.search .dropdown').removeClass('open');    		
+      }
+	}
     
+	$('#searchBox').focus(function(evt) {
+      $('.dropdown').removeClass('open');	
+	  handleSearchResults();
+	});	
+
+    $(document).click(function() {
+      $('.dropdown').removeClass('open');    		
+	});
+
+    $('.show_activity').click(function() {
+      $('.dropdown').removeClass('open');
+	});
+
     $('#searchBox').keyup(function() {
-      var strSearch = $(this).val();
-    	if (strSearch.length > 2) {
-    	  $('.form-search').dropdown('toggle');
-    	}
+      handleSearchResults();
     });
     
     var imgLoad1 = imagesLoaded('.discover_content .scale');

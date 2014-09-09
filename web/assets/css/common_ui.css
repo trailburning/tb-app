@@ -638,7 +638,14 @@ a:active .tb-cntrl {
 #headerview .right .search {
   float:left;
   position: relative;
+}
+
+#headerview .right .search form {
   line-height: 41px;
+}
+
+#headerview .right .search .search-results {
+  margin-top: 6px;
 }
 
 #search {

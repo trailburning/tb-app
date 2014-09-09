@@ -64,7 +64,7 @@
 			    	<div class="search">			    	
 	    			  <ul class="nav pull-right">
 	    				<li class="dropdown">	    					
-						<form class="form-search dropdown-toggle" method="get" id="search" action="/">			    	
+						<form class="form-search dropdown-toggle" method="get" id="search" action="/" data-toggle="dropdown2">			    	
 	    					<input type="text" id="searchBox" name="search_text">
 							<button type="submit">
 				  			<i class="ico" data-icon="n-search-16"></i>
@@ -72,15 +72,13 @@
 	    				</form>
 				        <ul class="dropdown-menu search-results">
 				        	<div class="header">
-				        		<div class="title"><h4 class="tb">Activity</h4></div>
-				        		<div class="viewprofile"><a href="{{ path('profile', {name: app.user.name}) }}">View profile</a></div>
+				        		<div class="title"><h4 class="tb">Results</h4></div>				        		
 				        	</div>
 				        	
 				        	<div class="search_list_container"></div>
 				
 				        	<div class="footer">
-				  				<div class="search_btn"><a href="javascript:void(0)" class="btn btn-tb btn-tb-small more_btn" disabled="disabled">More notifications</a></div>
-				        		<div class="signout"><a href="{{ path('fos_user_security_logout') }}">Sign out</a></div>
+				  				<div class="search_btn"><a href="javascript:void(0)" class="btn btn-tb btn-tb-small results_btn" disabled="disabled">More results</a></div>
 				        	</div>
 				        </ul>
 				        </li>
