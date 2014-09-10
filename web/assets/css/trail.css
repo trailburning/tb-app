@@ -485,7 +485,7 @@ html.touch #small_sponsor_bar {
 #trailplayer #view_map_btns {
   display: none;
   position: absolute;
-  top: 34px;
+  top: -300px;
   right: 152px;
 }
 
@@ -495,7 +495,7 @@ html.touch #trailplayer #view_map_btns {
 
 #trailplayer #view_player_btns {
   position: absolute;
-  top: 22px;
+  top: -100px;
   right: 22px;  
 }
 

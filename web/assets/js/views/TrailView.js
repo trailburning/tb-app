@@ -250,7 +250,9 @@ define([
       $('#trail_overlay').addClass('tb-move-vert');
       $('#trail_info').addClass('tb-move-vert');
       $('#trail_info .trail_avatar').addClass('tb-move-vert');       
-      $('#trail_info .trail_title').addClass('tb-move-vert');            
+      $('#trail_info .trail_title').addClass('tb-move-vert'); 
+      $('#view_player_btns').addClass('tb-move-vert');
+      $('#view_map_btns').addClass('tb-move-vert');
       $('#trail_stats_view').addClass('tb-move-vert');
       $('#trail_altitude_view').addClass('tb-move-vert');            
       $('#trail_mini_view').addClass('tb-move-vert');      
@@ -336,7 +338,9 @@ define([
         $('#trail_overlay').addClass('delay_transition');
         $('#trail_info').addClass('delay_transition');
         $('#trail_info .trail_avatar').addClass('delay_transition');       
-        $('#trail_info .trail_title').addClass('delay_transition');            
+        $('#trail_info .trail_title').addClass('delay_transition');
+        $('#view_player_btns').addClass('delay_transition');
+        $('#view_map_btns').addClass('delay_transition');            
         $('#trail_stats_view').addClass('delay_transition');
         $('#trail_altitude_view').addClass('delay_transition');            
         $('#trail_mini_view').addClass('delay_transition');      
@@ -345,7 +349,9 @@ define([
         $('#trail_overlay').removeClass('delay_transition');
         $('#trail_info').removeClass('delay_transition');
         $('#trail_info .trail_avatar').removeClass('delay_transition');       
-        $('#trail_info .trail_title').removeClass('delay_transition');            
+        $('#trail_info .trail_title').removeClass('delay_transition');
+        $('#view_player_btns').removeClass('delay_transition');        
+        $('#view_map_btns').removeClass('delay_transition');            
         $('#trail_stats_view').removeClass('delay_transition');
         $('#trail_altitude_view').removeClass('delay_transition');            
         $('#trail_mini_view').removeClass('delay_transition');      
@@ -449,6 +455,8 @@ define([
       $('#trail_info').css('top', 24);       
       $('#trail_info .trail_avatar').css('top', 0);       
       $('#trail_info .trail_title').css('top', 0);
+      $('#view_player_btns').css('top', 22);
+      $('#view_map_btns').css('top', 34);      
       
 	  this.toggleOverlay();
     },
@@ -461,6 +469,8 @@ define([
       $('#trail_info').css('top', -300);        
       $('#trail_info .trail_avatar').css('top', -300);       
       $('#trail_info .trail_title').css('top', -100);
+      $('#view_player_btns').css('top', -100);
+      $('#view_map_btns').css('top', -300);
       
       this.toggleOverlay();       
     },
