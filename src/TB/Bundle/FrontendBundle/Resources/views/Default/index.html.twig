@@ -17,15 +17,15 @@ var TB_USER_ID = {{ app.user.id }};
   <div id="home_header">  	
     <div class="hero_image">
       <div class="background">
-        <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/O=80/http://assets.trailburning.com/images/ambassadors/ambassador.jpg" class="resrc scale" /></div>
-	  </div>
-  	</div>
-
-    <div class="hero_image">
-      <div class="background">
         <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/o=80/http://assets.trailburning.com/images/editorial/highlands/313593cc63d7cec329eaaaefe2f65eed47488abc.JPG" class="resrc scale" /></div>
       </div>
   	</div>
+  	
+    <div class="hero_image">
+      <div class="background">
+        <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/O=80/http://assets.trailburning.com/images/ambassadors/ambassador.jpg" class="resrc scale" /></div>
+	  </div>
+  	</div>  	
 
     <div class="hero_image">
       <div class="background">
@@ -42,22 +42,6 @@ var TB_USER_ID = {{ app.user.id }};
 	<div class="hero_nav">
 	  <div class="button" data-slide="0"></div><div class="button" data-slide="1"></div><div class="button" data-slide="2"></div><div class="button" data-slide="3"></div>	  	
 	</div>
-
-    <div class="hero_overlay" data-url="{{ app.request.baseUrl }}/ambassadors">
-      <div class="left">
-    	<div class="title">
-      	<h1 class="tb tb-title">I'm #Trailburning</h1>
-      	<br/>
-      	<h1 class="tb tb-title">Ambassadors</h1>
-      	<div class="hero_btn"><a href="{{ app.request.baseUrl }}/ambassadors" class="btn btn-tb-action btn-tb-large">Do you have what it takes?</a></div>
-    	</div>
-	  </div>			  
-	  <div class="right">  
-      </div>
-	  <div class="tb-credit"></div>      
-	  <div class="sponsor_content">
-	  </div>  	
-  	</div>  	
   	  	
     <div class="hero_overlay" data-url="{{ app.request.baseUrl }}/inspire/highlands">
       <div class="left">
@@ -85,6 +69,22 @@ var TB_USER_ID = {{ app.user.id }};
 	    </div>
 	  </div>  	
   	</div>
+  	  	
+    <div class="hero_overlay" data-url="{{ app.request.baseUrl }}/ambassadors">
+      <div class="left">
+    	<div class="title">
+      	<h1 class="tb tb-title">I'm #Trailburning</h1>
+      	<br/>
+      	<h1 class="tb tb-title">Ambassadors</h1>
+      	<div class="hero_btn"><a href="{{ app.request.baseUrl }}/ambassadors" class="btn btn-tb-action btn-tb-large">Do you have what it takes?</a></div>
+    	</div>
+	  </div>			  
+	  <div class="right">  
+      </div>
+	  <div class="tb-credit"></div>      
+	  <div class="sponsor_content">
+	  </div>  	
+  	</div>  	
   	  	
     <div class="hero_overlay" data-url="{{ app.request.baseUrl }}/inspire/high">
       <div class="left">
