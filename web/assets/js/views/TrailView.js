@@ -92,6 +92,8 @@ define([
       $('#footerview').show();
       
       this.updatePlayerHeight();
+      // show loader
+      $('#tb-loader-overlay').fadeIn();
       
       // get trail    
       this.model.set('id', this.options.nTrail);             
