@@ -94,6 +94,8 @@ define([
       $('#footerview').show();
       
       this.updatePlayerHeight();
+      // show loader
+      $('#tb-loader-overlay').fadeIn();
       
       // get trail    
       this.model.set('id', this.options.nTrail);             
@@ -307,8 +309,8 @@ define([
       this.trailMiniMapView.renderMarkers();          
       this.trailMapView.renderMarkers();
           
-      this.bPlayerReady = true;          
-          
+      this.bPlayerReady = true;
+                      
       this.handleResize();      
       this.startSlideShow();
       
