@@ -13,7 +13,7 @@ define([
 ], function(_, Backbone, TrailMediaModel, ActivityFeedView, TrailMiniMapView, TrailSlidesView, TrailMapView, TrailStatsView, TrailAltitudeView, TrailWeatherView, TrailActivitiesView){
 
   var MIN_HEIGHT = 540;
-  var PLAYER_REDUCE_HEIGHT = 30;
+  var PLAYER_REDUCE_HEIGHT = 0;
   
   var SLIDE_VIEW = 0;
   var MAP_VIEW = 1;
@@ -365,6 +365,7 @@ define([
         $('#trail_views').css('top', -(PLAYER_REDUCE_HEIGHT/2));        
         $('#trailplayer').height(this.nPlayerHeight - PLAYER_REDUCE_HEIGHT);        
         $('#trail_overlay').css('top', -278);
+
         $('#trail_stats_view').css('top', 70);
         $('#trail_altitude_view').css('top', 70);        
         $('#trail_mini_view').css('top', 70);
@@ -374,10 +375,10 @@ define([
 
         $('#trail_views').css('top', 0);
         $('#trailplayer').height(this.nPlayerHeight);
-        
-        $('#trail_stats_view').css('top', 40);
-        $('#trail_altitude_view').css('top', 60);
-        $('#trail_mini_view').css('top', 80);
+
+        $('#trail_stats_view').css('top', 100);
+        $('#trail_altitude_view').css('top', 150);
+        $('#trail_mini_view').css('top', 200);
         
         $('#trail_overlay').css('top', 0);        
       }           
