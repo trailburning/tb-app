@@ -129,17 +129,25 @@ html.touch #small_sponsor_bar {
 #trail_overlay {
   z-index: 1;  
   position: absolute;
-  top: 0px;
+  top: -278px;
   width: 100%;
   height: 278px;
-/*
-  background: rgba(0, 0, 0, 0.4);    
-*/  
+}
+
+#trail_overlay .overlay_background {
+  position: absolute;
+  width: 100%;
+  height: 278px;  
   background: url(../img/trailplayer/overlay_background.png) repeat-x top left;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  -moz-transition: opacity 0.5s ease-in-out;
+  -webkit-transition: opacity 0.5s ease-in-out;
 }
 
 #trail_overlay .overlay_content {
   position: relative;
+  top: 0px;  
   width: 1200px;
   height: 100%;
   margin: 0px auto 0px auto;
@@ -150,7 +158,7 @@ html.touch #small_sponsor_bar {
 /******************************************/
 #trail_stats_view {
   position: absolute;
-  top: 40px;
+  top: 300px;
   left: 0px;
   width: 216px;
   height: 218px;  
@@ -211,7 +219,7 @@ html.touch #small_sponsor_bar {
 /******************************************/
 #trail_altitude_view {
   position: absolute;
-  top: 60px;
+  top: 350px;
   left: 216px;
   width: 688px;
   height: 218px;
@@ -250,7 +258,7 @@ html.touch #small_sponsor_bar {
 /******************************************/
 #trail_mini_view {
   position: absolute;
-  top: 80px;
+  top: 400px;
   left: 904px;
   width: 254px;
   height: 188px;

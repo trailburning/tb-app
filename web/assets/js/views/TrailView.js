@@ -13,7 +13,7 @@ define([
 ], function(_, Backbone, TrailMediaModel, ActivityFeedView, TrailMiniMapView, TrailSlidesView, TrailMapView, TrailStatsView, TrailAltitudeView, TrailWeatherView, TrailActivitiesView){
 
   var MIN_HEIGHT = 540;
-  var PLAYER_REDUCE_HEIGHT = 0;
+  var PLAYER_REDUCE_HEIGHT = 50;
   
   var SLIDE_VIEW = 0;
   var MAP_VIEW = 1;
@@ -108,7 +108,6 @@ define([
           self.mediaModel.fetch({
             success: function () {
               self.handleMedia(self.mediaModel);
-              self.showDetailOverlay();      
             }
           });        
         }      
@@ -336,7 +335,7 @@ define([
       // add transition for effect
       $('#trailplayer').addClass('tb-size');
 
-      if (this.bFirstSlide) {
+      if (this.bFirstSlide) {      	
         $('#trail_overlay').addClass('delay_transition');
         $('#trail_info').addClass('delay_transition');
         $('#trail_info .trail_avatar').addClass('delay_transition');       
@@ -364,7 +363,8 @@ define([
         
         $('#trail_views').css('top', -(PLAYER_REDUCE_HEIGHT/2));        
         $('#trailplayer').height(this.nPlayerHeight - PLAYER_REDUCE_HEIGHT);        
-        $('#trail_overlay').css('top', -278);
+
+        $('.overlay_background').css('opacity', 1);
 
         $('#trail_stats_view').css('top', 70);
         $('#trail_altitude_view').css('top', 70);        
@@ -376,11 +376,11 @@ define([
         $('#trail_views').css('top', 0);
         $('#trailplayer').height(this.nPlayerHeight);
 
-        $('#trail_stats_view').css('top', 100);
-        $('#trail_altitude_view').css('top', 150);
-        $('#trail_mini_view').css('top', 200);
-        
-        $('#trail_overlay').css('top', 0);        
+		$('.overlay_background').css('opacity', 0);
+
+        $('#trail_stats_view').css('top', 300);
+        $('#trail_altitude_view').css('top', 350);
+        $('#trail_mini_view').css('top', 400);
       }           
     },
     startSlideShow: function(){
@@ -447,7 +447,7 @@ define([
       }
     },
     showDetailOverlay: function(){
-      if (this.nDetailOverlayState != DETAIL_OVERLAY_OFF) {
+      if (this.bFirstSlide || this.nDetailOverlayState != DETAIL_OVERLAY_OFF) {
         return;
       }          
       this.nDetailOverlayState = DETAIL_OVERLAY_ON;
@@ -648,6 +648,8 @@ define([
       
       if (this.bFirstSlide) {
         this.bFirstSlide = false;
+        
+        self.showDetailOverlay();
       }
     },    
     onTrailSlidesViewSlideClickPrev: function(){
