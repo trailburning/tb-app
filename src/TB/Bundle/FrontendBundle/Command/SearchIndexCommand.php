@@ -26,63 +26,79 @@ class SearchIndexCommand extends ContainerAwareCommand
         $type = $input->getArgument('type');
         
         switch ($type) {
-            case 'suggest':
-            $this->initSuggestType();
+            case 'route':
+                $this->initRouteType();
                 break;
+            case 'user_profile':
+                $this->initUserProfileType();
+                break;                
             default:
                 $output->writeln(sprintf('<error>Unknown type "%s"</error>', $type));
                 break;
         }
     }
     
-    protected function initSuggestType()
+    protected function initRouteType()
     {
         // Create the new index 
-        $params = [
-            'index' => 'trailburning',
-            'type' => 'suggest',
-            'body' => [
-                'index' => [
-                    '_id' => [],
-                ],
-            ],
-        ];
         
         $routes = $this->em->createQuery('
                 SELECT r FROM TBFrontendBundle:Route r
                 WHERE r.publish = true AND r.approved = true')
             ->getResult();
         
-        $i = 0;   
-        $body = [];
         foreach ($routes as $route) {
-            $i++;
-            $id = sprintf('route_%s', $route->getId());
+            $suggestText = $route->getName() . ' ' . $route->getRegion();
+                
             $doc = [
-                'title' => $route->getName(),
+                'suggest_text' => $suggestText,
+                'name' => $route->getName(),
+                'short_name' => $route->getShortName(),
+                'region' => $route->getRegion(),
+                'slug' => $route->getSlug(),
             ];
             
-            $body[] = [
-                'index' => [
-                    '_id' => $id,
-                ],
-                'doc' => $doc,
+            if ($route->getMedia()) {
+                $doc['media'] = $route->getMedia()->getPath();
+            }
+                
+            $params = [
+                'body' => $doc,
+                'index' => 'trailburning',
+                'type' => 'route',
+                'id' => $route->getId(),
             ];
-            
-            if ($i >= 100) {
-                $bulk = $params;
-                $bulk['body'] = $body;
-                $this->client->bulk($bulk);
-                $i = 0;
-                $body = [];
-            }    
+            $this->client->index($params);
         }
+    }
+    
+    protected function initUserProfileType()
+    {
+        // Create the new index 
         
-        if (count($body) > 0) {
-            $bulk = $params;
-            $bulk['body'] = $body;
-            $this->client->bulk($bulk);
+        $users = $this->em->createQuery('
+                SELECT u FROM TBFrontendBundle:UserProfile u
+            ')
+            ->getResult();
+        
+        foreach ($users as $user) {
+                
+            $doc = [
+                'suggest_text' => $user->getTitle(),
+                'name' => $user->getName(),
+                'first_name' => $user->getFirstName(),
+                'last_name' => $user->getLastName(),
+                'location' => $user->getLocation(),
+                'avatar' => $user->getAvatarUrl(),
+            ];
+                
+            $params = [
+                'body' => $doc,
+                'index' => 'trailburning',
+                'type' => 'user_profile',
+                'id' => $user->getId(),
+            ];
+            $this->client->index($params);
         }
-        
     }
 }

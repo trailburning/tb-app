@@ -58,12 +58,12 @@ class SearchConfigCommand extends ContainerAwareCommand
                             ],
                             'edge_ngram' => [
                                 'type' => 'edgeNGram',
-                                'min_gram' => 1,
+                                'min_gram' => 2,
                                 'max_gram' => 30,
                             ],
                             'ngram' => [
-                                'type' => 'edgeNGram',
-                                'min_gram' => 1,
+                                'type' => 'nGram',
+                                'min_gram' => 2,
                                 'max_gram' => 20,
                             ],
                             'ngram_delimiter' => [
@@ -74,6 +74,11 @@ class SearchConfigCommand extends ContainerAwareCommand
                                 'catenate_numbers' => false,
                                 'catenate_all' => false,
                                 'split_on_case_change' => false,
+                            ],
+                            'my_metaphone' => [
+                                'type' => 'phonetic',
+                                'encoder' => 'metaphone',
+                                'replace' => false,
                             ],
                         ],
                         'analyzer' => [
@@ -101,6 +106,16 @@ class SearchConfigCommand extends ContainerAwareCommand
                                 'tokenizer' => 'standard',
                                 'filter' => ['ngram_delimiter', 'lowercase', 'ngram', 'nonealpha_replace', 'max_toke_length'],
                             ],
+                            'phonetic_text' => [
+                                'type' => 'custom',
+                                'tokenizer' => 'standard',
+                                'filter' => ['standard', 'lowercase', 'my_metaphone']
+                            ],
+                            'whitespace_analyzer' => [
+                               'type' => 'custom',
+                               'tokenizer' => 'whitespace',
+                               'filter' => ['lowercase', 'asciifolding']
+                            ]
                         ],
                     ],
                 ],

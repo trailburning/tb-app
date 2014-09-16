@@ -25,42 +25,142 @@ class SearchMappingCommand extends ContainerAwareCommand
         $type = $input->getArgument('type');
         
         switch ($type) {
-            case 'suggest':
-            $this->populateSuggestMapping();
+            case 'route':
+                $this->populateRouteMapping();
                 break;
+            case 'user_profile':
+                $this->populateUserProfileMapping();
+                break;    
             default:
                 $output->writeln(sprintf('<error>Unknown type "%s"</error>', $type));
                 break;
         }
     }
     
-    protected function populateSuggestMapping()
+    protected function populateRouteMapping()
     {   
         // Create the new index 
         $params = [
             'index' => 'trailburning',
-            'type' => 'suggest',
+            'type' => 'route',
             'body' => [
-                'suggest' => [
-                    '_source' => [
-                        'enabled' => true,
+                'route' => [
+                    '_id' => [
+                        'path' => 'id',
                     ],
+                    'dynamic' => 'strict',
                     'properties' => [
                         'id' => [
                             'type' => 'string', 
-                            'analyzer' => 'standard',
+                            'index' => 'not_analyzed',
                         ],
-                        'text' => [
-                            'type' => 'text',
-                            'analyzer' => 'standard',
+                        'suggest_text' => [
+                            'type' => 'string',
+                            'copy_to' => [
+                                'suggest_ng', 
+                                'suggest_nge', 
+                                'suggest_phon'
+                            ],
                         ],
-                        'textng' => [
-                            'type' => 'text',
-                            'analyzer' => 'standard',
+                        'suggest_ng' => [
+                            'type' => 'string',
+                            'index' => 'analyzed',
+                            'index_analyzer' => 'autocomplete_ngram',
+                            'search_analyzer' => 'whitespace_analyzer',
                         ],
-                        'textnge' => [
-                            'type' => 'text',
-                            'analyzer' => 'standard',
+                        'suggest_nge' => [
+                            'type' => 'string',
+                            'index' => 'analyzed',
+                            'index_analyzer' => 'autocomplete_edge',
+                            'search_analyzer' => 'whitespace_analyzer',
+                        ],
+                        'suggest_phon' => [
+                            'type' => 'string',
+                            'index' => 'analyzed',
+                            'analyzer' => 'phonetic_text',
+                        ],
+                        'name' => [
+                            'type' => 'string', 
+                        ],
+                        'short_name' => [
+                            'type' => 'string', 
+                        ],
+                        'region' => [
+                            'type' => 'string', 
+                        ],
+                        'slug' => [
+                            'type' => 'string', 
+                            'index' => 'not_analyzed',
+                        ],
+                        'media' => [
+                            'type' => 'string', 
+                            'index' => 'not_analyzed',
+                        ],
+                    ],
+                ],
+            ],
+        ];
+        
+        $this->client->indices()->putMapping($params);
+    }
+    
+    protected function populateUserProfileMapping()
+    {   
+        // Create the new index 
+        $params = [
+            'index' => 'trailburning',
+            'type' => 'user_profile',
+            'body' => [
+                'user_profile' => [
+                    '_id' => [
+                        'path' => 'id',
+                    ],
+                    'dynamic' => 'strict',
+                    'properties' => [
+                        'id' => [
+                            'type' => 'string', 
+                            'index' => 'not_analyzed',
+                        ],
+                        'suggest_text' => [
+                            'type' => 'string',
+                            'copy_to' => [
+                                'suggest_ng', 
+                                'suggest_nge', 
+                                'suggest_phon'
+                            ],
+                        ],
+                        'suggest_ng' => [
+                            'type' => 'string',
+                            'index' => 'analyzed',
+                            'index_analyzer' => 'autocomplete_ngram',
+                            'search_analyzer' => 'whitespace_analyzer',
+                        ],
+                        'suggest_nge' => [
+                            'type' => 'string',
+                            'index' => 'analyzed',
+                            'index_analyzer' => 'autocomplete_edge',
+                            'search_analyzer' => 'whitespace_analyzer',
+                        ],
+                        'suggest_phon' => [
+                            'type' => 'string',
+                            'index' => 'analyzed',
+                            'analyzer' => 'phonetic_text',
+                        ],
+                        'name' => [
+                            'type' => 'string', 
+                        ],
+                        'first_name' => [
+                            'type' => 'string', 
+                        ],
+                        'last_name' => [
+                            'type' => 'string', 
+                        ],
+                        'location' => [
+                            'type' => 'string', 
+                        ],
+                        'avatar' => [
+                            'type' => 'string', 
+                            'index' => 'not_analyzed',
                         ],
                     ],
                 ],

@@ -152,7 +152,7 @@
         
         <!--  Register image generator as service -->
         <service id="tb.elasticsearch.client" class="Elasticsearch\Client">
-            <argument>%elasticsearch_client%</argument>
+            <argument>%elasticsearch%</argument>
         </service>
         
     </services>
