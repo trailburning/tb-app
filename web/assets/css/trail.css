@@ -131,8 +131,11 @@ html.touch #small_sponsor_bar {
   position: absolute;
   top: 0px;
   width: 100%;
-  height: 218px;
-  background: rgba(0, 0, 0, 0.4);        
+  height: 278px;
+/*
+  background: rgba(0, 0, 0, 0.4);    
+*/  
+  background: url(../img/trailplayer/overlay_background.png) repeat-x top left;
 }
 
 #trail_overlay .overlay_content {
@@ -141,9 +144,6 @@ html.touch #small_sponsor_bar {
   height: 100%;
   margin: 0px auto 0px auto;
   overflow: hidden;
-/*  
-  background: rgba(0, 0, 0, 0.3);
-*/          
 }
 
 /* TRAIL STATS VIEW */
@@ -152,7 +152,7 @@ html.touch #small_sponsor_bar {
   position: absolute;
   top: 40px;
   left: 0px;
-  width: 234px;
+  width: 216px;
   height: 218px;  
 }
 
@@ -212,7 +212,7 @@ html.touch #small_sponsor_bar {
 #trail_altitude_view {
   position: absolute;
   top: 60px;
-  left: 234px;
+  left: 216px;
   width: 688px;
   height: 218px;
   border: none;
@@ -239,7 +239,7 @@ html.touch #small_sponsor_bar {
   left: 0px;  
   width: 18px;
   height: 18px;
-  background: url(https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/icons/sm_marker_inactive.png) no-repeat top left;
+  background: url(https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/icons/sm_marker_inactive.png) no-repeat top left;  
 }
 
 .trail_altitude_panel .profile .marker_active {
@@ -251,25 +251,43 @@ html.touch #small_sponsor_bar {
 #trail_mini_view {
   position: absolute;
   top: 80px;
-  left: 922px;
-  width: 278px;
-  height: 218px;
+  left: 904px;
+  width: 254px;
+  height: 188px;
+  background: rgba(0, 0, 0, 0.4);
 }
 
 #trail_mini_view .border_top {  
   position: absolute;
-  top: 5px;
-  width: 272px;
+  top: 0px;
+  width: 100%;
   height: 2px;  
-  border-top: 2px solid rgba(255, 255, 255, 0.1);
+  border-top: 2px solid rgba(0, 0, 0, 0.5);
 }
 
 #trail_mini_view .border_left {
   position: absolute;
-  top: 5px;
+  top: 0px;
   width: 2px;
-  height: 204px;  
-  border-left: 2px solid rgba(255, 255, 255, 0.1);
+  height: 100%;  
+  border-left: 2px solid rgba(0, 0, 0, 0.5);
+ }
+
+#trail_mini_view .border_right {
+  position: absolute;
+  top: 0px;
+  left: 252px;
+  width: 2px;
+  height: 100%;  
+  border-left: 2px solid rgba(0, 0, 0, 0.5);
+}
+
+#trail_mini_view .border_bottom {
+  position: absolute;
+  top: 186px;
+  width: 100%;
+  height: 2px;  
+  border-top: 2px solid rgba(0, 0, 0, 0.5);
 }
 
 /* TRAIL MINI MAP VIEW */
@@ -278,16 +296,16 @@ html.touch #small_sponsor_bar {
   position: absolute;
   top: 0px;
   left: 0px;
-  width: 278px;
-  height: 218px;
+  width: 254px;
+  height: 188px;
 }
 
 #trail_minimap_view #minimap {
   position: absolute;
-  top: 5px;
+  top: 0px;
   left: 0px;
-  width: 272px;
-  height: 204px;
+  width: 100%;
+  height: 100%;
   background-color: transparent;
   cursor: default;   
 }
@@ -1083,26 +1101,24 @@ html.touch #trailplayer #view_map_btns {
   #trail_stats_view {
     position: absolute;
     width: 194px;
-  }
+  }  
+  .trailstats_panel .content {
+    margin: 30px 0px 0px 12px;
+  }  
   #trail_altitude_view {
     left: 194px;
     width: 570px;
   }
   #trail_mini_view {
-    left: 764px;
+    left: 752px;
     width: 228px;
-  }
-  #trail_mini_view .border_top {  
-    width: 222px;
-  }
-  #trail_mini_view .toggle_view {
-    width: 222px;
-  }
+  }  
   #trail_minimap_view {
     width: 228px;
+    height: 188px;
   }
-  #trail_minimap_view #minimap {
-    width: 222px;
+  #trail_mini_view .border_right {
+    left: 226px;
   }
   #trail_minislides_view {
     width: 222px;
