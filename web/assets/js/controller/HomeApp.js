@@ -15,33 +15,6 @@ define([
       handleResize(); 
     });    
     handleResize();        
-
-	function handleSearchResults() {
-      var strSearch = $('#searchBox').val();
-      if (strSearch.length > 2) {
-    	$('.search .dropdown').addClass('open');
-      }
-      else {
-        $('.search .dropdown').removeClass('open');    		
-      }
-	}
-    
-	$('#searchBox').focus(function(evt) {
-      $('.dropdown').removeClass('open');	
-	  handleSearchResults();
-	});	
-
-    $(document).click(function() {
-      $('.dropdown').removeClass('open');    		
-	});
-
-    $('.show_activity').click(function() {
-      $('.dropdown').removeClass('open');
-	});
-
-    $('#searchBox').keyup(function() {
-      handleSearchResults();
-    });
     
     var imgLoad1 = imagesLoaded('.discover_content .scale');
 	imgLoad1.on('always', function(instance) {
@@ -79,6 +52,63 @@ define([
         
     this.homeHerosView = new HomeHerosView({ el: '#home_header' });
 	this.homeHerosView.render();
+
+	// setup autosuggest
+    var cache = {};
+    var client = new $.es.Client({    
+        hosts: 'e7p15amb:4yexy8z21pg5eee0@boxwood-7916136.eu-west-1.bonsai.io'
+    });
+    
+//    $('#q').autocomplete({  	
+    $('#searchBox').autocomplete({
+        minLength: 2,
+        delay: 0,
+        source: function(request, response ) {
+            var term = request.term;
+            if (term in cache) {
+                response(cache[term]);
+                return;
+            }
+            
+            client.search({
+                index: 'trailburning',
+                body: {
+                    query: {
+                        match: {
+                          suggest_nge: term
+                        }
+                    }
+                }
+            }).then(function (resp) {
+                var suggestions = resp.hits.hits;
+                cache[term] = suggestions;
+                response(suggestions); 
+            }, function (err) {
+                console.log(err.message);
+            });
+        }
+    });
+    
+    $('#searchBox').data('ui-autocomplete')._resizeMenu = function() {
+    	this.menu.element.outerWidth(300);
+    };
+    $('#searchBox').data('ui-autocomplete')._renderItem = function(ul, item) {
+    	var strItem = "";    	
+    	switch (item._type) {
+    	  case 'user_profile':
+    	    strItem = '<a href="profile/' + item._source.name + '" class="clearfix"><div class="match">"' + item._source.suggest_text + '</div><div class="type"><div class="tb-avatar"><div class="photo"><img src="'+item._source.avatar+'"></div></div></div></a>';
+    	    break;
+    	  default:
+    	    strItem = '<a href="trail/' + item._source.slug + '" class="clearfix">' + item._source.suggest_text + '</a>';
+    	    break;
+    	}
+    	
+		console.log(item);
+    	
+        return $('<li>')
+            .append(strItem)
+            .appendTo(ul);
+    };
 
   	// keyboard control
   	$(document).keydown(function(e){

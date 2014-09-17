@@ -19,6 +19,8 @@
         <link href="{{ asset('assets/css/bootstrap-responsive.min.css') }}" rel="stylesheet">
         <link href="{{ asset('assets/css/bootstrap-select.min.css') }}" rel="stylesheet">
         
+		<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
+        
         <link href="{{ asset('assets/css/common_ui.css') }}" rel="stylesheet" type="text/css">
         <link href="{{ asset('assets/css/common_cards.css') }}" rel="stylesheet" type="text/css">
         
@@ -61,26 +63,15 @@
                 </div>    
                 
 			    <div class="right navbar">
-			    	<div class="search">			    	
+			    	<div class="search ui-front">			    	
 	    			  <ul class="nav pull-right">
-	    				<li class="dropdown">	    					
-						<form class="form-search dropdown-toggle" method="get" id="search" action="/" data-toggle="dropdown2">			    	
+	    				<li class="ui-widget">	    					
+						<form class="form-search" method="get" id="search" action="/">			    	
 	    					<input type="text" id="searchBox" name="search_text">
 							<button type="submit">
 				  			<i class="ico" data-icon="n-search-16"></i>
 							</button>
 	    				</form>
-				        <ul class="dropdown-menu search-results">
-				        	<div class="header">
-				        		<div class="title"><h4 class="tb">Results</h4></div>				        		
-				        	</div>
-				        	
-				        	<div class="search_list_container"></div>
-				
-				        	<div class="footer">
-				  				<div class="search_btn"><a href="javascript:void(0)" class="btn btn-tb btn-tb-small results_btn" disabled="disabled">More results</a></div>
-				        	</div>
-				        </ul>
 				        </li>
 				      </ul>
 			    	</div>
@@ -182,6 +173,7 @@
 		<script src="//use.resrc.it"></script>
 
         <script src="{{ asset('assets/js/libs/jquery-1.8.3.min.js') }}"></script>
+        <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
         <script src="{{ asset('assets/js/libs/bootstrap.min.js') }}"></script>
         <script src="{{ asset('assets/js/libs/bootstrap-filestyle.min.js') }}"> </script>
         <script src="{{ asset('assets/js/libs/bootstrap-select.min.js') }}"></script>
@@ -189,6 +181,7 @@
         <script src='http://api.tiles.mapbox.com/mapbox.js/v1.6.3/mapbox.js'></script>
         <script src='http://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js'></script>
 
+		<script src="{{ asset('assets/js/libs/elasticsearch.jquery.min.js') }}"></script>
 		<script src="{{ asset('assets/js/libs/jquery.cookie.js') }}"></script>
         <script src="{{ asset('assets/js/libs/imagesloaded.pkgd.min.js') }}"></script>
         <script src="{{ asset('assets/js/libs/image-scale.min.js') }}"></script>

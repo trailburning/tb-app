@@ -640,12 +640,29 @@ a:active .tb-cntrl {
   position: relative;
 }
 
-#headerview .right .search form {
-  line-height: 41px;
+.search .ui-autocomplete {
+  float: right;
+  font-size: .9em;
 }
 
-#headerview .right .search .search-results {
-  margin-top: 6px;
+.search .ui-autocomplete-loading {
+  background: white url('http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/images/ui-anim_basic_16x16.gif') right center no-repeat;
+}
+
+.search  .ui-autocomplete li span {
+  float: right;
+}
+
+.search .ui-autocomplete li .match {
+  float: left;
+}
+
+.search .ui-autocomplete li .type {
+  float: right;
+}
+
+#headerview .right .search form {
+  line-height: 41px;
 }
 
 #search {
@@ -694,7 +711,7 @@ a:active .tb-cntrl {
   transition: all 0.3s ease;  
 }
 
-#searchBox:focus	{
+#searchBox:focus {
   width: 200px;
   -webkit-transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;
