@@ -29,3 +29,6 @@ parameters:
     memcached_port: 11211
     memcached_username: 
     memcached_password:   
+    elasticsearch:
+        hosts: 
+            - 'e7p15amb:4yexy8z21pg5eee0@boxwood-7916136.eu-west-1.bonsai.io'

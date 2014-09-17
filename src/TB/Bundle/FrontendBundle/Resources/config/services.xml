@@ -150,5 +150,10 @@
             <argument type="service" id="asset_files_filesystem" />
         </service>
         
+        <!--  Register image generator as service -->
+        <service id="tb.elasticsearch.client" class="Elasticsearch\Client">
+            <argument>%elasticsearch%</argument>
+        </service>
+        
     </services>
 </container>
