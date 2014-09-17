@@ -1,5 +1,10 @@
 <div id="brand_header">
     <div class="image_container fade_on_load"><img src="http://app.resrc.it/O=90/http://assets.trailburning.com/images/profile/{{ brand.name }}/{{ brand.headerImage }}" class="resrc scale" /></div>
-    <div class="brand_logo"><a href="{{ brand.link }}" onClick="trackOutboundLink(this, 'Outbound Links', '{{ brand.link|url_truncate }}'); return false;"><img src="http://assets.trailburning.com/images/profile/{{ brand.name }}/{{ brand.avatar }}" border="0"></a></div>
+    {% if brand.id == 223 %}
+    	<div class="brand_logo" style="top: 166px;">
+    {% else %}
+    	<div class="brand_logo">
+    {% endif %}
+    	<a href="{{ brand.link }}" onClick="trackOutboundLink(this, 'Outbound Links', '{{ brand.link|url_truncate }}'); return false;"><img src="http://assets.trailburning.com/images/profile/{{ brand.name }}/{{ brand.avatar }}" border="0"></a></div>
     <div class="tb-credit"></div>
 </div>
