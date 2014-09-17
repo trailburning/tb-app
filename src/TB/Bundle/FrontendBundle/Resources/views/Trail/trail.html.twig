@@ -261,18 +261,18 @@ var TB_TRAIL_ID = {{ trail.id }};
         </div>
   
         <div id="trail_overlay">
+        	<div class="overlay_background"></div>
             <div class="overlay_content">
                 <div id="trail_stats_view" class="trailstats_panel"></div>
                     <div id="trail_altitude_view" class="trail_altitude_panel"></div>
                     <div id="trail_mini_view">
-                    <div id="trail_minimap_view" class="trail_minimap"></div>
-                    <div id="trail_minislides_view" class="trail_minislides"></div>
+                    <div id="trail_minimap_view" class="trail_minimap"></div>                    
                     <div class='border_top'></div>
-                    <div class='border_left'></div>
-                    <div class='toggle_view_button'></div>          
+                    <div class='border_left'></div>                              
+                    <div class='border_right'></div>                              
+                    <div class='border_bottom'></div>                              
                 </div>
             </div>
-            <div class="overlay_pull"><span class="button"></span></div>
         </div>
     </div>  
 </div>  
@@ -294,12 +294,6 @@ var TB_TRAIL_ID = {{ trail.id }};
 
 <script type="text/template" id="trailMiniMapViewTemplate">
   <div id='minimap'></div>  
-</script>
-
-<script type="text/template" id="trailMiniSlidesViewTemplate">
-  <div id='minislides'>
-    <div class="photos_container"></div>
-  </div>
 </script>
 
 <script type="text/template" id="trailSlidesViewTemplate">
@@ -326,7 +320,6 @@ var TB_TRAIL_ID = {{ trail.id }};
 <script type="text/template" id="traiAltitudeViewTemplate">
   <div class="profile">
     <canvas id="graph"></canvas>
-    <div class="location"></div>      
   </div>
 </script>
 

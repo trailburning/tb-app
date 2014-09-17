@@ -79,8 +79,8 @@ define([
       var attribs = this.model.toJSON();
       $(this.el).html(this.template(attribs));
             
-      this.map = L.mapbox.map('minimap', null, {dragging: false, touchZoom: false, scrollWheelZoom:false, doubleClickZoom:false, boxZoom:false, tap:false, zoomControl:false, zoomAnimation:false, attributionControl:false});
-      this.layer_street = L.mapbox.tileLayer('mallbeury.map-kply0zpa');
+      this.map = L.mapbox.map('minimap', null, {dragging: false, touchZoom: false, scrollWheelZoom:false, doubleClickZoom:false, boxZoom:false, tap:false, zoomControl:false, zoomAnimation:false, keyboard:false, attributionControl:false});
+      this.layer_street = L.mapbox.tileLayer('mallbeury.8f5ac718');      
       this.map.addLayer(this.layer_street);
                 
       // remove previous points
@@ -94,7 +94,7 @@ define([
       });
 
       var polyline_options = {
-        color: '#44B6FC',
+        color: '#FFF',
         opacity: 1,
         weight: 4,
         clickable: false
