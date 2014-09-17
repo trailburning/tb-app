@@ -116,10 +116,14 @@ define([
     buildBtns: function(){
       var self = this;
 
+      $(document).mouseleave(function(){
+        self.hideDetailOverlay();
+	  });
+
       $(document).mousemove(function(evt){
       	var nTopY = $('#trailplayer').offset().top;
 		if (evt.pageY < nTopY) {
-          self.hideDetailOverlay();			
+//          self.hideDetailOverlay();			
 		}
       });
 
