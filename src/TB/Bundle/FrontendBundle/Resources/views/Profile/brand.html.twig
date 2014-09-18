@@ -34,12 +34,13 @@ var TB_BRAND_LAT = {{ brand.location.latitude }};
                     <div class="join"><a href="{{ brand.link }}" onClick="trackOutboundLink(this, 'Outbound Links', '{{ brand.link|url_truncate }}'); return false;" class="btn btn-tb-action btn-tb-large">Visit official website</a></div>
                 </div>
             </div>
-            
+            {% if brand.id == 215 %}
             <div class="panel brand_location_panel">
                 <div class="content">
                     <div id="brand_location_map" class="brand_location_map"></div>
                 </div>
-            </div>            
+            </div>         
+            {% endif %}   
         </div>
       
         <div class="right">
@@ -70,7 +71,7 @@ var TB_BRAND_LAT = {{ brand.location.latitude }};
             	{% else %}
 		   	      <div class="panel trail_card trail_card_panel">
 			        <div class="title"><h3 class="tb">Category</h3></div>
-		            <a href="{{ path('trail', {'trailSlug': event.slug}) }}">
+		            <a href="">
 		            <div class="photo tb-photo-btn">
 		              <div class="image_container fade_on_load">
 	                     {% if event.media is defined %}
@@ -87,7 +88,7 @@ var TB_BRAND_LAT = {{ brand.location.latitude }};
 		            </div>
 		          	</a>
 			      	<div class="summary">
-      					<div class="sponsor"><a href=""><img src="http://assets.trailburning.com/images/profile/mtbuller/card_trail_logo.png"></a></div>
+      					<div class="sponsor"><a href=""><img src="http://assets.trailburning.com/images/profile/mtbuller/card_logo3.png"></a></div>
       					<div class="location"></div>
 			        </div>
 		          </div>

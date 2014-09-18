@@ -58,8 +58,10 @@ define([
       var latlng = new L.LatLng(fLat, fLng);
       map.setView(latlng, 7);
     }
-                    
-    builtBrandMap();    
+                   
+	if ($('.brand_location_panel').length) {
+      builtBrandMap();    		
+	}                                       
   };
     
   return { 
