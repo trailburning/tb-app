@@ -44,6 +44,77 @@ var TB_BRAND_LAT = {{ brand.location.latitude }};
         </div>
       
         <div class="right">
+        	
+        {% if brand.id == 215 %}
+    		<div class="trails_title">
+    		<h2 class="tb tb-title first-title ">Discover the trails</h2>
+    		</div>
+			
+        	<div class="event_container">
+			
+				<div class="panel trail_card_panel">
+				    <div class="title"><h3 class="tb">Mountains</h3></div>
+				    <a href="../trail/gang-gangs-lazy-loop-mt-buller ">
+				    <div class="photo tb-photo-btn">
+				      <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/o=80/http://media.trailburning.com/422/8da94c153dafeb392390301ce17ae380f02e271b.jpg" class="resrc scale" border="0"></div>
+				      <div class="card_title">
+				        <h1>Gang Gangs Lazy Loop</h1>
+				      </div>
+				    </div>
+				    </a>
+				    <div class="summary">
+				      <div class="sponsor"><a href="../profile/mtbuller"><img src="http://assets.trailburning.com/images/profile/mtbuller/card_logo4.png"></a></div>
+				    </div>
+				</div>
+
+				<div class="panel trail_card_panel">
+				    <div class="title"><h3 class="tb">Mountains</h3></div>
+				    <a href="../trail/buller-stirling-showcase-mt-buller">
+				    <div class="photo tb-photo-btn">
+				      <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/o=80/http://media.trailburning.com/423/6ac3d807743f8aa25ab5827b5db1c88e58a0cbad.jpg" class="resrc scale" border="0"></div>
+				      <div class="card_title">
+				        <h1>Buller Stirling Showcase</h1>
+				      </div>
+				    </div>
+				    </a>
+				    <div class="summary">
+				      <div class="sponsor"><a href="../profile/mtbuller"><img src="http://assets.trailburning.com/images/profile/mtbuller/card_logo4.png"></a></div>
+				    </div>
+				</div>
+
+				<div class="panel trail_card_panel">
+				    <div class="title"><h3 class="tb">Mountains</h3></div>
+				    <a href="../trail/delatite-drop-mt-buller">
+				    <div class="photo tb-photo-btn">
+				      <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/o=80/http://media.trailburning.com/424/eb97dca023f18faa30ea01f98404c225aae7acb1.jpg" class="resrc scale" border="0"></div>
+				      <div class="card_title">
+				        <h1>Delatite Drop</h1>
+				      </div>
+				    </div>
+				    </a>
+				    <div class="summary">
+				      <div class="sponsor"><a href="../profile/mtbuller"><img src="http://assets.trailburning.com/images/profile/mtbuller/card_logo4.png"></a></div>
+				    </div>
+				</div>
+
+				<div class="panel trail_card_panel">
+				    <div class="title"><h3 class="tb">Mountains</h3></div>
+				    <a href="../trail/outer-space-loop-mt-buller">
+				    <div class="photo tb-photo-btn">
+				      <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/o=80/http://media.trailburning.com/425/1a758b7c527873593f6d7d5af1e6543f04c89ef7.jpg" class="resrc scale" border="0"></div>
+				      <div class="card_title">
+				        <h1>Outer Space Loop</h1>
+				      </div>
+				    </div>
+				    </a>
+				    <div class="summary">
+				      <div class="sponsor"><a href="../profile/mtbuller"><img src="http://assets.trailburning.com/images/profile/mtbuller/card_logo4.png"></a></div>
+				    </div>
+				</div>
+
+			</div>
+        {% endif %}   
+        	
         {% if events %}
         
         	{% if events|length > 1 %}
@@ -59,7 +130,7 @@ var TB_BRAND_LAT = {{ brand.location.latitude }};
 	                <div class="panel big_event_panel">
 	                    <a href="{{ path('event', {slug: event.slug}) }}">
 	                        <div class="photo tb-photo-btn">
-	                            <div class="image_container"><img src="http://app.resrc.it/O=80/http://assets.trailburning.com/images/events/{{ event.slug }}/{{ event.image}}" class="resrc scale" border="0"/></div>
+	                            <div class="image_container fade_on_load"><img src="http://app.resrc.it/O=80/http://assets.trailburning.com/images/events/{{ event.slug }}/{{ event.image}}" class="resrc scale" border="0"/></div>
 	                            <div class="logo"><img src="http://assets.trailburning.com/images/events/{{ event.slug }}/postcard_{{ event.logo }}"></div>              
 	                        </div>
 	                    </a>
