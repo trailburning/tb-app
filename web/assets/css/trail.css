@@ -346,8 +346,42 @@ html.touch #small_sponsor_bar {
   overflow: hidden;
 }
 
-#trail_slides_view .image_container img {
+#trail_slides_view .blur {
+  filter: brightness(0.5);
+  -webkit-filter: brightness(0.5);
+  -moz-filter: brightness(0.5);
+}
+
+#trail_slides_view .background .image_container img {
   width: 100%;
+}
+
+#trail_slides_view .foreground {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+}
+
+#trail_slides_view .foreground .image_container {
+  position: relative;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
+#trail_slides_view .foreground .image_container img {
+  display: block;
+  margin: 0 auto;
+  height: 100%;
+}
+	
+#trail_slides_view .foreground .image_container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
 }
 
 #trail_slides_view .slide_btns { 
