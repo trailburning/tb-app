@@ -43,16 +43,16 @@ define([
 	  // detect portrait
 	  if (Number(tags.height) > Number(tags.width)) {
 	  	this.bLandscape = false;
-	  	$('.image_overlay', $(this.el)).show();
-	  	$('.image_overlay', $(this.el)).addClass('darken');
+	  	
+	  	$('.background', $(this.el)).remove();	  	
 	  }
 	  else {
 	  	// remove foreground
 	  	$('.foreground', $(this.el)).remove();
+	  	$('.background_blur', $(this.el)).remove();
 	  }
-
 	  // force resrc update
-	  resrc.resrc($('img', $(this.el)));
+	  resrc.resrc($('img.resrc', $(this.el)));	        
 
 	  this.bRendered = true;
 
@@ -76,7 +76,7 @@ define([
         app.dispatcher.trigger("TrailSlideView:imageready", self);                        
 	  });
 	  // force resrc update
-	  resrc.resrc($('img', $(this.el)));	        
+	  resrc.resrc($('img.resrc', $(this.el)));	        
 	}
 	        
   });
