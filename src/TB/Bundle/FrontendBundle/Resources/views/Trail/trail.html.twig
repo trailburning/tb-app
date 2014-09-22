@@ -309,10 +309,13 @@ var TB_TRAIL_ID = {{ trail.id }};
 
 <script type="text/template" id="trailSlideViewTemplate">
   <div class="background">
-    <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/O=80/http://media.trailburning.com<%= versionLargePath%>" class="resrc scale" /></div>
+    <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/O=80/http://media.trailburning.com<%= versionLargePath%>" class="resrc scale" />    	
+    	<div class="image_overlay"></div>    	
+    </div>
   </div>
   <div class="foreground">
-	<div class="image_container fade_on_load"><img data-src="http://app.resrc.it/O=80/http://media.trailburning.com<%= versionLargePath%>" class="resrc" /></div>
+	<div class="image_container fade_on_load">
+		<img data-src="http://app.resrc.it/O=80/http://media.trailburning.com<%= versionLargePath%>" class="resrc" /></div>
   </div>
 </script>
 

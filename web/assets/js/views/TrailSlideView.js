@@ -43,7 +43,8 @@ define([
 	  // detect portrait
 	  if (Number(tags.height) > Number(tags.width)) {
 	  	this.bLandscape = false;
-	  	$('.background', $(this.el)).addClass('blur');
+	  	$('.image_overlay', $(this.el)).show();
+	  	$('.image_overlay', $(this.el)).addClass('darken');
 	  }
 	  else {
 	  	// remove foreground
