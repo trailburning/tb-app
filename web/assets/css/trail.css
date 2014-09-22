@@ -347,9 +347,9 @@ html.touch #small_sponsor_bar {
 }
 
 #trail_slides_view .blur {
-  filter: brightness(0.5);
-  -webkit-filter: brightness(0.5);
-  -moz-filter: brightness(0.5);
+  filter: brightness(0.4);
+  -webkit-filter: brightness(0.4);
+  -moz-filter: brightness(0.4);
 }
 
 #trail_slides_view .background .image_container img {
