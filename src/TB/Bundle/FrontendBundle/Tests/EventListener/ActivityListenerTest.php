@@ -283,7 +283,7 @@ class ActivityEventSubscriberTest extends AbstractFrontendTest
             'The id value is grater than 0');
         $this->assertObjectHasAttribute('type', $obj,
             'The message has the type attribute');
-        $this->assertContains($obj->type, ['activity', 'routeShareImage'], 
+        $this->assertContains($obj->type, ['activity', 'routeShareImage', 'routeIndex'], 
             'The type field contains one of the valid values');
     }
     

@@ -30,7 +30,22 @@ class SearchMappingCommand extends ContainerAwareCommand
                 break;
             case 'user_profile':
                 $this->populateUserProfileMapping();
-                break;    
+                break;  
+            case 'brand_profile':
+                $this->populateBrandProfileMapping();
+                break;  
+            case 'event':
+                $this->populateEventMapping();
+                break;                    
+            case 'editorial':
+                $this->populateEditorialMapping();
+                break;  
+            case 'all':
+                $this->populateRouteMapping();
+                $this->populateUserProfileMapping();
+                $this->populateEventMapping();
+                $this->populateEditorialMapping();
+                break;
             default:
                 $output->writeln(sprintf('<error>Unknown type "%s"</error>', $type));
                 break;
@@ -155,10 +170,195 @@ class SearchMappingCommand extends ContainerAwareCommand
                         'last_name' => [
                             'type' => 'string', 
                         ],
-                        'location' => [
+                        'avatar' => [
+                            'type' => 'string', 
+                            'index' => 'not_analyzed',
+                        ],
+                    ],
+                ],
+            ],
+        ];
+        
+        $this->client->indices()->putMapping($params);
+    }
+    
+    protected function populateBrandProfileMapping()
+    {   
+        // Create the new index 
+        $params = [
+            'index' => 'trailburning',
+            'type' => 'brand_profile',
+            'body' => [
+                'brand_profile' => [
+                    '_id' => [
+                        'path' => 'id',
+                    ],
+                    'dynamic' => 'strict',
+                    'properties' => [
+                        'id' => [
+                            'type' => 'string', 
+                            'index' => 'not_analyzed',
+                        ],
+                        'suggest_text' => [
+                            'type' => 'string',
+                            'copy_to' => [
+                                'suggest_ng', 
+                                'suggest_nge', 
+                                'suggest_phon'
+                            ],
+                        ],
+                        'suggest_ng' => [
+                            'type' => 'string',
+                            'index' => 'analyzed',
+                            'index_analyzer' => 'autocomplete_ngram',
+                            'search_analyzer' => 'whitespace_analyzer',
+                        ],
+                        'suggest_nge' => [
+                            'type' => 'string',
+                            'index' => 'analyzed',
+                            'index_analyzer' => 'autocomplete_edge',
+                            'search_analyzer' => 'whitespace_analyzer',
+                        ],
+                        'suggest_phon' => [
+                            'type' => 'string',
+                            'index' => 'analyzed',
+                            'analyzer' => 'phonetic_text',
+                        ],
+                        'name' => [
+                            'type' => 'string', 
+                        ],
+                        'display_name' => [
+                            'type' => 'string', 
+                        ],
+                        'subtitle' => [
                             'type' => 'string', 
                         ],
                         'avatar' => [
+                            'type' => 'string', 
+                            'index' => 'not_analyzed',
+                        ],
+                    ],
+                ],
+            ],
+        ];
+        
+        $this->client->indices()->putMapping($params);
+    }
+    
+    protected function populateEventMapping()
+    {   
+        // Create the new index 
+        $params = [
+            'index' => 'trailburning',
+            'type' => 'event',
+            'body' => [
+                'event' => [
+                    '_id' => [
+                        'path' => 'id',
+                    ],
+                    'dynamic' => 'strict',
+                    'properties' => [
+                        'id' => [
+                            'type' => 'string', 
+                            'index' => 'not_analyzed',
+                        ],
+                        'suggest_text' => [
+                            'type' => 'string',
+                            'copy_to' => [
+                                'suggest_ng', 
+                                'suggest_nge', 
+                                'suggest_phon'
+                            ],
+                        ],
+                        'suggest_ng' => [
+                            'type' => 'string',
+                            'index' => 'analyzed',
+                            'index_analyzer' => 'autocomplete_ngram',
+                            'search_analyzer' => 'whitespace_analyzer',
+                        ],
+                        'suggest_nge' => [
+                            'type' => 'string',
+                            'index' => 'analyzed',
+                            'index_analyzer' => 'autocomplete_edge',
+                            'search_analyzer' => 'whitespace_analyzer',
+                        ],
+                        'suggest_phon' => [
+                            'type' => 'string',
+                            'index' => 'analyzed',
+                            'analyzer' => 'phonetic_text',
+                        ],
+                        'title' => [
+                            'type' => 'string', 
+                        ],
+                        'title2' => [
+                            'type' => 'string', 
+                        ],
+                        'slug' => [
+                            'type' => 'string', 
+                            'index' => 'not_analyzed',
+                        ],
+                        'logo_small' => [
+                            'type' => 'string', 
+                            'index' => 'not_analyzed',
+                        ],
+                    ],
+                ],
+            ],
+        ];
+        
+        $this->client->indices()->putMapping($params);
+    }
+    
+    protected function populateEditorialMapping()
+    {   
+        // Create the new index 
+        $params = [
+            'index' => 'trailburning',
+            'type' => 'editorial',
+            'body' => [
+                'editorial' => [
+                    '_id' => [
+                        'path' => 'id',
+                    ],
+                    'dynamic' => 'strict',
+                    'properties' => [
+                        'id' => [
+                            'type' => 'string', 
+                            'index' => 'not_analyzed',
+                        ],
+                        'suggest_text' => [
+                            'type' => 'string',
+                            'copy_to' => [
+                                'suggest_ng', 
+                                'suggest_nge', 
+                                'suggest_phon'
+                            ],
+                        ],
+                        'suggest_ng' => [
+                            'type' => 'string',
+                            'index' => 'analyzed',
+                            'index_analyzer' => 'autocomplete_ngram',
+                            'search_analyzer' => 'whitespace_analyzer',
+                        ],
+                        'suggest_nge' => [
+                            'type' => 'string',
+                            'index' => 'analyzed',
+                            'index_analyzer' => 'autocomplete_edge',
+                            'search_analyzer' => 'whitespace_analyzer',
+                        ],
+                        'suggest_phon' => [
+                            'type' => 'string',
+                            'index' => 'analyzed',
+                            'analyzer' => 'phonetic_text',
+                        ],
+                        'title' => [
+                            'type' => 'string', 
+                        ],
+                        'slug' => [
+                            'type' => 'string', 
+                            'index' => 'not_analyzed',
+                        ],
+                        'image' => [
                             'type' => 'string', 
                             'index' => 'not_analyzed',
                         ],
