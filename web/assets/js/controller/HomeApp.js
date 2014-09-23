@@ -59,7 +59,6 @@ define([
         hosts: 'e7p15amb:4yexy8z21pg5eee0@boxwood-7916136.eu-west-1.bonsai.io'
     });
     
-//    $('#q').autocomplete({  	
     $('#searchBox').autocomplete({
         minLength: 2,
         delay: 0,
