@@ -96,6 +96,7 @@ define([
     	switch (item._type) {
     	  case 'user_profile':
     	    strItem = '<a href="profile/' + item._source.name + '" class="clearfix"><div class="match">' + item._source.suggest_text + '</div><div class="type"><div class="tb-avatar"><div class="photo"><img src="'+item._source.avatar+'"></div></div></div></a>';
+//    	    strItem = '<a href="profile/' + item._source.name + '" class="clearfix">' + item._source.suggest_text + '</a>';
     	    break;
     	  default:
     	    strItem = '<a href="trail/' + item._source.slug + '" class="clearfix">' + item._source.suggest_text + '</a>';
