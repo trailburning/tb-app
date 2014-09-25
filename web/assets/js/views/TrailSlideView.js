@@ -10,6 +10,7 @@ define([
       this.nType = this.options.type;
       this.bLoaded = false;
       this.bRendered = false;
+      this.bLandscape = true;
     },            
     isLoaded: function(){
       return this.bLoaded;
@@ -38,8 +39,20 @@ define([
       var attribs = this.model.toJSON();
       $(this.el).html(this.template(attribs));
 
+      var tags = this.model.get('tags');
+	  // detect portrait
+	  if (Number(tags.height) > Number(tags.width)) {
+	  	this.bLandscape = false;
+	  	
+	  	$('.background', $(this.el)).remove();	  	
+	  }
+	  else {
+	  	// remove foreground
+	  	$('.foreground', $(this.el)).remove();
+	  	$('.background_blur', $(this.el)).remove();
+	  }
 	  // force resrc update
-	  resrc.resrc($('img', $(this.el)));
+	  resrc.resrc($('img.resrc', $(this.el)));	        
 
 	  this.bRendered = true;
 
@@ -63,7 +76,7 @@ define([
         app.dispatcher.trigger("TrailSlideView:imageready", self);                        
 	  });
 	  // force resrc update
-	  resrc.resrc($('img', $(this.el)));	        
+	  resrc.resrc($('img.resrc', $(this.el)));	        
 	}
 	        
   });

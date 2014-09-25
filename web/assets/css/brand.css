@@ -70,6 +70,14 @@ border-width:1px;
   overflow: hidden;
 }
 
+.trails_title {
+  margin-left: 24px;
+}
+
+.trails_title .first-title {
+  margin-top: 0px;
+}
+
 /* BRAND DETAIL PANEL */
 /******************************************/
 .brand_detail_panel {
@@ -152,13 +160,13 @@ border-width:1px;
 .event_container h2 {
   color: #FFFFFF;
 }
-
+/*
 .event_container h3 {
   margin-left: 22px;
   height: 78px;
   line-height: 78px;
 }
-
+*/
 /* BIG EVENT */
 /******************************************/
 .big_event_panel {
@@ -202,6 +210,36 @@ border-width:1px;
   line-height: 78px;
 }
 
+/* TRAIL */
+/******************************************/
+.trail_card_panel {
+  margin: 24px 0px 0px 24px;
+  width: 260px;
+}
+
+/* BRAND LOCATION PANEL */
+/******************************************/
+.brand_location_panel {
+  margin-top: 24px;
+  width: 544px;
+  height: 300px;
+}
+
+.brand_location_panel .content {  
+  margin: 11px;
+}
+
+.brand_location_panel .content .brand_location_map {
+  width: 522px;
+  height: 278px;
+  background-color: transparent;   
+  cursor: default;
+}
+
+.brand_location_panel .content .brand_location_map:hover {
+  cursor: default;
+}
+
 /* RESPONSIVE */
 /******************************************/
 
@@ -234,6 +272,15 @@ border-width:1px;
   }
   .big_event_panel .photo .image_container {
     width: 472px;
+  }
+  .trail_card_panel {
+    width: 224px;
+  }
+  .brand_location_panel {
+    width: 472px;
+  }
+  .brand_location_panel .content .brand_location_map {
+    width: 450px;
   }
 }
 
