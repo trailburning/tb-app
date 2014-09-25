@@ -681,90 +681,19 @@ a:active .tb-cntrl {
   float: right;
 }
 
-/*
-
-.search  .ui-autocomplete li a {
-  border: none;
-}
-
-.search  .ui-autocomplete li a:hover,
-.search  .ui-autocomplete li a:active {
-
-padding: 10px;
-
-line-height: 1em;
-  background: red;
-}
-
-.ui-widget-content {
-  border: none;
-}
-
-.ui-menu {
-  padding: 0px;	
-}
-
-.search  .ui-autocomplete .ui-state-focus {
-  
-line-height: 1em;
-  	
-  border: none;
-  background: blue;	
-}
-*/
-
-/*
-.ui-state-hover,
-.ui-widget-content .ui-state-hover,
-.ui-widget-header .ui-state-hover,
-.ui-state-focus,
-.ui-widget-content .ui-state-focus,
-.ui-widget-header .ui-state-focus {
-
-  border: none;
-    background-image: none;
-    background: yellow;
-    color:blue;
-    
-    margin: 4px;
-}
-*/
-/*
-.search .ui-autocomplete .ui-state-hover,
-.search .ui-autocomplete .ui-state-active,
-.search .ui-autocomplete .ui-state-focus {
-	background: yellow;
-	font-weight: normal;
-	margin: 10px;
-	border:0;
-	border-collapse:separate;
-
-}
-*/
-
-
-
-
-
-.search a.sbiAnchor.ui-state-hover{
-    background: blue;
-}
-
-
 .search .ui-autocomplete li {
-    border-bottom: 1px solid #CDCDCD;	
+  border-bottom: 1px solid #CDCDCD;	
 }
 
 .search .ui-autocomplete li:last-child {
-    border-bottom: none;	
+  border-bottom: none;	
 }
 
 .search .ui-autocomplete .ui-state-focus {
-    background: #FFF;
-    outline: none;    
-    border: 1px solid #CDCDCD;
+  background: #FFF;
+  outline: none;    
+  border: 1px solid #CDCDCD;
 }
-
 
 #headerview .right .search form {
   line-height: 41px;
