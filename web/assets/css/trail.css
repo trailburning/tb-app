@@ -116,10 +116,7 @@ html.touch #small_sponsor_bar {
   display: none;
   position: relative;
   width: 100%;  
-/*  
   height: 486px;
-*/  
-  height: 300px;
   overflow: hidden;
 }
 
@@ -160,9 +157,28 @@ html.touch #small_sponsor_bar {
 /* TRAIL INTRO VIEW */
 /******************************************/
 #trail_intro_view {
-	z-index: 2;  
   position: absolute;
   top: 0px;
+}
+
+#trail_intro_view .info-hero {
+  position: absolute;
+  top: 0px;
+  left: -800px;
+  height: 1000px;
+  background: url(../img/trailplayer/background_skew.png) no-repeat top left;  
+}
+
+#trail_intro_view .info-hero .trail_avatar {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+
+#trail_intro_view .info-hero .trail_title {
+  position: relative;
+  top: 30px;
+  left: -100px;
 }
 
 /* TRAIL STATS VIEW */

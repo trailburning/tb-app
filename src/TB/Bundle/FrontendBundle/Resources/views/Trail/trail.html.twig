@@ -65,7 +65,22 @@ var TB_TRAIL_ID = {{ trail.id }};
         </div>
         
         <div id="trail_intro_view">
-        	<div class="player_show">CLICK</div>
+			<div class="info-hero tb-move-horiz">				  						  				
+			  <div class="trail_title tb-move-horiz">
+                {% if event %}
+                  <h2 class="tb tb-title">{{ event.title }}</h2>
+                  <br/>
+                  <h2 class="tb tb-title">{{ trail.name }}</h2>
+                {% else %}
+                  <h2 class="tb tb-title">{{ trail.name }}</h2>
+                  <br/>
+                  <h2 class="tb tb-title">{{ trail.region }}</h2>
+                {% endif %}
+              </div>
+              <div class="trail_avatar">
+	           	<div class="tb-avatar tb-avatar-feature"><div class="photo"><a href="{{ path('profile', {'name': user.name}) }}"><img src="{{ get_user_avatar_url(user) }}"></a></div></div>
+	          </div>
+			</div>        	
 		</div>        	
         
         <div id="tb-loader-overlay">

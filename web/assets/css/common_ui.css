@@ -1187,6 +1187,14 @@ form label {
   -webkit-transform:translate3d(0,0,0);              
 }
 
+.tb-move-horiz {
+  -webkit-transition: left 1s;
+  -moz-transition: left 1s;
+  -o-transition: left 1s;
+  transition: left 1s;    
+  -webkit-transform:translate3d(0,0,0);              
+}
+
 .tb-size {
   -webkit-transition: height 1s, width 1s;
   -moz-transition: height 1s, width 1s;
