@@ -115,8 +115,11 @@ html.touch #small_sponsor_bar {
 #trailplayer {
   display: none;
   position: relative;
-  width: 100%;
-  height: 600px;
+  width: 100%;  
+/*  
+  height: 486px;
+*/  
+  height: 300px;
   overflow: hidden;
 }
 
@@ -152,6 +155,14 @@ html.touch #small_sponsor_bar {
   height: 100%;
   margin: 0px auto 0px auto;
   overflow: hidden;
+}
+
+/* TRAIL INTRO VIEW */
+/******************************************/
+#trail_intro_view {
+	z-index: 2;  
+  position: absolute;
+  top: 0px;
 }
 
 /* TRAIL STATS VIEW */
