@@ -206,11 +206,18 @@ define([
 	  	  	var nAdjustY = (nPlayerHeight - nPlayerViewerHeight)/2;
             $('#trail_views').css('top', -nAdjustY);        	  	  	
 		  }
+		  
+	  	  if (nPlayerHeight < nPlayerViewerHeight) {
+	  	  	// player is smaller than viewer
+	  	    nPlayerViewerHeight = nPlayerHeight;
+	  	    $('#trail_views').css('top', 0);	  	  	
+		  }
+		  
       	  this.nPlayerHeight = nPlayerHeight;
 	  	  break;
 	  }
 
-      $('#trailplayer').height(nPlayerViewerHeight);            
+      $('#trailplayer').height(nPlayerViewerHeight);
       
   	  $('#trail_slides_view').height(this.nPlayerHeight);
    	  // force height update for imageScale
