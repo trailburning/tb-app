@@ -189,7 +189,6 @@ define([
       
 	  switch (this.nPlayerView) {
 	  	case PLAYER_INTRO:
-	  	case PLAYER_PREPARE_SHOW:
 	  	  nPlayerViewerHeight = MIN_HEIGHT;
 	  	  this.nPlayerHeight = nPlayerHeight;
 	  	  
@@ -199,6 +198,7 @@ define([
 	  	  } 
 	  	  break;
 	  	
+	  	case PLAYER_PREPARE_SHOW:
 	  	case PLAYER_SHOW:
 	  	  nPlayerViewerHeight = $(window).height() - nContentY;
 	  	  
@@ -308,7 +308,6 @@ define([
                       
       this.handleResize();
       
-      // mla      
       this.trailSlidesView.gotoHeroSlide();
       
       // keyboard control
@@ -355,13 +354,19 @@ define([
     showPlayer: function(){
       this.nPlayerView = PLAYER_PREPARE_SHOW;
 
+	  var self = this;
+
       // add transition for effect      
       $('#trailplayer').addClass('tb-size');
 	  $('#trail_views').addClass('tb-move-vert');
-
+      
       this.updatePlayerHeight();
       
-      this.startSlideShow();            
+      this.hideIntroOverlay();
+
+      setTimeout(function() {
+        self.startSlideShow();
+      }, 500);
     },
     hidePlayer: function(){
       this.nPlayerView = PLAYER_INTRO;
@@ -374,7 +379,6 @@ define([
       
       this.showIntroOverlay();
       
-      // mla      
       this.showPhotoView();
       
       $('#view_player_btns').css('top', -100);
@@ -382,8 +386,10 @@ define([
       
       this.stopSlideShow();
       this.nCurrSlide = -1;
-      // mla
+
       this.trailSlidesView.gotoHeroSlide();
+      
+      this.hideOverlay();
     },
     showIntroOverlay: function(){    
       $('#trail_intro_view .info-hero').css('left', 0);
@@ -393,6 +399,20 @@ define([
       $('#trail_intro_view .info-hero').css('left', -800);
       $('#trail_intro_view .info-hero .trail_title').css('left', -100);
     },
+    showOverlay: function(){
+      $('.overlay_background').css('opacity', 1);
+
+      $('#trail_stats_view').css('top', 70);
+      $('#trail_altitude_view').css('top', 70);        
+      $('#trail_mini_view').css('top', 70);
+	},
+    hideOverlay: function(){
+	  $('.overlay_background').css('opacity', 0);
+
+      $('#trail_stats_view').css('top', 300);
+      $('#trail_altitude_view').css('top', 350);
+      $('#trail_mini_view').css('top', 400);    
+	},
     startSlideShow: function(){
       this.nSlideShowState = SLIDESHOW_PLAYING;
 
@@ -637,14 +657,13 @@ define([
         
         self.showIntroOverlay();
       }
-      
-      // mla
+
       if (this.nPlayerView == PLAYER_PREPARE_SHOW) {
       	this.nPlayerView = PLAYER_SHOW;
       
       	this.updatePlayerHeight();
       
-        this.hideIntroOverlay();
+		this.showOverlay();
       
         $('#view_player_btns').css('top', 22);
         $('#view_map_btns').css('top', 34);
