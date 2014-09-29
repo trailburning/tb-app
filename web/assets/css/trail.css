@@ -165,6 +165,7 @@ html.touch #small_sponsor_bar {
   position: absolute;
   top: 0px;
   left: -800px;
+  width: 412px;
   height: 1000px;
   background: url(../img/trailplayer/background_skew.png) no-repeat top left;  
 }
