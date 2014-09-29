@@ -11,8 +11,6 @@ define([
   'views/TrailWeatherView',
   'views/TrailActivitiesView'
 ], function(_, Backbone, TrailMediaModel, ActivityFeedView, TrailMiniMapView, TrailSlidesView, TrailMapView, TrailStatsView, TrailAltitudeView, TrailWeatherView, TrailActivitiesView){
-
-  var MIN_HEIGHT = 486;
   
   var PLAYER_INTRO = 0;
   var PLAYER_PREPARE_SHOW = 1;  
@@ -53,7 +51,10 @@ define([
       this.nPlayerView = PLAYER_INTRO;
       this.nTrailView = SLIDE_VIEW;
       this.nSlideShowState = SLIDESHOW_INIT;
+            
       this.nPlayerHeight = 0;
+      this.nPlayerMinHeight = $('#trailplayer').height();
+
       this.slideTimer = null;
       this.nCurrSlide = -1;
       this.nTickleCount = 0;
@@ -189,7 +190,7 @@ define([
       
 	  switch (this.nPlayerView) {
 	  	case PLAYER_INTRO:
-	  	  nPlayerViewerHeight = MIN_HEIGHT;
+	  	  nPlayerViewerHeight = this.nPlayerMinHeight;
 	  	  this.nPlayerHeight = nPlayerHeight;
 	  	  
 	  	  if (nPlayerHeight > nPlayerViewerHeight) {
@@ -281,7 +282,7 @@ define([
       
       // set hero slide if we have one
       if (this.model.get('value').route.media) {
-      	this.trailSlidesView.setHeroSlide(this.model.get('value').route.media.id);
+      	this.trailSlidesView.setHeroSlideId(this.model.get('value').route.media.id);
       }      
       
       var jsonMedia = this.mediaModel.get('value');
@@ -308,7 +309,9 @@ define([
                       
       this.handleResize();
       
-      this.trailSlidesView.gotoHeroSlide();
+	  // start with hero slide
+	  this.nCurrSlide = this.trailSlidesView.getHeroSlide();
+      this.trailSlidesView.gotoSlide(this.nCurrSlide);
       
       // keyboard control
       $(document).keydown(function(e){
@@ -364,9 +367,27 @@ define([
       
       this.hideIntroOverlay();
 
+      this.nPlayerView = PLAYER_SHOW;
+      
+      this.updatePlayerHeight();
+      
+      this.trailMiniMapView.gotoMedia(this.nCurrSlide);
+      this.trailMapView.gotoMedia(this.nCurrSlide);
+      
+      this.trailAltitudeView.gotoMedia(this.nCurrSlide);
+      
       setTimeout(function() {
-        self.startSlideShow();
+	    self.showOverlay();
       }, 500);
+      
+//	  this.showOverlay();
+      
+      $('#view_player_btns').css('top', 22);
+      $('#view_map_btns').css('top', 34);
+      
+      this.slideTimer = setTimeout(function() {
+        self.startSlideShow();
+      }, HOLD_SLIDE);      
     },
     hidePlayer: function(){
       this.nPlayerView = PLAYER_INTRO;
@@ -385,9 +406,9 @@ define([
       $('#view_map_btns').css('top', -300);
       
       this.stopSlideShow();
-      this.nCurrSlide = -1;
 
       this.trailSlidesView.gotoHeroSlide();
+      this.nCurrSlide = this.trailSlidesView.getHeroSlide();
       
       this.hideOverlay();
     },
@@ -656,17 +677,6 @@ define([
         this.bFirstSlide = false;
         
         self.showIntroOverlay();
-      }
-
-      if (this.nPlayerView == PLAYER_PREPARE_SHOW) {
-      	this.nPlayerView = PLAYER_SHOW;
-      
-      	this.updatePlayerHeight();
-      
-		this.showOverlay();
-      
-        $('#view_player_btns').css('top', 22);
-        $('#view_map_btns').css('top', 34);
       }
     },    
     onTrailSlidesViewSlideClickPrev: function(){

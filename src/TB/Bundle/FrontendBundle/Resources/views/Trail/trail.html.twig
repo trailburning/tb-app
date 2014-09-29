@@ -75,11 +75,22 @@ var TB_TRAIL_ID = {{ trail.id }};
                   <h2 class="tb tb-title">{{ trail.name }}</h2>
                   <br/>
                   <h2 class="tb tb-title">{{ trail.region }}</h2>
-                {% endif %}
+                {% endif %}                
+                {% if user.id != 1 %}
+                    <br/> 
+                    {% if user is UserProfile %}
+                        <div class="author">by <strong>{{ user.firstName }} {{ user.lastName }}</strong></div>
+                    {% elseif user is BrandProfile %}
+                        <div class="author">by <strong>{{ user.displayName }}</strong></div>
+                    {% endif %}
+                {% endif %}                
               </div>
               <div class="trail_avatar">
 	           	<div class="tb-avatar tb-avatar-feature"><div class="photo"><a href="{{ path('profile', {'name': user.name}) }}"><img src="{{ get_user_avatar_url(user) }}"></a></div></div>
 	          </div>
+              <div class="trail_play">
+              	<div class="trail_btn"></div>Play Trail	
+			  </div>              	
 			</div>        	
 		</div>        	
         

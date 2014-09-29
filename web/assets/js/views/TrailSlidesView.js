@@ -25,7 +25,10 @@ define([
     hide: function(){
       $(this.el).hide();
     },    
-    setHeroSlide: function(nId){
+    getHeroSlide: function(){
+      return this.nHeroSlide;
+    },
+    setHeroSlideId: function(nId){
       this.nHeroSlideId = nId;
     },
     gotoHeroSlide: function(){
