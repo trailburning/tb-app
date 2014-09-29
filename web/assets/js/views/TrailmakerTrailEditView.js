@@ -145,7 +145,12 @@ define([
       $('.trailcard_panel .trail_card_title', $(this.el)).html(this.model.get('value').route.name);
       $('.trailcard_panel .trail_card_region', $(this.el)).html(this.model.get('value').route.region);
 	  // trail_card_category      	
-	  $('.trailcard_panel .trail_card_category', $(this.el)).html($('#trail_types li[data-id='+this.model.get('value').route.route_category_id+']').text());        
+	  $('.trailcard_panel .trail_card_category', $(this.el)).html($('#trail_types li[data-id='+this.model.get('value').route.route_category_id+']').text());
+	  // trail length
+	  $('.trailcard_panel .length_marker', $(this.el)).html(Math.round(this.model.get('value').route.length / 1000));
+	  // ascent/descent
+	  $('.trailcard_panel .ascent_marker', $(this.el)).html(Math.round(this.model.get('value').route.tags.ascent));
+	  $('.trailcard_panel .descent_marker', $(this.el)).html(Math.round(this.model.get('value').route.tags.descent));
     },
     renderTrailCardPhoto: function(){
       var self = this;

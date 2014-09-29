@@ -52,8 +52,6 @@ define([
       	    $.each(data.value.routes, function(key, card) {
       	      bEvent = false;
 	          model = new Backbone.Model(card);    	
-	          // mla - switch based on route
-	          console.log(model.get('slug'));
 	          
 	          switch (model.get('slug')) {
 	          	case '16km':

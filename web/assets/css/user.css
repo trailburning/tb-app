@@ -142,10 +142,6 @@ border-width:1px;
   background: url("../img/editor/draft.png") no-repeat top left;    	
 }
 
-.mytrails_content .cntrls {
-  line-height: 68px;
-}
-
 /* LIKE TRAILS */
 /******************************************/
 .likedtrails_content {
@@ -385,7 +381,7 @@ border-width:1px;
 }
 
 .cntrls .btnDeleteTrail {
-  margin: 24px 14px 0px 0px;
+  margin: 4px 0px 0px 0px;
   background: url("../img/editor/btn_delete.png") no-repeat top left;
 }
 
@@ -407,17 +403,18 @@ border-width:1px;
   }
   .crumb_content {
     width: 974px;
+  }    
+  .details_content {
+    width: 974px;  
   }  
   .profile_detail_panel {
   	width: 472px;
-  }    
-  
-.mytrails_content {
-  padding-bottom: 16px;
-}
-  
+  }      
+  .mytrails_content {
+    padding-bottom: 16px;
+  }  
   .profile_follow_panel {
-    margin-left: 10px;
+    margin-left: 20px;
   	width: 472px;
   }
   .mytrails_title_content {

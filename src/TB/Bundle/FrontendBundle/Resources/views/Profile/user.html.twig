@@ -8,114 +8,134 @@
 
 {% block body %}
 <script>
-var TB_APP = 'UserApp';
-{% if app.user %}		
-var TB_USER_ID = {{ app.user.id }};
-{% endif %}
-{% if user.location %}
-var TB_USER_LONG = {{ user.location.longitude }};
-var TB_USER_LAT = {{ user.location.latitude }};
-{% endif %}
+	var TB_APP = 'UserApp';
+	{% if app.user %}
+	var TB_USER_ID = {{ app.user.id }};
+	{% endif %}
+	{% if user.location %}
+	var TB_USER_LONG = {{ user.location.longitude }};
+	var TB_USER_LAT = {{ user.location.latitude }};
+	{% endif %}
 </script>
 
 {{ include('TBFrontendBundle:Profile:_userHeader.html.twig', [user]) }}
 
 <div class="panel_content">
 	<div class="crumb_content fixed_content">
-	  <div id="bigbar">
-        {{ include('TBFrontendBundle:Default:breadcrumb.html.twig', breadcrumb) }}
-        {{ include('TBFrontendBundle:Default:share.html.twig') }}
+		<div id="bigbar">
+			{{ include('TBFrontendBundle:Default:breadcrumb.html.twig', breadcrumb) }}
+			{{ include('TBFrontendBundle:Default:share.html.twig') }}
 
-		{% if app.user %}
+			{% if app.user %}
 			{% if app.user.id != user.id %}
-				<div class="follow"><a href="javascript:void(0)" class="btn btn-tb-action btn-tb like_btn{% if user_is_following(app.user, user) %} pressed-btn-tb{% endif %}" data-off="Follow" data-on="Following" data-firstname="{{ user.firstname}}" data-userid="{{ user.id}}"><i class="icon-star icon-white"></i> <span class="btn-label">{% if user_is_following(app.user, user) %}Following{% else %}Follow{% endif %} {{ user.firstname}}</span></a></div>
+			<div class="follow">
+				<a href="javascript:void(0)" class="btn btn-tb-action btn-tb like_btn{% if user_is_following(app.user, user) %} pressed-btn-tb{% endif %}" data-off="Follow" data-on="Following" data-firstname="{{ user.firstname}}" data-userid="{{ user.id}}"><i class="icon-star icon-white"></i> <span class="btn-label">{% if user_is_following(app.user, user) %}Following{% else %}Follow{% endif %} {{ user.firstname}}</span></a>
+			</div>
 			{% endif %}
-		{% else %}
-			<div class="follow"><a href="{{ path('fos_user_security_login') }}" class="btn btn-tb-action btn-tb like_btn" data-off="Follow" data-on="Following" data-firstname="{{ user.firstname}}" data-userid="{{ user.id}}"><i class="icon-star icon-white"></i> <span class="btn-label">Follow {{ user.firstname}}</span></a></div>
-		{% endif %}
-      </div>
-    </div>
-                        
-    <div class="panels clearfix">               	
-    	<div class="mytrails_title_content fixed_content">    		
-      	  <h2 class="tb tb-title">My Trails</h2>
-    	</div>
+			{% else %}
+			<div class="follow">
+				<a href="{{ path('fos_user_security_login') }}" class="btn btn-tb-action btn-tb like_btn" data-off="Follow" data-on="Following" data-firstname="{{ user.firstname}}" data-userid="{{ user.id}}"><i class="icon-star icon-white"></i> <span class="btn-label">Follow {{ user.firstname}}</span></a>
+			</div>
+			{% endif %}
+		</div>
+	</div>
 
-    	<div class="mytrails_content fixed_content">    		
-          {% if routes %}
-	  		<div class="trailcards panels clearfix">
-			  {% for route in routes %}
-	   	      <div class="panel trail_card trail_card_panel">
-		        <div class="title"><h3 class="tb">{{ route.category.name}}</h3></div>
-	            <a href="{{ path('trail', {'trailSlug': route.slug}) }}">
-	            <div class="photo tb-photo-btn">
-	              <div class="image_container fade_on_load">
-                     {% if route.media is defined %}
-                       <img src="http://app.resrc.it/O=80/http://media.trailburning.com{{ route.media.versions[0].path }}" class="resrc scale" border="0"/>
-                     {% else %}
-                        <img src="http://app.resrc.it/s=w260,pd1/o=80/http://assets.trailburning.com/images/default/example_trailcard.jpg" class="resrc scale" border="0"/>
-                     {% endif %}
-                  </div>
-		          <div class="card_title">
-					<h1>{{ route.name}}</h1>
-					<br/>
-					<h1>{{ route.region }}</h1>
-		          </div>
-	            </div>
-	          	</a>
-		      	<div class="summary">
-		          <div class="tb-avatar"><div class="photo"><a href="{{ path('profile', {'name': user.name}) }}"><img src="{{ get_user_avatar_url(user) }}"></a></div></div>
-		          <div class="detail">
-		            by <strong>{{ user.firstName }} {{ user.lastName }}</strong>
-		            {{ include('TBFrontendBundle:Trail:_trailcardRating.html.twig', {'trail': route}) }}		            
-		          </div>
-		        </div>
-	          </div>
-			  {% endfor %}
-	        </div>	      
-		{% endif %}
-    	</div>
+	<div class="panels clearfix">
+		<div class="mytrails_title_content fixed_content">
+			<h2 class="tb tb-title">My Trails</h2>
+		</div>
 
-    	<div class="details_content fixed_content clearfix">
+		<div class="mytrails_content fixed_content">
+			{% if routes %}
+			<div class="trailcards panels clearfix">
+				{% for route in routes %}
+				<div class="panel trail_card trail_card_panel">
+					<div class="title">
+						<h3 class="tb">{{ route.category.name}}</h3>
+					</div>
+					<a href="{{ path('trail', {'trailSlug': route.slug}) }}">
+					<div class="photo tb-photo-btn">
+						<div class="image_container fade_on_load">
+							{% if route.media is defined %}
+							<img src="http://app.resrc.it/O=80/http://media.trailburning.com{{ route.media.versions[0].path }}" class="resrc scale" border="0"/>
+							{% else %}
+							<img src="http://app.resrc.it/s=w260,pd1/o=80/http://assets.trailburning.com/images/default/example_trailcard.jpg" class="resrc scale" border="0"/>
+							{% endif %}
+						</div>
+						<div class="card_title">
+							<h1>{{ route.name }}</h1>
+							<br/>
+							<h2>{{ route.region }}</h2>
+							<br/>
+							<h2>{{ include('TBFrontendBundle:Trail:_trailcardRating.html.twig', {'trail': route}) }}</h2>
+						</div>
+					</div></a>					
+					<div class="card_avatar">
+						<div class="tb-avatar"><div class="photo"><a href="{{ path('profile', {'name': user.name}) }}"><img src="{{ get_user_avatar_url(user) }}"></a></div></div>						
+					</div>	
+					<div class="summary">
+						<div class="length">{{ route.length|dimension_format('km', 1000) }}</div>
+						<div class="altitude">
+                        {% if route.tags.ascent %}
+                        	{{ route.tags.ascent|dimension_format('m') }} D+
+                            {% if route.tags.descent %}
+                            	<br/>{{ route.tags.descent|dimension_format('m') }} D-
+                            {% endif %}
+                        {% endif %}
+						</div>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+			{% endif %}
+		</div>
+
+		<div class="details_content fixed_content clearfix">
 			<div class="panel profile_detail_panel">
-			  <div class="content">
-				<div class="title">About Me</div>
-		        <h1>{{ user.about|nl2br }}</h1>
-			  </div>
-			</div>
-    	
-			{{ include('TBFrontendBundle:Profile:_follow.html.twig', [user]) }}
-            
-    	</div>
-
-        {{ include('TBFrontendBundle:Profile:_trailsILike.html.twig', [trailsILike]) }}
-
-    	
-		{% if user.id == 2 %}
-{#
-			<div class="panel trailgear_panel">
 				<div class="content">
-					<div class="title">My favourite gear</div>
-					<div class="gear_list">
-						<div class="gear">
-							<div class="photo"><img src="http://assets.trailburning.com/images/brands/salomon/Speedcross3.jpg" /></div>
-							<h1>Speedcross 3</h1>
-							<h2>Salomon</h2>
-						</div>
-						<div class="gear">
-							<div class="photo"><img src="http://assets.trailburning.com/images/brands/ashmei/sweatshirt.jpg" /></div>
-							<h1>Merino Sweatshirt</h1>
-							<h2>Ashmei</h2>
-						</div>
-						<div class="gear">
-							<div class="photo"><img src="http://assets.trailburning.com/images/brands/nathan/VaporShape.jpg" /></div>
-							<h1>VaporShape</h1>
-							<h2>Nathan</h2>
-						</div>            
-					</div>            
-				</div>                              
+					<div class="title">
+						About Me
+					</div>
+					<h1>{{ user.about|nl2br }}</h1>
+				</div>
 			</div>
-#}		
+
+			{{ include('TBFrontendBundle:Profile:_follow.html.twig', [user]) }}
+
+		</div>
+
+		{{ include('TBFrontendBundle:Profile:_trailsILike.html.twig', [trailsILike]) }}
+
+		{% if user.id == 2 %}
+		{#
+		<div class="panel trailgear_panel">
+			<div class="content">
+				<div class="title">
+					My favourite gear
+				</div>
+				<div class="gear_list">
+					<div class="gear">
+						<div class="photo"><img src="http://assets.trailburning.com/images/brands/salomon/Speedcross3.jpg" />
+						</div>
+						<h1>Speedcross 3</h1>
+						<h2>Salomon</h2>
+					</div>
+					<div class="gear">
+						<div class="photo"><img src="http://assets.trailburning.com/images/brands/ashmei/sweatshirt.jpg" />
+						</div>
+						<h1>Merino Sweatshirt</h1>
+						<h2>Ashmei</h2>
+					</div>
+					<div class="gear">
+						<div class="photo"><img src="http://assets.trailburning.com/images/brands/nathan/VaporShape.jpg" />
+						</div>
+						<h1>VaporShape</h1>
+						<h2>Nathan</h2>
+					</div>
+				</div>
+			</div>
+		</div>
+		#}
 		{% endif %}
 	</div>
 </div>
