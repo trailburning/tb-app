@@ -664,9 +664,6 @@ a:active .tb-cntrl {
 
 .search  .ui-autocomplete li a {
   padding: 10px;
-/*  
-  border-bottom: 1px solid #CDCDCD;
-*/  
 }
 
 .search  .ui-autocomplete li span {
@@ -675,10 +672,12 @@ a:active .tb-cntrl {
 
 .search .ui-autocomplete li .type {
   float: left;
+  width: 25%;
 }
 
 .search .ui-autocomplete li .match {
-  float: right;
+  float: left;
+  width: 75%;
 }
 
 .search .ui-autocomplete li {

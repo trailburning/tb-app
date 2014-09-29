@@ -52,13 +52,9 @@ define([
         
     this.homeHerosView = new HomeHerosView({ el: '#home_header' });
 	this.homeHerosView.render();
+	
+	var cache = {};
 
-	// setup autosuggest
-    var cache = {};
-    var client = new $.es.Client({    
-        hosts: 'e7p15amb:4yexy8z21pg5eee0@boxwood-7916136.eu-west-1.bonsai.io'
-    });
-    
     $('#searchBox').autocomplete({
         minLength: 2,
         delay: 0,
@@ -68,26 +64,15 @@ define([
                 response(cache[term]);
                 return;
             }
-            
-            client.search({
-                index: 'trailburning',
-                body: {
-                    query: {
-                        match: {
-                          suggest_nge: term
-                        }
-                    }
-                }
-            }).then(function (resp) {
-                var suggestions = resp.hits.hits;
+            var url = TB_RESTAPI_BASEURL + '/v1/search/suggest?q=' + term;
+            $.getJSON(url, request, function( data, status, xhr ) {
+                var suggestions = data.hits.hits;
                 cache[term] = suggestions;
-                response(suggestions); 
-            }, function (err) {
-                console.log(err.message);
+                response(suggestions);
             });
         }
     });
-    
+
     $('#searchBox').data('ui-autocomplete')._resizeMenu = function() {
     	this.menu.element.outerWidth(300);
     };
@@ -95,10 +80,10 @@ define([
     	var strItem = "";    	
     	switch (item._type) {
     	  case 'user_profile':
-    	    strItem = '<a href="profile/' + item._source.name + '" class="clearfix"><div class="match">' + item._source.suggest_text + '</div><div class="type"><div class="tb-avatar"><div class="photo"><img src="'+item._source.avatar+'"></div></div></div></a>';
+    	    strItem = '<a href="profile/' + item._source.name + '" class="clearfix"><div class="type"><div class="tb-avatar"><div class="photo"><img src="'+item._source.avatar+'"></div></div></div><div class="match">' + item._source.suggest_text + '</div></a>';
     	    break;
     	  default:
-    	    strItem = '<a href="trail/' + item._source.slug + '" class="clearfix">' + item._source.suggest_text + '</a>';
+    	    strItem = '<a href="trail/' + item._source.slug + '" class="clearfix"><div class="type"></div><div class="match">' + item._source.suggest_text + '</div></a>';
     	    break;
     	}
 //		console.log(item);    	
