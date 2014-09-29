@@ -19,6 +19,9 @@ define([
 		if (this.model.get('category') == undefined) {
 		  this.model.set('category', '');
       	}
+		this.model.set('length_km', Math.round(this.model.get('length') / 1000));
+		this.model.set('ascent_m', formatAltitude(Math.round(this.model.get('tags').ascent)));
+		this.model.set('descent_m', formatAltitude(Math.round(this.model.get('tags').descent)));
 
         var attribs = this.model.toJSON();
         $(this.el).html(this.template(attribs));

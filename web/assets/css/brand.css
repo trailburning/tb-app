@@ -160,13 +160,7 @@ border-width:1px;
 .event_container h2 {
   color: #FFFFFF;
 }
-/*
-.event_container h3 {
-  margin-left: 22px;
-  height: 78px;
-  line-height: 78px;
-}
-*/
+
 /* BIG EVENT */
 /******************************************/
 .big_event_panel {
@@ -212,9 +206,10 @@ border-width:1px;
 
 /* TRAIL */
 /******************************************/
-.trail_card_panel {
+.trailcards .panel {
+  float: left;	
+  position: relative;
   margin: 24px 0px 0px 24px;
-  width: 260px;
 }
 
 /* BRAND LOCATION PANEL */
@@ -265,7 +260,7 @@ border-width:1px;
     width: 472px;
   }
   .event_container {
-    width: 496px;
+    width: 500px;
   }
   .big_event_panel {
     width: 472px;

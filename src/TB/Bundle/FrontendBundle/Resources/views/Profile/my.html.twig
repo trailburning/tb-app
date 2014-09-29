@@ -78,11 +78,11 @@ var TB_USER_LAT = {{ user.location.latitude }};
                   {% endif %}
                   </div>
                   {% if route.category is defined %}
-		            <div class="card_title">
-					  <h1>{{ route.name}}</h1>
-					  <br/>
-					  <h1>{{ route.region }}</h1>
-		            </div>
+					<div class="card_title">
+						<h1>{{ route.name }}</h1>
+						<br/>
+						<h2>{{ route.region }}</h2>
+					</div>
 		          {% endif %}
 	            </div>
 	            <div class="draft"></div>
@@ -107,11 +107,13 @@ var TB_USER_LAT = {{ user.location.latitude }};
                        <img src="http://app.resrc.it/s=w260,pd1/o=80/http://assets.trailburning.com/images/default/example_trailcard.jpg" class="resrc scale" border="0"/>
                     {% endif %}
                     </div> 
-		          <div class="card_title">
-					<h1>{{ route.name}}</h1>
-					<br/>
-					<h1>{{ route.region }}</h1>
-		          </div>
+					<div class="card_title">
+						<h1>{{ route.name }}</h1>
+						<br/>
+						<h2>{{ route.region }}</h2>
+						<br/>
+						<h2>{{ include('TBFrontendBundle:Trail:_trailcardRating.html.twig', {'trail': route}) }}</h2>
+					</div>
 	            </div>
 	          	</a>
 		      	<div class="summary">

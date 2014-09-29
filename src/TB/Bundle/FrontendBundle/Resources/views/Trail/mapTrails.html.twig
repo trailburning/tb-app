@@ -67,23 +67,31 @@ var TB_USER_ID = {{ app.user.id }};
       <div class="card_title">
         <h1><%= name %></h1>
         <br/>
-        <h1><%= region %></h1>
+        <h2><%= region %></h2>
+		<br/>
+		<h2>
+        <span class="stars">
+          <span class="star"></span>
+          <span class="star"></span>
+          <span class="star"></span>
+          <span class="star"></span>
+          <span class="star"></span>
+        </span>
+		</h2>
       </div>
     </div>
     </div>
-    <div class="summary">
+	<div class="card_avatar">
       <div class="tb-avatar"><div class="photo"><a href="{{ app.request.baseUrl }}/profile/<%= user.name %>"><img src="<%= user.avatar %>"></a></div></div>
-      <div class="detail">
-        by <strong><%= user.title %></strong>
-        <div class="stars">
-          <div class="star"></div>
-          <div class="star hide"></div>
-          <div class="star hide"></div>
-          <div class="star hide"></div>
-          <div class="star hide"></div>
-        </div>
-      </div>
-      <div class="location"></div>
+	</div>	    
+    <div class="location"></div>
+    <div class="summary">
+	  <div class="length"><%= length_km %> km</div>
+	  <div class="altitude">
+	  <%= ascent_m %> D+
+	  <br/>
+	  <%= descent_m %> D-
+	  </div>
     </div>
 </script>
 
@@ -95,13 +103,21 @@ var TB_USER_ID = {{ app.user.id }};
       <div class="card_title">
         <h1><%= name %></h1>
         <br/>
-        <h1><%= region %></h1>
+        <h2><%= region %></h2>
       </div>
     </div>
     </div>
+	<div class="card_avatar">
+	  <a href="{{ app.request.baseUrl }}/events/<%= eventURL %>"><img src="http://assets.trailburning.com/images/events/<%= eventURL %>/card_trail_logo.png"></a>		
+    </div>
+    <div class="location"></div>
     <div class="summary">
-      <div class="sponsor"><a href="{{ app.request.baseUrl }}/events/<%= eventURL %>"><img src="http://assets.trailburning.com/images/events/<%= eventURL %>/card_trail_logo.png"></a></div>
-      <div class="location"></div>
+	  <div class="length"><%= length_km %> km</div>
+	  <div class="altitude">
+	  <%= ascent_m %> D+
+	  <br/>
+	  <%= descent_m %> D-
+	  </div>
     </div>
 </script>
 

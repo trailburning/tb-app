@@ -174,24 +174,26 @@ var TB_USER_ID = {{ app.user.id }}
                                 <div class="card_title">
                                     <h1 class="trail_card_title"></h1>
                                     <br />
-                                    <h1 class="trail_card_region"></h1>
+                                    <h2 class="trail_card_region"></h2>
+									<br/>
+									<h2>
+	                                <span class="stars">
+	                                    <span class="star"></span>
+	                                    <span class="star"></span>
+	                                    <span class="star"></span>
+	                                    <span class="star"></span>
+	                                    <span class="star"></span>
+	                                </span>
+									</h2>
                                 </div>
                             </div>
                         </a>
-                        <div class="summary">                        	
-		          			<div class="tb-avatar"><div class="photo"><a href="{{ path('profile', {'name': app.user.name}) }}">
-            	  			<img src="{{ get_user_avatar_url(app.user) }}">
-							</a></div></div>
-                            <div class="detail">
-                              by <strong>{{ app.user.firstname }} {{ app.user.lastname }}</strong>
-                                <div class="stars">
-                                    <div class="star"></div>
-                                    <div class="star"></div>
-                                    <div class="star"></div>
-                                    <div class="star"></div>
-                                    <div class="star"></div>
-                                </div>
-                            </div>
+						<div class="card_avatar">
+		          			<div class="tb-avatar"><div class="photo"><a href="{{ path('profile', {'name': app.user.name}) }}"><img src="{{ get_user_avatar_url(app.user) }}"></a></div></div>
+						</div>	
+                        <div class="summary">  
+							<div class="length"><span class="length_marker">0</span> km</div>
+							<div class="altitude"><span class="ascent_marker">0</span> D+<br/><span class="descent_marker">0</span> D-</div>
                         </div>
                  	</div>						 	
                 </div>		 
