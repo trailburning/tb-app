@@ -649,16 +649,50 @@ a:active .tb-cntrl {
   background: white url('http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/images/ui-anim_basic_16x16.gif') right center no-repeat;
 }
 
+.search .ui-corner-all {
+  border-radius: 0px;
+}
+
+.search .ui-widget-content {
+  background: #F2F2F2;
+}
+
+.search .ui-widget-content {
+  padding: 0px;
+  border: 1px solid #CDCDCD;
+}
+
+.search  .ui-autocomplete li a {
+  padding: 10px;
+/*  
+  border-bottom: 1px solid #CDCDCD;
+*/  
+}
+
 .search  .ui-autocomplete li span {
   float: right;
 }
 
-.search .ui-autocomplete li .match {
+.search .ui-autocomplete li .type {
   float: left;
 }
 
-.search .ui-autocomplete li .type {
+.search .ui-autocomplete li .match {
   float: right;
+}
+
+.search .ui-autocomplete li {
+  border-bottom: 1px solid #CDCDCD;	
+}
+
+.search .ui-autocomplete li:last-child {
+  border-bottom: none;	
+}
+
+.search .ui-autocomplete .ui-state-focus {
+  background: #FFF;
+  outline: none;    
+  border: 1px solid #CDCDCD;
 }
 
 #headerview .right .search form {

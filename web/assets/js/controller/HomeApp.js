@@ -59,7 +59,6 @@ define([
         hosts: 'e7p15amb:4yexy8z21pg5eee0@boxwood-7916136.eu-west-1.bonsai.io'
     });
     
-//    $('#q').autocomplete({  	
     $('#searchBox').autocomplete({
         minLength: 2,
         delay: 0,
@@ -102,9 +101,7 @@ define([
     	    strItem = '<a href="trail/' + item._source.slug + '" class="clearfix">' + item._source.suggest_text + '</a>';
     	    break;
     	}
-    	
-		console.log(item);
-    	
+//		console.log(item);    	
         return $('<li>')
             .append(strItem)
             .appendTo(ul);
