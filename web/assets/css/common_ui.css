@@ -645,10 +645,6 @@ a:active .tb-cntrl {
   font-size: .9em;
 }
 
-.search .ui-autocomplete-loading {
-  background: white url('http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/images/ui-anim_basic_16x16.gif') right center no-repeat;
-}
-
 .search .ui-corner-all {
   border-radius: 0px;
 }
@@ -742,6 +738,10 @@ a:active .tb-cntrl {
   -moz-transition: all 0.3s ease;
   -o-transition: all 0.3s ease;
   transition: all 0.3s ease;  
+}
+
+#searchBox.ui-autocomplete-loading {
+  background: #5F5F5F;
 }
 
 #searchBox:focus {
