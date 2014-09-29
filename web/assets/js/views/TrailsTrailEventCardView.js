@@ -18,6 +18,9 @@ define([
           var versions = this.model.get('media').versions;
       	  this.model.set('versionLargePath', versions[0].path);	
       	}
+		this.model.set('length_km', Math.round(this.model.get('length') / 1000));
+		this.model.set('ascent_m', Math.round(this.model.get('tags').ascent));
+		this.model.set('descent_m', Math.round(this.model.get('tags').descent));
 
         var attribs = this.model.toJSON();
         $(this.el).html(this.template(attribs));

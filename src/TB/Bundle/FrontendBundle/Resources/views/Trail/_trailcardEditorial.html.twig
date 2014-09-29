@@ -7,20 +7,32 @@
           	<div class="card_title">
                 <h1>{{ route.shortName ? route.shortName : route.name }}</h1>
                 <br />
-                <h1>{{ route.region }}</h1>
+                <h2>{{ route.region }}</h2>
+		        {% if route.eventRoutes and route.eventRoutes|length() > 0 %}
+		        {% elseif route.user and route.user.name != 'admin'  %}
+					<br/>
+					<h2>{{ include('TBFrontendBundle:Trail:_trailcardRating.html.twig', {'trail': route}) }}</h2>                
+		        {% endif %}
         	</div>
        	</div>
         </a>
-        <div class="summary">
+		<div class="card_avatar">
         {% if route.eventRoutes and route.eventRoutes|length() > 0 %}
-	        <div class="sponsor"><a href="{{ path('event', {slug: route.eventRoutes[0].event.slug}) }}"><img src="http://assets.trailburning.com/images/events/{{ route.eventRoutes[0].event.slug }}/card_trail_logo.png"></a></div>	       		
+	        <a href="{{ path('event', {slug: route.eventRoutes[0].event.slug}) }}"><img src="http://assets.trailburning.com/images/events/{{ route.eventRoutes[0].event.slug }}/card_trail_sticker_logo.png"></a>	       		
         {% elseif route.user and route.user.name != 'admin'  %}
        		{{ include('TBFrontendBundle:Profile:_userAvatar.html.twig', {user: route.user}) }}
-	        <div class="detail">
-	            by <strong>{{ route.user.title }}</strong>
-				{{ include('TBFrontendBundle:Trail:_trailcardRating.html.twig', {'trail': route}) }}
-	      	</div>
         {% endif %}
+		</div>	
+        <div class="summary">
+			<div class="length">{{ route.length|dimension_format('km', 1000) }}</div>
+			<div class="altitude">
+	        {% if route.tags.ascent %}
+	        	{{ route.tags.ascent|dimension_format('m') }} D+
+	            {% if route.tags.descent %}
+	            	<br/>{{ route.tags.descent|dimension_format('m') }} D-
+	            {% endif %}
+	        {% endif %}
+			</div>
         </div>
  	</div>						 	
 </div> 

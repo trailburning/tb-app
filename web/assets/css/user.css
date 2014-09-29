@@ -403,17 +403,18 @@ border-width:1px;
   }
   .crumb_content {
     width: 974px;
+  }    
+  .details_content {
+    width: 974px;  
   }  
   .profile_detail_panel {
   	width: 472px;
-  }    
-  
-.mytrails_content {
-  padding-bottom: 16px;
-}
-  
+  }      
+  .mytrails_content {
+    padding-bottom: 16px;
+  }  
   .profile_follow_panel {
-    margin-left: 10px;
+    margin-left: 20px;
   	width: 472px;
   }
   .mytrails_title_content {

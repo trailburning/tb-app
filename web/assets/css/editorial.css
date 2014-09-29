@@ -423,6 +423,7 @@ html.touch #small_sponsor_bar {
 }
 
 .editorial_cards .panel {	
+  position: relative;
   display: inline-block;
   float: none;
   text-align: left;

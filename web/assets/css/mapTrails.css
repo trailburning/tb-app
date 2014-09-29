@@ -155,21 +155,21 @@ border-width:1px;
   overflow: visible;
 }
 
+#cardsview .location {
+  position: absolute;
+  top: 96px;
+  right: 14px;
+  width: 36px;
+  height: 47px;
+  background: url(../icons/location.png) no-repeat top left;
+}
+
 #cardsview .link:hover {
   cursor: pointer;  
 }
 
 #cardsview .summary {
   position: relative;
-}
-
-#cardsview .summary .location {
-  position: absolute;
-  top: 12px;
-  right: 14px;
-  width: 36px;
-  height: 47px;
-  background: url(../icons/location.png) no-repeat top left;
 }
 
 #cardsview .summary .location:hover {
@@ -219,7 +219,10 @@ html.touch #view_map_btns {
 }
 
 /* Medium devices (desktops, 992px and up) */
-@media (max-width: 1199px) {  
+@media (max-width: 1199px) {
+  #cardsview .location {
+    top: 74px;
+  }	  
   #cardsview .panel.selected .select_top {
     left: 204px;
   }

@@ -4,17 +4,23 @@
     <div class="photo tb-photo-btn">
         <div class="image_container fade_on_load"><img src="http://app.resrc.it/o=80/{{ trail.favouriteMedia.absolutePath }}" class="resrc scale" border="0"/></div>
       	<div class="card_title">
-            <h1>{{ trail.shortName ? trail.shortName : trail.name }}</h1>
-            <br />
-            <h1>{{ trail.region }}</h1>
+			<h1>{{ trail.shortName ? trail.shortName : trail.name }}</h1>
+			<br/>
+			<h2>{{ trail.region }}</h2>
+			<br/>
+			<h2>{{ include('TBFrontendBundle:Trail:_trailcardRating.html.twig', {'trail': trail}) }}</h2>
     	</div>
     </div>
     </a>
     <div class="summary">
-        {{ include('TBFrontendBundle:Profile:_userAvatar.html.twig', {user: trail.user}) }}
-        <div class="detail">
-        by <strong>{{ trail.user.title }}</strong>
-	    {{ include('TBFrontendBundle:Trail:_trailcardRating.html.twig', {'trail': trail}) }}
-        </div>
+		<div class="length">{{ trail.length|dimension_format('km', 1000) }}</div>
+		<div class="altitude">
+        {% if trail.tags.ascent %}
+        	{{ trail.tags.ascent|dimension_format('m') }} D+
+            {% if trail.tags.descent %}
+            	<br/>{{ trail.tags.descent|dimension_format('m') }} D-
+            {% endif %}
+        {% endif %}
+		</div>
     </div>
 </div>
