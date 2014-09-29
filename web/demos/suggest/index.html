@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
     <script src="http://code.jquery.com/jquery-1.7.2.js"></script>
     <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
-    <script src="assets/js/elasticsearch.jquery.js"></script>
     <style>
         .ui-autocomplete-loading {
             background: white url('http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/images/ui-anim_basic_16x16.gif') right center no-repeat;
@@ -23,9 +22,6 @@
 
         $(function() {
             var cache = {};
-            var client = new $.es.Client({    
-                hosts: 'e7p15amb:4yexy8z21pg5eee0@boxwood-7916136.eu-west-1.bonsai.io'
-            });
             
             $('#q').autocomplete({
                 minLength: 2,
@@ -36,22 +32,11 @@
                         response(cache[term]);
                         return;
                     }
-                    
-                    client.search({
-                        index: 'trailburning',
-                        body: {
-                            query: {
-                                match: {
-                                  suggest_nge: term
-                                }
-                            }
-                        }
-                    }).then(function (resp) {
-                        var suggestions = resp.hits.hits;
+                    var url = 'http://trailburning.localhost:8888/api/app_dev.php/v1/search/suggest?q=' + term;
+                    $.getJSON(url, request, function( data, status, xhr ) {
+                        var suggestions = data.hits.hits;
                         cache[term] = suggestions;
-                        response(suggestions); 
-                    }, function (err) {
-                        console.log(err.message);
+                        response(suggestions);
                     });
                 }
             }).data('ui-autocomplete')._renderItem = function(ul, item) {
