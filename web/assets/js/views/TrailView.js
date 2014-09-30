@@ -115,6 +115,18 @@ define([
     buildBtns: function(){
       var self = this;
 
+      $('#trail_intro_view .trail_play').click(function(evt){
+      	self.showPlayer();
+	  });
+
+      $('#trail_intro_view .trail_play').mouseover(function(evt){
+        $(evt.currentTarget).css('cursor','pointer');      
+	  });
+
+      $('#headerview .close_link').click(function(evt){
+      	self.hidePlayer();
+	  });
+
       $('#view_toggle .button').click(function(evt){
         self.onTrailToggleViewBtnClick(evt);
       });
@@ -359,6 +371,8 @@ define([
 
 	  var self = this;
 
+	  $('#headerview .close_link').show();
+
       // add transition for effect      
       $('#trailplayer').addClass('tb-size');
 	  $('#trail_views').addClass('tb-move-vert');
@@ -379,11 +393,9 @@ define([
       setTimeout(function() {
 	    self.showOverlay();
       }, 500);
-      
-//	  this.showOverlay();
-      
-      $('#view_player_btns').css('top', 22);
-      $('#view_map_btns').css('top', 34);
+            
+      $('#view_player_btns').css('top', 52);
+      $('#view_map_btns').css('top', 64);
       
       this.slideTimer = setTimeout(function() {
         self.startSlideShow();
@@ -391,6 +403,8 @@ define([
     },
     hidePlayer: function(){
       this.nPlayerView = PLAYER_INTRO;
+
+	  $('#headerview .close_link').hide();
 
       // add transition for effect      
       $('#trailplayer').addClass('tb-size');

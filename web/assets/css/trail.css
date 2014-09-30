@@ -12,6 +12,10 @@ border-width:1px;
   -webkit-transition-delay: 0.5s;  
 }
 
+#headerview .breadview .close_link {
+  display: none;
+}
+
 /* SMALL SPONSOR BAR */
 /******************************************/
 #small_sponsor_bar {
@@ -116,7 +120,7 @@ html.touch #small_sponsor_bar {
   display: none;
   position: relative;
   width: 100%;  
-  height: 412px;
+  height: 486px;
   overflow: hidden;
 }
 
@@ -126,10 +130,9 @@ html.touch #small_sponsor_bar {
   height: 100%;  
 }
 
-#trail_overlay {
-  z-index: 1;  
+#trail_overlay {  
   position: absolute;
-  top: -278px;
+  bottom: 0px;
   width: 100%;
   height: 278px;
 }
@@ -172,19 +175,19 @@ html.touch #small_sponsor_bar {
 
 #trail_intro_view .info-hero .trail_avatar {
   position: absolute;
-  top: 20px;
+  top: 70px;
   left: 20px;
 }
 
 #trail_intro_view .info-hero .trail_title {
   position: relative;
-  top: 30px;
+  top: 80px;
   left: -100px;
 }
 
 #trail_intro_view .info-hero .trail_play {
   position: absolute;
-  top: 288px;
+  top: 362px;
   left: 40px;
   font-size: 42px;
   line-height: 75px;
