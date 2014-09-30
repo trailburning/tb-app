@@ -425,7 +425,7 @@ var TB_TRAIL_ID = {{ trail.id }};
 		{% for link in breadcrumb %}<li>{% if loop.last == true %}<a href="{{ path(link.name, link.params) }}" class="active2">{{ link.label }}</a>{% else %}<a href="{{ path(link.name, link.params) }}">{{ link.label }}</a>{% endif %}</li>{% endfor %}
 		</ul>		
 		<ul class="right">
-		  <li class="close_link"><a href="javascript:void(0)">Close X</a></li>
+		  <li class="close_link"><a href="javascript:void(0)">X Close Trail Player</a></li>
 		</ul>		
 		</div>
 	{% endif %}

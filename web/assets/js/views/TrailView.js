@@ -457,9 +457,9 @@ define([
     showOverlay: function(){
       $('.overlay_background').css('opacity', 1);
 
-      $('#trail_stats_view').css('top', 70);
-      $('#trail_altitude_view').css('top', 70);        
-      $('#trail_mini_view').css('top', 70);
+      $('#trail_stats_view').css('top', 20);
+      $('#trail_altitude_view').css('top', 20);        
+      $('#trail_mini_view').css('top', 20);
 	},
     hideOverlay: function(){
 	  $('.overlay_background').css('opacity', 0);
