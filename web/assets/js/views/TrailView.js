@@ -54,6 +54,10 @@ define([
             
       this.nPlayerHeight = 0;
       this.nPlayerMinHeight = $('#trailplayer').height();
+      this.nAvatarWidth = 0;
+      if ($('#trail_intro_view .trail_avatar').length) {
+      	this.nAvatarWidth = $('#trail_intro_view .trail_avatar').width();
+      }
 
       this.slideTimer = null;
       this.nCurrSlide = -1;
@@ -444,7 +448,7 @@ define([
     },
     showIntroOverlay: function(){    
       $('#trail_intro_view .info-hero').css('left', 0);
-      $('#trail_intro_view .info-hero .trail_title').css('left', 180);                                	          
+      $('#trail_intro_view .info-hero .trail_title').css('left', this.nAvatarWidth + 50);                                	          
     },
     hideIntroOverlay: function(){    
       $('#trail_intro_view .info-hero').css('left', -800);

@@ -1019,6 +1019,7 @@ a:active .tb-cntrl {
 /******************************************/
 #bigbar {
   width: 100%;
+  height: 30px;
   padding-top: 18px;  
   font-size: 14px;
   line-height: 20px;
@@ -1074,7 +1075,7 @@ a:active .tb-cntrl {
 }
 
 #bigbar .like, #bigbar .follow {
-  float: right;
+  float: left;
   margin-top: 4px;
 }
 
@@ -1131,7 +1132,7 @@ a:active .tb-cntrl {
 
 .share .link {
   float: left;
-  margin-left: 6px;
+  margin-left: 4px;
 }
 
 .share a.button {
