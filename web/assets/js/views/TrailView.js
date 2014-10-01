@@ -416,6 +416,8 @@ define([
             
       $('#view_player_btns').css('top', 52);
       $('#view_map_btns').css('top', 64);
+      $('#slideshow_toggle .button').addClass('slideshow_pause');
+      $('#slideshow_toggle .button').removeClass('slideshow_play');
       
       this.slideTimer = setTimeout(function() {
         self.startSlideShow();
@@ -695,7 +697,6 @@ define([
     },
     onTrailSlidesViewSlideView: function(){
       var self = this;
-      
       // start timer
       if (this.slideTimer) {
         clearTimeout(this.slideTimer);
