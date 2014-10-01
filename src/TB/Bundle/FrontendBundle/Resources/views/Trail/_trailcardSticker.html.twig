@@ -8,32 +8,31 @@
 				<h1>{{ trail.shortName ? trail.shortName : trail.name }}</h1>
 				<br/>
 				<h2>{{ trail.region }}</h2>
-				<br/>
-				<h2>{{ include('TBFrontendBundle:Trail:_trailcardRating.html.twig', {'trail': trail}) }}</h2>
+	            {% if trail.eventRoutes and trail.eventRoutes|length() > 0 %}
+	            {% elseif trail.user and trail.user.name != 'admin'  %}
+					<br/>
+					<h2>{{ include('TBFrontendBundle:Trail:_trailcardRating.html.twig', {'trail': trail}) }}</h2>
+	            {% endif %}
 	    	</div>
 	    </div>
 	    </a>
 		<div class="card_avatar">
             {% if trail.eventRoutes and trail.eventRoutes|length() > 0 %}
-    	        <div class="sponsor"><a href="{{ path('event', {slug: trail.eventRoutes[0].event.slug}) }}"><img src="http://assets.trailburning.com/images/events/{{ trail.eventRoutes[0].event.slug }}/card_trail_logo.png"></a></div>	       		
+    	        <div class="sponsor"><a href="{{ path('event', {slug: trail.eventRoutes[0].event.slug}) }}"><img src="http://assets.trailburning.com/images/events/{{ trail.eventRoutes[0].event.slug }}/card_trail_sticker_logo.png"></a></div>	       		
             {% elseif trail.user and trail.user.name != 'admin'  %}
            		{{ include('TBFrontendBundle:Profile:_userAvatar.html.twig', {user: trail.user}) }}
             {% endif %}
 		</div>	
 	    <div class="summary">
-            {% if trail.eventRoutes and trail.eventRoutes|length() > 0 %}
-    	        <div class="sponsor"><a href="{{ path('event', {slug: trail.eventRoutes[0].event.slug}) }}"><img src="http://assets.trailburning.com/images/events/{{ trail.eventRoutes[0].event.slug }}/card_trail_logo.png"></a></div>	       		
-            {% elseif trail.user and trail.user.name != 'admin'  %}
-				<div class="length">{{ trail.length|dimension_format('km', 1000) }}</div>
-				<div class="altitude">
-                {% if trail.tags.ascent %}
-                	{{ trail.tags.ascent|dimension_format('m') }} D+
-                    {% if trail.tags.descent %}
-                    	<br/>{{ trail.tags.descent|dimension_format('m') }} D-
-                    {% endif %}
+			<div class="length">{{ trail.length|dimension_format('km', 1000) }}</div>
+			<div class="altitude">
+            {% if trail.tags.ascent %}
+            	{{ trail.tags.ascent|dimension_format('m') }} D+
+                {% if trail.tags.descent %}
+                	<br/>{{ trail.tags.descent|dimension_format('m') }} D-
                 {% endif %}
-				</div>
             {% endif %}
+			</div>
 	    </div>
 	</div>
 </div>
