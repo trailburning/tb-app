@@ -202,6 +202,24 @@ var TB_TRAIL_ID = {{ trail.id }};
                                 {% endfor %}
                                 </div>
                             {% endif %}
+                            
+                            {% if user.myFollower|length > 0 %}
+                            <div class="panel profile_follow_panel">
+                                <div class="content">
+                                    <div class="they_follow">
+                                        <div class="title">
+                                            User who like this trail
+                                        </div>	
+                                        <div class="avatars">
+                                            {% for user in routeLikes %}
+                                                {{ include('TBFrontendBundle:Profile:_userAvatar.html.twig', [user]) }}
+                                            {% endfor %}                
+                                        </div>
+                                    </div>        
+                                </div>
+                            </div>    
+                            
+                            {% endif %}
                         </div>  
                     </div>
                     
