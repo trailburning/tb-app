@@ -120,7 +120,7 @@ html.touch #small_sponsor_bar {
   display: none;
   position: relative;
   width: 100%;  
-  height: 486px;
+  height: 448px;
   overflow: hidden;
 }
 
@@ -187,7 +187,7 @@ html.touch #small_sponsor_bar {
 
 #trail_intro_view .info-hero .trail_play {
   position: absolute;
-  top: 362px;
+  top: 332px;
   left: 40px;
   font-size: 42px;
   line-height: 75px;
@@ -202,6 +202,10 @@ html.touch #small_sponsor_bar {
   width: 75px;
   height: 75px;
   background: url(../img/trailplayer/play_toggle.png) no-repeat top left;  
+}
+
+#trail_intro_view .info-hero .trail_play:hover .trail_btn {
+  background-position: 0 -75px;
 }
 
 /* TRAIL STATS VIEW */
