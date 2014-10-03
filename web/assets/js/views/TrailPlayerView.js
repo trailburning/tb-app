@@ -329,8 +329,15 @@ define([
       
       if (this.slideTimer) {
         clearTimeout(this.slideTimer);
-      }
-    },    
+      }      
+    }, 
+    toggleView: function(){
+      this.onTrailToggleViewBtnClick();
+    }, 
+    showNextSlide: function(){
+      this.stopSlideShow();
+	  this.nextSlide();         
+    },          
     nextSlide: function(){
       var nSlide = this.nCurrSlide; 
       if (nSlide < this.mediaCollection.length-1) {
@@ -340,7 +347,11 @@ define([
         nSlide = 0;
       }
       this.gotoMedia(nSlide);
-    },    
+    },   
+    showPrevSlide: function(){
+      this.stopSlideShow();
+	  this.prevSlide();         
+    },   
     prevSlide: function(){
       var nSlide = this.nCurrSlide; 
       if (nSlide > 0) {
@@ -441,7 +452,7 @@ define([
       this.gotoMedia(nMedia);
     },
     onTrailMapMediaPhotoClick: function(mapMediaMarkerView){
-      this.onTrailToggleViewBtnClick();
+      this.toggleView();
     },
     onTrailMediaMarkerClick: function(mediaMarkerView){
       // look up model in collcetion

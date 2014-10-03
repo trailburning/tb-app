@@ -29,8 +29,7 @@ define([
       	this.activityFeedView.getActivity();	  	
 	  }
       
-      this.trailPlayerView = new TrailPlayerView({ el: '#trailplayer', model: this.model, mediaCollection: this.mediaCollection, mediaModel: this.mediaModel });
-            
+      this.trailPlayerView = new TrailPlayerView({ el: '#trailplayer', model: this.model, mediaCollection: this.mediaCollection, mediaModel: this.mediaModel });            
       this.trailWeatherView = new TrailWeatherView({ el: '#trail_weather_view', model: this.model });
       this.trailActivitiesView = new TrailActivitiesView({ el: '#trailactivities_view', model: this.model, bReadonly: true });
       
@@ -165,21 +164,20 @@ define([
       	switch (e.keyCode) {
       	  case 13: // toggle overlay
             e.preventDefault();
-//            self.togglePlayer();
+            self.trailPlayerView.togglePlayer();
       	    break;
       	  case 32: // toggle slideshow
           	e.preventDefault();
-//          	self.toggleSlideshow();      	  
+          	self.trailPlayerView.toggleSlideshow();      	  
       	    break;
       	  case 37: // previos slide
-//          	self.stopSlideShow();
-//          	self.prevSlide();         
+			self.trailPlayerView.showPrevSlide();      	  
       	    break;
       	  case 39: // next slide
-//          	self.stopSlideShow();
-//          	self.nextSlide();         
+			self.trailPlayerView.showNextSlide();      	  
       	    break;
       	  case 86: // toggle view
+			self.trailPlayerView.toggleView();      	  
 //          	self.onTrailToggleViewBtnClick();
       	    break;
       	}
