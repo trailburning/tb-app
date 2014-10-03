@@ -842,6 +842,10 @@ html.touch #trailplayer #view_map_btns {
   color: #44B6F7;
 }
 
+.trail_like_panel .content h4 {
+  margin: 24px 0px 22px 0px;  
+}
+
 /* TRAIL WEATHER PANEL */
 /******************************************/
 .trail_weather_panel {
@@ -1278,11 +1282,8 @@ html.touch #trailplayer #view_map_btns {
   .two_col_panels .right {
     width: 496px;
   }  
-  .trail_detail_panel {
-    width: 472px;
-  }
-  
   .trail_location_panel,  
+  .trail_detail_panel,
   .trail_like_panel,
   .trail_weather_panel {
     width: 472px;

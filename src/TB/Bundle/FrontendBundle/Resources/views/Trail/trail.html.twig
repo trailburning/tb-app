@@ -213,15 +213,17 @@ var TB_TRAIL_ID = {{ trail.id }};
                         	
 							<div class="panel trail_like_panel">
 							    <div class="content">
-							            <div class="title">They like this Trail</div>	
-							            <div class="avatars">
-							            	<div class="tb-avatar "><div class="photo"><a href="/trailburning/app_dev.php/profile/lizbabidge"><img src="http://www.gravatar.com/avatar/52f2c62e0d8a74c198640300c1cc9478"></a></div></div>
-											<div class="tb-avatar "><div class="photo"><a href="/trailburning/app_dev.php/profile/reubentabner"><img src="http://assets.trailburning.com/images/profile/reubentabner/avatar.png"></a></div></div>
-											<div class="tb-avatar "><div class="photo"><a href="/trailburning/app_dev.php/profile/paultran"><img src="http://www.gravatar.com/avatar/5889ab29b92ea2bc3547770b9427310b"></a></div></div>
-											<div class="tb-avatar "><div class="photo"><a href="/trailburning/app_dev.php/profile/christianraimann"><img src="http://www.gravatar.com/avatar/70fd072fa19618b520aead42b2d0105b"></a></div></div>
-											<div class="tb-avatar "><div class="photo"><a href="/trailburning/app_dev.php/profile/andreasgroos"><img src="http://assets.trailburning.com/images/icons/avatars/avatar_man.jpg"></a></div></div>
-											<div class="tb-avatar "><div class="photo"><a href="/trailburning/app_dev.php/profile/paulhuebl"><img src="http://www.gravatar.com/avatar/39e8dc2f6a16510f3a95fbc7e4e18b4e"></a></div></div>
-										</div>
+                            	{% if routeLikes|length > 0 %}
+						            <div class="title">They like this Trail</div>	
+                                    <div class="avatars">
+									{% for user in routeLikes %}
+                                    	{{ include('TBFrontendBundle:Profile:_userAvatar.html.twig', [user]) }}
+                                    {% endfor %}                
+                                    </div>
+                                {% else %}
+						            <div class="title">Who likes this trail?</div>
+						            <h4 class="tb">Do you like it?  Maybe <strong>Share</strong> it with your friends if you do, or <strong>Like</strong> it yourself!</h4>
+                            	{% endif %}
 							    </div>
 							</div>
                         	
@@ -272,7 +274,7 @@ var TB_TRAIL_ID = {{ trail.id }};
 									{% endif %}				                        
                                 {% endfor %}
                                 </div>
-                            {% endif %}
+                            {% endif %}                            
                         </div>  
                     </div>
                     
