@@ -1074,12 +1074,13 @@ a:active .tb-cntrl {
 
 #bigbar .crumb_links {
   float: left;
-  margin: 1px 0px 0px 0px;
+  margin-top: 1px;
 }
 
 #bigbar .like, #bigbar .follow {
   float: left;
   margin-top: 4px;
+  margin-right: 16px;
 }
 
 #bigbar [class^="icon-"], #bigbar .like [class*=" icon-"] {

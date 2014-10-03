@@ -172,21 +172,20 @@ var TB_TRAIL_ID = {{ trail.id }};
         <div class="panel_content_container">       
             <div class="panel_content">       
                 <div id="bigbar">
-                	<div class="like">
-					{% if event %}
-					{% else %}
-						{% if app.user %}
-							{% if app.user.id != user.id %}
-								<a href="javascript:void(0)" class="btn btn-tb-action btn-tb like_btn{% if route_has_user_like(trail, app.user) %} pressed-btn-tb{% endif %}" data-off="Like" data-on="Liked" data-trailid="{{ trail.id}}"><i class="icon-star icon-white"></i> <span class="btn-label">{% if route_has_user_like(trail, app.user) %}Liked{% else %}Like{% endif %}</span></a>
-							{% endif %}
-						{% else %}
-							<a href="{{ path('fos_user_security_login') }}" class="btn btn-tb-action btn-tb like_btn" data-off="Like" data-on="Liked" data-trailid="{{ trail.id}}"><i class="icon-star icon-white"></i> <span class="btn-label">Like</span></a>
+				{% if event %}
+				{% else %}
+					{% if app.user %}
+						{% if app.user.id != user.id %}
+							<div class="like"><a href="javascript:void(0)" class="btn btn-tb-action btn-tb like_btn{% if route_has_user_like(trail, app.user) %} pressed-btn-tb{% endif %}" data-off="Like" data-on="Liked" data-trailid="{{ trail.id}}"><i class="icon-star icon-white"></i> <span class="btn-label">{% if route_has_user_like(trail, app.user) %}Liked{% else %}Like{% endif %}</span></a></div>
 						{% endif %}
+					{% else %}
+						<div class="like"><a href="{{ path('fos_user_security_login') }}" class="btn btn-tb-action btn-tb like_btn" data-off="Like" data-on="Liked" data-trailid="{{ trail.id}}"><i class="icon-star icon-white"></i> <span class="btn-label">Like</span></a></div>
 					{% endif %}
-					</div>					
-					{{ include('TBFrontendBundle:Default:breadcrumb.html.twig', breadcrumb) }}
-					                	
-                    {{ include('TBFrontendBundle:Default:share.html.twig') }}
+				{% endif %}
+					
+				{{ include('TBFrontendBundle:Default:breadcrumb.html.twig', breadcrumb) }}
+				                	
+                {{ include('TBFrontendBundle:Default:share.html.twig') }}
                 </div>
 
                 <div class="panels clearfix">     
