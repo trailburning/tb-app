@@ -153,6 +153,23 @@ var TB_TRAIL_ID = {{ trail.id }};
 							</div>    
                         </div>  
                         <div class="right">
+                        	
+							<div class="panel trail_like_panel">
+							    <div class="content">
+                            	{% if routeLikes|length > 0 %}
+						            <div class="title">They like this Trail</div>	
+                                    <div class="avatars">
+									{% for user in routeLikes %}
+                                    	{{ include('TBFrontendBundle:Profile:_userAvatar.html.twig', [user]) }}
+                                    {% endfor %}                
+                                    </div>
+                                {% else %}
+						            <div class="title">Who likes this trail?</div>
+						            <h4 class="tb">Do you like it?  Maybe <strong>Share</strong> it with your friends if you do, or <strong>Like</strong> it yourself!</h4>
+                            	{% endif %}
+							    </div>
+							</div>
+                        	
                             <div id="trail_weather_view" class="panel trail_weather_panel"></div>
                             {% if event and eventTrails %}
                 				<div class="event_trails_container">
@@ -201,25 +218,7 @@ var TB_TRAIL_ID = {{ trail.id }};
 									{% endif %}				                        
                                 {% endfor %}
                                 </div>
-                            {% endif %}
-                            
-                            {% if user.myFollower|length > 0 %}
-                            <div class="panel profile_follow_panel">
-                                <div class="content">
-                                    <div class="they_follow">
-                                        <div class="title">
-                                            User who like this trail
-                                        </div>	
-                                        <div class="avatars">
-                                            {% for user in routeLikes %}
-                                                {{ include('TBFrontendBundle:Profile:_userAvatar.html.twig', [user]) }}
-                                            {% endfor %}                
-                                        </div>
-                                    </div>        
-                                </div>
-                            </div>    
-                            
-                            {% endif %}
+                            {% endif %}                            
                         </div>  
                     </div>
                     
