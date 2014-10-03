@@ -1074,7 +1074,7 @@ a:active .tb-cntrl {
 
 #bigbar .crumb_links {
   float: left;
-  margin: 1px 0px 0px 16px;
+  margin: 1px 0px 0px 0px;
 }
 
 #bigbar .like, #bigbar .follow {
@@ -1257,25 +1257,16 @@ form label {
 }
 
 .star {
-/*	
-  float: left;
-*/  
   background: url(../img/star.png) no-repeat top left;
   background-size: 100% 100%;    
 }
 
 .star_full {
-/*	
-  float: left;
-*/  
   background: url(../img/star_full.png) no-repeat top left;    
   background-size: 100% 100%;    
 }
 
 .star_half {
-/*	
-  float: left;
-*/  
   background: url(../img/star_half.png) no-repeat top left;    
   background-size: 100% 100%;    
 }

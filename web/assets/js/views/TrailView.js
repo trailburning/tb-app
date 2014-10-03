@@ -130,6 +130,22 @@ define([
         self.tickle();
       });
       
+      var jsonRoute = this.model.get('value').route;
+      var elTrailLength = $('.trail_detail_panel .length .marker');
+      if (elTrailLength.length) {
+        elTrailLength.html(Math.round(jsonRoute.length/1000));
+      }
+        
+      var elTrailTerrain = $('.trail_detail_panel .ascent .marker');
+      if (elTrailTerrain.length) {
+        elTrailTerrain.html(formatAltitude(Math.floor(jsonRoute.tags.ascent)));
+      }
+
+      var elTrailTerrain = $('.trail_detail_panel .descent .marker');
+      if (elTrailTerrain.length) {
+        elTrailTerrain.html(formatAltitude(Math.floor(jsonRoute.tags.descent)));
+      }
+      
       var jsonPoint = this.model.get('value').route.route_points[0]; 
       var map = L.mapbox.map('trail_location_map', 'mallbeury.map-kply0zpa', {dragging: false, touchZoom: false, scrollWheelZoom:false, doubleClickZoom:false, boxZoom:false, tap:false, zoomControl:false, zoomAnimation:false, attributionControl:false});
       var LocationIcon = L.Icon.extend({
@@ -178,7 +194,6 @@ define([
       	    break;
       	  case 86: // toggle view
 			self.trailPlayerView.toggleView();      	  
-//          	self.onTrailToggleViewBtnClick();
       	    break;
       	}
       });

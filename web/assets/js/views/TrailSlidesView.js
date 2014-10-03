@@ -20,10 +20,12 @@ define([
       this.bWaitingForSlide = false;
     },            
     show: function(){      
-      $(this.el).show();
+//      $(this.el).show();
+      $(this.el).fadeIn();
     },
     hide: function(){
-      $(this.el).hide();
+//      $(this.el).hide();
+      $(this.el).fadeOut();
     },    
     getHeroSlide: function(){
       return this.nHeroSlide;

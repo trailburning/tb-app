@@ -160,8 +160,11 @@ var TB_TRAIL_ID = {{ trail.id }};
             </div>    
         </div>    
         <div id="view_player_btns">
+          	<div class="close_btn"></div>	
+<!--        	
             <div id="slideshow_toggle"><span class="button"></span></div>
             <div id="view_toggle"><span id="view_toggle_btn" class="button">Change View</span></div>
+-->            
         </div>
     </div>
   
@@ -180,7 +183,9 @@ var TB_TRAIL_ID = {{ trail.id }};
 							<a href="{{ path('fos_user_security_login') }}" class="btn btn-tb-action btn-tb like_btn" data-off="Like" data-on="Liked" data-trailid="{{ trail.id}}"><i class="icon-star icon-white"></i> <span class="btn-label">Like</span></a>
 						{% endif %}
 					{% endif %}
-					</div>                	
+					</div>					
+					{{ include('TBFrontendBundle:Default:breadcrumb.html.twig', breadcrumb) }}
+					                	
                     {{ include('TBFrontendBundle:Default:share.html.twig') }}
                 </div>
 
@@ -189,7 +194,16 @@ var TB_TRAIL_ID = {{ trail.id }};
                         <div class="left">
                             <div class="panel trail_detail_panel clearfix">
                                 <div class="content">
-                                    <h3 class="tb">About the trail</h3>
+                                    <h3 class="tb">About the trail</h3>                   
+       								{% if event %}
+									{% else %}                                                     
+										{{ include('TBFrontendBundle:Trail:_trailcardRating.html.twig', {'trail': trail}) }}
+									{% endif %}                                    
+                                    <div class="trail_stats">
+									    <div class="col length"><div class="detail"><h3 class="tb"><span class="marker">0</span> km</h3></div>Length</div>
+									    <div class="col ascent"><div class="detail"><h3 class="tb"><span class="marker">0</span> m</h3></div>Altitude D+</div>
+									    <div class="col descent"><div class="detail"><h3 class="tb"><span class="marker">0</span> m</h3></div>Altitude D-</div>
+                                    </div>
                                     <h4 class="tb">{{ trail.about|nl2br }}</h4>
                                 </div>
                             </div>
@@ -211,21 +225,24 @@ var TB_TRAIL_ID = {{ trail.id }};
 				                </div>
                         	</div>
                         	
-							<div class="panel trail_like_panel">
-							    <div class="content">
-                            	{% if routeLikes|length > 0 %}
-						            <div class="title">They like this Trail</div>	
-                                    <div class="avatars">
-									{% for user in routeLikes %}
-                                    	{{ include('TBFrontendBundle:Profile:_userAvatar.html.twig', [user]) }}
-                                    {% endfor %}                
-                                    </div>
-                                {% else %}
-						            <div class="title">Who likes this trail?</div>
-						            <h4 class="tb">Do you like it?  Maybe <strong>Share</strong> it with your friends if you do, or <strong>Like</strong> it yourself!</h4>
-                            	{% endif %}
-							    </div>
-							</div>
+       						{% if event %}
+							{% else %}
+								<div class="panel trail_like_panel">
+								    <div class="content">
+	                            	{% if routeLikes|length > 0 %}
+							            <div class="title">They like this Trail</div>	
+	                                    <div class="avatars">
+										{% for user in routeLikes %}
+	                                    	{{ include('TBFrontendBundle:Profile:_userAvatar.html.twig', [user]) }}
+	                                    {% endfor %}                
+	                                    </div>
+	                                {% else %}
+							            <div class="title">Who likes this trail?</div>
+							            <h4 class="tb">Do you like it?  Maybe <strong>Share</strong> it with your friends if you do, or <strong>Like</strong> it yourself!</h4>
+	                            	{% endif %}
+								    </div>
+								</div>
+							{% endif %}
                         	
                             {% if event and eventTrails %}
                 				<div class="event_trails_container">
@@ -421,6 +438,8 @@ var TB_TRAIL_ID = {{ trail.id }};
 
 {% if editorial %}
 {% else %}
+
+{#
 	{% if breadcrumb %}
 		<div class="breadview">
 		<ul class="left">
@@ -431,6 +450,8 @@ var TB_TRAIL_ID = {{ trail.id }};
 		</ul>		
 		</div>
 	{% endif %}
+#}
+	
 {% endif %}	
 
 {% endblock %}

@@ -175,13 +175,13 @@ html.touch #small_sponsor_bar {
 
 #trail_intro_view .info-hero .trail_avatar {
   position: absolute;
-  top: 86px;
+  top: 36px;
   left: 20px;
 }
 
 #trail_intro_view .info-hero .trail_title {
   position: relative;
-  top: 80px;
+  top: 36px;
   left: -100px;
 }
 
@@ -603,19 +603,29 @@ html.touch #trailplayer #view_map_btns {
 
 #trailplayer #view_player_btns {
   position: absolute;
-  top: -100px;
-  right: 22px;  
+  top: -160px;
+  right: 14px;  
+}
+
+#trailplayer #view_player_btns .close_btn {
+  width: 51px;
+  height: 51px;
+  background: url(../img/trailplayer/close_btn.png) no-repeat top left;
+}
+
+#trailplayer #view_player_btns .close_btn:hover {
+  background-position: 0 -51px;
 }
 
 #trailplayer #slideshow_toggle {
   position: absolute;
-  top: 0px;
+  top: 60px;
   right: 63px;  
 }
 
 #trailplayer #view_toggle {
   position: absolute;
-  top: 0px;
+  top: 60px;
   right: 0px;  
 }
 
@@ -750,7 +760,55 @@ html.touch #trailplayer #view_map_btns {
 }
 
 .trail_detail_panel .content h4 {
-  margin: 24px 0px 22px 0px;  
+  margin: 20px 0px 22px 0px;  
+}
+
+.trail_detail_panel .stars {
+  margin-top: 14px;
+}
+
+.trail_detail_panel .stars span {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+}
+
+.trail_detail_panel .trail_stats {
+  position: relative;
+  margin-top: 24px;
+  width: 100%;	
+  color: #44b6f7;
+}
+
+.trail_detail_panel .trail_stats .col {
+  display: inline-block;   
+}
+
+.trail_detail_panel .trail_stats .length {
+  width: 35%;
+}
+
+.trail_detail_panel .trail_stats .ascent,
+.trail_detail_panel .trail_stats .descent {
+  width: 30%;
+}
+
+.trail_detail_panel .trail_stats .col .detail {
+  display: table-cell;
+  padding-bottom: 0px;   
+  vertical-align: bottom;
+}
+
+.trail_detail_panel .trail_stats .ascent .tb,
+.trail_detail_panel .trail_stats .descent .tb {
+  font-weight: 300;
+  font-size: 2em;
+}
+
+.trail_detail_panel .trail_stats .tb {
+  margin: 0px;
+  padding: 0px;
+  line-height: 1em;	
 }
 
 /* TRAIL ACTIVITY PANEL */
