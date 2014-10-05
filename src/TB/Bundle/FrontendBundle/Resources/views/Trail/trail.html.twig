@@ -64,6 +64,56 @@ var TB_TRAIL_ID = {{ trail.id }};
             <div id="trail_slides_view"></div>
         </div>
         
+        <div id="trail_overlay">
+        	<div class="overlay_background"></div>
+            <div class="overlay_content">
+                <div id="trail_stats_view" class="trailstats_panel"></div>
+                <div id="trail_altitude_view" class="trail_altitude_panel"></div>
+                <div id="trail_mini_view">
+                    <div id="trail_minimap_view" class="trail_minimap"></div>                    
+                    <div class='border_top'></div>
+                    <div class='border_left'></div>                              
+                    <div class='border_right'></div>                              
+                    <div class='border_bottom'></div>                              
+                </div>
+            </div>
+        </div>
+        
+        <div id="trail_intro_view">
+			<div class="info-hero tb-move-horiz">				  						  				
+			  <div class="trail_title tb-move-horiz {% if event %} no_avatar{% endif %}">
+                {% if event %}
+                  <h2 class="tb tb-title">{{ event.title }}</h2>
+                  <br/>
+                  <h2 class="tb tb-title">{{ trail.name }}</h2>
+                {% else %}
+                  <h2 class="tb tb-title">{{ trail.name }}</h2>
+                  <br/>
+                  <h2 class="tb tb-title">{{ trail.region }}</h2>
+                {% endif %}                
+                {% if user.id != 1 %}
+                    <br/> 
+                    {% if user is UserProfile %}
+                        <div class="author">by <strong>{{ user.firstName }} {{ user.lastName }}</strong></div>
+                    {% elseif user is BrandProfile %}
+                        <div class="author">by <strong>{{ user.displayName }}</strong></div>
+                    {% endif %}
+                {% endif %}                
+              </div>
+              
+        	  {% if event %}
+	          {% else %}
+	          	<div class="trail_avatar">
+		        	<div class="tb-avatar tb-avatar-feature"><div class="photo"><a href="{{ path('profile', {'name': user.name}) }}"><img src="{{ get_user_avatar_url(user) }}"></a></div></div>
+		        </div>
+	          {% endif %}
+              
+              <div class="trail_play">
+              	<div class="trail_btn"></div>Play Trail	
+			  </div>              	
+			</div>        	
+		</div>        	
+        
         <div id="tb-loader-overlay">
   	  	  <div class="back"></div>
   	  	  <div class="tb-loader"><div class="spinner"></div><div class="middle">...</div></div>
@@ -75,8 +125,7 @@ var TB_TRAIL_ID = {{ trail.id }};
 			</div>
         {% endif %}
         
-        <div id="trail_info">   
-        	
+        <div id="trail_info">           	
         	{% if event %}
         	{% else %}
 	            <div class="trail_avatar">
@@ -111,8 +160,11 @@ var TB_TRAIL_ID = {{ trail.id }};
             </div>    
         </div>    
         <div id="view_player_btns">
+          	<div class="close_btn"></div>	
+<!--        	
             <div id="slideshow_toggle"><span class="button"></span></div>
             <div id="view_toggle"><span id="view_toggle_btn" class="button">Change View</span></div>
+-->            
         </div>
     </div>
   
@@ -120,19 +172,20 @@ var TB_TRAIL_ID = {{ trail.id }};
         <div class="panel_content_container">       
             <div class="panel_content">       
                 <div id="bigbar">
-                    {{ include('TBFrontendBundle:Default:breadcrumb.html.twig', breadcrumb) }}
-                    {{ include('TBFrontendBundle:Default:share.html.twig') }}
-                    
-					{% if event %}
+				{% if event %}
+				{% else %}
+					{% if app.user %}
+						{% if app.user.id != user.id %}
+							<div class="like"><a href="javascript:void(0)" class="btn btn-tb-action btn-tb like_btn{% if route_has_user_like(trail, app.user) %} pressed-btn-tb{% endif %}" data-off="Like" data-on="Liked" data-trailid="{{ trail.id}}"><i class="icon-star icon-white"></i> <span class="btn-label">{% if route_has_user_like(trail, app.user) %}Liked{% else %}Like{% endif %}</span></a></div>
+						{% endif %}
 					{% else %}
-						{% if app.user %}
-							{% if app.user.id != user.id %}
-								<div class="like"><a href="javascript:void(0)" class="btn btn-tb-action btn-tb like_btn{% if route_has_user_like(trail, app.user) %} pressed-btn-tb{% endif %}" data-off="Like" data-on="Liked" data-trailid="{{ trail.id}}"><i class="icon-star icon-white"></i> <span class="btn-label">{% if route_has_user_like(trail, app.user) %}Liked{% else %}Like{% endif %}</span></a></div>
-							{% endif %}
-						{% else %}
-							<div class="like"><a href="{{ path('fos_user_security_login') }}" class="btn btn-tb-action btn-tb like_btn" data-off="Like" data-on="Liked" data-trailid="{{ trail.id}}"><i class="icon-star icon-white"></i> <span class="btn-label">Like</span></a></div>
-						{% endif %}					
+						<div class="like"><a href="{{ path('fos_user_security_login') }}" class="btn btn-tb-action btn-tb like_btn" data-off="Like" data-on="Liked" data-trailid="{{ trail.id}}"><i class="icon-star icon-white"></i> <span class="btn-label">Like</span></a></div>
 					{% endif %}
+				{% endif %}
+					
+				{{ include('TBFrontendBundle:Default:breadcrumb.html.twig', breadcrumb) }}
+				                	
+                {{ include('TBFrontendBundle:Default:share.html.twig') }}
                 </div>
 
                 <div class="panels clearfix">     
@@ -140,10 +193,22 @@ var TB_TRAIL_ID = {{ trail.id }};
                         <div class="left">
                             <div class="panel trail_detail_panel clearfix">
                                 <div class="content">
-                                    <h3 class="tb">About the trail</h3>
+                                    <h3 class="tb">About the trail</h3>                   
+       								{% if event %}
+									{% else %}                                                     
+										{{ include('TBFrontendBundle:Trail:_trailcardRating.html.twig', {'trail': trail}) }}
+									{% endif %}                                    
+                                    <div class="trail_stats">
+									    <div class="col length"><div class="detail"><h3 class="tb"><span class="marker">0</span> km</h3></div>Length</div>
+									    <div class="col ascent"><div class="detail"><h3 class="tb"><span class="marker">0</span> m</h3></div>Altitude D+</div>
+									    <div class="col descent"><div class="detail"><h3 class="tb"><span class="marker">0</span> m</h3></div>Altitude D-</div>
+                                    </div>
                                     <h4 class="tb">{{ trail.about|nl2br }}</h4>
                                 </div>
                             </div>
+                            
+                            <div id="trail_weather_view" class="panel trail_weather_panel"></div>
+                            
                             <div class="activity_panel">
 					            <div class="bar_title">
 					              <div class="title"><h4 class="tb">This trail is suitable for</h4></div>
@@ -153,24 +218,31 @@ var TB_TRAIL_ID = {{ trail.id }};
 							</div>    
                         </div>  
                         <div class="right">
+                        	<div id="trail_location_view" class="panel trail_location_panel">
+				                <div class="content">
+				                    <div id="trail_location_map" class="trail_location_map"></div>
+				                </div>
+                        	</div>
                         	
-							<div class="panel trail_like_panel">
-							    <div class="content">
-                            	{% if routeLikes|length > 0 %}
-						            <div class="title">They like this Trail</div>	
-                                    <div class="avatars">
-									{% for user in routeLikes %}
-                                    	{{ include('TBFrontendBundle:Profile:_userAvatar.html.twig', [user]) }}
-                                    {% endfor %}                
-                                    </div>
-                                {% else %}
-						            <div class="title">Who likes this trail?</div>
-						            <h4 class="tb">Do you like it?  Maybe <strong>Share</strong> it with your friends if you do, or <strong>Like</strong> it yourself!</h4>
-                            	{% endif %}
-							    </div>
-							</div>
+       						{% if event %}
+							{% else %}
+								<div class="panel trail_like_panel">
+								    <div class="content">
+	                            	{% if routeLikes|length > 0 %}
+							            <div class="title">They like this Trail</div>	
+	                                    <div class="avatars">
+										{% for user in routeLikes %}
+	                                    	{{ include('TBFrontendBundle:Profile:_userAvatar.html.twig', [user]) }}
+	                                    {% endfor %}                
+	                                    </div>
+	                                {% else %}
+							            <div class="title">Who likes this trail?</div>
+							            <h4 class="tb">Do you like it?  Maybe <strong>Share</strong> it with your friends if you do, or <strong>Like</strong> it yourself!</h4>
+	                            	{% endif %}
+								    </div>
+								</div>
+							{% endif %}
                         	
-                            <div id="trail_weather_view" class="panel trail_weather_panel"></div>
                             {% if event and eventTrails %}
                 				<div class="event_trails_container">
                                 {% for eventTrail in eventTrails %}                                
@@ -277,20 +349,6 @@ var TB_TRAIL_ID = {{ trail.id }};
         	{% endif %}        	
         </div>
   
-        <div id="trail_overlay">
-        	<div class="overlay_background"></div>
-            <div class="overlay_content">
-                <div id="trail_stats_view" class="trailstats_panel"></div>
-                    <div id="trail_altitude_view" class="trail_altitude_panel"></div>
-                    <div id="trail_mini_view">
-                    <div id="trail_minimap_view" class="trail_minimap"></div>                    
-                    <div class='border_top'></div>
-                    <div class='border_left'></div>                              
-                    <div class='border_right'></div>                              
-                    <div class='border_bottom'></div>                              
-                </div>
-            </div>
-        </div>
     </div>  
 </div>  
           
@@ -304,6 +362,14 @@ var TB_TRAIL_ID = {{ trail.id }};
 
 <script type="text/template" id="trailStatsViewTemplate">
   <div class="content">
+    <div class="trail_player_cntrls">
+  	  <div class="play_btn"></div>	      	
+  	  <div class="pause_btn"></div>	      	
+    </div>              	
+    <div class="slides">
+    	<h2 class="tb"><span class="current">0</span>/<span class="total">0</span></h2>
+    </div>
+  	
     <div class="length"></div>
     <div class="terrain"></div>          
   </div>
@@ -372,5 +438,27 @@ var TB_TRAIL_ID = {{ trail.id }};
 <script type="text/template" id="trailActivityViewTemplate">
   <div class="icon icon-<%= name %>"></div>
 </script>
+
+{% endblock %}
+
+{% block breadcrumb %}
+
+{% if editorial %}
+{% else %}
+
+{#
+	{% if breadcrumb %}
+		<div class="breadview">
+		<ul class="left">
+		{% for link in breadcrumb %}<li>{% if loop.last == true %}<a href="{{ path(link.name, link.params) }}" class="active2">{{ link.label }}</a>{% else %}<a href="{{ path(link.name, link.params) }}">{{ link.label }}</a>{% endif %}</li>{% endfor %}
+		</ul>		
+		<ul class="right">
+		  <li class="close_link"><a href="javascript:void(0)">X Close Trail Player</a></li>
+		</ul>		
+		</div>
+	{% endif %}
+#}
+	
+{% endif %}	
 
 {% endblock %}

@@ -32,12 +32,14 @@ define([
       this.locationIcon = new LocationIcon({iconUrl: 'https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/icons/location.png'});
     },            
     show: function(){
-      $(this.el).show();
+//      $(this.el).show();
+      $(this.el).fadeIn();      
       $(this.elCntrls).show();
       this.showDetail(true);      
     },
     hide: function(){
-      $(this.el).hide();
+//      $(this.el).hide();
+      $(this.el).fadeOut();
       $(this.elCntrls).hide();
     },
     buildBtns: function(){
