@@ -16,15 +16,6 @@ define([
     });    
     handleResize();        
     
-    $('#search_field').focus(function(evt) {
-      $('#search_field').val('not just yet...');
-      event.preventDefault();
-    });
-    $('#search_form').submit(function(evt) {
-      $('#search_field').val('not just yet...');
-      event.preventDefault();
-    });
-    
     var imgLoad1 = imagesLoaded('.discover_content .scale');
 	imgLoad1.on('always', function(instance) {
       for ( var i = 0, len = imgLoad1.images.length; i < len; i++ ) {
@@ -61,6 +52,60 @@ define([
         
     this.homeHerosView = new HomeHerosView({ el: '#home_header' });
 	this.homeHerosView.render();
+
+	// setup autosuggest
+    var cache = {};
+    var client = new $.es.Client({    
+        hosts: 'e7p15amb:4yexy8z21pg5eee0@boxwood-7916136.eu-west-1.bonsai.io'
+    });
+    
+    $('#searchBox').autocomplete({
+        minLength: 2,
+        delay: 0,
+        source: function(request, response ) {
+            var term = request.term;
+            if (term in cache) {
+                response(cache[term]);
+                return;
+            }
+            
+            client.search({
+                index: 'trailburning',
+                body: {
+                    query: {
+                        match: {
+                          suggest_nge: term
+                        }
+                    }
+                }
+            }).then(function (resp) {
+                var suggestions = resp.hits.hits;
+                cache[term] = suggestions;
+                response(suggestions); 
+            }, function (err) {
+                console.log(err.message);
+            });
+        }
+    });
+    
+    $('#searchBox').data('ui-autocomplete')._resizeMenu = function() {
+    	this.menu.element.outerWidth(300);
+    };
+    $('#searchBox').data('ui-autocomplete')._renderItem = function(ul, item) {
+    	var strItem = "";    	
+    	switch (item._type) {
+    	  case 'user_profile':
+    	    strItem = '<a href="profile/' + item._source.name + '" class="clearfix"><div class="match">' + item._source.suggest_text + '</div><div class="type"><div class="tb-avatar"><div class="photo"><img src="'+item._source.avatar+'"></div></div></div></a>';
+    	    break;
+    	  default:
+    	    strItem = '<a href="trail/' + item._source.slug + '" class="clearfix">' + item._source.suggest_text + '</a>';
+    	    break;
+    	}
+//		console.log(item);    	
+        return $('<li>')
+            .append(strItem)
+            .appendTo(ul);
+    };
 
   	// keyboard control
   	$(document).keydown(function(e){

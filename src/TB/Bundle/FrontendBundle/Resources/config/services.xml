@@ -150,5 +150,31 @@
             <argument type="service" id="asset_files_filesystem" />
         </service>
         
+        <!--  Register image generator as service -->
+        <service id="tb.elasticsearch.client" class="Elasticsearch\Client">
+            <argument>%elasticsearch%</argument>
+        </service>
+        
+        <!-- Register Event Listener to index the Route to elasticsearch when the Route gets published -->
+        <service id="tb.search.route_publish_listener" class="TB\Bundle\FrontendBundle\EventListener\SearchListener">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="old_sound_rabbit_mq.main_producer" />
+            <tag name="kernel.event_listener" event="tb.route_publish" method="onRoutePublish" />
+        </service>
+        
+        <!-- Register Event Listener to index the Route to elasticsearch when the Route gets updated -->
+        <service id="tb.search.route_publish_listener" class="TB\Bundle\FrontendBundle\EventListener\SearchListener">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="old_sound_rabbit_mq.main_producer" />
+            <tag name="kernel.event_listener" event="tb.route_update" method="onRouteUpdate" />
+        </service>
+
+        <!-- Register event listener to post the email to mailproxy after registration -->
+        <service id="tb.searcg.route_publish_listener" class="TB\Bundle\FrontendBundle\EventListener\SearchListener">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="old_sound_rabbit_mq.main_producer" />
+            <tag name="kernel.event_listener" event="fos_user.registration.completed" method="onUserCreate" />  
+        </service>
+        
     </services>
 </container>

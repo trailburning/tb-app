@@ -130,7 +130,7 @@ class MediaTest extends AbstractFrontendTest
             "mimetype":"image\/jpeg",
             "versions":[
                 {
-                    "path":"trailburning-media\/path\/file.jpg",
+                    "path":"\/path\/file.jpg",
                     "size":0
                 }
             ],

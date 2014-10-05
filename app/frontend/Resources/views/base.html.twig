@@ -17,7 +17,8 @@
         
         <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
         <link href="{{ asset('assets/css/bootstrap-responsive.min.css') }}" rel="stylesheet">
-        <link href="{{ asset('assets/css/bootstrap-select.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('assets/css/bootstrap-select.min.css') }}" rel="stylesheet">      
+		<link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="stylesheet">
         
         <link href="{{ asset('assets/css/common_ui.css') }}" rel="stylesheet" type="text/css">
         <link href="{{ asset('assets/css/common_cards.css') }}" rel="stylesheet" type="text/css">
@@ -61,6 +62,19 @@
                 </div>    
                 
 			    <div class="right navbar">
+			    	<div class="search ui-front">			    	
+	    			  <ul class="nav pull-right">
+	    				<li class="ui-widget">	    					
+						<form class="form-search" method="get" id="search" action="/">			    	
+	    					<input type="text" id="searchBox" name="search_text">
+							<button type="submit">
+				  			<i class="ico" data-icon="n-search-16"></i>
+							</button>
+	    				</form>
+				        </li>
+				      </ul>
+			    	</div>
+			    	
                 	{% if app.user %}
 				    	<div class="profile">
 				    		<ul class="nav pull-right">
@@ -158,6 +172,7 @@
 		<script src="//use.resrc.it"></script>
 
         <script src="{{ asset('assets/js/libs/jquery-1.8.3.min.js') }}"></script>
+        <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
         <script src="{{ asset('assets/js/libs/bootstrap.min.js') }}"></script>
         <script src="{{ asset('assets/js/libs/bootstrap-filestyle.min.js') }}"> </script>
         <script src="{{ asset('assets/js/libs/bootstrap-select.min.js') }}"></script>
