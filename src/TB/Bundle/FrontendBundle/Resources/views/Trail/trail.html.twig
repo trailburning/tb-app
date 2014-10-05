@@ -68,8 +68,8 @@ var TB_TRAIL_ID = {{ trail.id }};
         	<div class="overlay_background"></div>
             <div class="overlay_content">
                 <div id="trail_stats_view" class="trailstats_panel"></div>
-                    <div id="trail_altitude_view" class="trail_altitude_panel"></div>
-                    <div id="trail_mini_view">
+                <div id="trail_altitude_view" class="trail_altitude_panel"></div>
+                <div id="trail_mini_view">
                     <div id="trail_minimap_view" class="trail_minimap"></div>                    
                     <div class='border_top'></div>
                     <div class='border_left'></div>                              
@@ -362,6 +362,14 @@ var TB_TRAIL_ID = {{ trail.id }};
 
 <script type="text/template" id="trailStatsViewTemplate">
   <div class="content">
+    <div class="trail_player_cntrls">
+  	  <div class="play_btn"></div>	      	
+  	  <div class="pause_btn"></div>	      	
+    </div>              	
+    <div class="slides">
+    	<h2 class="tb"><span class="current">0</span>/<span class="total">0</span></h2>
+    </div>
+  	
     <div class="length"></div>
     <div class="terrain"></div>          
   </div>

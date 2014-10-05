@@ -1,4 +1,4 @@
-/* APP */
+a/* APP */
 /******************************************/
 #appview {
 /*  
@@ -219,9 +219,50 @@ html.touch #small_sponsor_bar {
 }
 
 .trailstats_panel .content {
+  position: relative;
   margin: 30px 0px 0px 42px;
+  width: 100%;
+  height: 100%;
   line-height: 1em;
   color: #44B6F7;
+}
+
+.trailstats_panel .content .trail_player_cntrls {
+  position: absolute;  
+  bottom: 64px;
+  left: 0px;
+}
+
+.trailstats_panel .content .trail_player_cntrls div {
+  display: none;
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
+  width: 75px;
+  height: 75px;
+}
+
+.trailstats_panel .content .trail_player_cntrls .play_btn {
+  background: url(../img/trailplayer/play_toggle.png) no-repeat top left;  
+}
+
+.trailstats_panel .content .trail_player_cntrls .pause_btn {
+  background: url(../img/trailplayer/pause_toggle.png) no-repeat top left;  
+}
+
+.trailstats_panel .content .trail_player_cntrls div:hover {
+  background-position: 0 -75px;
+}
+
+.trailstats_panel .content .slides {
+  position: absolute;  
+  bottom: 64px;
+  left: 93px;	
+  height: 75px;
+}
+
+.trailstats_panel .content .slides h2.tb {
+  line-height: 75px;
 }
 
 .trailstats_panel .content h2 {
@@ -274,8 +315,8 @@ html.touch #small_sponsor_bar {
 #trail_altitude_view {
   position: absolute;
   top: 350px;
-  left: 216px;
-  width: 688px;
+  left: 256px;
+  width: 658px;
   height: 218px;
   border: none;
 }
@@ -1311,8 +1352,8 @@ html.touch #trailplayer #view_map_btns {
     margin: 30px 0px 0px 12px;
   }  
   #trail_altitude_view {
-    left: 194px;
-    width: 570px;
+    left: 214px;
+    width: 550px;
   }
   #trail_mini_view {
     left: 752px;

@@ -49,6 +49,8 @@ define([
 	  this.mediaCollection = this.options.mediaCollection;
 	  this.mediaModel = this.options.mediaModel;
 
+      app.dispatcher.on("TrailStatsView:clickplay", self.onTrailStatsPlayClick, this);
+      app.dispatcher.on("TrailStatsView:clickpause", self.onTrailStatsPauseClick, this);
       app.dispatcher.on("TrailMapView:zoominclick", self.onTrailMapViewZoomInClick, this);
       app.dispatcher.on("TrailMapView:zoomoutclick", self.onTrailMapViewZoomOutClick, this);
       app.dispatcher.on("TrailMapMediaMarkerView:mediaclick", self.onTrailMapMediaMarkerClick, this);
@@ -216,12 +218,16 @@ define([
         self.trailSlidesView.addMedia(model);
       });      
       
+      this.trailStatsView.render();
+	  this.trailStatsView.setTotalSlides(this.mediaCollection.length);
+      
       this.trailMiniMapView.renderMarkers();          
       this.trailMapView.renderMarkers();
                 
 	  // start with hero slide
 	  this.nCurrSlide = this.trailSlidesView.getHeroSlide();
       this.trailSlidesView.gotoSlide(this.nCurrSlide);
+	  this.trailStatsView.setCurrSlide(this.nCurrSlide+1);
       
       this.bPlayerReady = true;
     },        
@@ -260,6 +266,8 @@ define([
       
       this.trailAltitudeView.gotoMedia(this.nCurrSlide);
       
+	  this.trailStatsView.playerPlaying();
+      
       setTimeout(function() {
 	    self.showOverlay();
 	    self.bLocked = false;
@@ -267,8 +275,8 @@ define([
             
       $('#view_player_btns').css('top', 18);
       $('#view_map_btns').css('top', 30);
-      $('#slideshow_toggle .button').addClass('slideshow_pause');
-      $('#slideshow_toggle .button').removeClass('slideshow_play');
+//      $('#slideshow_toggle .button').addClass('slideshow_pause');
+//      $('#slideshow_toggle .button').removeClass('slideshow_play');
       
       this.slideTimer = setTimeout(function() {
         self.startSlideShow();
@@ -300,6 +308,7 @@ define([
       this.hideOverlay();
       this.trailSlidesView.gotoHeroSlide();
       this.nCurrSlide = self.trailSlidesView.getHeroSlide();
+	  this.trailStatsView.setCurrSlide(this.nCurrSlide+1);
       
       setTimeout(function() {      
 		self.showPhotoView();      
@@ -332,16 +341,20 @@ define([
     startSlideShow: function(){
       this.nSlideShowState = SLIDESHOW_PLAYING;
 
-      $('#slideshow_toggle .button').addClass('slideshow_pause');
-      $('#slideshow_toggle .button').removeClass('slideshow_play');
+	  this.trailStatsView.playerPlaying();
+	  
+//      $('#slideshow_toggle .button').addClass('slideshow_pause');
+//      $('#slideshow_toggle .button').removeClass('slideshow_play');
           
       this.nextSlide();
     },
     stopSlideShow: function(){
       this.nSlideShowState = SLIDESHOW_STOPPED;
+
+	  this.trailStatsView.playerStopped();
       
-      $('#slideshow_toggle .button').addClass('slideshow_play');
-      $('#slideshow_toggle .button').removeClass('slideshow_pause');
+//      $('#slideshow_toggle .button').addClass('slideshow_play');
+//      $('#slideshow_toggle .button').removeClass('slideshow_pause');
       
       if (this.slideTimer) {
         clearTimeout(this.slideTimer);
@@ -395,6 +408,7 @@ define([
     },    
     gotoMedia: function(nSlide){          
       this.trailSlidesView.gotoSlide(nSlide);
+	  this.trailStatsView.setCurrSlide(nSlide+1);
       
       this.trailMiniMapView.gotoMedia(nSlide);
       this.trailMapView.gotoMedia(nSlide);
@@ -473,6 +487,12 @@ define([
       this.trailMapView.enablePopups(false);
       this.trailSlidesView.show();
       this.trailSlidesView.render();
+    },
+    onTrailStatsPlayClick: function(){
+      this.startSlideShow(); 
+    },
+    onTrailStatsPauseClick: function(){   
+      this.stopSlideShow(); 
     },
     onTrailMapViewZoomInClick: function(mapView){
       this.stopSlideShow();
