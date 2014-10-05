@@ -72,22 +72,22 @@ class SearchMappingCommand extends ContainerAwareCommand
                         'suggest_text' => [
                             'type' => 'string',
                             'copy_to' => [
-                                'suggest_ng', 
-                                'suggest_nge', 
+                                'suggest_engram_part', 
+                                'suggest_engram_full', 
                                 'suggest_phon'
                             ],
                         ],
-                        'suggest_ng' => [
+                        'suggest_engram_part' => [
                             'type' => 'string',
                             'index' => 'analyzed',
-                            'index_analyzer' => 'autocomplete_ngram',
-                            'search_analyzer' => 'whitespace_analyzer',
+                            'index_analyzer' => 'autocomplete_engram_part',
+                            'search_analyzer' => 'autocomplete_engram_part_q',
                         ],
-                        'suggest_nge' => [
+                        'suggest_engram_full' => [
                             'type' => 'string',
                             'index' => 'analyzed',
-                            'index_analyzer' => 'autocomplete_edge',
-                            'search_analyzer' => 'whitespace_analyzer',
+                            'index_analyzer' => 'autocomplete_engram_part',
+                            'search_analyzer' => 'autocomplete_engram_part_q',
                         ],
                         'suggest_phon' => [
                             'type' => 'string',
@@ -139,22 +139,22 @@ class SearchMappingCommand extends ContainerAwareCommand
                         'suggest_text' => [
                             'type' => 'string',
                             'copy_to' => [
-                                'suggest_ng', 
-                                'suggest_nge', 
+                                'suggest_engram_part', 
+                                'suggest_engram_full', 
                                 'suggest_phon'
                             ],
                         ],
-                        'suggest_ng' => [
+                        'suggest_engram_part' => [
                             'type' => 'string',
                             'index' => 'analyzed',
-                            'index_analyzer' => 'autocomplete_ngram',
-                            'search_analyzer' => 'whitespace_analyzer',
+                            'index_analyzer' => 'autocomplete_engram_part',
+                            'search_analyzer' => 'autocomplete_engram_part_q',
                         ],
-                        'suggest_nge' => [
+                        'suggest_engram_full' => [
                             'type' => 'string',
                             'index' => 'analyzed',
-                            'index_analyzer' => 'autocomplete_edge',
-                            'search_analyzer' => 'whitespace_analyzer',
+                            'index_analyzer' => 'autocomplete_engram_full',
+                            'search_analyzer' => 'autocomplete_engram_full_q',
                         ],
                         'suggest_phon' => [
                             'type' => 'string',
@@ -202,22 +202,22 @@ class SearchMappingCommand extends ContainerAwareCommand
                         'suggest_text' => [
                             'type' => 'string',
                             'copy_to' => [
-                                'suggest_ng', 
-                                'suggest_nge', 
+                                'suggest_engram_part', 
+                                'suggest_engram_full', 
                                 'suggest_phon'
                             ],
                         ],
-                        'suggest_ng' => [
+                        'suggest_engram_part' => [
                             'type' => 'string',
                             'index' => 'analyzed',
-                            'index_analyzer' => 'autocomplete_ngram',
-                            'search_analyzer' => 'whitespace_analyzer',
+                            'index_analyzer' => 'autocomplete_engram_part',
+                            'search_analyzer' => 'autocomplete_engram_part_q',
                         ],
-                        'suggest_nge' => [
+                        'suggest_engram_full' => [
                             'type' => 'string',
                             'index' => 'analyzed',
-                            'index_analyzer' => 'autocomplete_edge',
-                            'search_analyzer' => 'whitespace_analyzer',
+                            'index_analyzer' => 'autocomplete_engram_full',
+                            'search_analyzer' => 'autocomplete_engram_full_q',
                         ],
                         'suggest_phon' => [
                             'type' => 'string',
@@ -265,22 +265,22 @@ class SearchMappingCommand extends ContainerAwareCommand
                         'suggest_text' => [
                             'type' => 'string',
                             'copy_to' => [
-                                'suggest_ng', 
-                                'suggest_nge', 
+                                'suggest_engram_part', 
+                                'suggest_engram_full', 
                                 'suggest_phon'
                             ],
                         ],
-                        'suggest_ng' => [
+                        'suggest_engram_part' => [
                             'type' => 'string',
                             'index' => 'analyzed',
-                            'index_analyzer' => 'autocomplete_ngram',
-                            'search_analyzer' => 'whitespace_analyzer',
+                            'index_analyzer' => 'autocomplete_engram_part',
+                            'search_analyzer' => 'autocomplete_engram_part_q',
                         ],
-                        'suggest_nge' => [
+                        'suggest_engram_full' => [
                             'type' => 'string',
                             'index' => 'analyzed',
-                            'index_analyzer' => 'autocomplete_edge',
-                            'search_analyzer' => 'whitespace_analyzer',
+                            'index_analyzer' => 'autocomplete_engram_full',
+                            'search_analyzer' => 'autocomplete_engram_full_q',
                         ],
                         'suggest_phon' => [
                             'type' => 'string',
@@ -329,22 +329,22 @@ class SearchMappingCommand extends ContainerAwareCommand
                         'suggest_text' => [
                             'type' => 'string',
                             'copy_to' => [
-                                'suggest_ng', 
-                                'suggest_nge', 
+                                'suggest_engram_part', 
+                                'suggest_engram_full', 
                                 'suggest_phon'
                             ],
                         ],
-                        'suggest_ng' => [
+                        'suggest_engram_part' => [
                             'type' => 'string',
                             'index' => 'analyzed',
-                            'index_analyzer' => 'autocomplete_ngram',
-                            'search_analyzer' => 'whitespace_analyzer',
+                            'index_analyzer' => 'autocomplete_engram_part',
+                            'search_analyzer' => 'autocomplete_engram_part_q',
                         ],
-                        'suggest_nge' => [
+                        'suggest_engram_full' => [
                             'type' => 'string',
                             'index' => 'analyzed',
-                            'index_analyzer' => 'autocomplete_edge',
-                            'search_analyzer' => 'whitespace_analyzer',
+                            'index_analyzer' => 'autocomplete_engram_full',
+                            'search_analyzer' => 'autocomplete_engram_full_q',
                         ],
                         'suggest_phon' => [
                             'type' => 'string',

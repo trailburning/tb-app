@@ -18,11 +18,22 @@ class SearchController extends AbstractRestController
         $client = $this->get('tb.elasticsearch.client');
         
         $body = '{
-            query: {
-                match: {
-                  suggest_nge: "' . $request->query->get('q') . '"
-                }
-            }
+            "query": {
+                "dis_max": {
+                    "tie_breaker": 0.7,
+                    "queries": [
+                        {
+                            "term": {"suggest_engram_full": "' . $request->query->get('q') . '" }
+                        },
+                        {
+                            "term": {"suggest_engram_part": "' . $request->query->get('q') . '" }
+                        },
+                        {
+                            "match" : { "text" : "' . $request->query->get('q') . '" }
+                        }
+                    ]
+                 } 
+             }
         }';
         
         $params = ['index' => 'trailburning', 'body' => $body];

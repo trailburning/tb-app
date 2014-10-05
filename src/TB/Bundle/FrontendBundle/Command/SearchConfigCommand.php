@@ -61,11 +61,6 @@ class SearchConfigCommand extends ContainerAwareCommand
                                 'min_gram' => 2,
                                 'max_gram' => 30,
                             ],
-                            'ngram' => [
-                                'type' => 'nGram',
-                                'min_gram' => 2,
-                                'max_gram' => 20,
-                            ],
                             'ngram_delimiter' => [
                                 'type' => 'word_delimiter',
                                 'generate_word_parts' => true,
@@ -81,30 +76,48 @@ class SearchConfigCommand extends ContainerAwareCommand
                                 'replace' => false,
                             ],
                         ],
+                        'tokenizer' => [
+                            'my_edge_ngram_tokenizer' => [
+                                'type' => 'edgeNGram',
+                                'min_gram' => '2',
+                                'max_gram' => '30',
+                                'token_chars' => []
+                            ]
+                        ],
                         'analyzer' => [
-                            'autocomplete_edge' => [
+                            'index_engram_analyzer' => [
+                                'type' => 'custom',
+                                'tokenizer' => 'my_edge_ngram_tokenizer',
+                                'filter' => ['lowercase']
+                            ],
+                            'search_engram_analyzer' => [
+                                'type' => 'custom',
+                                'tokenizer' => 'keyword',
+                                'filter' => 'lowercase' 
+                            ],
+                            'autocomplete_engram_full' => [
                                 'type' => 'custom',
                                 'char_filter' => ['iso_latin1_accent'],
-                                'tokenizer' => 'standard',
+                                'tokenizer' => 'keyword',
                                 'filter' => ['lowercase', 'punctiation_replace', 'edge_ngram', 'nonealpha_replace'],
                             ],
-                            'autocomplete_edge_q' => [
+                            'autocomplete_engram_full_q' => [
                                 'type' => 'custom',
                                 'char_filter' => ['iso_latin1_accent'],
-                                'tokenizer' => 'standard',
-                                'filter' => ['ngram_delimiter', 'lowercase', 'punctiation_replace', 'edge_ngram', 'nonealpha_replace', 'max_toke_length'],
+                                'tokenizer' => 'keyword',
+                                'filter' => ['ngram_delimiter', 'lowercase', 'punctiation_replace', 'nonealpha_replace', 'max_toke_length'],
                             ],
-                            'autocomplete_ngram' => [
+                            'autocomplete_engram_part' => [
                                 'type' => 'custom',
                                 'char_filter' => ['iso_latin1_accent'],
                                 'tokenizer' => 'standard',
-                                'filter' => ['ngram_delimiter', 'lowercase', 'ngram', 'nonealpha_replace'],
+                                'filter' => ['ngram_delimiter', 'lowercase', 'edge_ngram', 'nonealpha_replace'],
                             ],
-                            'autocomplete_ngram_q' => [
+                            'autocomplete_engram_part_q' => [
                                 'type' => 'custom',
                                 'char_filter' => ['iso_latin1_accent'],
                                 'tokenizer' => 'standard',
-                                'filter' => ['ngram_delimiter', 'lowercase', 'ngram', 'nonealpha_replace', 'max_toke_length'],
+                                'filter' => ['ngram_delimiter', 'lowercase', 'edge_ngram', 'nonealpha_replace', 'max_toke_length'],
                             ],
                             'phonetic_text' => [
                                 'type' => 'custom',

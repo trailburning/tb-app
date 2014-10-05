@@ -32,11 +32,11 @@
                         response(cache[term]);
                         return;
                     }
-//                    var url = 'http://localhost:8888/trailburning_api/app_dev.php/v1/search/suggest?q=' + term;
-                    var url = 'http://192.168.178.197:8888/trailburning_api/app_dev.php/v1/search/suggest?q=' + term;
+                    var url = 'http://trailburning.localhost:8888/api/app_dev.php/v1/search/suggest?q=' + term;
+                    // var url = 'http://192.168.178.197:8888/trailburning_api/app_dev.php/v1/search/suggest?q=' + term;
                     $.getJSON(url, request, function( data, status, xhr ) {
                         var suggestions = data.hits.hits;
-                        cache[term] = suggestions;
+                        cache[ term ] = suggestions;
                         response(suggestions);
                     });
                 }
