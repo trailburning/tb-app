@@ -1,0 +1,24 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}{{ campaign.title }}{% endblock %}
+
+{% block og_image %}
+
+{% endblock %}
+
+{% block stylesheets %}
+<link href="{{ asset('assets/css/editorial.css') }}" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block body %}
+<script>
+
+</script>
+
+<div id="event_header">
+    <div class="event_title">
+        <h1 class="tb tb-title">{{ campaign.title }}</h1>
+    </div>      
+</div>
+
+{% endblock %}
