@@ -55,9 +55,16 @@ define([
 	
 	var cache = {};
 
+	$('#search').submit(function(evt) {
+  	  evt.preventDefault();
+	});
+	
     $('#searchBox').autocomplete({
         minLength: 2,
         delay: 0,
+        select: function(event, ui)  {
+        	window.location = ui.item.url;
+        },
         source: function(request, response ) {
             var term = request.term;
             if (term in cache) {
@@ -70,14 +77,14 @@ define([
                 cache[term] = suggestions;
                 response(suggestions);
             });
-        }
-    });
-
+        }    
+	});
+	
     $('#searchBox').data('ui-autocomplete')._resizeMenu = function() {
     	this.menu.element.outerWidth(300);
     };
     $('#searchBox').data('ui-autocomplete')._renderItem = function(ul, item) {
-    	var strItem = "";    	
+    	var strItem = "", strURL = '';
     	var text = item._source.suggest_engram;
     	
         if (item.highlight) {
@@ -92,19 +99,24 @@ define([
     	
     	switch (item._type) {
     	  case 'user_profile':
-    	    strItem = '<a href="profile/' + item._source.name + '" class="clearfix"><div class="type"><div class="tb-avatar tb-avatar-search"><div class="photo"><img src="'+item._source.avatar+'"></div></div></div><div class="match">' + text + '</div></a>';
+    	    strURL = 'profile/' + item._source.name;
+    	    strItem = '<a href="' + strURL + '" class="clearfix"><div class="type"><div class="tb-avatar tb-avatar-search"><div class="photo"><img src="'+item._source.avatar+'"></div></div></div><div class="match">' + text + '<br/>Discover ' + item._source.first_name + '\'s trails.</div></a>';
     	    break;
     	  case 'event':
-    	    strItem = '<a href="event/' + item._source.slug + '" class="clearfix"><div class="type"><div class="icon_container"><div class="icon event"></div></div></div><div class="match">' + text + '</div></a>';
+    	    strURL = 'event/' + item._source.slug
+    	    strItem = '<a href="' + strURL + '" class="clearfix"><div class="type"><div class="icon_container"><div class="icon event"></div></div></div><div class="match">' + text + '</div></a>';
     	    break;
     	  case 'editorial':
-    	    strItem = '<a href="editorial/' + item._source.slug + '" class="clearfix"><div class="type"><div class="icon_container"><div class="icon editorial"></div></div></div><div class="match">' + text + '</div></a>';
+    	    strURL = 'editorial/' + item._source.slug
+    	    strItem = '<a href="' + strURL + '" class="clearfix"><div class="type"><div class="icon_container"><div class="icon editorial"></div></div></div><div class="match">' + text + '</div></a>';
     	    break;
     	  default:
-    	    strItem = '<a href="trail/' + item._source.slug + '" class="clearfix"><div class="type"><div class="icon_container"><div class="icon trailcard"></div></div></div><div class="match">' + text + '</div></a>';
+    	    strURL = 'trail/' + item._source.slug
+    	    strItem = '<a href="' + strURL + '" class="clearfix"><div class="type"><div class="icon_container"><div class="icon trailcard"></div></div></div><div class="match">' + text + '</div></a>';
     	    break;
     	}
-//		console.log(item);    	
+    	item.url = strURL;
+		console.log(item);    	
         return $('<li>')
             .append(strItem)
             .appendTo(ul);

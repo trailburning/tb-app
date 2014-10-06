@@ -279,10 +279,8 @@ a:active .tb-cntrl {
 }
 
 .tb-avatar-search {
-  box-shadow: none;
-  width: 28px;
-  height: 28px;
-  
+  width: 38px;
+  height: 38px;  
 }
 
 .tb-avatar-highlight {
@@ -675,12 +673,12 @@ a:active .tb-cntrl {
 
 .search .ui-autocomplete li .type {
   float: left;
-  width: 15%;
+  width: 18%;
 }
 
 .search .ui-autocomplete li .icon_container {
-  width: 32px;
-  height: 32px;
+  width: 38px;
+  height: 38px;
 }
 
 .search .ui-autocomplete li .icon {

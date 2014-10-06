@@ -24,9 +24,10 @@
             var cache = {};
             
             $('#q').autocomplete({
+            	autoFocus: true,
                 minLength: 2,
                 delay: 0,
-                source: function(request, response ) {
+                source: function(request, response) {
                     var term = request.term;
                     if (term in cache) {
                         response(cache[term]);
@@ -39,7 +40,10 @@
                         cache[ term ] = suggestions;
                         response(suggestions);
                     });
-                }
+                },
+				select: function(event, ui) {
+        		  console.log("You selected '" + ui.item.value + "'");
+        		}                        
             }).data('ui-autocomplete')._renderItem = function(ul, item) {
                 console.log(item);
                 if (item.highlight) {
