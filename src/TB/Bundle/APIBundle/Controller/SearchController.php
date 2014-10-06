@@ -33,7 +33,22 @@ class SearchController extends AbstractRestController
                         }
                     ]
                  } 
-             }
+             },
+             "highlight": {
+                 "pre_tags" : ["<strong>"],
+                 "post_tags" : ["</strong>"],
+                 "fields": {
+                    "suggest_text": {
+                        "number_of_fragments" : 1
+                    },
+                    "suggest_engram_full": {
+                        "number_of_fragments" : 1
+                    },
+                    "suggest_engram_part": {
+                        "number_of_fragments" : 1
+                    }
+               }
+           }
         }';
         
         $params = ['index' => 'trailburning', 'body' => $body];
