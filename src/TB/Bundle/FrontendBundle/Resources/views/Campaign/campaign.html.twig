@@ -7,18 +7,41 @@
 {% endblock %}
 
 {% block stylesheets %}
-<link href="{{ asset('assets/css/editorial.css') }}" rel="stylesheet" type="text/css">
+<link href="{{ asset('assets/css/campaign.css') }}" rel="stylesheet" type="text/css">
 {% endblock %}
 
 {% block body %}
 <script>
-
+var TB_APP = 'CampaignApp';
+{% if app.user %}		
+var TB_USER_ID = {{ app.user.id }};
+{% endif %}
 </script>
 
-<div id="event_header">
+  <div id="def_header">  	
+    <div class="background">
+      <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/O=80/http://assets.trailburning.com/images/competition/competition_background.jpg" class="resrc scale" /></div>
+    </div>
+    <div class="foreground">
+      <div class="image_container fade_on_load"><img src="http://assets.trailburning.com/images/competition/shirt.png" /></div>
+    </div>
     <div class="event_title">
-        <h1 class="tb tb-title">{{ campaign.title }}</h1>
+      <h1 class="tb tb-title">Campaign</h1>
+      <br/>
+      <h1 class="tb tb-title">coming soon...</h1>
     </div>      
-</div>
+  </div>    
+    
+  <div class="panel_content">          
+    <div class="panel_intro">
+      <div class="desc clearfix">
+        <h3 class="tb">Competition launching soon!</h3>        
+        <div class="prizes">
+		  <div class="image_container fade_on_load"><img src="http://assets.trailburning.com/images/competition/prize_shirt.png" /></div>
+		  <div class="image_container fade_on_load"><a href="http://www.likethewindmagazine.com" onClick="trackOutboundLink(this, 'Outbound Links', 'likethewindmagazine.com'); return false;"><img src="http://assets.trailburning.com/images/competition/prize_likethewind.png" /></a></div>
+		</div>	
+      </div>      
+    </div>
+  </div>
 
 {% endblock %}
