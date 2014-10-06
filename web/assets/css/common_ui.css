@@ -671,6 +671,19 @@ a:active .tb-cntrl {
   width: 25%;
 }
 
+.search .ui-autocomplete li .icon {
+  width: 54px;
+  height: 54px;
+}
+
+.search .ui-autocomplete li .trailcard {
+  background: url("../img/search/trailcard.png") no-repeat top left;
+}
+
+.search .ui-autocomplete li .event{
+  background: url("../img/search/event.png") no-repeat top left;
+}
+
 .search .ui-autocomplete li .match {
   float: left;
   width: 75%;

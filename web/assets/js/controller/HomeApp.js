@@ -82,11 +82,14 @@ define([
     	  case 'user_profile':
     	    strItem = '<a href="profile/' + item._source.name + '" class="clearfix"><div class="type"><div class="tb-avatar"><div class="photo"><img src="'+item._source.avatar+'"></div></div></div><div class="match">' + item._source.suggest_text + '</div></a>';
     	    break;
+    	  case 'event':
+    	    strItem = '<a href="event/' + item._source.slug + '" class="clearfix"><div class="type"><div class="icon event"></div></div><div class="match">' + item._source.suggest_text + '</div></a>';
+    	    break;
     	  default:
-    	    strItem = '<a href="trail/' + item._source.slug + '" class="clearfix"><div class="type"></div><div class="match">' + item._source.suggest_text + '</div></a>';
+    	    strItem = '<a href="trail/' + item._source.slug + '" class="clearfix"><div class="type"><div class="icon trailcard"></div></div><div class="match">' + item._source.suggest_text + '</div></a>';
     	    break;
     	}
-//		console.log(item);    	
+		console.log(item);    	
         return $('<li>')
             .append(strItem)
             .appendTo(ul);
