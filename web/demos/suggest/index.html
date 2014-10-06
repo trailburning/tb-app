@@ -41,8 +41,20 @@
                     });
                 }
             }).data('ui-autocomplete')._renderItem = function(ul, item) {
+                console.log(item);
+                if (item.highlight) {
+                    if (item.highlight.suggest_engram_full) {
+                        var text = item.highlight.suggest_engram_full;
+                    } else if(item.highlight.suggest_engram_part) {
+                        var text = item.highlight.suggest_engram_part;
+                    } else {
+                        var text = item.highlight.suggest_engram;
+                    }
+                } else {
+                    var text = item._source.suggest_engram;
+                }
                 return $('<li>')
-                    .append('<a>' + item._source.suggest_text + '</a>')
+                    .append('<a>' + text + '</a>')
                     .appendTo(ul);
             };
         });
