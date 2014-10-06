@@ -278,6 +278,13 @@ a:active .tb-cntrl {
   overflow: hidden;		
 }
 
+.tb-avatar-search {
+  box-shadow: none;
+  width: 28px;
+  height: 28px;
+  
+}
+
 .tb-avatar-highlight {
   width: 76px;
   height: 76px;
@@ -668,20 +675,31 @@ a:active .tb-cntrl {
 
 .search .ui-autocomplete li .type {
   float: left;
-  width: 25%;
+  width: 15%;
+}
+
+.search .ui-autocomplete li .icon_container {
+  width: 32px;
+  height: 32px;
 }
 
 .search .ui-autocomplete li .icon {
-  width: 54px;
-  height: 54px;
+  width: 100%;
+  height: 100%;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
 }
 
 .search .ui-autocomplete li .trailcard {
-  background: url("../img/search/trailcard.png") no-repeat top left;
+  background-image: url("../img/search/trailcard.png");
 }
 
 .search .ui-autocomplete li .event{
-  background: url("../img/search/event.png") no-repeat top left;
+  background-image: url("../img/search/event.png");
+}
+
+.search .ui-autocomplete li .editorial{
+  background-image: url("../img/search/editorial.png");
 }
 
 .search .ui-autocomplete li .match {

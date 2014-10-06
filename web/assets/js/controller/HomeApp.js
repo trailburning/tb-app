@@ -78,18 +78,33 @@ define([
     };
     $('#searchBox').data('ui-autocomplete')._renderItem = function(ul, item) {
     	var strItem = "";    	
+    	var text = item._source.suggest_engram;
+    	
+        if (item.highlight) {
+            if (item.highlight.suggest_engram_full) {
+                text = item.highlight.suggest_engram_full;
+            } else if(item.highlight.suggest_engram_part) {
+                text = item.highlight.suggest_engram_part;
+            } else {
+                text = item.highlight.suggest_engram;
+            }
+        }
+    	
     	switch (item._type) {
     	  case 'user_profile':
-    	    strItem = '<a href="profile/' + item._source.name + '" class="clearfix"><div class="type"><div class="tb-avatar"><div class="photo"><img src="'+item._source.avatar+'"></div></div></div><div class="match">' + item._source.suggest_text + '</div></a>';
+    	    strItem = '<a href="profile/' + item._source.name + '" class="clearfix"><div class="type"><div class="tb-avatar tb-avatar-search"><div class="photo"><img src="'+item._source.avatar+'"></div></div></div><div class="match">' + text + '</div></a>';
     	    break;
     	  case 'event':
-    	    strItem = '<a href="event/' + item._source.slug + '" class="clearfix"><div class="type"><div class="icon event"></div></div><div class="match">' + item._source.suggest_text + '</div></a>';
+    	    strItem = '<a href="event/' + item._source.slug + '" class="clearfix"><div class="type"><div class="icon_container"><div class="icon event"></div></div></div><div class="match">' + text + '</div></a>';
+    	    break;
+    	  case 'editorial':
+    	    strItem = '<a href="editorial/' + item._source.slug + '" class="clearfix"><div class="type"><div class="icon_container"><div class="icon editorial"></div></div></div><div class="match">' + text + '</div></a>';
     	    break;
     	  default:
-    	    strItem = '<a href="trail/' + item._source.slug + '" class="clearfix"><div class="type"><div class="icon trailcard"></div></div><div class="match">' + item._source.suggest_text + '</div></a>';
+    	    strItem = '<a href="trail/' + item._source.slug + '" class="clearfix"><div class="type"><div class="icon_container"><div class="icon trailcard"></div></div></div><div class="match">' + text + '</div></a>';
     	    break;
     	}
-		console.log(item);    	
+//		console.log(item);    	
         return $('<li>')
             .append(strItem)
             .appendTo(ul);
