@@ -393,6 +393,14 @@ html.touch #small_sponsor_bar {
   border-top: 2px solid rgba(0, 0, 0, 0.5);
 }
 
+#trail_mini_view .toggle_btn {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 254px;
+  height: 188px;	
+}
+
 /* TRAIL MINI MAP VIEW */
 /******************************************/
 #trail_minimap_view {
@@ -416,9 +424,10 @@ html.touch #small_sponsor_bar {
 /* TRAIL MINI SLIDE VIEW */
 /******************************************/
 #trail_minislides_view {
+  visibility: hidden;
   position: absolute;
   top: 0px;
-  left: -260px;
+  left: 0px;
   width: 254px;
   height: 188px;
   overflow: hidden;
@@ -533,7 +542,8 @@ html.touch #small_sponsor_bar {
   text-align: center;
 }
 
-#trail_slides_view .slide_btns { 
+#trail_slides_view .slide_btns {
+  display: none; 
   position: absolute;
   top: 0px;
   left: 0px;
@@ -545,16 +555,52 @@ html.touch #small_sponsor_bar {
   position: absolute;
   top: 0px;
   left: 0px;
-  width: 50%;
+  width: 30%;
   height: 100%;
+}
+
+#trail_slides_view .slide_btns .left .hot {
+  position: absolute;
+  left: -153px; 
+  width: 153px;
+  height: 100%;
+  background: url("../img/trailplayer/arrow_left_back.png") repeat-y top left;	
+}
+
+#trail_slides_view .slide_btns .left .hot .arrow {
+  position: absolute;
+  margin-top: -21px;
+  top: 50%;
+  left: 18px; 
+  width: 27px;
+  height: 43px;
+  background: url("../img/trailplayer/arrow_left.png") no-repeat top left;	
 }
 
 #trail_slides_view .slide_btns .right { 
   position: absolute;
   top: 0px;
   right: 0px;
-  width: 50%;
+  width: 30%;
   height: 100%;
+}
+
+#trail_slides_view .slide_btns .right .hot {
+  position: absolute;
+  right: -153px; 
+  width: 153px;
+  height: 100%;
+  background: url("../img/trailplayer/arrow_right_back.png") repeat-y top left;	
+}
+
+#trail_slides_view .slide_btns .right .hot .arrow {
+  position: absolute;
+  margin-top: -21px;
+  top: 50%;
+  right: 18px; 
+  width: 27px;
+  height: 43px;
+  background: url("../img/trailplayer/arrow_right.png") no-repeat top left;	
 }
 
 #trail_slides_view .loader_container {
@@ -692,10 +738,9 @@ html.touch #small_sponsor_bar {
 /* VIEW CNTRLS */
 /******************************************/
 #trailplayer #view_map_btns {
-  display: none;
   position: absolute;
   top: -300px;
-  right: 152px;
+  left: 82px;
 }
 
 html.touch #trailplayer #view_map_btns {
@@ -1427,11 +1472,14 @@ html.touch #trailplayer #view_map_btns {
     left: 226px;
   }
   #trail_minislides_view {
-    width: 222px;
+    width: 228px;
   }
   #minislides .image_container {
-    width: 222px;
+    width: 228px;
   }  
+  #trail_mini_view .toggle_btn {
+    width: 228px;
+  }
   .panel_content {
     width: 968px;
   }

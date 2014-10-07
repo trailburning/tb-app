@@ -20,11 +20,9 @@ define([
       this.bWaitingForSlide = false;
     },            
     show: function(){      
-//      $(this.el).show();
       $(this.el).fadeIn();
     },
     hide: function(){
-//      $(this.el).hide();
       $(this.el).fadeOut();
     },    
     getHeroSlide: function(){
@@ -96,41 +94,44 @@ define([
       return this;
     },
     buildBtns: function(){    
-      // make btns more touch friendly
-      if (Modernizr.touch) {
-        $('.slide_btns', $(this.el)).touchwipe({
-           wipeLeft: function() {
-            // fire event
-            app.dispatcher.trigger("TrailSlidesView:clickslidenext", self);                
-           },
-           wipeRight: function() {
-            // fire event
-            app.dispatcher.trigger("TrailSlidesView:clickslideprev", self);                              
-           },
-           wipeUp: function() { },
-           wipeDown: function() { },
-           min_move_x: 20,
-           min_move_y: 20,
-           preventDefaultEvents: false
-        });            
-      }
-      else {
-        $('.slide_btns .left', $(this.el)).click(function(evt){
-          // fire event
-          app.dispatcher.trigger("TrailSlidesView:clickslideprev", self);                
-        });
-        $('.slide_btns .left', $(this.el)).mouseover(function(evt){
-          $(evt.currentTarget).css('cursor','pointer');      
-        });      
-        
-        $('.slide_btns .right', $(this.el)).click(function(evt){
-          // fire event
-          app.dispatcher.trigger("TrailSlidesView:clickslidenext", self);                
-        });
-        $('.slide_btns .right', $(this.el)).mouseover(function(evt){
-          $(evt.currentTarget).css('cursor','pointer');      
-        });      
-      }
+      var self = this;
+      
+      $('.slide_btns .left .hot', $(this.el)).addClass('tb-move-horiz');
+      $('.slide_btns .right .hot', $(this.el)).addClass('tb-move-horiz');
+            
+      $('.slide_btns .left .hot', $(this.el)).click(function(evt){
+        // fire event
+        app.dispatcher.trigger("TrailSlidesView:clickslideprev", self);                
+      });
+    	
+      $('.slide_btns .left .hot', $(this.el)).mouseover(function(evt){
+        $(evt.currentTarget).css('cursor','pointer');      
+      });      
+
+      $('.slide_btns .left', $(this.el)).mouseover(function(evt){
+      	$('.slide_btns .left .hot', $(self.el)).css('left', 0);
+      });      
+
+      $('.slide_btns .left', $(this.el)).mouseout(function(evt){
+      	$('.slide_btns .left .hot', $(self.el)).css('left', -153);
+      });      
+
+      $('.slide_btns .right .hot', $(this.el)).click(function(evt){
+        // fire event
+        app.dispatcher.trigger("TrailSlidesView:clickslidenext", self);                
+      });
+    	
+      $('.slide_btns .right .hot', $(this.el)).mouseover(function(evt){
+        $(evt.currentTarget).css('cursor','pointer');      
+      });      
+
+      $('.slide_btns .right', $(this.el)).mouseover(function(evt){
+      	$('.slide_btns .right .hot', $(self.el)).css('right', 0);
+      });      
+
+      $('.slide_btns .right', $(this.el)).mouseout(function(evt){
+      	$('.slide_btns .right .hot', $(self.el)).css('right', -153);
+      });      
     },
     checkpoint: function(){
       var self = this;
@@ -165,7 +166,7 @@ define([
         app.dispatcher.trigger("TrailSlidesView:slideview", this);                
       }
     },    
-    onSlideReady: function(trailSlideView){   
+    onSlideReady: function(trailSlideView){
       if (trailSlideView.nType != 0) {
         return;
       }

@@ -32,15 +32,11 @@ define([
       this.locationIcon = new LocationIcon({iconUrl: 'https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/icons/location.png'});
     },            
     show: function(){
-//      $(this.el).show();
       $(this.el).fadeIn();      
-      $(this.elCntrls).show();
       this.showDetail(true);      
     },
     hide: function(){
-//      $(this.el).hide();
       $(this.el).fadeOut();
-      $(this.elCntrls).hide();
     },
     buildBtns: function(){
       var self = this;
@@ -118,6 +114,8 @@ define([
       if (this.arrMapMediaViews.length) {
         this.currMapMediaView = this.arrMapMediaViews[nMedia];
         this.currMapMediaView.setActive(true);
+        // centre on active marker
+        this.map.panTo(this.currMapMediaView.marker.getLatLng(), {duration: 1});
       }
     },
     addMedia: function(mediaModel){
@@ -190,8 +188,7 @@ define([
       $(this.el).html(this.template(attribs));
                         
       this.map = L.mapbox.map('map_large', null, {dragging: true, touchZoom: false, scrollWheelZoom:false, doubleClickZoom:false, boxZoom:false, tap:false, zoomControl:false, zoomAnimation:true, attributionControl:false});
-//      this.layer_street = L.mapbox.tileLayer('mallbeury.map-omeomj70');
-      this.layer_street = L.mapbox.tileLayer('mallbeury.8d4ad8ec');
+      this.layer_street = L.mapbox.tileLayer('mallbeury.map-omeomj70');
       this.layer_sat = L.mapbox.tileLayer('mallbeury.map-eorpnyp3');      
       this.map.addLayer(this.layer_street);
 

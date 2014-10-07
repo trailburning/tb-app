@@ -50,7 +50,7 @@ define([
       }
     },        
     addMedia: function(mediaModel){    	
-      var photoView = new TrailSlideView({ model: mediaModel, type: 0 });
+      var photoView = new TrailSlideView({ model: mediaModel, type: 1 });
       this.arrSlidePhotos.push(photoView);
       photoView.render($('#appview').width());
       
@@ -80,7 +80,6 @@ define([
       var attribs = this.model.toJSON();
       $(this.el).html(this.template(attribs));
 
-      // update container width
       $('.image_container', this.el).width($(this.el).width());
       $('.photos_container', this.el).width($(this.el).width());                        
       for (var nMedia=0; nMedia < this.arrSlidePhotos.length; nMedia++) {
@@ -126,7 +125,7 @@ define([
       }
     },    
     onSlideReady: function(trailSlideView){   
-      if (trailSlideView.nType != 0) {
+      if (trailSlideView.nType != 1) {
         return;
       }
                   

@@ -74,6 +74,14 @@ define([
     buildBtns: function(){
       var self = this;
       
+      $('#trail_mini_view .toggle_btn').click(function(evt){
+        self.onTrailToggleViewBtnClick(evt);
+	  });
+
+      $('#trail_mini_view .toggle_btn').mouseover(function(evt){
+        $(evt.currentTarget).css('cursor','pointer');      
+	  });
+      
       $('#trail_intro_view .trail_play').click(function(evt){
       	self.showPlayer();
 	  });
@@ -261,6 +269,8 @@ define([
       $('#trailplayer').addClass('tb-size');
 	  $('#trail_views').addClass('tb-move-vert');
       
+      $('#trail_slides_view .slide_btns').show();
+      
       this.hideIntroOverlay();
 
       this.nPlayerView = PLAYER_SHOW;
@@ -280,9 +290,6 @@ define([
       }, 500);
             
       $('#view_player_btns').css('top', 18);
-      $('#view_map_btns').css('top', 30);
-//      $('#slideshow_toggle .button').addClass('slideshow_pause');
-//      $('#slideshow_toggle .button').removeClass('slideshow_play');
       
       this.slideTimer = setTimeout(function() {
         self.startSlideShow();
@@ -304,12 +311,13 @@ define([
       $('#trailplayer').addClass('tb-size');
 	  $('#trail_views').addClass('tb-move-vert');
       
+      $('#trail_slides_view .slide_btns').hide();
+      
       this.updatePlayerHeight();
       
       this.stopSlideShow();
       
       $('#view_player_btns').css('top', -160);
-      $('#view_map_btns').css('top', -300);
 
       this.hideOverlay();
       this.trailSlidesView.gotoHeroSlide();
@@ -368,7 +376,6 @@ define([
       }      
     }, 
     toggleView: function(){
-      // mla
       if (this.nPlayerView != PLAYER_SHOW) {
       	return;
       }
@@ -376,7 +383,6 @@ define([
       this.onTrailToggleViewBtnClick();
     }, 
     showNextSlide: function(){
-      // mla
       if (this.nPlayerView != PLAYER_SHOW) {
       	return;
       }
@@ -395,7 +401,6 @@ define([
       this.gotoMedia(nSlide);
     },   
     showPrevSlide: function(){
-      // mla
       if (this.nPlayerView != PLAYER_SHOW) {
       	return;
       }
@@ -433,7 +438,6 @@ define([
       this.updatePlayerHeight();      
     },
     toggleSlideshow: function(){
-      // mla
       if (this.nPlayerView != PLAYER_SHOW) {
       	return;
       }
@@ -464,6 +468,11 @@ define([
     	
       this.nTrailView = MAP_VIEW;
       
+      $('#trail_minimap_view').css('visibility', 'hidden');
+      $('#trail_minislides_view').css('visibility', 'visible');
+
+      $('#view_map_btns').css('top', 18);
+      
       $('#view_toggle .button').addClass('view_photo');
       $('#view_toggle .button').removeClass('view_map');
       if (evt) {
@@ -483,6 +492,11 @@ define([
       }
     	
       this.nTrailView = SLIDE_VIEW;
+      
+      $('#trail_minislides_view').css('visibility', 'hidden');
+      $('#trail_minimap_view').css('visibility', 'visible');
+      
+      $('#view_map_btns').css('top', -300);
       
       $('#view_toggle .button').addClass('view_map');
       $('#view_toggle .button').removeClass('view_photo');
@@ -562,7 +576,6 @@ define([
       $('#view_toggle .button').removeClass('view_photo_hover');        
       $('#view_toggle .button').removeClass('view_map_hover');        
       
-      // mla
       switch (this.nTrailView) {
         case MAP_VIEW:
           this.showPhotoView(evt);
