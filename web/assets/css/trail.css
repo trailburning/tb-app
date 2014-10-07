@@ -413,6 +413,66 @@ html.touch #small_sponsor_bar {
   cursor: default;   
 }
 
+/* TRAIL MINI SLIDE VIEW */
+/******************************************/
+#trail_minislides_view {
+  position: absolute;
+  top: 0px;
+  left: -260px;
+  width: 254px;
+  height: 188px;
+  overflow: hidden;
+}
+
+#trail_minislides_view .photos_container {  
+  position: relative;  
+  width: 100%;
+  height: 100%;  
+  overflow: hidden;  
+}
+
+#trail_minislides_view .image_container {
+  position: absolute;
+  opacity: 0;  
+  top: 0px;
+  left: 0px;  
+  width: 100%;
+  height: 100%;  
+  overflow: hidden;
+}
+
+#trail_minislides_view .background_blur .image_container img, #trail_minislides_view .background .image_container img {
+  width: 100%;
+}
+
+#trail_minislides_view .foreground {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+}
+
+#trail_minislides_view .foreground .image_container {
+  position: relative;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
+#trail_minislides_view .foreground .image_container img {
+  display: block;
+  margin: 0 auto;
+  height: 100%;
+}
+	
+#trail_minislides_view .foreground .image_container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
 /* TRAIL SLIDES VIEW */
 /******************************************/
 #trail_slides_view {

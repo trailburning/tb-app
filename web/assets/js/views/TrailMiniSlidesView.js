@@ -4,7 +4,7 @@ define([
   'views/TrailSlideView'
 ], function(_, Backbone, TrailSlideView){
   
-  var TrailSlidesView = Backbone.View.extend({
+  var TrailMiniSlidesView = Backbone.View.extend({
     initialize: function(){
       this.template = _.template($('#trailSlidesViewTemplate').text());        
             
@@ -20,12 +20,10 @@ define([
       this.bWaitingForSlide = false;
     },            
     show: function(){      
-//      $(this.el).show();
-      $(this.el).fadeIn();
+      $(this.el).show();
     },
     hide: function(){
-//      $(this.el).hide();
-      $(this.el).fadeOut();
+      $(this.el).hide();
     },    
     getHeroSlide: function(){
       return this.nHeroSlide;
@@ -68,8 +66,8 @@ define([
       // already rendered?  Just update
       if (this.bRendered) {
         // update container width
-        $('.photos_container', this.el).width($('#appview').width());        
-        $('.image_container', this.el).width($('#appview').width());
+        $('.photos_container', this.el).width($(this.el).width());        
+        $('.image_container', this.el).width($(this.el).width());
         if (this.nCurrSlide >= 0 && this.arrSlidePhotos.length) {
           var photoView = this.arrSlidePhotos[this.nCurrSlide];
           photoView.render();
@@ -83,54 +81,16 @@ define([
       $(this.el).html(this.template(attribs));
 
       // update container width
-      $('.image_container', this.el).width($('#appview').width());
-      $('.photos_container', this.el).width($('#appview').width());                        
+      $('.image_container', this.el).width($(this.el).width());
+      $('.photos_container', this.el).width($(this.el).width());                        
       for (var nMedia=0; nMedia < this.arrSlidePhotos.length; nMedia++) {
         var photoView = this.arrSlidePhotos[nMedia];
         $('.photos_container', this.el).append(photoView.el);      
       }
-      this.buildBtns();
             
       this.bRendered = true;
                         
       return this;
-    },
-    buildBtns: function(){    
-      // make btns more touch friendly
-      if (Modernizr.touch) {
-        $('.slide_btns', $(this.el)).touchwipe({
-           wipeLeft: function() {
-            // fire event
-            app.dispatcher.trigger("TrailSlidesView:clickslidenext", self);                
-           },
-           wipeRight: function() {
-            // fire event
-            app.dispatcher.trigger("TrailSlidesView:clickslideprev", self);                              
-           },
-           wipeUp: function() { },
-           wipeDown: function() { },
-           min_move_x: 20,
-           min_move_y: 20,
-           preventDefaultEvents: false
-        });            
-      }
-      else {
-        $('.slide_btns .left', $(this.el)).click(function(evt){
-          // fire event
-          app.dispatcher.trigger("TrailSlidesView:clickslideprev", self);                
-        });
-        $('.slide_btns .left', $(this.el)).mouseover(function(evt){
-          $(evt.currentTarget).css('cursor','pointer');      
-        });      
-        
-        $('.slide_btns .right', $(this.el)).click(function(evt){
-          // fire event
-          app.dispatcher.trigger("TrailSlidesView:clickslidenext", self);                
-        });
-        $('.slide_btns .right', $(this.el)).mouseover(function(evt){
-          $(evt.currentTarget).css('cursor','pointer');      
-        });      
-      }
     },
     checkpoint: function(){
       var self = this;
@@ -148,7 +108,7 @@ define([
         }
                 
         photoView = this.arrSlidePhotos[this.nCurrSlide];        
-        photoView.show($('#appview').width());
+        photoView.show($(this.el).width());
         
 	    // pre-load next slide
 	    var nNextSlide = 0;
@@ -162,7 +122,7 @@ define([
         photoNextView.load();        
         
         // fire event
-        app.dispatcher.trigger("TrailSlidesView:slideview", this);                
+        app.dispatcher.trigger("TrailMiniSlidesView:slideview", this);                
       }
     },    
     onSlideReady: function(trailSlideView){   
@@ -183,5 +143,5 @@ define([
     }
   });
 
-  return TrailSlidesView;
+  return TrailMiniSlidesView;
 });
