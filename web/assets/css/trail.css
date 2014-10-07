@@ -645,17 +645,17 @@ html.touch #trailplayer #view_map_btns {
 #trailplayer #view_player_btns {
   position: absolute;
   top: -160px;
-  right: 14px;  
+  left: 18px;  
 }
 
 #trailplayer #view_player_btns .close_btn {
-  width: 51px;
-  height: 51px;
+  width: 30px;
+  height: 30px;
   background: url(../img/trailplayer/close_btn.png) no-repeat top left;
 }
 
 #trailplayer #view_player_btns .close_btn:hover {
-  background-position: 0 -51px;
+  background-position: 0 -30px;
 }
 
 #trailplayer #slideshow_toggle {
