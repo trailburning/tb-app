@@ -1,0 +1,177 @@
+/* APP */
+/******************************************/
+body {
+  background: #FFF;	
+}
+
+#appview {
+/*  
+border-style:solid;
+border-width:1px;
+*/  
+  min-width: 1200px;
+}
+
+#bodyview {
+  min-height: 0;
+}
+
+/* DEF HEADER */
+/******************************************/
+#def_header {
+  z-index: 100;
+  position: relative;
+  margin-top: 45px;
+  width: 100%;
+  height: 486px;
+  overflow: hidden;
+}
+
+#def_header .background .image_container {
+  position: relative;
+  opacity: 0;
+  width: 100%;
+  height: 486px;
+  overflow: hidden;
+}
+
+#def_header .foreground {
+  position: absolute;
+  bottom: 0px;
+  right: 104px;
+}
+
+#def_header .event_title {
+  position: absolute;
+  top: 24px;
+  left: 32px;
+  color: #44b6f7;
+}
+
+#def_header .btn {
+  margin-top: 24px;
+}
+
+/* PANELS */
+/******************************************/
+.panel_content {
+  position: relative;
+  margin: 0px auto 40px auto;
+  width: 1112px;
+}
+
+.panel_content a, 
+.panel_content a:link, 
+.panel_content a:visited {
+  color: inherit;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.panel_content a:hover, 
+.panel_content a:active {
+  color: inherit;
+  text-decoration: underline;
+  font-weight: 700;    
+}
+
+.panel_intro {
+  clear: both;
+  padding-top: 30px;
+  text-align: center;
+}
+
+.panel_intro .panel {
+  float: right;
+  margin-top: 24px;  
+  margin-right: 20px;
+}
+
+.panel_intro .desc {
+  margin: 12px auto 0px auto;
+  width: 782px;
+  text-align: center;
+}
+
+.panel_intro .desc h3 {
+  padding-top: 20px;
+}
+
+.panel_intro .desc h4 {
+  padding-top: 24px;
+}
+
+.panel_intro .prizes {
+  margin-top: 32px;
+}
+
+.panel_intro .prizes .image_container {
+  float: left;
+}
+
+.panel_intro .left {
+  float: left;
+  margin-top: 48px;
+  width: 372px;
+}
+
+.panel_intro .left img {
+  margin: 16px;
+}
+
+.panel_intro .right {
+  float: left;
+  text-align: left;
+  margin-top: 48px;
+  margin-left: 32px;
+  width: 396px;
+}
+
+/* PANEL */
+/******************************************/
+.panel .image_container {
+  position: relative;
+  opacity: 0;
+}
+
+/* PANEL */
+/******************************************/
+.panel .image_container {
+  position: relative;
+  opacity: 0;
+}
+
+/* TRAIL CARD PANEL */
+/******************************************/
+.trailcards .trail_card_panel {
+  float: right;
+}
+
+.image_container {
+  opacity: 0;
+}
+
+/* RESPONSIVE */
+/******************************************/
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+}
+ 
+/* Medium devices (desktops, 992px and up) */
+@media (max-width: 1199px) {  
+  #appview {
+    min-width: 992px;
+  }  
+  .panel_content {
+    width: 992px;
+  }   
+}
+
+.image {
+  display: none;  
+}
+
+img {
+  max-width: none;
+}
