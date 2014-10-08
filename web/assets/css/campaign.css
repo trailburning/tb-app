@@ -1,33 +1,24 @@
 /* APP */
 /******************************************/
-body {
-  background: #FFF;	
-}
-
 #appview {
 /*  
 border-style:solid;
 border-width:1px;
 */  
-  min-width: 1200px;
 }
 
-#bodyview {
-  min-height: 0;
-}
-
-/* DEF HEADER */
+/* CAMPAIGN HEADER */
 /******************************************/
-#def_header {
+#campaign_header {
   z-index: 100;
   position: relative;
   margin-top: 45px;
   width: 100%;
   height: 486px;
-  overflow: hidden;
+  overflow: overflow;
 }
 
-#def_header .background .image_container {
+#campaign_header .image_container {
   position: relative;
   opacity: 0;
   width: 100%;
@@ -35,120 +26,213 @@ border-width:1px;
   overflow: hidden;
 }
 
-#def_header .foreground {
+#campaign_header .campaign_logo {
   position: absolute;
-  bottom: 0px;
-  right: 104px;
+  top: 34px;
+  left: 30px;  
 }
 
-#def_header .event_title {
+#campaign_header .tb-credit {
   position: absolute;
-  top: 24px;
-  left: 32px;
-  color: #44b6f7;
-}
-
-#def_header .btn {
-  margin-top: 24px;
+  bottom: 12px;
+  right: 30px;
 }
 
 /* PANELS */
 /******************************************/
 .panel_content {
   position: relative;
-  margin: 0px auto 40px auto;
+  margin: 0px auto 80px auto;
   width: 1112px;
 }
 
-.panel_content a, 
-.panel_content a:link, 
-.panel_content a:visited {
-  color: inherit;
-  text-decoration: none;
-  font-weight: 700;
+.panels {
+  clear: left;
+  width: 100%;
+  padding-top: 22px;
 }
 
-.panel_content a:hover, 
-.panel_content a:active {
-  color: inherit;
-  text-decoration: underline;
-  font-weight: 700;    
-}
-
-.panel_intro {
-  clear: both;
-  padding-top: 30px;
-  text-align: center;
-}
-
-.panel_intro .panel {
-  float: right;
-  margin-top: 24px;  
-  margin-right: 20px;
-}
-
-.panel_intro .desc {
-  margin: 12px auto 0px auto;
-  width: 782px;
-  text-align: center;
-}
-
-.panel_intro .desc h3 {
-  padding-top: 20px;
-}
-
-.panel_intro .desc h4 {
-  padding-top: 24px;
-}
-
-.panel_intro .prizes {
-  margin-top: 32px;
-}
-
-.panel_intro .prizes .image_container {
+.panels .left {
   float: left;
+  width: 544px;
 }
 
-.panel_intro .left {
+.panels .right {
   float: left;
-  margin-top: 48px;
-  width: 372px;
+  width: 568px;
 }
 
-.panel_intro .left img {
-  margin: 16px;
-}
-
-.panel_intro .right {
-  float: left;
-  text-align: left;
-  margin-top: 48px;
-  margin-left: 32px;
-  width: 396px;
-}
-
-/* PANEL */
-/******************************************/
 .panel .image_container {
   position: relative;
   opacity: 0;
+  width: 100%;
+  height: 220px;
+  overflow: hidden;
 }
 
-/* PANEL */
+.trails_title {
+  margin-left: 24px;
+}
+
+.trails_title .first-title {
+  margin-top: 0px;
+}
+
+/* CAMPAIGN DETAIL PANEL */
 /******************************************/
-.panel .image_container {
+.campaign_detail_panel {
+  width: 544px;  
+}
+
+.campaign_detail_panel .content {
+  margin: 34px 72px 28px 24px;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.3em;  
+  color: #000000;
+}
+
+.campaign_detail_panel .content h4 {
+  margin: 24px 0px 22px 0px;  
+}
+
+.campaign_detail_panel .content .join {  
+  margin-top: 24px;
+}
+
+/* EVENT REGION PANEL */
+/******************************************/
+.event_region_panel {
+  margin-top: 24px;
+  width: 544px;
+}
+
+.event_region_panel .content {
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.3em;  
+  color: #000000;
+}
+
+.event_region_panel .content .title {
+  margin: 24px;
+}
+
+.event_region_panel .content .detail {
+  margin: 28px 60px 32px 26px;
+}
+
+.event_region_panel .content h4 {
+  margin: 0px 0px 26px 0px;
+  line-height: 1em;
+}  
+
+.event_region_panel .content .photo {
+  position: relative;  
+}
+
+.event_region_panel .content .photo .logo {
+  position: absolute;
+  bottom: 12px;
+  left: 20px;
+}
+
+/* EVENT CONTAINER */
+/******************************************/
+.event_container {
+  width: 568px;
+}
+
+.eventevent_container {  
+  line-height: 1em;
+  color: #FFFFFF;
+}
+
+.event_container a, 
+.event_container a:link, 
+.event_container a:visited,
+.event_container a:hover, 
+.event_container a:active {
+  color: #FFF;
+  text-decoration: none;    
+}
+
+.event_container h2 {
+  color: #FFFFFF;
+}
+
+/* BIG EVENT */
+/******************************************/
+.big_event_panel {
+  margin: 0px 0px 24px 24px;
+  width: 544px;
+}
+
+.big_event_panel .photo {
   position: relative;
-  opacity: 0;
 }
 
-/* TRAIL CARD PANEL */
-/******************************************/
-.trailcards .trail_card_panel {
+.big_event_panel .photo .image_container {
+  width: 544px;
+  height: 294px;  
+}
+
+.big_event_panel .photo .logo {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+}
+
+.big_event_panel .details {
+  height: 78px;
+  font-size: 16px;
+  font-weight: 300;
+  color: #666666;  
+}
+
+.big_event_panel .details .detail {
+  float: left;
+  margin: 16px 0px 0px 14px;
+  line-height: 1.5em; 
+}
+
+.big_event_panel .more { 
   float: right;
+  margin-right: 14px;
+  height: 56px;
+  line-height: 78px;
 }
 
-.image_container {
-  opacity: 0;
+/* TRAIL */
+/******************************************/
+.trailcards .panel {
+  float: left;	
+  position: relative;
+  margin: 24px 0px 0px 24px;
+}
+
+/* CAMPAIGN LOCATION PANEL */
+/******************************************/
+.campaign_location_panel {
+  margin-top: 24px;
+  width: 544px;
+  height: 300px;
+}
+
+.campaign_location_panel .content {  
+  margin: 11px;
+}
+
+.campaign_location_panel .content .campaign_location_map {
+  width: 522px;
+  height: 278px;
+  background-color: transparent;   
+  cursor: default;
+}
+
+.campaign_location_panel .content .campaign_location_map:hover {
+  cursor: default;
 }
 
 /* RESPONSIVE */
@@ -160,12 +244,43 @@ border-width:1px;
  
 /* Medium devices (desktops, 992px and up) */
 @media (max-width: 1199px) {  
-  #appview {
-    min-width: 992px;
-  }  
   .panel_content {
-    width: 992px;
-  }   
+    width: 968px;
+  }
+  .panels .left {
+    width: 472px;
+  }
+  .panels .right {
+    width: 496px;
+  }
+  .campaign_detail_panel {
+    width: 472px;
+  }
+  .event_region_panel {
+    width: 472px;
+  }
+  .event_container {
+    width: 500px;
+  }
+  .big_event_panel {
+    width: 472px;
+  }
+  .big_event_panel .photo .image_container {
+    width: 472px;
+  }
+  .trail_card_panel {
+    width: 224px;
+  }
+  .campaign_location_panel {
+    width: 472px;
+  }
+  .campaign_location_panel .content .campaign_location_map {
+    width: 450px;
+  }
+}
+
+/* Small devices (tablets, 768px) */
+@media (max-width: 768px) {  
 }
 
 .image {
