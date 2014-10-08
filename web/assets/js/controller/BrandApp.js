@@ -56,7 +56,14 @@ define([
       L.marker([fLat, fLng], {icon: startIcon}).addTo(map);      
 
       var latlng = new L.LatLng(fLat, fLng);
-      map.setView(latlng, 7);
+      
+      // mla temp
+      if (TB_BRAND_ID == 220) {
+        map.setView(latlng, 8);	
+      }
+      else {
+        map.setView(latlng, 7);	
+      }      
     }
                    
 	if ($('.brand_location_panel').length) {

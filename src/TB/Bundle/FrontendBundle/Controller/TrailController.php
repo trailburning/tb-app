@@ -122,6 +122,17 @@ class TrailController extends Controller
             $eventTrails = $query->getResult();  
         } 
         
+        // User who like this trail
+        $routeLikes = $this->getDoctrine()->getManager()
+            ->createQuery('
+                SELECT u FROM TBFrontendBundle:User u
+                JOIN u.routeLikes rl
+                WHERE rl.routeId=:routeId
+                ORDER BY rl.date DESC')
+            ->setParameter('routeId', $trail->getId())
+            ->setMaxResults(20)
+            ->getResult();
+        
         // Build the Breadcrumb for three different cases
         if ($editorial !== null) {
             // case 1: editorial is part of the url, add link to the editorial
@@ -167,6 +178,7 @@ class TrailController extends Controller
             'eventTrails' => $eventTrails,
             'editorialTrails' => $editorialTrails,
             'relatedTrails' => $relatedTrails,
+            'routeLikes' => $routeLikes,
         ];
     }
 

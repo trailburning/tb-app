@@ -32,13 +32,11 @@ define([
       this.locationIcon = new LocationIcon({iconUrl: 'https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/icons/location.png'});
     },            
     show: function(){
-      $(this.el).show();
-      $(this.elCntrls).show();
+      $(this.el).fadeIn();      
       this.showDetail(true);      
     },
     hide: function(){
-      $(this.el).hide();
-      $(this.elCntrls).hide();
+      $(this.el).fadeOut();
     },
     buildBtns: function(){
       var self = this;
@@ -116,6 +114,8 @@ define([
       if (this.arrMapMediaViews.length) {
         this.currMapMediaView = this.arrMapMediaViews[nMedia];
         this.currMapMediaView.setActive(true);
+        // centre on active marker
+        this.map.panTo(this.currMapMediaView.marker.getLatLng(), {animate: true, duration: 2});
       }
     },
     addMedia: function(mediaModel){

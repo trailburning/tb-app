@@ -74,7 +74,6 @@
 				        </li>
 				      </ul>
 			    	</div>
-			    	
                 	{% if app.user %}
 				    	<div class="profile">
 				    		<ul class="nav pull-right">
@@ -113,17 +112,8 @@
 			      			<a href="{{ path('fos_user_registration_register') }}" class="btn btn-tb-action btn-tb-small">Join</a>	
 			      		</div>
 			    	{% endif %}
-			      
-			      	<div class="discover">
-			<!--      	
-			        <form id="search_form">
-			        <input type="text" id="search_field" name="discover">
-			        <input type="submit" class="search-btn">        
-			        </form>
-			-->        
-			    	</div>
 			    </div>    
-                
+                {% block breadcrumb %}{% endblock %}
                 <div class="trans-line"></div>        
             </div>    
 

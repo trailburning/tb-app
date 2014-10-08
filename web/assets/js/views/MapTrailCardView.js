@@ -38,10 +38,15 @@ define([
 		  // fire event
           app.dispatcher.trigger("MapTrailCardView:click", self);                	      
 	    });
-      
+
         var nRating = this.model.get('rating');
-        $.each($('.star', $(this.el)), function(index, value){
-          switch (index) {
+        if (!nRating) {
+          // do not show no stars
+       	  $('.stars', $(this.el)).hide();
+        }
+        
+        $.each($('.star', $(this.el)), function(index, value){        	
+		  switch (index) {
           	case 0:
           	  if (nRating > 0) {
           	    $(this).addClass('star_full');          	  	
@@ -91,7 +96,7 @@ define([
           	    $(this).addClass('star');          	  	          	  
           	  }
           	  break;
-          }
+          }        	
         });      
 	  }
 	  

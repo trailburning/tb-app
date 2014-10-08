@@ -59,6 +59,7 @@ define([
   	  evt.preventDefault();
 	});
 	
+	// setup autosuggest
     $('#searchBox').autocomplete({
         minLength: 2,
         delay: 0,
@@ -115,13 +116,15 @@ define([
     	    strItem = '<a href="' + strURL + '" class="clearfix"><div class="type"><div class="icon_container"><div class="icon trailcard"></div></div></div><div class="match">' + text + '</div></a>';
     	    break;
     	}
+
     	item.url = strURL;
 		console.log(item);    	
+
         return $('<li>')
             .append(strItem)
             .appendTo(ul);
     };
-
+    
   	// keyboard control
   	$(document).keydown(function(e){
   	  switch (e.keyCode) {

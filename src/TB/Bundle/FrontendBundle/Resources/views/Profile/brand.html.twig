@@ -14,6 +14,8 @@ var TB_USER_ID = {{ app.user.id }};
 {% endif %}
 var TB_BRAND_LONG = {{ brand.location.longitude }};
 var TB_BRAND_LAT = {{ brand.location.latitude }};
+/* mla temp */
+var TB_BRAND_ID = {{ brand.id }};
 </script>
 
 {{ include('TBFrontendBundle:Profile:_brandHeader.html.twig', [brand]) }}
@@ -29,12 +31,19 @@ var TB_BRAND_LAT = {{ brand.location.latitude }};
             <div class="panel brand_detail_panel">
                 <div class="content">
                     <h3 class="tb title">{{ brand.subtitle }}</h3>
-                    <h4 class="tb">{{ brand.synopsis }}</h4>
+                    <h4 class="tb">{{ brand.synopsis|nl2br }}</h4>
                     <p>{{ brand.about|nl2br }}</p>
                     <div class="join"><a href="{{ brand.link }}" onClick="trackOutboundLink(this, 'Outbound Links', '{{ brand.link|url_truncate }}'); return false;" class="btn btn-tb-action btn-tb-large">Visit official website</a></div>
                 </div>
             </div>
             {% if brand.id == 215 %}
+            <div class="panel brand_location_panel">
+                <div class="content">
+                    <div id="brand_location_map" class="brand_location_map"></div>
+                </div>
+            </div>         
+            {% endif %}   
+            {% if brand.id == 220 %}
             <div class="panel brand_location_panel">
                 <div class="content">
                     <div id="brand_location_map" class="brand_location_map"></div>
@@ -60,6 +69,7 @@ var TB_BRAND_LAT = {{ brand.location.latitude }};
 				      <div class="card_title">
 				        <h1>Gang Gangs Lazy Loop</h1>
 				      </div>
+				      <div class="trail_level ts_green"></div>
 				    </div>
 				    </a>
 					<div class="card_avatar sponsor"><a href="../profile/mtbuller"><img src="http://assets.trailburning.com/images/profile/mtbuller/card_trail_sticker_logo.png"></a></div>	
@@ -81,6 +91,7 @@ var TB_BRAND_LAT = {{ brand.location.latitude }};
 				      <div class="card_title">
 				        <h1>Buller Stirling Showcase</h1>
 				      </div>
+				      <div class="trail_level ts_black"></div>
 				    </div>
 				    </a>
 					<div class="card_avatar sponsor"><a href="../profile/mtbuller"><img src="http://assets.trailburning.com/images/profile/mtbuller/card_trail_sticker_logo.png"></a></div>				    
@@ -102,6 +113,7 @@ var TB_BRAND_LAT = {{ brand.location.latitude }};
 				      <div class="card_title">
 				        <h1>Delatite Drop</h1>
 				      </div>
+				      <div class="trail_level ts_blue"></div>
 				    </div>
 				    </a>
 					<div class="card_avatar sponsor"><a href="../profile/mtbuller"><img src="http://assets.trailburning.com/images/profile/mtbuller/card_trail_sticker_logo.png"></a></div>				    
@@ -123,6 +135,7 @@ var TB_BRAND_LAT = {{ brand.location.latitude }};
 				      <div class="card_title">
 				        <h1>Outer Space Loop</h1>
 				      </div>
+				      <div class="trail_level ts_blue"></div>
 				    </div>
 				    </a>
 					<div class="card_avatar sponsor"><a href="../profile/mtbuller"><img src="http://assets.trailburning.com/images/profile/mtbuller/card_trail_sticker_logo.png"></a></div>				    
@@ -137,6 +150,105 @@ var TB_BRAND_LAT = {{ brand.location.latitude }};
 				</div>
 
 			</div>
+        {% endif %}   
+        	
+        {% if brand.id == 220 %}
+    		<div class="trails_title">
+    		<h2 class="tb tb-title first-title ">Discover the events</h2>
+    		</div>
+    		
+        	<div class="event_container trailcards">
+			
+				<div class="panel trail_card_panel">
+				    <div class="title"><h3 class="tb">Mountains</h3></div>
+				    <a href="../trail/motatapu-mountain-bike-race-queenstown">
+				    <div class="photo tb-photo-btn">
+				      <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/o=80/http://media.trailburning.com/442/0513647ef818efbf73f0810a3c5903e8c5040d2c.jpg" class="resrc scale" border="0"></div>
+				      <div class="card_title">
+				        <h1>Mountain Bike</h1>
+				      </div>
+				      <div class="trail_level ts_black"></div>
+				    </div>
+				    </a>
+					<div class="card_avatar sponsor"><a href="../profile/motatapu"><img src="http://assets.trailburning.com/images/profile/motatapu/card_trail_sticker_logo.png"></a></div>	
+				    <div class="summary">
+						<div class="length">47 km</div>
+						<div class="altitude">
+						1'000 m D+
+						<br/> 
+					    1'000 m D-
+						</div>
+				    </div>
+				</div>
+
+				<div class="panel trail_card_panel">
+				    <div class="title"><h3 class="tb">Mountains</h3></div>
+				    <a href="../trail/motatapu-mountain-bike-race-queenstown">
+				    <div class="photo tb-photo-btn">
+				      <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/o=80/http://assets.trailburning.com/images/profile/motatapu/brand_hero.jpg" class="resrc scale" border="0"></div>
+				      <div class="card_title">
+				        <h1>Off Road Marathon</h1>
+				      </div>
+				      <div class="trail_level ts_black"></div>
+				    </div>
+				    </a>
+					<div class="card_avatar sponsor"><a href="../profile/motatapu"><img src="http://assets.trailburning.com/images/profile/motatapu/card_trail_sticker_logo.png"></a></div>	
+				    <div class="summary">
+						<div class="length">42 km</div>
+						<div class="altitude">
+						1'000 m D+
+						<br/> 
+					    1'000 m D-
+						</div>
+				    </div>
+				</div>
+
+				<div class="panel trail_card_panel">
+				    <div class="title"><h3 class="tb">Mountains</h3></div>
+				    <a href="../trail/motatapu-mountain-bike-race-queenstown">
+				    <div class="photo tb-photo-btn">
+				      <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/o=80/http://assets.trailburning.com/images/profile/motatapu/brand_hero.jpg" class="resrc scale" border="0"></div>
+				      <div class="card_title">
+				        <h1>Adventure Run Team</h1>
+				      </div>
+				      <div class="trail_level ts_black"></div>
+				    </div>
+				    </a>
+					<div class="card_avatar sponsor"><a href="../profile/motatapu"><img src="http://assets.trailburning.com/images/profile/motatapu/card_trail_sticker_logo.png"></a></div>	
+				    <div class="summary">
+						<div class="length">51 km</div>
+						<div class="altitude">
+						1'000 m D+
+						<br/> 
+					    1'000 m D-
+						</div>
+				    </div>
+				</div>
+
+				<div class="panel trail_card_panel">
+				    <div class="title"><h3 class="tb">Mountains</h3></div>
+				    <a href="../trail/motatapu-mountain-bike-race-queenstown">
+				    <div class="photo tb-photo-btn">
+				      <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/o=80/http://assets.trailburning.com/images/profile/motatapu/brand_hero.jpg" class="resrc scale" border="0"></div>
+				      <div class="card_title">
+				        <h1>Miners Trail</h1>
+				      </div>
+				      <div class="trail_level ts_blue"></div>
+				    </div>
+				    </a>
+					<div class="card_avatar sponsor"><a href="../profile/motatapu"><img src="http://assets.trailburning.com/images/profile/motatapu/card_trail_sticker_logo.png"></a></div>	
+				    <div class="summary">
+						<div class="length">15 km</div>
+						<div class="altitude">
+						500 m D+
+						<br/> 
+					    500 m D-
+						</div>
+				    </div>
+				</div>
+    		
+    		</div>
+    		
         {% endif %}   
         	
         {% if events %}

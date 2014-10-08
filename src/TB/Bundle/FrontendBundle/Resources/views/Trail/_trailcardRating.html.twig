@@ -1,8 +1,12 @@
+{% if trail.rating > 0 %}
+
 <div class="stars">
   {% if trail.rating > 0 %}
     <span class="star_full"></span>
   {% else %}
+{#
 	<span class="star"></span>
+#}  
   {% endif %}
 
   {% if trail.rating >= 2 %}
@@ -10,7 +14,9 @@
   {% elseif trail.rating >= 1.5 %}
     <span class="star_half"></span>
   {% else %}
+{#
 	<span class="star"></span>
+#}  
   {% endif %}
 
   {% if trail.rating >= 3 %}
@@ -18,7 +24,9 @@
   {% elseif trail.rating >= 2.5 %}
     <span class="star_half"></span>
   {% else %}
+{#
 	<span class="star"></span>
+#}  
   {% endif %}
 
   {% if trail.rating >= 4 %}
@@ -26,7 +34,9 @@
   {% elseif trail.rating >= 3.5 %}
     <span class="star_half"></span>
   {% else %}
+{#
 	<span class="star"></span>
+#}  
   {% endif %}
 
   {% if trail.rating >= 5 %}
@@ -34,6 +44,10 @@
   {% elseif trail.rating >= 4.5 %}
     <span class="star_half"></span>
   {% else %}
+{#
 	<span class="star"></span>
+#}  
   {% endif %}
 </div>
+
+{% endif %}
