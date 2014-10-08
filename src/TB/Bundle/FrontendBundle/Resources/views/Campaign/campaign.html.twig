@@ -18,91 +18,186 @@ var TB_USER_ID = {{ app.user.id }};
 {% endif %}
 </script>
 
-<div id="campaign_header">
-    <div class="image_container fade_on_load"><img src="http://app.resrc.it/o=90/http://assets.trailburning.com/images/campaign/urbantrails/london/landing.jpg" class="resrc scale" /></div>
-   	<div class="campaign_logo"><img src="http://assets.trailburning.com/images/campaign/urbantrails/london/logo.png" border="0"></div>
-    <div class="tb-credit"></div>
-</div>
-
-<div class="panel_content">          
-    <div id="bigbar">
-    	{#
-        {{ include('TBFrontendBundle:Default:breadcrumb.html.twig', breadcrumb) }}
-        #}
-		<div class="crumbs">
-		    <div class="crumb_links">
-	            <a href="">Urban Trails</a>
-		    </div>
-    	</div>        
-        {{ include('TBFrontendBundle:Default:share.html.twig') }}
+<div id="content_view">	
+    <div id="campaignplayer">
+        <div id="trail_views">        
+            <div id="trail_map_view"></div>
+            <div id="trail_slides_view"></div>
+        </div>
+        
+        <div id="trail_intro_view">
+			<div class="info-hero tb-move-horiz">				  						  				
+			  <div class="trail_title tb-move-horiz">
+              <h2 class="tb tb-title">Hello</h2>
+              <br/>
+              <h2 class="tb tb-title">World</h2>
+              </div>
+              
+              <div class="trail_play">
+              	<div class="trail_btn"></div>Play Trail	
+			  </div>              	
+			</div>        	
+		</div>        	
+        
+        <div id="tb-loader-overlay">
+  	  	  <div class="back"></div>
+  	  	  <div class="tb-loader"><div class="spinner"></div><div class="middle">...</div></div>
+  	  	</div>        
+        
+        <div id="view_map_btns">        
+            <div class='controls'>
+                <span class="btn btn-tb zoomin_btn">+</span>          
+                <span class="btn btn-tb zoomout_btn">-</span>
+                <span class="btn btn-tb view_btn">Satellite</span>          
+            </div>    
+        </div>    
+        <div id="view_player_btns">
+          	<div class="close_btn"></div>	
+        </div>
     </div>
-            
-    <div class="panels clearfix">           
-        <div class="left">        
-            <div class="panel campaign_detail_panel">
-                <div class="content">
-                    <h3 class="tb title">About London</h3>
-                    <h4 class="tb">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut feugiat accumsan leo eget porttitor. Donec blandit, dui nec aliquam mattis, leo augue adipiscing purus, quis iaculis eros purus ac nisi. Etiam neque magna, consectetur eget suscipit vitae, convallis a metus. </h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut feugiat accumsan leo eget porttitor. Donec blandit, dui nec aliquam mattis, leo augue adipiscing purus, quis iaculis eros purus ac nisi. </p>
-                    <div class="join"><a href="" onClick="" class="btn btn-tb-action btn-tb-large">Visit London</a></div>
+  
+    <div class="panel_container">       
+        <div class="panel_content_container">       
+            <div class="panel_content">       
+                <div id="bigbar">
+		    	{#
+		        {{ include('TBFrontendBundle:Default:breadcrumb.html.twig', breadcrumb) }}
+		        #}
+				<div class="crumbs">
+				    <div class="crumb_links">
+			            <a href="">Urban Trails</a>
+				    </div>
+		    	</div>        
+		        {{ include('TBFrontendBundle:Default:share.html.twig') }}
                 </div>
+
+                <div class="panels clearfix">     
+			        <div class="left">        
+			            <div class="panel campaign_detail_panel">
+			                <div class="content">
+			                    <h3 class="tb title">About London</h3>
+			                    <h4 class="tb">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut feugiat accumsan leo eget porttitor. Donec blandit, dui nec aliquam mattis, leo augue adipiscing purus, quis iaculis eros purus ac nisi. Etiam neque magna, consectetur eget suscipit vitae, convallis a metus. </h4>
+			                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut feugiat accumsan leo eget porttitor. Donec blandit, dui nec aliquam mattis, leo augue adipiscing purus, quis iaculis eros purus ac nisi. </p>
+			                    <div class="join"><a href="" onClick="" class="btn btn-tb-action btn-tb-large">Visit London</a></div>
+			                </div>
+			            </div>
+			        </div>
+			      
+			        <div class="right">
+			        	
+			    		<div class="trails_title">
+			    		<h2 class="tb tb-title first-title ">London Trails</h2>
+			    		</div>
+						
+			        	<div class="event_container trailcards">
+						
+							<div class="panel trail_card_panel">
+							    <div class="title"><h3 class="tb">Mountains</h3></div>
+							    <a href="../trail/gang-gangs-lazy-loop-mt-buller ">
+							    <div class="photo tb-photo-btn">
+							      <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/o=80/http://media.trailburning.com/422/8da94c153dafeb392390301ce17ae380f02e271b.jpg" class="resrc scale" border="0"></div>
+							      <div class="card_title">
+							        <h1>Gang Gangs Lazy Loop</h1>
+							      </div>
+							    </div>
+							    </a>
+								<div class="card_avatar sponsor"><a href="../profile/mtbuller"><img src="http://assets.trailburning.com/images/profile/mtbuller/card_trail_sticker_logo.png"></a></div>	
+							    <div class="summary">
+									<div class="length">4 km</div>
+									<div class="altitude">
+									199 m D+
+									<br/> 
+								    199 m D-
+									</div>
+							    </div>
+							</div>
+			
+							<div class="panel trail_card_panel">
+							    <div class="title"><h3 class="tb">Mountains</h3></div>
+							    <a href="../trail/buller-stirling-showcase-mt-buller">
+							    <div class="photo tb-photo-btn">
+							      <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/o=80/http://media.trailburning.com/423/6ac3d807743f8aa25ab5827b5db1c88e58a0cbad.jpg" class="resrc scale" border="0"></div>
+							      <div class="card_title">
+							        <h1>Buller Stirling Showcase</h1>
+							      </div>
+							    </div>
+							    </a>
+								<div class="card_avatar sponsor"><a href="../profile/mtbuller"><img src="http://assets.trailburning.com/images/profile/mtbuller/card_trail_sticker_logo.png"></a></div>				    
+							    <div class="summary">
+									<div class="length">28 km</div>
+									<div class="altitude">
+									1’121 m D+
+									<br/> 
+								    1’126 m D-
+									</div>
+							    </div>
+							</div>
+			
+						</div>
+			        	
+			        </div>
+                    
+                </div>                                
             </div>
-        </div>
-      
-        <div class="right">
-        	
-    		<div class="trails_title">
-    		<h2 class="tb tb-title first-title ">London Trails</h2>
-    		</div>
-			
-        	<div class="event_container trailcards">
-			
-				<div class="panel trail_card_panel">
-				    <div class="title"><h3 class="tb">Mountains</h3></div>
-				    <a href="../trail/gang-gangs-lazy-loop-mt-buller ">
-				    <div class="photo tb-photo-btn">
-				      <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/o=80/http://media.trailburning.com/422/8da94c153dafeb392390301ce17ae380f02e271b.jpg" class="resrc scale" border="0"></div>
-				      <div class="card_title">
-				        <h1>Gang Gangs Lazy Loop</h1>
-				      </div>
-				    </div>
-				    </a>
-					<div class="card_avatar sponsor"><a href="../profile/mtbuller"><img src="http://assets.trailburning.com/images/profile/mtbuller/card_trail_sticker_logo.png"></a></div>	
-				    <div class="summary">
-						<div class="length">4 km</div>
-						<div class="altitude">
-						199 m D+
-						<br/> 
-					    199 m D-
-						</div>
-				    </div>
-				</div>
-
-				<div class="panel trail_card_panel">
-				    <div class="title"><h3 class="tb">Mountains</h3></div>
-				    <a href="../trail/buller-stirling-showcase-mt-buller">
-				    <div class="photo tb-photo-btn">
-				      <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/o=80/http://media.trailburning.com/423/6ac3d807743f8aa25ab5827b5db1c88e58a0cbad.jpg" class="resrc scale" border="0"></div>
-				      <div class="card_title">
-				        <h1>Buller Stirling Showcase</h1>
-				      </div>
-				    </div>
-				    </a>
-					<div class="card_avatar sponsor"><a href="../profile/mtbuller"><img src="http://assets.trailburning.com/images/profile/mtbuller/card_trail_sticker_logo.png"></a></div>				    
-				    <div class="summary">
-						<div class="length">28 km</div>
-						<div class="altitude">
-						1’121 m D+
-						<br/> 
-					    1’126 m D-
-						</div>
-				    </div>
-				</div>
-
-			</div>
         	
         </div>
+  
+    </div>  
+</div>  
+
+{% endblock %}
+
+
+{% block javascripts %}
+
+<script type="text/template" id="trailSlidesViewTemplate">
+  <div class="photos_container"></div>
+  <div class="slide_btns">
+    <div class="left">
+      <div class="hot"></div>
+      <div class="arrow"></div>
     </div>
-</div>
+    <div class="right">
+      <div class="hot">
+        <div class="arrow"></div>
+      </div>    	
+    </div>
+  </div>  
+  <div class="loader_container">
+    <div class="loader"></div>
+  </div>  
+</script>
+
+<script type="text/template" id="trailSlideViewTemplate">
+  <div class="background_blur">
+    <div class="image_container fade_on_load"><img src="http://tbmedia.imgix.net<%= versionLargePath%>?blur=70&bri=-10" class="scale" /></div>
+  </div>
+  <div class="background">
+    <div class="image_container fade_on_load"><img src="http://app.resrc.it/O=80/http://media.trailburning.com<%= versionLargePath%>" class="resrc scale" /></div>
+  </div>
+  <div class="foreground">
+	<div class="image_container fade_on_load"><img data-src="http://app.resrc.it/O=80/http://media.trailburning.com<%= versionLargePath%>" class="resrc" /></div>
+  </div>
+</script>
+
+<script type="text/template" id="trailMapViewTemplate">
+  <div class="map_container">
+    <div id='map_large'></div>
+  </div>
+</script>
+
+<script type="text/template" id="trailWeatherViewTemplate">
+  <div class="content">
+    <h3 class="tb">Today&#39;s weather</h3>
+    <div class="desc"></div>
+    <div class="detail clearfix">                  
+      <div class="text">
+        <div class="temp"></div>
+        <div class="wind"></div>
+      </div>
+      <div class="icon"></div>
+    </div>
+  </div>
+</script>
 
 {% endblock %}

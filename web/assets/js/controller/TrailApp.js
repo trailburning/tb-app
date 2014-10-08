@@ -16,15 +16,6 @@ define([
 
     this.appView = new AppView({ el: '#appview', model: this.trailModel, nTrail: TB_TRAIL_ID });
             
-    $('#search_field').focus(function(evt) {
-      $('#search_field').val('not just yet...');
-      evt.preventDefault();
-    });
-    $('#search_form').submit(function(evt) {
-      $('#search_field').val('not just yet...');
-      evt.preventDefault();
-    });    
-    
     var imgLoad = imagesLoaded('.panels .scale');
     imgLoad.on('always', function(instance) {
       for ( var i = 0, len = imgLoad.images.length; i < len; i++ ) {
