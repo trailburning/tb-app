@@ -96,8 +96,8 @@ define([
     buildBtns: function(){    
       var self = this;
       
-      $('.slide_btns .left .hot', $(this.el)).addClass('tb-move-horiz');
-      $('.slide_btns .right .hot', $(this.el)).addClass('tb-move-horiz');
+      $('.slide_btns .left .arrow', $(this.el)).addClass('tb-move-horiz');
+      $('.slide_btns .right .arrow', $(this.el)).addClass('tb-move-horiz');
             
       $('.slide_btns .left .hot', $(this.el)).click(function(evt){
         // fire event
@@ -109,11 +109,13 @@ define([
       });      
 
       $('.slide_btns .left', $(this.el)).mouseover(function(evt){
-      	$('.slide_btns .left .hot', $(self.el)).css('left', 0);
+      	$('.arrow', $(this)).css('left', 18);
+ 		$('.hot', $(this)).css('opacity', 1);
       });      
 
       $('.slide_btns .left', $(this.el)).mouseout(function(evt){
-      	$('.slide_btns .left .hot', $(self.el)).css('left', -153);
+      	$('.arrow', $(this)).css('left', -100);
+		$('.hot', $(this)).css('opacity', 0);
       });      
 
       $('.slide_btns .right .hot', $(this.el)).click(function(evt){
@@ -126,11 +128,13 @@ define([
       });      
 
       $('.slide_btns .right', $(this.el)).mouseover(function(evt){
-      	$('.slide_btns .right .hot', $(self.el)).css('right', 0);
+      	$('.arrow', $(this)).css('right', 18);
+ 		$('.hot', $(this)).css('opacity', 1);
       });      
 
       $('.slide_btns .right', $(this.el)).mouseout(function(evt){
-      	$('.slide_btns .right .hot', $(self.el)).css('right', -153);
+      	$('.arrow', $(this)).css('right', -100);
+		$('.hot', $(this)).css('opacity', 0);
       });      
     },
     checkpoint: function(){

@@ -115,7 +115,7 @@ define([
         this.currMapMediaView = this.arrMapMediaViews[nMedia];
         this.currMapMediaView.setActive(true);
         // centre on active marker
-        this.map.panTo(this.currMapMediaView.marker.getLatLng(), {duration: 1});
+        this.map.panTo(this.currMapMediaView.marker.getLatLng(), {animate: true, duration: 2});
       }
     },
     addMedia: function(mediaModel){

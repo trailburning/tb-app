@@ -28,8 +28,13 @@ define([
         $(this.el).addClass('trail_card_panel');
                 
         var nRating = this.model.get('rating');
-        $.each($('.star', $(this.el)), function(index, value){
-          switch (index) {
+        if (!nRating) {
+          // do not show no stars
+       	  $('.stars', $(this.el)).hide();
+        }
+        
+        $.each($('.star', $(this.el)), function(index, value){        	
+		  switch (index) {
           	case 0:
           	  if (nRating > 0) {
           	    $(this).addClass('star_full');          	  	
@@ -79,7 +84,7 @@ define([
           	    $(this).addClass('star');          	  	          	  
           	  }
           	  break;
-          }
+          }        	
         });
       
         var imgLoad = imagesLoaded($('.scale', $(this.el)));

@@ -286,6 +286,15 @@
   background-position: 0px 2px;
 }
 
+.trail_card_panel .stars .star {
+  display: none;
+}
+
+.trail_card_panel .stars .star_full,
+.trail_card_panel .stars .star_half {
+  display: inline-block;
+}
+
 .trail_card_panel .summary {  
   height: 52px;
   margin: 18px 22px 0px 18px;
