@@ -188,6 +188,12 @@ class Event implements Exportable
      */
     private $shareImage;
     
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="publish", type="boolean", options={"default" = false})
+     */
+    private $publish = false;
 
     /**
      * Get id
@@ -877,5 +883,28 @@ class Event implements Exportable
     public function getShareImage()
     {
         return $this->shareImage;
+    }
+
+    /**
+     * Set publish
+     *
+     * @param boolean $publish
+     * @return Event
+     */
+    public function setPublish($publish)
+    {
+        $this->publish = $publish;
+
+        return $this;
+    }
+
+    /**
+     * Get publish
+     *
+     * @return boolean 
+     */
+    public function getPublish()
+    {
+        return $this->publish;
     }
 }

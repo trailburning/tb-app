@@ -78,6 +78,7 @@ class EventController extends Controller
             ->createQuery('
                 SELECT e FROM TBFrontendBundle:Event e
                 WHERE e.homepageOrder IS NOT NULL
+                AND e.publish = true
                 ORDER BY e.homepageOrder ASC');
         $events = $query->getResult();  
         
