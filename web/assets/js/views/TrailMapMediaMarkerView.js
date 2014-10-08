@@ -62,6 +62,9 @@ define([
       }
     },
     showPopup: function(){
+      // mla - 14.10.07 removed feature
+      return;
+      
       this.popupOverlay.show();    	
 
       var imgLoad = imagesLoaded('.trail_media_popup .scale');
@@ -81,6 +84,9 @@ define([
       resrc.resrc($('.trail_media_popup  .scale'));                
     },
     hidePopup: function(){
+      // mla - 14.10.07 removed feature
+      return;
+    	
 	  if (this.popupOverlay) {
 		this.popupOverlay.hide();
       }    	

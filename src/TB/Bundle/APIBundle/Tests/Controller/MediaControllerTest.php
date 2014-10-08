@@ -87,7 +87,7 @@ class MediaControllerTest extends AbstractApiTestCase
             'The response JSON media filename is ok');               
         $this->assertEquals('image/jpeg', $responseObj->value[0]->mimetype,
             'The response JSON media mimetype is ok');
-        $this->assertRegExp('/trailburning-media\/' . $route->getId() . '\/[\d\w]+\.jpg/', $responseObj->value[0]->versions[0]->path,
+        $this->assertRegExp('/\/' . $route->getId() . '\/[\d\w]+\.jpg/', $responseObj->value[0]->versions[0]->path,
             'The response JSON media versions is ok');            
     }
     

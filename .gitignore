@@ -25,3 +25,5 @@ api/doc/cache
 .tm_properties
 composer.phar
 .DS_store
+.DS_Store
+

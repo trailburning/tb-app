@@ -61,11 +61,14 @@ define([
     load: function(){
       var self = this;
       
-      var elScale = $('.scale', $(this.el));
-      var imgLoad = imagesLoaded(elScale);
+      var elImg = $('img', $(this.el));
+      var imgLoad = imagesLoaded(elImg);
 	  imgLoad.on('always', function(instance) {
 	    for ( var i = 0, len = imgLoad.images.length; i < len; i++ ) {
-	  	  $(imgLoad.images[i].img).addClass('scale_image_ready');
+	      // do we want to scale?
+	      if ($(imgLoad.images[i].img).hasClass('scale')) {
+	  	    $(imgLoad.images[i].img).addClass('scale_image_ready');	      	
+	      }
 	   	}	  			   	
         // fade in - delay adding class to ensure image is ready  
         $('.fade_on_load', $(self.el)).addClass('tb-fade');
@@ -73,8 +76,8 @@ define([
 		self.bLoaded = true;
 	   	
         // fire event
-        app.dispatcher.trigger("TrailSlideView:imageready", self);                        
-	  });
+        app.dispatcher.trigger("TrailSlideView:imageready", self);                              
+	  });      
 	  // force resrc update
 	  resrc.resrc($('img.resrc', $(this.el)));	        
 	}

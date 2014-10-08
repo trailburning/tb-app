@@ -90,6 +90,12 @@ class MainConsumer extends Consumer
             case 'routeShareImage':
                 $isSuccess = $this->callCommand(sprintf('tb:route:create-share-image %s', $obj->id));
                 break;
+            case 'routeIndex':
+                $isSuccess = $this->callCommand(sprintf('tb:search:index route %s', $obj->id));
+                break;
+            case 'userIndex':
+                $isSuccess = $this->callCommand(sprintf('tb:search:index user_profile %s', $obj->id));
+                break;                                
             default:
                 $isSuccess = false;
                 break;

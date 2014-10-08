@@ -8,6 +8,7 @@
   font-style: normal;
 }
 
+
 body {  
   margin: 0;
   padding: 0;
@@ -600,11 +601,6 @@ a:active .tb-cntrl {
   text-decoration: none;    
 }
 
-#headerview .right .discover {
-  float: right;
-  margin: 17px 0px 0px 0px;
-}
-
 #headerview .right .discover .search-btn {
   margin: 0;
   padding: 0;  
@@ -656,9 +652,127 @@ a:active .tb-cntrl {
   color: #44b6f7;
 }
 
+#headerview .right .search {
+  float:left;
+  position: relative;
+}
+
+.search .ui-autocomplete {
+  float: right;
+  font-size: .9em;
+}
+
+.search .ui-autocomplete-loading {
+  background: white url('http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/images/ui-anim_basic_16x16.gif') right center no-repeat;
+}
+
+.search .ui-corner-all {
+  border-radius: 0px;
+}
+
+.search .ui-widget-content {
+  background: #F2F2F2;
+}
+
+.search .ui-widget-content {
+  padding: 0px;
+  border: 1px solid #CDCDCD;
+}
+
+.search  .ui-autocomplete li a {
+  padding: 10px;
+/*  
+  border-bottom: 1px solid #CDCDCD;
+*/  
+}
+
+.search  .ui-autocomplete li span {
+  float: right;
+}
+
+.search .ui-autocomplete li .type {
+  float: left;
+}
+
+.search .ui-autocomplete li .match {
+  float: right;
+}
+
+.search .ui-autocomplete li {
+  border-bottom: 1px solid #CDCDCD;	
+}
+
+.search .ui-autocomplete li:last-child {
+  border-bottom: none;	
+}
+
+.search .ui-autocomplete .ui-state-focus {
+  background: #FFF;
+  outline: none;    
+  border: 1px solid #CDCDCD;
+}
+
+#headerview .right .search form {
+  line-height: 41px;
+}
+
+#search {
+  position: relative;
+}
+
+#search button {
+  position: absolute;
+  right: 6px;
+  top: 2px;
+  background: none;
+  border: none;
+  padding: 0;
+  overflow: hidden;
+  color: #fff;
+}
+
+.ico {
+  background-repeat: no-repeat;
+  display: inline-block;
+  position: relative;  
+}
+
+.ico[data-icon="n-search-16"] {
+  background-image: url("../img/search.png");
+  width: 16px;
+  height: 16px;
+}
+
+#searchBox{
+  position: relative;
+  top: 0px;
+  right: 0px;	
+  width: 90px;
+  background: #3F3F3F;
+  height: 26px;
+  padding: 0 24px 0 8px;
+  color: #fff;
+  border: none;
+  outline: none;  
+  box-shadow:none;
+  -webkit-box-shadow:none; 
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;  
+}
+
+#searchBox:focus {
+  width: 200px;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
 #headerview .right .signin .links {
   float:left;
-  margin: 16px 15px 0px 30px;
+  margin: 16px 15px 0px 0px;
 }
 
 #headerview .right .signin .link {
@@ -674,7 +788,7 @@ a:active .tb-cntrl {
 
 #headerview .right .profile {  
   float: right;
-  margin: 3px 16px 0px 45px;
+  margin: 3px 16px 0px 16px;
 }
 
 #headerview .right .profile .activity {
@@ -716,7 +830,7 @@ a:active .tb-cntrl {
 
 #headerview .right .signin {  
   float: right;
-  margin: 0px 0px 0px 19px;
+  margin: 0px 0px 0px 32px;
 }
 
 #headerview .trans-line {
@@ -725,6 +839,62 @@ a:active .tb-cntrl {
   width: 100%;
   height: 2px;
   background: url(../img/trans_line.png) repeat-x top left;  
+}
+
+#headerview .breadview {
+  position: absolute;
+  top: 45px;
+  left: 0px;
+  width: 100%;
+  height: 30px;
+  background: #1f1f1f;
+  background: rgba(31, 31, 31, 0.6);
+}
+
+#headerview .breadview ul {
+  list-style-type: none;
+  margin: 0px;
+  padding: 0px;
+  height: 30px;
+  line-height: 30px;
+}
+
+#headerview .breadview ul.left {
+  margin-left: 6px;
+}
+
+#headerview .breadview ul.right {
+  margin-right: 16px;
+}
+
+#headerview .breadview li {
+  display: inline-block;
+  margin: 0px;
+  padding: 0px;
+  height: 30px;
+  line-height: 30px;    
+  border-right: 1px solid #1f1f1f;
+}
+
+#headerview .breadview li:last-child {
+  border-right: none;
+}
+
+#headerview .breadview li a {
+  display: inline-block;
+  padding: 0px 10px 0px 10px;
+  font-size: 15px;
+  font-weight: 300;
+  color: #fff;
+  text-decoration: none;
+}
+
+#headerview .breadview li a:hover {
+  background: #44b6f7;
+}
+
+#headerview .breadview li a.active {
+  background: #44b6f7;
 }
 
 /* BOOTSTRAP DROPDWON */
@@ -748,6 +918,13 @@ a:active .tb-cntrl {
 
 #headerview .dropdown-menu {
   width: 362px;
+}
+
+#headerview .search_list_container {
+  position: relative;
+  width: 362px;
+  height: 243px;
+  overflow: hidden;
 }
 
 #headerview .activity_list_container {
@@ -824,6 +1001,11 @@ a:active .tb-cntrl {
 }
 
 #headerview .dropdown-menu .footer .profile_btn {
+  float: left;
+  margin-right: 26px;
+}
+
+#headerview .dropdown-menu .footer .search_btn {
   float: left;
   margin-right: 26px;
 }
@@ -970,6 +1152,7 @@ a:active .tb-cntrl {
 /******************************************/
 #bigbar {
   width: 100%;
+  height: 30px;
   padding-top: 18px;  
   font-size: 14px;
   line-height: 20px;
@@ -1021,12 +1204,13 @@ a:active .tb-cntrl {
 
 #bigbar .crumb_links {
   float: left;
-  margin: 1px 0px 0px 16px;
+  margin-top: 1px;
 }
 
 #bigbar .like, #bigbar .follow {
-  float: right;
+  float: left;
   margin-top: 4px;
+  margin-right: 16px;
 }
 
 #bigbar [class^="icon-"], #bigbar .like [class*=" icon-"] {
@@ -1082,7 +1266,7 @@ a:active .tb-cntrl {
 
 .share .link {
   float: left;
-  margin-left: 6px;
+  margin-left: 4px;
 }
 
 .share a.button {
@@ -1187,6 +1371,14 @@ form label {
   -webkit-transform:translate3d(0,0,0);              
 }
 
+.tb-move-horiz {
+  -webkit-transition: left 1s, right 1s;
+  -moz-transition: left 1s, right 1s;
+  -o-transition: left 1s, right 1s;
+  transition: left 1s, right 1s;    
+  -webkit-transform:translate3d(0,0,0);              
+}
+
 .tb-size {
   -webkit-transition: height 1s, width 1s;
   -moz-transition: height 1s, width 1s;
@@ -1196,25 +1388,16 @@ form label {
 }
 
 .star {
-/*	
-  float: left;
-*/  
   background: url(../img/star.png) no-repeat top left;
   background-size: 100% 100%;    
 }
 
 .star_full {
-/*	
-  float: left;
-*/  
   background: url(../img/star_full.png) no-repeat top left;    
   background-size: 100% 100%;    
 }
 
 .star_half {
-/*	
-  float: left;
-*/  
   background: url(../img/star_half.png) no-repeat top left;    
   background-size: 100% 100%;    
 }
