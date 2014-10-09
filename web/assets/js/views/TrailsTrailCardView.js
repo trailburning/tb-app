@@ -14,8 +14,13 @@ define([
       var self = this;
 
       if (!this.bRendered) {
-        var versions = this.model.get('media').versions;
-      	this.model.set('versionLargePath', versions[0].path);
+		var strPath = '/images/default/example_trailcard.jpg';  
+      	if (this.model.get('media')) {
+          var versions = this.model.get('media').versions;
+      	  var strPath = versions[0].path;      	
+      	}
+		this.model.set('versionLargePath', strPath);      	
+
 		if (this.model.get('category') == undefined) {
 		  this.model.set('category', '');
       	}

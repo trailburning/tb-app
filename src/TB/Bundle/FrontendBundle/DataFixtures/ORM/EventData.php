@@ -31,6 +31,7 @@ class EventData extends AbstractFixture implements FixtureInterface, DependentFi
         $event->setLink('http://www.eigerultratrail.ch');
         $event->setMapZoom(7);
         $event->setLogoSmall('card_logo_eiger.png');
+        $event->setPublish(true);
         
         $manager->persist($event);
         $manager->flush();
@@ -53,6 +54,7 @@ The wintertime SkiTour, hosted in a magical Alpine landscape, will test the most
         $event->setLink('http://www.ultraks.com');
         $event->setMapZoom(7);
         $event->setLogoSmall('card_logo_ultraks.png');
+        $event->setPublish(true);
         
         $manager->persist($event);
         $manager->flush();
