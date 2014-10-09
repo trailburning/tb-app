@@ -32,20 +32,22 @@ define([
       this.locationIcon = new LocationIcon({iconUrl: 'https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/icons/location.png'});      
     },            
     show: function(){
-      $(this.el).fadeIn();      
+      $(this.el).fadeIn(500, 'linear');
+//      $(this.el).show();      
       this.showDetail(true);      
     },
     hide: function(){
-      $(this.el).fadeOut();
+      $(this.el).fadeOut(500, 'linear');
+//      $(this.el).hide();
     },
     buildBtns: function(){
       var self = this;
 
       // make btns more touch friendly
-//      if (Modernizr.touch) {
-//        $('.btn-tb', $(this.elCntrls)).addClass('touch_btn');
-//        $('.btn-tb', $(this.elCntrls)).addClass('btn-tb-mega');
-//      }      
+      if (Modernizr.touch) {
+        $('.btn-tb', $(this.elCntrls)).addClass('touch_btn');
+        $('.btn-tb', $(this.elCntrls)).addClass('btn-tb-mega');
+      }      
 
       $('.zoomin_btn', $(this.elCntrls)).click(function(evt){
         if(self.map.getZoom() < self.map.getMaxZoom()) {
@@ -159,7 +161,6 @@ define([
       if (this.bRendered) {
         this.map.invalidateSize();
         this.map.setView(latlng, 12);	
-        this.map.zoomOut(1, {animate: false});      	
         return;         
       }        
                 
