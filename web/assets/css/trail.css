@@ -562,7 +562,7 @@ html.touch #small_sponsor_bar {
 #trail_slides_view .slide_btns .left .hot {
   position: absolute;
   left: 0px;
-  width: 153px;
+  width: 177px;
   height: 100%;
   background: url("../img/trailplayer/arrow_left_back.png") repeat-y top left;
   opacity: 0;
@@ -592,7 +592,7 @@ html.touch #small_sponsor_bar {
 #trail_slides_view .slide_btns .right .hot {
   position: absolute;
   right: 0px; 
-  width: 153px;
+  width: 177px;
   height: 100%;
   background: url("../img/trailplayer/arrow_right_back.png") repeat-y top left;
   opacity: 0;

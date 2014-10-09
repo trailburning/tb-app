@@ -88,7 +88,7 @@ define([
 	          }
 	          else {
 	            trailsTrailCardView = new TrailsTrailCardView({ model: model});
-	          }	          
+	          }	          	          
     		  $('#trailCards').append(trailsTrailCardView.render().el);      	  	
       	    });           
           }

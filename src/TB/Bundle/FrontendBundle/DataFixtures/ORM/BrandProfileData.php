@@ -28,6 +28,7 @@ class BrandProfileData extends AbstractFixture implements FixtureInterface
         $brand->setLink('http://www.ashmei.com');
         $brand->setEmail('email@ashmei');
         $brand->setPassword('password');
+        $brand->setLocation(new Point(52.508006, 13.257437, 4326));
         
         $brand->setName('ashmei');
         $brand->setUsername('ashmei');
