@@ -23,13 +23,14 @@ class EventsFinder
     public function search($limit = 10, $offset = 0, &$count = 0)
     {
         $query = $this->em->createQuery('
-            SELECT count(e.id) FROM TBFrontendBundle:Event e
+            SELECT count(e.id) FROM TBFrontendBundle:Event e WHERE e.publish = true
         ');
         $count = $query->getSingleScalarResult();
         
         $query = $this->em->createQuery('
             SELECT e FROM TBFrontendBundle:Event e
             LEFT JOIN TBFrontendBundle:Region r WITH e.regionId=r.id
+            WHERE e.publish = true
             ORDER BY e.date ASC
         ');
         
