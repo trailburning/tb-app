@@ -251,7 +251,7 @@ define([
       var nXOffset = (this.nCanvasDrawWidth - this.nDrawWidth) / 2;
       var nYOffset = (this.nCanvasDrawHeight - this.nDrawHeight) / 2;
       
-      var viewMediaMarkerView, nX, nY, nYPercent;
+      var viewMediaMarkerView, nX, nY, fAlt, fPrevAlt, nYPercent;
       
       for (var nMarker=0; nMarker < this.arrMediaPoints.length; nMarker++) {
         viewMediaMarkerView = this.arrMediaPoints[nMarker];
@@ -262,7 +262,14 @@ define([
         
         nX = nXOffset + this.objTrailMarginRect.left + Math.round(viewMediaMarkerView.pos / this.fXFactor);
         
-        nYPercent = ((viewMediaMarkerView.model.get('tags').altitude - Math.round(this.fLowAlt)) / this.fAltRange) * 100;
+		// 14.10.10 - mla.  Temp fix until fix made in api         
+        fAlt = viewMediaMarkerView.model.get('tags').altitude;
+        if (fAlt == undefined) {
+          fAlt = fPrevAlt;	
+        }
+        fPrevAlt = fAlt;
+        
+        nYPercent = ((fAlt - Math.round(this.fLowAlt)) / this.fAltRange) * 100;
         nY = nYOffset + this.objTrailMarginRect.top + Math.round((this.nDrawHeight-2) - ((nYPercent * (this.nDrawHeight-2)) / 100));
               
         nX -= 7;
