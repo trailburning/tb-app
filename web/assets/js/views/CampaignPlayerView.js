@@ -85,13 +85,13 @@ define([
       $('#trail_views').removeClass('tb-move-vert');
       
       this.updatePlayerHeight();
+      $('#campaignplayer .map_container').width($('#appview').width());
       
       switch (this.nTrailView) {
         case SLIDE_VIEW:
           break;
            
         case MAP_VIEW:
-          $('#campaignplayer .map_container').width($('#appview').width());
           this.trailMapView.render();
           break;
       }      
@@ -179,23 +179,16 @@ define([
       
 	  var self = this;
 
-	  $('#headerview .close_link').show();
       // add transition for effect      
       $('#campaignplayer').addClass('tb-size');
 	  $('#trail_views').addClass('tb-move-vert');
-      
-      $('#trail_slides_view .slide_btns').show();
-      
+
+      this.showMapView();
       this.hideIntroOverlay();
 
-      this.nPlayerView = PLAYER_SHOW;
-      
-      this.updatePlayerHeight();
-      
-      setTimeout(function() {
-      	self.toggleView();
-	    self.bLocked = false;
-      }, 500);
+      self.nPlayerView = PLAYER_SHOW;
+      self.updatePlayerHeight();
+	  self.bLocked = false;
             
       $('#view_player_btns').css('top', 18);
     },
@@ -219,11 +212,9 @@ define([
       
       $('#view_player_btns').css('top', -160);
 
-      setTimeout(function() {      
-		self.showPhotoView();      
-    	self.showIntroOverlay();
-        self.bLocked = false;
-      }, 500);
+	  self.showPhotoView();      
+      self.showIntroOverlay();
+      self.bLocked = false;
     },
     showIntroOverlay: function(){    
       $('#trail_intro_view .info-hero').css('left', 0);
