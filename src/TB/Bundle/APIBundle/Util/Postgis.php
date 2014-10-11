@@ -396,7 +396,7 @@ class Postgis extends \PDO
     }
     
     /**
-     * Valid parameters: order, lat, long, radius
+     * Valid parameters: order, lat, long, radius, region_id
      */
     public function searchRoutes(array $params, $limit = 10, $offset = 0, &$count = 0) 
     {
@@ -891,6 +891,20 @@ class Postgis extends \PDO
     {
         $parts = explode(" ", substr(trim($text),6,-1));
         return new Point($parts[0], $parts[1], 4326); 
+    }
+    
+    public function updateRegionArea($id, $gmlPolygon) 
+    {
+        $q = 'UPDATE region SET area = ST_GeomFromGML(:polygon,4326) WHERE id = :id';
+        $pq = $this->prepare($q);
+        $pq->bindParam('polygon', $gmlPolygon, \PDO::PARAM_STR);
+        $pq->bindParam('id', $id, \PDO::PARAM_INT);
+        $success = $pq->execute();
+        if (!$success) {
+            throw new ApiException('Failed to update area ', 500);
+        }
+        
+        return true;
     }
 }
 
