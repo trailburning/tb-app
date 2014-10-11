@@ -52,7 +52,8 @@ define([
 	  	$('.background_blur', $(this.el)).remove();
 	  }
 	  // force resrc update
-	  resrc.resrc($('img.resrc', $(this.el)));	        
+	  // 154.10.11 - mla not sure that we need this.  Having it makes image load now.
+//	  resrc.resrc($('img.resrc', $(this.el)));	        
 
 	  this.bRendered = true;
 
