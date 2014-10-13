@@ -22,30 +22,43 @@ var TB_USER_ID = {{ app.user.id }};
     <div class="foreground">
       <div class="image_container fade_on_load"><img src="http://assets.trailburning.com/images/competition/shirt.png" /></div>
     </div>
+
+    <div class="event_back"></div>
     <div class="event_title">
-      <h1 class="tb tb-title">Create a trail</h1>
-      <br/>
-      <h1 class="tb tb-title">and WIN!</h1>
-      <br/>
+      <img src="http://assets.trailburning.com/images/campaign/urbantrails/london/logo.png" />
+      <h4 class="tb">Competition</h4>      
 	  {% if app.user %}  	      
-  	    <a href="{{ path('profile', {'name': app.user.name}) }}" class="btn btn-tb-action btn-tb-large">Let's make a trail</a>
+	    <a href="{{ path('trailmaker') }}" class="btn btn-tb-action btn-tb-large">Add your Urban Trail</a>
 	  {% else %}
-  	    <a href="{{ app.request.baseUrl }}/tour" class="btn btn-tb-action btn-tb-large">Let's make a trail</a>
+  	    <a href="{{ app.request.baseUrl }}/tour" class="btn btn-tb-action btn-tb-large">Add your Urban Trail</a>
 	  {% endif %}
     </div>      
+    <div class="sponsors">
+	  <ul>
+	    <li><a href="http://www.likethewindmagazine.com" onClick="trackOutboundLink(this, 'Outbound Links', 'likethewindmagazine.com'); return false;"><img src="http://assets.trailburning.com/images/competition/sponsor_ltw.png" /></a></li>
+	    <li><a href="http://www.ashmei.com" onClick="trackOutboundLink(this, 'Outbound Links', 'ashmei.com'); return false;"><img src="http://assets.trailburning.com/images/competition/sponsor_ashmei.png" /></a></li>
+	    <li class="partner">competition partners</li>
+	  </ul>
+    </div>
   </div>    
     
   <div class="panel_content">          
     <div class="panel_intro">
       <div class="desc clearfix">
-        <h3 class="tb">Enter the competition to Win!</h3>        
+        <h3 class="tb">Publish an Urban Trail in London and win!</h3>        
         <h4 class="tb">
-        We're offering some great Trailburning running shirts from Swedish brand <a href="http://www.craft.se" onClick="trackOutboundLink(this, 'Outbound Links', 'craft.se'); return false;">Craft</a>,<br/>
-        and copies of the latest <a href="http://www.likethewindmagazine.com" onClick="trackOutboundLink(this, 'Outbound Links', 'likethewindmagazine.com'); return false;">Like the Wind</a> magazine!
+		A new way to discover city-based trails - launching at <a href="http://www.likethewindmagazine.com/popup" onClick="trackOutboundLink(this, 'Outbound Links', 'likethewindmagazine.com/popup'); return false;">Like The Wind’s Pop-Up Gallery</a> on the <strong>28th</strong> of <strong>October</strong> in London.        	
 		</h4>                
+		<h4 class="tb">
+		<strong>Create an Urban Trail -</strong> Publish an urban trail in London.  Every trail selected by Urban Trails wins a <strong>£20</strong> gift voucher from <a href="http://www.ashmei.com" onClick="trackOutboundLink(this, 'Outbound Links', 'ashmei.com'); return false;">Ashmei</a>, simple as that!  If published during the <a href="http://www.likethewindmagazine.com/popup" onClick="trackOutboundLink(this, 'Outbound Links', 'likethewindmagazine.com/popup'); return false;">Pop-Up</a> then you also win the latest copy of <a href="http://www.likethewindmagazine.com" onClick="trackOutboundLink(this, 'Outbound Links', 'likethewindmagazine.com'); return false;">Like The Wind</a> magazine.  Not enough?  If your winning trail is the best of the best during the Pop-Up then you also win an <a href="http://www.ashmei.com" onClick="trackOutboundLink(this, 'Outbound Links', 'ashmei.com'); return false;">Ashmei</a> Merino Running Sweatshirt!  		 
+		</h4>
+		<h4 class="tb">
+		<strong>Best Photo Winner -</strong> Looking to improve your photography skills? Then attend <a href="http://iancorless.org/" target="_blank">Ian Corless’s</a> ‘<a href="https://www.eventbrite.co.uk/e/action-photography-workshop-with-ian-corless-tickets-13307377725" target="_blank">Action Photography</a>’ workshop on the <strong>30th of October</strong>.  The best photo taken during the workshop will win the photographer a piece of original artwork from Like The Wind magazine!
+		</h4>
+		
         <div class="prizes">
-		  <div class="image_container fade_on_load"><img src="http://assets.trailburning.com/images/competition/prize_shirt.png" /></div>
-		  <div class="image_container fade_on_load"><a href="http://www.likethewindmagazine.com" onClick="trackOutboundLink(this, 'Outbound Links', 'likethewindmagazine.com'); return false;"><img src="http://assets.trailburning.com/images/competition/prize_likethewind.png" /></a></div>
+		  <div class="image_container fade_on_load"><a href="http://www.ashmei.com" onClick="trackOutboundLink(this, 'Outbound Links', 'ashmei.com'); return false;"><img src="http://assets.trailburning.com/images/competition/prize_ashmei.jpg" /></a></div>
+		  <div class="image_container fade_on_load"><a href="http://www.likethewindmagazine.com" onClick="trackOutboundLink(this, 'Outbound Links', 'likethewindmagazine.com'); return false;"><img src="http://assets.trailburning.com/images/competition/prize_ltw3.jpg" /></a></div>
 		</div>	
       </div>      
     </div>
@@ -57,50 +70,54 @@ var TB_USER_ID = {{ app.user.id }};
       <div class="title"><h2>What you need to do</h2></div>      
       <div class="trailcards left">            
       
-			<div class="panel trail_card_panel">
-				<div class="title"><h3 class="tb">Mountains</h3></div>
-		        <a href="{{ app.request.baseUrl }}/inspire/high/trail/motto-della-croce-capanna-bar-capriasca">
-		        <div class="photo tb-photo-btn">
-		        	<div class="image_container fade_on_load"><img src="http://app.resrc.it/o=80/http://media.trailburning.com/238/99337e0254d96cf25a4faaa24927c068547b2391.JPG" class="resrc scale" border="0"/></div>
-		        	<div class="card_title">
-		            <h1>Motto della Croce</h1>
-		            <br />
-		            <h2>Capriasca</h2>
-		        	</div>
-		       	</div>
-		        </a>
-				<div class="card_avatar">
-	  	    		<div class="tb-avatar"><div class="photo"><a href="{{ app.request.baseUrl }}/profile/lucamanetti"><img src="http://www.gravatar.com/avatar/c0d52d3a4d92fd9c957b47c98bce354b"></a></div></div>
-				</div>	
-		        
-		        <div class="summary">
-					<div class="length">15 km</div>
-					<div class="altitude">
-					1’091 m D+
-					<br/> 
-				    1’092m  m D-
-					</div>
-		        </div>
-		 	</div>		
+		<div class="panel trail_card trail_card_panel">
+		  <div class="title"><h3 class="tb">Canal</h3></div>
+	      <a href="/trail/regent-s-canal-london">
+	      <div class="photo tb-photo-btn">
+            <div class="image_container fade_on_load"><img src="http://app.resrc.it/o=80/http://media.trailburning.com/288/9ee9b1fd51ec603cbe8d3a2fa867a19f9fb902f9.jpg" class="resrc scale scale_image_ready" border="0" alt=""></div> 
+			<div class="card_title">
+			<h1>Regent's Canal</h1>
+			<br>
+			<h2>London</h2>
+			<br>
+			<h2><div class="stars"><span class="star_full"></span><span class="star_half"></span></div></h2>
+			</div>
+	      </div>
+	      </a>
+		  <div class="card_avatar">
+      	    <div class="tb-avatar"><div class="photo"><a href="profile/mattallbeury"><img src="http://www.gravatar.com/avatar/e426b949d824bc81fe01caf1ad88abd7"></a></div></div>
+		  </div>	      
+		  <div class="summary">
+			<div class="length">11 km</div>
+			<div class="altitude">
+			78m D+
+			<br/> 
+		    102m D-
+			</div>
+		  </div>
+	    </div>      
 		 					 	
       </div>
       <div class="right">
         <h4 class="tb">
-      	To win this prize pack all you need to do is <strong>create</strong> a trail, <strong>share</strong> it on Facebook (you can now share when you publish in Trail Maker!) and get 6 of your friends to <strong>like</strong> the trail on Trailburning.
-        <br/><br/>         
-        <strong>This competition is now closed!</strong>
-        <br/><br/>         
+      	To win all you need to do is:
+		<ol>
+		  <li>Create an account on Trailburning.</li>
+		  <li>Record a trail with your favourite running app (Strava, MapMyRun) or device (Garmin, Suunto).</li>
+		  <li>Take a few photos to show off your trail, and publish on Trailburning.</li>
+		  <li>Any London trail selected by Urban Trails will win!</li>
+		</ol>
         </h4>      
-<!--        
+
         <h5 class="tb">
-      	The small print - only one prize pack per person, we will announce as soon as we have 5 winners.
+      	The small print - one prize pack per person.
         </h5>
--->        
+        
         <div class="discover">      	
 	    {% if app.user %}  	      
-<!--  	      <a href="{{ path('profile', {'name': app.user.name}) }}" class="btn btn-tb-action btn-tb-large">Let's make a trail</a> -->
+  	      <a href="{{ path('trailmaker') }}" class="btn btn-tb-action btn-tb-large">Add your Urban Trail</a>
 	    {% else %}
-<!--  	      <a href="{{ app.request.baseUrl }}/tour" class="btn btn-tb-action btn-tb-large">Let's make a trail</a> -->
+  	      <a href="{{ app.request.baseUrl }}/tour" class="btn btn-tb-action btn-tb-large">Add your Urban Trail</a>
 	    {% endif %}
       	</div>                
       </div>

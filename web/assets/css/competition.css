@@ -41,15 +41,54 @@ border-width:1px;
   right: 104px;
 }
 
+#def_header .event_back {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 268px;
+  height: 489px;
+  background: url("../img/campaign/landing_back.png") no-repeat top left;
+}
+
 #def_header .event_title {
   position: absolute;
-  top: 24px;
-  left: 32px;
+  top: 68px;
+  left: 44px;
   color: #44b6f7;
 }
 
+#def_header .event_title .tb {
+  margin-top: 12px;
+  color: #FFF;
+  text-shadow: 1px 1px #000000;  	
+}
+
 #def_header .btn {
-  margin-top: 24px;
+  margin-top: 62px;
+}
+
+#def_header .sponsors {
+  position: absolute;
+  left: 44px;
+  bottom: 22px;
+}
+ 
+#def_header .sponsors .partner {
+  color: #FFF;
+  text-shadow: 1px 1px #000000;  	
+}
+
+#def_header ul {
+  list-style-type: none;
+  margin: 0px;
+  padding: 0px;
+}
+
+#def_header li {
+  float: left;
+  margin: 0px 24px 0px 0px;
+  padding: 0px;
+  line-height: 43px;
 }
 
 /* PANELS */
@@ -177,6 +216,13 @@ border-width:1px;
 
 .guide_content .content .discover {
   margin-top: 32px;
+}
+
+.guide_content .content ol {
+  margin: 10px 0 10px 25px;
+}
+.guide_content .content li {
+	line-height: 1.3em;
 }
 
 /* FOOTER PROMOTE */
