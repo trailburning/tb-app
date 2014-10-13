@@ -53,6 +53,7 @@ define([
       	      bEvent = false;
 	          model = new Backbone.Model(card);    	
 	          
+	          console.log(model.get('slug'));
 	          switch (model.get('slug')) {
 	          	case '16km':
 	          	case '30km':
@@ -81,7 +82,11 @@ define([
 	          	case 'lantau-vertical-hong-kong':
 	          	  bEvent = true;	          	
 	          	  model.set('eventURL', 'lantauvertical');
-	          	  break;	          	  	          	  
+	          	  break;
+	          	case 'heysen-105-south-australia':
+	          	  bEvent = true;	          	
+	          	  model.set('eventURL', 'heysen105');
+	          	  break;
 	          }
 	          if (bEvent) {
 	            trailsTrailCardView = new TrailsTrailEventCardView({ model: model});

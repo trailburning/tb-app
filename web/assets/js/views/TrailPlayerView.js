@@ -264,36 +264,53 @@ define([
       
 	  var self = this;
 
-	  $('#headerview .close_link').show();
       // add transition for effect      
       $('#trailplayer').addClass('tb-size');
 	  $('#trail_views').addClass('tb-move-vert');
-      
-      $('#trail_slides_view .slide_btns').show();
-      
-      this.hideIntroOverlay();
 
-      this.nPlayerView = PLAYER_SHOW;
+	  // is the hero slide not the 1st slide?
+	  if (this.nCurrSlide != 0) {
+	    this.nCurrSlide = -1;	
+	    
+	    // change slide to 1st
+	    self.startSlideShow();
+
+        setTimeout(function() {
+          self.nPlayerView = PLAYER_SHOW;      
+          self.updatePlayerHeight();
+          
+ 		  self.hideIntroOverlay();
+      	  $('#trail_slides_view .slide_btns').show();
+          $('#view_player_btns').css('top', 18);
+
+		  setTimeout(function() {
+	    	self.showOverlay();
+	    	self.bLocked = false;
+	      }, 500);
+      	}, 500);	    
+	  }
+	  else {
+        this.nPlayerView = PLAYER_SHOW;
+        this.updatePlayerHeight();
+        
+        this.hideIntroOverlay();
+      	$('#trail_slides_view .slide_btns').show();
+        $('#view_player_btns').css('top', 18);
       
-      this.updatePlayerHeight();
+        this.trailMiniMapView.gotoMedia(this.nCurrSlide);
+        this.trailMapView.gotoMedia(this.nCurrSlide);
+        this.trailAltitudeView.gotoMedia(this.nCurrSlide);
+	    this.trailStatsView.playerPlaying();
       
-      this.trailMiniMapView.gotoMedia(this.nCurrSlide);
-      this.trailMapView.gotoMedia(this.nCurrSlide);
-      
-      this.trailAltitudeView.gotoMedia(this.nCurrSlide);
-      
-	  this.trailStatsView.playerPlaying();
-      
-      setTimeout(function() {
-	    self.showOverlay();
-	    self.bLocked = false;
-      }, 500);
+        setTimeout(function() {
+	      self.showOverlay();
+	      self.bLocked = false;
+        }, 500);
             
-      $('#view_player_btns').css('top', 18);
-      
-      this.slideTimer = setTimeout(function() {
-        self.startSlideShow();
-      }, HOLD_SLIDE);      
+        this.slideTimer = setTimeout(function() {
+          self.startSlideShow();
+        }, HOLD_SLIDE);      	  	
+	  }	  
     },
     hidePlayer: function(){
       if (this.bLocked) {
