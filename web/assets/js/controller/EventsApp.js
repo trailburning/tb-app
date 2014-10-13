@@ -4,8 +4,9 @@ define([
   'underscore', 
   'modernizr',
   'backbone',
-  'views/EventsView'  
-], function(_, Modernizr, Backbone, AppView){
+  'views/EventsView',
+  'views/SearchView'  
+], function(_, Modernizr, Backbone, AppView, SearchView){
   app.dispatcher = _.clone(Backbone.Events);
     
   var initialize = function() {
@@ -13,6 +14,7 @@ define([
               
     this.appView = new AppView({ });
     this.appView.getResults();
+	this.searchView = new SearchView({ el: '#searchview' });
     
   	$('#footerview').show();  	
   };

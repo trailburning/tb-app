@@ -43,6 +43,7 @@
               setTimeout(function() {window.open(link.href, '_blank');}, 100);
             }
             var TB_RESTAPI_BASEURL = '{{ api_host }}';
+            var TB_BASEURL = '{{ app.request.baseUrl }}';
             {% if app.user %}
             var TB_RESTAPI_USER = {{ extract_entity(app.user, ['id', 'name', 'firstName', 'lastName', 'location'])|json_encode()|raw }};
             {% endif %}
@@ -62,12 +63,11 @@
                 </div>    
                 
 			    <div class="right navbar">
-<!--			    	
-			    	<div class="search ui-front">			    	
+			    	<div id="searchview" class="search ui-front">			    	
 	    			  <ul class="nav pull-right">
 	    				<li class="ui-widget">	    					
-						<form class="form-search" method="get" id="search" action="/">			    	
-	    					<input type="text" id="searchBox" name="search_text">
+						<form class="form-search" method="get" id="search" action="">			    	
+	    					<input type="text" class="searchBox" id="searchBox" name="search_text">
 							<button type="submit">
 				  			<i class="ico" data-icon="n-search-16"></i>
 							</button>
@@ -75,7 +75,6 @@
 				        </li>
 				      </ul>
 			    	</div>
--->			    	
                 	{% if app.user %}
 				    	<div class="profile">
 				    		<ul class="nav pull-right">

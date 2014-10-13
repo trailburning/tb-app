@@ -5,8 +5,9 @@ define([
   'modernizr',
   'backbone',
   'models/TrailModel',
-  'views/TrailView'
-], function(_, Modernizr, Backbone, TrailModel, AppView){
+  'views/TrailView',
+  'views/SearchView'    
+], function(_, Modernizr, Backbone, TrailModel, AppView, SearchView){
   app.dispatcher = _.clone(Backbone.Events);
     
   var initialize = function() {
@@ -16,14 +17,7 @@ define([
 
     this.appView = new AppView({ el: '#appview', model: this.trailModel, nTrail: TB_TRAIL_ID });
             
-    $('#search_field').focus(function(evt) {
-      $('#search_field').val('not just yet...');
-      evt.preventDefault();
-    });
-    $('#search_form').submit(function(evt) {
-      $('#search_field').val('not just yet...');
-      evt.preventDefault();
-    });    
+	this.searchView = new SearchView({ el: '#searchview' });
     
     var imgLoad = imagesLoaded('.panels .scale');
     imgLoad.on('always', function(instance) {

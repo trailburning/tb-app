@@ -4,8 +4,9 @@ define([
   'underscore', 
   'backbone',
   'views/ActivityFeedView',
+  'views/SearchView',
   'views/HomeHerosView'      
-], function(_, Backbone, ActivityFeedView, HomeHerosView){
+], function(_, Backbone, ActivityFeedView, SearchView, HomeHerosView){
   app.dispatcher = _.clone(Backbone.Events);
   
   var initialize = function() {
@@ -44,6 +45,7 @@ define([
 	  resrc.resrcAll();
 	});        
         
+	this.searchView = new SearchView({ el: '#searchview' });        
     if (typeof TB_USER_ID != 'undefined') {
   	  this.activityFeedView = new ActivityFeedView({ el: '#activity_feed_view' });
   	  this.activityFeedView.render();
@@ -52,60 +54,7 @@ define([
         
     this.homeHerosView = new HomeHerosView({ el: '#home_header' });
 	this.homeHerosView.render();
-
-	// setup autosuggest
-/*	
-    var cache = {};
-    var client = new $.es.Client({    
-        hosts: 'e7p15amb:4yexy8z21pg5eee0@boxwood-7916136.eu-west-1.bonsai.io'
-    });
-    
-    $('#searchBox').autocomplete({
-        minLength: 2,
-        delay: 0,
-        source: function(request, response ) {
-            var term = request.term;
-            if (term in cache) {
-                response(cache[term]);
-                return;
-            }
-            
-            client.search({
-                index: 'trailburning',
-                body: {
-                    query: {
-                        match: {
-                          suggest_nge: term
-                        }
-                    }
-                }
-            }).then(function (resp) {
-                var suggestions = resp.hits.hits;
-                cache[term] = suggestions;
-                response(suggestions); 
-            }, function (err) {
-                console.log(err.message);
-            });
-        }
-    });
-    $('#searchBox').data('ui-autocomplete')._resizeMenu = function() {
-    	this.menu.element.outerWidth(300);
-    };
-    $('#searchBox').data('ui-autocomplete')._renderItem = function(ul, item) {
-    	var strItem = "";    	
-    	switch (item._type) {
-    	  case 'user_profile':
-    	    strItem = '<a href="profile/' + item._source.name + '" class="clearfix"><div class="match">' + item._source.suggest_text + '</div><div class="type"><div class="tb-avatar"><div class="photo"><img src="'+item._source.avatar+'"></div></div></div></a>';
-    	    break;
-    	  default:
-    	    strItem = '<a href="trail/' + item._source.slug + '" class="clearfix">' + item._source.suggest_text + '</a>';
-    	    break;
-    	}
-        return $('<li>')
-            .append(strItem)
-            .appendTo(ul);
-    };
-*/    
+	
   	// keyboard control
   	$(document).keydown(function(e){
   	  switch (e.keyCode) {

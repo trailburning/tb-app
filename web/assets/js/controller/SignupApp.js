@@ -4,8 +4,9 @@ define([
   'underscore', 
   'backbone',
   'views/ActivityFeedView',      
+  'views/SearchView'    
   'gmaps'
-], function(_, Backbone, ActivityFeedView, Gmaps){
+], function(_, Backbone, ActivityFeedView, SearchView, Gmaps){
   app.dispatcher = _.clone(Backbone.Events);
   
   var initialize = function() {
@@ -18,6 +19,7 @@ define([
     });    
     handleResize();        
 
+	this.searchView = new SearchView({ el: '#searchview' });
     if (typeof TB_USER_ID != 'undefined') {
   	  this.activityFeedView = new ActivityFeedView({ el: '#activity_feed_view' });
   	  this.activityFeedView.render();

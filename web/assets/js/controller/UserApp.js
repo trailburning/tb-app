@@ -4,8 +4,9 @@ define([
   'underscore', 
   'modernizr',
   'backbone',
-  'views/UserView'
-], function(_, Modernizr, Backbone, AppView){
+  'views/UserView',
+  'views/SearchView'  
+], function(_, Modernizr, Backbone, AppView, SearchView){
   app.dispatcher = _.clone(Backbone.Events);
   
   var initialize = function() {        
@@ -16,14 +17,7 @@ define([
     
     this.appView = new AppView({ el: '#appview' });
     
-    $('#search_field').focus(function(evt) {
-      $('#search_field').val('not just yet...');
-      event.preventDefault();
-    });
-    $('#search_form').submit(function(evt) {
-      $('#search_field').val('not just yet...');
-      event.preventDefault();
-    });    
+	this.searchView = new SearchView({ el: '#searchview' });
     
     var imgLoad = imagesLoaded('.scale');
     imgLoad.on('always', function(instance) {
