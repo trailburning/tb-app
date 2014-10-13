@@ -43,7 +43,7 @@ define([
 
 	  this.buildBtns();
 	  
-	  var data = {'tags': {'width': 800, 'height': 600}, versions: [{ 'path': '/33/c28bda4c8ce769c558cede3f7fe6c34731ec5d05.jpg'  }]};
+	  var data = {'tags': {'width': 800, 'height': 600}, versions: [{ 'path': '/images/campaign/urbantrails/london/shutterstock_148485164.jpg'  }]};
 	  var mediaModel = new Backbone.Model(data);
 	  this.trailSlidesView.addMedia(mediaModel);
 	  
