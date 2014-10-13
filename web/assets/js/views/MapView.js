@@ -411,6 +411,10 @@ define([
           	  bEvent = true;	          	
           	  model.set('eventURL', 'lantauvertical');
           	  break;	          	  	          	  
+          	case 'heysen-105-south-australia':
+          	  bEvent = true;	          	
+          	  model.set('eventURL', 'heysen105');
+          	  break;
 	    }
         if (bEvent) {
           mapTrailCardView = new MapTrailEventCardView({ model: model });
