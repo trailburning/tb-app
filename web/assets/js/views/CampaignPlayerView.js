@@ -333,7 +333,6 @@ define([
       this.trailSlidesView.hide();
       this.trailMapView.show();
       this.trailMapView.render();
-      this.trailMapView.enablePopups(true);          
     },
     showPhotoView: function(evt){
       if (this.nTrailView == SLIDE_VIEW) {
@@ -356,7 +355,6 @@ define([
       }
                           
       this.trailMapView.hide();
-      this.trailMapView.enablePopups(false);
       this.trailSlidesView.show();
       this.trailSlidesView.render();
     },
@@ -367,10 +365,8 @@ define([
       this.stopSlideShow(); 
     },
     onTrailMapViewZoomInClick: function(mapView){
-      this.stopSlideShow();
     },
     onTrailMapViewZoomOutClick: function(mapView){
-      this.stopSlideShow();
     },
     onTrailMapMediaMarkerClick: function(mapMediaMarkerView){
       // look up model in collcetion

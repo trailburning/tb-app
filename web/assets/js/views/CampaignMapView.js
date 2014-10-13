@@ -1,8 +1,8 @@
 define([
   'underscore', 
   'backbone',
-  'views/TrailMapMediaMarkerView'  
-], function(_, Backbone, TrailMapMediaMarkerView){
+  'views/MapTrailMarker'  
+], function(_, Backbone, MapTrailMarker){
 
   var MAP_STREET_VIEW = 0;
   var MAP_SAT_VIEW = 1;
@@ -11,34 +11,25 @@ define([
     initialize: function(){
       this.template = _.template($('#trailMapViewTemplate').text());        
             
+      var self = this;
+      
+      app.dispatcher.on("MapTrailMarker:click", self.onTrailMarkerClick, this);
+            
       this.elCntrls = this.options.elCntrls;            
       this.bRendered = false;
       this.map = null;
-      this.polyline = null;
-      this.arrLineCordinates = [];
-      this.arrMapMediaViews = [];
-      this.currMapMediaView = null;
       this.nMapView = MAP_STREET_VIEW;
+      this.nCurrCard = -1;
+      this.collection = new Backbone.Collection();
       
-      var self = this;
-      
-      var LocationIcon = L.Icon.extend({
-          options: {
-              iconSize:     [36, 47],
-              iconAnchor:   [16, 44],
-              popupAnchor:  [16, 44]
-          }
-      });      
-      this.locationIcon = new LocationIcon({iconUrl: 'https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/icons/location.png'});      
+	  this.getResults();
+	  this.buildBtns();
     },            
     show: function(){
       $(this.el).fadeIn(500, 'linear');
-//      $(this.el).show();      
-      this.showDetail(true);      
     },
     hide: function(){
       $(this.el).fadeOut(500, 'linear');
-//      $(this.el).hide();
     },
     buildBtns: function(){
       var self = this;
@@ -60,10 +51,6 @@ define([
         if(self.map.getZoom() >= self.map.getMaxZoom()-1) {
           $('.zoomin_btn', $(self.elCntrls)).attr('disabled', true);
         }
-                
-        if(self.map.getZoom() > 8) {
-          self.showDetail(true);
-        }
       });
 
       $('.zoomout_btn', $(this.elCntrls)).click(function(evt){
@@ -76,14 +63,10 @@ define([
         
         if(self.map.getZoom() <= self.map.getMinZoom()+4) {
           $('.zoomout_btn', $(self.elCntrls)).attr('disabled', true);
-        }
-        
-        if(self.map.getZoom() <= 10) {
-          self.showDetail(false);
-        }
+        }        
       });
       
-      $('.view_btn', $(this.elCntrls)).click(function(evt){
+      $('#view_map_btns .view_btn', $(this.elCntrls)).click(function(evt){
         switch (self.nMapView) {
           case MAP_SAT_VIEW:
             self.nMapView = MAP_STREET_VIEW;
@@ -107,53 +90,6 @@ define([
         }
       });
     },
-    gotoMedia: function(nMedia){
-      // restore previous
-      if (this.currMapMediaView) {
-        this.currMapMediaView.setActive(false);
-      }
-      
-      if (this.arrMapMediaViews.length) {
-        this.currMapMediaView = this.arrMapMediaViews[nMedia];
-        this.currMapMediaView.setActive(true);
-        // centre on active marker
-        this.map.panTo(this.currMapMediaView.marker.getLatLng(), {animate: true, duration: 2});
-      }
-    },
-    addMedia: function(mediaModel){
-      var trailMapMediaMarkerView = new TrailMapMediaMarkerView({ map: this.map, model: mediaModel });
-      this.arrMapMediaViews.push(trailMapMediaMarkerView);
-    },
-    showDetail: function(bShow){
-      if (!this.arrMapMediaViews.length) {
-        return;
-      }
-
-      if (bShow) {
-        $('.leaflet-overlay-pane').show();
-      }
-      else {
-        $('.leaflet-overlay-pane').hide();        
-      }
-
-      var trailMapMediaView = null;
-      for (var nMedia=0; nMedia < this.arrMapMediaViews.length; nMedia++) {
-        trailMapMediaView = this.arrMapMediaViews[nMedia];
-        if (bShow) {
-          trailMapMediaView.show();
-        }
-        else {
-          trailMapMediaView.hide();          
-        }
-      }
-    },    
-    enablePopups: function(bEnable){
-      var trailMapMediaView = null;
-      for (var nMedia=0; nMedia < this.arrMapMediaViews.length; nMedia++) {
-        trailMapMediaView = this.arrMapMediaViews[nMedia];
-        trailMapMediaView.enablePopup(bEnable);
-      }
-    },    
     render: function(){
       var latlng = new L.LatLng(51.507351, -0.127758);
     	
@@ -175,12 +111,131 @@ define([
 
       this.map.setView(latlng, 12);	
 
-      this.buildBtns();           
-                        
+	  this.map.on('move', function() {
+	  	self.showTrailsInView();
+      });                 
       this.bRendered = true;
                         
       return this;
-    }    
+    },
+    showTrailsInView: function(){
+    	var self = this;
+	    var inBounds = [],
+	    // Get the map bounds - the top-left and bottom-right locations.
+	    bounds = this.map.getBounds();
+
+	    // For each marker, consider whether it is currently visible by comparing
+	    // with the current map bounds.
+ 		this.collection.each(function(cardModel) { 			
+//            console.log('item:'+cardModel.id);
+	        if (bounds.contains(cardModel.mapTrailMarker.marker.getLatLng())) {
+//	            inBounds.push(marker.options.title);
+	        }
+        });	    	    
+	},    
+    getResults: function(){
+      var self = this;
+
+	  var nOffSet = this.nPage * (this.PageSize);
+		  		  
+	  var strURL = TB_RESTAPI_BASEURL + '/v1/routes/search?order=distance&radius=200&lat=51.507351&long=-0.127758&limit=500&offset=0';
+      $.ajax({
+        type: "GET",
+        dataType: "json",
+        url: strURL,
+        error: function(data) {
+//          console.log('error:'+data.responseText);      
+        },
+        success: function(data) {      
+//          console.log('success');
+//          console.log(data);
+		  self.onCampaignCardsResult(data);
+        }
+      });        
+    },
+    selectMarkerOrCluster: function(){
+      if (this.nCurrCard == -1) {
+      	return;
+      }
+    	    
+      var self = this;
+      
+      var cardModel = this.collection.at(this.nCurrCard);      
+    	
+	  if (this.currMarkerOrCluster) {
+	  	$(this.currMarkerOrCluster._icon).removeClass('selected');
+	  }
+	  this.currMarkerOrCluster = this.markerCluster.getVisibleParent(cardModel.mapTrailMarker.marker);
+	  if (this.currMarkerOrCluster) {
+	    $(this.currMarkerOrCluster._icon).addClass('selected');	  	
+	  }    	
+
+    },    
+    onCampaignCardsResult: function(data){
+	  if (!data.value.routes.length) {
+	  	return;
+	  }
+
+      var self = this;
+
+	  this.markerCluster = new L.MarkerClusterGroup({ showCoverageOnHover: false, spiderfyOnMaxZoom: false,
+    	iconCreateFunction: function(cluster) {
+    	  var nSize = 40;
+    	  var strClass = 'tb-map-marker small';
+    	  if (cluster._childCount > 9) {
+    	  	nSize = 50;
+    	  	strClass = 'tb-map-marker medium';
+    	  }     	  
+    	  if (cluster._childCount > 99) {
+    	  	nSize = 60;
+    	  	strClass = 'tb-map-marker large';
+    	  } 
+          return new L.DivIcon({ className: strClass, html: '<div class="marker">' + cluster.getChildCount() + '</div>', iconSize: [nSize, nSize] });
+    	}
+	  });
+        
+	  this.markerCluster.on('clusterclick', function (a) {
+    	self.selectMarkerOrCluster();
+	  });
+	          
+      var model, cardViewModel;
+      $.each(data.value.routes, function(key, card) {
+      	bEvent = false;
+	    model = new Backbone.Model(card);	    
+	    
+        var mapTrailMarker = new MapTrailMarker({ model: model, map: self.map, mapCluster: self.markerCluster });        
+        mapTrailMarker.render();        
+        mapTrailMarker.getTrail();
+
+    	cardViewModel = new Backbone.Model();
+    	cardViewModel.id = model.id;
+    	cardViewModel.mapTrailMarker = mapTrailMarker;
+    	self.collection.add(cardViewModel);   	  	
+      });       
+	  this.map.addLayer(this.markerCluster);
+	  this.map.fitBounds(this.markerCluster.getBounds());
+	  	
+	  $(this.elCntrls).show();         
+    },
+    onTrailMarkerClick: function(trailCardMarker){
+	  if (this.currMarkerOrCluster) {
+	  	$(this.currMarkerOrCluster._icon).removeClass('selected');
+	  	this.currMarkerOrCluster = null;
+	  }
+
+      if (this.currCardModel) {
+      	this.currCardModel.mapTrailMarker.selected(false);      	
+      }
+
+      var cardModel = this.collection.get(trailCardMarker.model.id);
+      
+	  // select marker      
+      cardModel.mapTrailMarker.selected(true);      
+	  this.currCardModel = cardModel;      	          
+      
+      this.nCurrCard = this.collection.indexOf(cardModel);
+    }
+    
   });
 
   return CampaignMapView;
