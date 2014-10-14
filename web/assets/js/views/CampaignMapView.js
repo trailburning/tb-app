@@ -119,19 +119,19 @@ define([
       return this;
     },
     showTrailsInView: function(){
-    	var self = this;
-	    var inBounds = [],
-	    // Get the map bounds - the top-left and bottom-right locations.
-	    bounds = this.map.getBounds();
+      var self = this;
+	  var inBounds = [], bounds = this.map.getBounds();
 
-	    // For each marker, consider whether it is currently visible by comparing
-	    // with the current map bounds.
- 		this.collection.each(function(cardModel) { 			
-//            console.log('item:'+cardModel.id);
-	        if (bounds.contains(cardModel.mapTrailMarker.marker.getLatLng())) {
-//	            inBounds.push(marker.options.title);
-	        }
-        });	    	    
+ 	  this.collection.each(function(cardModel) { 			
+	    if (self.map.getZoom() <= 12) {
+	      cardModel.mapTrailMarker.hideTrail();
+ 	  	}
+ 	  	else {
+	      if (bounds.contains(cardModel.mapTrailMarker.marker.getLatLng())) {
+		    cardModel.mapTrailMarker.renderTrail();
+	      }
+ 	  	}
+	  });	    	    
 	},    
     getResults: function(){
       var self = this;
@@ -178,7 +178,7 @@ define([
 
       var self = this;
 
-	  this.markerCluster = new L.MarkerClusterGroup({ showCoverageOnHover: false, spiderfyOnMaxZoom: false,
+	  this.markerCluster = new L.MarkerClusterGroup({ showCoverageOnHover: false, spiderfyOnMaxZoom: false, disableClusteringAtZoom: 13,
     	iconCreateFunction: function(cluster) {
     	  var nSize = 40;
     	  var strClass = 'tb-map-marker small';
@@ -205,7 +205,6 @@ define([
 	    
         var mapTrailMarker = new MapTrailMarker({ model: model, map: self.map, mapCluster: self.markerCluster });        
         mapTrailMarker.render();        
-        mapTrailMarker.getTrail();
 
     	cardViewModel = new Backbone.Model();
     	cardViewModel.id = model.id;
