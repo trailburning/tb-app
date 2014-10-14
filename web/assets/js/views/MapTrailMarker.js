@@ -24,14 +24,15 @@ define([
       
       this.inactive_polyline_options = {
         color: '#44B6FC',
-        opacity: 0.8,
+        opacity: 0.6,
         weight: 6,
-        clickable: true
+        clickable: true,        
+    	distanceMarkers: { offset: 1000, lazy: true }    
       };         
 	  
       this.active_polyline_options = {
         color: '#ed1c24',
-        opacity: 1,
+        opacity: 0.8,
         weight: 6,
         clickable: true
       };               
@@ -64,9 +65,7 @@ define([
 	  	  self.onMouseOut(evt);
 	    }	    
 	    
-//        this.locationMarker = L.marker([this.model.get('start')[1], this.model.get('start')[0]], {icon: this.locationIcon, zIndexOffset: 1000}).on('click', onClickLocation).addTo(this.options.map);
-        this.locationMarker = L.marker([this.model.get('start')[1], this.model.get('start')[0]], {icon: this.locationIcon, zIndexOffset: 1000}).on('click', onClickLocation);
-	    
+        this.locationMarker = L.marker([this.model.get('start')[1], this.model.get('start')[0]], {icon: this.locationIcon, zIndexOffset: 1000}).on('click', onClickLocation);	    
 	    this.marker = L.marker(new L.LatLng(this.model.get('start')[1], this.model.get('start')[0])).on('click', onClick).on('mouseover', onMouseOver).on('mouseout', onMouseOut);			  
 	    this.marker.setIcon(L.divIcon({className: 'tb-map-marker', html: '<div class="marker"></div>', iconSize: [20, 20]}));      	  
 		this.options.mapCluster.addLayer(this.marker);      	  
@@ -103,10 +102,31 @@ define([
         	self.arrLineCordinates.push([Number(point.coords[1]), Number(point.coords[0])]);        
       	  });
       	  self.polyline = L.polyline(self.arrLineCordinates, self.inactive_polyline_options).on('click', onClick).on('mouseover', onMouseOver).on('mouseout', onMouseOut);
+
+/*
+// use defaults
+var line = L.polyline(coords);
+
+// override defaults
+var line = L.polyline(coords, {
+    distanceMarkers: { showAll: 11, offset: 1600 }
+});
+
+// show/hide markers on mouseover
+var line = L.polyline(coords, {
+    distanceMarkers: { lazy: true }
+});
+line.on('mouseover', line.addDistanceMarkers);
+line.on('mouseout', line.removeDistanceMarkers);
+map.fitBounds(line.getBounds());
+map.addLayer(line);
+*/
+
+
       	  self.showTrail();
-      	  self.bTrailRendered = true;      
         }      
       });            
+	  this.bTrailRendered = true;      
   	},
 	select: function(){
 	  // fire event
@@ -119,7 +139,8 @@ define([
 	
 	  if (this.polyline) {
         this.polyline.setStyle(this.active_polyline_options);
-        this.polyline.bringToFront();
+	    this.polyline.addDistanceMarkers();
+        this.polyline.bringToFront();        
 	  }
 	},
 	blur: function(){	
@@ -130,6 +151,7 @@ define([
       this.marker.setIcon(L.divIcon({className: 'tb-map-marker', html: '<div class="marker"></div>', iconSize: [20, 20]}));
       if (this.polyline) {
         this.polyline.setStyle(this.inactive_polyline_options);
+        this.polyline.removeDistanceMarkers();
       }
 	},
 	selected: function(bSelected){	

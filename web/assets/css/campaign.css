@@ -1,4 +1,14 @@
-a/* APP */
+
+.dist-marker {
+	font-size: 14px;
+	border: 1px solid #777;
+	border-radius: 10px;
+	text-align: center;
+	color: #000;
+	background: #fff;
+}
+
+/* APP */
 /******************************************/
 #appview {
 /*  
@@ -54,7 +64,13 @@ border-width:1px;
   position: absolute;
   top: 0px;
   left: -800px;
-  width: 700px;
+}
+
+#campaign_landing_overlay_view .back {
+  position: absolute;
+  top: 0px;
+  left: -800px;
+  width: 412px;
   height: 1000px;
   background: url("../img/campaign/background_skew.png") no-repeat top left;
 }
@@ -74,6 +90,7 @@ border-width:1px;
   color: #FFF;
   font-weight: 400;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
 #campaign_landing_overlay_view .info-hero .campaign_play .campaign_btn {
@@ -82,6 +99,10 @@ border-width:1px;
   width: 75px;
   height: 75px;
   background: url(../img/trailplayer/play_toggle.png) no-repeat top left;  
+}
+
+#campaign_landing_overlay_view .info-hero .campaign_play .test {
+  display: inline-block;
 }
 
 #campaign_landing_overlay_view .info-hero .campaign_play:hover .campaign_btn {
@@ -99,15 +120,31 @@ border-width:1px;
   position: absolute;
   top: 0px;
   left: -800px;
-  width: 700px;
+}
+
+#campaign_map_overlay_view .back {
+  position: absolute;
+  top: 0px;
+  left: -800px;
+  width: 412px;
   height: 1000px;
   background: url("../img/campaign/background_skew.png") no-repeat top left;
 }
 
 #campaign_map_overlay_view .info-hero .campaign_title {
   position: relative;
-  top: 36px;
+  top: 30px;
   left: -100px;
+}
+
+#campaign_map_overlay_view .info-hero .campaign_title img {
+  width: 286px;
+}
+
+#campaign_map_overlay_view .info-hero .campaign_card {
+  position: absolute;
+  top: 216px;
+  left: 189px;
 }
 
 /* TRAIL SLIDES VIEW */
@@ -479,6 +516,61 @@ html.touch #campaignplayer #view_map_btns {
   margin-top: 24px;
 }
 
+/* TRAIL WEATHER PANEL */
+/******************************************/
+.trail_weather_panel {
+  margin: 24px 0px 0px 0px;
+  width: 544px;
+}
+
+.trail_weather_panel .content {
+  margin: 34px 0px 28px 24px;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.3em;  
+  color: #44b6f7;
+}
+
+.trail_weather_panel .content .desc {
+  padding: 0px 0px 0px 4px;
+}
+
+.trail_weather_panel h1 {
+  margin: 0px;
+  padding: 0px;
+}
+
+.trail_weather_panel h2 {
+  margin: 0px;
+  padding: 0px 0px 0px 2px;
+}
+
+.trail_weather_panel .detail {
+  padding: 0px 0px 0px 4px;
+}
+
+.trail_weather_panel .detail .text {
+  float: left;
+  width: 302px;
+}
+
+.trail_weather_panel .detail .icon {
+  float: left;
+  width: 164px;
+}
+
+.trail_weather_panel .detail .icon img {
+  width: 100%;
+}
+
+.trail_weather_panel .detail .temp {
+  margin-top: 54px;
+}
+
+.trail_weather_panel .detail .wind {
+  margin-top: 22px;
+}
+
 /* EVENT CONTAINER */
 /******************************************/
 .event_container {
@@ -567,14 +659,17 @@ html.touch #campaignplayer #view_map_btns {
   .panel_content {
     width: 968px;
   }
-  .two_col_panels .left {
+  .panels .left {
     width: 472px;
   }
-  .two_col_panels .right {
+  .panels .right {
     width: 496px;
-  }  
+  }
+  .event_container {
+    width: 500px;
+  }
   .trail_location_panel,  
-  .trail_detail_panel,
+  .campaign_detail_panel,
   .trail_like_panel,
   .trail_weather_panel {
     width: 472px;

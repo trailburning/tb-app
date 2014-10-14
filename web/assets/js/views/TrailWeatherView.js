@@ -107,15 +107,8 @@ define([
         elField.html(strText);     
       }
       
-      if (!this.model) {
-        return;
-      }
-
       if (!this.bRendered) {
-        var attribs = this.model.toJSON();
-        $(this.el).html(this.template(attribs));
-        
-        var jsonRoute = this.model.get('value').route;
+        $(this.el).html(this.template());
         
         // get weather
         var strUnits = '';
@@ -128,8 +121,7 @@ define([
             strUnits = 'imperial';
             break;
         }
-        var strURL = WEATHER_BASEURL + '?lat='+jsonRoute.route_points[0].coords[1]+'&lon='+jsonRoute.route_points[0].coords[0] + '&units=metric';
-//        console.log(strURL);
+        var strURL = WEATHER_BASEURL + '?lat='+self.options.lat+'&lon='+self.options.lon+'&units=metric';
         $.ajax({
           dataType: "jsonp",
           url: strURL,

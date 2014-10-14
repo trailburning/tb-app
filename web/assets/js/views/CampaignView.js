@@ -17,7 +17,7 @@ define([
 	  }
       
       this.playerView = new CampaignPlayerView({ el: '#trailplayer', model: this.model, mediaCollection: this.mediaCollection, mediaModel: this.mediaModel });            
-      this.weatherView = new TrailWeatherView({ el: '#trail_weather_view', model: this.model });
+      this.weatherView = new TrailWeatherView({ el: '#trail_weather_view', lat: 51.507351, lon: -0.127758});
       
       this.playerView.updatePlayerHeight();
       
@@ -30,7 +30,7 @@ define([
       $('#footerview').show();
       
   	  this.playerView.render();
-//      this.weatherView.render();
+      this.weatherView.render();
       
       this.playerView.handleMedia();
       this.handleResize();

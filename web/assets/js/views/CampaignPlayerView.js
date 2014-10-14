@@ -217,17 +217,21 @@ define([
       self.bLocked = false;
     },
     showIntroOverlay: function(){
+      $('#campaign_landing_overlay_view .back').css('left', -144);
       $('#campaign_landing_overlay_view .info-hero').css('left', -144);
       $('#campaign_landing_overlay_view .info-hero .campaign_title').css('left', 189);                                	          
       
+      $('#campaign_map_overlay_view .back').css('left', -800);
       $('#campaign_map_overlay_view .info-hero').css('left', -800);
       $('#campaign_map_overlay_view .info-hero .campaign_title').css('left', -100);
     },
     hideIntroOverlay: function(){    
+      $('#campaign_landing_overlay_view .back').css('left', -800);
       $('#campaign_landing_overlay_view .info-hero').css('left', -800);
       $('#campaign_landing_overlay_view .info-hero .campaign_title').css('left', -100);
       
-      $('#campaign_map_overlay_view .info-hero').css('left', -144);
+      $('#campaign_map_overlay_view .back').css('left', -124);
+      $('#campaign_map_overlay_view .info-hero').css('left', -150);
       $('#campaign_map_overlay_view .info-hero .campaign_title').css('left', 189);                                	          
     },
     toggleView: function(){

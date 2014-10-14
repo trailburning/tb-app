@@ -91,12 +91,10 @@ define([
       });
     },
     render: function(){
-      var latlng = new L.LatLng(51.507351, -0.127758);
-    	
       // already rendered?  Just update
       if (this.bRendered) {
         this.map.invalidateSize();
-        this.map.setView(latlng, 12);	
+	    this.map.fitBounds(this.markerCluster.getBounds(), {padding: [200, 200]});
         return;         
       }        
                 
@@ -108,8 +106,6 @@ define([
       this.layer_street = L.mapbox.tileLayer('mallbeury.8d4ad8ec');
       this.layer_sat = L.mapbox.tileLayer('mallbeury.map-eorpnyp3');      
       this.map.addLayer(this.layer_street);
-
-      this.map.setView(latlng, 12);	
 
 	  this.map.on('move', function() {
 	  	self.showTrailsInView();
@@ -138,7 +134,7 @@ define([
 
 	  var nOffSet = this.nPage * (this.PageSize);
 		  		  
-	  var strURL = TB_RESTAPI_BASEURL + '/v1/routes/search?order=distance&radius=200&lat=51.507351&long=-0.127758&limit=500&offset=0';
+	  var strURL = TB_RESTAPI_BASEURL + '/v1/routes/search?order=distance&radius=30&lat=51.507351&long=-0.127758&limit=500&offset=0';
       $.ajax({
         type: "GET",
         dataType: "json",
@@ -212,7 +208,7 @@ define([
     	self.collection.add(cardViewModel);   	  	
       });       
 	  this.map.addLayer(this.markerCluster);
-	  this.map.fitBounds(this.markerCluster.getBounds());
+	  this.map.fitBounds(this.markerCluster.getBounds(), {padding: [200, 200]});
 	  	
 	  $(this.elCntrls).show();         
     },

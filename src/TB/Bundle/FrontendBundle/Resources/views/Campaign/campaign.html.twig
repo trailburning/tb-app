@@ -25,20 +25,25 @@ var TB_USER_ID = {{ app.user.id }};
             <div id="trail_slides_view"></div>
         </div>
         
-        <div id="campaign_landing_overlay_view">
+        <div id="campaign_landing_overlay_view">        	
+        	<div class="back tb-move-horiz"></div>        	
 			<div class="info-hero tb-move-horiz">				  						  				
 			  <div class="campaign_title tb-move-horiz"><img src="http://assets.trailburning.com/images/campaign/urbantrails/london/logo_urbantrails_london.png" /></div>              
               <div class="campaign_play">
-              	<div class="campaign_btn"></div>Discover Trails	
+              	<div class="campaign_btn"></div>
+              	Discover Trails	
 			  </div>              	
 			</div>        	
 		</div>        	
 
         <div id="campaign_map_overlay_view">
+        	<div class="back tb-move-horiz"></div>        	
 			<div class="info-hero tb-move-horiz">				  						  				
 			  <div class="campaign_title tb-move-horiz"><img src="http://assets.trailburning.com/images/campaign/urbantrails/london/logo_urbantrails_london.png" /></div>              
-              <div class="campaign_play">
-				Hello World	
+              <div class="campaign_card">
+				
+				<img src="{{ asset('assets/img') }}/temp_campaign.jpg" />
+				
 			  </div>              	
 			</div>        	
 		</div>        	
@@ -54,7 +59,11 @@ var TB_USER_ID = {{ app.user.id }};
                 <span class="btn btn-tb zoomout_btn">-</span>
                 <span class="btn btn-tb view_btn">Satellite</span>          
             </div>    
-        </div>    
+        </div>
+        
+		<div id="view_player_btns" class="tb-move-vert">
+          	<div class="close_btn"></div>	
+        </div>            
     </div>
   
     <div class="panel_container">       
@@ -82,6 +91,8 @@ var TB_USER_ID = {{ app.user.id }};
 			                    <div class="join"><a href="" onClick="" class="btn btn-tb-action btn-tb-large">Visit London</a></div>
 			                </div>
 			            </div>
+			            
+                        <div id="trail_weather_view" class="panel trail_weather_panel"></div>			            
 			        </div>
 			      
 			        <div class="right">
