@@ -9,6 +9,10 @@ define([
 
       var cache = {};
     
+      if (!$(this.el).length) {
+      	return;
+      }
+    
 	  $('.form-search', $(this.el)).submit(function(evt) {
   	    evt.preventDefault();
 	  });

@@ -19,14 +19,15 @@ var TB_USER_ID = {{ app.user.id }};
     <div class="background">
       <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/O=80/http://assets.trailburning.com/images/campaign/urbantrails/london/shutterstock_148485164.jpg" class="resrc scale" /></div>
     </div>
+{#	    
     <div class="foreground">
       <div class="image_container fade_on_load"><img src="http://assets.trailburning.com/images/competition/shirt.png" /></div>
     </div>
-
+#}
     <div class="event_back"></div>
     <div class="event_title">
-      <img src="http://assets.trailburning.com/images/campaign/urbantrails/london/logo.png" />
-      <h4 class="tb">Competition</h4>      
+      <img src="http://assets.trailburning.com/images/campaign/urbantrails/london/logo_urbantrails_london.png" />
+      <br/>
 	  {% if app.user %}  	      
 	    <a href="{{ path('trailmaker') }}" class="btn btn-tb-action btn-tb-large">Add your Urban Trail</a>
 	  {% else %}
@@ -105,7 +106,7 @@ var TB_USER_ID = {{ app.user.id }};
 		  <li>Create an account on Trailburning.</li>
 		  <li>Record a trail with your favourite running app (Strava, MapMyRun) or device (Garmin, Suunto).</li>
 		  <li>Take a few photos to show off your trail, and publish on Trailburning.</li>
-		  <li>Any London trail selected by Urban Trails will win!</li>
+		  <li>Any London trail selected to appear on Urban Trails will win!</li>
 		</ol>
         </h4>      
 
