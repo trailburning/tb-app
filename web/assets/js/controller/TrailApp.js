@@ -5,8 +5,9 @@ define([
   'modernizr',
   'backbone',
   'models/TrailModel',
-  'views/TrailView'
-], function(_, Modernizr, Backbone, TrailModel, AppView){
+  'views/TrailView',
+  'views/SearchView'    
+], function(_, Modernizr, Backbone, TrailModel, AppView, SearchView){
   app.dispatcher = _.clone(Backbone.Events);
     
   var initialize = function() {
@@ -16,6 +17,8 @@ define([
 
     this.appView = new AppView({ el: '#appview', model: this.trailModel, nTrail: TB_TRAIL_ID });
             
+	this.searchView = new SearchView({ el: '#searchview' });
+    
     var imgLoad = imagesLoaded('.panels .scale');
     imgLoad.on('always', function(instance) {
       for ( var i = 0, len = imgLoad.images.length; i < len; i++ ) {

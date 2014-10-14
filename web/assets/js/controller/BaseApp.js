@@ -4,8 +4,9 @@ define([
   'underscore', 
   'backbone',
   'views/ActivityFeedView',
+  'views/SearchView',
   'views/HerosView'  
-], function(_, Backbone, ActivityFeedView, HerosView){
+], function(_, Backbone, ActivityFeedView, SearchView, HerosView){
   app.dispatcher = _.clone(Backbone.Events);
   
   var initialize = function() {
@@ -18,6 +19,7 @@ define([
     
     $('#footerview').show();
     
+	this.searchView = new SearchView({ el: '#searchview' });
     if (typeof TB_USER_ID != 'undefined') {
   	  this.activityFeedView = new ActivityFeedView({ el: '#activity_feed_view' });
   	  this.activityFeedView.render();

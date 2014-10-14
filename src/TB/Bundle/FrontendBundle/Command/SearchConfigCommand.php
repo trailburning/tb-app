@@ -51,21 +51,6 @@ class SearchConfigCommand extends ContainerAwareCommand
                                 'pattern' => '([^\w\d\*æøåÆØÅ ])',
                                 'replacement' => '',
                             ],
-                            'max_toke_length' => [
-                                'type' => 'pattern_replace',
-                                'pattern' => '(.{30})(.*)?',
-                                'replacement' => '',
-                            ],
-                            'edge_ngram' => [
-                                'type' => 'edgeNGram',
-                                'min_gram' => 2,
-                                'max_gram' => 30,
-                            ],
-                            'ngram' => [
-                                'type' => 'nGram',
-                                'min_gram' => 2,
-                                'max_gram' => 20,
-                            ],
                             'ngram_delimiter' => [
                                 'type' => 'word_delimiter',
                                 'generate_word_parts' => true,
@@ -81,30 +66,54 @@ class SearchConfigCommand extends ContainerAwareCommand
                                 'replace' => false,
                             ],
                         ],
+                        'tokenizer' => [
+                            'my_edge_ngram_tokenizer' => [
+                                'type' => 'edgeNGram',
+                                'min_gram' => '2',
+                                'max_gram' => '30',
+                                'token_chars' => []
+                            ],
+                            'my_edge_ngram_part_tokenizer' => [
+                                'type' => 'edgeNGram',
+                                'min_gram' => '2',
+                                'max_gram' => '30',
+                                'token_chars' => ['letter', 'digit', 'punctuation', 'symbol']
+                            ]
+                        ],
                         'analyzer' => [
-                            'autocomplete_edge' => [
+                            'index_engram_analyzer' => [
                                 'type' => 'custom',
-                                'char_filter' => ['iso_latin1_accent'],
-                                'tokenizer' => 'standard',
-                                'filter' => ['lowercase', 'punctiation_replace', 'edge_ngram', 'nonealpha_replace'],
+                                'tokenizer' => 'my_edge_ngram_tokenizer',
+                                'filter' => ['lowercase']
                             ],
-                            'autocomplete_edge_q' => [
+                            'search_engram_analyzer' => [
                                 'type' => 'custom',
-                                'char_filter' => ['iso_latin1_accent'],
-                                'tokenizer' => 'standard',
-                                'filter' => ['ngram_delimiter', 'lowercase', 'punctiation_replace', 'edge_ngram', 'nonealpha_replace', 'max_toke_length'],
+                                'tokenizer' => 'keyword',
+                                'filter' => 'lowercase' 
                             ],
-                            'autocomplete_ngram' => [
+                            'autocomplete_engram_full' => [
                                 'type' => 'custom',
                                 'char_filter' => ['iso_latin1_accent'],
-                                'tokenizer' => 'standard',
-                                'filter' => ['ngram_delimiter', 'lowercase', 'ngram', 'nonealpha_replace'],
+                                'tokenizer' => 'my_edge_ngram_tokenizer',
+                                'filter' => ['lowercase', 'punctiation_replace', 'nonealpha_replace'],
                             ],
-                            'autocomplete_ngram_q' => [
+                            'autocomplete_engram_full_q' => [
                                 'type' => 'custom',
                                 'char_filter' => ['iso_latin1_accent'],
-                                'tokenizer' => 'standard',
-                                'filter' => ['ngram_delimiter', 'lowercase', 'ngram', 'nonealpha_replace', 'max_toke_length'],
+                                'tokenizer' => 'keyword',
+                                'filter' => ['ngram_delimiter', 'lowercase', 'punctiation_replace', 'nonealpha_replace'],
+                            ],
+                            'autocomplete_engram_part' => [
+                                'type' => 'custom',
+                                'char_filter' => ['iso_latin1_accent'],
+                                'tokenizer' => 'my_edge_ngram_part_tokenizer',
+                                'filter' => ['lowercase', 'punctiation_replace', 'nonealpha_replace'],
+                            ],
+                            'autocomplete_engram_part_q' => [
+                                'type' => 'custom',
+                                'char_filter' => ['iso_latin1_accent'],
+                                'tokenizer' => 'keyword',
+                                'filter' => ['ngram_delimiter', 'lowercase', 'nonealpha_replace'],
                             ],
                             'phonetic_text' => [
                                 'type' => 'custom',

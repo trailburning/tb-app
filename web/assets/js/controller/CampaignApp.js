@@ -4,17 +4,21 @@ define([
   'underscore', 
   'modernizr',
   'backbone',
-  'views/CampaignView'      
-], function(_, Modernizr, Backbone, AppView){
+  'views/CampaignView',
+  'views/SearchView'
+], function(_, Modernizr, Backbone, AppView, SearchView){
   app.dispatcher = _.clone(Backbone.Events);
   
   var initialize = function() {
     var self = this;
-    
+
     this.appView = new AppView({ el: '#appview' });
             
-    var imgLoad = imagesLoaded('.panels .scale');
-    imgLoad.on('always', function(instance) {
+	this.searchView = new SearchView({ el: '#searchview' });
+    
+  	var imgLoad = imagesLoaded('.scale');
+  	imgLoad.on('always', function(instance) {
+
       for ( var i = 0, len = imgLoad.images.length; i < len; i++ ) {
         $(imgLoad.images[i].img).addClass('scale_image_ready');
         // update pos

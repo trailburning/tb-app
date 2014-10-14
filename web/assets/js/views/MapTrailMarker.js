@@ -13,6 +13,15 @@ define([
       this.polyline = null;
       this.arrLineCordinates = [];
       
+      var LocationIcon = L.Icon.extend({
+          options: {
+              iconSize:     [36, 47],
+              iconAnchor:   [16, 58],
+              popupAnchor:  [16, 44]
+          }
+      });      
+      this.locationIcon = new LocationIcon({iconUrl: 'http://assets.trailburning.com/images/icons/location.png'});      
+      
       this.inactive_polyline_options = {
         color: '#44B6FC',
         opacity: 0.8,
@@ -25,8 +34,7 @@ define([
         opacity: 1,
         weight: 6,
         clickable: true
-      };         
-      
+      };               
     },            
     showTrail: function(){    
       if (this.polyline) {
@@ -43,6 +51,8 @@ define([
 
       if (!this.bRendered) {
         // add to map
+        function onClickLocation(evt) {
+        }
         function onClick(evt) {
 		  // fire event
           app.dispatcher.trigger("MapTrailMarker:click", self);                
@@ -52,7 +62,10 @@ define([
 	    }
 	    function onMouseOut(evt){
 	  	  self.onMouseOut(evt);
-	    }
+	    }	    
+	    
+//        this.locationMarker = L.marker([this.model.get('start')[1], this.model.get('start')[0]], {icon: this.locationIcon, zIndexOffset: 1000}).on('click', onClickLocation).addTo(this.options.map);
+        this.locationMarker = L.marker([this.model.get('start')[1], this.model.get('start')[0]], {icon: this.locationIcon, zIndexOffset: 1000}).on('click', onClickLocation);
 	    
 	    this.marker = L.marker(new L.LatLng(this.model.get('start')[1], this.model.get('start')[0])).on('click', onClick).on('mouseover', onMouseOver).on('mouseout', onMouseOut);			  
 	    this.marker.setIcon(L.divIcon({className: 'tb-map-marker', html: '<div class="marker"></div>', iconSize: [20, 20]}));      	  
@@ -99,38 +112,43 @@ define([
 	  // fire event
       app.dispatcher.trigger("MapTrailMarker:click", this);                
 	},		
+	focus: function(){	
+	  $(this.marker._icon).addClass('selected');
+	
+	  this.locationMarker.addTo(this.options.map);
+	
+	  if (this.polyline) {
+        this.polyline.setStyle(this.active_polyline_options);
+        this.polyline.bringToFront();
+	  }
+	},
+	blur: function(){	
+  	  $(this.marker._icon).removeClass('selected');
+  	
+  	  this.options.map.removeLayer(this.locationMarker);
+  	
+      this.marker.setIcon(L.divIcon({className: 'tb-map-marker', html: '<div class="marker"></div>', iconSize: [20, 20]}));
+      if (this.polyline) {
+        this.polyline.setStyle(this.inactive_polyline_options);
+      }
+	},
 	selected: function(bSelected){	
 	  this.bSelected = bSelected;
 	  if (bSelected) {
-		$(this.marker._icon).addClass('selected');
-		if (this.polyline) {
-          this.polyline.setStyle(this.active_polyline_options);	  	
-	      this.polyline.bringToFront();
-	    }
+	  	this.focus();
 	  }
 	  else {
-  	  	$(this.marker._icon).removeClass('selected');
-  	  	if (this.polyline) {
-          this.polyline.setStyle(this.inactive_polyline_options);
-        }	  		  	
+	  	this.blur();
 	  }		
 	},
 	onMouseOver: function(evt){	
   	  if (!this.bSelected) {
-		$(this.marker._icon).addClass('selected');
-		if (this.polyline) {
-	      this.polyline.setStyle(this.active_polyline_options);
-	      this.polyline.bringToFront();
-		}
+  	  	this.focus();
   	  }
     },
 	onMouseOut: function(evt){	
-  	  if (!this.bSelected) {  	  	
-  	  	$(this.marker._icon).removeClass('selected');
-        this.marker.setIcon(L.divIcon({className: 'tb-map-marker', html: '<div class="marker"></div>', iconSize: [20, 20]}));
-        if (this.polyline) {
-	      this.polyline.setStyle(this.inactive_polyline_options);
-	    }
+  	  if (!this.bSelected) {  	 
+  	  	this.blur(); 	
 	  }
   	}
   });

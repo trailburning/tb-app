@@ -279,6 +279,11 @@ a:active .tb-cntrl {
   overflow: hidden;		
 }
 
+.tb-avatar-search {
+  width: 38px;
+  height: 38px;  
+}
+
 .tb-avatar-highlight {
   width: 76px;
   height: 76px;
@@ -662,10 +667,6 @@ a:active .tb-cntrl {
   font-size: .9em;
 }
 
-.search .ui-autocomplete-loading {
-  background: white url('http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/images/ui-anim_basic_16x16.gif') right center no-repeat;
-}
-
 .search .ui-corner-all {
   border-radius: 0px;
 }
@@ -681,9 +682,6 @@ a:active .tb-cntrl {
 
 .search  .ui-autocomplete li a {
   padding: 10px;
-/*  
-  border-bottom: 1px solid #CDCDCD;
-*/  
 }
 
 .search  .ui-autocomplete li span {
@@ -692,10 +690,36 @@ a:active .tb-cntrl {
 
 .search .ui-autocomplete li .type {
   float: left;
+  width: 18%;
+}
+
+.search .ui-autocomplete li .icon_container {
+  width: 38px;
+  height: 38px;
+}
+
+.search .ui-autocomplete li .icon {
+  width: 100%;
+  height: 100%;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.search .ui-autocomplete li .trailcard {
+  background-image: url("../img/search/trailcard.png");
+}
+
+.search .ui-autocomplete li .event{
+  background-image: url("../img/search/event.png");
+}
+
+.search .ui-autocomplete li .editorial{
+  background-image: url("../img/search/editorial.png");
 }
 
 .search .ui-autocomplete li .match {
-  float: right;
+  float: left;
+  width: 75%;
 }
 
 .search .ui-autocomplete li {
@@ -760,6 +784,10 @@ a:active .tb-cntrl {
   -moz-transition: all 0.3s ease;
   -o-transition: all 0.3s ease;
   transition: all 0.3s ease;  
+}
+
+#searchBox.ui-autocomplete-loading {
+  background: #5F5F5F;
 }
 
 #searchBox:focus {

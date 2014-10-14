@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
     <script src="http://code.jquery.com/jquery-1.7.2.js"></script>
     <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
-    <script src="assets/js/elasticsearch.jquery.js"></script>
     <style>
         .ui-autocomplete-loading {
             background: white url('http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/images/ui-anim_basic_16x16.gif') right center no-repeat;
@@ -23,40 +22,43 @@
 
         $(function() {
             var cache = {};
-            var client = new $.es.Client({    
-                hosts: 'e7p15amb:4yexy8z21pg5eee0@boxwood-7916136.eu-west-1.bonsai.io'
-            });
             
             $('#q').autocomplete({
+            	autoFocus: true,
                 minLength: 2,
                 delay: 0,
-                source: function(request, response ) {
+                source: function(request, response) {
                     var term = request.term;
                     if (term in cache) {
                         response(cache[term]);
                         return;
                     }
-                    
-                    client.search({
-                        index: 'trailburning',
-                        body: {
-                            query: {
-                                match: {
-                                  suggest_nge: term
-                                }
-                            }
-                        }
-                    }).then(function (resp) {
-                        var suggestions = resp.hits.hits;
-                        cache[term] = suggestions;
-                        response(suggestions); 
-                    }, function (err) {
-                        console.log(err.message);
+                    var url = 'http://trailburning.localhost:8888/api/app_dev.php/v1/search/suggest?q=' + term;
+                    // var url = 'http://192.168.178.197:8888/trailburning_api/app_dev.php/v1/search/suggest?q=' + term;
+                    $.getJSON(url, request, function( data, status, xhr ) {
+                        var suggestions = data.hits.hits;
+                        cache[ term ] = suggestions;
+                        response(suggestions);
                     });
-                }
+                },
+				select: function(event, ui) {
+        		  console.log("You selected '" + ui.item.value + "'");
+        		}                        
             }).data('ui-autocomplete')._renderItem = function(ul, item) {
+                console.log(item);
+                if (item.highlight) {
+                    if (item.highlight.suggest_engram_full) {
+                        var text = item.highlight.suggest_engram_full;
+                    } else if(item.highlight.suggest_engram_part) {
+                        var text = item.highlight.suggest_engram_part;
+                    } else {
+                        var text = item.highlight.suggest_engram;
+                    }
+                } else {
+                    var text = item._source.suggest_engram;
+                }
                 return $('<li>')
-                    .append('<a>' + item._source.suggest_text + '</a>')
+                    .append('<a>' + text + '</a>')
                     .appendTo(ul);
             };
         });
