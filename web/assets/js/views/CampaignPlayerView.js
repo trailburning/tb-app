@@ -60,11 +60,11 @@ define([
         $(evt.currentTarget).css('cursor','pointer');      
 	  });
       
-      $('#trail_intro_view .trail_play').click(function(evt){
+      $('#campaign_landing_overlay_view .campaign_play').click(function(evt){
       	self.showPlayer();
 	  });
 
-      $('#trail_intro_view .trail_play').mouseover(function(evt){
+      $('#campaign_landing_overlay_view .campaign_play').mouseover(function(evt){
         $(evt.currentTarget).css('cursor','pointer');      
 	  });
 
@@ -216,13 +216,19 @@ define([
       self.showIntroOverlay();
       self.bLocked = false;
     },
-    showIntroOverlay: function(){    
-      $('#trail_intro_view .info-hero').css('left', 0);
-      $('#trail_intro_view .info-hero .trail_title').css('left', 50);                                	          
+    showIntroOverlay: function(){
+      $('#campaign_landing_overlay_view .info-hero').css('left', -144);
+      $('#campaign_landing_overlay_view .info-hero .campaign_title').css('left', 189);                                	          
+      
+      $('#campaign_map_overlay_view .info-hero').css('left', -800);
+      $('#campaign_map_overlay_view .info-hero .campaign_title').css('left', -100);
     },
     hideIntroOverlay: function(){    
-      $('#trail_intro_view .info-hero').css('left', -800);
-      $('#trail_intro_view .info-hero .trail_title').css('left', -100);
+      $('#campaign_landing_overlay_view .info-hero').css('left', -800);
+      $('#campaign_landing_overlay_view .info-hero .campaign_title').css('left', -100);
+      
+      $('#campaign_map_overlay_view .info-hero').css('left', -144);
+      $('#campaign_map_overlay_view .info-hero .campaign_title').css('left', 189);                                	          
     },
     toggleView: function(){
       if (this.nPlayerView != PLAYER_SHOW) {
