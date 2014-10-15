@@ -11,6 +11,7 @@ define([
       this.bTrailRendered = false;
       this.bSelected = false;
       this.polyline = null;
+      this.hoverPolyline = null;
       this.arrLineCordinates = [];
       
       var LocationIcon = L.Icon.extend({
@@ -26,25 +27,27 @@ define([
         color: '#44B6FC',
         opacity: 0.6,
         weight: 6,
-        clickable: true,        
-    	distanceMarkers: { offset: 1000, lazy: true }    
+        clickable: false,
+        distanceMarkers: { offset: 1000, lazy: true }
       };         
 	  
       this.active_polyline_options = {
         color: '#ed1c24',
         opacity: 0.8,
         weight: 6,
-        clickable: true
+        clickable: false
       };               
     },            
     showTrail: function(){    
       if (this.polyline) {
-        this.polyline.addTo(this.options.map);	
+        this.polyline.addTo(this.options.map);
+        this.hoverPolyline.addTo(this.options.map);	
       }
     },
     hideTrail: function(){
       if (this.polyline) {
         this.options.map.removeLayer(this.polyline);
+        this.options.map.removeLayer(this.hoverPolyline);
       }    
     },
     render: function(){
@@ -101,28 +104,17 @@ define([
       	  $.each(data.route.route_points, function(key, point) {
         	self.arrLineCordinates.push([Number(point.coords[1]), Number(point.coords[0])]);        
       	  });
-      	  self.polyline = L.polyline(self.arrLineCordinates, self.inactive_polyline_options).on('click', onClick).on('mouseover', onMouseOver).on('mouseout', onMouseOut);
-
-/*
-// use defaults
-var line = L.polyline(coords);
-
-// override defaults
-var line = L.polyline(coords, {
-    distanceMarkers: { showAll: 11, offset: 1600 }
-});
-
-// show/hide markers on mouseover
-var line = L.polyline(coords, {
-    distanceMarkers: { lazy: true }
-});
-line.on('mouseover', line.addDistanceMarkers);
-line.on('mouseout', line.removeDistanceMarkers);
-map.fitBounds(line.getBounds());
-map.addLayer(line);
-*/
-
-
+//      	  self.polyline = L.polyline(self.arrLineCordinates, self.inactive_polyline_options).on('click', onClick).on('mouseover', onMouseOver).on('mouseout', onMouseOut);
+      	  self.polyline = L.polyline(self.arrLineCordinates, self.inactive_polyline_options);
+      	  
+          var hover_polyline_options = {
+        	color: '#ff0000',
+        	opacity: 0,
+        	weight: 20,
+        	clickable: true,
+	    	distanceMarkers: { offset: 1000, lazy: true }                    
+      	  };               	  
+      	  self.hoverPolyline = L.polyline(self.arrLineCordinates, hover_polyline_options).on('click', onClick).on('mouseover', onMouseOver).on('mouseout', onMouseOut);
       	  self.showTrail();
         }      
       });            
@@ -140,7 +132,8 @@ map.addLayer(line);
 	  if (this.polyline) {
         this.polyline.setStyle(this.active_polyline_options);
 	    this.polyline.addDistanceMarkers();
-        this.polyline.bringToFront();        
+        this.polyline.bringToFront();
+        this.hoverPolyline.bringToFront();        
 	  }
 	},
 	blur: function(){	

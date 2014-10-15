@@ -346,12 +346,12 @@ border-width:1px;
 }
 
 .dist-marker {
-  font-size: 14px;
-  line-height: 20px;
+  font-size: 12px;
+  line-height: 24px;
   text-align: center;
   color: #000;	
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   border: 1px solid #777;
   background: #FFF;
   border-radius: 50%;
