@@ -36,7 +36,7 @@ L.DistanceMarkers = L.LayerGroup.extend({
 		for (var i = 1; i <= count; ++i) {
 			var distance = offset * i;
 			var position = L.GeometryUtil.interpolateOnLine(map, line, distance / length);
-			var icon = L.divIcon({ className: 'dist-marker', html: i });
+			var icon = L.divIcon({ className: 'dist-marker', html: i, iconSize: [20, 20] });
 			var marker = L.marker(position.latLng, { title: i, icon: icon });
 
 			// visible only starting at a specific zoom level

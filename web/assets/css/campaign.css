@@ -1,13 +1,3 @@
-
-.dist-marker {
-	font-size: 14px;
-	border: 1px solid #777;
-	border-radius: 10px;
-	text-align: center;
-	color: #000;
-	background: #fff;
-}
-
 /* APP */
 /******************************************/
 #appview {
@@ -353,6 +343,19 @@ border-width:1px;
   width: 254px;
   height: 188px;
   overflow: hidden;
+}
+
+.dist-marker {
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  color: #000;	
+  width: 20px;
+  height: 20px;
+  border: 1px solid #777;
+  background: #FFF;
+  border-radius: 50%;
+  overflow: hidden;		
 }
 
 /* CAMPAIGN PLAYER */
