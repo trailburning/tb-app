@@ -70,6 +70,12 @@ class Region implements Exportable
      **/
     private $events;
 
+    /**
+     * @var Point point
+     *
+     * @ORM\Column(name="area", type="polygon", columnDefinition="GEOMETRY(POLYGON,4326)", nullable=true)
+     */
+    private $area;
 
     /**
      * Get id

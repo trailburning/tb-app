@@ -189,4 +189,16 @@ class PostgisTest extends AbstractApiTestCase
         }
     }
     
+    public function testUpdateRegionArea()
+    {
+        $this->loadFixtures([
+            'TB\Bundle\FrontendBundle\DataFixtures\ORM\RegionData',
+        ]); 
+        $postgis = $this->getContainer()->get('postgis');
+        $region = $this->getRegion('london');
+        $gml = file_get_contents(realpath(__DIR__ . '/../../DataFixtures/GML/london.gml'));
+        $result = $postgis->updateRegionArea($region->getId(), $gml);
+        
+        $this->assertTrue($result);
+    }
 }    
