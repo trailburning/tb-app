@@ -18,7 +18,6 @@ define([
     
   	var imgLoad = imagesLoaded('.scale');
   	imgLoad.on('always', function(instance) {
-
       for ( var i = 0, len = imgLoad.images.length; i < len; i++ ) {
         $(imgLoad.images[i].img).addClass('scale_image_ready');
         // update pos

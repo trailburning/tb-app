@@ -606,6 +606,54 @@ html.touch #campaignplayer #view_map_btns {
   margin: 24px 0px 0px 24px;
 }
 
+.trailcards .promo_panel {
+  margin: 24px 0px 0px 24px;
+  width: 544px;
+}
+
+.trailcards .promo_panel .photo {
+  position: relative;
+}
+
+.trailcards .promo_panel .photo .image_container {
+  width: 544px;
+  height: 220px;  
+}
+
+.trailcards .promo_panel .photo .image_container.prize {
+  position: absolute;
+  top: -52px;
+  right: 54px;
+  width: 213px;
+  height: 328px;  	
+}
+
+.trailcards .promo_panel .marker {
+  margin-bottom: 10px;
+}
+
+.trailcards .promo_panel .sponsor {
+  position: absolute;
+  top: 84px;
+  left: 32px;  
+}
+
+.trailcards .promo_panel .sponsor img {
+  width: 100%;
+  height: 100%;
+}
+
+.trailcards .promo_panel .details {
+  height: 78px;  
+}
+
+.trailcards .promo_panel .more { 
+  float: left;
+  margin-left: 14px;
+  height: 56px;
+  line-height: 78px;
+}
+
 /* TOUCH */
 /******************************************/
 #view_map_btns .touch_btn {  
@@ -628,37 +676,6 @@ html.touch #campaignplayer #view_map_btns {
     position: relative;
     left: 128px;
   }
-  #trail_stats_view {
-    position: absolute;
-    width: 194px;
-  }  
-  .trailstats_panel .content {
-    margin: 30px 0px 0px 12px;
-  }  
-  #trail_altitude_view {
-    left: 214px;
-    width: 550px;
-  }
-  #trail_mini_view {
-    left: 752px;
-    width: 228px;
-  }  
-  #trail_minimap_view {
-    width: 228px;
-    height: 188px;
-  }
-  #trail_mini_view .border_right {
-    left: 226px;
-  }
-  #trail_minislides_view {
-    width: 228px;
-  }
-  #minislides .image_container {
-    width: 228px;
-  }  
-  #trail_mini_view .toggle_btn {
-    width: 228px;
-  }
   .panel_content {
     width: 968px;
   }
@@ -674,21 +691,20 @@ html.touch #campaignplayer #view_map_btns {
   .trail_location_panel,  
   .campaign_detail_panel,
   .trail_like_panel,
-  .trail_weather_panel {
+  .trail_weather_panel,
+  .trailcards .promo_panel,
+  .trailcards .promo_panel .photo .image_container {
     width: 472px;
   }    
-  .event_trails_container .event_trail {
-    width: 222px;
-  }  
-  .event_trail .detail {
-  	height: 192px;
-  }
-  .event_trails_container .big_event_trail {
-    width: 472px;
-  }  
   .trail_weather_panel .detail .text {
     width: 250px;
-  }
+  }  
+  .trailcards .promo_panel .photo .image_container.prize {
+    right: 20px;
+  }  
+  .trailcards .promo_panel .sponsor {
+    top: 74px;
+  }  
   .othertrails_panel {
     width: 472px;
     height: 336px;
