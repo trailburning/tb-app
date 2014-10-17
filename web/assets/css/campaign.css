@@ -346,6 +346,9 @@ border-width:1px;
 }
 
 .dist-marker {
+/*	
+  pointer-events: none;
+*/  
   font-size: 12px;
   line-height: 24px;
   text-align: center;
