@@ -4,7 +4,7 @@ define([
   'underscore', 
   'backbone',
   'views/ActivityFeedView',      
-  'views/SearchView'    
+  'views/SearchView',    
   'gmaps'
 ], function(_, Backbone, ActivityFeedView, SearchView, Gmaps){
   app.dispatcher = _.clone(Backbone.Events);
