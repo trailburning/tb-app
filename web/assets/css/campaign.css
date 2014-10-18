@@ -137,6 +137,10 @@ border-width:1px;
   left: 189px;
 }
 
+#campaign_map_overlay_view .trailcards .panel {
+  margin: 0px;
+}
+
 /* TRAIL SLIDES VIEW */
 /******************************************/
 #trail_slides_view {

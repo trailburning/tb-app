@@ -41,8 +41,20 @@ var TB_USER_ID = {{ app.user.id }};
 			<div class="info-hero tb-move-horiz">				  						  				
 			  <div class="campaign_title tb-move-horiz"><img src="http://assets.trailburning.com/images/campaign/urbantrails/london/logo_urbantrails_london.png" /></div>              
               <div class="campaign_card">
-				
-				<img src="{{ asset('assets/img') }}/temp_campaign.jpg" />
+
+				<div class="trailcards">
+					<div id="trailcard_view" class="panel trail_card_panel">
+						
+				    <div class="title"><h3 class="tb">London</h3></div>
+				    <div class="photo tb-photo-btn">
+				      <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/o=80/http://assets.trailburning.com/images/campaign/urbantrails/london/shutterstock_148485164.jpg" class="resrc scale" border="0"/></div>
+				    </div>
+				    <div class="location"></div>
+				    <div class="summary">
+				    </div>
+						
+					</div>
+				</div>
 				
 			  </div>              	
 			</div>        	
@@ -254,6 +266,42 @@ var TB_USER_ID = {{ app.user.id }};
       <div class="icon"></div>
     </div>
   </div>
+</script>
+
+<script type="text/template" id="trailCardViewTemplate">
+    <div class="title"><h3 class="tb"><%= category.name %></h3></div>
+    <div class="link" data-url="{{ app.request.baseUrl }}/trail/<%= slug %>" data-id="<%= id %>">
+    <div class="photo tb-photo-btn">
+      <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/O=80/http://media.trailburning.com<%= versionLargePath %>" class="resrc scale" border="0"/></div>
+      <div class="card_title">
+        <h1><%= name %></h1>
+        <br/>
+        <h2><%= region %></h2>
+		<br/>
+		<h2>
+        <span class="stars">
+          <span class="star"></span>
+          <span class="star"></span>
+          <span class="star"></span>
+          <span class="star"></span>
+          <span class="star"></span>
+        </span>
+		</h2>
+      </div>
+    </div>
+    </div>
+	<div class="card_avatar">
+      <div class="tb-avatar"><div class="photo"><a href="{{ app.request.baseUrl }}/profile/<%= user.name %>"><img src="<%= user.avatar %>"></a></div></div>
+	</div>	    
+    <div class="location"></div>
+    <div class="summary">
+	  <div class="length"><%= length_km %> km</div>
+	  <div class="altitude">
+	  <%= ascent_m %> D+
+	  <br/>
+	  <%= descent_m %> D-
+	  </div>
+    </div>
 </script>
 
 {% endblock %}
