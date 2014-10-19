@@ -18,12 +18,11 @@ define([
       this.bWaitingForSlide = false;
     },            
     show: function(){      
+      $(this.el).css('visibility', 'visible');
       $(this.el).fadeIn(500, 'linear');
-//      $(this.el).show();
     },
     hide: function(){
       $(this.el).fadeOut(500, 'linear');
-//      $(this.el).hide();
     },    
     gotoSlide: function(nSlide){
       this.bSlideReady = false;

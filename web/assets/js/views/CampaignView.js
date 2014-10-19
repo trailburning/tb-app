@@ -27,10 +27,12 @@ define([
   
       $('#campaignplayer').show();
       $('.panel_container').show();
-      $('#footerview').show();
       
   	  this.playerView.render();
       this.weatherView.render();
+
+      $('#content_view').show();
+      $('#footerview').show();
       
       this.playerView.handleMedia();
       this.handleResize();

@@ -22,7 +22,7 @@ define([
       this.nCurrCard = -1;
       this.currTrailCardMarker = null;
       this.collection = new Backbone.Collection();
-      
+
 	  this.markerCluster = new L.MarkerClusterGroup({ showCoverageOnHover: false, spiderfyOnMaxZoom: false, disableClusteringAtZoom: 13,
     	iconCreateFunction: function(cluster) {
     	  var nSize = 40;

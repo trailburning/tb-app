@@ -19,6 +19,7 @@ border-width:1px;
 /* CONTENT VIEW */
 /******************************************/
 #content_view {
+  display: none;	
   position: relative;
   top: 45px;  
   width: 100%;
@@ -144,6 +145,10 @@ border-width:1px;
 /* TRAIL SLIDES VIEW */
 /******************************************/
 #trail_slides_view {
+/*	
+  display: none;
+*/  
+  visibility: hidden;
   position: absolute;
   top: 0px;
   left: 0px;

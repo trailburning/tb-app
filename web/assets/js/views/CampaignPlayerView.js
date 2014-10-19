@@ -21,6 +21,7 @@ define([
       var self = this;
 
       this.nPlayerView = PLAYER_INTRO;
+//      this.nPlayerView = PLAYER_SHOW;
       this.nTrailView = SLIDE_VIEW;
       this.nSlideShowState = SLIDESHOW_INIT;
 
@@ -28,6 +29,7 @@ define([
       this.collection = new Backbone.Collection();
       this.slideTimer = null;
       this.nCurrSlide = -1;
+      this.bMapReady = false, this.bSlidesReady = false;
       this.bFirstSlide = true;
       this.bPlayerReady = false;  
       this.bSlideFull = true;
@@ -46,6 +48,10 @@ define([
 
 	  this.getResults();
 	  this.buildBtns();
+	  
+	  if (this.nPlayerView == PLAYER_INTRO) {
+        $('#trail_slides_view').css('visibility', 'visible');
+	  }
 	  
 	  var data = {'tags': {'width': 800, 'height': 600}, versions: [{ 'path': '/images/campaign/urbantrails/london/shutterstock_148485164.jpg'  }]};
 	  var mediaModel = new Backbone.Model(data);
@@ -81,7 +87,7 @@ define([
 	  });	  
 	},    
     render: function(){
-  	  this.trailMapView.render();
+  	  this.trailMapView.render();        
 	  this.trailCardView.render();
 	},
 	handleResize: function(){
@@ -177,6 +183,8 @@ define([
 	    	self.collection.add(model);	    
 		  });
 		  self.trailMapView.updateTrails();
+		  self.bMapReady = true;
+		  self.playerCheckpoint();
         }
       });        
     },    
@@ -359,9 +367,6 @@ define([
     	
       this.nTrailView = MAP_VIEW;
       
-      $('#trail_minimap_view').css('visibility', 'hidden');
-      $('#trail_minislides_view').css('visibility', 'visible');
-
       $('#view_map_btns').css('top', 18);
       
       $('#view_toggle .button').addClass('view_photo');
@@ -383,9 +388,6 @@ define([
     	
       this.nTrailView = SLIDE_VIEW;
       
-      $('#trail_minislides_view').css('visibility', 'hidden');
-      $('#trail_minimap_view').css('visibility', 'visible');
-      
       $('#view_map_btns').css('top', -300);
       
       $('#view_toggle .button').addClass('view_map');
@@ -400,6 +402,23 @@ define([
       this.trailSlidesView.show();
       this.trailSlidesView.render();
     },
+    playerCheckpoint: function(){
+      if (!this.bMapReady || !this.bSlidesReady) {
+      	return;
+      }
+      
+      this.bLocked = false;
+        
+      switch (this.nPlayerView) {
+        case PLAYER_INTRO:
+          this.showIntroOverlay();
+          break;
+            
+        case PLAYER_SHOW:
+          this.showPlayer();
+          break;
+      }
+    },    
     onTrailStatsPlayClick: function(){
       this.startSlideShow(); 
     },
@@ -521,9 +540,8 @@ define([
       
       if (this.bFirstSlide) {
         this.bFirstSlide = false;
-        
-        self.showIntroOverlay();
-        this.bLocked = false;
+      	this.bSlidesReady = true;
+      	this.playerCheckpoint();
       }
     },    
     onTrailSlidesViewSlideClickPrev: function(){
