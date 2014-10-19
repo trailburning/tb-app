@@ -16,6 +16,17 @@ border-width:1px;
   display: none;
 }
 
+.fixed_content {
+  width: 1140px;
+}
+
+/* CRUMBS */
+/******************************************/
+.crumb_content {
+  margin: 0px auto 0px auto;
+  width: 1112px;  
+}
+
 /* CONTENT VIEW */
 /******************************************/
 #content_view {
@@ -75,7 +86,7 @@ border-width:1px;
 #campaign_landing_overlay_view .info-hero .campaign_play {
   position: absolute;
   top: 332px;
-  left: 189px;
+  left: 184px;
   font-size: 42px;
   line-height: 75px;
   color: #FFF;
@@ -473,13 +484,19 @@ html.touch #campaignplayer #view_map_btns {
 /******************************************/
 .panel_content {
   position: relative;
+/*  
   margin: 0px auto 80px auto;
   width: 1112px;
+*/  
 }
 
 .panels {
+  margin: 0px auto 80px auto;
+  width: 1112px;
+/*	
   clear: left;
   width: 100%;
+*/  
   padding-top: 22px;
 }
 
@@ -610,6 +627,34 @@ html.touch #campaignplayer #view_map_btns {
   color: #FFFFFF;
 }
 
+/* LIKE TRAILS */
+/******************************************/
+.likedtrails_content {
+  width: 100%;
+  background: #FFF;
+}
+
+.likedtrails_content .fixed_content {
+  padding-top: 44px;
+  padding-bottom: 68px;
+  margin: 0px auto 0px auto;
+  text-align: center;
+}
+
+.likedtrails_content .desc {
+  margin-top: 18px;
+}
+
+.likedtrails_content .panels {
+  margin-top: 32px;
+  margin-bottom: 12px;
+}
+
+.likedtrails_content .trail_card_sticker {
+  display: inline-block;
+  margin: 0px 14px 0px 14px;
+}
+
 /* TRAIL */
 /******************************************/
 .trailcards .panel {
@@ -688,9 +733,13 @@ html.touch #campaignplayer #view_map_btns {
     position: relative;
     left: 128px;
   }
-  .panel_content {
-    width: 968px;
+  .fixed_content {
+    width: 994px;
   }
+  .crumb_content,
+  .panels {
+    width: 968px;
+  }    
   .panels .left {
     width: 472px;
   }
