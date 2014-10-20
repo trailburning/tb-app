@@ -12,13 +12,14 @@ define([
   var initialize = function() {
     var self = this;
 
+	L.mapbox.accessToken = 'pk.eyJ1IjoibWFsbGJldXJ5IiwiYSI6IjJfV1MzaE0ifQ.scrjDE31p7wBx7-GemqV3A';
+
     this.appView = new AppView({ el: '#appview' });
             
 	this.searchView = new SearchView({ el: '#searchview' });
     
   	var imgLoad = imagesLoaded('.scale');
   	imgLoad.on('always', function(instance) {
-
       for ( var i = 0, len = imgLoad.images.length; i < len; i++ ) {
         $(imgLoad.images[i].img).addClass('scale_image_ready');
         // update pos

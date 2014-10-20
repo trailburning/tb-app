@@ -2,8 +2,9 @@ define([
   'underscore', 
   'backbone',
   'views/CampaignSlidesView',  
-  'views/CampaignMapView'  
-], function(_, Backbone, CampaignSlidesView, CampaignMapView){
+  'views/CampaignMapView',
+  'views/CampaignTrailCardView'  
+], function(_, Backbone, CampaignSlidesView, CampaignMapView, CampaignTrailCardView){
   
   var PLAYER_INTRO = 0;
   var PLAYER_SHOW = 1;  
@@ -20,28 +21,42 @@ define([
       var self = this;
 
       this.nPlayerView = PLAYER_INTRO;
+	  // do we have a route to select?
+	  var nRouteID = $.cookie('route_id');
+	  if (nRouteID != undefined) {
+        this.nPlayerView = PLAYER_SHOW;
+	  }
+
       this.nTrailView = SLIDE_VIEW;
       this.nSlideShowState = SLIDESHOW_INIT;
 
       this.bLocked = true;
+      this.collection = new Backbone.Collection();
       this.slideTimer = null;
       this.nCurrSlide = -1;
+      this.bMapReady = false, this.bSlidesReady = false;
       this.bFirstSlide = true;
-      this.bPlayerReady = false;
-  
+      this.bPlayerReady = false;  
       this.bSlideFull = true;
 
       this.nPlayerHeight = 0;
       this.nPlayerMinHeight = $('#campaignplayer').height();
 
+      app.dispatcher.on("TrailMapView:selecttrail", self.onSelectTrail, this);
       app.dispatcher.on("TrailMapView:zoominclick", self.onTrailMapViewZoomInClick, this);
       app.dispatcher.on("TrailMapView:zoomoutclick", self.onTrailMapViewZoomOutClick, this);
       app.dispatcher.on("TrailSlidesView:slideview", self.onTrailSlidesViewSlideView, this);
 
       this.trailSlidesView = new CampaignSlidesView({ el: '#trail_slides_view', model: this.mediaModel });
       this.trailMapView = new CampaignMapView({ el: '#trail_map_view', elCntrls: '#view_map_btns', model: this.model });
+      this.trailCardView = new CampaignTrailCardView({ el: '#trailcard_view' });
 
+	  this.getResults();
 	  this.buildBtns();
+	  
+	  if (this.nPlayerView == PLAYER_INTRO) {
+        $('#trail_slides_view').css('visibility', 'visible');
+	  }
 	  
 	  var data = {'tags': {'width': 800, 'height': 600}, versions: [{ 'path': '/images/campaign/urbantrails/london/shutterstock_148485164.jpg'  }]};
 	  var mediaModel = new Backbone.Model(data);
@@ -77,7 +92,8 @@ define([
 	  });	  
 	},    
     render: function(){
-  	  this.trailMapView.render();
+  	  this.trailMapView.render();        
+	  this.trailCardView.render();
 	},
 	handleResize: function(){
       // remove transition to avoid seeing grey beneath image when resizing
@@ -147,6 +163,35 @@ define([
    	  $('#trail_map_view').height(this.nPlayerHeight);
    	  // force height update for MapBox
    	  $('#trail_map_view .map_container').height(this.nPlayerHeight);      	  	  
+    },    
+    getResults: function(){
+      var self = this;
+
+	  var nOffSet = this.nPage * (this.PageSize);
+		  		  
+	  var strURL = TB_RESTAPI_BASEURL + '/v1/routes/search?order=distance&radius=30&lat=51.507351&long=-0.127758&limit=500&offset=0';
+//	  var strURL = TB_RESTAPI_BASEURL + '/v1/routes/search?order=distance&radius=200&lat=-37.150776&long=142.502729&limit=500&offset=0';	  
+      $.ajax({
+        type: "GET",
+        dataType: "json",
+        url: strURL,
+        error: function(data) {
+//          console.log('error:'+data.responseText);      
+        },
+        success: function(data) {      
+//          console.log('success');
+//          console.log(data);
+          var model;
+      	  $.each(data.value.routes, function(key, card) {
+	    	model = new Backbone.Model(card);
+	    	self.trailMapView.addTrail(model);
+	    	self.collection.add(model);	    
+		  });
+		  self.trailMapView.updateTrails();
+		  self.bMapReady = true;
+		  self.playerCheckpoint();
+        }
+      });        
     },    
     handleMedia: function(){
       var self = this;
@@ -327,9 +372,6 @@ define([
     	
       this.nTrailView = MAP_VIEW;
       
-      $('#trail_minimap_view').css('visibility', 'hidden');
-      $('#trail_minislides_view').css('visibility', 'visible');
-
       $('#view_map_btns').css('top', 18);
       
       $('#view_toggle .button').addClass('view_photo');
@@ -351,9 +393,6 @@ define([
     	
       this.nTrailView = SLIDE_VIEW;
       
-      $('#trail_minislides_view').css('visibility', 'hidden');
-      $('#trail_minimap_view').css('visibility', 'visible');
-      
       $('#view_map_btns').css('top', -300);
       
       $('#view_toggle .button').addClass('view_map');
@@ -368,6 +407,34 @@ define([
       this.trailSlidesView.show();
       this.trailSlidesView.render();
     },
+    playerCheckpoint: function(){
+      if (!this.bMapReady || !this.bSlidesReady) {
+      	return;
+      }
+      
+      this.bLocked = false;
+        
+      switch (this.nPlayerView) {
+        case PLAYER_INTRO:
+          this.showIntroOverlay();
+          break;
+            
+        case PLAYER_SHOW:
+          this.showPlayer();
+          
+	  	  var nRouteID = $.cookie('route_id');          
+		  if (nRouteID != undefined) {
+    	    this.trailMapView.setMapView(new L.LatLng($.cookie('route_lat'), $.cookie('route_lng')), $.cookie('route_zoom'));
+            this.trailMapView.selectTrail(nRouteID);	        
+		  	// remove
+		  	$.removeCookie('route_id');
+		    $.removeCookie('route_lat');
+		    $.removeCookie('route_lng');
+		    $.removeCookie('route_zoom');        
+		  }          
+          break;
+      }
+    },    
     onTrailStatsPlayClick: function(){
       this.startSlideShow(); 
     },
@@ -489,9 +556,8 @@ define([
       
       if (this.bFirstSlide) {
         this.bFirstSlide = false;
-        
-        self.showIntroOverlay();
-        this.bLocked = false;
+      	this.bSlidesReady = true;
+      	this.playerCheckpoint();
       }
     },    
     onTrailSlidesViewSlideClickPrev: function(){
@@ -504,7 +570,11 @@ define([
     },
     onShowNextSlide: function(){
       this.nextSlide();          
-    }    
+    },
+    onSelectTrail: function(id){
+      var model = this.collection.get(id);
+	  this.trailCardView.render(model);
+    }
     
   });
 

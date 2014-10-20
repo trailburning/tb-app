@@ -16,9 +16,21 @@ border-width:1px;
   display: none;
 }
 
+.fixed_content {
+  width: 1140px;
+}
+
+/* CRUMBS */
+/******************************************/
+.crumb_content {
+  margin: 0px auto 0px auto;
+  width: 1112px;  
+}
+
 /* CONTENT VIEW */
 /******************************************/
 #content_view {
+  display: none;	
   position: relative;
   top: 45px;  
   width: 100%;
@@ -74,7 +86,7 @@ border-width:1px;
 #campaign_landing_overlay_view .info-hero .campaign_play {
   position: absolute;
   top: 332px;
-  left: 189px;
+  left: 184px;
   font-size: 42px;
   line-height: 75px;
   color: #FFF;
@@ -137,9 +149,17 @@ border-width:1px;
   left: 189px;
 }
 
+#campaign_map_overlay_view .trailcards .panel {
+  margin: 0px;
+}
+
 /* TRAIL SLIDES VIEW */
 /******************************************/
 #trail_slides_view {
+/*	
+  display: none;
+*/  
+  visibility: hidden;
   position: absolute;
   top: 0px;
   left: 0px;
@@ -346,12 +366,15 @@ border-width:1px;
 }
 
 .dist-marker {
-  font-size: 14px;
-  line-height: 20px;
+/*	
+  pointer-events: none;
+*/  
+  font-size: 12px;
+  line-height: 24px;
   text-align: center;
   color: #000;	
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   border: 1px solid #777;
   background: #FFF;
   border-radius: 50%;
@@ -461,13 +484,19 @@ html.touch #campaignplayer #view_map_btns {
 /******************************************/
 .panel_content {
   position: relative;
+/*  
   margin: 0px auto 80px auto;
   width: 1112px;
+*/  
 }
 
 .panels {
+  margin: 0px auto 80px auto;
+  width: 1112px;
+/*	
   clear: left;
   width: 100%;
+*/  
   padding-top: 22px;
 }
 
@@ -598,12 +627,92 @@ html.touch #campaignplayer #view_map_btns {
   color: #FFFFFF;
 }
 
+/* LIKE TRAILS */
+/******************************************/
+.likedtrails_content {
+  width: 100%;
+  background: #FFF;
+}
+
+.likedtrails_content .fixed_content {
+  padding-top: 44px;
+  padding-bottom: 68px;
+  margin: 0px auto 0px auto;
+  text-align: center;
+}
+
+.likedtrails_content .desc {
+  margin-top: 18px;
+}
+
+.likedtrails_content .panels {
+  margin-top: 32px;
+  margin-bottom: 12px;
+}
+
+.likedtrails_content .trail_card_sticker {
+  display: inline-block;
+  margin: 0px 14px 0px 14px;
+}
+
 /* TRAIL */
 /******************************************/
+#trailcard_view .link:hover {
+  cursor: pointer;  
+}
+
 .trailcards .panel {
   float: left;	
   position: relative;
   margin: 24px 0px 0px 24px;
+}
+
+.trailcards .promo_panel {
+  margin: 24px 0px 0px 24px;
+  width: 544px;
+}
+
+.trailcards .promo_panel .photo {
+  position: relative;
+}
+
+.trailcards .promo_panel .photo .image_container {
+  width: 544px;
+  height: 220px;  
+}
+
+.trailcards .promo_panel .photo .image_container.prize {
+  position: absolute;
+  top: -52px;
+  right: 54px;
+  width: 213px;
+  height: 328px;  	
+}
+
+.trailcards .promo_panel .marker {
+  margin-bottom: 10px;
+}
+
+.trailcards .promo_panel .sponsor {
+  position: absolute;
+  top: 84px;
+  left: 32px;  
+}
+
+.trailcards .promo_panel .sponsor img {
+  width: 100%;
+  height: 100%;
+}
+
+.trailcards .promo_panel .details {
+  height: 78px;  
+}
+
+.trailcards .promo_panel .more { 
+  float: left;
+  margin-left: 14px;
+  height: 56px;
+  line-height: 78px;
 }
 
 /* TOUCH */
@@ -628,40 +737,13 @@ html.touch #campaignplayer #view_map_btns {
     position: relative;
     left: 128px;
   }
-  #trail_stats_view {
-    position: absolute;
-    width: 194px;
-  }  
-  .trailstats_panel .content {
-    margin: 30px 0px 0px 12px;
-  }  
-  #trail_altitude_view {
-    left: 214px;
-    width: 550px;
+  .fixed_content {
+    width: 994px;
   }
-  #trail_mini_view {
-    left: 752px;
-    width: 228px;
-  }  
-  #trail_minimap_view {
-    width: 228px;
-    height: 188px;
-  }
-  #trail_mini_view .border_right {
-    left: 226px;
-  }
-  #trail_minislides_view {
-    width: 228px;
-  }
-  #minislides .image_container {
-    width: 228px;
-  }  
-  #trail_mini_view .toggle_btn {
-    width: 228px;
-  }
-  .panel_content {
+  .crumb_content,
+  .panels {
     width: 968px;
-  }
+  }    
   .panels .left {
     width: 472px;
   }
@@ -674,21 +756,20 @@ html.touch #campaignplayer #view_map_btns {
   .trail_location_panel,  
   .campaign_detail_panel,
   .trail_like_panel,
-  .trail_weather_panel {
+  .trail_weather_panel,
+  .trailcards .promo_panel,
+  .trailcards .promo_panel .photo .image_container {
     width: 472px;
   }    
-  .event_trails_container .event_trail {
-    width: 222px;
-  }  
-  .event_trail .detail {
-  	height: 192px;
-  }
-  .event_trails_container .big_event_trail {
-    width: 472px;
-  }  
   .trail_weather_panel .detail .text {
     width: 250px;
-  }
+  }  
+  .trailcards .promo_panel .photo .image_container.prize {
+    right: 20px;
+  }  
+  .trailcards .promo_panel .sponsor {
+    top: 74px;
+  }  
   .othertrails_panel {
     width: 472px;
     height: 336px;

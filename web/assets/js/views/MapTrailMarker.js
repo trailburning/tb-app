@@ -6,54 +6,63 @@ define([
 
   var MapTrailMarker = Backbone.View.extend({
     initialize: function(){
+      this.trailEvents = this.trailEvents || {};    	
+    	
+  	  this.trailEvents.dispatcher = _.clone(Backbone.Events);
+    	
+	  var self = this;
+	      	
+      this.trailEvents.dispatcher.on("DistanceMarkers:click", function(evt){
+		// fire event
+        app.dispatcher.trigger("MapTrailMarker:click", self);                     	  	
+      }, this);
+      this.trailEvents.dispatcher.on("DistanceMarkers:mouseover", function(evt){
+	    self.onMouseOver(evt);      	  	
+      }, this);
+      this.trailEvents.dispatcher.on("DistanceMarkers:mouseout", function(evt){
+	  	self.onMouseOut(evt);      	  	
+      }, this);
+    	
       this.trailModel = new TrailModel();    	
       this.bRendered = false;
       this.bTrailRendered = false;
+      this.bTrailVisible = false;
       this.bSelected = false;
       this.polyline = null;
+      this.hoverPolyline = null;
       this.arrLineCordinates = [];
       
       var LocationIcon = L.Icon.extend({
           options: {
               iconSize:     [36, 47],
-              iconAnchor:   [16, 58],
+              iconAnchor:   [16, 44],
               popupAnchor:  [16, 44]
           }
       });      
-      this.locationIcon = new LocationIcon({iconUrl: 'http://assets.trailburning.com/images/icons/location.png'});      
-      
-      this.inactive_polyline_options = {
-        color: '#44B6FC',
-        opacity: 0.6,
-        weight: 6,
-        clickable: true,        
-    	distanceMarkers: { offset: 1000, lazy: true }    
-      };         
-	  
-      this.active_polyline_options = {
-        color: '#ed1c24',
-        opacity: 0.8,
-        weight: 6,
-        clickable: true
-      };               
+      this.locationIcon = new LocationIcon({iconUrl: 'http://assets.trailburning.com/images/icons/location.png'});            
     },            
     showTrail: function(){    
       if (this.polyline) {
-        this.polyline.addTo(this.options.map);	
+        this.polyline.addTo(this.options.map);
+		this.hoverPolyline.addTo(this.options.map);
+		if ($(this.marker._icon).hasClass('selected')) {
+			this.selected(true);
+		}
+		this.bTrailVisible = true;
       }
     },
     hideTrail: function(){
       if (this.polyline) {
         this.options.map.removeLayer(this.polyline);
-      }    
+        this.options.map.removeLayer(this.hoverPolyline);
+      } 
+      this.bTrailVisible = false;   
     },
     render: function(){
       var self = this;
 
       if (!this.bRendered) {
         // add to map
-        function onClickLocation(evt) {
-        }
         function onClick(evt) {
 		  // fire event
           app.dispatcher.trigger("MapTrailMarker:click", self);                
@@ -65,10 +74,10 @@ define([
 	  	  self.onMouseOut(evt);
 	    }	    
 	    
-        this.locationMarker = L.marker([this.model.get('start')[1], this.model.get('start')[0]], {icon: this.locationIcon, zIndexOffset: 1000}).on('click', onClickLocation);	    
 	    this.marker = L.marker(new L.LatLng(this.model.get('start')[1], this.model.get('start')[0])).on('click', onClick).on('mouseover', onMouseOver).on('mouseout', onMouseOut);			  
 	    this.marker.setIcon(L.divIcon({className: 'tb-map-marker', html: '<div class="marker"></div>', iconSize: [20, 20]}));      	  
-		this.options.mapCluster.addLayer(this.marker);      	  
+		this.options.mapCluster.addLayer(this.marker);		
+//		this.locationMarker = L.marker(new L.LatLng(this.model.get('start')[1], this.model.get('start')[0]), {icon: this.locationIcon});            
 	  }
       this.bRendered = true;
                        
@@ -96,33 +105,56 @@ define([
       // get trail    
       this.trailModel.set('id', this.model.id);             
       this.trailModel.fetch({
-        success: function () {        
+        success: function () {                
+	      var nDistanceOffsetMetres = 1000;
+	      // over 10k reduce markers
+	      if (self.trailModel.get('value').route.length > 10000) {
+	        nDistanceOffsetMetres = 2000;
+		  }
+	      
+	      self.blur_polyline_options = {
+	        color: '#ed1c24',
+	        opacity: 0.4,
+	        weight: 6,
+	        clickable: false,
+	        distanceMarkers: { offset: nDistanceOffsetMetres, lazy: true, events: self.trailEvents }
+	      };         
+		  
+	      self.focus_polyline_options = {
+	        color: '#ed1c24',
+	        opacity: 0.8,
+	        weight: 6,
+	        clickable: false,
+	        distanceMarkers: { offset: nDistanceOffsetMetres, lazy: true, events: self.trailEvents }
+	      };               
+	
+	      self.select_polyline_options = {
+	        color: '#ed1c24',
+	        opacity: 1,
+	        weight: 6,
+	        clickable: false,
+	        distanceMarkers: { offset: nDistanceOffsetMetres, lazy: true, events: self.trailEvents }
+	      };               
+        	
+        	
       	  var data = self.trailModel.get('value');      
       	  $.each(data.route.route_points, function(key, point) {
         	self.arrLineCordinates.push([Number(point.coords[1]), Number(point.coords[0])]);        
       	  });
-      	  self.polyline = L.polyline(self.arrLineCordinates, self.inactive_polyline_options).on('click', onClick).on('mouseover', onMouseOver).on('mouseout', onMouseOut);
-
-/*
-// use defaults
-var line = L.polyline(coords);
-
-// override defaults
-var line = L.polyline(coords, {
-    distanceMarkers: { showAll: 11, offset: 1600 }
-});
-
-// show/hide markers on mouseover
-var line = L.polyline(coords, {
-    distanceMarkers: { lazy: true }
-});
-line.on('mouseover', line.addDistanceMarkers);
-line.on('mouseout', line.removeDistanceMarkers);
-map.fitBounds(line.getBounds());
-map.addLayer(line);
-*/
-
-
+      	  self.polyline = L.polyline(self.arrLineCordinates, self.blur_polyline_options);
+      	  
+          var hover_polyline_options = {
+        	color: '#000000',
+        	opacity: 0,
+        	weight: 20,
+        	clickable: true,
+	    	distanceMarkers: { offset: 1000, lazy: true, events: self.trailEvents }                    
+      	  };               	  
+      	  self.hoverPolyline = L.polyline(self.arrLineCordinates, hover_polyline_options).on('click', onClick).on('mousemove', function(evt){
+	  	    self.onMouseOver(evt);      	  	
+      	  }).on('mouseout', function(evt){
+            self.onMouseOut(evt);
+      	  });
       	  self.showTrail();
         }      
       });            
@@ -133,24 +165,25 @@ map.addLayer(line);
       app.dispatcher.trigger("MapTrailMarker:click", this);                
 	},		
 	focus: function(){	
-	  $(this.marker._icon).addClass('selected');
-	
-	  this.locationMarker.addTo(this.options.map);
-	
+	  $(this.marker._icon).addClass('selected');	
+//	  this.locationMarker.addTo(this.options.map);
+
 	  if (this.polyline) {
-        this.polyline.setStyle(this.active_polyline_options);
-	    this.polyline.addDistanceMarkers();
-        this.polyline.bringToFront();        
+        this.polyline.setStyle(this.focus_polyline_options);
+	  	this.polyline.addDistanceMarkers();
+	  	if (this.bTrailVisible) {
+          this.polyline.bringToFront();
+          this.hoverPolyline.bringToFront();	  		
+	  	}
 	  }
 	},
 	blur: function(){	
-  	  $(this.marker._icon).removeClass('selected');
-  	
-  	  this.options.map.removeLayer(this.locationMarker);
+  	  $(this.marker._icon).removeClass('selected');  	
+//  	  this.options.map.removeLayer(this.locationMarker);
   	
       this.marker.setIcon(L.divIcon({className: 'tb-map-marker', html: '<div class="marker"></div>', iconSize: [20, 20]}));
       if (this.polyline) {
-        this.polyline.setStyle(this.inactive_polyline_options);
+        this.polyline.setStyle(this.blur_polyline_options);
         this.polyline.removeDistanceMarkers();
       }
 	},
@@ -158,6 +191,9 @@ map.addLayer(line);
 	  this.bSelected = bSelected;
 	  if (bSelected) {
 	  	this.focus();
+	  	if (this.polyline) {
+          this.polyline.setStyle(this.select_polyline_options);
+        }
 	  }
 	  else {
 	  	this.blur();

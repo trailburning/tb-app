@@ -4,12 +4,14 @@ define([
   'underscore', 
   'backbone',
   'views/ActivityFeedView',      
-  'views/SearchView'    
+  'views/SearchView',    
   'gmaps'
 ], function(_, Backbone, ActivityFeedView, SearchView, Gmaps){
   app.dispatcher = _.clone(Backbone.Events);
   
   var initialize = function() {
+	L.mapbox.accessToken = 'pk.eyJ1IjoibWFsbGJldXJ5IiwiYSI6IjJfV1MzaE0ifQ.scrjDE31p7wBx7-GemqV3A';
+
     var self = this;
     
 	$('select').selectpicker();

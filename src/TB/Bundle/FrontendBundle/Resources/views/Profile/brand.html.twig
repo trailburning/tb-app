@@ -54,103 +54,54 @@ var TB_BRAND_ID = {{ brand.id }};
       
         <div class="right">
         	
-        {% if brand.id == 215 %}
+        {% if routes %}
     		<div class="trails_title">
     		<h2 class="tb tb-title first-title ">Discover the trails</h2>
     		</div>
 			
         	<div class="event_container trailcards">
-			
-				<div class="panel trail_card_panel">
-				    <div class="title"><h3 class="tb">Mountains</h3></div>
-				    <a href="../trail/gang-gangs-lazy-loop-mt-buller ">
-				    <div class="photo tb-photo-btn">
-				      <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/o=80/http://media.trailburning.com/422/8da94c153dafeb392390301ce17ae380f02e271b.jpg" class="resrc scale" border="0"></div>
-				      <div class="card_title">
-				        <h1>Gang Gangs Lazy Loop</h1>
-				      </div>
-				      <div class="trail_level ts_green"></div>
-				    </div>
-				    </a>
-					<div class="card_avatar sponsor"><a href="../profile/mtbuller"><img src="http://assets.trailburning.com/images/profile/mtbuller/card_trail_sticker_logo.png"></a></div>	
-				    <div class="summary">
-						<div class="length">4 km</div>
-						<div class="altitude">
-						199 m D+
-						<br/> 
-					    199 m D-
-						</div>
-				    </div>
-				</div>
-
-				<div class="panel trail_card_panel">
-				    <div class="title"><h3 class="tb">Mountains</h3></div>
-				    <a href="../trail/buller-stirling-showcase-mt-buller">
-				    <div class="photo tb-photo-btn">
-				      <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/o=80/http://media.trailburning.com/423/6ac3d807743f8aa25ab5827b5db1c88e58a0cbad.jpg" class="resrc scale" border="0"></div>
-				      <div class="card_title">
-				        <h1>Buller Stirling Showcase</h1>
-				      </div>
-				      <div class="trail_level ts_black"></div>
-				    </div>
-				    </a>
-					<div class="card_avatar sponsor"><a href="../profile/mtbuller"><img src="http://assets.trailburning.com/images/profile/mtbuller/card_trail_sticker_logo.png"></a></div>				    
-				    <div class="summary">
-						<div class="length">28 km</div>
-						<div class="altitude">
-						1’121 m D+
-						<br/> 
-					    1’126 m D-
-						</div>
-				    </div>
-				</div>
-
-				<div class="panel trail_card_panel">
-				    <div class="title"><h3 class="tb">Mountains</h3></div>
-				    <a href="../trail/delatite-drop-mt-buller">
-				    <div class="photo tb-photo-btn">
-				      <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/o=80/http://media.trailburning.com/424/eb97dca023f18faa30ea01f98404c225aae7acb1.jpg" class="resrc scale" border="0"></div>
-				      <div class="card_title">
-				        <h1>Delatite Drop</h1>
-				      </div>
-				      <div class="trail_level ts_blue"></div>
-				    </div>
-				    </a>
-					<div class="card_avatar sponsor"><a href="../profile/mtbuller"><img src="http://assets.trailburning.com/images/profile/mtbuller/card_trail_sticker_logo.png"></a></div>				    
-				    <div class="summary">
-						<div class="length">14 km</div>
-						<div class="altitude">
-						369 m D+
-						<br/> 
-					    1’281 m D-
-						</div>
-				    </div>
-				</div>
-
-				<div class="panel trail_card_panel">
-				    <div class="title"><h3 class="tb">Mountains</h3></div>
-				    <a href="../trail/outer-space-loop-mt-buller">
-				    <div class="photo tb-photo-btn">
-				      <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/o=80/http://media.trailburning.com/425/1a758b7c527873593f6d7d5af1e6543f04c89ef7.jpg" class="resrc scale" border="0"></div>
-				      <div class="card_title">
-				        <h1>Outer Space Loop</h1>
-				      </div>
-				      <div class="trail_level ts_blue"></div>
-				    </div>
-				    </a>
-					<div class="card_avatar sponsor"><a href="../profile/mtbuller"><img src="http://assets.trailburning.com/images/profile/mtbuller/card_trail_sticker_logo.png"></a></div>				    
-				    <div class="summary">
-						<div class="length">11 km</div>
-						<div class="altitude">
-						518 m D+
-						<br/> 
-					    527 m D-
-						</div>
-				    </div>
-				</div>
-
-			</div>
-        {% endif %}   
+                {% for route in routes %}
+    				<div class="panel trail_card trail_card_panel">
+    					<div class="title">
+    						<h3 class="tb">{{ route.category.name}}</h3>
+    					</div>
+    					<a href="{{ path('trail', {'trailSlug': route.slug}) }}">
+    					<div class="photo tb-photo-btn">
+    						<div class="image_container fade_on_load">
+    							{% if route.media is defined %}
+    							<img src="http://app.resrc.it/O=80/http://media.trailburning.com{{ route.media.versions[0].path }}" class="resrc scale" border="0"/>
+    							{% else %}
+    							<img src="http://app.resrc.it/s=w260,pd1/o=80/http://assets.trailburning.com/images/default/example_trailcard.jpg" class="resrc scale" border="0"/>
+    							{% endif %}
+    						</div>
+    						<div class="card_title">
+    							<h1>{{ route.name }}</h1>
+    							<br/>
+    							<h2>{{ route.region }}</h2>
+    							<br/>
+    							<h2>{{ include('TBFrontendBundle:Trail:_trailcardRating.html.twig', {'trail': route}) }}</h2>
+    						</div>
+{#
+							<div class="trail_level ts_green"></div>    							
+#}    						
+    					</div></a>					                        
+                        <div class="card_avatar sponsor"><a href="{{ path('profile', {'name': brand.name}) }}"><img src="http://assets.trailburning.com/images/profile/{{ brand.name }}/card_trail_sticker_logo.png"></a></div>                        
+    					<div class="summary">
+    						<div class="length">{{ route.length|dimension_format('km', 1000) }}</div>
+    						<div class="altitude">
+                            {% if route.tags.ascent %}
+                            	{{ route.tags.ascent|dimension_format('m') }} D+
+                                {% if route.tags.descent %}
+                                	<br/>{{ route.tags.descent|dimension_format('m') }} D-
+                                {% endif %}
+                            {% endif %}
+    						</div>
+    					</div>
+    				</div>
+                {% endfor %}
+            </div>
+            
+        {% endif %}
         	
         {% if brand.id == 220 %}
     		<div class="trails_title">

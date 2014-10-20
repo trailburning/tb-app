@@ -124,6 +124,17 @@ class ProfileController extends Controller
                 ->getRepository('TBFrontendBundle:Event')
                     ->findByUser($user);
             
+            $client = $this->get('rest_client');
+            $request = $client->get('v1/routes/user/' . $user->getId());
+            $response = $request->send();
+            $response->getBody();
+        
+            if ($response->getStatusCode() !== 200) {
+                throw new \Exception('API error');  
+            }
+            $data = $response->json();
+            $routes = $data['value']['routes'];
+            
             $breadcrumb[] = [
                 'name' => 'profile',
                 'label' => $user->getDisplayName(), 
@@ -133,6 +144,7 @@ class ProfileController extends Controller
             return $this->render(
                 'TBFrontendBundle:Profile:brand.html.twig', [
                     'brand' => $user, 
+                    'routes' => $routes, 
                     'events' => $events, 
                     'breadcrumb' => $breadcrumb
                 ]
