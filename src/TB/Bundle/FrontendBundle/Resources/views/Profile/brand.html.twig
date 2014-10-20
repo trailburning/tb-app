@@ -84,7 +84,8 @@ var TB_BRAND_ID = {{ brand.id }};
 {#
 							<div class="trail_level ts_green"></div>    							
 #}    						
-    					</div></a>					                        
+    					</div></a>					
+    					    	
                         <div class="card_avatar sponsor"><a href="{{ path('profile', {'name': brand.name}) }}"><img src="http://assets.trailburning.com/images/profile/{{ brand.name }}/card_trail_sticker_logo.png"></a></div>                        
     					<div class="summary">
     						<div class="length">{{ route.length|dimension_format('km', 1000) }}</div>
@@ -97,6 +98,12 @@ var TB_BRAND_ID = {{ brand.id }};
                             {% endif %}
     						</div>
     					</div>
+{#							    					
+						<div class="card_avatar">
+			       		{{ include('TBFrontendBundle:Profile:_userAvatar.html.twig', {user: route.user}) }}
+						</div>	
+#}				       		
+    					
     				</div>
                 {% endfor %}
             </div>
