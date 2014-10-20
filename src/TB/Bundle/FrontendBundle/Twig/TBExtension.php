@@ -19,10 +19,20 @@ class TBExtension extends \Twig_Extension
     {
         return [
             new \Twig_SimpleTest('UserProfile', function ($substance) { 
-                return $substance instanceof \TB\Bundle\FrontendBundle\Entity\UserProfile;
+                if ($substance instanceof \TB\Bundle\FrontendBundle\Entity\UserProfile 
+                    || (property_exists($substance, 'discr') && $substance->discr == 'user')) {
+                    return true;
+                } else {
+                    return false;
+                }
             }),
             new \Twig_SimpleTest('BrandProfile', function ($substance) { 
-                return $substance instanceof \TB\Bundle\FrontendBundle\Entity\BrandProfile; 
+                if ($substance instanceof \TB\Bundle\FrontendBundle\Entity\BrandProfile
+                    || (property_exists($substance, 'discr') && $substance->discr == 'brand')) {
+                    return true;
+                } else {
+                    return false;
+                }
             })
         ];
     }
