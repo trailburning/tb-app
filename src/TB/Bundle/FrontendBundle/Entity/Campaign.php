@@ -122,6 +122,13 @@ class Campaign
     private $routes;
     
     /**
+     * @var string
+     *
+     * @ORM\Column(name="link", type="string", length=255, nullable=true)
+     */
+    private $link;
+    
+    /**
      * Get id
      *
      * @return integer 
@@ -487,5 +494,28 @@ class Campaign
         } else {
             return $this->getTitle();
         }
+    }
+
+    /**
+     * Set link
+     *
+     * @param string $link
+     * @return Campaign
+     */
+    public function setLink($link)
+    {
+        $this->link = $link;
+
+        return $this;
+    }
+
+    /**
+     * Get link
+     *
+     * @return string 
+     */
+    public function getLink()
+    {
+        return $this->link;
     }
 }

@@ -111,7 +111,7 @@ var TB_USER_ID = {{ app.user.id }};
                                     {{ campaign.synopsis|nl2br }}
                 				</h4>
                                 <p>{{ campaign.text|raw }}</p>
-			                    <div class="join"><a href="" onClick="" class="btn btn-tb-action btn-tb-large">Visit {{ campaign.title }}</a></div>
+			                    <div class="join"><a href="{{ campaign.link }}" onClick="" class="btn btn-tb-action btn-tb-large" target="_blank">Visit {{ campaign.title }}</a></div>
 			                </div>
 			            </div>
 			            
