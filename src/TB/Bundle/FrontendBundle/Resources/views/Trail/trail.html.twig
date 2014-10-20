@@ -11,7 +11,11 @@
 {% if event %}
 	{{ trail.name }}, {{ trail.region }}
 {% else %}
-	{{ trail.name }}, {{ trail.region }} by {{ user.firstName }} {{ user.lastName }}
+    {% if user is UserProfile %}
+		{{ trail.name }}, {{ trail.region }} by {{ user.firstName }} {{ user.lastName }}
+	{% else%}
+		{{ trail.name }}, {{ trail.region }}
+	{% endif %}
 {% endif %}
 {% endblock %}
 
