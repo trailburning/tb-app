@@ -179,6 +179,10 @@ define([
       // keyboard control
       $(document).keydown(function(e){
       	switch (e.keyCode) {
+      	  case 27: // close player
+            e.preventDefault();
+            self.trailPlayerView.hidePlayer();
+      	    break;
       	  case 13: // toggle overlay
             e.preventDefault();
             self.trailPlayerView.togglePlayer();
