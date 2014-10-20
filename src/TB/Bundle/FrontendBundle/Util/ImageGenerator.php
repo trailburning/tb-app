@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 use TB\Bundle\FrontendBundle\Entity\Route;
 use TB\Bundle\FrontendBundle\Entity\Editorial;
 use TB\Bundle\FrontendBundle\Entity\Event;
+use TB\Bundle\FrontendBundle\Entity\BrandProfile;
 use Gaufrette\Filesystem;
 
 /**
@@ -108,6 +109,40 @@ class ImageGenerator
         $event->setShareImage($shareImagePath);
         $this->em->persist($event);
         $this->em->flush($event);
+
+        return true;
+    }
+    
+    public function createBrandProfileShareImage(BrandProfile $profile)
+    {
+        if ($profile->getHeaderImage() === null) {
+            return false;
+        }
+        
+        // Get the image to create the share image and the watermark
+        $imagePath = sprintf('images/profile/%s/%s', $profile->getUsername(), $profile->getHeaderImage());
+        if (!$this->assetsFilesystem->has($imagePath)) {
+            throw new \Exception(sprintf('Missing BrandProfile image: %s', $imagePath));
+        }
+        
+        // Construct the share image filepath
+        $pathParts = pathinfo($imagePath);        
+        $shareImagePath = sprintf('images/profile/%s/%s_share.%s', $profile->getUsername(), $pathParts['filename'], $pathParts['extension']);
+        
+        $watermarkPath = realpath(__DIR__ . '/../DataFixtures/Media/watermark/fb_share_event_1200x630.png');
+        $logoPath = realpath(__DIR__ . '/../DataFixtures/Media/watermark/fb_share_event_1200x630.png');
+        
+        $logoPath = sprintf('images/profile/%s/%s', $profile->getUsername(), $profile->getAvatar());
+        if (!$this->assetsFilesystem->has($logoPath)) {
+            throw new \Exception(sprintf('Missing BrandProfile avatar: %s', $logoPath));
+        }
+        
+        $this->createShareImage($imagePath, $shareImagePath, $watermarkPath, $this->assetsFilesystem, $logoPath);
+        
+        // Update the Media object and set the share image path
+        $profile->setShareImage($shareImagePath);
+        $this->em->persist($profile);
+        $this->em->flush($profile);
 
         return true;
     }

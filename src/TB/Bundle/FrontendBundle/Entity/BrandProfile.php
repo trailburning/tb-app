@@ -70,6 +70,13 @@ class BrandProfile extends User
      */
     private $sponsoredEvents;
     
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="share_image", type="string", length=100, nullable=true)
+     */
+    private $shareImage;
+    
     public function getTitle()
     {
         return $this->getDisplayName();
@@ -311,5 +318,60 @@ class BrandProfile extends User
         
         return $data;
     }
-    
+
+    /**
+     * Set shareImage
+     *
+     * @param string $shareImage
+     * @return BrandProfile
+     */
+    public function setShareImage($shareImage)
+    {
+        $this->shareImage = $shareImage;
+
+        return $this;
+    }
+
+    /**
+     * Get shareImage
+     *
+     * @return string 
+     */
+    public function getShareImage()
+    {
+        return $this->shareImage;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set registeredAt
+     *
+     * @param \DateTime $registeredAt
+     * @return BrandProfile
+     */
+    public function setRegisteredAt($registeredAt)
+    {
+        $this->registeredAt = $registeredAt;
+
+        return $this;
+    }
+
+    /**
+     * Get registeredAt
+     *
+     * @return \DateTime 
+     */
+    public function getRegisteredAt()
+    {
+        return $this->registeredAt;
+    }
 }
