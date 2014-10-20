@@ -21,7 +21,12 @@ define([
       var self = this;
 
       this.nPlayerView = PLAYER_INTRO;
-//      this.nPlayerView = PLAYER_SHOW;
+	  // do we have a route to select?
+	  var nRouteID = $.cookie('route_id');
+	  if (nRouteID != undefined) {
+        this.nPlayerView = PLAYER_SHOW;
+	  }
+
       this.nTrailView = SLIDE_VIEW;
       this.nSlideShowState = SLIDESHOW_INIT;
 
@@ -416,6 +421,17 @@ define([
             
         case PLAYER_SHOW:
           this.showPlayer();
+          
+	  	  var nRouteID = $.cookie('route_id');          
+		  if (nRouteID != undefined) {
+    	    this.trailMapView.setMapView(new L.LatLng($.cookie('route_lat'), $.cookie('route_lng')), $.cookie('route_zoom'));
+            this.trailMapView.selectTrail(nRouteID);	        
+		  	// remove
+		  	$.removeCookie('route_id');
+		    $.removeCookie('route_lat');
+		    $.removeCookie('route_lng');
+		    $.removeCookie('route_zoom');        
+		  }          
           break;
       }
     },    
@@ -555,8 +571,8 @@ define([
     onShowNextSlide: function(){
       this.nextSlide();          
     },
-    onSelectTrail: function(trailCardMarker){
-      var model = this.collection.get(trailCardMarker.model.id);
+    onSelectTrail: function(id){
+      var model = this.collection.get(id);
 	  this.trailCardView.render(model);
     }
     

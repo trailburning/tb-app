@@ -14,6 +14,7 @@ define([
       var self = this;
       
       app.dispatcher.on("MapTrailMarker:click", self.onSelectTrail, this);
+      app.dispatcher.on("CampaignTrailCardView:click", self.onTrailCardViewClick, this);
             
       this.elCntrls = this.options.elCntrls;            
       this.bRendered = false;
@@ -180,7 +181,10 @@ define([
 	  this.map.addLayer(this.markerCluster);
 	  this.map.fitBounds(this.markerCluster.getBounds(), {padding: [200, 200]});
     },
-    onSelectTrail: function(trailCardMarker){
+    setMapView: function(latLng, nZoom){
+   	  this.map.setView(latLng, nZoom);
+    },
+    selectTrail: function(id){
 	  if (this.currMarkerOrCluster) {
 	  	$(this.currMarkerOrCluster._icon).removeClass('selected');
 	  	this.currMarkerOrCluster = null;
@@ -189,15 +193,30 @@ define([
       if (this.currTrailCardMarker) {
       	this.currTrailCardMarker.selected(false);      	
       }
+      
+      var trailCardMarker = this.collection.get(id).mapTrailMarker;
       this.currTrailCardMarker = trailCardMarker;
 
-	  var cardModel = this.collection.get(trailCardMarker.model.id);
+	  var cardModel = this.collection.get(id);
       trailCardMarker.selected(true);      
       
       this.nCurrCard = this.collection.indexOf(cardModel);
       
 	  // fire event
-      app.dispatcher.trigger("TrailMapView:selecttrail", trailCardMarker);                
+      app.dispatcher.trigger("TrailMapView:selecttrail", id);                
+    },    
+    onTrailCardViewClick: function(trailCardView){
+	  var latLng = this.map.getCenter(); 
+	  // save
+	  $.cookie('route_id', $(trailCardView.el).attr('data-id'));
+	  $.cookie('route_lat', latLng.lat);
+	  $.cookie('route_lng', latLng.lng);
+	  $.cookie('route_zoom', this.map.getZoom());
+	  	  	  	
+	  window.location = $('.link', trailCardView.el).attr('data-url');	  	
+	},        
+    onSelectTrail: function(trailCardMarker){
+      this.selectTrail(trailCardMarker.model.id);    	
     }
     
   });

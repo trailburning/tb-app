@@ -39,7 +39,7 @@ define([
 	            
 		  $('.link', $(this.el)).click(function(evt){
 			// fire event
-	        app.dispatcher.trigger("MapTrailCardView:click", self);                	      
+	        app.dispatcher.trigger("CampaignTrailCardView:click", self);                	      
 		  });
 	
 	      var nRating = this.model.get('rating');
