@@ -265,6 +265,13 @@ class Route implements Exportable
      * @ORM\Column(name="start", type="point", columnDefinition="GEOMETRY(POINT,4326)", nullable=true)
      */
     private $start;
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\Campaign", mappedBy="routes")
+     */
+    private $campaigns;
 
     /**
      * Set name
@@ -1470,5 +1477,72 @@ class Route implements Exportable
     public function getStart()
     {
         return $this->start;
+    }
+
+
+    /**
+     * Add campaigns
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\Campaign $campaigns
+     * @return Route
+     */
+    public function addCampaign(\TB\Bundle\FrontendBundle\Entity\Campaign $campaigns)
+    {
+        $this->campaigns[] = $campaigns;
+
+        return $this;
+    }
+
+    /**
+     * Remove campaigns
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\Campaign $campaigns
+     */
+    public function removeCampaign(\TB\Bundle\FrontendBundle\Entity\Campaign $campaigns)
+    {
+        $this->campaigns->removeElement($campaigns);
+    }
+
+    /**
+     * Get campaigns
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCampaigns()
+    {
+        return $this->campaigns;
+    }
+
+    /**
+     * Add pendingCampaigns
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\User $pendingCampaigns
+     * @return Route
+     */
+    public function addPendingCampaign(\TB\Bundle\FrontendBundle\Entity\User $pendingCampaigns)
+    {
+        $this->pendingCampaigns[] = $pendingCampaigns;
+
+        return $this;
+    }
+
+    /**
+     * Remove pendingCampaigns
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\User $pendingCampaigns
+     */
+    public function removePendingCampaign(\TB\Bundle\FrontendBundle\Entity\User $pendingCampaigns)
+    {
+        $this->pendingCampaigns->removeElement($pendingCampaigns);
+    }
+
+    /**
+     * Get pendingCampaigns
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPendingCampaigns()
+    {
+        return $this->pendingCampaigns;
     }
 }

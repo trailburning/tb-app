@@ -208,7 +208,7 @@ abstract class User extends BaseUser implements Exportable
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\Route", mappedBy="userLikes")
+     * @ORM\OneToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\RouteLike", mappedBy="user")
      */
     private $routeLikes;
     
@@ -240,6 +240,13 @@ abstract class User extends BaseUser implements Exportable
      * @ORM\OneToOne(targetEntity="UserRegisterActivity", mappedBy="actor")
      **/
     private $userRegisterActivity;
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="Campaign", mappedBy="user")
+     **/
+    private $campaigns;
     
     /**
      * Constructor
@@ -599,7 +606,7 @@ abstract class User extends BaseUser implements Exportable
     public function updateAvatarGravatar()
     {
         if ($this->getEmail() == '') {
-            throw new Exception('Unable to generate gravatar profile hash, missing email firld for User');
+            throw new \Exception('Unable to generate gravatar profile hash, missing email firld for User');
         }
         $hash = md5($this->getEmail());
         $imageUrl = sprintf('http://www.gravatar.com/avatar/%s', $hash);
@@ -875,7 +882,7 @@ abstract class User extends BaseUser implements Exportable
         $data = [
             'name' => $this->getName(),
             'title' => $this->getTitle(),
-            'avatar' => $this->getMainAvatar(),
+            'avatar' => $this->getAvatarUrl(),
         ];
 
         return $data;
@@ -907,17 +914,19 @@ abstract class User extends BaseUser implements Exportable
     /**
      * Gets the best avatar for this user
      */
-    public function getMainAvatar()
+    public function getAvatarUrl()
     {
         if ($this->getAvatar()) {
-            $avatar = sprintf('https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/%s/avatar.jpg', $this->getName());
+            $url = sprintf('http://assets.trailburning.com/images/profile/%s/%s', $this->getName(), $this->getAvatar());
         } elseif ($this->getAvatarGravatar()) {
-            $avatar = $this->getAvatarGravatar();
+            $url = $this->getAvatarGravatar();
+        } elseif($this->getGender() === User::GENDER_FEMALE) {
+            $url = 'http://assets.trailburning.com/images/icons/avatars/avatar_woman.jpg';
         } else {
-            $avatar = 'assets/img/avatar_man.jpg';
+            $url = 'http://assets.trailburning.com/images/icons/avatars/avatar_man.jpg';
         }
         
-        return $avatar;
+        return $url;
     }
 
     /**
@@ -1159,5 +1168,28 @@ abstract class User extends BaseUser implements Exportable
     public function getRegisteredAt()
     {
         return $this->registeredAt;
+    }
+
+    /**
+     * Set userRegisterActivity
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\UserRegisterActivity $userRegisterActivity
+     * @return User
+     */
+    public function setUserRegisterActivity(\TB\Bundle\FrontendBundle\Entity\UserRegisterActivity $userRegisterActivity = null)
+    {
+        $this->userRegisterActivity = $userRegisterActivity;
+
+        return $this;
+    }
+
+    /**
+     * Get userRegisterActivity
+     *
+     * @return \TB\Bundle\FrontendBundle\Entity\UserRegisterActivity 
+     */
+    public function getUserRegisterActivity()
+    {
+        return $this->userRegisterActivity;
     }
 }

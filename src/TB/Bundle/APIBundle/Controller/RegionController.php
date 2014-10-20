@@ -10,15 +10,18 @@ use TB\Bundle\APIBundle\Util\JpegMedia;
 use TB\Bundle\FrontendBundle\Entity\Media;
 use CrEOF\Spatial\PHP\Types\Geometry\Point;
 
-class MediaController extends AbstractRestController
+class RegionController extends AbstractRestController
 {
     
     /**
      * @Route("/region/{id}/area")
-     * @Method("PUT")
+     * @Method("POST")
      */
-    public function putRegionArea($id)
+    public function postRegionArea($id)
     {
+        
+        $postgis = $postgis = $this->get('postgis');
+        
         $request = $this->getRequest();
         if (!$request->files->has('gmlfile')) {
             throw (new ApiException('gmlfile variable not set', 400));
@@ -34,15 +37,15 @@ class MediaController extends AbstractRestController
             throw new ApiException(sprintf('Region with id "%s" not found', $id), 400);
         }
         
-        $media->setCoords(new Point($mediaObj->coords->long, $mediaObj->coords->lat, 4326));
-        $media->setTags($mediaObj->tags);
+        $gml = file_get_contents($file->getPathname()); 
+        try {
+            $postgis->updateRegionArea($region->getId(), $gml);
+        } catch (\Exception $e) {
+            throw new ApiException($e->getMessage(), 400);
+        }       
         
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($media);
-        $em->flush();
-        
-        $output = ['usermsg' => 'success', "value" => $id];
+        $output = ['usermsg' => 'success'];
 
-       return $this->getRestResponse($output);
+        return $this->getRestResponse($output);
     }
 }

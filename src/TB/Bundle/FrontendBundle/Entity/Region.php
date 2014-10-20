@@ -76,6 +76,13 @@ class Region implements Exportable
      * @ORM\Column(name="area", type="polygon", columnDefinition="GEOMETRY(POLYGON,4326)", nullable=true)
      */
     private $area;
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="Campaign", mappedBy="region")
+     **/
+    private $campaigns;
 
     /**
      * Get id
@@ -278,5 +285,61 @@ class Region implements Exportable
         ];
         
         return $data;
+    }
+
+    /**
+     * Set area
+     *
+     * @param polygon $area
+     * @return Region
+     */
+    public function setArea($area)
+    {
+        $this->area = $area;
+
+        return $this;
+    }
+
+    /**
+     * Get area
+     *
+     * @return polygon 
+     */
+    public function getArea()
+    {
+        return $this->area;
+    }
+
+    /**
+     * Add campaigns
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\Campaign $campaigns
+     * @return Region
+     */
+    public function addCampaign(\TB\Bundle\FrontendBundle\Entity\Campaign $campaigns)
+    {
+        $this->campaigns[] = $campaigns;
+
+        return $this;
+    }
+
+    /**
+     * Remove campaigns
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\Campaign $campaigns
+     */
+    public function removeCampaign(\TB\Bundle\FrontendBundle\Entity\Campaign $campaigns)
+    {
+        $this->campaigns->removeElement($campaigns);
+    }
+
+    /**
+     * Get campaigns
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCampaigns()
+    {
+        return $this->campaigns;
     }
 }

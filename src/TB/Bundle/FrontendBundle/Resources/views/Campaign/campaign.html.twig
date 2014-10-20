@@ -1,6 +1,12 @@
 {% extends "::base.html.twig" %}
 
-{% block title %}{{ campaign.title }}{% endblock %}
+{% block title %}{{ campaign.displayTitle }}{% endblock %}
+
+{% block description %}
+{{ campaign.synopsis }}
+{% endblock %}
+
+
 
 {% block og_image %}
 
@@ -28,7 +34,7 @@ var TB_USER_ID = {{ app.user.id }};
         <div id="campaign_landing_overlay_view">        	
         	<div class="back tb-move-horiz"></div>        	
 			<div class="info-hero tb-move-horiz">				  						  				
-			  <div class="campaign_title tb-move-horiz"><img src="http://assets.trailburning.com/images/campaign/urbantrails/london/logo_urbantrails_london.png" /></div>              
+			  <div class="campaign_title tb-move-horiz"><img src="http://assets.trailburning.com/{{ campaign.logo }}" /></div>              
               <div class="campaign_play">
               	<div class="campaign_btn"></div>
               	Discover Trails	
@@ -39,7 +45,7 @@ var TB_USER_ID = {{ app.user.id }};
         <div id="campaign_map_overlay_view">
         	<div class="back tb-move-horiz"></div>        	
 			<div class="info-hero tb-move-horiz">				  						  				
-			  <div class="campaign_title tb-move-horiz"><img src="http://assets.trailburning.com/images/campaign/urbantrails/london/logo_urbantrails_london.png" /></div>              
+			  <div class="campaign_title tb-move-horiz"><img src="http://assets.trailburning.com/{{ campaign.logo }}" /></div>              
               <div class="campaign_card">
 				
 				<img src="{{ asset('assets/img') }}/temp_campaign.jpg" />
@@ -70,9 +76,7 @@ var TB_USER_ID = {{ app.user.id }};
         <div class="panel_content_container">       
             <div class="panel_content">       
                 <div id="bigbar">
-		    	{#
 		        {{ include('TBFrontendBundle:Default:breadcrumb.html.twig', breadcrumb) }}
-		        #}
 				<div class="crumbs">
 				    <div class="crumb_links">
 			            <a href="">Urban Trails</a>
@@ -85,10 +89,13 @@ var TB_USER_ID = {{ app.user.id }};
 			        <div class="left">        
 			            <div class="panel campaign_detail_panel">
 			                <div class="content">
-			                    <h3 class="tb title">About London</h3>
-			                    <h4 class="tb">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut feugiat accumsan leo eget porttitor. Donec blandit, dui nec aliquam mattis, leo augue adipiscing purus, quis iaculis eros purus ac nisi. Etiam neque magna, consectetur eget suscipit vitae, convallis a metus. </h4>
-			                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut feugiat accumsan leo eget porttitor. Donec blandit, dui nec aliquam mattis, leo augue adipiscing purus, quis iaculis eros purus ac nisi. </p>
-			                    <div class="join"><a href="" onClick="" class="btn btn-tb-action btn-tb-large">Visit London</a></div>
+			                    <h3 class="tb title">About {{ campaign.title }}</h3>
+                                
+                	  			<h4 class="tb">	 
+                                    {{ campaign.synopsis|nl2br }}
+                				</h4>
+                                <p>{{ campaign.text|raw }}</p>
+			                    <div class="join"><a href="" onClick="" class="btn btn-tb-action btn-tb-large">Visit {{ campaign.title }}</a></div>
 			                </div>
 			            </div>
 			            
@@ -98,62 +105,24 @@ var TB_USER_ID = {{ app.user.id }};
 			        <div class="right">
 			        	
 			    		<div class="trails_title">
-			    		<h2 class="tb tb-title first-title ">London Trails</h2>
+			    		<h2 class="tb tb-title first-title ">{{ campaign.title }} Trails</h2>
 			    		</div>
-						
-			        	<div class="event_container trailcards">
-						
-							<div class="panel trail_card_panel">
-							    <div class="title"><h3 class="tb">Mountains</h3></div>
-							    <a href="../trail/gang-gangs-lazy-loop-mt-buller ">
-							    <div class="photo tb-photo-btn">
-							      <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/o=80/http://media.trailburning.com/422/8da94c153dafeb392390301ce17ae380f02e271b.jpg" class="resrc scale" border="0"></div>
-							      <div class="card_title">
-							        <h1>Gang Gangs Lazy Loop</h1>
-							      </div>
-							    </div>
-							    </a>
-								<div class="card_avatar sponsor"><a href="../profile/mtbuller"><img src="http://assets.trailburning.com/images/profile/mtbuller/card_trail_sticker_logo.png"></a></div>	
-							    <div class="summary">
-									<div class="length">4 km</div>
-									<div class="altitude">
-									199 m D+
-									<br/> 
-								    199 m D-
-									</div>
-							    </div>
-							</div>
-			
-							<div class="panel trail_card_panel">
-							    <div class="title"><h3 class="tb">Mountains</h3></div>
-							    <a href="../trail/buller-stirling-showcase-mt-buller">
-							    <div class="photo tb-photo-btn">
-							      <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/o=80/http://media.trailburning.com/423/6ac3d807743f8aa25ab5827b5db1c88e58a0cbad.jpg" class="resrc scale" border="0"></div>
-							      <div class="card_title">
-							        <h1>Buller Stirling Showcase</h1>
-							      </div>
-							    </div>
-							    </a>
-								<div class="card_avatar sponsor"><a href="../profile/mtbuller"><img src="http://assets.trailburning.com/images/profile/mtbuller/card_trail_sticker_logo.png"></a></div>				    
-							    <div class="summary">
-									<div class="length">28 km</div>
-									<div class="altitude">
-									1’121 m D+
-									<br/> 
-								    1’126 m D-
-									</div>
-							    </div>
-							</div>
-			
-						</div>
+						                        
+                        {% if campaign.routes and campaign.routes|length > 0 %}
 			        	
-			        </div>
-                    
+                        <div class="event_container trailcards">
+
+                    	    {% for trail in campaign.routes %}
+                    	        {{ include('TBFrontendBundle:Trail:_trailcard.html.twig', {'trail': trail}) }}
+                    	    {% endfor %}
+						</div>
+                        
+                        {% endif %}
+			        	
+			        </div>  
                 </div>                                
             </div>
-        	
         </div>
-  
     </div>  
 </div>  
 
