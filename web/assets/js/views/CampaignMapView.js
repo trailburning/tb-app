@@ -103,7 +103,7 @@ define([
         }        
       });
       
-      $('#view_map_btns .view_btn', $(this.elCntrls)).click(function(evt){
+      $('.view_btn', $(this.elCntrls)).click(function(evt){
         switch (self.nMapView) {
           case MAP_SAT_VIEW:
             self.nMapView = MAP_STREET_VIEW;
