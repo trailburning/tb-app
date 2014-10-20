@@ -1,6 +1,12 @@
 {% extends "::base.html.twig" %}
 
-{% block title %}{{ campaign.title }}{% endblock %}
+{% block title %}{{ campaign.displayTitle }}{% endblock %}
+
+{% block description %}
+{{ campaign.synopsis }}
+{% endblock %}
+
+
 
 {% block og_image %}
 
@@ -28,7 +34,7 @@ var TB_USER_ID = {{ app.user.id }};
         <div id="campaign_landing_overlay_view">        	
         	<div class="back tb-move-horiz"></div>        	
 			<div class="info-hero tb-move-horiz">				  						  				
-			  <div class="campaign_title tb-move-horiz"><img src="http://assets.trailburning.com/images/campaign/urbantrails/london/logo_urbantrails_london.png" /></div>              
+			  <div class="campaign_title tb-move-horiz"><img src="http://assets.trailburning.com/{{ campaign.logo }}" /></div>              
               <div class="campaign_play">
               	<div class="campaign_btn"></div>
               	Discover Trails	
@@ -39,7 +45,7 @@ var TB_USER_ID = {{ app.user.id }};
         <div id="campaign_map_overlay_view">
         	<div class="back tb-move-horiz"></div>        	
 			<div class="info-hero tb-move-horiz">				  						  				
-			  <div class="campaign_title tb-move-horiz"><img src="http://assets.trailburning.com/images/campaign/urbantrails/london/logo_urbantrails_london.png" /></div>              
+			  <div class="campaign_title tb-move-horiz"><img src="http://assets.trailburning.com/{{ campaign.logo }}" /></div>              
               <div class="campaign_card">
 
 				<div class="trailcards">
@@ -99,10 +105,13 @@ var TB_USER_ID = {{ app.user.id }};
 			        <div class="left">        
 			            <div class="panel campaign_detail_panel">
 			                <div class="content">
-			                    <h3 class="tb title">About London</h3>
-			                    <h4 class="tb">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut feugiat accumsan leo eget porttitor. Donec blandit, dui nec aliquam mattis, leo augue adipiscing purus, quis iaculis eros purus ac nisi. Etiam neque magna, consectetur eget suscipit vitae, convallis a metus. </h4>
-			                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut feugiat accumsan leo eget porttitor. Donec blandit, dui nec aliquam mattis, leo augue adipiscing purus, quis iaculis eros purus ac nisi. </p>
-			                    <div class="join"><a href="" onClick="" class="btn btn-tb-action btn-tb-large">Visit London</a></div>
+			                    <h3 class="tb title">About {{ campaign.title }}</h3>
+                                
+                	  			<h4 class="tb">	 
+                                    {{ campaign.synopsis|nl2br }}
+                				</h4>
+                                <p>{{ campaign.text|raw }}</p>
+			                    <div class="join"><a href="{{ campaign.link }}" onClick="" class="btn btn-tb-action btn-tb-large" target="_blank">Visit {{ campaign.title }}</a></div>
 			                </div>
 			            </div>
 			            
@@ -112,227 +121,24 @@ var TB_USER_ID = {{ app.user.id }};
 			        <div class="right">
 			        	
 			    		<div class="trails_title">
-			    		<h2 class="tb tb-title first-title ">London Urban Trails</h2>
+                                
+			    		<h2 class="tb tb-title first-title ">{{ campaign.title }} Trails</h2>
 			    		</div>
-						
-			        	<div class="event_container trailcards">
-						
-							<div class="panel trail_card_panel">
-							    <div class="title"><h3 class="tb">Canal</h3></div>
-							    <a href="../trail/regent-s-canal-london">
-							    <div class="photo tb-photo-btn">
-							      <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/O=80/http://media.trailburning.com/288/9ee9b1fd51ec603cbe8d3a2fa867a19f9fb902f9.jpg" class="resrc scale" border="0"></div>
-							      <div class="card_title">
-							        <h1>Regent's Canal</h1>
-							        <br>
-							        <h2>London</h2>
-									<br>
-									<h2>
-							        <span class="stars">
-							          <span class="star star_full"></span>
-							          <span class="star star_half"></span>
-							          <span class="star"></span>
-							          <span class="star"></span>
-							          <span class="star"></span>
-							        </span>
-									</h2>
-							      </div>
-							    </div>
-							    </a>
-								<div class="card_avatar">
-							      <div class="tb-avatar"><div class="photo"><a href="../profile/mattallbeury"><img src="http://www.gravatar.com/avatar/e426b949d824bc81fe01caf1ad88abd7"></a></div></div>
-								</div>	        
-							    <div class="summary">
-								  <div class="length">11 km</div>
-								  <div class="altitude">
-								  78 D+
-								  <br>
-								  102 D-
-								  </div>
-							    </div>
-							</div>
-			
-							<div class="panel trail_card_panel">
-							    <div class="title"><h3 class="tb">Park</h3></div>
-							    <a href="../trail/lyndale-golders-heath-hampstead-heath-london">
-							    <div class="photo tb-photo-btn">
-							      <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/O=80/http://media.trailburning.com/307/8c49c382ee174884d893d2caa5717b4a04d321e8.jpg" class="resrc scale" border="0"></div>
-							      <div class="card_title">
-							        <h1>lyndale-golders-heath </h1>
-							        <br>
-							        <h2>Hampstead Heath, London</h2>
-									<br>
-									<h2>
-							        <span class="stars">
-							          <span class="star"></span>
-							          <span class="star"></span>
-							          <span class="star"></span>
-							          <span class="star"></span>
-							          <span class="star"></span>
-							        </span>
-									</h2>
-							      </div>
-							    </div>
-							    </a>
-								<div class="card_avatar">
-							      <div class="tb-avatar"><div class="photo"><a href="../profile/adamlennox"><img src="http://assets.trailburning.com/images/icons/avatars/avatar_man.jpg"></a></div></div>
-								</div>	        
-							    <div class="summary">
-								  <div class="length">10 km</div>
-								  <div class="altitude">
-								  196 D+
-								  <br>
-								  197 D-
-								  </div>
-							    </div>
-							</div>
-			
-							<div class="panel trail_card_panel promo_panel">
-								<div class="title"><h3 class="tb">Add your trail</h3></div>								                            	
-                            	<a href="/trailburning/app_dev.php/trail/heysen-105-south-australia">
-                                <div class="photo tb-photo-btn">
-                                    <div class="image_container fade_on_load"><img src="http://app.resrc.it/http://assets.trailburning.com/images/campaign/urbantrails/london/promo_back.jpg" class="resrc scale" border="0"></div>
-                                    <div class="card_title">
-                                    <div class="marker"><img src="http://assets.trailburning.com/images/icons/location.png"></div>
-                                    <h1>Submit your Urban</h1>
-                                    <br>
-                                    <h1>Trail and win great</h1>
-                                    <br>
-                                    <h1>Ashmei gear!</h1>
-                                    </div>
-                                    <div class="image_container prize fade_on_load"><img src="http://app.resrc.it/http://assets.trailburning.com/images/campaign/urbantrails/london/ashmei_prize.png" class="resrc scale" border="0"></div>
-                                </div>
-                            	</a>
-								<div class="sponsor"><img src="http://assets.trailburning.com/images/profile/ashmei/editorial_sponsor_logo_big.png"></div>				    
-                            	<div class="details">
-                                	<div class="more"><a class="btn btn-tb-action" href="{{ app.request.baseUrl }}/competition">How to Win</a></div>
-                            	</div>
-                        	</div>
-                        			
-						</div>
+						                        
+                        {% if campaign.routes and campaign.routes|length > 0 %}
 			        	
-			        </div>
-                    
+                        <div class="event_container trailcards">
+
+                    	    {% for trail in campaign.routes %}
+                    	        {{ include('TBFrontendBundle:Trail:_trailcard.html.twig', {'trail': trail}) }}
+                    	    {% endfor %}
+
+						</div>
+                        
+                        {% endif %}
+			        	
+			        </div>  
                 </div>
-                
-				<div class="likedtrails_content">
-				  <div class="fixed_content">				
-				    <h2 class="tb">Popular Urban Trails</h2>
-				    <div class="desc"><h4 class="tb">Discover Urban Trails shared by the Trailburning Community</h4></div>      
-				    <div class="trailcards panels">  	
-				    	<div class="trail_card_sticker">				    		
-							<div class="panel trail_card_panel">
-							    <div class="title"><h3 class="tb">Canal</h3></div>
-							    <a href="../trail/regent-s-canal-london">
-							    <div class="photo tb-photo-btn">
-							      <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/O=80/http://media.trailburning.com/288/9ee9b1fd51ec603cbe8d3a2fa867a19f9fb902f9.jpg" class="resrc scale" border="0"></div>
-							      <div class="card_title">
-							        <h1>Regent's Canal</h1>
-							        <br>
-							        <h2>London</h2>
-									<br>
-									<h2>
-							        <span class="stars">
-							          <span class="star star_full"></span>
-							          <span class="star star_half"></span>
-							          <span class="star"></span>
-							          <span class="star"></span>
-							          <span class="star"></span>
-							        </span>
-									</h2>
-							      </div>
-							    </div>
-							    </a>
-								<div class="card_avatar">
-							      <div class="tb-avatar"><div class="photo"><a href="../profile/mattallbeury"><img src="http://www.gravatar.com/avatar/e426b949d824bc81fe01caf1ad88abd7"></a></div></div>
-								</div>	        
-							    <div class="summary">
-								  <div class="length">11 km</div>
-								  <div class="altitude">
-								  78 D+
-								  <br>
-								  102 D-
-								  </div>
-							    </div>
-							</div>				    		
-				    	</div>
-
-				    	<div class="trail_card_sticker">				    		
-							<div class="panel trail_card_panel">
-							    <div class="title"><h3 class="tb">Canal</h3></div>
-							    <a href="../trail/regent-s-canal-london">
-							    <div class="photo tb-photo-btn">
-							      <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/O=80/http://media.trailburning.com/288/9ee9b1fd51ec603cbe8d3a2fa867a19f9fb902f9.jpg" class="resrc scale" border="0"></div>
-							      <div class="card_title">
-							        <h1>Regent's Canal</h1>
-							        <br>
-							        <h2>London</h2>
-									<br>
-									<h2>
-							        <span class="stars">
-							          <span class="star star_full"></span>
-							          <span class="star star_half"></span>
-							          <span class="star"></span>
-							          <span class="star"></span>
-							          <span class="star"></span>
-							        </span>
-									</h2>
-							      </div>
-							    </div>
-							    </a>
-								<div class="card_avatar">
-							      <div class="tb-avatar"><div class="photo"><a href="../profile/mattallbeury"><img src="http://www.gravatar.com/avatar/e426b949d824bc81fe01caf1ad88abd7"></a></div></div>
-								</div>	        
-							    <div class="summary">
-								  <div class="length">11 km</div>
-								  <div class="altitude">
-								  78 D+
-								  <br>
-								  102 D-
-								  </div>
-							    </div>
-							</div>				    		
-				    	</div>
-
-				    	<div class="trail_card_sticker">				    		
-							<div class="panel trail_card_panel">
-							    <div class="title"><h3 class="tb">Canal</h3></div>
-							    <a href="../trail/regent-s-canal-london">
-							    <div class="photo tb-photo-btn">
-							      <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/O=80/http://media.trailburning.com/288/9ee9b1fd51ec603cbe8d3a2fa867a19f9fb902f9.jpg" class="resrc scale" border="0"></div>
-							      <div class="card_title">
-							        <h1>Regent's Canal</h1>
-							        <br>
-							        <h2>London</h2>
-									<br>
-									<h2>
-							        <span class="stars">
-							          <span class="star star_full"></span>
-							          <span class="star star_half"></span>
-							          <span class="star"></span>
-							          <span class="star"></span>
-							          <span class="star"></span>
-							        </span>
-									</h2>
-							      </div>
-							    </div>
-							    </a>
-								<div class="card_avatar">
-							      <div class="tb-avatar"><div class="photo"><a href="../profile/mattallbeury"><img src="http://www.gravatar.com/avatar/e426b949d824bc81fe01caf1ad88abd7"></a></div></div>
-								</div>	        
-							    <div class="summary">
-								  <div class="length">11 km</div>
-								  <div class="altitude">
-								  78 D+
-								  <br>
-								  102 D-
-								  </div>
-							    </div>
-							</div>				    		
-				    	</div>
-				    </div>
-				  </div>	   	
-				</div>                
             </div>
         </div>
     </div>  

@@ -12,7 +12,7 @@ class CampaignController extends Controller
     
     
     /**
-     * @Route("/campaign/{slug}", name="campaigns")
+     * @Route("/campaign/{slug}", name="campaign")
      * @Template()
      */
     public function campaignAction($slug)

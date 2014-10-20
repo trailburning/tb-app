@@ -242,6 +242,13 @@ abstract class User extends BaseUser implements Exportable
     private $userRegisterActivity;
     
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="Campaign", mappedBy="user")
+     **/
+    private $campaigns;
+    
+    /**
      * Constructor
      */
     public function __construct()
@@ -1184,5 +1191,38 @@ abstract class User extends BaseUser implements Exportable
     public function getUserRegisterActivity()
     {
         return $this->userRegisterActivity;
+    }
+
+    /**
+     * Add campaigns
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\Campaign $campaigns
+     * @return User
+     */
+    public function addCampaign(\TB\Bundle\FrontendBundle\Entity\Campaign $campaigns)
+    {
+        $this->campaigns[] = $campaigns;
+
+        return $this;
+    }
+
+    /**
+     * Remove campaigns
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\Campaign $campaigns
+     */
+    public function removeCampaign(\TB\Bundle\FrontendBundle\Entity\Campaign $campaigns)
+    {
+        $this->campaigns->removeElement($campaigns);
+    }
+
+    /**
+     * Get campaigns
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCampaigns()
+    {
+        return $this->campaigns;
     }
 }
