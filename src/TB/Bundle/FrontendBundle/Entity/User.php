@@ -889,7 +889,7 @@ abstract class User extends BaseUser implements Exportable
             'name' => $this->getName(),
             'title' => $this->getTitle(),
             'avatar' => $this->getAvatarUrl(),
-            'discr' => $discr,
+            'type' => $discr,
         ];
 
         return $data;

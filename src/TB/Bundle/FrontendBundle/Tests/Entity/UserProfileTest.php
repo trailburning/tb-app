@@ -108,7 +108,7 @@ class UserProfileTest extends AbstractFrontendTest
           'name' => null,
           'title' => ' ',
           'avatar' => 'http://assets.trailburning.com/images/icons/avatars/avatar_man.jpg',
-          'discr' => 'user',
+          'type' => 'user',
         ];
         
         $this->assertEquals($expected, $userProfile->export(),

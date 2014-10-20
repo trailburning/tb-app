@@ -17,7 +17,7 @@ class BrandProfileTest extends AbstractFrontendTest
           'name' => null,
           'title' => null,
           'avatar' => null,
-          'discr' => 'brand',
+          'type' => 'brand',
         ];
         
         $this->assertEquals($expected, $brandProfile->export(),
