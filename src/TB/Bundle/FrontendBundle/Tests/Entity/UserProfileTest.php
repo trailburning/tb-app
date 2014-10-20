@@ -98,5 +98,20 @@ class UserProfileTest extends AbstractFrontendTest
         $this->assertEquals($expected, $user->exportAsActivity(),
             'UserProfile::exportAsActivity() returns the expected data array');
     }
-    
+        
+        
+    public function testExport() 
+    {
+        $userProfile = new UserProfile();
+        
+        $expected = [
+          'name' => null,
+          'title' => ' ',
+          'avatar' => 'http://assets.trailburning.com/images/icons/avatars/avatar_man.jpg',
+          'discr' => 'user',
+        ];
+        
+        $this->assertEquals($expected, $userProfile->export(),
+            'UserProfile::export() returns the expected data array');
+    }
 }
