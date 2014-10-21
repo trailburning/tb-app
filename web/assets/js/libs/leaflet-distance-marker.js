@@ -39,7 +39,7 @@ L.DistanceMarkers = L.LayerGroup.extend({
 			
 	  		var strMarker = Math.round(distance / 1000);
 			var position = L.GeometryUtil.interpolateOnLine(map, line, distance / length);
-			var icon = L.divIcon({ className: 'dist-marker', html: strMarker, iconSize: [18, 18] });
+			var icon = L.divIcon({ className: options.strClassName, html: strMarker, iconSize: [18, 18] });
 			var marker = L.marker(position.latLng, { icon: icon }).on('click', function(evt){
         		// fire event
         		options.events.dispatcher.trigger("DistanceMarkers:click", self);                              				
