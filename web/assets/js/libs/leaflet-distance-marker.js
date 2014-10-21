@@ -40,14 +40,15 @@ L.DistanceMarkers = L.LayerGroup.extend({
 	  		var strMarker = Math.round(distance / 1000);
 			var position = L.GeometryUtil.interpolateOnLine(map, line, distance / length);
 			var icon = L.divIcon({ className: 'dist-marker', html: strMarker, iconSize: [24, 24] });
-			
 			var marker = L.marker(position.latLng, { icon: icon }).on('click', function(evt){
         		// fire event
         		options.events.dispatcher.trigger("DistanceMarkers:click", self);                              				
 			}).on('mouseout', function(evt){
+				evt.originalEvent.stopPropagation();
         		// fire event
         		options.events.dispatcher.trigger("DistanceMarkers:mouseout", self);                              				
 			}).on('mouseover', function(evt){
+				evt.originalEvent.stopPropagation();
         		// fire event
         		options.events.dispatcher.trigger("DistanceMarkers:mouseover", self);                              				
 			});

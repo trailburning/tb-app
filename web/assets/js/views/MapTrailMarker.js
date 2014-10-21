@@ -113,29 +113,28 @@ define([
 		  }
 	      
 	      self.blur_polyline_options = {
-	        color: '#ed1c24',
-	        opacity: 0.4,
-	        weight: 6,
+	        color: '#1f1f1f',
+	        opacity: 0.5,
+	        weight: 4,
 	        clickable: false,
-	        distanceMarkers: { offset: nDistanceOffsetMetres, lazy: true, events: self.trailEvents }
+	        distanceMarkers: { offset: nDistanceOffsetMetres, lazy: true, events: self.trailEvents, id: self.model.id }
 	      };         
 		  
 	      self.focus_polyline_options = {
-	        color: '#ed1c24',
-	        opacity: 0.8,
-	        weight: 6,
+	        color: '#1f1f1f',
+	        opacity: 1,
+	        weight: 4,
 	        clickable: false,
-	        distanceMarkers: { offset: nDistanceOffsetMetres, lazy: true, events: self.trailEvents }
+	        distanceMarkers: { offset: nDistanceOffsetMetres, lazy: true, events: self.trailEvents, id: self.model.id }
 	      };               
 	
 	      self.select_polyline_options = {
 	        color: '#ed1c24',
 	        opacity: 1,
-	        weight: 6,
+	        weight: 4,
 	        clickable: false,
-	        distanceMarkers: { offset: nDistanceOffsetMetres, lazy: true, events: self.trailEvents }
-	      };               
-        	
+	        distanceMarkers: { offset: nDistanceOffsetMetres, lazy: true, events: self.trailEvents, id: self.model.id }
+	      };                       	
         	
       	  var data = self.trailModel.get('value');      
       	  $.each(data.route.route_points, function(key, point) {
