@@ -366,16 +366,16 @@ border-width:1px;
 }
 
 .dist-marker {
-  font-size: 12px;
-  line-height: 24px;
+  font-size: 10px;
+  line-height: 16px;
   text-align: center;
-  width: 24px;
-  height: 24px;
-  color: #000;	
-  border: 1px solid #777;
-  background: #FFF;
+  width: 18px;
+  height: 18px;
+  color: #FFF;	
+  background: #ed1c24;
   border-radius: 50%;
   overflow: hidden;		
+  box-shadow: 1px 1px 1px #888888;
 }
 
 /* CAMPAIGN PLAYER */
