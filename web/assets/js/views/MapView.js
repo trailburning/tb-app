@@ -48,8 +48,8 @@ define([
 	  this.collection = new Backbone.Collection();
       this.map = L.mapbox.map('map', null, {dragging: true, touchZoom: false, scrollWheelZoom:false, doubleClickZoom:false, boxZoom:false, tap:false, zoomControl:false, zoomAnimation:false, attributionControl:false});
       this.layer_street = L.mapbox.tileLayer('mallbeury.idjhlejc');
-//      this.layer_street = L.mapbox.tileLayer('mallbeury.8d4ad8ec');
-      this.layer_sat = L.mapbox.tileLayer('mallbeury.map-eorpnyp3');      
+//      this.layer_sat = L.mapbox.tileLayer('mallbeury.map-eorpnyp3');      
+      this.layer_street = L.mapbox.tileLayer('mallbeury.8d4ad8ec');
       this.map.addLayer(this.layer_street);
 	  this.currMarkerOrCluster = null;      
                           
