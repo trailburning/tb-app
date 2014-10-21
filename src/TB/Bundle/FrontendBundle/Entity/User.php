@@ -242,6 +242,13 @@ abstract class User extends BaseUser implements Exportable
     private $userRegisterActivity;
     
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="Campaign", mappedBy="user")
+     **/
+    private $campaigns;
+    
+    /**
      * Constructor
      */
     public function __construct()
@@ -872,10 +879,17 @@ abstract class User extends BaseUser implements Exportable
     
     public function export()
     {   
+        if ($this instanceof \TB\Bundle\FrontendBundle\Entity\UserProfile) {
+            $discr = 'user';
+        } elseif ($this instanceof \TB\Bundle\FrontendBundle\Entity\BrandProfile) {
+            $discr = 'brand';
+        }
+        
         $data = [
             'name' => $this->getName(),
             'title' => $this->getTitle(),
             'avatar' => $this->getAvatarUrl(),
+            'type' => $discr,
         ];
 
         return $data;
@@ -913,10 +927,14 @@ abstract class User extends BaseUser implements Exportable
             $url = sprintf('http://assets.trailburning.com/images/profile/%s/%s', $this->getName(), $this->getAvatar());
         } elseif ($this->getAvatarGravatar()) {
             $url = $this->getAvatarGravatar();
-        } elseif($this->getGender() === User::GENDER_FEMALE) {
-            $url = 'http://assets.trailburning.com/images/icons/avatars/avatar_woman.jpg';
+        } elseif ($this instanceof \TB\Bundle\FrontendBundle\Entity\BrandProfile) {
+            $url = null;
         } else {
-            $url = 'http://assets.trailburning.com/images/icons/avatars/avatar_man.jpg';
+            if ($this->getGender() === User::GENDER_FEMALE) {
+                $url = 'http://assets.trailburning.com/images/icons/avatars/avatar_woman.jpg';
+            } else {
+                $url = 'http://assets.trailburning.com/images/icons/avatars/avatar_man.jpg';
+            }
         }
         
         return $url;
@@ -1184,5 +1202,38 @@ abstract class User extends BaseUser implements Exportable
     public function getUserRegisterActivity()
     {
         return $this->userRegisterActivity;
+    }
+
+    /**
+     * Add campaigns
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\Campaign $campaigns
+     * @return User
+     */
+    public function addCampaign(\TB\Bundle\FrontendBundle\Entity\Campaign $campaigns)
+    {
+        $this->campaigns[] = $campaigns;
+
+        return $this;
+    }
+
+    /**
+     * Remove campaigns
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\Campaign $campaigns
+     */
+    public function removeCampaign(\TB\Bundle\FrontendBundle\Entity\Campaign $campaigns)
+    {
+        $this->campaigns->removeElement($campaigns);
+    }
+
+    /**
+     * Get campaigns
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCampaigns()
+    {
+        return $this->campaigns;
     }
 }

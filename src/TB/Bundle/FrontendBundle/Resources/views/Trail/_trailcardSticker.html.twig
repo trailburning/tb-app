@@ -20,7 +20,11 @@
             {% if trail.eventRoutes and trail.eventRoutes|length() > 0 %}
     	        <div class="sponsor"><a href="{{ path('event', {slug: trail.eventRoutes[0].event.slug}) }}"><img src="http://assets.trailburning.com/images/events/{{ trail.eventRoutes[0].event.slug }}/card_trail_sticker_logo.png"></a></div>	       		
             {% elseif trail.user and trail.user.name != 'admin'  %}
-           		{{ include('TBFrontendBundle:Profile:_userAvatar.html.twig', {user: trail.user}) }}
+				{% if trail.user is BrandProfile %}
+                    <div class="sponsor"><a href="{{ path('profile', {'name': trail.user.name}) }}"><img src="http://assets.trailburning.com/images/profile/{{ trail.user.name }}/card_trail_sticker_logo.png"></a></div>                        
+				{% else %}
+					{{ include('TBFrontendBundle:Profile:_userAvatar.html.twig', {user: trail.user}) }}
+				{% endif %}
             {% endif %}
 		</div>	
 	    <div class="summary">
