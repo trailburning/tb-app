@@ -311,6 +311,21 @@ a:active .tb-cntrl {
   width: 100%;
 }
 
+.tb-map-location-marker {
+  width: 18px;
+  height: 25px;
+  background: url("../img/map/location.png") no-repeat top left;  
+}
+
+.tb-map-location-marker.selected {
+  background-position: 0 -25px;      
+}
+
+.tb-map-location-marker .marker {
+  width: 18px;
+  height: 25px;
+}
+
 .tb-map-marker {
   width: 20px;
   height: 20px;

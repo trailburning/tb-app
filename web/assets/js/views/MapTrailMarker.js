@@ -31,15 +31,6 @@ define([
       this.polyline = null;
       this.hoverPolyline = null;
       this.arrLineCordinates = [];
-      
-      var LocationIcon = L.Icon.extend({
-          options: {
-              iconSize:     [36, 47],
-              iconAnchor:   [16, 44],
-              popupAnchor:  [16, 44]
-          }
-      });      
-      this.locationIcon = new LocationIcon({iconUrl: 'http://assets.trailburning.com/images/icons/location.png'});            
     },            
     showTrail: function(){    
       if (this.polyline) {
@@ -75,9 +66,8 @@ define([
 	    }	    
 	    
 	    this.marker = L.marker(new L.LatLng(this.model.get('start')[1], this.model.get('start')[0])).on('click', onClick).on('mouseover', onMouseOver).on('mouseout', onMouseOut);			  
-	    this.marker.setIcon(L.divIcon({className: 'tb-map-marker', html: '<div class="marker"></div>', iconSize: [20, 20]}));      	  
+	    this.marker.setIcon(L.divIcon({className: 'tb-map-location-marker', html: '<div class="marker"></div>', iconSize: [18, 25], iconAnchor: [9, 25],}));      	  
 		this.options.mapCluster.addLayer(this.marker);		
-//		this.locationMarker = L.marker(new L.LatLng(this.model.get('start')[1], this.model.get('start')[0]), {icon: this.locationIcon});            
 	  }
       this.bRendered = true;
                        
@@ -165,7 +155,6 @@ define([
 	},		
 	focus: function(){	
 	  $(this.marker._icon).addClass('selected');	
-//	  this.locationMarker.addTo(this.options.map);
 
 	  if (this.polyline) {
         this.polyline.setStyle(this.focus_polyline_options);
@@ -178,9 +167,7 @@ define([
 	},
 	blur: function(){	
   	  $(this.marker._icon).removeClass('selected');  	
-//  	  this.options.map.removeLayer(this.locationMarker);
   	
-      this.marker.setIcon(L.divIcon({className: 'tb-map-marker', html: '<div class="marker"></div>', iconSize: [20, 20]}));
       if (this.polyline) {
         this.polyline.setStyle(this.blur_polyline_options);
         this.polyline.removeDistanceMarkers();
