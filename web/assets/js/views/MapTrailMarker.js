@@ -32,12 +32,12 @@ define([
       this.hoverPolyline = null;
       this.arrLineCordinates = [];
     },            
-    showTrail: function(){    
+    showTrail: function(){
       if (this.polyline) {
         this.polyline.addTo(this.options.map);
 		this.hoverPolyline.addTo(this.options.map);
-		if ($(this.marker._icon).hasClass('selected')) {
-			this.selected(true);
+		if (this.bSelected) {
+		  this.selected(true);
 		}
 		this.bTrailVisible = true;
       }
@@ -173,7 +173,7 @@ define([
         this.polyline.removeDistanceMarkers();
       }
 	},
-	selected: function(bSelected){	
+	selected: function(bSelected){
 	  this.bSelected = bSelected;
 	  if (bSelected) {
 	  	this.focus();

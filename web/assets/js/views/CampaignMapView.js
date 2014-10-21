@@ -7,6 +7,8 @@ define([
   var MAP_STREET_VIEW = 0;
   var MAP_SAT_VIEW = 1;
 
+  var SHOW_TRAIL_ZOOM = 13;
+
   var CampaignMapView = Backbone.View.extend({
     initialize: function(){
       this.template = _.template($('#trailMapViewTemplate').text());        
@@ -130,8 +132,8 @@ define([
     render: function(){
       // already rendered?  Just update
       if (this.bRendered) {
-        this.map.invalidateSize();
-	    this.map.fitBounds(this.markerCluster.getBounds(), {padding: [200, 200]});
+        this.map.invalidateSize(false);
+	    this.map.fitBounds(this.markerCluster.getBounds(), {padding: [200, 200], animate: false});
         return;         
       }        
                 
@@ -156,13 +158,13 @@ define([
 	  var inBounds = [], bounds = this.map.getBounds();
 
  	  this.collection.each(function(cardModel) { 			
-	    if (self.map.getZoom() <= 12) {
-	      cardModel.mapTrailMarker.hideTrail();
- 	  	}
- 	  	else {
+	    if (self.map.getZoom() >= SHOW_TRAIL_ZOOM) {
 	      if (bounds.contains(cardModel.mapTrailMarker.marker.getLatLng())) {
 		    cardModel.mapTrailMarker.renderTrail();
 	      }
+ 	  	}
+ 	  	else {
+	      cardModel.mapTrailMarker.hideTrail();
  	  	}
 	  });	    	    
 	},    
@@ -182,7 +184,7 @@ define([
 	  this.map.fitBounds(this.markerCluster.getBounds(), {padding: [200, 200]});
     },
     setMapView: function(latLng, nZoom){
-   	  this.map.setView(latLng, nZoom);
+   	  this.map.setView(latLng, nZoom, {animate: false});
     },
     selectTrail: function(id){
 	  if (this.currMarkerOrCluster) {
