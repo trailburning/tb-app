@@ -404,10 +404,19 @@ class Postgis extends \PDO
         
         $q = 'SELECT COUNT(r.id) AS count
               FROM routes r
-              INNER JOIN fos_user u ON r.user_id=u.id
-              WHERE r.publish = true AND approved = true';
+              INNER JOIN fos_user u ON r.user_id=u.id';
+    
+        if (isset($params['campaign_id'])) {
+            $q .= ' INNER JOIN campaign_route cr ON cr.route_id=r.id';
+        }
+     
+        $q .= ' WHERE r.publish = true AND approved = true';
         if (isset($params['radius'])) {
             $q .= ' AND ST_Distance_Sphere(ST_Centroid(r.centroid), ST_GeomFromText(:point,4326)) <= :radius';
+        }
+        
+        if (isset($params['campaign_id'])) {
+            $q .= ' AND cr.campaign_id=:campaign_id';
         }
           
         $pq = $this->prepare($q);
@@ -415,6 +424,10 @@ class Postgis extends \PDO
              $pq->bindValue('point', 'POINT(' . $params['long'] . ' ' . $params['lat'] . ')', \PDO::PARAM_STR);
              // Convert kilometers to meters for 'radius'
              $pq->bindValue('radius', ($params['radius'] * 1000), \PDO::PARAM_INT);
+        }
+    
+        if (isset($params['campaign_id'])) {
+            $pq->bindValue('campaign_id', $params['campaign_id'], \PDO::PARAM_INT);
         }
         
         $success = $pq->execute();
@@ -430,10 +443,18 @@ class Postgis extends \PDO
                   INNER JOIN fos_user u ON r.user_id=u.id
                   LEFT JOIN route_type rt ON r.route_type_id=rt.id
                   LEFT JOIN route_category rc ON r.route_category_id=rc.id
-                  LEFT JOIN medias m ON r.media_id=m.id
-                  WHERE r.publish = true AND approved = true';
+                  LEFT JOIN medias m ON r.media_id=m.id';
+            
+            if (isset($params['campaign_id'])) {
+                $q .= ' INNER JOIN campaign_route cr ON cr.route_id=r.id';
+            }
+                  
+            $q .= ' WHERE r.publish = true AND approved = true';
             if (isset($params['radius'])) {
                 $q .= ' AND ST_Distance_Sphere(ST_Centroid(r.centroid), ST_GeomFromText(:point,4326)) <= :radius';
+            }
+            if (isset($params['campaign_id'])) {
+                $q .= ' AND cr.campaign_id=:campaign_id';
             }
             $q .= ' GROUP BY r.id, rt.id, rc.id , u.id, m.id';
             if (isset($params['order']) && $params['order'] == 'distance') {
@@ -454,6 +475,10 @@ class Postgis extends \PDO
             if (isset($params['radius'])) {
                 // Convert kilometers to meters for 'radius'
                 $pq->bindValue('radius', ($params['radius'] * 1000), \PDO::PARAM_INT);
+            }
+            
+            if (isset($params['campaign_id'])) {
+                $pq->bindValue('campaign_id', $params['campaign_id'], \PDO::PARAM_INT);
             }
 
             $success = $pq->execute();
@@ -858,6 +883,7 @@ class Postgis extends \PDO
             'lat' => null,
             'long' => null,
             'radius' => null,
+            'campaign_id' => null,
         ];
         
         foreach ($params as $paramName => $paramValue) {

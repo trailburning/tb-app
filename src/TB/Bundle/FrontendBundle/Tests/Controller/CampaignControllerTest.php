@@ -9,6 +9,10 @@ class CampaignControllerTest extends AbstractFrontendTest
     
     public function testCampaign()
     {
+        $this->loadFixtures([
+            'TB\Bundle\FrontendBundle\DataFixtures\ORM\CampaignData',
+        ]); 
+        
         $client = static::createClient();
 
         $campaign = $this->getCampaign('urbantrails-london');
@@ -18,6 +22,9 @@ class CampaignControllerTest extends AbstractFrontendTest
     
     public function testCampaignRoute()
     {
+        $this->loadFixtures([
+            'TB\Bundle\FrontendBundle\DataFixtures\ORM\CampaignData',
+        ]); 
         $client = static::createClient();
 
         $campaign = $this->getCampaign('urbantrails-london');
