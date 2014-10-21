@@ -11,7 +11,11 @@
 {% if event %}
 	{{ trail.name }}, {{ trail.region }}
 {% else %}
-	{{ trail.name }}, {{ trail.region }} by {{ user.firstName }} {{ user.lastName }}
+    {% if user is UserProfile %}
+		{{ trail.name }}, {{ trail.region }} by {{ user.firstName }} {{ user.lastName }}
+	{% else%}
+		{{ trail.name }}, {{ trail.region }}
+	{% endif %}
 {% endif %}
 {% endblock %}
 
@@ -88,7 +92,7 @@ var TB_TRAIL_ID = {{ trail.id }};
                   <h2 class="tb tb-title">{{ event.title }}</h2>
                   <br/>
                   <h2 class="tb tb-title">{{ trail.name }}</h2>
-                {% else %}
+                {% else %}                
                   <h2 class="tb tb-title">{{ trail.name }}</h2>
                   <br/>
                   <h2 class="tb tb-title">{{ trail.region }}</h2>
@@ -103,7 +107,7 @@ var TB_TRAIL_ID = {{ trail.id }};
                 {% endif %}                
               </div>
               
-        	  {% if event %}
+        	  {% if event or user is BrandProfile %}
 	          {% else %}
 	          	<div class="trail_avatar">
 		        	<div class="tb-avatar tb-avatar-feature"><div class="photo"><a href="{{ path('profile', {'name': user.name}) }}"><img src="{{ get_user_avatar_url(user) }}"></a></div></div>
@@ -132,6 +136,13 @@ var TB_TRAIL_ID = {{ trail.id }};
     			<a href="{{ app.request.baseUrl }}/campaign/{{ campaign.slug}}"><img src="http://assets.trailburning.com/images/campaign/urbantrails/london/logo_urbantrails_london.png" width="218" border="0"></a>
 			</div>
         {% endif %}
+        
+	    {% if user is BrandProfile %}
+			<div class="event_logo">
+    			<a href="{{ path('profile', {'name': user.name}) }}"><img src="http://assets.trailburning.com/images/profile/{{ user.name }}/logo.png" border="0"></a>
+			</div>
+        {% endif %}
+        
         
         <div id="trail_info">           	
         	{% if event %}

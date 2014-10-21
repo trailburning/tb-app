@@ -52,42 +52,46 @@ define([
       	    $.each(data.value.routes, function(key, card) {
       	      bEvent = false;
 	          model = new Backbone.Model(card);    	
-	          
-	          console.log(model.get('slug'));
 	          switch (model.get('slug')) {
 	          	case '16km':
 	          	case '30km':
 	          	case '46km':
 	          	  bEvent = true;	          	
-	          	  model.set('eventURL', 'ultraks');
+	          	  model.set('sponsorURL', 'event/ultraks');
 	          	  break;	          	  
 	          	case 'e16':
 	          	case 'e51':
 	          	case 'e101':
 	          	  bEvent = true;	          	
-	          	  model.set('eventURL', 'eiger');
+	          	  model.set('sponsorURL', 'event/eiger');
 	          	  break;	          	  
 	          	case 'ttm':
 	          	  bEvent = true;	          	
-	          	  model.set('eventURL', 'tfor');
+	          	  model.set('sponsorURL', 'event/tfor');
 	          	  break;	          	  
 	          	case 'marathon':
 	          	  bEvent = true;	          	
-	          	  model.set('eventURL', 'aom');
+	          	  model.set('sponsorURL', 'event/aom');
 	          	  break;	          	  
 	          	case 'ultramarathon':
 	          	  bEvent = true;	          	
-	          	  model.set('eventURL', 'laugavegur');
+	          	  model.set('sponsorURL', 'event/laugavegur');
 	          	  break;	          	  
 	          	case 'lantau-vertical-hong-kong':
 	          	  bEvent = true;	          	
-	          	  model.set('eventURL', 'lantauvertical');
+	          	  model.set('sponsorURL', 'event/lantauvertical');
 	          	  break;
 	          	case 'heysen-105-south-australia':
 	          	  bEvent = true;	          	
-	          	  model.set('eventURL', 'heysen105');
+	          	  model.set('sponsorURL', 'event/heysen105');
 	          	  break;
 	          }
+	          
+	          if (model.get('user').type == 'brand') {
+				model.set('sponsorURL', 'profile/' + model.get('user').name);
+	          	bEvent = true;
+	          }
+	          
 	          if (bEvent) {
 	            trailsTrailCardView = new TrailsTrailEventCardView({ model: model});
 	          }

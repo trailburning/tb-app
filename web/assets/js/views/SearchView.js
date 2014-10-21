@@ -30,7 +30,7 @@ define([
                 response(cache[term]);
                 return;
             }
-            var url = TB_RESTAPI_BASEURL + '/v1/search/suggest?q=' + term;
+            var url = TB_RESTAPI_BASEURL + '/v1/search/suggest?q=' + term.toLowerCase();
             $.getJSON(url, request, function( data, status, xhr ) {
                 var suggestions = data.hits.hits;
                 cache[term] = suggestions;
@@ -38,12 +38,13 @@ define([
             });
         }    
 	  });
-	
+		
       $('.searchBox', $(this.el)).data('ui-autocomplete')._resizeMenu = function() {
     	this.menu.element.outerWidth(300);
       };
       
       $('.searchBox', $(this.el)).data('ui-autocomplete')._renderItem = function(ul, item) {
+		item.value = item._source.suggest_text;      	    	  
     	var strItem = "", strURL = TB_BASEURL;
     	var text = item._source.suggest_engram;
     	
@@ -81,7 +82,7 @@ define([
         return $('<li>')
             .append(strItem)
             .appendTo(ul);
-      };      
+      };     
     }
   });
 
