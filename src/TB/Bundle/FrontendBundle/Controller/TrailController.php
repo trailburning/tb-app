@@ -63,6 +63,7 @@ class TrailController extends Controller
     {   
         $editorial = null;
         $event = null;
+        $campaign = null;
         $eventTrails = null;
         $editorialTrails = null;
         $relatedTrails = null;
@@ -210,6 +211,7 @@ class TrailController extends Controller
             'user' => $trail->getUser(), 
             'editorial' => $editorial, 
             'event' => $event,
+            'campaign' => $campaign,
             'breadcrumb' => $breadcrumb,
             'eventTrails' => $eventTrails,
             'editorialTrails' => $editorialTrails,
