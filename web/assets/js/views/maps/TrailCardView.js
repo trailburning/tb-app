@@ -3,11 +3,9 @@ define([
   'backbone'
 ], function(_, Backbone){
 
-  var CampaignTrailCardView = Backbone.View.extend({
+  var TrailCardView = Backbone.View.extend({
   	className: "panel_content",
     initialize: function(){
-      this.template = _.template($('#trailCardViewTemplate').text());        
-                        
       this.bRendered = false;
     },            
     render: function(model){
@@ -15,6 +13,47 @@ define([
       
       if (model) {
 	      this.model = model;
+	
+		  var bEvent = false;
+	      switch (this.model.get('slug')) {
+	        case '16km':
+	        case '30km':
+	        case '46km':
+	          bEvent = true;	          	
+	          model.set('sponsorURL', 'event/ultraks');
+	          break;	          	  
+	        case 'e16':
+	        case 'e51':
+	        case 'e101':
+	          bEvent = true;	          	
+	          model.set('sponsorURL', 'event/eiger');
+	          break;	          	  
+	        case 'ttm':
+	          bEvent = true;	          	
+	          model.set('sponsorURL', 'event/tfor');
+	          break;	          	  
+	        case 'marathon':
+	          bEvent = true;	          	
+	          model.set('sponsorURL', 'event/aom');
+	          break;	          	  
+	        case 'ultramarathon':
+	          bEvent = true;	          	
+	          model.set('sponsorURL', 'event/laugavegur');
+	          break;	          	  
+          	case 'lantau-vertical-hong-kong':
+          	  bEvent = true;	          	
+          	  model.set('sponsorURL', 'event/lantauvertical');
+          	  break;	          	  	          	  
+          	case 'heysen-105-south-australia':
+          	  bEvent = true;	          	
+          	  model.set('sponsorURL', 'event/heysen105');
+          	  break;	          
+	      }
+	
+          this.template = _.template($('#trailCardViewTemplate').text());        
+		  if (bEvent) {
+		    this.template = _.template($('#trailEventCardViewTemplate').text());	
+		  }
 	
 		  var strPath = '/images/default/example_trailcard.jpg';
 	      if (this.model.get('media')) {
@@ -39,7 +78,7 @@ define([
 	            
 		  $('.link', $(this.el)).click(function(evt){
 			// fire event
-	        app.dispatcher.trigger("CampaignTrailCardView:click", self);                	      
+	        app.dispatcher.trigger("TrailCardView:click", self);                	      
 		  });
 	
 	      var nRating = this.model.get('rating');
@@ -142,5 +181,5 @@ define([
 
   });
 
-  return CampaignTrailCardView;
+  return TrailCardView;
 });

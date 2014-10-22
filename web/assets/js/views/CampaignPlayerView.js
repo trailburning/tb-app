@@ -2,9 +2,9 @@ define([
   'underscore', 
   'backbone',
   'views/CampaignSlidesView',  
-  'views/CampaignMapView',
-  'views/CampaignTrailCardView'  
-], function(_, Backbone, CampaignSlidesView, CampaignMapView, CampaignTrailCardView){
+  'views/maps/MapTrailView',
+  'views/maps/TrailCardView'  
+], function(_, Backbone, CampaignSlidesView, MapTrailView, TrailCardView){
   
   var PLAYER_INTRO = 0;
   var PLAYER_SHOW = 1;  
@@ -48,8 +48,8 @@ define([
       app.dispatcher.on("TrailSlidesView:slideview", self.onTrailSlidesViewSlideView, this);
 
       this.trailSlidesView = new CampaignSlidesView({ el: '#trail_slides_view', model: this.mediaModel });
-      this.trailMapView = new CampaignMapView({ el: '#trail_map_view', elCntrls: '#view_map_btns', model: this.model });
-      this.trailCardView = new CampaignTrailCardView({ el: '#trailcard_view' });
+      this.trailMapView = new MapTrailView({ el: '#trail_map_view', elCntrls: '#view_map_btns', model: this.model });
+      this.trailCardView = new TrailCardView({ el: '#trailcard_view' });
 
 	  this.getResults();
 	  this.buildBtns();

@@ -2,9 +2,9 @@ define([
   'underscore', 
   'backbone',
   'views/ActivityFeedView',  
-  'views/CampaignMapView',
-  'views/CampaignTrailCardView'  
-], function(_, Backbone, ActivityFeedView, CampaignMapView, CampaignTrailCardView){
+  'views/maps/MapTrailView',
+  'views/maps/TrailCardView'  
+], function(_, Backbone, ActivityFeedView, MapTrailView, TrailCardView){
   
   var SLIDE_VIEW = 0;
   var MAP_VIEW = 1;
@@ -18,9 +18,6 @@ define([
       this.slideTimer = null;
       this.nCurrSlide = -1;
 	  this.bPlayerReady = false;
-
-      this.nPlayerHeight = 0;
-      this.nPlayerMinHeight = $('#campaignplayer').height();
 
       app.dispatcher.on("TrailMapView:selecttrail", self.onSelectTrail, this);
       app.dispatcher.on("TrailMapView:zoominclick", self.onTrailMapViewZoomInClick, this);
@@ -39,8 +36,8 @@ define([
 	  	$('#welcome_view').show();
 	  }
 
-      this.trailMapView = new CampaignMapView({ el: '#trail_map_view', elCntrls: '#view_map_btns', model: this.model });
-      this.trailCardView = new CampaignTrailCardView({ el: '#trailcard_view' });
+      this.trailMapView = new MapTrailView({ el: '#trail_map_view', elCntrls: '#view_map_btns', model: this.model });
+      this.trailCardView = new TrailCardView({ el: '#trailcard_view' });
   	  this.trailMapView.render();
 
 	  this.getResults();

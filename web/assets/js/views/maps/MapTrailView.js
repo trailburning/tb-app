@@ -1,20 +1,20 @@
 define([
   'underscore', 
   'backbone',
-  'views/MapTrailMarker'  
+  'views/maps/MapTrailMarker'  
 ], function(_, Backbone, MapTrailMarker){
 
   var MAP_STREET_VIEW = 0;
   var MAP_SAT_VIEW = 1;
 
-  var CampaignMapView = Backbone.View.extend({
+  var MapTrailView = Backbone.View.extend({
     initialize: function(){
       this.template = _.template($('#trailMapViewTemplate').text());        
             
       var self = this;
       
       app.dispatcher.on("MapTrailMarker:click", self.onSelectTrail, this);
-      app.dispatcher.on("CampaignTrailCardView:click", self.onTrailCardViewClick, this);
+      app.dispatcher.on("TrailCardView:click", self.onTrailCardViewClick, this);
             
       this.elCntrls = this.options.elCntrls;            
       this.bRendered = false;
@@ -192,6 +192,7 @@ define([
 
       var cardViewModel = new Backbone.Model();
       cardViewModel.id = model.id;
+      
       cardViewModel.mapTrailMarker = mapTrailMarker;
       this.collection.add(cardViewModel);   	  	    
     },
@@ -239,5 +240,5 @@ define([
     
   });
 
-  return CampaignMapView;
+  return MapTrailView;
 });
