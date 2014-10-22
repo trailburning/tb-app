@@ -74,7 +74,7 @@ border-width:1px;
   left: -800px;
   width: 412px;
   height: 1000px;
-  background: url("../img/campaign/background_skew.png") no-repeat top left;
+  background: url("../img/map/background_skew.png") no-repeat top left;
 }
 
 #campaign_landing_overlay_view .info-hero .campaign_title {
@@ -317,7 +317,7 @@ border-width:1px;
 }
 
 #trail_map_view .leaflet-container {
-    background: #DEDEDE;
+  background: #DEDEDE;
 }
 
 #trail_map_view #map_large {
