@@ -29,19 +29,31 @@ border-width:1px;
   background: #A4DDFE;	
 }
 
-#overlay_view {
+#map_overlay_view {
   position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 400px;
+  top: 0px;  
   height: 100%;
-  background: url(../img/back_shape.png) no-repeat top left;	
 }
 
-#overlay_view .maintitle {
+#map_overlay_view .info-hero {
   position: absolute;
-  top: 8px;
-  left: 40px;
+  top: 0px;
+  left: -800px;
+}
+
+#map_overlay_view .back {
+  position: absolute;
+  top: 0px;
+  left: -800px;
+  width: 412px;
+  height: 100%;
+  background: url("../img/map/background_skew.png") no-repeat top left;
+}
+
+#map_overlay_view .info-hero .campaign_title {
+  position: relative;
+  top: 30px;
+  left: -100px;
 }
 
 /* WELCOME VIEW */
@@ -49,13 +61,13 @@ border-width:1px;
 #welcome_view {
   display: none;
   position: absolute;
+  width: 210px;
   top: 192px;
-  left: 40px;	
 }
 
 #welcome_view .title {
   font-size: 32px;
-  line-height: 1.1em;
+  line-height: 1.2em;
   color: #FFF;
   text-shadow: 1px 1px #000000;  
 }
@@ -66,7 +78,6 @@ border-width:1px;
   display: none;
   position: absolute;
   top: 192px;
-  left: 40px;	
 }
 
 #cards_container_view .tb-avatar .photo {

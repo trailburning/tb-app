@@ -16,18 +16,17 @@ var TB_USER_ID = {{ app.user.id }};
 
 <div id="mapview">
 	<div id="map"></div>
-
-	  <div id="overlay_view">	
-		<div class="maintitle">
-		<h2 class="tb tb-title">Explore</h2>
-		<br/>
-		<h2 class="tb tb-title">World Trails</h2>
-		</div>
+    <div id="map_overlay_view">	
+  	  <div class="back tb-move-horiz"></div>
+  	  <div class="info-hero tb-move-horiz">  	  	
+	    <div class="campaign_title tb-move-horiz">
+	    	<h2 class="tb tb-title">Explore</h2><br/><h2 class="tb tb-title">Trails</h2>
 
 	    <div id="welcome_view">
 	    	<div class="title">
-			Select trails from the<br/> 
-			map or <a href="javascript:void(0)" class="btn btn-tb btn-tb-large discover_btn">Discover</a> the<br/>			
+			Select trails<br/>
+			from the map<br/> 
+			or <a href="javascript:void(0)" class="btn btn-tb btn-tb-large discover_btn">Discover</a> the<br/>			
 			latest trail.</div>
 		</div>	    	
 		
@@ -42,12 +41,15 @@ var TB_USER_ID = {{ app.user.id }};
 	      	<div class="prev"><a href="javascript:void(0)" class="button prev_card">Previous</a></div><!-- 
 	      	--><div class="title">Select a Trail</div><!--
 	      	--><div class="next"><a href="javascript:void(0)" class="button next_card">Next</a></div>
-	      </div>	  
-	    </div>
-	  
-	  </div>
+	        </div>	  
+	      </div>
+
+	    	
+	    </div>              
+  	  	
+  	  </div>	  
+	</div>
 	
-  	</div>
   	<div id="view_map_btns">        
 		<div class='controls'>
     	<span class="btn btn-tb zoomin_btn">+</span>          
