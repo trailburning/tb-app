@@ -50,7 +50,13 @@ define([
           	  break;	          
 	      }
 	
-          this.template = _.template($('#trailCardViewTemplate').text());        
+          this.template = _.template($('#trailCardViewTemplate').text());
+          
+          if (model.get('user').type == 'brand') {
+		    model.set('sponsorURL', 'profile/' + model.get('user').name);
+      	    bEvent = true;
+          }
+                  
 		  if (bEvent) {
 		    this.template = _.template($('#trailEventCardViewTemplate').text());	
 		  }
