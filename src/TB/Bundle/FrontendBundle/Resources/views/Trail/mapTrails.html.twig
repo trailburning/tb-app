@@ -15,40 +15,30 @@ var TB_USER_ID = {{ app.user.id }};
 </script>
 
 <div id="mapview">
-	<div id="map"></div>
-
-	  <div id="overlay_view">	
-		<div class="maintitle">
-		<h2 class="tb tb-title">Explore</h2>
-		<br/>
-		<h2 class="tb tb-title">World Trails</h2>
-		</div>
-
-	    <div id="welcome_view">
+	<div id="trail_map_view"></div>
+    <div id="map_overlay_view">	
+  	  <div class="back tb-move-horiz"></div>
+  	  <div class="info-hero tb-move-horiz">  	  	
+	    <div class="campaign_title tb-move-horiz">
+    	  <h2 class="tb tb-title">Explore</h2><br/><h2 class="tb tb-title">Trails</h2>
+	      <div id="welcome_view">
 	    	<div class="title">
-			Select trails from the<br/> 
-			map or <a href="javascript:void(0)" class="btn btn-tb btn-tb-large discover_btn">Discover</a> the<br/>			
+			Select trails<br/>
+			from the map<br/> 
+			or <a href="javascript:void(0)" class="btn btn-tb btn-tb-large discover_btn">Discover</a> the<br/>			
 			latest trail.</div>
-		</div>	    	
-		
-	    <div id="cards_container_view">	
-	      <div class="trailcards">
-  	        <div class="panel trail_card_panel">
-		      <div id="cardsview"></div>
-    	    </div>
-  		  </div>
-	  
-	      <div class="nav">
-	      	<div class="prev"><a href="javascript:void(0)" class="button prev_card">Previous</a></div><!-- 
-	      	--><div class="title">Select a Trail</div><!--
-	      	--><div class="next"><a href="javascript:void(0)" class="button next_card">Next</a></div>
-	      </div>	  
-	    </div>
-	  
-	  </div>
+		  </div>	    	
+				
+	      <div id="cards_container_view">	
+			<div class="trailcards">
+				<div id="trailcard_view" class="panel trail_card_panel"></div>
+	      	</div>                	  	
+  	  	  </div>
+  	  	</div>
+  	  </div>	  
+	</div>
 	
-  	</div>
-  	<div id="view_map_btns">        
+  	<div id="view_map_btns" class="tb-move-vert">        
 		<div class='controls'>
     	<span class="btn btn-tb zoomin_btn">+</span>          
     	<span class="btn btn-tb zoomout_btn">-</span>
@@ -59,7 +49,13 @@ var TB_USER_ID = {{ app.user.id }};
 	<div id="view_toggle"><a href="{{ app.request.baseUrl }}/trails"><div class="tb-cntrl icon-cards"></div></a></div>
 </div>  
 
-<script type="text/template" id="mapTrailCardViewTemplate">
+<script type="text/template" id="trailMapViewTemplate">
+  <div class="map_container">
+    <div id='map_large'></div>
+  </div>
+</script>
+
+<script type="text/template" id="trailCardViewTemplate">
     <div class="title"><h3 class="tb"><%= category.name %></h3></div>
     <div class="link" data-url="{{ app.request.baseUrl }}/trail/<%= slug %>" data-id="<%= id %>">
     <div class="photo tb-photo-btn">
@@ -95,7 +91,7 @@ var TB_USER_ID = {{ app.user.id }};
     </div>
 </script>
 
-<script type="text/template" id="mapTrailEventCardViewTemplate">
+<script type="text/template" id="trailEventCardViewTemplate">
     <div class="title"><h3 class="tb"><%= category.name %></h3></div>
     <div class="link" data-url="{{ app.request.baseUrl }}/trail/<%= slug %>" data-id="<%= id %>">
     <div class="photo tb-photo-btn">

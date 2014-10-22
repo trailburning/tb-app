@@ -29,8 +29,7 @@ define([
       	this.activityFeedView.getActivity();	  	
 	  }
       
-      this.trailPlayerView = new TrailPlayerView({ el: '#trailplayer', model: this.model, mediaCollection: this.mediaCollection, mediaModel: this.mediaModel });            
-      this.trailWeatherView = new TrailWeatherView({ el: '#trail_weather_view', model: this.model });
+      this.trailPlayerView = new TrailPlayerView({ el: '#trailplayer', model: this.model, mediaCollection: this.mediaCollection, mediaModel: this.mediaModel });                  
       this.trailActivitiesView = new TrailActivitiesView({ el: '#trailactivities_view', model: this.model, bReadonly: true });
       
       this.buildBtns();      
@@ -103,11 +102,11 @@ define([
         url: strURL,
         headers: {'Trailburning-User-ID': TB_USER_ID},
         error: function(data) {
-          console.log('error:'+data.responseText);      
+//          console.log('error:'+data.responseText);      
         },
         success: function(data) {      
-          console.log('success');
-          console.log(data);
+//          console.log('success');
+//          console.log(data);
         }
       });        
     },        
@@ -117,6 +116,9 @@ define([
     handleTrail: function(){      
       // render activities
       this.trailActivitiesView.render();
+      // render weather
+      this.trailWeatherView = new TrailWeatherView({ el: '#trail_weather_view', lat: this.model.get('value').route.start[1], lon: this.model.get('value').route.start[0] });
+      this.trailWeatherView.render();
       if (this.model.get('value').route.attributes != undefined) {
         $('.activity_panel').show();
       }
@@ -172,7 +174,6 @@ define([
         self.mediaCollection.add(new Backbone.Model(media));      
       });
 
-      this.trailWeatherView.render();
       this.handleResize();
       
       // keyboard control

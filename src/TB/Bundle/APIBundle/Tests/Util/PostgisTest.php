@@ -75,6 +75,25 @@ class PostgisTest extends AbstractApiTestCase
             'the total number of results is 2');            
     }
     
+    public function testSearchCampaignRoutes()
+    {
+        $this->loadFixtures([
+            'TB\Bundle\FrontendBundle\DataFixtures\ORM\CampaignData',
+        ]); 
+        $postgis = $this->getContainer()->get('postgis');
+        
+        $campaign = $this->getCampaign('urbantrails-london');
+        
+        $params = ['campaign_id' => $campaign->getId()];
+        $routes = $postgis->searchRoutes($params, 10, 0, $count);
+        $this->assertInternalType('array', $routes, 
+            'searchRoutes returns an array of Routes');   
+        $this->assertEquals(1, count($routes),
+            'searchRoutes returns one route');
+        $this->assertEquals(1, $count,
+            'the total number of results is 1');
+    }
+    
     protected function importRoute($file)
     {
         $this->loadFixtures([
@@ -189,4 +208,16 @@ class PostgisTest extends AbstractApiTestCase
         }
     }
     
+    public function testUpdateRegionArea()
+    {
+        $this->loadFixtures([
+            'TB\Bundle\FrontendBundle\DataFixtures\ORM\RegionData',
+        ]); 
+        $postgis = $this->getContainer()->get('postgis');
+        $region = $this->getRegion('london');
+        $gml = file_get_contents(realpath(__DIR__ . '/../../DataFixtures/GML/london.gml'));
+        $result = $postgis->updateRegionArea($region->getId(), $gml);
+        
+        $this->assertTrue($result);
+    }
 }    

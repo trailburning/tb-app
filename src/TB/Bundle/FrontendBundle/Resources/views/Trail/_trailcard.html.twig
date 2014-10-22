@@ -1,6 +1,10 @@
 <div class="panel trail_card_panel">
     <div class="title"><h3 class="tb">{{ trail.routeCategory.name }}</h3></div>
-    <a href="{{ path('trail', {'trailSlug': trail.slug}) }}">
+    {% if campaign is defined %}
+        <a href="{{ path('campaign_trail', {'trailSlug': trail.slug, 'campaignSlug': campaign.slug}) }}">
+    {% else %}
+        <a href="{{ path('trail', {'trailSlug': trail.slug}) }}">
+    {% endif %}
     <div class="photo tb-photo-btn">
         <div class="image_container fade_on_load">
         {% if trail.favouriteMedia %}	

@@ -56,12 +56,14 @@ class TrailController extends Controller
     /**
      * @Route("/trail/{trailSlug}", name="trail")
      * @Route("/inspire/{editorialSlug}/trail/{trailSlug}", name="editorial_trail")
+     * @Route("/campaign/{campaignSlug}/trail/{trailSlug}", name="campaign_trail")
      * @Template()
      */
-    public function trailAction($trailSlug, $editorialSlug = null, $eventSlug = null)
+    public function trailAction($trailSlug, $editorialSlug = null, $campaignSlug = null)
     {   
         $editorial = null;
         $event = null;
+        $campaign = null;
         $eventTrails = null;
         $editorialTrails = null;
         $relatedTrails = null;
@@ -74,6 +76,24 @@ class TrailController extends Controller
             throw $this->createNotFoundException(
                 sprintf('Trail %s not found', $trailSlug)
             );
+        }
+        
+        if ($campaignSlug !== null) {
+            $query = $this->getDoctrine()->getManager()
+                ->createQuery('
+                    SELECT c FROM TBFrontendBundle:Campaign c
+                    JOIN c.routes r
+                    WHERE c.slug = :campaignSlug
+                    AND r.id = :routeId')
+                ->setParameter('campaignSlug', $campaignSlug)
+                ->setParameter('routeId', $trail->getId());
+            try {
+                $campaign = $query->getSingleResult();
+            } catch (\Doctrine\ORM\NoResultException $e) {
+                throw $this->createNotFoundException(
+                    sprintf('Campaign %s not found or no relation to Trail %s', $campaignSlug, $trailSlug)
+                );
+            }
         }
         
         if ($editorialSlug !== null) {
@@ -106,7 +126,7 @@ class TrailController extends Controller
         } else {
             $postgis = $this->get('postgis');
             $relatedTrails = $postgis->relatedRoutes($trail->getId());
-        } 
+        }
         
         if (count($trail->getEventRoutes()) > 0) {
             $event = $trail->getEventRoutes()[0]->getEvent();
@@ -156,6 +176,23 @@ class TrailController extends Controller
                 'label' => $trail->getName(), 
                 'params' => ['trailSlug' => $trail->getSlug()],
             ]];
+        } elseif ($campaign != null) {
+            // case 3: a campaign is linked to the trail, add link to the campaign
+            if ($campaign->getCampaignGroup()) {
+                $title = sprintf('%s %s', $campaign->getCampaignGroup()->getName(), $campaign->getTitle());
+            } else {
+                $title = $campaign->getTitle();
+            }   
+            
+            $breadcrumb = [[
+                'name' => 'campaign',
+                'label' => $title, 
+                'params' => ['slug' => $campaign->getSlug()],
+            ],[
+                'name' => 'trail',
+                'label' => $trail->getName(), 
+                'params' => ['trailSlug' => $trail->getSlug()],
+            ]];
         } else {
             // case 2: none of the above, add link to the profile that created that event
             $breadcrumb = [[
@@ -174,6 +211,7 @@ class TrailController extends Controller
             'user' => $trail->getUser(), 
             'editorial' => $editorial, 
             'event' => $event,
+            'campaign' => $campaign,
             'breadcrumb' => $breadcrumb,
             'eventTrails' => $eventTrails,
             'editorialTrails' => $editorialTrails,

@@ -58,6 +58,20 @@ abstract class AbstractApiTestCase extends WebTestCase
         return $route;
     }
     
+    protected function getRegion($slug)
+    {
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        $region = $em
+            ->getRepository('TBFrontendBundle:Region')
+            ->findOneBySlug($slug);
+        
+        if (!$region) {
+            $this->fail(sprintf('Missing Region with slug "%s" in test DB', $slug));
+        }
+        
+        return $region;
+    }
+    
     protected function getAttribute($name, $type)
     {
         $query = $this->getContainer()->get('doctrine.orm.entity_manager')
@@ -75,5 +89,19 @@ abstract class AbstractApiTestCase extends WebTestCase
         }
         
         return $attribute;
+    }
+    
+    protected function getCampaign($slug)
+    {
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        $campaign = $em
+            ->getRepository('TBFrontendBundle:Campaign')
+            ->findOneBySlug($slug);
+        
+        if (!$campaign) {
+            $this->fail(sprintf('Missing Campaign with slug "%s" in test DB', $slug));
+        }
+        
+        return $campaign;
     }
 }

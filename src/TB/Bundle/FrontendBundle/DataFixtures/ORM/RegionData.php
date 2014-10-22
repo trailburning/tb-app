@@ -38,6 +38,18 @@ Grindelwald has something to offer everyone. The village is lively, sporty and a
         $manager->persist($region);
         $manager->flush();
         $this->addReference('Region-valais', $region);
+        
+        $region = new Region();
+        $region->setName('London');
+        $region->setAbout('London');
+        $region->setImage('london.jpg');
+        $region->setLogo('london.png');
+        $region->setLink('http://www.london.com');
+        $region->setSlug('london');
+        
+        $manager->persist($region);
+        $manager->flush();
+        $this->addReference('Region-london', $region);
     }
     
     public function getOrder()
