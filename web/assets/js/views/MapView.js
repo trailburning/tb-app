@@ -1,9 +1,10 @@
 define([
   'underscore', 
   'backbone',
+  'views/ActivityFeedView',  
   'views/CampaignMapView',
   'views/CampaignTrailCardView'  
-], function(_, Backbone, CampaignMapView, CampaignTrailCardView){
+], function(_, Backbone, ActivityFeedView, CampaignMapView, CampaignTrailCardView){
   
   var SLIDE_VIEW = 0;
   var MAP_VIEW = 1;
@@ -25,6 +26,12 @@ define([
       app.dispatcher.on("TrailMapView:zoominclick", self.onTrailMapViewZoomInClick, this);
       app.dispatcher.on("TrailMapView:zoomoutclick", self.onTrailMapViewZoomOutClick, this);
       app.dispatcher.on("TrailSlidesView:slideview", self.onTrailSlidesViewSlideView, this);
+
+	  if (typeof TB_USER_ID != 'undefined') {
+      	this.activityFeedView = new ActivityFeedView({ el: '#activity_feed_view' });
+      	this.activityFeedView.render();
+      	this.activityFeedView.getActivity();	  	
+	  }
 
 	  // do we have a route to select?
 	  var nRouteID = $.cookie('route_id');

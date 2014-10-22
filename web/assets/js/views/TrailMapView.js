@@ -21,15 +21,6 @@ define([
       this.nMapView = MAP_STREET_VIEW;
       
       var self = this;
-      
-      var LocationIcon = L.Icon.extend({
-          options: {
-              iconSize:     [36, 47],
-              iconAnchor:   [16, 44],
-              popupAnchor:  [16, 44]
-          }
-      });      
-      this.locationIcon = new LocationIcon({iconUrl: 'https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/icons/location.png'});
     },            
     show: function(){
       $(this.el).fadeIn();      
@@ -163,7 +154,9 @@ define([
         trailMapMediaView.render();
       }
       
-      L.marker(this.arrLineCordinates[0], {icon: this.locationIcon}).addTo(this.map);            
+	  var marker = L.marker(this.arrLineCordinates[0]).addTo(this.map);			        
+      marker.setIcon(L.divIcon({className: 'tb-map-location-marker', html: '<div class="marker"></div>', iconSize: [18, 25], iconAnchor: [9, 25],}));
+	  $(marker._icon).addClass('selected');
     },        
     render: function(){
       if (!this.model) {
@@ -188,7 +181,7 @@ define([
       $(this.el).html(this.template(attribs));
                         
       this.map = L.mapbox.map('map_large', null, {dragging: true, touchZoom: false, scrollWheelZoom:false, doubleClickZoom:false, boxZoom:false, tap:false, zoomControl:false, zoomAnimation:true, attributionControl:false});
-      this.layer_street = L.mapbox.tileLayer('mallbeury.map-omeomj70');
+      this.layer_street = L.mapbox.tileLayer('mallbeury.8d4ad8ec');
       this.layer_sat = L.mapbox.tileLayer('mallbeury.map-eorpnyp3');      
       this.map.addLayer(this.layer_street);
 
@@ -204,7 +197,7 @@ define([
       });
 
       var polyline_options = {
-        color: '#44B6FC',
+        color: '#ed1c24',
         opacity: 1,
         weight: 4,
         clickable: false
