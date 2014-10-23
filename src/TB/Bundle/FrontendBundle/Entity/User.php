@@ -129,7 +129,7 @@ abstract class User extends BaseUser implements Exportable
     private $editorials;
     
     /**
-     * @ORM\ManyToMany(targetEntity="User", mappedBy="iFollow")
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="userIFollow")
      **/
     private $myFollower;    
 
@@ -140,7 +140,7 @@ abstract class User extends BaseUser implements Exportable
      *      inverseJoinColumns={@ORM\JoinColumn(name="follower_user_id", referencedColumnName="id")}
      *      )
      **/
-    private $iFollow;
+    private $userIFollow;
     
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -249,6 +249,26 @@ abstract class User extends BaseUser implements Exportable
     private $campaigns;
     
     /**
+     * @ORM\ManyToMany(targetEntity="Campaign", inversedBy="follower")
+     * @ORM\JoinTable(name="campaign_follower")
+     **/
+    private $campaignsIFollow;
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="CampaignFollowActivity", mappedBy="actor")
+     **/
+    private $campaignFollowActivities;
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="CampaignUnfollowActivity", mappedBy="actor")
+     **/
+    private $campaignUnfollowActivities;
+    
+    /**
      * Constructor
      */
     public function __construct()
@@ -256,10 +276,13 @@ abstract class User extends BaseUser implements Exportable
         $this->routes = new \Doctrine\Common\Collections\ArrayCollection();
         $this->events = new \Doctrine\Common\Collections\ArrayCollection();
         $this->editorials = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->iFollow = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->userIFollow = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->campaignsIFollow = new \Doctrine\Common\Collections\ArrayCollection();
         $this->myFollower = new \Doctrine\Common\Collections\ArrayCollection();
         $this->routeLikeActivities = new \Doctrine\Common\Collections\ArrayCollection();
         $this->routeUndoLikeActivities = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->campaignFollowActivities = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->campaignUnfollowActivities = new \Doctrine\Common\Collections\ArrayCollection();
         parent::__construct();
     }
     
@@ -629,36 +652,36 @@ abstract class User extends BaseUser implements Exportable
     }
 
     /**
-     * Add iFollow
+     * Add userIFollow
      *
-     * @param \TB\Bundle\FrontendBundle\Entity\User $iFollow
+     * @param \TB\Bundle\FrontendBundle\Entity\User $userIFollow
      * @return User
      */
-    public function addIFollow(\TB\Bundle\FrontendBundle\Entity\User $iFollow)
+    public function addUserIFollow(\TB\Bundle\FrontendBundle\Entity\User $userIFollow)
     {
-        $this->iFollow[] = $iFollow;
+        $this->userIFollow[] = $userIFollow;
 
         return $this;
     }
 
     /**
-     * Remove iFollow
+     * Remove userIFollow
      *
-     * @param \TB\Bundle\FrontendBundle\Entity\User $iFollow
+     * @param \TB\Bundle\FrontendBundle\Entity\User $userIFollow
      */
-    public function removeIFollow(\TB\Bundle\FrontendBundle\Entity\User $iFollow)
+    public function removeUserIFollow(\TB\Bundle\FrontendBundle\Entity\User $userIFollow)
     {
-        $this->iFollow->removeElement($iFollow);
+        $this->userIFollow->removeElement($userIFollow);
     }
 
     /**
-     * Get iFollow
+     * Get userIFollow
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getIFollow()
+    public function getUserIFollow()
     {
-        return $this->iFollow;
+        return $this->userIFollow;
     }
 
     /**
@@ -669,7 +692,7 @@ abstract class User extends BaseUser implements Exportable
      */
     public function addMyFollower(\TB\Bundle\FrontendBundle\Entity\User $myFollower)
     {
-        $myFollower->addIFollow($this);
+        $myFollower->addUserIFollow($this);
         $this->myFollower[] = $myFollower;
 
         return $this;
@@ -703,8 +726,8 @@ abstract class User extends BaseUser implements Exportable
      */
     public function isFollowing(User $user)
     {
-        foreach ($this->getIFollow() as $iFollowUser) {
-            if ($iFollowUser->getId() === $user->getId()) {
+        foreach ($this->getUserIFollow() as $userIFollowUser) {
+            if ($userIFollowUser->getId() === $user->getId()) {
                 return true;
             }
         }
@@ -1235,5 +1258,104 @@ abstract class User extends BaseUser implements Exportable
     public function getCampaigns()
     {
         return $this->campaigns;
+    }
+
+    /**
+     * Add campaignsIFollow
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\Campaign $campaignsIFollow
+     * @return User
+     */
+    public function addCampaignsIFollow(\TB\Bundle\FrontendBundle\Entity\Campaign $campaignsIFollow)
+    {
+        $this->campaignsIFollow[] = $campaignsIFollow;
+
+        return $this;
+    }
+
+    /**
+     * Remove campaignsIFollow
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\Campaign $campaignsIFollow
+     */
+    public function removeCampaignsIFollow(\TB\Bundle\FrontendBundle\Entity\Campaign $campaignsIFollow)
+    {
+        $this->campaignsIFollow->removeElement($campaignsIFollow);
+    }
+
+    /**
+     * Get campaignsIFollow
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCampaignsIFollow()
+    {
+        return $this->campaignsIFollow;
+    }
+
+    /**
+     * Add campaignFollowActivities
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\CampaignFollowActivity $campaignFollowActivities
+     * @return User
+     */
+    public function addCampaignFollowActivity(\TB\Bundle\FrontendBundle\Entity\CampaignFollowActivity $campaignFollowActivities)
+    {
+        $this->campaignFollowActivities[] = $campaignFollowActivities;
+
+        return $this;
+    }
+
+    /**
+     * Remove campaignFollowActivities
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\CampaignFollowActivity $campaignFollowActivities
+     */
+    public function removeCampaignFollowActivity(\TB\Bundle\FrontendBundle\Entity\CampaignFollowActivity $campaignFollowActivities)
+    {
+        $this->campaignFollowActivities->removeElement($campaignFollowActivities);
+    }
+
+    /**
+     * Get campaignFollowActivities
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCampaignFollowActivities()
+    {
+        return $this->campaignFollowActivities;
+    }
+
+    /**
+     * Add campaignUnfollowActivities
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\CampaignUnfollowActivity $campaignUnfollowActivities
+     * @return User
+     */
+    public function addCampaignUnfollowActivity(\TB\Bundle\FrontendBundle\Entity\CampaignUnfollowActivity $campaignUnfollowActivities)
+    {
+        $this->campaignUnfollowActivities[] = $campaignUnfollowActivities;
+
+        return $this;
+    }
+
+    /**
+     * Remove campaignUnfollowActivities
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\CampaignUnfollowActivity $campaignUnfollowActivities
+     */
+    public function removeCampaignUnfollowActivity(\TB\Bundle\FrontendBundle\Entity\CampaignUnfollowActivity $campaignUnfollowActivities)
+    {
+        $this->campaignUnfollowActivities->removeElement($campaignUnfollowActivities);
+    }
+
+    /**
+     * Get campaignUnfollowActivities
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCampaignUnfollowActivities()
+    {
+        return $this->campaignUnfollowActivities;
     }
 }

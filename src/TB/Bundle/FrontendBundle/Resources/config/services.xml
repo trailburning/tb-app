@@ -74,6 +74,14 @@
             <tag name="kernel.event_listener" event="tb.route_publish" method="onRoutePublish" />
         </service>
         
+        <!-- Register Event Listener to create an Activity Feed Item when a Route gets accepted to a Campaign -->
+        <service id="tb.activity.campaign_route_accept_listener" class="TB\Bundle\FrontendBundle\EventListener\ActivityListener">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="old_sound_rabbit_mq.main_producer" />
+            <argument type="service" id="tb.activity.feed.generator" />
+            <tag name="kernel.event_listener" event="tb.campaign_route_accept" method="onCampaignRouteAccept" />
+        </service>
+        
         <!-- Register Event Listener to create an Activity Feed Item when a User gets followed -->
         <service id="tb.activity.user_follow_listener" class="TB\Bundle\FrontendBundle\EventListener\ActivityListener">
             <argument type="service" id="doctrine.orm.entity_manager" />
@@ -88,6 +96,22 @@
             <argument type="service" id="old_sound_rabbit_mq.main_producer" />
             <argument type="service" id="tb.activity.feed.generator" />
             <tag name="kernel.event_listener" event="tb.user_unfollow" method="onUserUnfollow" />
+        </service>
+        
+        <!-- Register Event Listener to create an Activity Feed Item when a Campaign gets followed -->
+        <service id="tb.activity.campaign_follow_listener" class="TB\Bundle\FrontendBundle\EventListener\ActivityListener">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="old_sound_rabbit_mq.main_producer" />
+            <argument type="service" id="tb.activity.feed.generator" />
+            <tag name="kernel.event_listener" event="tb.campaign_follow" method="onCampaignFollow" />
+        </service>
+        
+        <!-- Register Event Listener to create an Activity Feed Item when a Campaign gets unfollowed -->
+        <service id="tb.activity.campaign_unfollow_listener" class="TB\Bundle\FrontendBundle\EventListener\ActivityListener">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="old_sound_rabbit_mq.main_producer" />
+            <argument type="service" id="tb.activity.feed.generator" />
+            <tag name="kernel.event_listener" event="tb.campaign_unfollow" method="onCampaignUnfollow" />
         </service>
         
         <!-- Register Event Listener to create an Activity Feed Item when a Route gets liked -->

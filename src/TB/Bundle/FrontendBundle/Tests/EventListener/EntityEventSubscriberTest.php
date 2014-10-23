@@ -25,7 +25,7 @@ class EntityEventSubscriberTest extends AbstractFrontendTest
         $user1 = $this->getUser('mattallbeury');
         $user2 = $this->getUser('paultran');
         
-        $user1->addIFollow($user2);
+        $user1->addUserIFollow($user2);
         $em->persist($user1);
         $em->flush();
     }

@@ -3,6 +3,7 @@
 namespace TB\Bundle\FrontendBundle\Tests\Controller;
 
 use TB\Bundle\FrontendBundle\Tests\AbstractFrontendTest;
+use Symfony\Component\HttpFoundation\Response;
 
 class CampaignControllerTest extends AbstractFrontendTest
 {
@@ -18,6 +19,7 @@ class CampaignControllerTest extends AbstractFrontendTest
         $campaign = $this->getCampaign('urbantrails-london');
 
         $crawler = $client->request('GET', '/campaign/' . $campaign->getSlug());
+        $this->assertEquals(Response::HTTP_OK,  $client->getResponse()->getStatusCode());
     }
     
     public function testCampaignRoute()
@@ -31,6 +33,7 @@ class CampaignControllerTest extends AbstractFrontendTest
         $route = $this->getRoute('ttm');
 
         $crawler = $client->request('GET', '/campaign/' . $campaign->getSlug() . '/trail/' . $route->getSlug());
+        $this->assertEquals(Response::HTTP_OK,  $client->getResponse()->getStatusCode());
     }
 
 }

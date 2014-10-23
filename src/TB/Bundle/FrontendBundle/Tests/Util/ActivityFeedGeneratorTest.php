@@ -7,6 +7,8 @@ use TB\Bundle\FrontendBundle\Entity\RoutePublishActivity;
 use TB\Bundle\FrontendBundle\Entity\UserFollowActivity;
 use TB\Bundle\FrontendBundle\Entity\UserUnfollowActivity;
 use TB\Bundle\FrontendBundle\Entity\UserRegisterActivity;
+use TB\Bundle\FrontendBundle\Entity\CampaignFollowActivity;
+use TB\Bundle\FrontendBundle\Entity\CampaignRouteAcceptActivity;
 
 class ActivityFeedGeneratorTest extends AbstractFrontendTest
 {
@@ -162,6 +164,68 @@ class ActivityFeedGeneratorTest extends AbstractFrontendTest
             'The UserActivity was created');    
         $this->assertEquals(1, $user->getActivityUnseenCount(),
                 'The followed Users activityUnseenCount was upated');
+    }
+    
+    public function testCreateFeedFromCampaignRouteAcceptActivity()
+    {
+        $this->loadFixtures([
+            'TB\Bundle\FrontendBundle\DataFixtures\ORM\CampaignData',
+        ]);
+        
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        
+        $user = $this->getUser('paultran');
+        $campaign = $this->getCampaign('urbantrails-london');
+        
+        // add the user as follower to the campaign
+        $user->addCampaignsIFollow($campaign);
+        $em->persist($user);
+        $em->flush();
+        
+        // create the activity
+        $activity = new CampaignRouteAcceptActivity($campaign->getUser(), $campaign->getCampaignRoutes()[0]->getRoute(), $campaign);
+        $em->persist($activity);
+        $em->flush();
+        
+        $generator = $this->getContainer()->get('tb.activity.feed.generator');
+        
+        $generator->createFeedFromActivity($activity);
+        
+        // The follower of the campaign gets a UserActivity item
+
+        $userActivity = $user->getUserActivities()[0];
+        $this->assertEquals($activity->getId(), $user->getUserActivities()[0]->getActivity()->getId(),
+            'The UserActivity was created');
+        $this->assertEquals(1, $user->getActivityUnseenCount(),
+            'The Users activityUnseenCount was upated');
+        
+    }
+    
+    public function testCreateFeedFromCampaignFollowActivity()
+    {
+        $this->loadFixtures([
+            'TB\Bundle\FrontendBundle\DataFixtures\ORM\CampaignData',
+        ]);
+        
+        $user = $this->getUser('paultran');
+        $campaign = $this->getCampaign('urbantrails-london');
+        
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        
+        $activity = new CampaignFollowActivity($user, $campaign);
+        $em->persist($activity);
+        $em->flush();
+        
+        $generator = $this->getContainer()->get('tb.activity.feed.generator');
+        
+        $generator->createFeedFromActivity($activity);
+        
+        $this->assertEquals(1, count($campaign->getUser()->getUserActivities()),
+            'The User who owns the campaign has one UserActivity');
+        $this->assertEquals($activity->getId(), $campaign->getUser()->getUserActivities()[0]->getActivity()->getId(),
+            'The UserActivity was created');    
+        $this->assertEquals(1, $campaign->getUser()->getActivityUnseenCount(),
+                'The Users activityUnseenCount was upated');
     }
     
 }    

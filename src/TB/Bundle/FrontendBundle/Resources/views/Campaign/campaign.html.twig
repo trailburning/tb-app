@@ -118,11 +118,11 @@ var TB_USER_ID = {{ app.user.id }};
 			        <div class="right">
 						<div class="trails_title"><h2 class="tb tb-title first-title ">{{ campaign.title }} Urban Trails</h2></div>			        	
 						
-                        {% if campaign.routes and campaign.routes|length > 0 %}
+                        {% if routes and routes|length > 0 %}
 						
 			        	<div class="event_container trailcards">
 						
-                    	    {% for trail in campaign.routes %}
+                    	    {% for trail in routes %}
                     	        {{ include('TBFrontendBundle:Trail:_trailcard.html.twig', {'trail': trail, 'campaign' : campaign}) }}
                     	    {% endfor %}
 						

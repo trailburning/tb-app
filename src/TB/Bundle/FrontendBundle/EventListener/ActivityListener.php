@@ -11,6 +11,9 @@ use TB\Bundle\FrontendBundle\Event\UserFollowEvent;
 use TB\Bundle\FrontendBundle\Event\UserUnfollowEvent;
 use TB\Bundle\FrontendBundle\Event\RouteLikeEvent;
 use TB\Bundle\FrontendBundle\Event\RouteUndoLikeEvent;
+use TB\Bundle\FrontendBundle\Event\CampaignRouteAcceptEvent;
+use TB\Bundle\FrontendBundle\Event\CampaignFollowEvent;
+use TB\Bundle\FrontendBundle\Event\CampaignUnfollowEvent;
 
 use TB\Bundle\FrontendBundle\Entity\Activity;
 use TB\Bundle\FrontendBundle\Entity\RoutePublishActivity;
@@ -19,6 +22,9 @@ use TB\Bundle\FrontendBundle\Entity\UserUnfollowActivity;
 use TB\Bundle\FrontendBundle\Entity\RouteLikeActivity;
 use TB\Bundle\FrontendBundle\Entity\RouteUndoLikeActivity;
 use TB\Bundle\FrontendBundle\Entity\UserRegisterActivity;
+use TB\Bundle\FrontendBundle\Entity\CampaignRouteAcceptActivity;
+use TB\Bundle\FrontendBundle\Entity\CampaignFollowActivity;
+use TB\Bundle\FrontendBundle\Entity\CampaignUnfollowActivity;
 
 use FOS\UserBundle\Event\FilterUserResponseEvent;
 
@@ -61,7 +67,7 @@ class ActivityListener
     }
     
     /**
-     * Create a UserUnFollowActivity from the UserUnfollowEvent event
+     * Create a UserUnfollowActivity from the UserUnfollowEvent event
      */ 
     public function onUserUnfollow(UserUnfollowEvent $event)
     {
@@ -103,6 +109,38 @@ class ActivityListener
     }
     
     /**
+     * Create a CampaignRouteAcceptActivity from the CampaignRouteAcceptEvent event
+     */ 
+    public function onCampaignRouteAccept(CampaignRouteAcceptEvent $event)
+    {
+        $campaignRouteAcceptActivity = new CampaignRouteAcceptActivity($event->getUser(), $event->getRoute(), $event->getCampaign());
+        $this->em->persist($campaignRouteAcceptActivity);
+        $this->em->flush();
+        $this->publishMessage($campaignRouteAcceptActivity);
+    }
+    
+    /**
+     * Create a CampaignFollowActivity from the CampaignFollowEvent event
+     */ 
+    public function onCampaignFollow(CampaignFollowEvent $event)
+    {
+        $campaignFollowActivity = new CampaignFollowActivity($event->getUser(), $event->getCampaign());
+        $this->em->persist($campaignFollowActivity);
+        $this->em->flush();
+        $this->publishMessage($campaignFollowActivity);
+    }
+    
+    /**
+     * Create a CampaignUnfollowActivity from the UserUnfollowEvent event
+     */ 
+    public function onCampaignUnfollow(CampaignUnfollowEvent $event)
+    {
+        $campaignUnfollowActivity = new CampaignUnfollowActivity($event->getUser(), $event->getCampaign());
+        $this->em->persist($campaignUnfollowActivity);
+        $this->em->flush();
+    }
+    
+    /**
      * Publishes a message to RabbitMQ
      */
     protected function publishMessage(Activity $activity)
@@ -110,4 +148,5 @@ class ActivityListener
         $this->producer->setContentType('application/json');
         $this->producer->publish(json_encode($activity->exportMessage()));
     }
+    
 }
