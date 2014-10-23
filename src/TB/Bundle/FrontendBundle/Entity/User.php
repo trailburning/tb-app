@@ -724,10 +724,27 @@ abstract class User extends BaseUser implements Exportable
      * @param User $user The User to check in the follower
      * @return boolean returns true if the User is following, false if not
      */
-    public function isFollowing(User $user)
+    public function isFollowingUser(User $user)
     {
         foreach ($this->getUserIFollow() as $userIFollowUser) {
             if ($userIFollowUser->getId() === $user->getId()) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    /**
+     * Checks if the User is following a given Campaign
+     *
+     * @param Campaign $campaign The Campaign to check in the follower
+     * @return boolean returns true if the User is following, false if not
+     */
+    public function isFollowingCampaign(Campaign $campaign)
+    {
+        foreach ($this->getCampaignsIFollow() as $campaignIFollow) {
+            if ($campaignIFollow->getId() === $campaign->getId()) {
                 return true;
             }
         }

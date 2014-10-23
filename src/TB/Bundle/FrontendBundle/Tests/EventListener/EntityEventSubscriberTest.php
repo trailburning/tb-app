@@ -5,6 +5,8 @@ namespace TB\Bundle\APIBundle\Tests\EventListener;
 use TB\Bundle\FrontendBundle\Tests\AbstractFrontendTest;
 use TB\Bundle\FrontendBundle\Entity\GpxFile;
 use TB\Bundle\FrontendBundle\Entity\Route;
+use TB\Bundle\FrontendBundle\Entity\Campaign;
+use TB\Bundle\FrontendBundle\Entity\CampaignRoute;
 use CrEOF\Spatial\PHP\Types\Geometry\Point;
 
 class EntityEventSubscriberTest extends AbstractFrontendTest
@@ -226,6 +228,84 @@ class EntityEventSubscriberTest extends AbstractFrontendTest
         $this->em->flush();
         
         $this->assertFalse($this->eventDispatched, 'The tb.route_publish Event was not dispatched');
+    }
+    
+    /**
+     * Test that on CampaignRoute persist the RoutePublishEvent gets dispatched
+     */
+    public function testDispatchCampaignRouteAcceptEvent()
+    {
+        $this->loadFixtures([
+            'TB\Bundle\FrontendBundle\DataFixtures\ORM\CampaignData',
+        ]);
+
+        $campaign = $this->getCampaign('urbantrails-london');
+        $route = $this->getRoute('grunewald');
+
+        // set flag to false
+        $this->eventDispatched = false;
+
+        //  get the event dispatcher and add a listener for the tb.route_publish event
+        $dispatcher = $this->getContainer()->get('event_dispatcher');
+        $dispatcher->addListener('tb.campaign_route_accept', function ($event, $eventName, $dispatcher) {
+
+            $this->assertInstanceOf('TB\Bundle\FrontendBundle\Event\CampaignRouteAcceptEvent', $event,
+                'The CampaignRouteAcceptEvent was created');
+            $this->assertEquals('grunewald', $event->getRoute()->getSlug(),
+                'The Route that was published was passed to the CampaignRouteAcceptEvent event');
+            $this->assertEquals('urbantrails-london', $event->getCampaign()->getSlug(),
+                'The Campaign was passed to the CampaignRouteAcceptEvent event');
+            $this->assertEquals($event->getUser()->getName(), $event->getUser()->getName(),
+                'The User was passed to the CampaignRouteAcceptEvent event');
+
+            // set flag to true, it means the event was dispatched
+            $this->eventDispatched = true;
+        });
+
+        $campaignRoute = new CampaignRoute();
+        $campaignRoute->setCampaign($campaign);
+        $campaignRoute->setRoute($route);
+
+        $this->em->persist($campaignRoute);
+        $this->em->flush();
+
+        $this->assertTrue($this->eventDispatched, 'The tb.campaign_route_accept Event was successfully dispatched');
+    }
+    
+    /**
+     * Test that on CampaignRoute update the RoutePublishEvent gets not dispatched
+     */
+    public function testDispatchCampaignRouteAcceptEventNotDispatchesEvent()
+    {
+        $this->loadFixtures([
+            'TB\Bundle\FrontendBundle\DataFixtures\ORM\CampaignData',
+        ]);
+
+        $campaign = $this->getCampaign('urbantrails-london');
+        $route = $this->getRoute('grunewald');
+
+        $campaignRoute = new CampaignRoute();
+        $campaignRoute->setCampaign($campaign);
+        $campaignRoute->setRoute($route);
+
+        $this->em->persist($campaignRoute);
+        $this->em->flush();
+
+        // set flag to false
+        $this->eventDispatched = false;
+
+        //  get the event dispatcher and add a listener for the tb.route_publish event
+        $dispatcher = $this->getContainer()->get('event_dispatcher');
+        $dispatcher->addListener('tb.campaign_route_accept', function ($event, $eventName, $dispatcher) {
+
+            // set flag to true, it means the event was dispatched
+            $this->eventDispatched = true;
+        });
+
+        $this->em->persist($campaignRoute);
+        $this->em->flush();
+
+        $this->assertFalse($this->eventDispatched, 'The tb.campaign_route_accept Event was not dispatched');
     }
     
 }

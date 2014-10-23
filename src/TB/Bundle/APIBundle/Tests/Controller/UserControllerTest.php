@@ -97,7 +97,7 @@ class UserControllerTest extends AbstractApiTestCase
         
         $client = $this->createClient();
         
-        //  get the event dispatcher and add a listener for the tb.route_publish event
+        //  get the event dispatcher and add a listener for the tb.user_follow event
         $dispatcher = $client->getContainer()->get('event_dispatcher'); 
         $dispatcher->addListener('tb.user_follow', function ($event, $eventName, $dispatcher) {
             // this part gets executed when the event is dispatched
@@ -211,7 +211,7 @@ class UserControllerTest extends AbstractApiTestCase
         
         $client = $this->createClient();
         
-        //  get the event dispatcher and add a listener for the tb.route_publish event
+        //  get the event dispatcher and add a listener for the tb.user_unfollow event
         $dispatcher = $client->getContainer()->get('event_dispatcher'); 
         $dispatcher->addListener('tb.user_unfollow', function ($event, $eventName, $dispatcher) {
             // this part gets executed when the event is dispatched

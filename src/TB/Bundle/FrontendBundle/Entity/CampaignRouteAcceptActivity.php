@@ -143,7 +143,7 @@ class CampaignRouteAcceptActivity extends Activity
                 }
             }
             if (!isset($campaignRoute)) {
-                throw new ActivityObjectNotFoundException(sprintf('CampaignRoute Entity not found for campaign_id $s and route_id %s', $this->getTargetId(), $this->getObjectId()));
+                throw new ActivityObjectNotFoundException(sprintf('CampaignRoute Entity not found for campaign_id %s and route_id %s', $this->getTargetId(), $this->getObjectId()));
             }
             $objectData = $campaignRoute->exportAsActivity();
         } catch (EntityNotFoundException $e) {
@@ -153,7 +153,7 @@ class CampaignRouteAcceptActivity extends Activity
         try {
             $targetData = $this->getTarget()->exportAsActivity();
         } catch (EntityNotFoundException $e) {
-            throw new ActivityActorNotFoundException(sprintf('Campaign Entity not found with id %s', $this->getTargetId()));
+            throw new ActivityTargetNotFoundException(sprintf('Campaign Entity not found with id %s', $this->getTargetId()));
         }
         
         $data = [

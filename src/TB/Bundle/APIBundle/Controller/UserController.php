@@ -110,7 +110,7 @@ class UserController extends AbstractRestController
         $em->persist($user);
         $em->flush();
         
-        // dispath tb.user_follow event
+        // dispath tb.user_unfollow event
         $event = new UserUnfollowEvent($user, $userToUnfollow);
         $dispatcher = $this->container->get('event_dispatcher'); 
         $dispatcher->dispatch('tb.user_unfollow', $event);

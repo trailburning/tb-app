@@ -63,6 +63,8 @@ class ActivityFeedGenerator
                 continue;
             } catch (ActivityObjectNotFoundException $e) {
                 continue;
+            } catch (ActivityTargetNotFoundException $e) {
+                continue;
             }
             
             $activityItem = $decorator->decorate($activityItem);

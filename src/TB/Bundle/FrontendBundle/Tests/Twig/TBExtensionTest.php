@@ -77,6 +77,25 @@ class TBExtensionTest extends AbstractFrontendTest
         $this->assertTrue($this->extension->userIsFollowing($user1, $user2), 'user1 is following user2');
     }
     
+    public function testUserIsFollowingCampaign()
+    {
+        $this->loadFixtures([
+            'TB\Bundle\FrontendBundle\DataFixtures\ORM\CampaignData',
+        ]);
+        
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        $campaign = $this->getCampaign('urbantrails-london');
+        $user = $this->getUser('paultran');
+        
+        $this->assertFalse($this->extension->userIsFollowingCampaign($user, $campaign), 'user is not following the campaign');
+        
+        $user->addCampaignsIFollow($campaign);
+        $em->persist($user);
+        $em->flush();
+        
+        $this->assertTrue($this->extension->userIsFollowingCampaign($user, $campaign), 'user is following campaign');
+    }
+    
     public function testRouteHasUserLike()
     {
         $this->loadFixtures([

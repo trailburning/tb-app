@@ -5,6 +5,7 @@ namespace TB\Bundle\FrontendBundle\Twig;
 use Symfony\Bundle\TwigBundle\Loader\FilesystemLoader;
 use TB\Bundle\FrontendBundle\Entity\User;
 use TB\Bundle\FrontendBundle\Entity\Route;
+use TB\Bundle\FrontendBundle\Entity\Campaign;
 
 /**
 * 
@@ -50,6 +51,7 @@ class TBExtension extends \Twig_Extension
     {
         return array(
             new \Twig_SimpleFunction('user_is_following', array($this, 'userIsFollowing')),
+            new \Twig_SimpleFunction('user_is_following_campaign', array($this, 'userIsFollowingCampaign')),
             new \Twig_SimpleFunction('route_has_user_like', array($this, 'routeHasUserLike')),
             new \Twig_SimpleFunction('extract_entity', array($this, 'extractEntity')),
             new \Twig_SimpleFunction('get_share_media', array($this, 'getShareMedia')),
@@ -125,7 +127,7 @@ class TBExtension extends \Twig_Extension
     }
     
     /**
-     * Test if a given User A is following a given User B
+     * Tests if User A is following User B
      * 
      * @param User $userA The User to lookup
      * @param User $userB The User to test for following 
@@ -133,7 +135,19 @@ class TBExtension extends \Twig_Extension
      */
     public function userIsFollowing(User $userA, User $userB)
     {
-        return $userA->isFollowing($userB);
+        return $userA->isFollowingUser($userB);
+    }
+    
+    /**
+     * Tests if a User is following a Campaign
+     * 
+     * @param User $user The User to lookup
+     * @param Campaign $campaign The Campaign to test for following 
+     * @return boolean true is the User is following the Campaign, false if not
+     */
+    public function userIsFollowingCampaign(User $user, Campaign $campaign)
+    {
+        return $user->isFollowingCampaign($campaign);
     }
     
     /**

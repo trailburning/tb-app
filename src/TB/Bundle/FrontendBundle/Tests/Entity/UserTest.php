@@ -90,7 +90,7 @@ class UserTest extends AbstractFrontendTest
         $this->assertEquals('', $user->getAvatarGravatar());
     }
     
-    public function testIsFollowing()
+    public function testIsFollowingUser()
     {
         $this->loadFixtures([
             'TB\Bundle\FrontendBundle\DataFixtures\ORM\UserProfileData',
@@ -102,23 +102,44 @@ class UserTest extends AbstractFrontendTest
         
         $user2 = $this->getUser('paultran');
         
-        $this->assertFalse($user1->isFollowing($user2), 'user1 is not following user2');
+        $this->assertFalse($user1->isFollowingUser($user2), 'user1 is not following user2');
         
         $user1->addUserIFollow($user2);
         $em->persist($user1);
         $em->flush();
         
-        $this->assertTrue($user1->isFollowing($user2), 'user1 is following user2');
+        $this->assertTrue($user1->isFollowingUser($user2), 'user1 is following user2');
         
         // Test the other way of adding follower
-        $this->assertFalse($user2->isFollowing($user1), 'user2 is not following user1');
+        $this->assertFalse($user2->isFollowingUser($user1), 'user2 is not following user1');
         
         $user1->addMyFollower($user2);
         $em->persist($user1);
         $em->flush();
         
-        $this->assertTrue($user2->isFollowing($user1), 'user2 is following user1');
+        $this->assertTrue($user2->isFollowingUser($user1), 'user2 is following user1');
         
+    }
+    
+    public function testIsFollowingCampaign()
+    {
+        $this->loadFixtures([
+            'TB\Bundle\FrontendBundle\DataFixtures\ORM\CampaignData',
+        ]);
+        
+        // Get Route from DB with the slug "grunewald"..
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        
+        $user = $this->getUser('paultran');
+        $campaign = $this->getCampaign('urbantrails-london');
+        
+        $this->assertFalse($user->isFollowingCampaign($campaign), 'user is not following the campaign');
+        
+        $user->addCampaignsIFollow($campaign);
+        $em->persist($user);
+        $em->flush();
+        
+        $this->assertTrue($user->isFollowingCampaign($campaign), 'user is following the campaign');
     }
     
     public function testGetAvatarUrl()
