@@ -163,7 +163,7 @@ class RouteController extends AbstractRestController
         $limit = $request->query->get('limit', 10);
         $offset = $request->query->get('offset', 0);
         
-        $validParams = ['order', 'lat', 'long', 'radius'];
+        $validParams = ['order', 'lat', 'long', 'radius', 'campaign_id'];
         $params = [];
         foreach ($validParams as $key) {
             if ($request->query->has($key)) {

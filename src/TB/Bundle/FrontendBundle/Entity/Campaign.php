@@ -115,18 +115,44 @@ class Campaign
     private $region;
     
     /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\Route", inversedBy="campaigns")
-     */
-    private $routes;
-    
-    /**
      * @var string
      *
      * @ORM\Column(name="link", type="string", length=255, nullable=true)
      */
     private $link;
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="CampaignRoute", mappedBy="campaign")
+     **/
+    private $campaignRoutes;
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="CampaignRouteAcceptActivity", mappedBy="target")
+     **/
+    private $campaignRouteAcceptActivities;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="campaignsIFollow")
+     **/
+    private $follower;
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="CampaignFollowActivity", mappedBy="object")
+     **/
+    private $campaignFollowActivities;
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="CampaignUnfollowActivity", mappedBy="object")
+     **/
+    private $campaignUnfollowActivities;
     
     /**
      * Get id
@@ -419,72 +445,7 @@ class Campaign
     public function __construct()
     {
         $this->routes = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add routes
-     *
-     * @param \TB\Bundle\FrontendBundle\Entity\Route $routes
-     * @return Campaign
-     */
-    public function addRoute(\TB\Bundle\FrontendBundle\Entity\Route $routes)
-    {
-        $this->routes[] = $routes;
-
-        return $this;
-    }
-
-    /**
-     * Remove routes
-     *
-     * @param \TB\Bundle\FrontendBundle\Entity\Route $routes
-     */
-    public function removeRoute(\TB\Bundle\FrontendBundle\Entity\Route $routes)
-    {
-        $this->routes->removeElement($routes);
-    }
-
-    /**
-     * Get routes
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getRoutes()
-    {
-        return $this->routes;
-    }
-
-    /**
-     * Add pendingRoutes
-     *
-     * @param \TB\Bundle\FrontendBundle\Entity\User $pendingRoutes
-     * @return Campaign
-     */
-    public function addPendingRoute(\TB\Bundle\FrontendBundle\Entity\User $pendingRoutes)
-    {
-        $this->pendingRoutes[] = $pendingRoutes;
-
-        return $this;
-    }
-
-    /**
-     * Remove pendingRoutes
-     *
-     * @param \TB\Bundle\FrontendBundle\Entity\User $pendingRoutes
-     */
-    public function removePendingRoute(\TB\Bundle\FrontendBundle\Entity\User $pendingRoutes)
-    {
-        $this->pendingRoutes->removeElement($pendingRoutes);
-    }
-
-    /**
-     * Get pendingRoutes
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getPendingRoutes()
-    {
-        return $this->pendingRoutes;
+        $this->follower = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     public function getDisplayTitle() 
@@ -517,5 +478,185 @@ class Campaign
     public function getLink()
     {
         return $this->link;
+    }
+
+    /**
+     * Add campaignRoutes
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\CampaignRoute $campaignRoutes
+     * @return Campaign
+     */
+    public function addCampaignRoute(\TB\Bundle\FrontendBundle\Entity\CampaignRoute $campaignRoutes)
+    {
+        $this->campaignRoutes[] = $campaignRoutes;
+
+        return $this;
+    }
+
+    /**
+     * Remove campaignRoutes
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\CampaignRoute $campaignRoutes
+     */
+    public function removeCampaignRoute(\TB\Bundle\FrontendBundle\Entity\CampaignRoute $campaignRoutes)
+    {
+        $this->campaignRoutes->removeElement($campaignRoutes);
+    }
+
+    /**
+     * Get campaignRoutes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCampaignRoutes()
+    {
+        return $this->campaignRoutes;
+    }
+    
+    /**
+     * Returns an data array representatiosn of this entity for the activity feed
+     */
+    public function exportAsActivity()
+    {   
+        $data = [
+            'url' => '/campaign/' . $this->getSlug(),
+            'objectType' => 'campaign',
+            'id' => $this->getId(),
+            'displayName' => $this->getTitle(),
+        ];
+        
+        return $data;
+    }
+
+    /**
+     * Add campaignRouteAcceptActivities
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\CampaignRouteAcceptActivity $campaignRouteAcceptActivities
+     * @return Campaign
+     */
+    public function addCampaignRouteAcceptActivity(\TB\Bundle\FrontendBundle\Entity\CampaignRouteAcceptActivity $campaignRouteAcceptActivities)
+    {
+        $this->campaignRouteAcceptActivities[] = $campaignRouteAcceptActivities;
+
+        return $this;
+    }
+
+    /**
+     * Remove campaignRouteAcceptActivities
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\CampaignRouteAcceptActivity $campaignRouteAcceptActivities
+     */
+    public function removeCampaignRouteAcceptActivity(\TB\Bundle\FrontendBundle\Entity\CampaignRouteAcceptActivity $campaignRouteAcceptActivities)
+    {
+        $this->campaignRouteAcceptActivities->removeElement($campaignRouteAcceptActivities);
+    }
+
+    /**
+     * Get campaignRouteAcceptActivities
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCampaignRouteAcceptActivities()
+    {
+        return $this->campaignRouteAcceptActivities;
+    }
+
+    /**
+     * Add campaignFollowActivities
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\CampaignFollowActivity $campaignFollowActivities
+     * @return Campaign
+     */
+    public function addCampaignFollowActivity(\TB\Bundle\FrontendBundle\Entity\CampaignFollowActivity $campaignFollowActivities)
+    {
+        $this->campaignFollowActivities[] = $campaignFollowActivities;
+
+        return $this;
+    }
+
+    /**
+     * Remove campaignFollowActivities
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\CampaignFollowActivity $campaignFollowActivities
+     */
+    public function removeCampaignFollowActivity(\TB\Bundle\FrontendBundle\Entity\CampaignFollowActivity $campaignFollowActivities)
+    {
+        $this->campaignFollowActivities->removeElement($campaignFollowActivities);
+    }
+
+    /**
+     * Get campaignFollowActivities
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCampaignFollowActivities()
+    {
+        return $this->campaignFollowActivities;
+    }
+
+    /**
+     * Add campaignUnfollowActivities
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\CampaignUnfollowActivity $campaignUnfollowActivities
+     * @return Campaign
+     */
+    public function addCampaignUnfollowActivity(\TB\Bundle\FrontendBundle\Entity\CampaignUnfollowActivity $campaignUnfollowActivities)
+    {
+        $this->campaignUnfollowActivities[] = $campaignUnfollowActivities;
+
+        return $this;
+    }
+
+    /**
+     * Remove campaignUnfollowActivities
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\CampaignUnfollowActivity $campaignUnfollowActivities
+     */
+    public function removeCampaignUnfollowActivity(\TB\Bundle\FrontendBundle\Entity\CampaignUnfollowActivity $campaignUnfollowActivities)
+    {
+        $this->campaignUnfollowActivities->removeElement($campaignUnfollowActivities);
+    }
+
+    /**
+     * Get campaignUnfollowActivities
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCampaignUnfollowActivities()
+    {
+        return $this->campaignUnfollowActivities;
+    }
+
+    /**
+     * Add follower
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\User $follower
+     * @return Campaign
+     */
+    public function addFollower(\TB\Bundle\FrontendBundle\Entity\User $follower)
+    {
+        $this->follower[] = $follower;
+
+        return $this;
+    }
+
+    /**
+     * Remove follower
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\User $follower
+     */
+    public function removeFollower(\TB\Bundle\FrontendBundle\Entity\User $follower)
+    {
+        $this->follower->removeElement($follower);
+    }
+
+    /**
+     * Get follower
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getFollower()
+    {
+        return $this->follower;
     }
 }

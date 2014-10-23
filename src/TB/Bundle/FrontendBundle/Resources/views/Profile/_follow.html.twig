@@ -9,8 +9,8 @@
                 {% endif %}
             </div>	
             <div class="avatars">
-            {% if user.iFollow|length > 0 %}
-                    {% for user in user.iFollow %}
+            {% if user.userIFollow|length > 0 %}
+                    {% for user in user.userIFollow %}
                         {{ include('TBFrontendBundle:Profile:_userAvatar.html.twig', [user]) }}
                     {% endfor %}
             {% else %}

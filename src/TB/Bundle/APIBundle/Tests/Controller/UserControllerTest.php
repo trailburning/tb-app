@@ -62,8 +62,8 @@ class UserControllerTest extends AbstractApiTestCase
         
         // check if user is following
         $isFollowing = false;
-        foreach ($user->getIfollow() as $iFollow) {
-            if ($iFollow->getId() == $userToFollow->getId()) {
+        foreach ($user->getUserIFollow() as $userIFollow) {
+            if ($userIFollow->getId() == $userToFollow->getId()) {
                 $isFollowing = true;
                 break;
             }
@@ -161,7 +161,7 @@ class UserControllerTest extends AbstractApiTestCase
         $this->assertJsonResponse($client);
         
         // Test user unfollow
-        $user->addIFollow($userToUnfollow);
+        $user->addUserIFollow($userToUnfollow);
         
         $em->persist($user);
         $em->flush();
@@ -175,8 +175,8 @@ class UserControllerTest extends AbstractApiTestCase
         
         // check if user is following
         $isFollowing = false;
-        foreach ($user->getIfollow() as $iFollow) {
-            if ($iFollow->getId() == $userToUnfollow->getId()) {
+        foreach ($user->getUserIFollow() as $userIFollow) {
+            if ($userIFollow->getId() == $userToUnfollow->getId()) {
                 $isFollowing = true;
                 break;
             }
@@ -201,7 +201,7 @@ class UserControllerTest extends AbstractApiTestCase
         $userToUnfollow = $this->getUser('paultran');
                 
         // create following user
-        $user->addIFollow($userToUnfollow);
+        $user->addUserIFollow($userToUnfollow);
         
         $em->persist($user);
         $em->flush();

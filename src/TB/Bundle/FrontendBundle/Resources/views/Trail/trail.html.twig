@@ -261,6 +261,24 @@ var TB_TRAIL_ID = {{ trail.id }};
 								    </div>
 								</div>
 							{% endif %}
+
+							{% if campaign %}
+								<div class="panel trail_card_panel campaign_panel">
+									<div class="content">
+	                            	<a href="{{ app.request.baseUrl }}/campaign/{{ campaign.slug }}">
+	                                <div class="photo tb-photo-btn">
+	                                    <div class="image_container fade_on_load"><img src="http://app.resrc.it/o=80/http://assets.trailburning.com/images/campaign/urbantrails/london/shutterstock_148485164.jpg" class="resrc scale" border="0"></div>                                    
+	                                    <div class="overlay"><div class="logo"><img src="http://assets.trailburning.com/images/campaign/urbantrails/london/logo_urbantrails_london.png"></div></div>                                    
+	                                    <div class="card_title">
+	                                    <h1>This trail is featured</h1>
+	                                    <br>
+	                                    <h1>in Urban Trails London.</h1>
+	                                    </div>
+	                                </div>
+	                            	</a>
+	                            	</div>
+								</div>
+							{% endif %}
                         	
                             {% if event and eventTrails %}
                 				<div class="event_trails_container">

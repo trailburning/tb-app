@@ -8,6 +8,8 @@ use TB\Bundle\FrontendBundle\Entity\UserActivity;
 use TB\Bundle\FrontendBundle\Entity\User;
 use TB\Bundle\FrontendBundle\Entity\RouteLikeActivity;
 use TB\Bundle\FrontendBundle\Entity\RouteUndoLikeActivity;
+use TB\Bundle\FrontendBundle\Entity\CampaignFollowActivity;
+use TB\Bundle\FrontendBundle\Entity\CampaignUnfollowActivity;
 use TB\Bundle\FrontendBundle\Exception\ActivityActorNotFoundException;
 use TB\Bundle\FrontendBundle\Exception\ActivityObjectNotFoundException;
 
@@ -108,6 +110,8 @@ class ActivityFeedGenerator
             $updatedUsers[] = $user;
             $this->em->persist($userActivity);
             $this->em->flush();
+        } elseif ($activity instanceof \TB\Bundle\FrontendBundle\Entity\RouteUndoLikeActivity) {
+            // No UserActivity is created for RouteUndoLikeActivity
         } elseif ($activity instanceof \TB\Bundle\FrontendBundle\Entity\UserRegisterActivity) {
             $userActivity = new UserActivity();
             $userActivity->setActivity($activity);
@@ -116,8 +120,27 @@ class ActivityFeedGenerator
             $updatedUsers[] = $user;
             $this->em->persist($userActivity);
             $this->em->flush();
-        } elseif ($activity instanceof \TB\Bundle\FrontendBundle\Entity\RouteUndoLikeActivity) {
-            // No UserActivity is created for RouteUndoLikeActivity
+        } elseif ($activity instanceof \TB\Bundle\FrontendBundle\Entity\CampaignFollowActivity) {
+            // Create a UserActivity for the User who owns the Campaign that gets followed
+            $userActivity = new UserActivity();
+            $userActivity->setActivity($activity);
+            $userActivity->setUser($activity->getObject()->getUser());
+            $updatedUsers[] = $activity->getObject()->getUser();
+            $this->em->persist($userActivity);
+            $this->em->flush();
+        } elseif ($activity instanceof \TB\Bundle\FrontendBundle\Entity\CampaignUnfollowActivity) {
+            // No UserActivity is created for UserUnfollowActivity
+        } elseif ($activity instanceof \TB\Bundle\FrontendBundle\Entity\CampaignRouteAcceptActivity) {
+            // Create a UserActivity for all User who follow the Campaign
+            $users = $activity->getTarget()->getFollower();
+            foreach ($users as $user) {
+                $userActivity = new UserActivity();
+                $userActivity->setActivity($activity);
+                $userActivity->setUser($user);
+                $updatedUsers[] = $user;
+                $this->em->persist($userActivity);
+            }
+            $this->em->flush();
         } else {
             throw new \Exception(sprintf('Unhandled activity item of type "%s"', $activity));
         }

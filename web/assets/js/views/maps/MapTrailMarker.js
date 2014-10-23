@@ -19,9 +19,6 @@ define([
       this.trailEvents.dispatcher.on("DistanceMarkers:mouseover", function(evt){
 	    self.onMouseOver(evt);      	  	
       }, this);
-      this.trailEvents.dispatcher.on("DistanceMarkers:mouseout", function(evt){
-	  	self.onMouseOut(evt);      	  	
-      }, this);
     	
       this.trailModel = new TrailModel();    	
       this.bRendered = false;
@@ -66,7 +63,7 @@ define([
 	    }	    
 	    
 	    this.marker = L.marker(new L.LatLng(this.model.get('start')[1], this.model.get('start')[0])).on('click', onClick).on('mouseover', onMouseOver).on('mouseout', onMouseOut);			  
-	    this.marker.setIcon(L.divIcon({className: 'tb-map-location-marker', html: '<div class="marker"></div>', iconSize: [18, 25], iconAnchor: [9, 25],}));      	  
+	    this.marker.setIcon(L.divIcon({className: 'tb-map-location-marker', html: '<div class="marker"></div>', iconSize: [18, 25], iconAnchor: [9, 25]}));      	  
 		this.options.mapCluster.addLayer(this.marker);		
 	  }
       this.bRendered = true;
@@ -155,6 +152,7 @@ define([
 	},		
 	focus: function(){	
 	  $(this.marker._icon).addClass('selected');	
+	  this.marker.setZIndexOffset(2);
 
 	  if (this.polyline) {
         this.polyline.setStyle(this.focus_polyline_options);
@@ -167,6 +165,7 @@ define([
 	},
 	blur: function(){	
   	  $(this.marker._icon).removeClass('selected');  	
+	  this.marker.setZIndexOffset(0);
   	
       if (this.polyline) {
         this.polyline.setStyle(this.blur_polyline_options);

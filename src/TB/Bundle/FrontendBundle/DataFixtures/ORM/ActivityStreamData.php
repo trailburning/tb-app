@@ -21,13 +21,13 @@ class ActivityStreamData extends AbstractFixture implements FixtureInterface, De
         $userB = $this->getReference('UserProfile-paul');
         
         // User Paul follows User Matt
-        $userB->addIFollow($userA);
+        $userB->addUserIFollow($userA);
         $manager->persist($userB);
         $activity1 = new UserFollowActivity($userB, $userA);
         $manager->persist($activity1);
         
         // User Matt follows User Paul
-        $userA->addIFollow($userB);
+        $userA->addUserIFollow($userB);
         $manager->persist($userA);
         $activity2 = new UserFollowActivity($userA, $userB);
         $manager->persist($activity2);

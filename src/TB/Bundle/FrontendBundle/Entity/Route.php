@@ -227,6 +227,13 @@ class Route implements Exportable
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
+     * @ORM\OneToMany(targetEntity="CampaignRouteAcceptActivity", mappedBy="object")
+     **/
+    private $campaignRouteAcceptActivities;
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
      * @ORM\OneToMany(targetEntity="RouteLike", mappedBy="route")
      **/
     private $routeLikes;
@@ -265,13 +272,13 @@ class Route implements Exportable
      * @ORM\Column(name="start", type="point", columnDefinition="GEOMETRY(POINT,4326)", nullable=true)
      */
     private $start;
-    
+
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="TB\Bundle\FrontendBundle\Entity\Campaign", mappedBy="routes")
-     */
-    private $campaigns;
+     * @ORM\OneToMany(targetEntity="CampaignRoute", mappedBy="route")
+     **/
+    private $campaignRoutes;
 
     /**
      * Set name
@@ -598,6 +605,7 @@ class Route implements Exportable
         $this->routeLikeActivities = new \Doctrine\Common\Collections\ArrayCollection();
         $this->routeUndoLikeActivities = new \Doctrine\Common\Collections\ArrayCollection();        
         $this->attributes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->campaignRouteAcceptActivities = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**
@@ -1479,70 +1487,70 @@ class Route implements Exportable
         return $this->start;
     }
 
-
     /**
-     * Add campaigns
+     * Add campaignRoutes
      *
-     * @param \TB\Bundle\FrontendBundle\Entity\Campaign $campaigns
+     * @param \TB\Bundle\FrontendBundle\Entity\CampaignRoute $campaignRoutes
      * @return Route
      */
-    public function addCampaign(\TB\Bundle\FrontendBundle\Entity\Campaign $campaigns)
+    public function addCampaignRoute(\TB\Bundle\FrontendBundle\Entity\CampaignRoute $campaignRoutes)
     {
-        $this->campaigns[] = $campaigns;
+        $this->campaignRoutes[] = $campaignRoutes;
 
         return $this;
     }
 
     /**
-     * Remove campaigns
+     * Remove campaignRoutes
      *
-     * @param \TB\Bundle\FrontendBundle\Entity\Campaign $campaigns
+     * @param \TB\Bundle\FrontendBundle\Entity\CampaignRoute $campaignRoutes
      */
-    public function removeCampaign(\TB\Bundle\FrontendBundle\Entity\Campaign $campaigns)
+    public function removeCampaignRoute(\TB\Bundle\FrontendBundle\Entity\CampaignRoute $campaignRoutes)
     {
-        $this->campaigns->removeElement($campaigns);
+        $this->campaignRoutes->removeElement($campaignRoutes);
     }
 
     /**
-     * Get campaigns
+     * Get campaignRoutes
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getCampaigns()
+    public function getCampaignRoutes()
     {
-        return $this->campaigns;
+        return $this->campaignRoutes;
     }
 
     /**
-     * Add pendingCampaigns
+     * Add campaignRouteAcceptActivities
      *
-     * @param \TB\Bundle\FrontendBundle\Entity\User $pendingCampaigns
+     * @param \TB\Bundle\FrontendBundle\Entity\CampaignRouteAcceptActivity $campaignRouteAcceptActivities
      * @return Route
      */
-    public function addPendingCampaign(\TB\Bundle\FrontendBundle\Entity\User $pendingCampaigns)
+    public function addCampaignRouteAcceptActivity(\TB\Bundle\FrontendBundle\Entity\CampaignRouteAcceptActivity $campaignRouteAcceptActivities)
     {
-        $this->pendingCampaigns[] = $pendingCampaigns;
+        $this->campaignRouteAcceptActivities[] = $campaignRouteAcceptActivities;
 
         return $this;
     }
 
     /**
-     * Remove pendingCampaigns
+     * Remove campaignRouteAcceptActivities
      *
-     * @param \TB\Bundle\FrontendBundle\Entity\User $pendingCampaigns
+     * @param \TB\Bundle\FrontendBundle\Entity\CampaignRouteAcceptActivity $campaignRouteAcceptActivities
      */
-    public function removePendingCampaign(\TB\Bundle\FrontendBundle\Entity\User $pendingCampaigns)
+    public function removeCampaignRouteAcceptActivity(\TB\Bundle\FrontendBundle\Entity\CampaignRouteAcceptActivity $campaignRouteAcceptActivities)
     {
-        $this->pendingCampaigns->removeElement($pendingCampaigns);
+        $this->campaignRouteAcceptActivities->removeElement($campaignRouteAcceptActivities);
     }
 
     /**
-     * Get pendingCampaigns
+     * Get campaignRouteAcceptActivities
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getPendingCampaigns()
+    public function getCampaignRouteAcceptActivities()
     {
-        return $this->pendingCampaigns;
+        return $this->campaignRouteAcceptActivities;
     }
+
 }

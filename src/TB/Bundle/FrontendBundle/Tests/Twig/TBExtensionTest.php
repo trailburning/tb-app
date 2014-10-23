@@ -70,7 +70,7 @@ class TBExtensionTest extends AbstractFrontendTest
         
         $this->assertFalse($this->extension->userIsFollowing($user1, $user2), 'user1 is not following user2');
         
-        $user1->addIFollow($user2);
+        $user1->addUserIFollow($user2);
         $em->persist($user1);
         $em->flush();
         

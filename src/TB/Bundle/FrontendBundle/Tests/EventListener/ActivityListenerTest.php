@@ -8,9 +8,12 @@ use TB\Bundle\FrontendBundle\Event\UserFollowEvent;
 use TB\Bundle\FrontendBundle\Event\UserUnfollowEvent;
 use TB\Bundle\FrontendBundle\Event\RouteLikeEvent;
 use TB\Bundle\FrontendBundle\Event\RouteUndoLikeEvent;
+use TB\Bundle\FrontendBundle\Event\CampaignRouteAcceptEvent;
+use TB\Bundle\FrontendBundle\Event\CampaignFollowEvent;
+use TB\Bundle\FrontendBundle\Event\CampaignUnfollowEvent;
 use FOS\UserBundle\Event\FilterUserResponseEvent;
 
-class ActivityEventSubscriberTest extends AbstractFrontendTest
+class ActivityListenerTest extends AbstractFrontendTest
 {
 
     /**
@@ -37,7 +40,7 @@ class ActivityEventSubscriberTest extends AbstractFrontendTest
         
         $route= $this->getRoute('grunewald');
         
-        //  get the event dispatcher and dispathe the tb.route_publish manually
+        //  get the event dispatcher and dispatch the tb.route_publish manually
         $dispatcher = $this->getContainer()->get('event_dispatcher');
         $event = new RoutePublishEvent($route, $route->getUser());
         $dispatcher->dispatch('tb.route_publish', $event);
@@ -80,7 +83,7 @@ class ActivityEventSubscriberTest extends AbstractFrontendTest
             ->will($this->returnCallback(array($this, 'assertAMQPMessage'))); // Use this callback to verify AMQP message AMQPChannel;
         $this->getContainer()->set('old_sound_rabbit_mq.main_producer', $producer);
         
-        //  get the event dispatcher and dispathe the tb.route_publish manually
+        //  get the event dispatcher and dispatch the tb.route_publish manually
         $dispatcher = $this->getContainer()->get('event_dispatcher');
         $event = new UserFollowEvent($user, $userToFollow);
         $dispatcher->dispatch('tb.user_follow', $event);
@@ -123,7 +126,7 @@ class ActivityEventSubscriberTest extends AbstractFrontendTest
             ->will($this->returnCallback(array($this, 'assertAMQPMessage'))); // Use this callback to verify AMQP message AMQPChannel;
         $this->getContainer()->set('old_sound_rabbit_mq.main_producer', $producer);
         
-        //  Get the event dispatcher and dispathe the tb.route_publish manually
+        //  Get the event dispatcher and dispatch the tb.route_publish manually
         $dispatcher = $this->getContainer()->get('event_dispatcher');
         $event = new UserUnfollowEvent($user, $userToUnfollow);
         $dispatcher->dispatch('tb.user_unfollow', $event);
@@ -166,7 +169,7 @@ class ActivityEventSubscriberTest extends AbstractFrontendTest
             ->will($this->returnCallback(array($this, 'assertAMQPMessage'))); // Use this callback to verify AMQP message AMQPChannel;
         $this->getContainer()->set('old_sound_rabbit_mq.main_producer', $producer);
         
-        //  get the event dispatcher and dispathe the tb.route_publish manually
+        //  get the event dispatcher and dispatch the tb.route_publish manually
         $dispatcher = $this->getContainer()->get('event_dispatcher');
         $event = new RouteLikeEvent($route, $user);
         $dispatcher->dispatch('tb.route_like', $event);
@@ -209,7 +212,7 @@ class ActivityEventSubscriberTest extends AbstractFrontendTest
             ->will($this->returnCallback(array($this, 'assertAMQPMessage'))); // Use this callback to verify AMQP message AMQPChannel;
         $this->getContainer()->set('old_sound_rabbit_mq.main_producer', $producer);
         
-        //  Get the event dispatcher and dispathe the tb.route_publish manually
+        //  Get the event dispatcher and dispatch the tb.route_publish manually
         $dispatcher = $this->getContainer()->get('event_dispatcher');
         $event = new RouteUndoLikeEvent($route, $user);
         $dispatcher->dispatch('tb.route_undolike', $event);
@@ -250,7 +253,7 @@ class ActivityEventSubscriberTest extends AbstractFrontendTest
             ->method('createFeedFromActivity');
         $this->getContainer()->set('tb.activity.feed.generator', $generator);
         
-        //  get the event dispatcher and dispathe the tb.route_publish manually
+        //  get the event dispatcher and dispatch the tb.route_publish manually
         $client = static::createClient();
         $client->request('GET', '/');
         $dispatcher = $this->getContainer()->get('event_dispatcher');
@@ -267,6 +270,138 @@ class ActivityEventSubscriberTest extends AbstractFrontendTest
         
         $this->assertEquals($user->getId(), $activity->getActor()->getId(),
             'UserRegisterActivity with excpected actorId was created');
+        
+    }
+    
+    /**
+     * Test that a CampaignRouteAcceptActivity is created when the tb.campaign_route_accept event gets dispatched
+     */
+    public function testOnCampaignRouteAccept()
+    {
+        // Replace the RabbitMQ Producer Service with a Stub
+        $producer = $this->getMockBuilder('OldSound\RabbitMqBundle\RabbitMq\Producer')
+            ->disableOriginalConstructor()
+            ->getMock();
+        // Test that the publish() method gets called one time, two times when two Routes are created from fixtures,
+        // and once when the tb.route_publish Event is fired manually in this test
+        $producer->expects($this->any())
+            ->method('publish')
+            ->will($this->returnCallback(array($this, 'assertAMQPMessage'))); // Use this callback to verify AMQP message
+        $this->getContainer()->set('old_sound_rabbit_mq.main_producer', $producer);
+
+        $this->loadFixtures([
+            'TB\Bundle\FrontendBundle\DataFixtures\ORM\CampaignData',
+        ]);
+
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+
+        $campaign= $this->getCampaign('urbantrails-london');
+        $route = $campaign->getCampaignRoutes()[0]->getRoute();
+
+        //  get the event dispatcher and dispatch the tb.route_publish manually
+        $dispatcher = $this->getContainer()->get('event_dispatcher');
+        $event = new CampaignRouteAcceptEvent($route->getUser(), $route, $campaign);
+        $dispatcher->dispatch('tb.campaign_route_accept', $event);
+
+        $activity = $em
+            ->getRepository('TBFrontendBundle:CampaignRouteAcceptActivity')
+            ->findOneByObjectId($route->getId());
+
+        if (!$activity) {
+            $this->fail('CampaignRouteAcceptActivity was not created for tb.campaign_route_accept event');
+        }
+
+        $this->assertEquals($route->getUser()->getId(), $activity->getActor()->getId(),
+            'CampaignRouteAcceptActivity with excpected actorId was created');
+        $this->assertEquals($route->getId(), $activity->getObject()->getId(),
+            'CampaignRouteAcceptActivity with excpected objectId was created');
+        $this->assertEquals($campaign->getId(), $activity->getTarget()->getId(),
+            'CampaignRouteAcceptActivity with excpected targetId was created');
+    }
+ 
+    /**
+     * Test that a CampaignFollowActivity is created when the tb.campaign_follow event gets dispatched
+     */
+    public function testOnCampaignFollow()
+    {
+        $this->loadFixtures([
+            'TB\Bundle\FrontendBundle\DataFixtures\ORM\CampaignData',
+        ]);
+            
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        $user = $this->getUser('mattallbeury');
+        $campaign = $this->getCampaign('urbantrails-london');
+        
+        // Replace the RabbitMQ Producer Service with a Stub
+        $producer = $this->getMockBuilder('OldSound\RabbitMqBundle\RabbitMq\Producer')
+            ->disableOriginalConstructor()
+            ->getMock();
+        // Test that the publish() method gets called exactly once
+        $producer->expects($this->once())
+            ->method('publish')
+            ->will($this->returnCallback(array($this, 'assertAMQPMessage'))); // Use this callback to verify AMQP message AMQPChannel;
+        $this->getContainer()->set('old_sound_rabbit_mq.main_producer', $producer);
+        
+        //  get the event dispatcher and dispatch the tb.campaign_follow event manually
+        $dispatcher = $this->getContainer()->get('event_dispatcher');
+        $event = new CampaignFollowEvent($user, $campaign);
+        $dispatcher->dispatch('tb.campaign_follow', $event);
+        
+        $activity = $em
+            ->getRepository('TBFrontendBundle:CampaignFollowActivity')
+            ->findOneByObjectId($campaign->getId());
+        
+        if (!$activity) {
+            $this->fail('CampaignFollowActivity was not created for tb.campaign_follow event');
+        }
+        
+        $this->assertEquals($campaign->getId(), $activity->getObject()->getId(), 
+            'CampaignFollowActivity with excpected objectId was created');
+        $this->assertEquals($user->getId(), $activity->getActor()->getId(),
+            'CampaignFollowActivity with excpected actorId was created');
+        
+    }
+    
+    /**
+     * Test that a CampaignUnfollowEvent is created when the tb.campaign_unfollow event gets dispatched
+     */
+    public function testOnCampaignUnfollow()
+    {
+        $this->loadFixtures([
+            'TB\Bundle\FrontendBundle\DataFixtures\ORM\CampaignData',
+        ]);
+        
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        $user = $this->getUser('mattallbeury');
+        $campaign = $this->getCampaign('urbantrails-london');
+        
+        // Replace the RabbitMQ Producer Service with a Stub
+        $producer = $this->getMockBuilder('OldSound\RabbitMqBundle\RabbitMq\Producer')
+            ->disableOriginalConstructor()
+            ->getMock();
+        // Test that the publish() method gets not called
+        $producer->expects($this->never())
+            ->method('publish')
+            ->will($this->returnCallback(array($this, 'assertAMQPMessage'))); // Use this callback to verify AMQP message AMQPChannel;
+        $this->getContainer()->set('old_sound_rabbit_mq.main_producer', $producer);
+        
+        //  Get the event dispatcher and dispatch the tb.campaign_unfollow event manually
+        $dispatcher = $this->getContainer()->get('event_dispatcher');
+        $event = new CampaignUnfollowEvent($user, $campaign);
+        $dispatcher->dispatch('tb.campaign_unfollow', $event);
+        
+        $activity = $em
+            ->getRepository('TBFrontendBundle:CampaignUnfollowActivity')
+            ->findOneByObjectId($campaign->getId());
+        
+        if (!$activity) {
+            $this->fail('CampaignUnfollowActivity was not created for tb.campaign_unfollow event');
+        }
+        
+        $this->assertEquals($campaign->getId(), $activity->getObject()->getId(), 
+            'CampaignUnfollowActivity with excpected objectId was created');
+        $this->assertEquals($user->getId(), $activity->getActor()->getId(),
+            'CampaignUnfollowActivity with excpected actorId was created');
         
     }
     

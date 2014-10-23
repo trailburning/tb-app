@@ -49,7 +49,7 @@ class UserController extends AbstractRestController
             throw new ApiException(sprintf('User %s is already following user %s', $user->getId(), $userToFollow->getId()), 400);
         }
 
-        $user->addIFollow($userToFollow);
+        $user->addUserIFollow($userToFollow);
         
         $em = $this->getDoctrine()->getManager();
         $em->persist($user);
@@ -104,7 +104,7 @@ class UserController extends AbstractRestController
             throw new ApiException(sprintf('User %s is not following user %s', $user->getId(), $userToUnfollow->getId()), 400);
         }
         
-        $user->removeIFollow($userToUnfollow);
+        $user->removeUserIFollow($userToUnfollow);
         
         $em = $this->getDoctrine()->getManager();
         $em->persist($user);

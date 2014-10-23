@@ -17,6 +17,9 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *    "route_like" = "RouteLikeActivity",
  *    "route_undolike" = "RouteUndoLikeActivity",
  *    "user_register" = "UserRegisterActivity",
+ *    "campaign_route_accept" = "CampaignRouteAcceptActivity",
+ *    "campaign_follow" = "CampaignFollowActivity",
+ *    "campaign_unfollow" = "CampaignUnfollowActivity"
  * })
  */
 abstract class Activity implements Exportable
