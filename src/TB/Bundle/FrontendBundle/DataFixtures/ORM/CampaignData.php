@@ -8,6 +8,7 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use TB\Bundle\FrontendBundle\Entity\Campaign;
 use TB\Bundle\FrontendBundle\Entity\CampaignGroup;
+use TB\Bundle\FrontendBundle\Entity\CampaignRoute;
 
 class CampaignData extends AbstractFixture implements FixtureInterface, DependentFixtureInterface
 {
@@ -30,10 +31,17 @@ class CampaignData extends AbstractFixture implements FixtureInterface, Dependen
         $campaign->setImage('images/campaign/urbantrails/london/shutterstock_148485164.jpg');
         $campaign->setLogo('images/campaign/urbantrails/london/logo_urbantrails_london.png');
         $campaign->setCampaignGroup($campaignGroup);
-        $campaign->addRoute($this->getReference('Route-ttm'));
         
         $manager->persist($campaign);
         $manager->flush();
+        
+        $campaignRoute = new CampaignRoute();
+        $campaignRoute->setCampaign($campaign);
+        $campaignRoute->setRoute($this->getReference('Route-ttm'));
+        
+        $manager->persist($campaignRoute);
+        $manager->flush();
+        
         $this->addReference('Campaign-london', $campaign);
     }
     

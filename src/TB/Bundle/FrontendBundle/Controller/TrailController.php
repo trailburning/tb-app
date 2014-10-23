@@ -82,9 +82,9 @@ class TrailController extends Controller
             $query = $this->getDoctrine()->getManager()
                 ->createQuery('
                     SELECT c FROM TBFrontendBundle:Campaign c
-                    JOIN c.routes r
+                    JOIN c.campaignRoutes r
                     WHERE c.slug = :campaignSlug
-                    AND r.id = :routeId')
+                    AND r.routeId = :routeId')
                 ->setParameter('campaignSlug', $campaignSlug)
                 ->setParameter('routeId', $trail->getId());
             try {
@@ -336,8 +336,8 @@ class TrailController extends Controller
         }
         $trails = [];
         $followingIds = [];
-        foreach ($this->getUser()->getIFollow() as $iFollow) {
-            $followingIds[] = $iFollow->getId();
+        foreach ($this->getUser()->getUserIFollow() as $userIFollow) {
+            $followingIds[] = $userIFollow->getId();
         }    
         
         if (count($followingIds) > 0) {

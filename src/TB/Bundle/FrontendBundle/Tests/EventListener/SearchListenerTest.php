@@ -33,7 +33,7 @@ class SearchListenerTest extends AbstractFrontendTest
         $route= new Route();
         $user = new UserProfile();
         
-        //  get the event dispatcher and dispathe the tb.route_publish manually
+        //  get the event dispatcher and dispatch the tb.route_publish manually
         $dispatcher = $this->getContainer()->get('event_dispatcher');
         $event = new RouteUpdateEvent($route, $user);
         $dispatcher->dispatch('tb.route_update', $event);

@@ -29,6 +29,15 @@ class CampaignController extends Controller
             );
         }
         
+        $query = $this->getDoctrine()->getManager()
+            ->createQuery('
+                SELECT r FROM TBFrontendBundle:Route r
+                JOIN r.campaignRoutes c
+                WHERE c.campaignId=:campaignId
+                ORDER BY r.id')
+            ->setParameter('campaignId', $campaign->getId());
+        $routes = $query->getResult();
+        
         $breadcrumb[] = [
             'name' => 'campaign',
             'label' => trim($campaign->getTitle()), 
@@ -37,6 +46,7 @@ class CampaignController extends Controller
         
         return array(
             'campaign' => $campaign,
+            'routes' => $routes,
             'breadcrumb' => $breadcrumb,
         );
     }

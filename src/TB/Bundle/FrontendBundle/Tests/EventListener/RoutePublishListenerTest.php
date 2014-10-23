@@ -38,7 +38,7 @@ class RoutePublishListenerTest extends AbstractFrontendTest
         // The published date is null bofore RoutePublishEvent
         $route->setPublishedDate(null);
         
-        //  get the event dispatcher and dispathe the tb.route_publish manually
+        //  get the event dispatcher and dispatch the tb.route_publish manually
         $dispatcher = $this->getContainer()->get('event_dispatcher');
         $event = new RoutePublishEvent($route, $route->getUser());
         $dispatcher->dispatch('tb.route_publish', $event);
