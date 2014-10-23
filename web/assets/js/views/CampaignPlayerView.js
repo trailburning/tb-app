@@ -2,9 +2,9 @@ define([
   'underscore', 
   'backbone',
   'views/CampaignSlidesView',  
-  'views/CampaignMapView',
-  'views/CampaignTrailCardView'  
-], function(_, Backbone, CampaignSlidesView, CampaignMapView, CampaignTrailCardView){
+  'views/maps/MapTrailView',
+  'views/maps/TrailCardView'  
+], function(_, Backbone, CampaignSlidesView, MapTrailView, TrailCardView){
   
   var PLAYER_INTRO = 0;
   var PLAYER_SHOW = 1;  
@@ -48,8 +48,8 @@ define([
       app.dispatcher.on("TrailSlidesView:slideview", self.onTrailSlidesViewSlideView, this);
 
       this.trailSlidesView = new CampaignSlidesView({ el: '#trail_slides_view', model: this.mediaModel });
-      this.trailMapView = new CampaignMapView({ el: '#trail_map_view', elCntrls: '#view_map_btns', model: this.model });
-      this.trailCardView = new CampaignTrailCardView({ el: '#trailcard_view' });
+      this.trailMapView = new MapTrailView({ el: '#trail_map_view', elCntrls: '#view_map_btns', model: this.model });
+      this.trailCardView = new TrailCardView({ el: '#trailcard_view' });
 
 	  this.getResults();
 	  this.buildBtns();
@@ -170,7 +170,6 @@ define([
 	  var nOffSet = this.nPage * (this.PageSize);
 		  		  
 	  var strURL = TB_RESTAPI_BASEURL + '/v1/routes/search?order=distance&radius=30&lat=51.507351&long=-0.127758&limit=500&offset=0';
-//	  var strURL = TB_RESTAPI_BASEURL + '/v1/routes/search?order=distance&radius=200&lat=-37.150776&long=142.502729&limit=500&offset=0';	  
       $.ajax({
         type: "GET",
         dataType: "json",
@@ -425,7 +424,7 @@ define([
 	  	  var nRouteID = $.cookie('route_id');          
 		  if (nRouteID != undefined) {
     	    this.trailMapView.setMapView(new L.LatLng($.cookie('route_lat'), $.cookie('route_lng')), $.cookie('route_zoom'));
-            this.trailMapView.selectTrail(nRouteID);	        
+            this.trailMapView.selectTrail(nRouteID);
 		  	// remove
 		  	$.removeCookie('route_id');
 		    $.removeCookie('route_lat');

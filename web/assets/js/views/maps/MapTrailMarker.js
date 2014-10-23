@@ -32,12 +32,12 @@ define([
       this.hoverPolyline = null;
       this.arrLineCordinates = [];
     },            
-    showTrail: function(){    
+    showTrail: function(){
       if (this.polyline) {
         this.polyline.addTo(this.options.map);
 		this.hoverPolyline.addTo(this.options.map);
-		if ($(this.marker._icon).hasClass('selected')) {
-			this.selected(true);
+		if (this.bSelected) {
+		  this.selected(true);
 		}
 		this.bTrailVisible = true;
       }
@@ -107,7 +107,7 @@ define([
 	        opacity: 0.5,
 	        weight: 4,
 	        clickable: false,
-	        distanceMarkers: { offset: nDistanceOffsetMetres, lazy: true, events: self.trailEvents, id: self.model.id }
+	        distanceMarkers: { offset: nDistanceOffsetMetres, lazy: true, events: self.trailEvents, id: self.model.id, strClassName: 'dist-marker' }
 	      };         
 		  
 	      self.focus_polyline_options = {
@@ -115,7 +115,7 @@ define([
 	        opacity: 1,
 	        weight: 4,
 	        clickable: false,
-	        distanceMarkers: { offset: nDistanceOffsetMetres, lazy: true, events: self.trailEvents, id: self.model.id }
+	        distanceMarkers: { offset: nDistanceOffsetMetres, lazy: true, events: self.trailEvents, id: self.model.id, strClassName: 'dist-marker' }
 	      };               
 	
 	      self.select_polyline_options = {
@@ -123,7 +123,7 @@ define([
 	        opacity: 1,
 	        weight: 4,
 	        clickable: false,
-	        distanceMarkers: { offset: nDistanceOffsetMetres, lazy: true, events: self.trailEvents, id: self.model.id }
+	        distanceMarkers: { offset: nDistanceOffsetMetres, lazy: true, events: self.trailEvents, id: self.model.id, strClassName: 'dist-marker' }
 	      };                       	
         	
       	  var data = self.trailModel.get('value');      
@@ -137,7 +137,7 @@ define([
         	opacity: 0,
         	weight: 20,
         	clickable: true,
-	    	distanceMarkers: { offset: 1000, lazy: true, events: self.trailEvents }                    
+	        distanceMarkers: { offset: nDistanceOffsetMetres, lazy: true, events: self.trailEvents, id: self.model.id, strClassName: 'dist-marker-active' }
       	  };               	  
       	  self.hoverPolyline = L.polyline(self.arrLineCordinates, hover_polyline_options).on('click', onClick).on('mousemove', function(evt){
 	  	    self.onMouseOver(evt);      	  	
@@ -173,16 +173,20 @@ define([
         this.polyline.removeDistanceMarkers();
       }
 	},
-	selected: function(bSelected){	
+	selected: function(bSelected){
 	  this.bSelected = bSelected;
 	  if (bSelected) {
 	  	this.focus();
 	  	if (this.polyline) {
+          this.hoverPolyline.addDistanceMarkers();
           this.polyline.setStyle(this.select_polyline_options);
         }
 	  }
 	  else {
 	  	this.blur();
+	  	if (this.polyline) {	
+          this.hoverPolyline.removeDistanceMarkers();
+        }
 	  }		
 	},
 	onMouseOver: function(evt){	

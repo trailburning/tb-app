@@ -74,7 +74,7 @@ border-width:1px;
   left: -800px;
   width: 412px;
   height: 1000px;
-  background: url("../img/campaign/background_skew.png") no-repeat top left;
+  background: url("../img/map/background_skew.png") no-repeat top left;
 }
 
 #campaign_landing_overlay_view .info-hero .campaign_title {
@@ -130,7 +130,7 @@ border-width:1px;
   left: -800px;
   width: 412px;
   height: 1000px;
-  background: url("../img/campaign/background_skew.png") no-repeat top left;
+  background: url("../img/map/background_skew.png") no-repeat top left;
 }
 
 #campaign_map_overlay_view .info-hero .campaign_title {
@@ -317,7 +317,7 @@ border-width:1px;
 }
 
 #trail_map_view .leaflet-container {
-    background: #DEDEDE;
+  background: #DEDEDE;
 }
 
 #trail_map_view #map_large {
@@ -363,19 +363,6 @@ border-width:1px;
   width: 254px;
   height: 188px;
   overflow: hidden;
-}
-
-.dist-marker {
-  font-size: 10px;
-  line-height: 16px;
-  text-align: center;
-  width: 18px;
-  height: 18px;
-  color: #FFF;	
-  background: #ed1c24;
-  border-radius: 50%;
-  overflow: hidden;		
-  box-shadow: 1px 1px 1px #888888;
 }
 
 /* CAMPAIGN PLAYER */
