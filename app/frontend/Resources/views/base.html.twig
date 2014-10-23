@@ -146,8 +146,11 @@
 		</script>
 
 		<script type="text/template" id="activityFeedItemViewTemplate">
-    	  <a href="{{ app.request.baseUrl }}<%=  activityURL%>">            	
-	 	  <div class="tb-avatar"><div class="photo"><img src="<%= actorAvatarURL%>"></div></div>	
+    	  <a href="{{ app.request.baseUrl }}<%=  activityURL%>">
+    	  <div class="icon">            	
+	 	    <div class="tb-avatar"><div class="photo"><img src="<%= actorAvatarURL%>"></div></div>
+	 	    <div class="logo"><img src="<%= actorAvatarURL%>"></div>
+	 	  </div>	
     	  <div class="note"><span class="seen <%= displaySeen%>"></span><span class="time"><%= displayPublished%></span><br/><strong> <%= actorDisplayName%></strong> <%= preVerbDisplayName%> <strong><%= verbDisplayName%></strong> <%= subjectDisplayName%>.</div>
     	  </a>
 		</script>

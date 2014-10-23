@@ -11,7 +11,8 @@ define([
             
     },            
     render: function(){
-      var self = this;
+      var self = this, bAvatar = true;;
+      
                       
       switch (this.model.get('verb')) {
 		case 'tb_welcome':
@@ -25,7 +26,7 @@ define([
       	  this.model.set('verbDisplayName', 'new trail experience');
       	  this.model.set('subjectDisplayName', '');
 		  break;
-		  
+
 		default:
       	  this.model.set('actorAvatarURL', this.model.get('actor').image.url);
       	  this.model.set('actorDisplayName', this.model.get('actor').displayName);
@@ -41,6 +42,16 @@ define([
 	  	  }
 
       	  switch (this.model.get('verb')) {
+			case 'accept':	  
+			  bAvatar = false;
+	      	  this.model.set('actorAvatarURL', 'http://assets.trailburning.com/images/campaign/urbantrails/icon.png');
+	      	  this.model.set('activityURL', this.model.get('object').url);
+	      	  this.model.set('actorDisplayName', 'Urban Trails London');
+	      	  this.model.set('preVerbDisplayName', 'has');
+	      	  this.model.set('verbDisplayName', 'accepted');
+	      	  this.model.set('subjectDisplayName', ' a new trail: ' + this.model.get('object').displayName);			  
+			  break;
+      	  	
       		case 'follow':      	
       	  	  this.model.set('activityURL', this.model.get('actor').url);
       	  	  this.model.set('preVerbDisplayName', 'started');
@@ -76,7 +87,12 @@ define([
       
       var attribs = this.model.toJSON();
       $(this.el).html(this.template(attribs));
-                        
+                      
+	  if (!bAvatar) {
+	  	$('.tb-avatar', this.el).hide();
+	  	$('.logo', this.el).show();
+	  } 
+	                         
       return this;
     },
     setSeen: function(bSeen){
