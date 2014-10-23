@@ -200,7 +200,8 @@ define([
         color: '#ed1c24',
         opacity: 1,
         weight: 4,
-        clickable: false
+        clickable: false,
+    	distanceMarkers: { lazy: true }
       };         
       this.polyline = L.polyline(self.arrLineCordinates, polyline_options).addTo(this.map);          
       this.map.fitBounds(self.polyline.getBounds(), {padding: [30, 30]});

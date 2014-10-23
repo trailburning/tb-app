@@ -169,7 +169,7 @@ define([
 
 	  var nOffSet = this.nPage * (this.PageSize);
 		  		  
-	  var strURL = TB_RESTAPI_BASEURL + '/v1/routes/search?order=distance&radius=30&lat=51.507351&long=-0.127758&limit=500&offset=0';
+	  var strURL = TB_RESTAPI_BASEURL + '/v1/routes/search?campaign_id=1&limit=500&offset=0';
       $.ajax({
         type: "GET",
         dataType: "json",
