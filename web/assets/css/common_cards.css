@@ -30,6 +30,10 @@
   overflow: hidden;
 }
 
+.trailcards .campaign_card_panel .image_container {
+  height: 294px;
+}
+
 /* TRAIL CARD PANEL */
 /******************************************/
 .trail_card_sticker {
@@ -315,6 +319,17 @@
   line-height: 18px;
 }
 
+/* CAMPAIGN CARD PANEL */
+/******************************************/
+.campaign_card_panel .card_avatar {
+  top: 12px;
+  left: 12px;
+}
+
+.campaign_card_panel .card_avatar img {
+  width: 152px;
+}
+
 /* RESPONSIVE */
 /******************************************/
 
@@ -325,10 +340,6 @@
 /* Medium devices (desktops, 992px and up) */
 @media (max-width: 1199px) {
   .trailcards .panel {
-/*  	  	
-    width: 226px;
-    margin: 10px 10px 10px 10px;
-*/    
     width: 226px;
     margin: 10px 10px 10px 10px;
   }    
@@ -341,6 +352,12 @@
   .trailcards .panel .image_container {
     height: 190px;
   }
+  .trailcards .campaign_card_panel .image_container {
+    height: 254px;
+  }  
+  .trailcards .campaign_card_panel .card_avatar {
+    top: 12px;
+  }  
   .trail_card_sticker {
     width: 265px;
     height: 358px;
