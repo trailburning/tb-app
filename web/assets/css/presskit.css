@@ -91,6 +91,10 @@
   color: #979797;
 }
 
+.guide_content .content .pack .small_screenshot img {
+  width: 254px;
+}
+
 .guide_content .content .pack img {
   float: right;
 }
