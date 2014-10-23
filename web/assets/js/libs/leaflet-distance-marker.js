@@ -39,20 +39,18 @@ L.DistanceMarkers = L.LayerGroup.extend({
 			
 	  		var strMarker = Math.round(distance / 1000);
 			var position = L.GeometryUtil.interpolateOnLine(map, line, distance / length);
-			var icon = L.divIcon({ className: options.strClassName, html: strMarker, iconSize: [18, 18] });
-			var marker = L.marker(position.latLng, { icon: icon }).on('click', function(evt){
-        		// fire event
-        		options.events.dispatcher.trigger("DistanceMarkers:click", self);                              				
-			}).on('mouseout', function(evt){
+			
+			var marker = L.marker(position.latLng).on('click', function(evt){
 				evt.originalEvent.stopPropagation();
         		// fire event
-        		options.events.dispatcher.trigger("DistanceMarkers:mouseout", self);                              				
+        		options.events.dispatcher.trigger("DistanceMarkers:click", self);                              				
 			}).on('mouseover', function(evt){
 				evt.originalEvent.stopPropagation();
         		// fire event
         		options.events.dispatcher.trigger("DistanceMarkers:mouseover", self);                              				
 			});
-
+	        marker.setIcon(L.divIcon({className: options.strClassName, html: strMarker, iconSize: [18, 18]}));      	  
+										
 			// visible only starting at a specific zoom level
 			var zoom = this._minimumZoomLevelForItem(i, showAll);
 			if (zoomLayers[zoom] === undefined) {
