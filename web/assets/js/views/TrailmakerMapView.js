@@ -27,15 +27,6 @@ define([
       this.currMapMediaMarkerView = null;
       this.nMapView = MAP_STREET_VIEW;      
       this.timezoneData = null;      
-      
-      var LocationIcon = L.Icon.extend({
-          options: {
-              iconSize:     [36, 47],
-              iconAnchor:   [16, 44],
-              popupAnchor:  [16, 44]
-          }
-      });      
-      this.locationIcon = new LocationIcon({iconUrl: ASSETS_BASEURL + 'images/icons/location.png'});      
     },         
     buildBtns: function(){
       var self = this;
@@ -131,7 +122,7 @@ define([
         $(this.el).html(this.template());
   
         this.map = L.mapbox.map('trail_map', null, {dragging: true, touchZoom: false, scrollWheelZoom: false, doubleClickZoom: false, boxZoom: false, tap: false, zoomControl:false, zoomAnimation:true, attributionControl: false, center: [52.512303, 13.408813], zoom: 3});
-        this.layer_street = L.mapbox.tileLayer('mallbeury.gchl1fm0');
+        this.layer_street = L.mapbox.tileLayer('mallbeury.8d4ad8ec');
         this.layer_sat = L.mapbox.tileLayer('mallbeury.map-eorpnyp3');      
         this.map.addLayer(this.layer_street);
         
@@ -146,21 +137,20 @@ define([
         $.each(data.route.route_points, function(key, point) {
           self.arrLineCordinates.push([Number(point.coords[1]), Number(point.coords[0])]);
         });
-  
+
         var polyline_options = {
-          color: '#44B6FC',
+          color: '#ed1c24',
           opacity: 1,
           weight: 4,
-          clickable: false
+          clickable: false,
+          distanceMarkers: { lazy: true }
         };         
-/*        
-        function onClickTrail(e) {
-          self.addMarker(e.latlng.lat, e.latlng.lng, true, '');
-        }
-        this.polyline = L.polyline(self.arrLineCordinates, polyline_options).on('click', onClickTrail).addTo(this.map);
-*/        
+
         this.polyline = L.polyline(self.arrLineCordinates, polyline_options).addTo(this.map);
-        L.marker(this.arrLineCordinates[0], {icon: this.locationIcon}).addTo(this.map);            
+
+	    var marker = L.marker(this.arrLineCordinates[0]).addTo(this.map);			        
+        marker.setIcon(L.divIcon({className: 'tb-map-location-marker', html: '<div class="marker"></div>', iconSize: [18, 25], iconAnchor: [9, 25],}));
+	    $(marker._icon).addClass('selected');
                   
         this.map.fitBounds(self.polyline.getBounds(), {padding: [30, 30]});
       }
