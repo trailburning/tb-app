@@ -107,9 +107,9 @@ var TB_USER_ID = {{ app.user.id }};
 						</div>
 					{% endif %}
 
-{#
-			        {{ include('TBFrontendBundle:Default:breadcrumb.html.twig', breadcrumb) }}
-#}					
+					<div class="crumbs">
+					    <div class="crumb_links"><a href="{{ app.request.baseUrl }}/campaign/{{ campaign.slug }}">{{ campaign.displayTitle }}</a></div>
+					</div>
 			        {{ include('TBFrontendBundle:Default:share.html.twig') }}
 	                </div>
                 </div>
