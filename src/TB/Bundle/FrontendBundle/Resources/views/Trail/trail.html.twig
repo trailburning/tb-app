@@ -261,12 +261,13 @@ var TB_TRAIL_ID = {{ trail.id }};
 								    </div>
 								</div>
 							{% endif %}
-
+{#	
+MLA - HIDE UNTIL URBAN TRAILS LAUNCHES!
+	
 							{% if campaigns and campaigns|length > 0 %}
 								<div class="panel trail_card_panel campaign_panel">
                                     {% for campaign in campaigns %}
-                                        <div class="content">
-                                            
+                                        <div class="content">                                            
     	                            	<a href="{{ path('campaign', { slug: campaign.slug}) }}">
     	                                <div class="photo tb-photo-btn">
     	                                    <div class="image_container fade_on_load"><img src="http://app.resrc.it/o=80/http://assets.trailburning.com/{{ campaign.image }}" class="resrc scale" border="0"></div>                                    
@@ -282,6 +283,7 @@ var TB_TRAIL_ID = {{ trail.id }};
                                     {% endfor %}
 								</div>
 							{% endif %}
+#}
                         	
                             {% if event and eventTrails %}
                 				<div class="event_trails_container">
