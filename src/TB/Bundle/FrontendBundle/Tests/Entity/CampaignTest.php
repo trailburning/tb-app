@@ -3,11 +3,8 @@
 namespace TB\Bundle\FrontendBundle\Tests\Entity;
 
 use TB\Bundle\FrontendBundle\Tests\AbstractFrontendTest;
-use TB\Bundle\FrontendBundle\Entity\Route;
-use TB\Bundle\FrontendBundle\Entity\Media;
-use TB\Bundle\FrontendBundle\Entity\GpxFile;
-use TB\Bundle\FrontendBundle\Entity\RouteLike;
-use CrEOF\Spatial\PHP\Types\Geometry\Point;
+use TB\Bundle\FrontendBundle\Entity\Campaign;
+use TB\Bundle\FrontendBundle\Entity\CampaignGroup;
 
 class CampaignTest extends AbstractFrontendTest
 {
@@ -27,7 +24,7 @@ class CampaignTest extends AbstractFrontendTest
             'url' => '/campaign/urbantrails-london',
             'objectType' => 'campaign',
             'id' => $campaign->getId(),
-            'displayName' => 'London',
+            'displayName' => 'Urban Trails London',
         ];
         
         $this->assertEquals($expected, $campaign->exportAsActivity(),

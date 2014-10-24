@@ -522,7 +522,7 @@ class Campaign
             'url' => '/campaign/' . $this->getSlug(),
             'objectType' => 'campaign',
             'id' => $this->getId(),
-            'displayName' => $this->getTitle(),
+            'displayName' => $this->getDisplayTitle(),
         ];
         
         return $data;
