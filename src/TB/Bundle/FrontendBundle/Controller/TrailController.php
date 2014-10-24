@@ -64,6 +64,7 @@ class TrailController extends Controller
         $editorial = null;
         $event = null;
         $campaign = null;
+        $campaigns = null;
         $eventTrails = null;
         $editorialTrails = null;
         $relatedTrails = null;
@@ -79,6 +80,7 @@ class TrailController extends Controller
         }
         
         if ($campaignSlug !== null) {
+            // Get the one Campaign that is referenced in the URL
             $query = $this->getDoctrine()->getManager()
                 ->createQuery('
                     SELECT c FROM TBFrontendBundle:Campaign c
@@ -94,6 +96,15 @@ class TrailController extends Controller
                     sprintf('Campaign %s not found or no relation to Trail %s', $campaignSlug, $trailSlug)
                 );
             }
+        } else {
+            // Get all Campaigns that this Route is part of
+            $campaigns = $this->getDoctrine()->getManager()
+                ->createQuery('
+                    SELECT c FROM TBFrontendBundle:Campaign c
+                    JOIN c.campaignRoutes r
+                    WHERE r.routeId = :routeId')
+                ->setParameter('routeId', $trail->getId())
+                ->getResult();
         }
         
         if ($editorialSlug !== null) {
@@ -212,6 +223,7 @@ class TrailController extends Controller
             'editorial' => $editorial, 
             'event' => $event,
             'campaign' => $campaign,
+            'campaigns' => $campaigns,
             'breadcrumb' => $breadcrumb,
             'eventTrails' => $eventTrails,
             'editorialTrails' => $editorialTrails,

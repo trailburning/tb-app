@@ -6,8 +6,6 @@
 {{ campaign.synopsis }}
 {% endblock %}
 
-
-
 {% block og_image %}
 
 {% endblock %}
@@ -34,7 +32,7 @@ var TB_USER_ID = {{ app.user.id }};
         <div id="campaign_landing_overlay_view">        	
         	<div class="back tb-move-horiz"></div>        	
 			<div class="info-hero tb-move-horiz">				  						  				
-			  <div class="campaign_title tb-move-horiz"><img src="http://assets.trailburning.com/images/campaign/urbantrails/london/logo_urbantrails_london.png" /></div>              
+			  <div class="campaign_title tb-move-horiz"><img src="http://assets.trailburning.com/{{ campaign.logo }}" /></div>              
               <div class="campaign_play">
               	<div class="campaign_btn"></div>
               	Discover Trails	
@@ -45,13 +43,13 @@ var TB_USER_ID = {{ app.user.id }};
         <div id="campaign_map_overlay_view">
         	<div class="back tb-move-horiz"></div>        	
 			<div class="info-hero tb-move-horiz">				  						  				
-			  <div class="campaign_title tb-move-horiz"><img src="http://assets.trailburning.com/images/campaign/urbantrails/london/logo_urbantrails_london.png" /></div>              
+			  <div class="campaign_title tb-move-horiz"><img src="http://assets.trailburning.com/{{ campaign.logo }}" /></div>              
               <div class="campaign_card">
 				<div class="trailcards">
 					<div id="trailcard_view">
 						<div class="panel trail_card_panel campaign_card_panel">
 						    <div class="photo tb-photo-btn">
-						      <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/o=80/http://assets.trailburning.com/images/campaign/urbantrails/london/shutterstock_148485164.jpg" class="resrc scale" border="0"/></div>
+						      <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/o=80/http://assets.trailburning.com/{{ campaign.image }}" class="resrc scale" border="0"/></div>
 						      <div class="card_title">
 						        <h1>Rediscover your</h1>
 						        <br/>
@@ -64,7 +62,7 @@ var TB_USER_ID = {{ app.user.id }};
 						      <a href="{{ app.request.baseUrl }}/campaign/{{ campaign.slug }}"><img src="http://assets.trailburning.com/images/campaign/urbantrails/logo_urbantrails.jpg"></a>
 						    </div>
 						    <div class="summary">
-							  <div class="length">11 Trails</div>
+							  <div class="length">{{ routes|length }} Trails</div>
 						    </div>
 						</div>						
 					</div>
@@ -118,9 +116,13 @@ var TB_USER_ID = {{ app.user.id }};
 			        <div class="left">        
 			            <div class="panel campaign_detail_panel">
 			                <div class="content">
-			                    <h3 class="tb title">About London</h3>
-			                    <h4 class="tb">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut feugiat accumsan leo eget porttitor. Donec blandit, dui nec aliquam mattis, leo augue adipiscing purus, quis iaculis eros purus ac nisi. Etiam neque magna, consectetur eget suscipit vitae, convallis a metus. </h4>
-			                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut feugiat accumsan leo eget porttitor. Donec blandit, dui nec aliquam mattis, leo augue adipiscing purus, quis iaculis eros purus ac nisi. </p>
+			                    <h3 class="tb title">About {{ campaign.title }}</h3>
+                                                                
+                	  			<h4 class="tb">	 
+                                    {{ campaign.synopsis|nl2br }}
+                				</h4>
+                                <p>{{ campaign.text|raw }}</p>
+                                
 			                    <div class="join"><a href="" onClick="" class="btn btn-tb-action btn-tb-large">Visit London</a></div>
 			                </div>
 			            </div>
