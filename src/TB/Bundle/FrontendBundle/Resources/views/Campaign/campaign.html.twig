@@ -97,14 +97,19 @@ var TB_USER_ID = {{ app.user.id }};
             <div class="panel_content">       
 				<div class="crumb_content fixed_content">
 	                <div id="bigbar">
-			    	{#
+					{% if app.user %}
+						<div class="follow">
+							<a href="javascript:void(0)" class="btn btn-tb-action btn-tb like_btn{% if user_is_following_campaign(app.user, campaign) %} pressed-btn-tb{% endif %}" data-off="Follow" data-on="Following" data-campaignname="{{ campaign.title }}" data-campaignid="{{ campaign.id }}"><i class="icon-star icon-white"></i> <span class="btn-label">{% if user_is_following_campaign(app.user, campaign) %}Following{% else %}Follow{% endif %} {{ campaign.title }}</span></a>
+						</div>
+					{% else %}
+						<div class="follow">
+							<a href="{{ path('fos_user_security_login') }}" class="btn btn-tb-action btn-tb like_btn" data-off="Follow" data-on="Following" data-campaignname="{{ campaign.title }}" data-campaignid="{{ campaign.id }}"><i class="icon-star icon-white"></i> <span class="btn-label">Follow {{ campaign.title }}</span></a>
+						</div>
+					{% endif %}
+
+{#
 			        {{ include('TBFrontendBundle:Default:breadcrumb.html.twig', breadcrumb) }}
-			        #}
-					<div class="crumbs">
-					    <div class="crumb_links">
-				            <a href="">Urban Trails</a>
-					    </div>
-			    	</div>        
+#}					
 			        {{ include('TBFrontendBundle:Default:share.html.twig') }}
 	                </div>
                 </div>

@@ -1108,12 +1108,23 @@ a:active .tb-cntrl {
   border-bottom-style: solid;
   border-bottom-color: #C2C2C2;
 }
-
+/*
 #headerview .navbar .nav .dropdown-menu li .tb-avatar {
   float: left;
   margin-top: 8px;
   margin-bottom: 8px;
   margin-right: 12px;
+}
+*/
+#headerview .navbar .nav .dropdown-menu li .icon {
+  float: left;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  margin-right: 12px;
+}
+
+#headerview .navbar .nav .dropdown-menu li .logo {
+  display: none;
 }
 
 #headerview .navbar .nav .dropdown-menu li .note {

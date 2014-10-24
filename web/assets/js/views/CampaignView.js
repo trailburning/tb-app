@@ -18,6 +18,7 @@ define([
       
       this.playerView = new CampaignPlayerView({ el: '#trailplayer', model: this.model, mediaCollection: this.mediaCollection, mediaModel: this.mediaModel });            
       this.weatherView = new TrailWeatherView({ el: '#trail_weather_view', lat: 51.507351, lon: -0.127758});
+	  this.elLikeBtn = $('.like_btn', $(this.el));
       
       this.playerView.updatePlayerHeight();
       
@@ -37,6 +38,28 @@ define([
       this.playerView.handleMedia();
       this.handleResize();
       
+	  function updateFollowBtn() {
+	    if (self.elLikeBtn.hasClass('pressed-btn-tb')) {
+	  	  $('.btn-label', self.elLikeBtn).text(self.elLikeBtn.attr('data-on')+' '+self.elLikeBtn.attr('data-campaignname'));
+	    }
+	    else {
+	  	  $('.btn-label', self.elLikeBtn).text(self.elLikeBtn.attr('data-off')+' '+self.elLikeBtn.attr('data-campaignname'));
+	    }
+	  }
+
+  	  $('.like_btn', $(this.el)).click(function(evt){
+  	    if ($(this).hasClass('pressed-btn-tb')) {
+      	  $(this).removeClass('pressed-btn-tb');
+      	  self.follow($(this).attr('data-campaignid'), false);
+  	      updateFollowBtn();
+  	    }
+        else {
+      	  $(this).addClass('pressed-btn-tb');
+      	  self.follow($(this).attr('data-campaignid'), true);
+          updateFollowBtn();
+  	    }      	
+  	  });
+      
       // keyboard control
       $(document).keydown(function(e){
       	switch (e.keyCode) {
@@ -52,7 +75,28 @@ define([
     },   
     handleResize: function(){
       this.playerView.handleResize();
-    }
+    },
+    follow: function(nCampaign, bFollow){    
+      var strMethod = 'follow';
+      if (!bFollow) {
+      	strMethod = 'unfollow';
+      }
+    	
+      var strURL = TB_RESTAPI_BASEURL + '/v1/campaign/'+nCampaign+'/' + strMethod;
+      $.ajax({
+        type: "PUT",
+        dataType: "json",
+        url: strURL,
+        headers: {'Trailburning-User-ID': TB_USER_ID},
+        error: function(data) {
+//          console.log('error:'+data.responseText);      
+        },
+        success: function(data) {      
+//          console.log('success');
+//          console.log(data);
+        }
+      });        
+    }    
     
   });
 
