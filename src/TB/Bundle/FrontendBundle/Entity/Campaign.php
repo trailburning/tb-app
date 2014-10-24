@@ -155,6 +155,13 @@ class Campaign
     private $campaignUnfollowActivities;
     
     /**
+     * @var string
+     *
+     * @ORM\Column(name="share_image", type="string", length=100, nullable=true)
+     */
+    private $shareImage;
+    
+    /**
      * Get id
      *
      * @return integer 
@@ -658,5 +665,28 @@ class Campaign
     public function getFollower()
     {
         return $this->follower;
+    }
+
+    /**
+     * Set shareImage
+     *
+     * @param string $shareImage
+     * @return Campaign
+     */
+    public function setShareImage($shareImage)
+    {
+        $this->shareImage = $shareImage;
+
+        return $this;
+    }
+
+    /**
+     * Get shareImage
+     *
+     * @return string 
+     */
+    public function getShareImage()
+    {
+        return $this->shareImage;
     }
 }
