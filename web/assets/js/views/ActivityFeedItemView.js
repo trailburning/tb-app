@@ -46,17 +46,25 @@ define([
 			  bAvatar = false;
 	      	  this.model.set('actorAvatarURL', 'http://assets.trailburning.com/images/campaign/urbantrails/icon.png');
 	      	  this.model.set('activityURL', this.model.get('object').url);
-	      	  this.model.set('actorDisplayName', 'Urban Trails London');
+	      	  this.model.set('actorDisplayName', this.model.get('target').displayName);
 	      	  this.model.set('preVerbDisplayName', 'has');
 	      	  this.model.set('verbDisplayName', 'accepted');
 	      	  this.model.set('subjectDisplayName', ' a new trail: ' + this.model.get('object').displayName);			  
 			  break;
       	  	
-      		case 'follow':      	
+      		case 'follow':      	      		
+      		  switch (this.model.get('object').objectType) {
+      		  	case 'campaign':
+      		  	  this.model.set('subjectDisplayName', 'your campaign: ' + this.model.get('object').displayName);
+      		  	  break;
+
+      		  	default:
+      		  	  this.model.set('subjectDisplayName', 'your trails');
+      		  	  break;
+      		  }      		
       	  	  this.model.set('activityURL', this.model.get('actor').url);
       	  	  this.model.set('preVerbDisplayName', 'started');
-      	  	  this.model.set('verbDisplayName', 'following');      	
-      	  	  this.model.set('subjectDisplayName', 'your trails');      	
+      	  	  this.model.set('verbDisplayName', 'following');      	      	  	        	
       	  	  break;
       		case 'publish':      	      	
       	  	  this.model.set('activityURL', this.model.get('object').url);
