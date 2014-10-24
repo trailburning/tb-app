@@ -2,14 +2,12 @@
 
 {% block title %}{{ campaign.displayTitle }}{% endblock %}
 
-{% block description %}
-{{ campaign.synopsis }}
+{% block og_image %}
+{% if campaign.shareImage is not null %}http://assets.trailburning.com/{{ campaign.shareImage }}{% else %}http://www.trailburning.com/assets/img/social/tb_profile_icon.png{% endif %}
 {% endblock %}
 
-
-
-{% block og_image %}
-
+{% block description %}
+{{ campaign.synopsis }}
 {% endblock %}
 
 {% block stylesheets %}
@@ -119,8 +117,8 @@ var TB_USER_ID = {{ app.user.id }};
 			            <div class="panel campaign_detail_panel">
 			                <div class="content">
 			                    <h3 class="tb title">About London</h3>
-			                    <h4 class="tb">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut feugiat accumsan leo eget porttitor. Donec blandit, dui nec aliquam mattis, leo augue adipiscing purus, quis iaculis eros purus ac nisi. Etiam neque magna, consectetur eget suscipit vitae, convallis a metus. </h4>
-			                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut feugiat accumsan leo eget porttitor. Donec blandit, dui nec aliquam mattis, leo augue adipiscing purus, quis iaculis eros purus ac nisi. </p>
+			                    <h4 class="tb">{{ campaign.synopsis }}</h4>
+			                    <p>{{ campaign.text }}</p>
 			                    <div class="join"><a href="" onClick="" class="btn btn-tb-action btn-tb-large">Visit London</a></div>
 			                </div>
 			            </div>
