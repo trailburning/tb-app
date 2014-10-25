@@ -58,7 +58,7 @@ define([
         $('#trail_slides_view').css('visibility', 'visible');
 	  }
 	  
-	  var data = {'tags': {'width': 800, 'height': 600}, versions: [{ 'path': '/images/campaign/urbantrails/london/shutterstock_148485164.jpg' }]};
+	  var data = {'tags': {'width': 800, 'height': 600}, versions: [{ 'path': '/images/profile/mtbuller/brand_hero3.jpg' }]};
 	  
 	  var mediaModel = new Backbone.Model(data);
 	  this.trailSlidesView.addMedia(mediaModel);
@@ -110,6 +110,7 @@ define([
            
         case MAP_VIEW:
           this.trailMapView.render();
+          this.trailMapView.map.setZoom(14);
           break;
       }      
       
@@ -133,7 +134,8 @@ define([
 	  	  
 	  	  if (nPlayerHeight > nPlayerViewerHeight) {
 	  	  	var nAdjustY = (nPlayerHeight - nPlayerViewerHeight)/2;
-            $('#trail_views').css('top', -nAdjustY);        	  	  	
+            $('#trail_views').css('top', -nAdjustY);
+            $('#trail_slides_view').css('top', nAdjustY);        	  	  	
 	  	  } 
 	  	  break;
 	  	
@@ -142,7 +144,8 @@ define([
 	  	  
 	  	  if (nPlayerHeight > nPlayerViewerHeight) {
 	  	  	var nAdjustY = (nPlayerHeight - nPlayerViewerHeight)/2;
-            $('#trail_views').css('top', -nAdjustY);        	  	  	
+            $('#trail_views').css('top', -nAdjustY);     
+            $('#trail_slides_view').css('top', nAdjustY);   	  	  	
 		  }
 		  
 	  	  if (nPlayerHeight < nPlayerViewerHeight) {
@@ -157,9 +160,9 @@ define([
 
       $('#campaignplayer').height(nPlayerViewerHeight);
       
-  	  $('#trail_slides_view').height(this.nPlayerHeight);
+//  	  $('#trail_slides_view').height(this.nPlayerHeight);
    	  // force height update for imageScale
-   	  $('#trail_slides_view .image_container').height(this.nPlayerHeight);      	  
+//   	  $('#trail_slides_view .image_container').height(this.nPlayerHeight);      	  
 	  
    	  $('#trail_map_view').height(this.nPlayerHeight);
    	  // force height update for MapBox
@@ -170,7 +173,8 @@ define([
 
 	  var nOffSet = this.nPage * (this.PageSize);
 		  		  
-	  var strURL = TB_RESTAPI_BASEURL + '/v1/routes/search?campaign_id=1&limit=500&offset=0';
+	  var strURL = TB_RESTAPI_BASEURL + '/v1/routes/search?order=distance&radius=50&lat=-37.132552&long=146.454196&limit=500&offset=0';
+	  
       $.ajax({
         type: "GET",
         dataType: "json",
@@ -229,14 +233,19 @@ define([
 	  $('#trail_views').addClass('tb-move-vert');
 
       this.showMapView();
-      
+      $('#view_map_btns').css('top', 18);      
       this.hideIntroOverlay();
+        
+      setTimeout(function(){
+        self.nPlayerView = PLAYER_SHOW;
+        self.updatePlayerHeight();
 
-      self.nPlayerView = PLAYER_SHOW;
-      self.updatePlayerHeight();
-	  self.bLocked = false;
+	    self.showMapOverlay();
+
+	    self.bLocked = false;
             
-      $('#view_player_btns').css('top', 18);
+        $('#view_player_btns').css('top', 18);      	
+      }, 500);
     },
     hidePlayer: function(){
       if (this.bLocked) {
@@ -255,30 +264,35 @@ define([
 	  $('#trail_views').addClass('tb-move-vert');
       
       this.updatePlayerHeight();
-      
+      this.hideMapOverlay();
       $('#view_player_btns').css('top', -160);
+      $('#view_map_btns').css('top', -300);
 
-	  self.showPhotoView();      
-      self.showIntroOverlay();
-      self.bLocked = false;
+      setTimeout(function(){
+        self.showIntroOverlay();
+	    self.showPhotoView();      
+        self.bLocked = false;
+      }, 1000);      
     },
     showIntroOverlay: function(){
       $('#campaign_landing_overlay_view .back').css('left', -144);
       $('#campaign_landing_overlay_view .info-hero').css('left', -144);
       $('#campaign_landing_overlay_view .info-hero .campaign_title').css('left', 189);                                	          
-      
-      $('#campaign_map_overlay_view .back').css('left', -800);
-      $('#campaign_map_overlay_view .info-hero').css('left', -800);
-      $('#campaign_map_overlay_view .info-hero .campaign_title').css('left', -100);
     },
     hideIntroOverlay: function(){    
       $('#campaign_landing_overlay_view .back').css('left', -800);
       $('#campaign_landing_overlay_view .info-hero').css('left', -800);
       $('#campaign_landing_overlay_view .info-hero .campaign_title').css('left', -100);
-      
+    },
+    showMapOverlay: function(){
       $('#campaign_map_overlay_view .back').css('left', -124);
       $('#campaign_map_overlay_view .info-hero').css('left', -150);
       $('#campaign_map_overlay_view .info-hero .campaign_title').css('left', 189);                                	          
+    },
+    hideMapOverlay: function(){    
+      $('#campaign_map_overlay_view .back').css('left', -800);
+      $('#campaign_map_overlay_view .info-hero').css('left', -800);
+      $('#campaign_map_overlay_view .info-hero .campaign_title').css('left', -100);
     },
     toggleView: function(){
       if (this.nPlayerView != PLAYER_SHOW) {
@@ -372,9 +386,7 @@ define([
       }
     	
       this.nTrailView = MAP_VIEW;
-      
-      $('#view_map_btns').css('top', 18);
-      
+            
       $('#view_toggle .button').addClass('view_photo');
       $('#view_toggle .button').removeClass('view_map');
       if (evt) {
@@ -384,9 +396,9 @@ define([
       }
       
       this.trailSlidesView.hide();
-      
       this.trailMapView.show();
       this.trailMapView.render();
+      this.trailMapView.map.setZoom(14);
     },
     showPhotoView: function(evt){
       if (this.nTrailView == SLIDE_VIEW) {
@@ -394,9 +406,7 @@ define([
       }
     	
       this.nTrailView = SLIDE_VIEW;
-      
-      $('#view_map_btns').css('top', -300);
-      
+            
       $('#view_toggle .button').addClass('view_map');
       $('#view_toggle .button').removeClass('view_photo');
       if (evt) {
