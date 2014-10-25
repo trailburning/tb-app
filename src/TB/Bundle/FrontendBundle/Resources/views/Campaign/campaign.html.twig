@@ -121,7 +121,13 @@ var TB_USER_ID = {{ app.user.id }};
                                     {{ campaign.synopsis|nl2br }}
                 				</h4>
                                 <p>{{ campaign.text|raw }}</p>
-			                    <div class="join"><a href="" onClick="" class="btn btn-tb-action btn-tb-large">Visit London</a></div>
+			                    <div class="join">
+							    {% if app.user %}  	      
+						  	      <a href="{{ path('trailmaker') }}" class="btn btn-tb-action btn-tb-large">Add your Urban Trail</a>
+							    {% else %}
+						  	      <a href="{{ app.request.baseUrl }}/tour" class="btn btn-tb-action btn-tb-large">Add your Urban Trail</a>
+							    {% endif %}
+			                    </div>
 			                </div>
 			            </div>
 			            
