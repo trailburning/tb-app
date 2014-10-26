@@ -297,10 +297,13 @@ define([
       	$('#trail_slides_view .slide_btns').show();
         $('#view_player_btns').css('top', 18);
       
+      	this.nSlideShowState = SLIDESHOW_PLAYING;
+
+	  	this.trailStatsView.playerPlaying();
+		
         this.trailMiniMapView.gotoMedia(this.nCurrSlide);
         this.trailMapView.gotoMedia(this.nCurrSlide);
         this.trailAltitudeView.gotoMedia(this.nCurrSlide);
-	    this.trailStatsView.playerPlaying();
       
         setTimeout(function() {
 	      self.showOverlay();
@@ -458,7 +461,7 @@ define([
       if (this.nPlayerView != PLAYER_SHOW) {
       	return;
       }
-    	
+
       $('#slideshow_toggle .button').removeClass('slideshow_pause_hover');        
       $('#slideshow_toggle .button').removeClass('slideshow_play_hover');        
       
@@ -531,7 +534,7 @@ define([
     onTrailStatsPlayClick: function(){
       this.startSlideShow(); 
     },
-    onTrailStatsPauseClick: function(){   
+    onTrailStatsPauseClick: function(){
       this.stopSlideShow(); 
     },
     onTrailMapViewZoomInClick: function(mapView){
