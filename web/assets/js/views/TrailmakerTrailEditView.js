@@ -67,6 +67,19 @@ define([
         // fire event
         app.dispatcher.trigger('TrailEditView:fieldkeypress', self);                        
 	  });
+
+	// mla move to campaigns view	  	  
+    var imgLoad = imagesLoaded('.campaign .scale');
+    imgLoad.on('always', function(instance) {    	
+      for ( var i = 0, len = imgLoad.images.length; i < len; i++ ) {
+        $(imgLoad.images[i].img).addClass('scale_image_ready');
+        // update pos
+        $(imgLoad.images[i].img).imageScale();
+      }
+      // fade in - delay adding class to ensure image is ready  
+      $('.campaign .fade_on_load').addClass('tb-fade-in');
+      $('.campaign .image_container').css('opacity', 1);
+    });    	
 	  	  
       return this;
     },

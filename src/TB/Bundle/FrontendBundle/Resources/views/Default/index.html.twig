@@ -17,6 +17,18 @@ var TB_USER_ID = {{ app.user.id }};
   <div id="home_header">  	
     <div class="hero_image">
       <div class="background">
+        <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/o=80/http://assets.trailburning.com/images/campaign/urbantrails/london/8972edd96f999eabf6612d18d9bc2d2b042db5c8.jpg" class="resrc scale" /></div>
+      </div>
+  	</div>
+
+    <div class="hero_image">
+      <div class="background">
+        <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/o=80/http://assets.trailburning.com/images/profile/mtbuller/LM_131120_MtBuller_0311.jpg" class="resrc scale" /></div>
+      </div>
+  	</div>
+  	
+    <div class="hero_image">
+      <div class="background">
         <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/o=80/http://assets.trailburning.com/images/editorial/wild/image_edited2.jpg" class="resrc scale" /></div>
       </div>
   	</div>
@@ -40,8 +52,44 @@ var TB_USER_ID = {{ app.user.id }};
   	</div>
 
 	<div class="hero_nav">
-	  <div class="button" data-slide="0"></div><div class="button" data-slide="1"></div><div class="button" data-slide="2"></div><div class="button" data-slide="3"></div>	  	
+	  <div class="button" data-slide="0"></div><div class="button" data-slide="1"></div><div class="button" data-slide="2"></div><div class="button" data-slide="3"></div><div class="button" data-slide="4"></div><div class="button" data-slide="4"></div>
 	</div>
+  	  	
+    <div class="hero_overlay" data-url="{{ app.request.baseUrl }}/campaign/urbantrails-london">
+      <div class="left">
+    	<div class="title feature">
+      	<h1 class="tb tb-title">Rediscover your</h1>
+      	<br/>
+      	<h1 class="tb tb-title">city runs</h1>
+      	<br/>
+		<div class="hero_btn"><a href="{{ app.request.baseUrl }}/campaign/urbantrails-london" class="btn btn-tb-action btn-tb-large">Visit Urban Trails</a></div>      	
+    	</div>
+	  </div>			  
+	  <div class="right">
+	  	<a href="{{ app.request.baseUrl }}/campaign/urbantrails-london"><img src="http://assets.trailburning.com/images/campaign/urbantrails/london/logo_urbantrails_london.png"></a>
+      </div>
+	  <div class="tb-credit">Photo credit: © Nick Baber</div>
+	  <div class="sponsor_content">
+	  </div>  	
+  	</div>
+  	  	
+    <div class="hero_overlay" data-url="{{ app.request.baseUrl }}/profile/mtbuller">
+      <div class="left">
+    	<div class="title feature">
+      	<h1 class="tb tb-title">Discover</h1>
+      	<br/>
+      	<h1 class="tb tb-title">Mt Buller Trails</h1>
+      	<br/>
+		<div class="hero_btn"><a href="{{ app.request.baseUrl }}/profile/mtbuller" class="btn btn-tb-action btn-tb-large">Go and Run Buller</a></div>      	
+    	</div>
+	  </div>			  
+	  <div class="right">
+	  	<a href="{{ app.request.baseUrl }}/profile/mtbuller"><img src="http://assets.trailburning.com/images/profile/mtbuller/logo.png"></a>
+      </div>
+	  <div class="tb-credit"></div>
+	  <div class="sponsor_content">
+	  </div>  	
+  	</div>
   	  	
     <div class="hero_overlay" data-url="{{ app.request.baseUrl }}/inspire/wild">
       <div class="left">

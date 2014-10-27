@@ -120,8 +120,13 @@ var TB_USER_ID = {{ app.user.id }};
                 	  			<h4 class="tb">	 
                                     {{ campaign.synopsis|nl2br }}
                 				</h4>
-                                <p>{{ campaign.text|raw }}</p>
-			                    <div class="join"><a href="" onClick="" class="btn btn-tb-action btn-tb-large">Visit London</a></div>
+			                    <div class="join">
+							    {% if app.user %}  	      
+						  	      <a href="{{ path('trailmaker') }}" class="btn btn-tb-action btn-tb-large">Add your Urban Trail</a>
+							    {% else %}
+						  	      <a href="{{ app.request.baseUrl }}/tour" class="btn btn-tb-action btn-tb-large">Add your Urban Trail</a>
+							    {% endif %}
+			                    </div>
 			                </div>
 			            </div>
 			            
@@ -129,12 +134,11 @@ var TB_USER_ID = {{ app.user.id }};
 			        </div>
 			      
 			        <div class="right">
-						<div class="trails_title"><h2 class="tb tb-title first-title ">{{ campaign.title }} Urban Trails</h2></div>			        	
+						<div class="trails_title"><h2 class="tb tb-title first-title ">Latest Urban Trails</h2></div>			        	
 						
                         {% if routes and routes|length > 0 %}
 						
 			        	<div class="event_container trailcards">
-						
                     	    {% for trail in routes %}
                     	        {{ include('TBFrontendBundle:Trail:_trailcard.html.twig', {'trail': trail, 'campaign' : campaign}) }}
                     	    {% endfor %}
