@@ -12,6 +12,8 @@ use TB\Bundle\FrontendBundle\Entity\UserProfile;
 use TB\Bundle\FrontendBundle\Entity\BrandProfile;
 use TB\Bundle\FrontendBundle\Entity\Event;
 use TB\Bundle\FrontendBundle\Entity\EventRoute;
+use TB\Bundle\FrontendBundle\Entity\Campaign;
+use TB\Bundle\FrontendBundle\Entity\CampaignGroup;
 use CrEOF\Spatial\PHP\Types\Geometry\Point;
 use TB\Bundle\APIBundle\Util;
 use PDO;
@@ -931,6 +933,69 @@ class Postgis extends \PDO
         }
         
         return true;
+    }
+    
+    public function relatedCampaigns($routeId, $count = null) 
+    {
+        $q = 'SELECT ST_X(r.start) AS long, ST_Y(r.start) AS lat FROM routes r WHERE r.id=:routeId';
+        
+        $pq = $this->prepare($q);
+        $pq->bindParam('routeId', $routeId, \PDO::PARAM_INT);
+        $success = $pq->execute();
+        if (!$success) {
+            $this->rollBack();
+            throw (new ApiException('Failed to fetch route from Database', 500));
+        }
+        
+        if ($row = $pq->fetch(\PDO::FETCH_ASSOC)) {
+            $long = $row['long'];
+            $lat = $row['lat'];
+        } else {
+            throw (new ApiException(sprintf('Route with id %s not found', $routeId), 404));
+        }
+        
+        $q = 'SELECT c.id, c.title, c.slug, c.image, c.logo, c.synopsis, c.text, cg.id AS cg_id, cg.name AS cg_name
+              FROM campaign c
+              LEFT JOIN campaign_group cg ON c.campaign_group_id=cg.id
+              INNER JOIN region r ON c.region_id=r.id
+              WHERE ST_Contains(r.area, ST_GeomFromText(:point,4326))
+              GROUP BY c.id, cg.id';
+        if ($count !== null) {
+            $q .= ' LIMIT :count';
+        }
+        
+        $pq = $this->prepare($q);
+        $pq->bindValue('point', 'POINT(' . $long . ' ' . $lat . ')', \PDO::PARAM_STR);
+        if ($count !== null) {
+            $pq->bindParam('count', $count, \PDO::PARAM_INT);
+        }
+        
+        $success = $pq->execute();
+        if (!$success) {
+            throw (new ApiException('Failed to fetch related campaign from Database', 500));
+        }
+
+        $campaigns = [];
+        while ($row = $pq->fetch(\PDO::FETCH_ASSOC)) {
+            $campaign = new Campaign();
+            $campaign->setId($row['id']);
+            $campaign->setTitle($row['title']);
+            $campaign->setSlug($row['slug']);
+            $campaign->setImage($row['image']);
+            $campaign->setLogo($row['logo']);
+            $campaign->setSynopsis($row['synopsis']);
+            $campaign->setText($row['text']);
+
+            if ($row['cg_id'] != '') {
+                $campaignGroup = new CampaignGroup();
+                $campaignGroup->setId($row['cg_id']);
+                $campaignGroup->setName($row['cg_name']);
+                $campaign->setCampaignGroup($campaignGroup);
+            }
+            $campaigns[] = $campaign;
+        }
+        
+        return $campaigns;
     }
 }
 

@@ -162,6 +162,19 @@ class Campaign
     private $shareImage;
     
     /**
+     * Set id
+     *
+     * @param integer $id
+     * @return Route
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    
+        return $this;
+    }
+    
+    /**
      * Get id
      *
      * @return integer 
@@ -531,6 +544,21 @@ class Campaign
             'id' => $this->getId(),
             'displayName' => $this->getDisplayTitle(),
         ];
+        
+        return $data;
+    }
+    
+    public function export() 
+    {
+        $data = [
+            'id' => $this->getId(),
+            'title' => $this->getDisplayTitle(),
+            'slug' => $this->getSlug(),
+            'logo' => $this->getLogo(),
+            'image' => $this->getImage(),
+            'text' => $this->getText(),
+            'synopsis' => $this->getSynopsis(),
+        ];                       
         
         return $data;
     }

@@ -51,8 +51,8 @@ class PostgisTest extends AbstractApiTestCase
             'searchRoutes returns an array of Routes');   
         $this->assertEquals(1, count($routes),
             'searchRoutes returns one route');
-        $this->assertEquals(2, $count,
-            'the total number of results is 2');
+        $this->assertEquals(3, $count,
+            'the total number of results is 3');
             
         // Limit search to a radius around a point
         $params = ['radius' => 20, 'long' => 13.2, 'lat' => 52.5];
@@ -71,8 +71,8 @@ class PostgisTest extends AbstractApiTestCase
             'searchRoutes returns an array of Routes');   
         $this->assertEquals(1, count($routes),
             'searchRoutes returns one route');
-        $this->assertEquals(2, $count,
-            'the total number of results is 2');            
+        $this->assertEquals(3, $count,
+            'the total number of results is 3');            
     }
     
     public function testSearchCampaignRoutes()
@@ -219,5 +219,19 @@ class PostgisTest extends AbstractApiTestCase
         $result = $postgis->updateRegionArea($region->getId(), $gml);
         
         $this->assertTrue($result);
+    }
+    
+    public function testRelatedCampaigns()
+    {
+        $this->loadFixtures([
+            'TB\Bundle\FrontendBundle\DataFixtures\ORM\CampaignData',
+        ]); 
+        $postgis = $this->getContainer()->get('postgis');
+        $route = $this->getRoute('london');
+        $campaigns = $postgis->relatedCampaigns($route->getId());
+        $this->assertInternalType('array', $campaigns, 
+            'relatedCampaigns returns an array of Campaigns');   
+        $this->assertEquals(1, count($campaigns),
+            'relatedCampaigns returns one Campaigns');
     }
 }    
