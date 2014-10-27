@@ -501,10 +501,11 @@ border-width:1px;
 
 /* CAMPAIGNS VIEW */
 /******************************************/
-#step_route_edit_view .campaigns_panel {
-/*	
-*/	
+#campaigns_view {
   display: none;
+}
+
+#step_route_edit_view .campaigns_panel {
   width: 100%;
   background: #F2F2F2;
 }

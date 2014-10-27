@@ -6,8 +6,9 @@ define([
   'views/TrailUploadPhotoProgressView',
   'views/TrailUploadPhotoErrorView',
   'views/TrailSlideshowView',
-  'views/TrailActivitiesView',  
-], function(_, Backbone, OverlayView, TrailUploadPhotoView, TrailUploadPhotoProgressView, TrailUploadPhotoErrorView, TrailSlideshowView, TrailActivitiesView){
+  'views/TrailmakerCampaignsView',
+  'views/TrailActivitiesView'
+], function(_, Backbone, OverlayView, TrailUploadPhotoView, TrailUploadPhotoProgressView, TrailUploadPhotoErrorView, TrailSlideshowView, TrailmakerCampaignsView, TrailActivitiesView){
 
   var STATE_UPLOAD = 0;
 
@@ -57,6 +58,7 @@ define([
       this.trailUploadPhotoView.render();          
 
 	  this.renderTrailDetail();
+	  this.renderCampaignsDetail();
       
       $('.submit', $(this.el)).click(function(evt) {
         // fire event
@@ -67,19 +69,6 @@ define([
         // fire event
         app.dispatcher.trigger('TrailEditView:fieldkeypress', self);                        
 	  });
-
-	// mla move to campaigns view	  	  
-    var imgLoad = imagesLoaded('.campaign .scale');
-    imgLoad.on('always', function(instance) {    	
-      for ( var i = 0, len = imgLoad.images.length; i < len; i++ ) {
-        $(imgLoad.images[i].img).addClass('scale_image_ready');
-        // update pos
-        $(imgLoad.images[i].img).imageScale();
-      }
-      // fade in - delay adding class to ensure image is ready  
-      $('.campaign .fade_on_load').addClass('tb-fade-in');
-      $('.campaign .image_container').css('opacity', 1);
-    });    	
 	  	  
       return this;
     },
@@ -151,6 +140,10 @@ define([
       
       this.trailActivitiesView.render();            
     },
+    renderCampaignsDetail: function(){
+	  this.campaignsView = new TrailmakerCampaignsView({ el: '#campaigns_view', model: this.model });
+      this.campaignsView.getAndRender();
+	},    
     renderTrailCard: function(){
       if (this.model.get('value').route.slug || this.model.get('value').route.bDetailUpdated) {
       	$('.trailcard_panel').show();
