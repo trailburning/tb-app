@@ -158,9 +158,11 @@ var TB_USER_ID = {{ app.user.id }}
               <div class="title"><h4 class="tb">This trail is suitable for</h4></div>
               <div class="right"></div>
             </div>
-            <div id="trailactivities_view" class="activities"></div>                
+            <div id="trailactivities_view" class="activities"></div>            
         </div>
     </div>
+
+	<div id="campaigns_view" class="campaigns_panel"></div>
 
     <div class="trailcard_panel">
         <div class="content clearfix">      
@@ -266,6 +268,39 @@ var TB_USER_ID = {{ app.user.id }}
 
 <script type="text/template" id="trailActivityViewTemplate">
   <div class="icon icon-<%= name %>"></div>
+</script>
+
+<script type="text/template" id="campaignsViewTemplate">
+	<div class="bar_title clearfix">
+	  <div class="left"></div>
+	  <div class="title"><h4 class="tb">This trail could be part of</h4></div>
+	  <div class="right"></div>
+	</div>
+	<div id="campaignslist_view" class="clearfix">
+		<div class="campaign">
+		
+			<div class="panel trail_card_panel campaign_panel">
+	            <div class="content">                                            
+	        	<a href="{{ app.request.baseUrl }}/competition" target="_blank">
+	            <div class="photo tb-photo-btn">
+	                <div class="image_container fade_on_load"><img src="http://app.resrc.it/o=80/http://assets.trailburning.com/<%= image %>" class="resrc scale" border="0"></div>                                    
+	                <div class="overlay"><div class="logo"><img src="http://assets.trailburning.com/<%= logo %>"></div></div>                                    
+	                <div class="card_title">
+	                <h1>Submit your trail to <%= text %></h1>
+	                <br>
+	                <h1>to win great gear from Ashmei!</h1>
+	                </div>
+	            </div>
+	        	</a>
+	        	</div>    
+			</div>
+			<div class="apply">
+				<label class="checkbox">
+			      <input type="checkbox"> <h4 class="tb">Yes please, I'd like to submit my trail to <%= title %>.</h4>
+			    </label>				
+			</div>
+		</div>
+	</div>
 </script>
 
 <script type="text/template" id="stepPublishedViewTemplate">

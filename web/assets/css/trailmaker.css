@@ -195,6 +195,22 @@ border-width:1px;
   display: none;
 }
 
+#step_route_edit_view .bar_title {	
+  margin-top: 28px;
+}
+
+#step_route_edit_view .bar_title .title {
+  float: left;
+  width: 40%;	
+}
+
+#step_route_edit_view .bar_title .left, #step_route_edit_view .bar_title .right {
+  float: left;
+  width: 30%;
+  height: 14px;
+  border-bottom: 1px solid #989898;
+}
+
 #step_route_view .panel_content {
   position: relative;
   padding-top: 216px;
@@ -278,7 +294,7 @@ border-width:1px;
 
 #step_route_edit_view .detail_panel .content {
   padding-top: 24px;
-  margin: 0px auto 92px auto;
+  margin: 0px auto 64px auto;
   width: 614px;
   text-align: center;
 }
@@ -323,22 +339,6 @@ border-width:1px;
 
 #step_route_edit_view .detail_panel .update {
   padding-top: 12px;
-}
-
-#step_route_edit_view .detail_panel .bar_title {	
-  margin-top: 28px;
-}
-
-#step_route_edit_view .detail_panel .bar_title .title {
-  float: left;
-  width: 40%;	
-}
-
-#step_route_edit_view .detail_panel .bar_title .left, #step_route_edit_view .detail_panel .bar_title .right {
-  float: left;
-  width: 30%;
-  height: 14px;
-  border-bottom: 1px solid #989898;
 }
 
 #step_route_edit_view .detail_panel .activities {
@@ -497,6 +497,88 @@ border-width:1px;
 
 #step_route_edit_view a.button:hover {
   background-position: 0 -24px;
+}
+
+/* CAMPAIGNS VIEW */
+/******************************************/
+#campaigns_view {
+  display: none;
+}
+
+#step_route_edit_view .campaigns_panel {
+  width: 100%;
+  background: #F2F2F2;
+}
+
+#step_route_edit_view .campaigns_panel .bar_title {
+  margin: 0px auto 0px auto;
+  width: 614px;
+  text-align: center;	
+}
+
+#step_route_edit_view .campaigns_panel .campaign {
+  margin: 0px auto 0px auto;
+  width: 542px;
+}
+
+#campaignslist_view {
+  padding-top: 16px;
+  padding-bottom: 64px;
+}
+
+#step_route_edit_view .campaigns_panel .apply {
+  margin-top: 24px;
+  text-align: center;
+}
+
+#step_route_edit_view .campaigns_panel .checkbox {
+  text-align: left;
+}
+
+#step_route_edit_view .campaigns_panel .checkbox h4 {
+  font-size: 16px;	
+}
+
+/* CAMPAIGN PANEL */
+/******************************************/
+.campaign_panel {
+  float: none;
+  width: 542px;
+  height: 370px;
+}
+
+.campaign_panel .content {
+  margin: 11px;
+}
+
+.campaign_panel .overlay {
+  position: absolute;
+  top: 0px;
+  width: 170px;
+  height: 348px;
+  background: url("../img/campaign/background_skew.png") no-repeat top left;	
+}
+
+.campaign_panel .overlay .logo {
+  margin: 26px 0px 0px 26px;
+}
+
+.campaign_panel .overlay .logo img {
+  width: 234px;
+}
+
+.campaign_panel .photo {
+  position: relative;
+}
+
+.campaign_panel .photo .image_container {
+  width: 520px;
+  height: 348px;  
+}
+
+.campaign_panel .photo .card_title {
+  bottom: 22px;
+  left: 26px;	
 }
 
 /* STEP ROUTE REMOVE */

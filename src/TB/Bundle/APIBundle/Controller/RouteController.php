@@ -387,4 +387,26 @@ class RouteController extends AbstractRestController
         return $this->getRestResponse($output);
     }
     
+    /**
+     * @Route("/route/{routeId}/related/campaigns")
+     * @Method("GET")
+     */
+    public function getRelatedCampaigns($routeId)
+    {
+        $request = $this->getRequest();
+        $count = $request->query->get('count', null);
+        
+        $postgis = $this->get('postgis');
+        $campaigns = $postgis->relatedCampaigns($routeId, $count);
+        $campaignsExport = [];
+        foreach ($campaigns as $campaign) {
+            $campaignsExport[] = $campaign->export();
+        }
+        
+        $output = ['usermsg' => 'success', "value" => [
+            'campaigns' => $campaignsExport,
+        ]];
+
+        return $this->getRestResponse($output);
+    }
 }

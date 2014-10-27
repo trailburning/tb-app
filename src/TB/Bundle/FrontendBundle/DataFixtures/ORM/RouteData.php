@@ -97,11 +97,12 @@ class RouteData extends AbstractFixture implements FixtureInterface, DependentFi
         $manager->persist($route);
         $manager->flush();
         
+        
+        $this->addReference('GpxFile-grunewald', $gpxFile);
+        
         //
         // Trail created by BrandProfile, no Event, no Editorial
         //
-        $this->addReference('GpxFile-grunewald', $gpxFile);
-        
         $gpxFile = new GpxFile();
         $gpxFile->setPath('path');
         
@@ -185,6 +186,56 @@ The scenery along the footpath; including locks, bridges, forestry and the river
         $manager->persist($route);
         $manager->flush();
         
+        
+        // A Trail in the London area
+        $gpxFile = new GpxFile();
+        $gpxFile->setPath('path');
+        
+        $manager->persist($gpxFile);
+        $this->addReference('GpxFile-london', $gpxFile);
+        
+        $route = new Route();
+        $route->setGpxfile($gpxFile);
+        $route->setName('London Bridge to Canary Wharf');
+        $route->setLength(8555);    
+        $route->setCentroid(new Point(-0.0570821292840698, 51.5071244171621, 4326));
+        $route->setStart(new Point(-0.087764896452427, 51.505058288574, 4326));
+        $route->setTags(['ascent' => 196.9912879467, 'descent' => 175.93078684807]);
+        $route->setUser($this->getReference('UserProfile-matt'));
+        $route->setRouteType($this->getReference('RouteType-marathon'));
+        $route->setRouteCategory($this->getReference('RouteCategory-park'));
+        $route->setRegion('London');
+        $route->setSlug('london');
+        $route->setAbout('What better way to start the day than by ditching the underground, stretching your legs and taking in some urban sights!');
+        $route->setPublish(true);
+        $route->addAttribute($this->getReference('Attribute-run'));
+
+        $manager->persist($route);
+        $this->addReference('Route-london', $route);
+        
+        // add RoutePoints to Route
+        $points = [                               
+            [1, ['altitude' => 9.0, 'datetime' => 1413782815], [-0.087764896452427, 51.505058288574]],
+            [119, ['altitude' => 4.800000190734863, 'datetime' => 1413783161], [-0.087228454649448, 51.50902557373]],
+            [241, ['altitude' => 4.400000095367432, 'datetime' => 1413783688], [-0.081370010972023, 51.508296966553]],
+            [512, ['altitude' => 7.400000095367432, 'datetime' => 1413784562], [-0.070695824921131, 51.506488800049]],
+            [667, ['altitude' => 5.2877702713012695, 'datetime' => 1413784985], [-0.06482295691967, 51.505058288574]],
+            [934, ['altitude' => 6.603863716125488, 'datetime' => 1413785658], [-0.054779089987278, 51.505416870117]],
+            [1213, ['altitude' => 9.420328140258789, 'datetime' => 1413786447], [-0.042354177683592, 51.509876251221]],
+            [1334, ['altitude' => 7.585502624511719, 'datetime' => 1413786808], [-0.03692588955164, 51.509628295898]],
+            [1525, ['altitude' => 18.662710189819336, 'datetime' => 1413787348], [-0.028080800548196, 51.50598526001]],
+            [1686, ['altitude' => 30.060501098632812, 'datetime' => 1413787779], [-0.019470071420073, 51.505290985107]],
+        ];
+        foreach ($points as $point) {
+            $routePoint = new RoutePoint();
+            $routePoint->setPointNumber($point[0]);
+            $routePoint->setTags($point[1]);
+            $routePoint->setCoords(new Point($point[2][0], $point[2][1], 4326));
+            $routePoint->setRoute($route);
+            $manager->persist($routePoint);
+        }
+         
+        $manager->flush();
     }
     
     public function getOrder()

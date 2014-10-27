@@ -17,8 +17,7 @@ define([
                 
     this.trailModel = new TrailModel();
 
-    this.appView = new AppView({ el: '#appview', model: this.trailModel, nTrail: TB_TRAIL_ID });
-            
+    this.appView = new AppView({ el: '#appview', model: this.trailModel, nTrail: TB_TRAIL_ID });            
 	this.searchView = new SearchView({ el: '#searchview' });
     
     var imgLoad = imagesLoaded('.panels .scale');

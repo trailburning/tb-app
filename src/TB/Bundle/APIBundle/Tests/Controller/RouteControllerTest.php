@@ -590,5 +590,25 @@ class RouteControllerTest extends AbstractApiTestCase
         $this->assertJsonResponse($client);
     }
     
+    /**
+     * Test the GET /route/{routeId}/related/campaigns action
+     */
+    public function testGetRelatedCampaigns()
+    {
+        $this->loadFixtures([
+            'TB\Bundle\FrontendBundle\DataFixtures\ORM\CampaignData',
+        ]);
+        
+        $route = $this->getRoute('london');
+        
+        $client = $this->createClient();
+        $client->request('GET', '/v1/route/' . $route->getId() . '/related/campaigns');
+        $this->assertEquals(Response::HTTP_OK,  $client->getResponse()->getStatusCode());
+          
+        var_export($client->getResponse()->getContent());
+        exit;
+          
+        $this->assertJsonResponse($client);
+    }
     
 }

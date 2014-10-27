@@ -6,8 +6,9 @@ define([
   'views/TrailUploadPhotoProgressView',
   'views/TrailUploadPhotoErrorView',
   'views/TrailSlideshowView',
-  'views/TrailActivitiesView',  
-], function(_, Backbone, OverlayView, TrailUploadPhotoView, TrailUploadPhotoProgressView, TrailUploadPhotoErrorView, TrailSlideshowView, TrailActivitiesView){
+  'views/TrailmakerCampaignsView',
+  'views/TrailActivitiesView'
+], function(_, Backbone, OverlayView, TrailUploadPhotoView, TrailUploadPhotoProgressView, TrailUploadPhotoErrorView, TrailSlideshowView, TrailmakerCampaignsView, TrailActivitiesView){
 
   var STATE_UPLOAD = 0;
 
@@ -57,6 +58,7 @@ define([
       this.trailUploadPhotoView.render();          
 
 	  this.renderTrailDetail();
+	  this.renderCampaignsDetail();
       
       $('.submit', $(this.el)).click(function(evt) {
         // fire event
@@ -138,6 +140,10 @@ define([
       
       this.trailActivitiesView.render();            
     },
+    renderCampaignsDetail: function(){
+	  this.campaignsView = new TrailmakerCampaignsView({ el: '#campaigns_view', model: this.model });
+      this.campaignsView.getAndRender();
+	},    
     renderTrailCard: function(){
       if (this.model.get('value').route.slug || this.model.get('value').route.bDetailUpdated) {
       	$('.trailcard_panel').show();
