@@ -10,6 +10,14 @@ use Symfony\Component\HttpFoundation\Request;
 class CampaignController extends Controller
 {
     
+    /**
+     * @Route("/urbantrails/london", name="campaign_urbantrails_london_redirect")
+     * @Template()
+     */
+    public function urbantrailsLondonRedirectAction()
+    {
+        return $this->redirect($this->generateUrl('campaign', ['slug' => 'urbantrails-london']), 301);
+    }
     
     /**
      * @Route("/campaign/{slug}", name="campaign")
