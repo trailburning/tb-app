@@ -40,11 +40,19 @@ class SearchMappingCommand extends ContainerAwareCommand
             case 'editorial':
                 $this->populateEditorialMapping();
                 break;  
+            case 'campaign':
+                $this->populateCampaignMapping();
+                break;
+            case 'region':
+                $this->populateRegionMapping();
+                break;                      
             case 'all':
                 $this->populateRouteMapping();
                 $this->populateUserProfileMapping();
                 $this->populateEventMapping();
                 $this->populateEditorialMapping();
+                $this->populateCampaignMapping();
+                $this->populateRegionMapping();
                 break;
             default:
                 $output->writeln(sprintf('<error>Unknown type "%s"</error>', $type));
@@ -54,7 +62,6 @@ class SearchMappingCommand extends ContainerAwareCommand
     
     protected function populateRouteMapping()
     {   
-        // Create the new index 
         $params = [
             'index' => 'trailburning',
             'type' => 'route',
@@ -125,8 +132,7 @@ class SearchMappingCommand extends ContainerAwareCommand
     }
     
     protected function populateUserProfileMapping()
-    {   
-        // Create the new index 
+    {    
         $params = [
             'index' => 'trailburning',
             'type' => 'user_profile',
@@ -193,8 +199,7 @@ class SearchMappingCommand extends ContainerAwareCommand
     }
     
     protected function populateBrandProfileMapping()
-    {   
-        // Create the new index 
+    {    
         $params = [
             'index' => 'trailburning',
             'type' => 'brand_profile',
@@ -261,8 +266,7 @@ class SearchMappingCommand extends ContainerAwareCommand
     }
     
     protected function populateEventMapping()
-    {   
-        // Create the new index 
+    {    
         $params = [
             'index' => 'trailburning',
             'type' => 'event',
@@ -330,8 +334,7 @@ class SearchMappingCommand extends ContainerAwareCommand
     }
     
     protected function populateEditorialMapping()
-    {   
-        // Create the new index 
+    {    
         $params = [
             'index' => 'trailburning',
             'type' => 'editorial',
@@ -383,7 +386,133 @@ class SearchMappingCommand extends ContainerAwareCommand
                             'type' => 'string', 
                             'index' => 'not_analyzed',
                         ],
-                        'image' => [
+                    ],
+                ],
+            ],
+        ];
+        
+        $this->client->indices()->putMapping($params);
+    }
+    
+    protected function populateCampaignMapping()
+    {    
+        $params = [
+            'index' => 'trailburning',
+            'type' => 'campaign',
+            'body' => [
+                'campaign' => [
+                    '_id' => [
+                        'path' => 'id',
+                    ],
+                    'dynamic' => 'strict',
+                    'properties' => [
+                        'id' => [
+                            'type' => 'string', 
+                            'index' => 'not_analyzed',
+                        ],
+                        'suggest_text' => [
+                            'type' => 'string',
+                            'term_vector' => 'with_positions_offsets',
+                            'copy_to' => [
+                                'suggest_engram_part', 
+                                'suggest_engram_full', 
+                                'suggest_phon'
+                            ],
+                        ],
+                        'suggest_engram_part' => [
+                            'type' => 'string',
+                            'index' => 'analyzed',
+                            'store' => true,
+                            'term_vector' => 'with_positions_offsets',
+                            'index_analyzer' => 'autocomplete_engram_part',
+                            'search_analyzer' => 'autocomplete_engram_part_q',
+                        ],
+                        'suggest_engram_full' => [
+                            'type' => 'string',
+                            'index' => 'analyzed',
+                            'store' => true,
+                            'term_vector' => 'with_positions_offsets',
+                            'index_analyzer' => 'autocomplete_engram_full',
+                            'search_analyzer' => 'autocomplete_engram_full_q',
+                        ],
+                        'suggest_phon' => [
+                            'type' => 'string',
+                            'index' => 'analyzed',
+                            'analyzer' => 'phonetic_text',
+                        ],
+                        'title' => [
+                            'type' => 'string', 
+                        ],
+                        'slug' => [
+                            'type' => 'string', 
+                            'index' => 'not_analyzed',
+                        ],
+                        'logo' => [
+                            'type' => 'string', 
+                            'index' => 'not_analyzed',
+                        ],
+                    ],
+                ],
+            ],
+        ];
+        
+        $this->client->indices()->putMapping($params);
+    }
+    
+    protected function populateRegionMapping()
+    {    
+        $params = [
+            'index' => 'trailburning',
+            'type' => 'region',
+            'body' => [
+                'region' => [
+                    '_id' => [
+                        'path' => 'id',
+                    ],
+                    'dynamic' => 'strict',
+                    'properties' => [
+                        'id' => [
+                            'type' => 'string', 
+                            'index' => 'not_analyzed',
+                        ],
+                        'suggest_text' => [
+                            'type' => 'string',
+                            'term_vector' => 'with_positions_offsets',
+                            'copy_to' => [
+                                'suggest_engram_part', 
+                                'suggest_engram_full', 
+                                'suggest_phon'
+                            ],
+                        ],
+                        'suggest_engram_part' => [
+                            'type' => 'string',
+                            'index' => 'analyzed',
+                            'store' => true,
+                            'term_vector' => 'with_positions_offsets',
+                            'index_analyzer' => 'autocomplete_engram_part',
+                            'search_analyzer' => 'autocomplete_engram_part_q',
+                        ],
+                        'suggest_engram_full' => [
+                            'type' => 'string',
+                            'index' => 'analyzed',
+                            'store' => true,
+                            'term_vector' => 'with_positions_offsets',
+                            'index_analyzer' => 'autocomplete_engram_full',
+                            'search_analyzer' => 'autocomplete_engram_full_q',
+                        ],
+                        'suggest_phon' => [
+                            'type' => 'string',
+                            'index' => 'analyzed',
+                            'analyzer' => 'phonetic_text',
+                        ],
+                        'name' => [
+                            'type' => 'string', 
+                        ],
+                        'slug' => [
+                            'type' => 'string', 
+                            'index' => 'not_analyzed',
+                        ],
+                        'logo' => [
                             'type' => 'string', 
                             'index' => 'not_analyzed',
                         ],

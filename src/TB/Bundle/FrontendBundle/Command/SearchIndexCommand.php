@@ -42,13 +42,21 @@ class SearchIndexCommand extends ContainerAwareCommand
                 break;
             case 'editorial':
                 $this->indexEditorialType($output, $id);
-                break;              
+                break;
+            case 'campaign':
+                $this->indexCampaignType($output, $id);
+                break;                              
+            case 'region':
+                $this->indexRegionType($output, $id);
+                break;                                              
             case 'all':
                 $this->indexRouteType($output);
                 $this->indexUserProfileType($output);
                 $this->indexBrandProfileType($output);
                 $this->indexEventType($output);
                 $this->indexEditorialType($output);
+                $this->indexCampaignType($output);
+                $this->indexRegionType($output);
                 break;                                    
             default:
                 $output->writeln(sprintf('<error>Unknown type "%s"</error>', $type));
@@ -82,7 +90,7 @@ class SearchIndexCommand extends ContainerAwareCommand
             $suggestText = $route->getName() . ' ' . $route->getRegion();
                 
             $doc = [
-                'suggest_text' => $suggestText,
+                'suggest_text' => trim($suggestText),
                 'name' => $route->getName(),
                 'short_name' => $route->getShortName(),
                 'region' => $route->getRegion(),
@@ -127,7 +135,7 @@ class SearchIndexCommand extends ContainerAwareCommand
         foreach ($users as $user) {
                 
             $doc = [
-                'suggest_text' => $user->getTitle(),
+                'suggest_text' => trim($user->getTitle()),
                 'name' => $user->getName(),
                 'first_name' => $user->getFirstName(),
                 'last_name' => $user->getLastName(),
@@ -168,7 +176,7 @@ class SearchIndexCommand extends ContainerAwareCommand
         foreach ($brands as $brand) {
                 
             $doc = [
-                'suggest_text' => $brand->getTitle(),
+                'suggest_text' => trim($brand->getTitle()),
                 'name' => $brand->getName(),
                 'display_name' => $brand->getDisplayName(),
                 'avatar' => $brand->getAvatarUrl(),
@@ -209,7 +217,7 @@ class SearchIndexCommand extends ContainerAwareCommand
             $suggestText = $event->getTitle() . ' ' . $event->getTitle2();
             
             $doc = [
-                'suggest_text' => $suggestText,
+                'suggest_text' => trim($suggestText),
                 'title' => $event->getTitle(),
                 'title2' => $event->getTitle2(),
                 'slug' => $event->getSlug(),
@@ -252,7 +260,7 @@ class SearchIndexCommand extends ContainerAwareCommand
             $title = trim(preg_replace('/\s+/', ' ', $title));
                 
             $doc = [
-                'suggest_text' => $title,
+                'suggest_text' => trim($title),
                 'title' => $title,
                 'slug' => $editorial->getSlug(),
                 'image' => $editorial->getImage(),
@@ -268,6 +276,92 @@ class SearchIndexCommand extends ContainerAwareCommand
         }
         
         $output->writeln(sprintf('%s editorial(s) were indexed', count($editorials)));
+        $output->writeln('OK');
+    }
+    
+    protected function indexCampaignType($output, $id = null)
+    {
+        if ($id == null) {
+            $campaigns = $this->em->createQuery('
+                    SELECT c FROM TBFrontendBundle:Campaign c')
+                ->getResult();            
+        } else {
+            $campaigns = $this->em->createQuery('
+                    SELECT c FROM TBFrontendBundle:Campaign c
+                    WHERE c.id = :id')
+                ->setParameter('id', $id)
+                ->getResult();
+            if (count($editorials) == 0) {
+                $output->writeln(sprintf('<error>No Campaign found for specified id %s </error>', $id));
+                exit;
+            }                
+        }
+        
+        foreach ($campaigns as $campaign) {
+                
+            $doc = [
+                'suggest_text' => trim($campaign->getDisplayTitle()),
+                'title' => $campaign->getDisplayTitle(),
+                'slug' => $campaign->getSlug(),
+                'logo' => $campaign->getLogo(),
+            ];
+
+            $params = [
+                'body' => $doc,
+                'index' => 'trailburning',
+                'type' => 'campaign',
+                'id' => $campaign->getId(),
+            ];
+            $this->client->index($params);
+        }
+        
+        $output->writeln(sprintf('%s campaign(s) were indexed', count($campaigns)));
+        $output->writeln('OK');
+    }
+    
+    protected function indexRegionType($output, $id = null)
+    {
+        if ($id == null) {
+            $regions = $this->em->createQuery('
+                    SELECT r FROM TBFrontendBundle:Region r
+                    WHERE r.area IS NOT NULL')
+                ->getResult();            
+            if (count($regions) == 0) {
+                $output->writeln('<error>No CampaigRegionsns found</error>');
+                exit;
+            }
+        } else {
+            $regions = $this->em->createQuery('
+                    SELECT c FROM TBFrontendBundle:Campaign c
+                    WHERE IS NOT NULL
+                    AND c.id = :id')
+                ->setParameter('id', $id)
+                ->getResult();
+            if (count($regions) == 0) {
+                $output->writeln(sprintf('<error>No Region found for specified id %s </error>', $id));
+                exit;
+            }                
+        }
+        
+        foreach ($regions as $region) {
+                
+            $doc = [
+                'suggest_text' => trim($region->getName()),
+                'name' => $region->getName(),
+                'slug' => $region->getSlug(),
+                'logo' => $region->getLogo(),
+            ];
+
+            $params = [
+                'body' => $doc,
+                'index' => 'trailburning',
+                'type' => 'region',
+                'id' => $region->getId(),
+            ];
+            $this->client->index($params);
+        }
+        
+        $output->writeln(sprintf('%s ragion(s) were indexed', count($regions)));
         $output->writeln('OK');
     }
 }
