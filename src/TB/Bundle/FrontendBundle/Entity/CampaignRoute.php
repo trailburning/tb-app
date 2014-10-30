@@ -3,6 +3,7 @@
 namespace TB\Bundle\FrontendBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * CampaignRoute
@@ -41,7 +42,6 @@ class CampaignRoute
      */
     private $campaign;
 
-
     /**
      * @var Route
      *
@@ -51,6 +51,14 @@ class CampaignRoute
      * })
      */
     private $route;
+    
+    /**
+     * @var datetime
+     *
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(name="accepted_at", type="datetime")
+     */
+    private $acceptedAt;
 
     /**
      * Set campaign_id
@@ -169,4 +177,27 @@ class CampaignRoute
 
     }
 
+
+    /**
+     * Set acceptedAt
+     *
+     * @param \DateTime $acceptedAt
+     * @return CampaignRoute
+     */
+    public function setAcceptedAt($acceptedAt)
+    {
+        $this->acceptedAt = $acceptedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get acceptedAt
+     *
+     * @return \DateTime 
+     */
+    public function getAcceptedAt()
+    {
+        return $this->acceptedAt;
+    }
 }
