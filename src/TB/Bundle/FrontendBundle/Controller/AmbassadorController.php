@@ -22,8 +22,7 @@ class AmbassadorController extends Controller
             ->createQuery('
                 SELECT u FROM TBFrontendBundle:UserProfile u
                 WHERE u.isAmbassador=true
-                ORDER BY r.id')
-            ->setParameter('campaignId', $campaign->getId());
+                ORDER BY u.registeredAt DESC');
         $ambassadors = $query->getResult();
         
         foreach ($ambassadors as $ambassador) {
@@ -32,6 +31,7 @@ class AmbassadorController extends Controller
                     SELECT r FROM TBFrontendBundle:Route r
                     WHERE r.publish=true AND r.approved=true AND r.userId=:userId
                     ORDER BY r.publishedDate DESC')
+                ->setMaxResults(1)
                 ->setParameter('userId', $ambassador->getId());
             $latestRoute = $query->getOneOrNullResult();
             if ($latestRoute) {
@@ -39,15 +39,8 @@ class AmbassadorController extends Controller
             }
         }
         
-        $breadcrumb[] = [
-            'name' => 'campaign',
-            'label' => trim($campaign->getTitle()), 
-            'params' => ['slug' => $campaign->getSlug()],
-        ];
-        
         return array(
-            'campaign' => $campaign,
-            'routes' => $routes,
+            'ambassadors' => $ambassadors,
             'breadcrumb' => $breadcrumb,
         );
     }
