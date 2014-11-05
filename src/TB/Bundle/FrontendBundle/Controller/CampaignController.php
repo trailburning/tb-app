@@ -57,6 +57,14 @@ class CampaignController extends Controller
             ->setMaxResults(3);
         $popularRoutes = $query->getResult();
         
+        $query = $this->getDoctrine()->getManager()
+            ->createQuery('
+                SELECT COUNT(r) FROM TBFrontendBundle:Route r
+                JOIN r.campaignRoutes c
+                WHERE c.campaignId=:campaignId')
+            ->setParameter('campaignId', $campaign->getId());
+        $totalRoutesCount = $query->getSingleScalarResult();
+        
         $breadcrumb[] = [
             'name' => 'campaign',
             'label' => trim($campaign->getTitle()), 
@@ -67,6 +75,7 @@ class CampaignController extends Controller
             'campaign' => $campaign,
             'latestRoutes' => $latestRoutes,
             'popularRoutes' => $popularRoutes,
+            'totalRoutesCount' => $totalRoutesCount,
             'breadcrumb' => $breadcrumb,
         );
     }
