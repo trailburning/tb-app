@@ -11,6 +11,20 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class UserProfile extends User
 {    
+    
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="is_ambassador", type="boolean", options={"default" = false})
+     */
+    private $isAmbassador = false;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ambassador_tagline", type="string", length=255, nullable=true)
+     */
+    private $ambassadorTagline;
      
     public function getTitle()
     {
