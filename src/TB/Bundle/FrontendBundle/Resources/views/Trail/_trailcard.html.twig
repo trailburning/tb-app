@@ -1,6 +1,6 @@
 <div class="panel trail_card_panel">
     <div class="title"><h3 class="tb">{{ trail.routeCategory.name }}</h3></div>
-    {% if campaign is not null %}
+    {% if campaign is defined and campaign is not null %}
         <a href="{{ path('campaign_trail', {'trailSlug': trail.slug, 'campaignSlug': campaign.slug}) }}">
     {% else %}
         <a href="{{ path('trail', {'trailSlug': trail.slug}) }}">
