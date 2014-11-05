@@ -199,6 +199,11 @@
             <argument type="service" id="old_sound_rabbit_mq.main_producer" />
             <tag name="kernel.event_listener" event="fos_user.registration.completed" method="onUserCreate" />  
         </service>
+
+        <!-- Register Mandrill service -->
+        <service id="tbmandrill" class="Mandrill">
+            <argument>%mandrill_api_key%</argument>
+        </service>
         
     </services>
 </container>
