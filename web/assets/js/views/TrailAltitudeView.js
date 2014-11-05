@@ -255,18 +255,24 @@ define([
       
       for (var nMarker=0; nMarker < this.arrMediaPoints.length; nMarker++) {
         viewMediaMarkerView = this.arrMediaPoints[nMarker];
-        if (!this.bRendered) {
-          // append marker
-          elProfile.append(viewMediaMarkerView.render().el);
-        }
         
         nX = nXOffset + this.objTrailMarginRect.left + Math.round(viewMediaMarkerView.pos / this.fXFactor);
         
 		// 14.10.10 - mla.  Temp fix until fix made in api         
         fAlt = viewMediaMarkerView.model.get('tags').altitude;
         if (fAlt == undefined) {
-          fAlt = fPrevAlt;	
+          fAlt = 0;
+          if (fPrevAlt != undefined) {
+            fAlt = fPrevAlt;
+          }	
+          viewMediaMarkerView.model.get('tags').altitude = fAlt;
         }
+
+        if (!this.bRendered) {
+          // append marker
+          elProfile.append(viewMediaMarkerView.render().el);
+        }
+        
         fPrevAlt = fAlt;
         
         nYPercent = ((fAlt - Math.round(this.fLowAlt)) / this.fAltRange) * 100;
