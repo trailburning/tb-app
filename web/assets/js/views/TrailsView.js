@@ -51,7 +51,8 @@ define([
             var model, trailsTrailCardView, bEvent;
       	    $.each(data.value.routes, function(key, card) {
       	      bEvent = false;
-	          model = new Backbone.Model(card);    	
+	          model = new Backbone.Model(card);
+	          
 	          switch (model.get('slug')) {
 	          	case '16km':
 	          	case '30km':
@@ -85,6 +86,10 @@ define([
 	          	  bEvent = true;	          	
 	          	  model.set('sponsorURL', 'event/heysen105');
 	          	  break;
+	          	case 'scenic-trail-24k-d-2200m-lugano-capriasca-switzerland':
+	          	case 'scenic-trail-54k-d-3900m-lugano-capriasca-switzerland':
+	          	  bEvent = true;	          	
+	          	  model.set('sponsorURL', 'event/luganoscenictrail');
 	          }
 	          
 	          if (model.get('user').type == 'brand') {

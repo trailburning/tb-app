@@ -48,6 +48,10 @@ define([
           	  bEvent = true;	          	
           	  model.set('sponsorURL', 'event/heysen105');
           	  break;	          
+          	case 'scenic-trail-24k-d-2200m-lugano-capriasca-switzerland':
+          	case 'scenic-trail-54k-d-3900m-lugano-capriasca-switzerland':
+          	  bEvent = true;	          	
+          	  model.set('sponsorURL', 'event/luganoscenictrail');
 	      }
 	
           this.template = _.template($('#trailCardViewTemplate').text());
