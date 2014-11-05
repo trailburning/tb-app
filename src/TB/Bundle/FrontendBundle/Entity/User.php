@@ -735,6 +735,12 @@ abstract class User extends BaseUser implements Exportable
         return false;
     }
     
+    
+    public function isFollowing(User $user)
+    {   
+        return $this->isFollowingUser($user);
+    }
+    
     /**
      * Checks if the User is following a given Campaign
      *

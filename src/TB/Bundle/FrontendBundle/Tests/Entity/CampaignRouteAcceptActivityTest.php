@@ -26,29 +26,29 @@ class CampaignRouteAcceptActivityTest extends AbstractFrontendTest
         $expected = [
             'published' => NULL,
             'actor' => [
-                'url' => '/profile/ashmei',
-                'objectType' => 'brand',
+                'url' => '/profile/mattallbeury',
+                'objectType' => 'person',
                 'id' => $user->getId(),
-                'displayName' => 'ashmei',
+                'displayName' => 'Matt Allbeury',
                 'image' => [
-                    'url' => 'https://s3-eu-west-1.amazonaws.com/trailburning-assets/images/profile/ashmei/avatar.jpg',
+                    'url' => 'http://assets.trailburning.com/images/profile/mattallbeury/avatar_ma.png',
                 ],
             ],
             'verb' => 'accept',
             'object' => [
-                'url' => '/campaign/urbantrails-london/trail/ttm',
+                'url' => '/campaign/urbantrails-london/trail/london',
                 'objectType' => 'campaignTrail',
                 'id' => [
                     'campaign_id' => $campaign->getId(),
                     'route_id' => $route->getId(),
                 ],
-                'displayName' => 'Thames Trail Marathon',
+                'displayName' => 'London Bridge to Canary Wharf',
             ],
             'target' => [
                 'url' => '/campaign/urbantrails-london',
                 'objectType' => 'campaign',
                 'id' => $campaign->getId(),
-                'displayName' => 'London',
+                'displayName' => 'Urban Trails London',
             ],
         ];
         

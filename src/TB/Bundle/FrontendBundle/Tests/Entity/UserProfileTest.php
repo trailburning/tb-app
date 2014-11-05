@@ -4,6 +4,7 @@ namespace TB\Bundle\FrontendBundle\Tests\Entity;
 
 use TB\Bundle\FrontendBundle\Tests\AbstractFrontendTest;
 use TB\Bundle\FrontendBundle\Entity\UserProfile;
+use CrEOF\Spatial\PHP\Types\Geometry\Point;
 
 class UserProfileTest extends AbstractFrontendTest
 {
@@ -21,6 +22,7 @@ class UserProfileTest extends AbstractFrontendTest
         $user->setPassword('password');
         $user->setFirstName('first');
         $user->setlastName('last name');
+        $user->setLocation(new Point(52.508006, 13.257437, 4326));
 
         $em->persist($user);
         $em->flush();
@@ -59,6 +61,7 @@ class UserProfileTest extends AbstractFrontendTest
         $user->setPassword('password');
         $user->setFirstName('first');
         $user->setlastName('last name');
+        $user->setLocation(new Point(52.508006, 13.257437, 4326));
 
         $em->persist($user);
         $em->flush();

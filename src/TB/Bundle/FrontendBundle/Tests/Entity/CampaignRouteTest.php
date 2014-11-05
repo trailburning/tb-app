@@ -20,10 +20,10 @@ class CampaignRouteTest extends AbstractFrontendTest
         $campaignRoute = $campaign->getCampaignRoutes()[0];
         
         $expected = [
-            'url' => '/campaign/urbantrails-london/trail/ttm',
+            'url' => '/campaign/urbantrails-london/trail/london',
             'objectType' => 'campaignTrail',
             'id' => ['campaign_id' => $campaignRoute->getCampaignId(), 'route_id' => $campaignRoute->getRouteId()],
-            'displayName' => 'Thames Trail Marathon',
+            'displayName' => 'London Bridge to Canary Wharf',
         ];
         
         $this->assertEquals($expected, $campaignRoute->exportAsActivity(),
