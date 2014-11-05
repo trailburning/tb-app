@@ -62,8 +62,8 @@ var TB_USER_ID = {{ app.user.id }};
       					<p class="fancy"><span>"{{ user.ambassadorTagline }}"</span></p>  					
       				</div>
       				<div class="ambassador-content">
-    					<div class="trailcards trail_card_sticker">      
-                            {{ include('TBFrontendBundle:Trail:_trailcardSticker.html.twig', {'trail': user.routes[0]}) }}
+    					<div class="trailcards">      
+                        {{ include('TBFrontendBundle:Trail:_trailcardSticker.html.twig', {'trail': user.routes[0]}) }}
     	  				</div>
     	  				<div class="details">
     	  					<h3 class="tb">{{ user.title }}</h3>
