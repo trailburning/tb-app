@@ -40,6 +40,7 @@ class Mailproxy
     {
         try {
             $template_name = 'tb-welcome';
+            $template_content = [];
             $message = [
                 'to' => [
                     [
