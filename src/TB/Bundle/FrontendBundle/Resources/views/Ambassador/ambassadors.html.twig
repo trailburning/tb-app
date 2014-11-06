@@ -59,11 +59,11 @@ var TB_USER_ID = {{ app.user.id }};
     			</div>  			
       			<div class="ambassador-profile">  			
       				<div class="quote">
-      					<p class="fancy"><span>"{{ user.ambassadorTagline }}"</span></p>  					
+      					<p class="fancy">{% if user.ambassadorTagline %}<span>"{{ user.ambassadorTagline }}"</span>{% endif %}</p>  					
       				</div>
       				<div class="ambassador-content">
                         {% if latestRoutes[user.id] is defined %}
-    					<div class="trailcards trail_card_sticker">      
+    					<div class="trailcards">      
                             {{ include('TBFrontendBundle:Trail:_trailcardSticker.html.twig', {'trail': latestRoutes[user.id]}) }}
     	  				</div>
                         {% endif %}
