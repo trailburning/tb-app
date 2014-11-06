@@ -25,6 +25,7 @@ class AmbassadorController extends Controller
                 ORDER BY u.registeredAt DESC');
         $ambassadors = $query->getResult();
         
+        $latestRoutes = [];
         foreach ($ambassadors as $ambassador) {
             $query = $this->getDoctrine()->getManager()
                 ->createQuery('
@@ -32,15 +33,17 @@ class AmbassadorController extends Controller
                     WHERE r.publish=true AND r.approved=true AND r.userId=:userId
                     ORDER BY r.publishedDate DESC')
                 ->setMaxResults(1)
+                ->setFetchMode("TBFrontendBundle:Route", "routePoints", \Doctrine\ORM\Mapping\ClassMetadata::FETCH_EXTRA_LAZY)
                 ->setParameter('userId', $ambassador->getId());
             $latestRoute = $query->getOneOrNullResult();
             if ($latestRoute) {
-                $ambassador->addRoute($latestRoute);
+                $latestRoutes[$ambassador->getId()] = $latestRoute;
             }
         }
         
         return array(
             'ambassadors' => $ambassadors,
+            'latestRoutes' => $latestRoutes,
             'breadcrumb' => $breadcrumb,
         );
     }
