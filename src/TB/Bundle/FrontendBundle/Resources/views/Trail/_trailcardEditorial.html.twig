@@ -24,7 +24,7 @@
         {% endif %}
 		</div>	
         <div class="summary">
-			<div class="length">{{ route.length|dimension_format('km', 1000) }}</div>
+			<div class="length">{{ route.length|kmDistance }} km</div>
 			<div class="altitude">
 	        {% if route.tags.ascent %}
 	        	{{ route.tags.ascent|dimension_format('m') }} D+

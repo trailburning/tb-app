@@ -25,7 +25,7 @@ define([
 		  this.model.set('category', '');
       	}
 
-		this.model.set('length_km', Math.round(this.model.get('length') / 1000));
+		this.model.set('length_km', Math.ceil(this.model.get('length') / 1000));
 		this.model.set('ascent_m', Math.round(this.model.get('tags').ascent));
 		this.model.set('descent_m', Math.round(this.model.get('tags').descent));
       

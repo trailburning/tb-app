@@ -51,7 +51,7 @@ define([
         var elTrailLength = $('.length', $(this.el));
         if (elTrailLength.length) {
           if (elTrailLength.html() == '') {
-            elTrailLength.html('<h2 class="tb">'+Math.round(jsonRoute.length/1000)+' km</h2><div class="desc">Length</div>');
+            elTrailLength.html('<h2 class="tb">'+Math.ceil(jsonRoute.length/1000)+' km</h2><div class="desc">Length</div>');
           }
         }
         

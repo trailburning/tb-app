@@ -135,7 +135,7 @@ define([
       var jsonRoute = this.model.get('value').route;
       var elTrailLength = $('.trail_detail_panel .length .marker');
       if (elTrailLength.length) {
-        elTrailLength.html(Math.round(jsonRoute.length/1000));
+        elTrailLength.html(Math.ceil(jsonRoute.length/1000));
       }
         
       var elTrailTerrain = $('.trail_detail_panel .ascent .marker');
