@@ -39,7 +39,7 @@ class Mailproxy
     public function sendWelcomeMail($email, $firstname) 
     {
         try {
-            $template_name = 'tb-autoresponder';
+            $template_name = 'tb-welcome';
             $message = [
                 'to' => [
                     [
