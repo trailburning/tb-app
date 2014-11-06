@@ -21,8 +21,19 @@ class RegistrationControllerTest extends AbstractFrontendTest
     public function testRegistration()
     {
         $this->loadFixtures([]);
-
         $client = $this->createClient();
+
+        // TODO: mock doesn't work
+        //// Replace the Mailproxy Service with a Stub
+        // $mailproxy = $this->getMockBuilder('TB\Bundle\FrontendBundle\Util\Mailproxy')
+        //     ->disableOriginalConstructor()
+        //     ->getMock();
+        //// Test that the sendWelcomeMail() method gets called once
+        // $mailproxy
+        //     ->expects($this->once())
+        //     ->method('sendWelcomeMail');
+        // $client->getContainer()->set('tb.mailproxy', $mailproxy);
+
         $crawler = $client->request('GET', '/register/');
         $this->assertEquals(Response::HTTP_OK,  $client->getResponse()->getStatusCode());
         
