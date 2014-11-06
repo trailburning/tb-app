@@ -19,7 +19,7 @@ class MailproxyTest extends AbstractFrontendTest
     
     public function testSendWelcomeMail()
     {
-        // $this->mailproxy->sendWelcomeMail('patrick@trailburning.com', 'Patrick');
+        $this->mailproxy->sendWelcomeMail('patrick@trailburning.com', 'Patrick');
     }
     
 }

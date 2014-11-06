@@ -12,7 +12,6 @@ use FOS\UserBundle\Event\FilterUserResponseEvent;
  */
 class RegistrationCompletedListener
 {
-
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
@@ -23,8 +22,9 @@ class RegistrationCompletedListener
      */ 
     public function onRegistrationCompleted(FilterUserResponseEvent $event)
     {
+        $mailproxy = $this->container->get('tb.mailproxy');
+        
         if ($event->getUser()->getNewsletter() == true) {
-            $mailproxy = $this->container->get('tb.mailproxy');
             $mailproxy->addNewsletterSubscriber($event->getUser()->getEmail());
         }
         

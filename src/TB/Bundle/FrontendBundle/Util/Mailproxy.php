@@ -40,18 +40,20 @@ class Mailproxy
     {
         try {
             $template_name = 'tb-autoresponder';
-            $template_content = [
-                [
-                    'name' => 'firstname',
-                    'content' => $firstname
-                ]
-            ];
             $message = [
                 'to' => [
                     [
                         'email' => $email
                     ]
-                ]
+                ],
+                'merge' => true,
+                'merge_language' => 'mailchimp',
+                'global_merge_vars' => [
+                    [
+                        'name' => 'firstname',
+                        'content' => $firstname
+                    ]
+                ],
             ];
             $async = false;
             $result = $this->mandrill->messages->sendTemplate($template_name, $template_content, $message, $async);
