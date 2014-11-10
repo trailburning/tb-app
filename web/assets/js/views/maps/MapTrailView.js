@@ -15,6 +15,7 @@ define([
       
       app.dispatcher.on("MapTrailMarker:click", self.onSelectTrail, this);
       app.dispatcher.on("TrailCardView:click", self.onTrailCardViewClick, this);
+      app.dispatcher.on("MapTrailDetail:click", self.onMapTrailDetailClick, this);
             
       this.elCntrls = this.options.elCntrls;            
       this.bRendered = false;
@@ -224,16 +225,22 @@ define([
 	  // fire event
       app.dispatcher.trigger("TrailMapView:selecttrail", id);                
     },    
-    onTrailCardViewClick: function(trailCardView){
+    viewTrail: function(id, strURL){
 	  var latLng = this.map.getCenter(); 
 	  // save
-	  $.cookie('route_id', $(trailCardView.el).attr('data-id'));
+	  $.cookie('route_id', id);
 	  $.cookie('route_lat', latLng.lat);
 	  $.cookie('route_lng', latLng.lng);
 	  $.cookie('route_zoom', this.map.getZoom());
 	  	  	  	
-	  window.location = $('.link', trailCardView.el).attr('data-url');	  	
+	  window.location = strURL;	  	
 	},        
+    onTrailCardViewClick: function(trailCardView){
+	  this.viewTrail($(trailCardView.el).attr('data-id'), $('.link', trailCardView.el).attr('data-url'));    	
+	},        
+    onMapTrailDetailClick: function(el){
+	  this.viewTrail($(el).attr('data-id'), $(el).attr('data-url'));    	
+	},        	
     onSelectTrail: function(trailCardMarker){
       this.selectTrail(trailCardMarker.model.id);    	
     }

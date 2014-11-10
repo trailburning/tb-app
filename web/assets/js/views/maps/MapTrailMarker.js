@@ -107,9 +107,13 @@ define([
 	    this.marker = L.marker(new L.LatLng(this.model.get('start')[1], this.model.get('start')[0])).on('click', onClick).on('mouseover', onMouseOver).on('mouseout', onMouseOut);			  
 	    this.marker.setIcon(L.divIcon({className: 'tb-map-location-marker', html: '<div class="marker"></div>', iconSize: [18, 25], iconAnchor: [9, 25]}));      	  
 		this.options.mapCluster.addLayer(this.marker);
-		
+
         this.popupContainer = $('<div />');      
-      	this.popupContainer.html('<div class="tb-trailpopup"><div class="image_container fade_on_load"><img data-src="http://app.resrc.it/O=80/http://media.trailburning.com'+this.model.get('media').versions[0].path+'" class="resrc scale"></div></div></div>');
+        this.popupContainer.on('click', '.btnView', function(evt) {
+          // fire event          
+          app.dispatcher.trigger("MapTrailDetail:click", this);                        
+        });
+      	this.popupContainer.html('<div class="tb-trailpopup"><div class="image_container fade_on_load"><img data-src="http://app.resrc.it/O=80/http://media.trailburning.com'+this.model.get('media').versions[0].path+'" class="resrc scale"></div><div class="detail_container"><h3 class="tb">'+this.model.get('name')+'</h3><h4 class="tb">'+this.model.get('region')+'</h4><div class="btns"><span data-url="'+TB_PATH+'/trail/'+this.model.get('slug')+'" data-id="'+this.model.id+'" class="btn btn-tb btnView">View Trail</span></div></div></div>');      	
 	  }
       this.bRendered = true;
                        

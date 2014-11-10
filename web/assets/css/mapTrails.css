@@ -81,15 +81,14 @@ border-width:1px;
 }
 
 .leaflet-popup-content-wrapper {
-  margin: 0px;
-  padding: 0px;  
-  width: 266px;
-  height: 224px;
+  background: #FFF;
 }
 
 .leaflet-popup-content {  
   margin: 0px;
-  padding: 6px;  
+  padding: 0px;  
+  width: 500px;
+  height: 220px;
 }
 
 /* WELCOME VIEW */
