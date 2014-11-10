@@ -11,8 +11,10 @@ define([
   	  this.trailEvents.dispatcher = _.clone(Backbone.Events);
     	
 	  var self = this;
+	  this.popup = null;
 	      	
       this.trailEvents.dispatcher.on("DistanceMarkers:click", function(evt){
+      	self.showPopup();
 		// fire event
         app.dispatcher.trigger("MapTrailMarker:click", self);                     	  	
       }, this);
@@ -46,12 +48,52 @@ define([
       } 
       this.bTrailVisible = false;   
     },
+    showPopup: function(){
+      var popup_options = {
+        autoPan: true,
+        closeButton: true,
+        maxWidth: 500,
+        offset: [0, -15],
+        autoPanPaddingTopLeft: [300, 200]
+      };                
+        
+      this.popup = L.popup(popup_options)
+      .setLatLng([this.marker.getLatLng().lat, this.marker.getLatLng().lng])
+      .setContent(this.popupContainer[0])
+      .openOn(this.options.map);  
+      
+  	  // reset      
+      $('.tb-trailpopup.fade_on_load').removeClass('tb-fade-in');
+      $('.tb-trailpopup.image_container').css('opacity', 0);
+      
+	  // scale images when loaded
+	  var elImages = $('.tb-trailpopup .scale');
+	  var imgLoad = imagesLoaded(elImages);
+      imgLoad.on('always', function(instance) {
+        for ( var i = 0, len = imgLoad.images.length; i < len; i++ ) {
+          $(imgLoad.images[i].img).addClass('scale_image_ready');
+        }
+        // update pos
+        $('.tb-trailpopup img.scale_image_ready').imageScale();
+        // fade in - delay adding class to ensure image is ready  
+        $('.tb-trailpopup .fade_on_load').addClass('tb-fade-in');
+        $('.tb-trailpopup .image_container').css('opacity', 1);
+      });
+	  // invoke resrc      
+      resrc.resrc($('.tb-trailpopup .scale'));                      
+    },    
+    hidePopup: function(){
+      if (this.popup) {
+     	this.options.map.closePopup(this.popup);
+      }
+    },
     render: function(){
       var self = this;
 
       if (!this.bRendered) {
         // add to map
         function onClick(evt) {
+		  self.showPopup();        	
 		  // fire event
           app.dispatcher.trigger("MapTrailMarker:click", self);                
 	    }
@@ -64,7 +106,10 @@ define([
 	    
 	    this.marker = L.marker(new L.LatLng(this.model.get('start')[1], this.model.get('start')[0])).on('click', onClick).on('mouseover', onMouseOver).on('mouseout', onMouseOut);			  
 	    this.marker.setIcon(L.divIcon({className: 'tb-map-location-marker', html: '<div class="marker"></div>', iconSize: [18, 25], iconAnchor: [9, 25]}));      	  
-		this.options.mapCluster.addLayer(this.marker);		
+		this.options.mapCluster.addLayer(this.marker);
+		
+        this.popupContainer = $('<div />');      
+      	this.popupContainer.html('<div class="tb-trailpopup"><div class="image_container fade_on_load"><img data-src="http://app.resrc.it/O=80/http://media.trailburning.com'+this.model.get('media').versions[0].path+'" class="resrc scale"></div></div></div>');
 	  }
       this.bRendered = true;
                        
@@ -79,6 +124,7 @@ define([
 	  var self = this;
 		
 	  function onClick(evt){
+	  	self.showPopup();
 	    // fire event
         app.dispatcher.trigger("MapTrailMarker:click", self);                
 	  }

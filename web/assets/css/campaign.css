@@ -347,14 +347,12 @@ border-width:1px;
   margin: 0px;
   padding: 0px;  
   width: 266px;
-  height: 200px;
+  height: 224px;
 }
 
 .leaflet-popup-content {  
   margin: 0px;
   padding: 6px;  
-  width: 124px;
-  height: 94px;
 }
 
 .trail_media_popup .image_container {

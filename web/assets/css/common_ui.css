@@ -419,6 +419,24 @@ a:active .tb-cntrl {
   line-height: 52px;
 }
 
+.tb-trailpopup {
+  margin: 0px;
+  padding: 0px;	   
+  text-align: center;  
+}
+
+.tb-trailpopup .image_container {
+  float: left;
+  position: relative;
+  opacity: 0;  
+  width: 254px;
+  height: 212px;
+}
+
+.tb-trailpopup .image_container img {
+  width: 100%;
+}
+  
 .tb-credit {
   font-size: 12px;
   color: #FFF;
@@ -1108,14 +1126,7 @@ a:active .tb-cntrl {
   border-bottom-style: solid;
   border-bottom-color: #C2C2C2;
 }
-/*
-#headerview .navbar .nav .dropdown-menu li .tb-avatar {
-  float: left;
-  margin-top: 8px;
-  margin-bottom: 8px;
-  margin-right: 12px;
-}
-*/
+
 #headerview .navbar .nav .dropdown-menu li .icon {
   float: left;
   margin-top: 8px;
