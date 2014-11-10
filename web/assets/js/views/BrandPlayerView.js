@@ -16,7 +16,7 @@ define([
   var SLIDESHOW_PLAYING = 1;
   var SLIDESHOW_STOPPED = 0;
   
-  var CampaignPlayerView = Backbone.View.extend({
+  var BrandPlayerView = Backbone.View.extend({
     initialize: function(){
       var self = this;
 
@@ -58,7 +58,7 @@ define([
         $('#trail_slides_view').css('visibility', 'visible');
 	  }
 	  
-	  var data = {'tags': {'width': 800, 'height': 600}, versions: [{ 'path': '/images/campaign/urbantrails/london/shutterstock_148485164.jpg' }]};
+	  var data = {'tags': {'width': 800, 'height': 600}, versions: [{ 'path': '/images/profile/mtbuller/LM_131122_MtBuller_0462_HIGHres.jpg' }]};
 	  
 	  var mediaModel = new Backbone.Model(data);
 	  this.trailSlidesView.addMedia(mediaModel);
@@ -110,6 +110,7 @@ define([
            
         case MAP_VIEW:
           this.trailMapView.render();
+          this.trailMapView.map.zoomOut(4, {animate: false});
           break;
       }      
       
@@ -170,7 +171,7 @@ define([
 
 	  var nOffSet = this.nPage * (this.PageSize);
 		  		  
-	  var strURL = TB_RESTAPI_BASEURL + '/v1/routes/search?campaign_id=1&limit=500&offset=0';
+	  var strURL = TB_RESTAPI_BASEURL + '/v1/routes/search?order=distance&radius=50&lat=-37.132552&long=146.454196&limit=500&offset=0';	  
       $.ajax({
         type: "GET",
         dataType: "json",
@@ -387,6 +388,7 @@ define([
       
       this.trailMapView.show();
       this.trailMapView.render();
+      this.trailMapView.map.zoomOut(4, {animate: false});      
     },
     showPhotoView: function(evt){
       if (this.nTrailView == SLIDE_VIEW) {
@@ -580,5 +582,5 @@ define([
     
   });
 
-  return CampaignPlayerView;
+  return BrandPlayerView;
 });

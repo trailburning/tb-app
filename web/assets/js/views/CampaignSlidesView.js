@@ -63,7 +63,8 @@ define([
 
       // update container width
       $('.image_container', this.el).width($('#appview').width());
-      $('.photos_container', this.el).width($('#appview').width());                        
+      $('.photos_container', this.el).width($('#appview').width());
+                              
       for (var nMedia=0; nMedia < this.arrSlidePhotos.length; nMedia++) {
         var photoView = this.arrSlidePhotos[nMedia];
         $('.photos_container', this.el).append(photoView.el);      
