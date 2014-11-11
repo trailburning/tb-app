@@ -17,6 +17,7 @@
 {% block body %}
 <script>
 var TB_APP = 'BrandApp';
+var TB_PATH = '{{ app.request.baseUrl }}';
 {% if app.user %}		
 var TB_USER_ID = {{ app.user.id }};
 {% endif %}
