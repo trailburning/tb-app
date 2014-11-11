@@ -118,40 +118,42 @@ define([
       }
 	},
     updatePlayerHeight: function(){
-      var nPlayerHeight = 0;      
+      var nImageHeight = 0;      
       var nPlayerViewerHeight = 0;
 
       var elContentView = $('#content_view');
       var nContentY = elContentView.position().top;
+      var nContentHeight = $(window).height() - nContentY;
       
-      nPlayerHeight = Math.round(elContentView.width() * 0.746875);
+      nImageHeight = Math.round(elContentView.width() * 0.746875);
       
 	  switch (this.nPlayerView) {
 	  	case PLAYER_INTRO:
 	  	  nPlayerViewerHeight = this.nPlayerMinHeight;
-	  	  this.nPlayerHeight = nPlayerHeight;
+	  	  this.nPlayerHeight = nImageHeight;
 	  	  
-	  	  if (nPlayerHeight > nPlayerViewerHeight) {
-	  	  	var nAdjustY = (nPlayerHeight - nPlayerViewerHeight)/2;
+	  	  if (nImageHeight > nPlayerViewerHeight) {
+	  	  	var nAdjustY = (nImageHeight - nPlayerViewerHeight)/2;
             $('#trail_views').css('top', -nAdjustY);        	  	  	
 	  	  } 
 	  	  break;
 	  	
 	  	case PLAYER_SHOW:
-	  	  nPlayerViewerHeight = $(window).height() - nContentY;
+	  	  nPlayerViewerHeight = nContentHeight;
 	  	  
-	  	  if (nPlayerHeight > nPlayerViewerHeight) {
-	  	  	var nAdjustY = (nPlayerHeight - nPlayerViewerHeight)/2;
-            $('#trail_views').css('top', -nAdjustY);        	  	  	
+	  	  if (nImageHeight > nPlayerViewerHeight) {
+	  	  	var nAdjustY = (nImageHeight - nPlayerViewerHeight)/2;
+            $('#trail_views').css('top', -nAdjustY);            
+            $('#trail_map_view').css('top', nAdjustY);                    	  	  	
 		  }
 		  
-	  	  if (nPlayerHeight < nPlayerViewerHeight) {
+	  	  if (nImageHeight < nPlayerViewerHeight) {
 	  	  	// player is smaller than viewer
-	  	    nPlayerViewerHeight = nPlayerHeight;
+	  	    nPlayerViewerHeight = nImageHeight;
 	  	    $('#trail_views').css('top', 0);	  	  	
 		  }
 		  
-      	  this.nPlayerHeight = nPlayerHeight;
+      	  this.nPlayerHeight = nImageHeight;
 	  	  break;
 	  }
 
@@ -161,9 +163,9 @@ define([
    	  // force height update for imageScale
    	  $('#trail_slides_view .image_container').height(this.nPlayerHeight);      	  
 	  
-   	  $('#trail_map_view').height(this.nPlayerHeight);
+   	  $('#trail_map_view').height(nContentHeight);
    	  // force height update for MapBox
-   	  $('#trail_map_view .map_container').height(this.nPlayerHeight);      	  	  
+   	  $('#trail_map_view .map_container').height(nContentHeight);      	  	  
     },    
     getResults: function(){
       var self = this;
