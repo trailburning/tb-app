@@ -37,6 +37,7 @@ class RegistrationFormType extends BaseType
         
         // remove username, we user email adress as username instead
         $builder->remove('username');
+        // $builder->remove('plainPassword');
     }
 
     public function getName()

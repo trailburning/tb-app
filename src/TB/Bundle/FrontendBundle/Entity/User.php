@@ -271,13 +271,6 @@ abstract class User extends BaseUser implements Exportable
     /**
      * @var string
      *
-     * @ORM\Column(name="facebook_id", type="string", nullable=true)
-     */
-    private $facebookId;
-    
-    /**
-     * @var string
-     *
      * @ORM\Column(name="oauth_service", type="string", nullable=true)
      */
     private $oAuthService;
@@ -1411,29 +1404,6 @@ abstract class User extends BaseUser implements Exportable
     }
 
     /**
-     * Set facebookId
-     *
-     * @param string $facebookId
-     * @return User
-     */
-    public function setFacebookId($facebookId)
-    {
-        $this->facebookId = $facebookId;
-
-        return $this;
-    }
-
-    /**
-     * Get facebookId
-     *
-     * @return string 
-     */
-    public function getFacebookId()
-    {
-        return $this->facebookId;
-    }
-
-    /**
      * Set oAuthService
      *
      * @param string $oAuthService
@@ -1500,5 +1470,54 @@ abstract class User extends BaseUser implements Exportable
     public function getOAuthAccessToken()
     {
         return $this->oAuthAccessToken;
+    }
+    
+    public function serialize()
+    {
+        return serialize(array(
+            $this->name,
+            $this->email,
+            $this->firstName,
+            $this->lastName,
+            $this->location,
+            $this->about,
+            $this->avatar,
+            $this->avatarGravatar,
+            $this->activityUnseenCount,
+            $this->activityLastViewed,
+            $this->homepageOrder,
+            $this->gender,
+            $this->newsletter,
+            $this->registeredAt,
+            $this->oAuthService,
+            $this->oAuthId,
+            $this->oAuthAccessToken,
+            parent::serialize(),
+        ));
+    }
+
+    public function unserialize($str)
+    {   
+        list(
+            $this->name,
+            $this->email,
+            $this->firstName,
+            $this->lastName,
+            $this->location,
+            $this->about,
+            $this->avatar,
+            $this->avatarGravatar,
+            $this->activityUnseenCount,
+            $this->activityLastViewed,
+            $this->homepageOrder,
+            $this->gender,
+            $this->newsletter,
+            $this->registeredAt,
+            $this->oAuthService,
+            $this->oAuthId,
+            $this->oAuthAccessToken,
+            $parentData
+        ) = unserialize($str);
+        parent::unserialize($parentData);
     }
 }

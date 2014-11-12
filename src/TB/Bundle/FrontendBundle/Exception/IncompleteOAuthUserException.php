@@ -121,7 +121,7 @@ class IncompleteOAuthUserException extends AuthenticationException implements OA
         $this->user = $user;
     }
 
-    public function getUser($user)
+    public function getUser()
     {
         return $this->user;
     }
@@ -132,16 +132,24 @@ class IncompleteOAuthUserException extends AuthenticationException implements OA
             $this->user,
             $this->accessToken,
             $this->resourceOwnerName,
+            $this->rawToken,
+            $this->refreshToken,
+            $this->expiresIn,
+            $this->tokenSecret,
             parent::serialize(),
         ));
     }
 
     public function unserialize($str)
-    {
+    {   
         list(
             $this->user,
             $this->accessToken,
             $this->resourceOwnerName,
+            $this->rawToken,
+            $this->refreshToken,
+            $this->expiresIn,
+            $this->tokenSecret,
             $parentData
         ) = unserialize($str);
         parent::unserialize($parentData);
