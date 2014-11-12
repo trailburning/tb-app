@@ -27,10 +27,15 @@ class RegistrationFormType extends BaseType
                 User::GENDER_MALE => 'Male',
                 User::GENDER_FEMALE => 'Female',
             ],
-        ]);
-        
+        ]);        
         $builder->add('newsletter', 'checkbox', ['label' => 'Receive Trailburning newsletter', 'required' => false]);
         
+        // add optional fields for registrations with external authentification providers (Facebook)
+        $builder->add('oAuthService', 'hidden', ['required' => false]);
+        $builder->add('oAuthId', 'hidden', ['required' => false]);
+        $builder->add('oAuthAccessToken', 'hidden', ['required' => false]);
+        
+        // remove username, we user email adress as username instead
         $builder->remove('username');
     }
 

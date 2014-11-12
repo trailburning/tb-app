@@ -32,7 +32,10 @@ var TB_APP = 'BaseApp';
                     <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
                     <span class="option_text" for="remember_me">{{ 'security.login.remember_me'|trans }}</span>
                 </div>
-                <div class="next_step"><button type="submit" id="_submit" name="_submit" class="btn btn-tb-action btn-tb-large">Sign in</button></div>
+                <div class="next_step">
+                    <button type="submit" id="_submit" name="_submit" class="btn btn-tb-action btn-tb-large">Sign in</button>
+                    {% render(controller('HWIOAuthBundle:Connect:connect')) %}
+                </div>
 				<div class="cookie_error error">It appears that cookies are not enabled in your browser, you will need to enable cookies before signing in.  For more information please <a href="mailto:support@trailburning.com">contact</a> us.</div>
             	{% if error %}
                 	<div class="error">{{ error|trans }}</div>

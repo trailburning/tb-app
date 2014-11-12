@@ -32,3 +32,5 @@ parameters:
     elasticsearch:
         hosts: 
             - 'e7p15amb:4yexy8z21pg5eee0@boxwood-7916136.eu-west-1.bonsai.io'
+    facebook_app_id: 623118321108716
+    facebook_app_secret: e54f06973cb1557a30788f5ac5844c12

@@ -16,6 +16,7 @@ security:
             form_login:
                 provider: fos_userbundle
                 csrf_provider: form.csrf_provider
+                failure_handler: auth.fail
             logout:       true
             anonymous:    true
             remember_me:
@@ -24,9 +25,23 @@ security:
                 path:     /
                 domain:   ~
 
+            oauth:
+                resource_owners:
+                    facebook:      facebook_login
+                login_path:        /login
+                failure_path:      /login
+                check_path:        /login
+                oauth_user_provider:
+                    service: tb.provider.oauth
+                failure_handler: auth.fail
+
+            # Turn on anonymous for testings need.
+            anonymous: ~
+
     access_control:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_ADMIN }
         - { path: ^/trailmaker, roles: ROLE_USER }
+        - { path: ^/secured, role: IS_AUTHENTICATED_ANONYMOUSLY }

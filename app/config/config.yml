@@ -25,6 +25,8 @@ twig:
     strict_variables: %kernel.debug%
     globals:
         api_host: %api_host%  
+        facebook_app_id: %facebook_app_id%
+        facebook_app_secret: %facebook_app_secret%
 
 # Assetic Configuration
 assetic:
@@ -95,8 +97,10 @@ fos_user:
         form:
             type: tb_user_profile
     from_email:
-            address:        email@trailburning.com
-            sender_name:    email@trailburning.com
+        address:        email@trailburning.com
+        sender_name:    email@trailburning.com
+    service:
+        user_manager: tb.user_manager
             
 stof_doctrine_extensions:
     default_locale: en_US
@@ -171,6 +175,7 @@ services:
     postgis:
         class:      %postgis_class%
         arguments:  [%database_host%, %database_port%, %database_name%, %database_user%, %database_password%]        
+        
 
 old_sound_rabbit_mq:
     connections:
@@ -187,4 +192,3 @@ old_sound_rabbit_mq:
             connection:       default
             exchange_options: {name: %rabbit_mq_main_queue%, type: direct}
             queue_options:    {name: %rabbit_mq_main_queue%}
-            

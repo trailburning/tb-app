@@ -269,6 +269,34 @@ abstract class User extends BaseUser implements Exportable
     private $campaignUnfollowActivities;
     
     /**
+     * @var string
+     *
+     * @ORM\Column(name="facebook_id", type="string", nullable=true)
+     */
+    private $facebookId;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="oauth_service", type="string", nullable=true)
+     */
+    private $oAuthService;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="oauth_id", type="string", nullable=true)
+     */
+    private $oAuthId;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="oauth_access_token", type="string", nullable=true)
+     */
+    private $oAuthAccessToken;
+    
+    /**
      * Constructor
      */
     public function __construct()
@@ -1380,5 +1408,97 @@ abstract class User extends BaseUser implements Exportable
     public function getCampaignUnfollowActivities()
     {
         return $this->campaignUnfollowActivities;
+    }
+
+    /**
+     * Set facebookId
+     *
+     * @param string $facebookId
+     * @return User
+     */
+    public function setFacebookId($facebookId)
+    {
+        $this->facebookId = $facebookId;
+
+        return $this;
+    }
+
+    /**
+     * Get facebookId
+     *
+     * @return string 
+     */
+    public function getFacebookId()
+    {
+        return $this->facebookId;
+    }
+
+    /**
+     * Set oAuthService
+     *
+     * @param string $oAuthService
+     * @return User
+     */
+    public function setOAuthService($oAuthService)
+    {
+        $this->oAuthService = $oAuthService;
+
+        return $this;
+    }
+
+    /**
+     * Get oAuthService
+     *
+     * @return string 
+     */
+    public function getOAuthService()
+    {
+        return $this->oAuthService;
+    }
+
+    /**
+     * Set oAuthId
+     *
+     * @param string $oAuthId
+     * @return User
+     */
+    public function setOAuthId($oAuthId)
+    {
+        $this->oAuthId = $oAuthId;
+
+        return $this;
+    }
+
+    /**
+     * Get oAuthId
+     *
+     * @return string 
+     */
+    public function getOAuthId()
+    {
+        return $this->oAuthId;
+    }
+
+    /**
+     * Set oAuthAccessToken
+     *
+     * @param string $oAuthAccessToken
+     * @return User
+     */
+    public function setOAuthAccessToken($oAuthAccessToken)
+    {
+        $this->oAuthAccessToken = $oAuthAccessToken;
+
+        return $this;
+    }
+
+    /**
+     * Get oAuthAccessToken
+     *
+     * @return string 
+     */
+    public function getOAuthAccessToken()
+    {
+        return $this->oAuthAccessToken;
     }
 }

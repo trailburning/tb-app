@@ -269,6 +269,34 @@ abstract class User extends BaseUser implements Exportable
     private $campaignUnfollowActivities;
     
     /**
+     * @var string
+     *
+     * @ORM\Column(name="facebook_id", type="string", nullable=true)
+     */
+    private $facebookId;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="oauth_service", type="string", nullable=true)
+     */
+    private $oAuthService;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="oauth_id", type="string", nullable=true)
+     */
+    private $oAuthId;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="oauth_access_token", type="string", nullable=true)
+     */
+    private $oAuthAccessToken;
+    
+    /**
      * Constructor
      */
     public function __construct()
@@ -724,10 +752,33 @@ abstract class User extends BaseUser implements Exportable
      * @param User $user The User to check in the follower
      * @return boolean returns true if the User is following, false if not
      */
-    public function isFollowing(User $user)
+    public function isFollowingUser(User $user)
     {
         foreach ($this->getUserIFollow() as $userIFollowUser) {
             if ($userIFollowUser->getId() === $user->getId()) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    
+    public function isFollowing(User $user)
+    {   
+        return $this->isFollowingUser($user);
+    }
+    
+    /**
+     * Checks if the User is following a given Campaign
+     *
+     * @param Campaign $campaign The Campaign to check in the follower
+     * @return boolean returns true if the User is following, false if not
+     */
+    public function isFollowingCampaign(Campaign $campaign)
+    {
+        foreach ($this->getCampaignsIFollow() as $campaignIFollow) {
+            if ($campaignIFollow->getId() === $campaign->getId()) {
                 return true;
             }
         }
@@ -902,10 +953,17 @@ abstract class User extends BaseUser implements Exportable
     
     public function export()
     {   
+        if ($this instanceof \TB\Bundle\FrontendBundle\Entity\UserProfile) {
+            $discr = 'user';
+        } elseif ($this instanceof \TB\Bundle\FrontendBundle\Entity\BrandProfile) {
+            $discr = 'brand';
+        }
+        
         $data = [
             'name' => $this->getName(),
             'title' => $this->getTitle(),
             'avatar' => $this->getAvatarUrl(),
+            'type' => $discr,
         ];
 
         return $data;
@@ -943,10 +1001,14 @@ abstract class User extends BaseUser implements Exportable
             $url = sprintf('http://assets.trailburning.com/images/profile/%s/%s', $this->getName(), $this->getAvatar());
         } elseif ($this->getAvatarGravatar()) {
             $url = $this->getAvatarGravatar();
-        } elseif($this->getGender() === User::GENDER_FEMALE) {
-            $url = 'http://assets.trailburning.com/images/icons/avatars/avatar_woman.jpg';
+        } elseif ($this instanceof \TB\Bundle\FrontendBundle\Entity\BrandProfile) {
+            $url = null;
         } else {
-            $url = 'http://assets.trailburning.com/images/icons/avatars/avatar_man.jpg';
+            if ($this->getGender() === User::GENDER_FEMALE) {
+                $url = 'http://assets.trailburning.com/images/icons/avatars/avatar_woman.jpg';
+            } else {
+                $url = 'http://assets.trailburning.com/images/icons/avatars/avatar_man.jpg';
+            }
         }
         
         return $url;
@@ -1280,5 +1342,94 @@ abstract class User extends BaseUser implements Exportable
     public function getCampaignsIFollow()
     {
         return $this->campaignsIFollow;
+    }
+
+    /**
+     * Add campaignFollowActivities
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\CampaignFollowActivity $campaignFollowActivities
+     * @return User
+     */
+    public function addCampaignFollowActivity(\TB\Bundle\FrontendBundle\Entity\CampaignFollowActivity $campaignFollowActivities)
+    {
+        $this->campaignFollowActivities[] = $campaignFollowActivities;
+
+        return $this;
+    }
+
+    /**
+     * Remove campaignFollowActivities
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\CampaignFollowActivity $campaignFollowActivities
+     */
+    public function removeCampaignFollowActivity(\TB\Bundle\FrontendBundle\Entity\CampaignFollowActivity $campaignFollowActivities)
+    {
+        $this->campaignFollowActivities->removeElement($campaignFollowActivities);
+    }
+
+    /**
+     * Get campaignFollowActivities
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCampaignFollowActivities()
+    {
+        return $this->campaignFollowActivities;
+    }
+
+    /**
+     * Add campaignUnfollowActivities
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\CampaignUnfollowActivity $campaignUnfollowActivities
+     * @return User
+     */
+    public function addCampaignUnfollowActivity(\TB\Bundle\FrontendBundle\Entity\CampaignUnfollowActivity $campaignUnfollowActivities)
+    {
+        $this->campaignUnfollowActivities[] = $campaignUnfollowActivities;
+
+        return $this;
+    }
+
+    /**
+     * Remove campaignUnfollowActivities
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\CampaignUnfollowActivity $campaignUnfollowActivities
+     */
+    public function removeCampaignUnfollowActivity(\TB\Bundle\FrontendBundle\Entity\CampaignUnfollowActivity $campaignUnfollowActivities)
+    {
+        $this->campaignUnfollowActivities->removeElement($campaignUnfollowActivities);
+    }
+
+    /**
+     * Get campaignUnfollowActivities
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCampaignUnfollowActivities()
+    {
+        return $this->campaignUnfollowActivities;
+    }
+
+    /**
+     * Set facebookId
+     *
+     * @param string $facebookId
+     * @return User
+     */
+    public function setFacebookId($facebookId)
+    {
+        $this->facebookId = $facebookId;
+
+        return $this;
+    }
+
+    /**
+     * Get facebookId
+     *
+     * @return string 
+     */
+    public function getFacebookId()
+    {
+        return $this->facebookId;
     }
 }

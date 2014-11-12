@@ -41,7 +41,8 @@
         "oldsound/rabbitmq-bundle": "1.2.*@dev",
         "webfactory/exceptions-bundle": "@stable",
         "react/child-process": "0.5.*@dev",
-        "elasticsearch/elasticsearch": "~1.0"
+        "elasticsearch/elasticsearch": "~1.0",
+        "hwi/oauth-bundle": "0.4.*@dev"
     },
     "repositories": [
         {

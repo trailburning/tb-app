@@ -53,6 +53,12 @@
             <tag name="kernel.event_listener" event="fos_user.registration.completed" method="onRegistrationCompleted" />  
         </service>
         
+        <!-- Register event listener addadditional information to the user object from external authentification providers (e.g. Facebook) -->
+        <service id="registration_initialize" class="TB\Bundle\FrontendBundle\EventListener\RegistrationInitializeListener">
+            <argument type="service" id="service_container" />
+            <tag name="kernel.event_listener" event="fos_user.registration.initialize" method="onRegistrationInitialize" />  
+        </service>
+        
         <!-- Register Event Listener to update the user gravatar avatar on every login --> 
         <service id="tb.security.login_listener" class="TB\Bundle\FrontendBundle\EventListener\AuthenticationSuccessListener">  
             <argument type="service" id="service_container" />  
@@ -200,5 +206,20 @@
             <tag name="kernel.event_listener" event="fos_user.registration.completed" method="onUserCreate" />  
         </service>
         
+        <service id="tb.provider.oauth" class="TB\Bundle\FrontendBundle\Security\OAuthUserProvider">
+            <argument type="service" id="fos_user.user_manager" />
+            <argument type="collection">
+                <argument key="facebook">oAuthId</argument>
+            </argument>
+        </service>
+
+        <service id="tb.user_manager" class="TB\Bundle\FrontendBundle\Security\OAuthUserManager">
+            <argument type="service" id="security.encoder_factory" />
+            <argument type="service" id="fos_user.util.username_canonicalizer" />
+            <argument type="service" id="fos_user.util.email_canonicalizer" />
+            <argument type="service" id="fos_user.entity_manager" />
+            <argument>%fos_user.model.user.class%</argument>
+        </service>
+
     </services>
 </container>
