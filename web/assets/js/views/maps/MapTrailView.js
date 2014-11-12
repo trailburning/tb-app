@@ -53,11 +53,11 @@ define([
 	  }, this);
         
 	  this.markerCluster.on('clustermouseover', function (evt) {
-	  	$(evt.layer._icon).addClass('selected');
+	  	$(evt.layer._icon).addClass('focus');
 	  });
 
 	  this.markerCluster.on('clustermouseout', function (evt) {
-	  	$(evt.layer._icon).removeClass('selected');
+	  	$(evt.layer._icon).removeClass('focus');
 	  });
 
 	  this.buildBtns();
@@ -156,7 +156,6 @@ define([
       return this;
     },
     showTrailsInView: function(){
-    	// mla
       var self = this;
 	  var inBounds = [], bounds = this.map.getBounds();
 
@@ -210,7 +209,7 @@ define([
 	  }
       
       if (this.currTrailCardMarker) {
-      	this.currTrailCardMarker.selected(false);      	
+      	this.currTrailCardMarker.selected(false);
       }
       
       var trailCardMarker = this.collection.get(id).mapTrailMarker;
@@ -218,9 +217,13 @@ define([
 
 	  var cardModel = this.collection.get(id);
       trailCardMarker.selected(true);      
+
+      this.currMarkerOrCluster = this.markerCluster.getVisibleParent(this.currTrailCardMarker.marker);
+      if (this.currMarkerOrCluster) {
+        $(this.currMarkerOrCluster._icon).addClass('selected');
+	  }      	      
       
       this.nCurrCard = this.collection.indexOf(cardModel);
-      
 	  // fire event
       app.dispatcher.trigger("TrailMapView:selecttrail", id);                
     },    

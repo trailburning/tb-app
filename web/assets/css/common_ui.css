@@ -361,7 +361,7 @@ a:active .tb-cntrl {
   overflow: hidden;		
 }
 
-.tb-map-marker.selected {
+.tb-map-marker.selected, .tb-map-marker.focus {
   background: #ed1c24;
 }
 
@@ -379,7 +379,7 @@ a:active .tb-cntrl {
   overflow: hidden;
 }
 
-.tb-map-marker.selected .marker {
+.tb-map-marker.selected .marker, .tb-map-marker.focus .marker {
   color: #ed1c24;
 }
 
