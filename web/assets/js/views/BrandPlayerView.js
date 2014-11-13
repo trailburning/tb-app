@@ -2,9 +2,8 @@ define([
   'underscore', 
   'backbone',
   'views/CampaignSlidesView',  
-  'views/maps/MapTrailView',
-  'views/maps/TrailCardView'  
-], function(_, Backbone, CampaignSlidesView, MapTrailView, TrailCardView){
+  'views/maps/MapTrailView'
+], function(_, Backbone, CampaignSlidesView, MapTrailView){
   
   var PLAYER_INTRO = 0;
   var PLAYER_SHOW = 1;  
@@ -49,7 +48,7 @@ define([
 
       this.trailSlidesView = new CampaignSlidesView({ el: '#trail_slides_view', model: this.mediaModel });
       this.trailMapView = new MapTrailView({ el: '#trail_map_view', elCntrls: '#view_map_btns', model: this.model });
-      this.trailCardView = new TrailCardView({ el: '#trailcard_view' });
+//      this.trailCardView = new TrailCardView({ el: '#trailcard_view' });
 
 	  this.getResults();
 	  this.buildBtns();
@@ -94,7 +93,7 @@ define([
 	},    
     render: function(){
   	  this.trailMapView.render();        
-	  this.trailCardView.render();
+//	  this.trailCardView.render();
 	},
 	handleResize: function(){
       // remove transition to avoid seeing grey beneath image when resizing
@@ -579,7 +578,7 @@ define([
     },
     onSelectTrail: function(id){
       var model = this.collection.get(id);
-	  this.trailCardView.render(model);
+//	  this.trailCardView.render(model);
     }
     
   });
