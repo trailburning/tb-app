@@ -179,8 +179,8 @@ define([
 
 	    if (this.model.get('length')) {
 	      this.model.set('length_km', Math.ceil(this.model.get('length') / 1000));
-	      this.model.set('ascent_m', Math.round(this.model.get('tags').ascent));
-	      this.model.set('descent_m', Math.round(this.model.get('tags').descent));	  	
+	      this.model.set('ascent_m', formatAltitude(Math.round(this.model.get('tags').ascent)));
+	      this.model.set('descent_m', formatAltitude(Math.round(this.model.get('tags').descent)));	  	
 	    }
 
 	  	var bEvent = false;
