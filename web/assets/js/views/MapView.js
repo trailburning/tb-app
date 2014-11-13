@@ -2,9 +2,8 @@ define([
   'underscore', 
   'backbone',
   'views/ActivityFeedView',  
-  'views/maps/MapTrailView',
-  'views/maps/TrailCardView'  
-], function(_, Backbone, ActivityFeedView, MapTrailView, TrailCardView){
+  'views/maps/MapTrailView'
+], function(_, Backbone, ActivityFeedView, MapTrailView){
   
   var SLIDE_VIEW = 0;
   var MAP_VIEW = 1;
@@ -37,7 +36,7 @@ define([
 	  }
 
       this.trailMapView = new MapTrailView({ el: '#trail_map_view', elCntrls: '#view_map_btns', model: this.model });
-      this.trailCardView = new TrailCardView({ el: '#trailcard_view' });
+//      this.trailCardView = new TrailCardView({ el: '#trailcard_view' });
   	  this.trailMapView.render();
 
 	  this.getResults();
@@ -78,7 +77,7 @@ define([
 	},    
     render: function(){
   	  this.trailMapView.render();        
-	  this.trailCardView.render();
+//	  this.trailCardView.render();
 	},
     getResults: function(){
       var self = this;
@@ -142,7 +141,7 @@ define([
       $('#cards_container_view').show();
     	
       var model = this.collection.get(id);
-	  this.trailCardView.render(model);
+//	  this.trailCardView.render(model);
     }
     
   });

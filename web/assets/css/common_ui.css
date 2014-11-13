@@ -422,8 +422,7 @@ a:active .tb-cntrl {
 .tb-trailpopup {
   position: relative;
   margin: 5px;
-  padding: 0px;	     
-  
+  padding: 0px;	       
   font-family: 'Signika', sans-serif;
 }
 
@@ -480,7 +479,7 @@ a:active .tb-cntrl {
   background: rgba(0, 0, 0, 0.6);  
   box-shadow: 6px 0 0 rgba(0, 0, 0, 0.6), -5px 0 0 rgba(0, 0, 0, 0.6);      
 }
- 
+  
 .tb-trailpopup .stars {
   display: inline-block;
 }
@@ -507,7 +506,7 @@ a:active .tb-cntrl {
   top: 0px;
   left: 276px;
   text-align: left;
-  width: 190px;
+  width: 150px;
   height: 100%;
   overflow: hidden;
 }
@@ -519,10 +518,14 @@ a:active .tb-cntrl {
   color: #666666;
 }
 
+.tb-trailpopup h3.tb {
+  font-size: 2.4em;
+}
+
 .tb-trailpopup .length {
   color: #44B6F7;
-  font-size: 36px;
-  line-height: 36px;
+  font-size: 1.5em;
+  line-height: 1em;
 }
 
 .tb-trailpopup .altitude {
