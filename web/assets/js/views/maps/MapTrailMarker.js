@@ -64,6 +64,66 @@ define([
   	  // reset      
       $('.tb-trailpopup.fade_on_load').removeClass('tb-fade-in');
       $('.tb-trailpopup.image_container').css('opacity', 0);
+            
+      var nRating = this.model.get('rating');
+      if (!nRating) {
+        // do not show no stars
+       	$('.tb-trailpopup .stars').hide();
+      }
+      
+      $.each($('.tb-trailpopup .star'), function(index, value){
+		switch (index) {
+          case 0:
+            if (nRating > 0) {
+          	  $(this).addClass('star_full');          	  	
+          	}
+          	break;
+          case 1:
+          	if (nRating >= 2) {
+          	  $(this).addClass('star_full');          	  	          	  
+          	}
+          	else if (nRating >= 1.5) {
+          	  $(this).addClass('star_half');          	  	          	  
+          	}
+          	else {
+          	  $(this).addClass('star');          	  	          	  
+          	}
+          	break;
+          case 2:
+          	if (nRating >= 3) {
+          	  $(this).addClass('star_full');          	  	          	  
+          	}
+          	else if (nRating >= 2.5) {
+          	  $(this).addClass('star_half');          	  	          	  
+          	}
+          	else {
+          	  $(this).addClass('star');          	  	          	  
+          	}
+          	break;
+          case 3:
+          	if (nRating >= 4) {
+          	  $(this).addClass('star_full');          	  	          	  
+          	}
+          	else if (nRating >= 3.5) {
+          	  $(this).addClass('star_half');          	  	          	  
+          	}
+          	else {
+          	  $(this).addClass('star');          	  	          	  
+          	}
+          	break;
+          case 4:
+          	if (nRating >= 5) {
+          	  $(this).addClass('star_full');          	  	          	  
+          	}
+          	else if (nRating >= 4.5) {
+          	  $(this).addClass('star_half');          	  	          	  
+          	}
+          	else {
+          	  $(this).addClass('star');          	  	          	  
+          	}
+          	break;
+          }        	
+      });      
       
 	  // scale images when loaded
 	  var elImages = $('.tb-trailpopup .scale');
@@ -112,7 +172,67 @@ define([
           // fire event          
           app.dispatcher.trigger("MapTrailDetail:click", this);                        
         });
-      	this.popupContainer.html('<div class="tb-trailpopup"><div class="image_container fade_on_load"><img data-src="http://app.resrc.it/O=80/http://media.trailburning.com'+this.model.get('media').versions[0].path+'" class="resrc scale"></div><div class="detail_container"><h3 class="tb">'+this.model.get('name')+'</h3><h4 class="tb">'+this.model.get('region')+'</h4><div class="btns"><span data-url="'+TB_PATH+'/trail/'+this.model.get('slug')+'" data-id="'+this.model.id+'" class="btn btn-tb btnView">View Trail</span></div></div></div>');      	
+        
+	    if (this.model.get('category') == undefined) {
+		  this.model.set('category', '');
+        }
+
+	    if (this.model.get('length')) {
+	      this.model.set('length_km', Math.ceil(this.model.get('length') / 1000));
+	      this.model.set('ascent_m', Math.round(this.model.get('tags').ascent));
+	      this.model.set('descent_m', Math.round(this.model.get('tags').descent));	  	
+	    }
+
+	  	var bEvent = false;
+      	switch (this.model.get('slug')) {
+          case '16km':
+          case '30km':
+          case '46km':
+            bEvent = true;	          	
+            this.model.set('sponsorURL', 'event/ultraks');
+            break;	          	  
+          case 'e16':
+          case 'e51':
+          case 'e101':
+            bEvent = true;	          	
+            this.model.set('sponsorURL', 'event/eiger');
+            break;	          	  
+          case 'ttm':
+            bEvent = true;	          	
+            this.model.set('sponsorURL', 'event/tfor');
+            break;	          	  
+          case 'marathon':
+            bEvent = true;	          	
+            this.model.set('sponsorURL', 'event/aom');
+            break;	          	  
+          case 'ultramarathon':
+            bEvent = true;	          	
+            this.model.set('sponsorURL', 'event/laugavegur');
+            break;	          	  
+      	  case 'lantau-vertical-hong-kong':
+      	    bEvent = true;	          	
+      	    this.model.set('sponsorURL', 'event/lantauvertical');
+      	    break;	          	  	          	  
+      	  case 'heysen-105-south-australia':
+      	    bEvent = true;	          	
+      	    this.model.set('sponsorURL', 'event/heysen105');
+      	    break;	          
+      	  case 'scenic-trail-24k-d-2200m-lugano-capriasca-switzerland':
+      	  case 'scenic-trail-54k-d-3900m-lugano-capriasca-switzerland':
+      	    bEvent = true;	          	
+      	    this.model.set('sponsorURL', 'event/luganoscenictrail');
+        }
+
+        if (this.model.get('user').type == 'brand') {
+	      this.model.set('sponsorURL', 'profile/' + this.model.get('user').name);
+  	      bEvent = true;
+        }
+
+	    var strPopup = '<div class="tb-trailpopup"><div class="card"><div class="image_container fade_on_load"><img data-src="http://app.resrc.it/O=80/http://media.trailburning.com'+this.model.get('media').versions[0].path+'" class="resrc scale"></div><div class="card_title"><h1>'+this.model.get('name')+'</h1><br/><h2>'+this.model.get('region')+'</h2><br/><h2><span class="stars"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></span></h2></div></div><div class="card_avatar"><div class="tb-avatar"><div class="photo"><a href="'+TB_BASEURL+'/profile/'+this.model.get('user').name+'"><img src="'+this.model.get('user').avatar+'"></a></div></div></div><div class="detail_container"><h3 class="tb">'+this.model.get('category').name+'</h3><div class="summary"><div class="length">'+this.model.get('length_km')+' km</div><div class="altitude">'+this.model.get('ascent_m')+' D+<br/>'+this.model.get('descent_m')+' D-</div></div><div class="btns"><span data-url="'+TB_PATH+'/trail/'+this.model.get('slug')+'" data-id="'+this.model.id+'" class="btn btn-tb-action btnView">View the Trail</span></div></div></div>';              
+	    if (bEvent) {
+	      strPopup = '<div class="tb-trailpopup"><div class="card"><div class="image_container fade_on_load"><img data-src="http://app.resrc.it/O=80/http://media.trailburning.com'+this.model.get('media').versions[0].path+'" class="resrc scale"></div><div class="card_title"><h1>'+this.model.get('name')+'</h1><br/><h2>'+this.model.get('region')+'</h2></div></div><div class="card_avatar"><a href="'+TB_BASEURL+'/'+this.model.get('sponsorURL')+'"><img src="http://assets.trailburning.com/images/'+this.model.get('sponsorURL')+'/card_trail_sticker_logo.png"></a></div><div class="detail_container"><h3 class="tb">'+this.model.get('category').name+'</h3><div class="summary"><div class="length">'+this.model.get('length_km')+' km</div><div class="altitude">'+this.model.get('ascent_m')+' D+<br/>'+this.model.get('descent_m')+' D-</div></div><div class="btns"><span data-url="'+TB_PATH+'/trail/'+this.model.get('slug')+'" data-id="'+this.model.id+'" class="btn btn-tb-action btnView">View the Trail</span></div></div></div>';              
+	    }
+      	this.popupContainer.html(strPopup);      	
 	  }
       this.bRendered = true;
                        

@@ -62,17 +62,19 @@ border-width:1px;
 }
 
 #map_overlay_view .back {
+/*	
   position: absolute;
   top: 0px;
   left: -800px;
   width: 412px;
   height: 100%;
   background: url("../img/map/background_skew.png") no-repeat top left;
+*/  
 }
 
 #map_overlay_view .info-hero .campaign_title {
-  position: relative;
-  top: 30px;
+  position: absolute;
+  top: 24px;
   left: -100px;
 }
 
@@ -82,13 +84,14 @@ border-width:1px;
 
 .leaflet-popup-content-wrapper {
   background: #FFF;
+  border-radius: 0px;
 }
 
 .leaflet-popup-content {  
   margin: 0px;
-  padding: 0px;  
+  padding: 0px;
   width: 500px;
-  height: 220px;
+  height: 235px;
 }
 
 /* WELCOME VIEW */

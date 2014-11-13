@@ -112,8 +112,8 @@ define([
     },    
     showOverlay: function(){    
       $('#map_overlay_view .back').css('left', -124);
-      $('#map_overlay_view .info-hero').css('left', -150);
-      $('#map_overlay_view .info-hero .campaign_title').css('left', 189);
+      $('#map_overlay_view .info-hero').css('left', 0);
+      $('#map_overlay_view .info-hero .campaign_title').css('left', 32);
       
       $('#view_map_btns').css('top', 32);                                      	          
     },

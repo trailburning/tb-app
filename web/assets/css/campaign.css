@@ -68,7 +68,7 @@ border-width:1px;
   left: -800px;
 }
 
-#campaign_landing_overlay_view .back {
+#campaign_landing_overlay_view .back {	
   position: absolute;
   top: 0px;
   left: -800px;
@@ -324,13 +324,14 @@ border-width:1px;
 
 .leaflet-popup-content-wrapper {
   background: #FFF;
+  border-radius: 0px;
 }
 
 .leaflet-popup-content {  
   margin: 0px;
-  padding: 0px;  
+  padding: 0px;
   width: 500px;
-  height: 220px;
+  height: 235px;
 }
 
 /* CAMPAIGN PLAYER */
