@@ -506,7 +506,7 @@ a:active .tb-cntrl {
   top: 0px;
   left: 276px;
   text-align: left;
-  width: 150px;
+  width: 180px;
   height: 100%;
   overflow: hidden;
 }
@@ -518,14 +518,14 @@ a:active .tb-cntrl {
   color: #666666;
 }
 
-.tb-trailpopup h3.tb {
-  font-size: 2.4em;
+.tb-trailpopup .reduce {
+  font-size: 3em;
 }
 
 .tb-trailpopup .length {
   color: #44B6F7;
-  font-size: 1.5em;
-  line-height: 1em;
+  font-size: 36px;
+  line-height: 36px;
 }
 
 .tb-trailpopup .altitude {

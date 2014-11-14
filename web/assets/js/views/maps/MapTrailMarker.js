@@ -52,7 +52,8 @@ define([
       var popup_options = {
         autoPan: true,
         closeButton: true,
-        maxWidth: 500,
+        maxWidth: 460,
+        autoPanPadding: [30, 30],
         offset: [0, -15]
       };                
         
@@ -228,9 +229,15 @@ define([
   	      bEvent = true;
         }
 
-	    var strPopup = '<div class="tb-trailpopup"><div class="card"><div class="image_container fade_on_load"><img data-src="http://app.resrc.it/O=80/http://media.trailburning.com'+this.model.get('media').versions[0].path+'" class="resrc scale"></div><div class="card_title"><h1>'+this.model.get('name')+'</h1><br/><h2>'+this.model.get('region')+'</h2><br/><h2><span class="stars"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></span></h2></div></div><div class="card_avatar"><div class="tb-avatar"><div class="photo"><a href="'+TB_BASEURL+'/profile/'+this.model.get('user').name+'"><img src="'+this.model.get('user').avatar+'"></a></div></div></div><div class="detail_container"><h3 class="tb">'+this.model.get('category').name+'</h3><div class="summary"><div class="length">'+this.model.get('length_km')+' km</div><div class="altitude">'+this.model.get('ascent_m')+' D+<br/>'+this.model.get('descent_m')+' D-</div></div><div class="btns"><span data-url="'+TB_PATH+'/trail/'+this.model.get('slug')+'" data-id="'+this.model.id+'" class="btn btn-tb-action btnView">View the Trail</span></div></div></div>';              
+		var strCategory = '<h3 class="tb">'+this.model.get('category').name+'</h3>';
+		// mla - this should be an id
+		if (this.model.get('category').name == 'Mountains') {
+		  strCategory = '<h3 class="tb reduce">'+this.model.get('category').name+'</h3>';
+		}
+
+	    var strPopup = '<div class="tb-trailpopup"><div class="card"><div class="image_container fade_on_load"><img data-src="http://app.resrc.it/O=80/http://media.trailburning.com'+this.model.get('media').versions[0].path+'" class="resrc scale"></div><div class="card_title"><h1>'+this.model.get('name')+'</h1><br/><h2>'+this.model.get('region')+'</h2><br/><h2><span class="stars"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></span></h2></div></div><div class="card_avatar"><div class="tb-avatar"><div class="photo"><a href="'+TB_BASEURL+'/profile/'+this.model.get('user').name+'"><img src="'+this.model.get('user').avatar+'"></a></div></div></div><div class="detail_container">'+strCategory+'<div class="summary"><div class="length">'+this.model.get('length_km')+' km</div><div class="altitude">'+this.model.get('ascent_m')+' D+<br/>'+this.model.get('descent_m')+' D-</div></div><div class="btns"><span data-url="'+TB_PATH+'/trail/'+this.model.get('slug')+'" data-id="'+this.model.id+'" class="btn btn-tb-action btnView">View the Trail</span></div></div></div>';              
 	    if (bEvent) {
-	      strPopup = '<div class="tb-trailpopup"><div class="card"><div class="image_container fade_on_load"><img data-src="http://app.resrc.it/O=80/http://media.trailburning.com'+this.model.get('media').versions[0].path+'" class="resrc scale"></div><div class="card_title"><h1>'+this.model.get('name')+'</h1><br/><h2>'+this.model.get('region')+'</h2></div></div><div class="card_avatar"><a href="'+TB_BASEURL+'/'+this.model.get('sponsorURL')+'"><img src="http://assets.trailburning.com/images/'+this.model.get('sponsorURL')+'/card_trail_sticker_logo.png"></a></div><div class="detail_container"><h3 class="tb">'+this.model.get('category').name+'</h3><div class="summary"><div class="length">'+this.model.get('length_km')+' km</div><div class="altitude">'+this.model.get('ascent_m')+' D+<br/>'+this.model.get('descent_m')+' D-</div></div><div class="btns"><span data-url="'+TB_PATH+'/trail/'+this.model.get('slug')+'" data-id="'+this.model.id+'" class="btn btn-tb-action btnView">View the Trail</span></div></div></div>';              
+	      strPopup = '<div class="tb-trailpopup"><div class="card"><div class="image_container fade_on_load"><img data-src="http://app.resrc.it/O=80/http://media.trailburning.com'+this.model.get('media').versions[0].path+'" class="resrc scale"></div><div class="card_title"><h1>'+this.model.get('name')+'</h1><br/><h2>'+this.model.get('region')+'</h2></div></div><div class="card_avatar"><a href="'+TB_BASEURL+'/'+this.model.get('sponsorURL')+'"><img src="http://assets.trailburning.com/images/'+this.model.get('sponsorURL')+'/card_trail_sticker_logo.png"></a></div><div class="detail_container">'+strCategory+'<div class="summary"><div class="length">'+this.model.get('length_km')+' km</div><div class="altitude">'+this.model.get('ascent_m')+' D+<br/>'+this.model.get('descent_m')+' D-</div></div><div class="btns"><span data-url="'+TB_PATH+'/trail/'+this.model.get('slug')+'" data-id="'+this.model.id+'" class="btn btn-tb-action btnView">View the Trail</span></div></div></div>';              
 	    }
       	this.popupContainer.html(strPopup);      	
 	  }

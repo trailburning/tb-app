@@ -57,11 +57,19 @@ define([
         $('#trail_slides_view').css('visibility', 'visible');
 	  }
 	  
-	  var data = {'tags': {'width': 800, 'height': 600}, versions: [{ 'path': '/images/profile/mtbuller/LM_131122_MtBuller_0462_HIGHres.jpg' }]};
+	  console.log('t:'+$('#campaign_map_overlay_view').length);
+	  
+	  var data;
+	  if ($('#campaign_map_overlay_view').length) {
+	    data = {'tags': {'width': 800, 'height': 600}, versions: [{ 'path': '/images/profile/mtbuller/LM_131122_MtBuller_0462_HIGHres.jpg' }]};	
+	  }
+	  else {
+	  	data = {'tags': {'width': 1200, 'height': 486}, versions: [{ 'path': '/images/profile/ashmei/brand_hero2.jpg' }]};	
+	  }
+	  
 	  
 	  var mediaModel = new Backbone.Model(data);
-	  this.trailSlidesView.addMedia(mediaModel);
-	  
+	  this.trailSlidesView.addMedia(mediaModel);	  
       this.trailSlidesView.gotoSlide(0);
     },
     buildBtns: function(){
