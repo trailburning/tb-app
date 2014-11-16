@@ -37,6 +37,12 @@ define([
           // do not show no stars
        	  $('.stars', $(this.el)).hide();
         }
+        else {
+          if (nRating == 0) {
+            // do not show no stars
+       	    $('.stars', $(this.el)).hide();
+          }
+        }
         
         $.each($('.star', $(this.el)), function(index, value){        	
 		  switch (index) {
