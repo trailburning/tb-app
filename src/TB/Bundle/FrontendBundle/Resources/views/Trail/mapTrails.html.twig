@@ -58,66 +58,51 @@ var TB_USER_ID = {{ app.user.id }};
   </div>
 </script>
 
-<script type="text/template" id="trailCardViewTemplate">
-    <div class="title"><h3 class="tb"><%= category.name %></h3></div>
-    <div class="link" data-url="{{ app.request.baseUrl }}/trail/<%= slug %>" data-id="<%= id %>">
-    <div class="photo tb-photo-btn">
-      <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/O=80/http://media.trailburning.com<%= versionLargePath %>" class="resrc scale" border="0"/></div>
-      <div class="card_title">
-        <h1><%= name %></h1>
-        <br/>
-        <h2><%= region %></h2>
-		<br/>
-		<h2>
-        <span class="stars">
-          <span class="star"></span>
-          <span class="star"></span>
-          <span class="star"></span>
-          <span class="star"></span>
-          <span class="star"></span>
-        </span>
-		</h2>
+<script type="text/template" id="trailMarkerPopupViewTemplate">
+  <div class="tb-trailpopup">
+  	<div class="card">
+  	  <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/O=80/http://media.trailburning.com<%= versionLargePath %>" class="resrc scale"></div>
+  	  <div class="card_title">
+  	  <h1><%= name %></h1><br/>
+  	  <h2><%= region %></h2><br/>
+  	  <h2><span class="stars"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></span></h2>
+  	  </div>
+    </div>
+    <div class="card_avatar">    
+	  <div class="tb-avatar"><div class="photo"><a href="{{ app.request.baseUrl }}/profile/<%= user.name %>"><img src="<%= user.avatar %>"></a></div></div>    	
+    </div>
+    <div class="detail_container">
+      <h3 class="tb"><%= category.name %></h3>
+      <div class="summary">
+	    <div class="length"><%= length_km %> km</div>
+	    <div class="altitude"><%= ascent_m %> D+<br/><%= descent_m %> D-</div>
       </div>
+      <div class="btns"><span data-url="{{ app.request.baseUrl }}/trail/<%= slug %>" data-id="<%= id %>" class="btn btn-tb-action btnView">View the Trail</span></div>
     </div>
-    </div>
-	<div class="card_avatar">
-      <div class="tb-avatar"><div class="photo"><a href="{{ app.request.baseUrl }}/profile/<%= user.name %>"><img src="<%= user.avatar %>"></a></div></div>
-	</div>	    
-    <div class="location"></div>
-    <div class="summary">
-	  <div class="length"><%= length_km %> km</div>
-	  <div class="altitude">
-	  <%= ascent_m %> D+
-	  <br/>
-	  <%= descent_m %> D-
-	  </div>
-    </div>
+  </div>              
 </script>
 
-<script type="text/template" id="trailEventCardViewTemplate">
-    <div class="title"><h3 class="tb"><%= category.name %></h3></div>
-    <div class="link" data-url="{{ app.request.baseUrl }}/trail/<%= slug %>" data-id="<%= id %>">
-    <div class="photo tb-photo-btn">
-      <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/O=80/http://media.trailburning.com<%= versionLargePath %>" class="resrc scale" border="0"/></div>
-      <div class="card_title">
-        <h1><%= name %></h1>
-        <br/>
-        <h2><%= region %></h2>
+<script type="text/template" id="trailEventMarkerPopupViewTemplate">
+  <div class="tb-trailpopup">
+  	<div class="card">
+  	  <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/O=80/http://media.trailburning.com<%= versionLargePath %>" class="resrc scale"></div>
+  	  <div class="card_title">
+  	  <h1><%= name %></h1><br/>
+  	  <h2><%= region %></h2><br/>
+  	  </div>
+    </div>
+    <div class="card_avatar">    
+	  <a href="{{ app.request.baseUrl }}/<%= sponsorURL %>"><img src="http://assets.trailburning.com/images/<%= sponsorURL %>/card_trail_sticker_logo.png"></a>    	
+    </div>
+    <div class="detail_container">
+      <h3 class="tb"><%= category.name %></h3>
+      <div class="summary">
+	    <div class="length"><%= length_km %> km</div>
+	    <div class="altitude"><%= ascent_m %> D+<br/><%= descent_m %> D-</div>
       </div>
+      <div class="btns"><span data-url="{{ app.request.baseUrl }}/trail/<%= slug %>" data-id="<%= id %>" class="btn btn-tb-action btnView">View the Trail</span></div>
     </div>
-    </div>
-	<div class="card_avatar">
-      <a href="{{ app.request.baseUrl }}/<%= sponsorURL %>"><img src="http://assets.trailburning.com/images/<%= sponsorURL %>/card_trail_sticker_logo.png"></a>
-    </div>
-    <div class="location"></div>
-    <div class="summary">
-	  <div class="length"><%= length_km %> km</div>
-	  <div class="altitude">
-	  <%= ascent_m %> D+
-	  <br/>
-	  <%= descent_m %> D-
-	  </div>
-    </div>
+  </div>              
 </script>
 
 {% endblock %}
