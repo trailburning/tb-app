@@ -425,11 +425,14 @@ define([
       	return;
       }
       
+      var self = this;
       this.bLocked = false;
         
       switch (this.nPlayerView) {
         case PLAYER_INTRO:
-          this.showIntroOverlay();
+          setTimeout(function() {
+			self.showIntroOverlay();
+          }, 500);
           break;
             
         case PLAYER_SHOW:

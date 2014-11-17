@@ -48,7 +48,6 @@ define([
 
       this.trailSlidesView = new CampaignSlidesView({ el: '#trail_slides_view', model: this.mediaModel });
       this.trailMapView = new MapTrailView({ el: '#trail_map_view', elCntrls: '#view_map_btns', model: this.model });
-//      this.trailCardView = new TrailCardView({ el: '#trailcard_view' });
 
 	  this.getResults();
 	  this.buildBtns();
@@ -93,7 +92,6 @@ define([
 	},    
     render: function(){
   	  this.trailMapView.render();        
-//	  this.trailCardView.render();
 	},
 	handleResize: function(){
       // remove transition to avoid seeing grey beneath image when resizing
@@ -415,11 +413,14 @@ define([
       	return;
       }
       
+      var self = this;
       this.bLocked = false;
         
       switch (this.nPlayerView) {
         case PLAYER_INTRO:
-          this.showIntroOverlay();
+          setTimeout(function() {
+			self.showIntroOverlay();
+          }, 500);
           break;
             
         case PLAYER_SHOW:
@@ -575,8 +576,6 @@ define([
       this.nextSlide();          
     },
     onSelectTrail: function(id){
-      var model = this.collection.get(id);
-//	  this.trailCardView.render(model);
     }
     
   });
