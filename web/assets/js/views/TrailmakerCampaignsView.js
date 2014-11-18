@@ -56,8 +56,8 @@ define([
 	  // listen for check
 	  // mla - this is only until we extend API to accept campaigns
   	  $('input[type="checkbox"]').click(function(){
-        if($(this).prop("checked") == true){                
-          window.location.href = "mailto:hello@trailburning.com?subject=" + self.model.get('title') + ' - Please review my trail';
+        if($(this).prop("checked") == true){       
+          window.location.href = "mailto:hello@trailburning.com?subject=" + self.model.get('title') + ' - Please review my trail' + "&body=My trail - " + self.model.get('value')	.route.name;
         }
       });
         

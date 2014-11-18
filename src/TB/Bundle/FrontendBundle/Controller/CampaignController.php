@@ -52,7 +52,7 @@ class CampaignController extends Controller
                 SELECT r FROM TBFrontendBundle:Route r
                 JOIN r.campaignRoutes c
                 WHERE c.campaignId=:campaignId
-                ORDER BY r.rating DESC')
+                ORDER BY r.rating DESC, r.publishedDate DESC')
             ->setParameter('campaignId', $campaign->getId())
             ->setMaxResults(3);
         $popularRoutes = $query->getResult();

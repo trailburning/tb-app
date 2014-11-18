@@ -338,13 +338,13 @@ a:active .tb-cntrl {
 }
 
 .tb-map-location-marker {
-  width: 18px;
-  height: 25px;
+  width: 22px;
+  height: 30px;
   background: url("../img/map/location.png") no-repeat top left;  
 }
 
 .tb-map-location-marker.selected {
-  background-position: 0 -25px;      
+  background-position: 0 -30px;      
 }
 
 .tb-map-location-marker .marker {
@@ -361,7 +361,7 @@ a:active .tb-cntrl {
   overflow: hidden;		
 }
 
-.tb-map-marker.selected {
+.tb-map-marker.selected, .tb-map-marker.focus {
   background: #ed1c24;
 }
 
@@ -379,7 +379,7 @@ a:active .tb-cntrl {
   overflow: hidden;
 }
 
-.tb-map-marker.selected .marker {
+.tb-map-marker.selected .marker, .tb-map-marker.focus .marker {
   color: #ed1c24;
 }
 
@@ -419,8 +419,130 @@ a:active .tb-cntrl {
   line-height: 52px;
 }
 
+.tb-trailpopup {
+  position: relative;
+  margin: 5px;
+  padding: 0px;	       
+  font-family: 'Signika', sans-serif;
+}
+
+.tb-trailpopup .card_avatar {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+}
+
+.tb-trailpopup .card {
+  position: relative;
+  width: 260px;
+}
+
+.tb-trailpopup .image_container {
+  position: relative;
+  opacity: 0;  
+  width: 260px;
+  height: 230px;
+}
+
+.tb-trailpopup .image_container img {
+  width: 100%;
+}
+
+.tb-trailpopup .card .card_title {
+  position: absolute;
+  margin: 0px 15px 0px 0px;
+  bottom: 10px;
+  left: 18px;
+  color: #FFFFFF;
+}
+
+.tb-trailpopup .card .card_title h1 {
+  margin: 0px;
+  padding: 2px 0px 2px 0px;
+  display: inline;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 1.7em;    
+  background-color: #000;  
+  background: rgba(0, 0, 0, 0.6);  
+  box-shadow: 10px 0 0 rgba(0, 0, 0, 0.6), -5px 0 0 rgba(0, 0, 0, 0.6);      
+}
+
+.tb-trailpopup .card .card_title h2 {
+  margin: 0px;
+  padding: 2px 0px 2px 0px;
+  display: inline;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 1.7em;
+  background-color: #000;  
+  background: rgba(0, 0, 0, 0.6);  
+  box-shadow: 6px 0 0 rgba(0, 0, 0, 0.6), -5px 0 0 rgba(0, 0, 0, 0.6);      
+}
+  
+.tb-trailpopup .stars {
+  display: inline-block;
+}
+
+.tb-trailpopup .stars span {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  background-position: 0px 2px;
+}
+
+.tb-trailpopup .stars .star {
+  display: none;
+}
+
+.tb-trailpopup .stars .star_full,
+.tb-trailpopup .stars .star_half {
+  display: inline-block;
+}
+ 
+.tb-trailpopup .detail_container {
+  position: absolute;
+  padding-top: 16px;
+  top: 0px;
+  left: 276px;
+  text-align: left;
+  width: 180px;
+  height: 100%;
+  overflow: hidden;
+}
+
+.tb-trailpopup .summary {
+  margin-top: 26px;
+  font-size: 16px;
+  font-weight: 300;
+  color: #666666;
+}
+
+.tb-trailpopup .reduce {
+  font-size: 3em;
+}
+
+.tb-trailpopup .length {
+  color: #44B6F7;
+  font-size: 36px;
+  line-height: 36px;
+}
+
+.tb-trailpopup .altitude {
+  margin-top: 12px;
+  color: #44B6F7;
+  font-size: 14px;
+  line-height: 18px;
+}
+
+.tb-trailpopup .btns {
+  position: absolute;
+  bottom: 12px;
+  left: 0px;
+}
+  
 .tb-credit {
-  font-size: 12px;
+  font-size: 8px;
   color: #FFF;
   text-shadow: 1px 1px #000000;  
 }
@@ -1108,14 +1230,7 @@ a:active .tb-cntrl {
   border-bottom-style: solid;
   border-bottom-color: #C2C2C2;
 }
-/*
-#headerview .navbar .nav .dropdown-menu li .tb-avatar {
-  float: left;
-  margin-top: 8px;
-  margin-bottom: 8px;
-  margin-right: 12px;
-}
-*/
+
 #headerview .navbar .nav .dropdown-menu li .icon {
   float: left;
   margin-top: 8px;

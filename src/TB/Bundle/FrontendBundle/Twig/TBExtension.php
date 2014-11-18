@@ -43,7 +43,9 @@ class TBExtension extends \Twig_Extension
         return array(
             new \Twig_SimpleFilter('url_truncate', array($this, 'urlTruncateFilter')),
             new \Twig_SimpleFilter('url_shareable', array($this, 'urlShareableFilter')),
-            new \Twig_SimpleFilter('dimension_format', array($this, 'dimensionFormatFilter')),            
+            new \Twig_SimpleFilter('dimension_format', array($this, 'dimensionFormatFilter')),   
+            new \Twig_SimpleFilter('kmDistance', array($this, 'kmDistance')),   
+            //             'ceil' => new \Twig_Filter_Method($this, 'ceil'),         
         );
     }
     
@@ -87,6 +89,16 @@ class TBExtension extends \Twig_Extension
         return $url;
     }
     
+    /**
+     * Formats a number as rounded up km for showing trail length
+     *
+     * @param integer The length to convert
+     */
+   	public function kmDistance($number)
+    {
+        return ceil($number / 1000);
+    }
+		
     /**
      * Formats value to display it in the template
      * 

@@ -255,9 +255,9 @@ class Route implements Exportable
     /**
      * @var integer
      *
-     * @ORM\Column(name="rating", type="decimal", precision=5, scale=3, nullable=true)
+     * @ORM\Column(name="rating", type="decimal", precision=5, scale=3, options={"default" = 0})
      */
-    private $rating;    
+    private $rating = 0;    
 
     /**
      * @var datetime

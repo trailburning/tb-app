@@ -30,7 +30,7 @@
         {% endif %}
 	</div>	
     <div class="summary">
-		<div class="length">{{ trail.length|dimension_format('km', 1000) }}</div>
+		<div class="length">{{ trail.length|kmDistance }} km</div>
 		<div class="altitude">
         {% if trail.tags.ascent %}
         	{{ trail.tags.ascent|dimension_format('m') }} D+

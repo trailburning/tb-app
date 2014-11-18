@@ -15,7 +15,7 @@ define([
   var SLIDESHOW_PLAYING = 1;
   var SLIDESHOW_STOPPED = 0;
   
-  var CampaignPlayerView = Backbone.View.extend({
+  var BrandPlayerView = Backbone.View.extend({
     initialize: function(){
       var self = this;
 
@@ -48,6 +48,7 @@ define([
 
       this.trailSlidesView = new CampaignSlidesView({ el: '#trail_slides_view', model: this.mediaModel });
       this.trailMapView = new MapTrailView({ el: '#trail_map_view', elCntrls: '#view_map_btns', model: this.model });
+//      this.trailCardView = new TrailCardView({ el: '#trailcard_view' });
 
 	  this.getResults();
 	  this.buildBtns();
@@ -56,11 +57,19 @@ define([
         $('#trail_slides_view').css('visibility', 'visible');
 	  }
 	  
-	  var data = {'tags': {'width': 800, 'height': 600}, versions: [{ 'path': '/images/campaign/urbantrails/london/shutterstock_148485164.jpg' }]};
+	  console.log('t:'+$('#campaign_map_overlay_view').length);
+	  
+	  var data;
+	  if ($('#campaign_map_overlay_view').length) {
+	    data = {'tags': {'width': 800, 'height': 600}, versions: [{ 'path': '/images/profile/mtbuller/LM_131122_MtBuller_0462_HIGHres.jpg' }]};	
+	  }
+	  else {
+	  	data = {'tags': {'width': 1200, 'height': 486}, versions: [{ 'path': '/images/profile/ashmei/brand_hero2.jpg' }]};	
+	  }
+	  
 	  
 	  var mediaModel = new Backbone.Model(data);
-	  this.trailSlidesView.addMedia(mediaModel);
-	  
+	  this.trailSlidesView.addMedia(mediaModel);	  
       this.trailSlidesView.gotoSlide(0);
     },
     buildBtns: function(){
@@ -92,6 +101,7 @@ define([
 	},    
     render: function(){
   	  this.trailMapView.render();        
+//	  this.trailCardView.render();
 	},
 	handleResize: function(){
       // remove transition to avoid seeing grey beneath image when resizing
@@ -107,6 +117,7 @@ define([
            
         case MAP_VIEW:
           this.trailMapView.render();
+          this.trailMapView.map.zoomOut(4, {animate: false});
           break;
       }      
       
@@ -146,7 +157,7 @@ define([
 		  
 	  	  if (nImageHeight < nPlayerViewerHeight) {
 	  	  	// player is smaller than viewer
-	  	    nPlayerViewerHeight = nImageHeight;
+	  	    nPlayerViewerHeight = nPlayerHeight;
 	  	    $('#trail_views').css('top', 0);	  	  	
 		  }
 		  
@@ -169,7 +180,7 @@ define([
 
 	  var nOffSet = this.nPage * (this.PageSize);
 		  		  
-	  var strURL = TB_RESTAPI_BASEURL + '/v1/routes/search?campaign_id=1&limit=500&offset=0';
+	  var strURL = TB_RESTAPI_BASEURL + '/v1/routes/search?order=distance&radius=50&lat=-37.132552&long=146.454196&limit=500&offset=0';	  
       $.ajax({
         type: "GET",
         dataType: "json",
@@ -386,6 +397,7 @@ define([
       
       this.trailMapView.show();
       this.trailMapView.render();
+      this.trailMapView.map.zoomOut(4, {animate: false});      
     },
     showPhotoView: function(evt){
       if (this.nTrailView == SLIDE_VIEW) {
@@ -576,9 +588,11 @@ define([
       this.nextSlide();          
     },
     onSelectTrail: function(id){
+      var model = this.collection.get(id);
+//	  this.trailCardView.render(model);
     }
     
   });
 
-  return CampaignPlayerView;
+  return BrandPlayerView;
 });

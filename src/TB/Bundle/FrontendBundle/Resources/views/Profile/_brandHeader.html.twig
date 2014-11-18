@@ -1,3 +1,4 @@
+{#	
 <div id="brand_header">
     <div class="image_container fade_on_load"><img src="http://app.resrc.it/O=90/http://assets.trailburning.com/images/profile/{{ brand.name }}/{{ brand.headerImage }}" class="resrc scale" /></div>
     {% if brand.id == 215 %}
@@ -7,4 +8,50 @@
     {% endif %}
     	<a href="{{ brand.link }}" onClick="trackOutboundLink(this, 'Outbound Links', '{{ brand.link|url_truncate }}'); return false;"><img src="http://assets.trailburning.com/images/profile/{{ brand.name }}/{{ brand.avatar }}" border="0"></a></div>
     <div class="tb-credit"></div>
+</div>
+#}
+
+<div id="campaignplayer">
+    <div id="trail_views">        
+        <div id="trail_map_view"></div>
+        <div id="trail_slides_view"></div>
+    </div>
+    
+    <div id="campaign_landing_overlay_view">        	
+    	<div class="back tb-move-horiz"></div>        	
+		<div class="info-hero tb-move-horiz">				  						  				
+		  <div class="campaign_title tb-move-horiz"><img src="http://assets.trailburning.com/images/profile/{{ brand.name }}/{{ brand.avatar }}" /></div>		  
+		  {% if brand.id == 215 %}		                
+	          <div class="campaign_play">
+	          	<div class="campaign_btn"></div>
+	          	Discover Trails	
+			  </div>    		  
+		  {% endif %}          	
+		</div>        	
+	</div>        	
+
+	{% if brand.id == 215 %}
+	    <div id="campaign_map_overlay_view">
+			<div class="info-hero tb-move-horiz">				  						  				
+			  <div class="campaign_title tb-move-horiz"><img src="http://assets.trailburning.com/images/profile/{{ brand.name }}/logo.png" /></div>
+			</div>        	
+		</div>        	
+    {% endif %}
+    
+    <div id="tb-loader-overlay">
+  	  <div class="back"></div>
+  	  <div class="tb-loader"><div class="spinner"></div><div class="middle">...</div></div>
+  	</div>        
+    
+    <div id="view_map_btns">        
+        <div class='controls'>
+            <span class="btn btn-tb zoomin_btn">+</span>          
+            <span class="btn btn-tb zoomout_btn">-</span>
+            <span class="btn btn-tb view_btn">Satellite</span>          
+        </div>    
+    </div>
+    
+	<div id="view_player_btns" class="tb-move-vert">
+      	<div class="close_btn"></div>	
+    </div>            
 </div>
