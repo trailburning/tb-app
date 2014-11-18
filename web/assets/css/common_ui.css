@@ -131,6 +131,55 @@ a.btn {
   background-color: #DADADA !important;
 }
 
+/* TB SOCIAL */
+/******************************************/
+.btn-tb-facebook {
+  font-family: 'Signika', sans-serif;
+  padding: 8px 15px;
+  font-size: 22px;
+  color: #FFFFFF !important;
+  text-shadow: none;
+  background-color: #3950b3;
+  background-image: -moz-linear-gradient(top, #3e57c2, #31459c);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#3e57c2), to(#31459c));
+  background-image: -webkit-linear-gradient(top, #3e57c2, #31459c);
+  background-image: -o-linear-gradient(top, #3e57c2, #31459c);
+  background-image: linear-gradient(to bottom, #3e57c2, #31459c);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff3e57c2', endColorstr='#ff31459c', GradientType=0);
+  border-color: #31459c #31459c #1f2c62;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  *background-color: #31459c;
+  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+}
+.btn-tb-facebook:hover,
+.btn-tb-facebook:focus,
+.btn-tb-facebook:active,
+.btn-tb-facebook.active,
+.btn-tb-facebook.disabled,
+.btn-tb-facebook[disabled] {
+  color: #ffffff;
+  background-color: #31459c;
+  *background-color: #2b3d88;
+}
+.btn-tb-facebook:active,
+.btn-tb-facebook.active {
+  background-color: #253475 ;
+}
+
+.tb-facebook-logo {
+  display: block;
+  float: left;
+  margin-top: 0px;
+  margin-right: 10px;
+  width: 13px;
+  height: 19px;
+  background-image: url("../img/tb_facebook_icon_btn.png");
+  background-repeat: no-repeat;
+}
+
 /* TB TITLES */
 /******************************************/
 .tb-title {
