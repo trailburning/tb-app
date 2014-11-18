@@ -13,7 +13,7 @@ define([
         closeButton: true,
         maxWidth: 460,
         autoPanPadding: [30, 30],
-        offset: [0, -15]
+        offset: [0, -24]
       };                
         
       this.popup = L.popup(popup_options)

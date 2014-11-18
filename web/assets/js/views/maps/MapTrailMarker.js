@@ -72,7 +72,7 @@ define([
 	    }	    
 	    
 	    this.marker = L.marker(new L.LatLng(this.model.get('start')[1], this.model.get('start')[0])).on('click', onClick).on('mouseover', onMouseOver).on('mouseout', onMouseOut);			  
-	    this.marker.setIcon(L.divIcon({className: 'tb-map-location-marker', html: '<div class="marker"></div>', iconSize: [18, 25], iconAnchor: [9, 25]}));      	  
+	    this.marker.setIcon(L.divIcon({className: 'tb-map-location-marker', html: '<div class="marker"></div>', iconSize: [22, 30], iconAnchor: [11, 30]}));      	  
 		this.options.mapCluster.addLayer(this.marker);
 
 	    this.popup = new MapTrailMarkerPopup({ model: this.model, map: this.options.map });

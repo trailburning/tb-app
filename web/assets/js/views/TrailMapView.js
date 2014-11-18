@@ -155,7 +155,7 @@ define([
       }
       
 	  var marker = L.marker(this.arrLineCordinates[0]).addTo(this.map);			        
-      marker.setIcon(L.divIcon({className: 'tb-map-location-marker', html: '<div class="marker"></div>', iconSize: [18, 25], iconAnchor: [9, 25],}));
+      marker.setIcon(L.divIcon({className: 'tb-map-location-marker', html: '<div class="marker"></div>', iconSize: [22, 30], iconAnchor: [11, 30],}));
 	  $(marker._icon).addClass('selected');
     },        
     render: function(){

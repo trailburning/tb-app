@@ -338,13 +338,13 @@ a:active .tb-cntrl {
 }
 
 .tb-map-location-marker {
-  width: 18px;
-  height: 25px;
+  width: 22px;
+  height: 30px;
   background: url("../img/map/location.png") no-repeat top left;  
 }
 
 .tb-map-location-marker.selected {
-  background-position: 0 -25px;      
+  background-position: 0 -30px;      
 }
 
 .tb-map-location-marker .marker {
