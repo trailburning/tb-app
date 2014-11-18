@@ -357,7 +357,7 @@ define([
     },
     hideIntroOverlay: function(){    
       $('#trail_intro_view .info-hero').css('left', -800);
-      $('#trail_intro_view .info-hero .trail_title').css('left', -100);
+      $('#trail_intro_view .info-hero .trail_title').css('left', -200);
     },
     showOverlay: function(){
       $('.overlay_background').css('opacity', 1);
