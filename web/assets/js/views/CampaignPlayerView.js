@@ -420,7 +420,7 @@ define([
         case PLAYER_INTRO:
           setTimeout(function() {
 			self.showIntroOverlay();
-          }, 500);
+          }, 1000);
           break;
             
         case PLAYER_SHOW:
