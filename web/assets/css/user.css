@@ -26,6 +26,11 @@ border-width:1px;
   overflow: hidden;
 }
 
+#profile_header p {
+  margin: 0px;
+  padding: 0px;	
+}
+
 #profile_header #profile_map_view {
   position: relative;  
   width: 100%; 
@@ -60,6 +65,16 @@ border-width:1px;
   pointer-events: none;  
 }
 
+#profile_header .profile_banner {
+  position: absolute;
+  top: 0px;
+  left: 40px;
+  width: 97px;
+  height: 290px;
+  background: url(../img/ambassador/banner.png) no-repeat top left;
+  background-size: 97px 290px;
+}
+
 #profile_header .profile_info {
   z-index: 1000;
   position: absolute;
@@ -75,6 +90,10 @@ border-width:1px;
 #profile_header .profile_title {
   float: left;
   margin-left: 16px;	
+}
+
+#profile_header .ambassador_title {
+  margin-top: 16px;
 }
 
 .editprofile {
@@ -393,7 +412,15 @@ border-width:1px;
 }
  
 /* Medium devices (desktops, 992px and up) */
-@media (max-width: 1199px) {
+@media (max-width: 1199px) {	
+  #profile_header .profile_banner {    
+    width: 83px;
+    height: 248px;
+    background-size: 83px 248px;
+  }  
+  #profile_header .ambassador_title img {
+  	width: 86%;
+  }  
   #profile_map .leaflet-overlay {
     width: 730px;
     background-size: 730px 538px;
