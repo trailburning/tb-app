@@ -5,10 +5,7 @@ namespace TB\Bundle\FrontendBundle\Security;
 use FOS\UserBundle\Doctrine\UserManager as BaseUserManager;
 
 /**
- * Class UserManager
- * @package Owl\UserBundle\Doctrine
  *
- * @author Andrzej Ośmiałowski <andrzej@osmialowski.co.uk>
  */
 class OAuthUserManager extends BaseUserManager
 {

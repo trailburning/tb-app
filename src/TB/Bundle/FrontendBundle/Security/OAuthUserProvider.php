@@ -12,7 +12,6 @@ use TB\Bundle\FrontendBundle\Entity\User;
 
 /**
  * Class OAuthUserProvider
- * @package Owl\UserBundle\Security\User\Provider
  */
 class OAuthUserProvider extends BaseClass
 {
@@ -56,7 +55,10 @@ class OAuthUserProvider extends BaseClass
                 
                 throw $e;
             } else {
-                throw new AuthenticationException('Username or email has been already used.');
+                $user->setOAuthService($response->getResourceOwner()->getName());
+                $user->setOAuthId($userId);
+                $user->setOAuthAccessToken($response->getAccessToken());
+                $this->userManager->updateUser($user);
             }
         } else {
             $checker = new UserChecker();
