@@ -123,6 +123,13 @@ html.touch #small_sponsor_bar {
   overflow: hidden;
 }
 
+#trailplayer #player_big_btn {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+}
+
 #trailplayer #trail_views {
   position: relative;
   width: 100%;
