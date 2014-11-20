@@ -129,7 +129,7 @@ var TB_EVENT_MAP_ZOOM = {{ event.mapZoom }};
                                         </div>                                              
                                     {% endif %}
                                     <div class="length">
-                                        <h2 class="tb">{{ route.length|dimension_format('km', 1000) }}</h2>
+                                        <h2 class="tb">{{ route.length|kmDistance }} km</h2>
                                         <div class="desc">Length</div>
                                     </div>
                                 </div>

@@ -2,7 +2,10 @@
     {% set url = url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}
 {% endif %}
 {% if text is not defined  %}
-    {% set text = 'Are you trailburning?' %}
+   	{% set text = 'I\'m #trailburning!' %}    
+	{% if trail is defined %}
+    	{% set text = ['I\'m #trailburning!', ' ', url('trail', {trailSlug: trail.id}), ' @trailburning']|join %}
+    {% endif %}    
 {% endif %}
 
 <div class="share">

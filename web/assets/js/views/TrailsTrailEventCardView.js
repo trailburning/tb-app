@@ -18,7 +18,7 @@ define([
           var versions = this.model.get('media').versions;
       	  this.model.set('versionLargePath', versions[0].path);	
       	}
-		this.model.set('length_km', Math.round(this.model.get('length') / 1000));
+		this.model.set('length_km', Math.ceil(this.model.get('length') / 1000));
 		this.model.set('ascent_m', formatAltitude(Math.round(this.model.get('tags').ascent)));
 		this.model.set('descent_m', formatAltitude(Math.round(this.model.get('tags').descent)));
 
