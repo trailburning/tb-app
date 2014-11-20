@@ -34,7 +34,6 @@ var TB_APP = 'BaseApp';
                 </div>
                 <div class="next_step">
                     <button type="submit" id="_submit" name="_submit" class="btn btn-tb-action btn-tb-large">Sign in</button>
-                    {% render(controller('HWIOAuthBundle:Connect:connect')) %}
                 </div>
 				<div class="cookie_error error">It appears that cookies are not enabled in your browser, you will need to enable cookies before signing in.  For more information please <a href="mailto:support@trailburning.com">contact</a> us.</div>
             	{% if error %}
@@ -43,11 +42,12 @@ var TB_APP = 'BaseApp';
                 <div>
                 <a href="{{ path('fos_user_resetting_request') }}">Forgotten your password?</a>
                 <br/>Don't have an account? <a href="{{ path('fos_user_registration_register') }}">Join now</a>
-                </div>
+                </div>                
+			  	<div class="bar_title clearfix">
+                	<div class="left"></div><div class="title"><h4 class="tb">or</h4></div><div class="right"></div>
+            	</div>            
+				<div class="social"><a href="{{ hwi_oauth_login_url('facebook') }}" class="btn btn-tb-facebook"><span class="tb-facebook-logo"></span> Sign in with Facebook</a></div>                            
             </form>
-            
-			<a href="" class="btn btn-tb-facebook"><div class="tb-facebook-logo"></div> Sign in with Facebook</a>
-                                
             </div>
         </div>
     	<div class="step_marker_container">
