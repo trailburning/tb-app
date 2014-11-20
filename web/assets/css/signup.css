@@ -154,8 +154,10 @@ a:active {
   margin-bottom: 14px;  
 }
 
-.panel_content .bar_title {	
+.panel_content .bar_title {
+  height: 28px;	
   margin-top: 12px;
+  margin-bottom: 12px;
 }
 
 .panel_content .bar_title .title {
@@ -171,8 +173,9 @@ a:active {
   border-bottom: 1px solid #989898;
 }
 
+
 .panel_content .social {
-  margin-top: 20px;  
+  text-align: center;  
 }
 
 .msg {

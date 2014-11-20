@@ -18,7 +18,7 @@ var TB_USER_ID = {{ app.user.id }};
 {% endif %}
 </script>
 
-<div id="contentview" class="clearfix">    
+<div id="contentview" class="register clearfix">    
 	<div class="panel_content">        	
     	<div class="panel">
       		<div class="content">      
@@ -26,21 +26,34 @@ var TB_USER_ID = {{ app.user.id }};
         	<div class="desc">
           		<h4 class="tb">
                     {% if form.vars.value.oAuthService is not null %}
-                    Complete your registration with {{  form.vars.value.oAuthService }}
+                    Please complete your {{ form.vars.value.oAuthService }} registration 
                     {% else %}
                     Fill in your details for a whole new trail experience!
                     {% endif %}
                 </h4>
         	</div>        
 			<form id="signup_form" action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
+
+            {% if form.vars.value.oAuthService is not null %}
+            {% else %}
+				<div class="social"><a href="{{ hwi_oauth_login_url('facebook') }}" class="btn btn-tb-facebook"><span class="tb-facebook-logo"></span> Sign up with Facebook</a></div>                            
+			  	<div class="bar_title">
+	            	<div class="left"></div><div class="title"><h4 class="tb">or</h4></div><div class="right"></div>
+	        	</div>            
+            {% endif %}
+
 	        {# {{ form_widget(form) }}                     #}
 	                    
 	        {{ form_errors(form) }}
 	
             {{ form_row(form.email) }}
+            
+            {% if form.vars.value.oAuthService is not null %}
+            {% else %}
 	        <div>
 	        To use a personal avatar please register this email address at <a href="http://www.gravatar.com" target="_blank">Gravatar</a>.	
 	        </div>
+            {% endif %}
             
             {# No password required for signup with external authentification provier #}
             {% if form.vars.value.oAuthService is null %}
