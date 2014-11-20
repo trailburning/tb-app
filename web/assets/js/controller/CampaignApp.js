@@ -28,7 +28,10 @@ define([
     	if (elContainer.hasClass('fade_on_load')) {
           // fade in - delay adding class to ensure image is ready  
           elContainer.addClass('tb-fade-in');
-          elContainer.css('opacity', 1);    		
+		  var nRnd = 100 * (Math.floor(Math.random() * 6) + 1);
+		  setTimeout(function(){
+		  	elContainer.css('opacity', 1);
+		  }, nRnd);
     	}
 		// invoke resrc      
 	    resrc.resrc($(image.img));        
