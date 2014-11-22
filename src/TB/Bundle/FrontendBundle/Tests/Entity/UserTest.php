@@ -177,4 +177,21 @@ class UserTest extends AbstractFrontendTest
                 'Returns the avatar.jpg image with avatar image set');    
                 
     }
+    
+    public function testUpdateAvatarFacebook()
+    {
+        $user = $this->getMockForAbstractClass('TB\Bundle\FrontendBundle\Entity\User');
+        $user->setOAuthService('facebook');
+        $user->setOAuthId(863323267041867);
+        $user->updateAvatarFacebook();
+        
+        $this->assertRegExp('/^https:\/\/fbcdn-profile-a\.akamaihd\.net\/hprofile-ak-prn2\/v\/t1\.0-1\/p200x200/', $user->getAvatarFacebook());
+        
+        $user = $this->getMockForAbstractClass('TB\Bundle\FrontendBundle\Entity\User');
+        $user->setOAuthService('facebook');
+        $user->setOAuthId(123456782342342342342349);
+        $user->updateAvatarFacebook();
+        
+        $this->assertEquals('', $user->getAvatarFacebook());
+    }
 }

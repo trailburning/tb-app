@@ -290,6 +290,13 @@ abstract class User extends BaseUser implements Exportable
     private $oAuthAccessToken;
     
     /**
+     * @var string
+     *
+     * @ORM\Column(name="avatar_facebook", type="string", length=255, nullable=true)
+     */
+    private $avatarFacebook;
+    
+    /**
      * Constructor
      */
     public function __construct()
@@ -650,7 +657,7 @@ abstract class User extends BaseUser implements Exportable
     public function updateAvatarGravatar()
     {
         if ($this->getEmail() == '') {
-            throw new \Exception('Unable to generate gravatar profile hash, missing email firld for User');
+            throw new \Exception('Unable to generate gravatar profile hash, missing email field for User');
         }
         $hash = md5($this->getEmail());
         $imageUrl = sprintf('http://www.gravatar.com/avatar/%s', $hash);
@@ -671,6 +678,32 @@ abstract class User extends BaseUser implements Exportable
             $this->setAvatarGravatar('');
         }
     }
+    
+    /**
+     * Get the avatar from gravatar
+     */
+    public function updateAvatarFacebook()
+    {
+        if ($this->getOAuthService() == 'facebook') {
+        
+            $imageUrl = sprintf('http://graph.facebook.com/%s/picture?type=large', $this->getOAuthId());
+        
+            $c = curl_init();
+            curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($c, CURLOPT_CUSTOMREQUEST, 'HEAD');
+            curl_setopt($c, CURLOPT_HEADER, 1);
+            curl_setopt($c, CURLOPT_NOBODY, true);
+            curl_setopt($c, CURLOPT_URL, $imageUrl);
+            curl_setopt($c, CURLOPT_FOLLOWLOCATION, 1);
+            curl_exec($c);
+            
+            $url = curl_getinfo($c, CURLINFO_EFFECTIVE_URL);
+            if ($url != $imageUrl) {
+                $this->setAvatarFacebook($url);
+            }
+        }
+    }
+    
 
     /**
      * Add userIFollow
@@ -994,6 +1027,8 @@ abstract class User extends BaseUser implements Exportable
             $url = sprintf('http://assets.trailburning.com/images/profile/%s/%s', $this->getName(), $this->getAvatar());
         } elseif ($this->getAvatarGravatar()) {
             $url = $this->getAvatarGravatar();
+        } elseif ($this->getAvatarFacebook()) {
+            $url = $this->getAvatarFacebook();
         } elseif ($this instanceof \TB\Bundle\FrontendBundle\Entity\BrandProfile) {
             $url = null;
         } else {
@@ -1519,5 +1554,28 @@ abstract class User extends BaseUser implements Exportable
             $parentData
         ) = unserialize($str);
         parent::unserialize($parentData);
+    }
+
+    /**
+     * Set avatarFacebook
+     *
+     * @param string $avatarFacebook
+     * @return User
+     */
+    public function setAvatarFacebook($avatarFacebook)
+    {
+        $this->avatarFacebook = $avatarFacebook;
+
+        return $this;
+    }
+
+    /**
+     * Get avatarFacebook
+     *
+     * @return string 
+     */
+    public function getAvatarFacebook()
+    {
+        return $this->avatarFacebook;
     }
 }
