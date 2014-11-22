@@ -1025,10 +1025,10 @@ abstract class User extends BaseUser implements Exportable
     {
         if ($this->getAvatar()) {
             $url = sprintf('http://assets.trailburning.com/images/profile/%s/%s', $this->getName(), $this->getAvatar());
-        } elseif ($this->getAvatarGravatar()) {
-            $url = $this->getAvatarGravatar();
         } elseif ($this->getAvatarFacebook()) {
             $url = $this->getAvatarFacebook();
+        } elseif ($this->getAvatarGravatar()) {
+            $url = $this->getAvatarGravatar();
         } elseif ($this instanceof \TB\Bundle\FrontendBundle\Entity\BrandProfile) {
             $url = null;
         } else {
