@@ -12,7 +12,7 @@
 			<div class="profile_title">
 		    <p><h2 class="tb tb-title">{{ user.firstName }}</h2></p>
 	        <p><h2 class="tb tb-title">{{ user.lastName }}</h2></p>
-			{% if user.id == 3 or user.id == 26 or user.id == 46 or user.id == 171 %}
+	        {% if user.isAmbassador %}
 		        <p class="ambassador_title"><a href="{{ app.request.baseUrl }}/ambassadors"><img src="{{ asset('assets/img/ambassador/title.png') }}" border="0"></a></p>	        
 			{% endif %}				
 			{% if app.user %}		
