@@ -77,6 +77,12 @@ define([
             error: function(data) {
 //              console.log('error');
               bValid = false;
+
+              var errObj = null;              
+              if (data.responseText) {
+              	errObj = jQuery.parseJSON(data.responseText);
+              }
+              self.errObj = errObj;
               
         	  $('#uploadPhotoprogress_view').hide();      	
         	  // fire event
