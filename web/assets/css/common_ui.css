@@ -623,6 +623,10 @@ a:active .tb-cntrl {
   background: #f83d3d;
 }
 
+#tb-overlay-view .next_step {
+  margin-top: 24px;
+}
+
 /* LOADER */
 /******************************************/
 #tb-loader-overlay {
