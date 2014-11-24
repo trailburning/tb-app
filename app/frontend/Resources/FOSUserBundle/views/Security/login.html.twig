@@ -13,13 +13,19 @@
 var TB_APP = 'BaseApp';
 </script>
 
-<div id="contentview" class="clearfix">    
+<div id="contentview" class="login clearfix">    
 	<div class="panel_content">        	
     	<div class="panel">
       		<div class="content">      
         	<h1 class="tb">Sign in</h1>
             <form action="{{ path("fos_user_security_check") }}" method="post">
-                <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />                
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+                
+				<div class="social"><a href="{{ hwi_oauth_login_url('facebook') }}" class="btn btn-tb-facebook"><span class="tb-facebook-logo"></span> Sign in with Facebook</a></div>                            
+			  	<div class="bar_title">
+                	<div class="left"></div><div class="title"><h4 class="tb">or</h4></div><div class="right"></div>
+            	</div>            
+                                
                 <div>
                     <label for="username">Email</label>
                     <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" />
@@ -43,10 +49,6 @@ var TB_APP = 'BaseApp';
                 <a href="{{ path('fos_user_resetting_request') }}">Forgotten your password?</a>
                 <br/>Don't have an account? <a href="{{ path('fos_user_registration_register') }}">Join now</a>
                 </div>                
-			  	<div class="bar_title">
-                	<div class="left"></div><div class="title"><h4 class="tb">or</h4></div><div class="right"></div>
-            	</div>            
-				<div class="social"><a href="{{ hwi_oauth_login_url('facebook') }}" class="btn btn-tb-facebook"><span class="tb-facebook-logo"></span> Sign in with Facebook</a></div>                            
             </form>
             </div>
         </div>
