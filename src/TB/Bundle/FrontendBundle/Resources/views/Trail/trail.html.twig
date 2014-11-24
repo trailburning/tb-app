@@ -108,6 +108,12 @@ var TB_TRAIL_ID = {{ trail.id }};
                         <div class="author">by <strong>{{ user.displayName }}</strong></div>
                     {% endif %}
                 {% endif %}                
+                
+                {#
+	        	{% if user.isAmbassador %}
+		        	Ambassador	        
+				{% endif %}				
+				#}            
               </div>
               
         	  {% if event or user is BrandProfile %}
