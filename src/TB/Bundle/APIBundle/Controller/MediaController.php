@@ -77,7 +77,11 @@ class MediaController extends AbstractRestController
             $media = new Media();    
             $media->setRoute($route);
             $media->setFile($mediaFile);
-            $media->readMetadata($mediaImporter);
+            try {
+                $media->readMetadata($mediaImporter);
+            } catch (\Exception $e) {
+                throw (new ApiException($e->getMessage(), 400));
+            }
             
             $errors = $validator->validate($media);
             if (count($errors) > 0) {
@@ -92,7 +96,11 @@ class MediaController extends AbstractRestController
         }
         
         foreach ($medias as $media) {
-            $media->upload($filesystem);
+            try {
+                $media->upload($filesystem);
+            } catch (\Exception $e) {
+                throw (new ApiException($e->getMessage(), 400));
+            }
             $em = $this->getDoctrine()->getManager();
             $em->persist($media);
             $em->flush();
