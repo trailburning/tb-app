@@ -77,9 +77,10 @@ class EventController extends Controller
         $query = $this->getDoctrine()->getManager()
             ->createQuery('
                 SELECT e FROM TBFrontendBundle:Event e
-                WHERE e.homepageOrder IS NOT NULL
+                WHERE e.date >= CURRENT_DATE()
                 AND e.publish = true
-                ORDER BY e.homepageOrder ASC');
+                ORDER BY e.date ASC')
+            ->setMaxResults(4);
         $events = $query->getResult();  
         
         return [

@@ -163,8 +163,8 @@ class ProfileController extends Controller
         $query = $this->getDoctrine()->getManager()
             ->createQuery('
                 SELECT u FROM TBFrontendBundle:User u
-                WHERE u.homepageOrder IS NOT NULL
-                ORDER BY u.homepageOrder ASC');
+                WHERE u.avatar IS NOT NULL OR u.avatarGravatar IS NOT NULL OR u.avatarFacebook IS NOT NULL
+                ORDER BY u.registeredAt DESC');
         $users = $query->getResult();  
         
         return [

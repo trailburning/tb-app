@@ -226,7 +226,8 @@ class RouteTest extends AbstractFrontendTest
                 "avatar": "http://assets.trailburning.com/images/profile/mattallbeury/avatar_ma.png", 
                 "name": "mattallbeury", 
                 "title": "Matt Allbeury",
-                "type": "user"
+                "type": "user",
+                "is_ambassador": false
             },
             "share_media": {
                 "mimetype": "image/jpeg", 

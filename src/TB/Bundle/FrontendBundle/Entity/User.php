@@ -935,6 +935,7 @@ abstract class User extends BaseUser implements Exportable
             'name' => $this->getName(),
             'title' => $this->getTitle(),
             'avatar' => $this->getAvatarUrl(),
+            'type' => $discr,
         ];
         
         if ($this instanceof \TB\Bundle\FrontendBundle\Entity\UserProfile) {

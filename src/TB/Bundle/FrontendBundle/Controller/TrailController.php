@@ -328,9 +328,9 @@ class TrailController extends Controller
         $query = $this->getDoctrine()->getManager()
             ->createQuery('
                 SELECT r FROM TBFrontendBundle:Route r
-                WHERE r.publish = true 
-                AND r.homepageOrder IS NOT NULL
-                ORDER BY r.homepageOrder ASC');
+                WHERE r.publish = true AND r.approved = true
+                ORDER BY r.publishedDate DESC')
+            ->setMaxResults(3);
         $trails = $query->getResult();  
         
         return [
