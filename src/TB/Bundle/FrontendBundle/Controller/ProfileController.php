@@ -162,9 +162,10 @@ class ProfileController extends Controller
     {
         $query = $this->getDoctrine()->getManager()
             ->createQuery('
-                SELECT u FROM TBFrontendBundle:User u
-                WHERE u.avatar IS NOT NULL OR u.avatarGravatar IS NOT NULL OR u.avatarFacebook IS NOT NULL
-                ORDER BY u.registeredAt DESC');
+                SELECT u FROM TBFrontendBundle:UserProfile u
+                WHERE u.avatar != \'\' OR u.avatarGravatar != \'\' OR u.avatarFacebook != \'\'
+                ORDER BY u.registeredAt DESC')
+            ->setMaxResults(6);
         $users = $query->getResult();  
         
         return [
