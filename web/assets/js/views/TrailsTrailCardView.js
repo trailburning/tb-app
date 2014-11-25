@@ -24,7 +24,7 @@ define([
 		if (this.model.get('category') == undefined) {
 		  this.model.set('category', '');
       	}
-		this.model.set('length_km', Math.round(this.model.get('length') / 1000));
+		this.model.set('length_km', Math.ceil(this.model.get('length') / 1000));
 		this.model.set('ascent_m', formatAltitude(Math.round(this.model.get('tags').ascent)));
 		this.model.set('descent_m', formatAltitude(Math.round(this.model.get('tags').descent)));
 
@@ -36,6 +36,12 @@ define([
         if (!nRating) {
           // do not show no stars
        	  $('.stars', $(this.el)).hide();
+        }
+        else {
+          if (nRating == 0) {
+            // do not show no stars
+       	    $('.stars', $(this.el)).hide();
+          }
         }
         
         $.each($('.star', $(this.el)), function(index, value){        	

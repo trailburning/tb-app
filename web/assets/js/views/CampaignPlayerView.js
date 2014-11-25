@@ -2,9 +2,8 @@ define([
   'underscore', 
   'backbone',
   'views/CampaignSlidesView',  
-  'views/maps/MapTrailView',
-  'views/maps/TrailCardView'  
-], function(_, Backbone, CampaignSlidesView, MapTrailView, TrailCardView){
+  'views/maps/MapTrailView'
+], function(_, Backbone, CampaignSlidesView, MapTrailView){
   
   var PLAYER_INTRO = 0;
   var PLAYER_SHOW = 1;  
@@ -49,7 +48,6 @@ define([
 
       this.trailSlidesView = new CampaignSlidesView({ el: '#trail_slides_view', model: this.mediaModel });
       this.trailMapView = new MapTrailView({ el: '#trail_map_view', elCntrls: '#view_map_btns', model: this.model });
-      this.trailCardView = new TrailCardView({ el: '#trailcard_view' });
 
 	  this.getResults();
 	  this.buildBtns();
@@ -58,7 +56,8 @@ define([
         $('#trail_slides_view').css('visibility', 'visible');
 	  }
 	  
-	  var data = {'tags': {'width': 800, 'height': 600}, versions: [{ 'path': '/images/campaign/urbantrails/london/shutterstock_148485164.jpg'  }]};
+	  var data = {'tags': {'width': 800, 'height': 600}, versions: [{ 'path': '/images/campaign/urbantrails/london/shutterstock_148485164.jpg' }]};
+	  
 	  var mediaModel = new Backbone.Model(data);
 	  this.trailSlidesView.addMedia(mediaModel);
 	  
@@ -66,6 +65,14 @@ define([
     },
     buildBtns: function(){
       var self = this;
+      
+      $('#player_big_btn').click(function(evt){
+      	self.showPlayer();
+	  });
+
+      $('#player_big_btn').mouseover(function(evt){
+      	$(evt.currentTarget).css('cursor','pointer');
+	  });
       
       $('#trail_mini_view .toggle_btn').click(function(evt){
         self.onTrailToggleViewBtnClick(evt);
@@ -93,7 +100,6 @@ define([
 	},    
     render: function(){
   	  this.trailMapView.render();        
-	  this.trailCardView.render();
 	},
 	handleResize: function(){
       // remove transition to avoid seeing grey beneath image when resizing
@@ -117,40 +123,42 @@ define([
       }
 	},
     updatePlayerHeight: function(){
-      var nPlayerHeight = 0;      
+      var nImageHeight = 0;      
       var nPlayerViewerHeight = 0;
 
       var elContentView = $('#content_view');
       var nContentY = elContentView.position().top;
+      var nContentHeight = $(window).height() - nContentY;
       
-      nPlayerHeight = Math.round(elContentView.width() * 0.746875);
+      nImageHeight = Math.round(elContentView.width() * 0.746875);
       
 	  switch (this.nPlayerView) {
 	  	case PLAYER_INTRO:
 	  	  nPlayerViewerHeight = this.nPlayerMinHeight;
-	  	  this.nPlayerHeight = nPlayerHeight;
+	  	  this.nPlayerHeight = nImageHeight;
 	  	  
-	  	  if (nPlayerHeight > nPlayerViewerHeight) {
-	  	  	var nAdjustY = (nPlayerHeight - nPlayerViewerHeight)/2;
+	  	  if (nImageHeight > nPlayerViewerHeight) {
+	  	  	var nAdjustY = (nImageHeight - nPlayerViewerHeight)/2;
             $('#trail_views').css('top', -nAdjustY);        	  	  	
 	  	  } 
 	  	  break;
 	  	
 	  	case PLAYER_SHOW:
-	  	  nPlayerViewerHeight = $(window).height() - nContentY;
+	  	  nPlayerViewerHeight = nContentHeight;
 	  	  
-	  	  if (nPlayerHeight > nPlayerViewerHeight) {
-	  	  	var nAdjustY = (nPlayerHeight - nPlayerViewerHeight)/2;
-            $('#trail_views').css('top', -nAdjustY);        	  	  	
+	  	  if (nImageHeight > nPlayerViewerHeight) {
+	  	  	var nAdjustY = (nImageHeight - nPlayerViewerHeight)/2;
+            $('#trail_views').css('top', -nAdjustY);            
+            $('#trail_map_view').css('top', nAdjustY);                    	  	  	
 		  }
 		  
-	  	  if (nPlayerHeight < nPlayerViewerHeight) {
+	  	  if (nImageHeight < nPlayerViewerHeight) {
 	  	  	// player is smaller than viewer
-	  	    nPlayerViewerHeight = nPlayerHeight;
+	  	    nPlayerViewerHeight = nImageHeight;
 	  	    $('#trail_views').css('top', 0);	  	  	
 		  }
 		  
-      	  this.nPlayerHeight = nPlayerHeight;
+      	  this.nPlayerHeight = nImageHeight;
 	  	  break;
 	  }
 
@@ -160,9 +168,9 @@ define([
    	  // force height update for imageScale
    	  $('#trail_slides_view .image_container').height(this.nPlayerHeight);      	  
 	  
-   	  $('#trail_map_view').height(this.nPlayerHeight);
+   	  $('#trail_map_view').height(nContentHeight);
    	  // force height update for MapBox
-   	  $('#trail_map_view .map_container').height(this.nPlayerHeight);      	  	  
+   	  $('#trail_map_view .map_container').height(nContentHeight);      	  	  
     },    
     getResults: function(){
       var self = this;
@@ -223,11 +231,13 @@ define([
       
 	  var self = this;
 
+	  $('#player_big_btn').hide();
       // add transition for effect      
       $('#campaignplayer').addClass('tb-size');
 	  $('#trail_views').addClass('tb-move-vert');
 
       this.showMapView();
+      
       this.hideIntroOverlay();
 
       self.nPlayerView = PLAYER_SHOW;
@@ -246,6 +256,7 @@ define([
       	
       this.nPlayerView = PLAYER_INTRO;
 
+	  $('#player_big_btn').show();
 	  $('#headerview .close_link').hide();
 
       // add transition for effect      
@@ -382,6 +393,7 @@ define([
       }
       
       this.trailSlidesView.hide();
+      
       this.trailMapView.show();
       this.trailMapView.render();
     },
@@ -411,11 +423,14 @@ define([
       	return;
       }
       
+      var self = this;
       this.bLocked = false;
         
       switch (this.nPlayerView) {
         case PLAYER_INTRO:
-          this.showIntroOverlay();
+          setTimeout(function() {
+			self.showIntroOverlay();
+          }, 1000);
           break;
             
         case PLAYER_SHOW:
@@ -571,8 +586,6 @@ define([
       this.nextSlide();          
     },
     onSelectTrail: function(id){
-      var model = this.collection.get(id);
-	  this.trailCardView.render(model);
     }
     
   });

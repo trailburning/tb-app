@@ -64,24 +64,32 @@ define([
     	    strItem = '<a href="' + strURL + '" class="clearfix"><div class="type"><div class="tb-avatar tb-avatar-search"><div class="photo"><img src="'+item._source.avatar+'"></div></div></div><div class="match">' + text + '<br/>Discover ' + item._source.first_name + '\'s trails.</div></a>';
     	    break;
     	  case 'event':
-    	    strURL += '/event/' + item._source.slug
+    	    strURL += '/event/' + item._source.slug;
     	    strItem = '<a href="' + strURL + '" class="clearfix"><div class="type"><div class="icon_container"><div class="icon event"></div></div></div><div class="match">' + text + '</div></a>';
     	    break;
     	  case 'editorial':
-    	    strURL += '/editorial/' + item._source.slug
+    	    strURL += '/editorial/' + item._source.slug;
     	    strItem = '<a href="' + strURL + '" class="clearfix"><div class="type"><div class="icon_container"><div class="icon editorial"></div></div></div><div class="match">' + text + '</div></a>';
     	    break;
-    	  default:
-    	    strURL += '/trail/' + item._source.slug
+    	  case 'brand_profile':
+    	    strURL += '/profile/' + item._source.name;
+    	    strItem = '<a href="' + strURL + '" class="clearfix"><div class="type"><div class="tb-avatar tb-avatar-search"><div class="photo"><img src="http://assets.trailburning.com/images/icons/avatars/avatar_man.jpg"></div></div></div><div class="match">' + text + '<br/>Discover ' + item._source.display_name + '\'s trails.</div></a>';
+    	    break;
+    	  case 'route':
+    	    strURL += '/trail/' + item._source.slug;
     	    strItem = '<a href="' + strURL + '" class="clearfix"><div class="type"><div class="icon_container"><div class="icon trailcard"></div></div></div><div class="match">' + text + '</div></a>';
     	    break;
     	}
 
     	item.url = strURL;
-
-        return $('<li>')
+	    if (strItem != '') {
+          return $('<li>')
             .append(strItem)
-            .appendTo(ul);
+            .appendTo(ul);	    	
+	    }
+	    else {
+	    	return $('');
+	    }
       };     
     }
   });

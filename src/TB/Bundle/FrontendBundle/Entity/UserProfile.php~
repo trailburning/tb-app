@@ -13,70 +13,41 @@ class UserProfile extends User
 {    
     
     /**
-     * @var string
+     * @var boolean
      *
-     * @ORM\Column(name="first_name", type="string", length=50, nullable=true)
+     * @ORM\Column(name="is_ambassador", type="boolean", options={"default" = false})
      */
-    private $first_name;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="last_name", type="string", length=50, nullable=true)
-     */
-    private $last_name;
-
-    /**
-     * @var Point
-     *
-     * @ORM\Column(name="location", type="point", columnDefinition="GEOMETRY(POINT,4326)", nullable=true)
-     */
-    private $location; 
+    private $isAmbassador = false;
     
-
     /**
-     * Set last_name
+     * @var string
      *
-     * @param string $lastName
-     * @return UserProfile
+     * @ORM\Column(name="ambassador_tagline", type="string", length=255, nullable=true)
      */
-    public function setLastName($lastName)
+    private $ambassadorTagline;
+     
+    public function getTitle()
     {
-        $this->last_name = $lastName;
-
-        return $this;
+        return sprintf('%s %s', $this->getFirstName(), $this->getLastName());
+    }
+    
+    /**
+     * Returns an data array representatiosn of this entity for the activity feed
+     */
+    public function exportAsActivity()
+    {   
+        
+        $data = [
+            'url' => '/profile/' . $this->getName(),
+            'objectType' => 'person',
+            'id' => $this->getId(),
+            'displayName' => $this->getTitle(),
+            'image' => [
+                'url' => $this->getAvatarUrl(),
+            ],
+        ];
+        
+        return $data;
     }
 
-    /**
-     * Get last_name
-     *
-     * @return string 
-     */
-    public function getLastName()
-    {
-        return $this->last_name;
-    }
-
-    /**
-     * Set location
-     *
-     * @param point $location
-     * @return UserProfile
-     */
-    public function setLocation($location)
-    {
-        $this->location = $location;
-
-        return $this;
-    }
-
-    /**
-     * Get location
-     *
-     * @return point 
-     */
-    public function getLocation()
-    {
-        return $this->location;
-    }
 }

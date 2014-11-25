@@ -185,21 +185,21 @@ class Media implements Exportable
     public function upload(Filesystem $filesystem)
     {
         if ($this->getFile() === null) {
-            throw new \Exception('file is empty');
+            throw new \Exception('Not file was provided.');
         }
         
         if ($this->getRoute() === null) {
-            throw new \Exception('Route must be set before uploading a file');
+            throw new \Exception('Route must be set before uploading a file.');
         }
         
         if ($this->getRoute()->getId() == 0) {
-            throw new \Exception('The Route must be persisted before uploading a file');
+            throw new \Exception('The Route must be persisted before uploading a file.');
         }
         
         $file = $this->getFile();
         
         if (filesize($this->file->getPathname()) < 11 || exif_imagetype($this->file->getPathname()) != 2) {
-            throw new \Exception('Only JPEG files are allowed');
+            throw new \Exception(sprintf('Invalid type for %s, only JPEG files are allowed.', $this->file->getClientOriginalName()));
         }
         
         $filename = sprintf('/%s/%s.%s', $this->getRoute()->getId(), sha1_file($this->file->getPathname()), $this->file->getClientOriginalExtension());
@@ -244,7 +244,7 @@ class Media implements Exportable
         }
         
         if (exif_imagetype($this->file->getPathname()) != 2) {
-            throw new \Exception('Only JPEG files are supported');
+            throw new \Exception(sprintf('Invalid type for %s, only JPEG files are allowed.', $this->file->getClientOriginalName()));
         }
         
         $tags = $this->getTags();

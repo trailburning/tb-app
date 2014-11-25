@@ -88,7 +88,7 @@ a:active {
 }
 
 .panel_content form div {
-  width: 324px;
+  width: 336px;
   margin: 0px auto 0px auto;
   text-align: left;
 }
@@ -152,6 +152,33 @@ a:active {
 .panel_content .next_step {
   margin-top: 24px;
   margin-bottom: 14px;  
+}
+
+.panel_content .bar_title {
+  height: 28px;	
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
+.panel_content .bar_title .title {
+  float: left;
+  width: 20%;	
+  text-align: center;
+}
+
+.panel_content .bar_title .left, .panel_content .bar_title .right {
+  float: left;
+  width: 40%;
+  height: 14px;
+  border-bottom: 1px solid #989898;
+}
+
+.panel_content .social {
+  text-align: center;  
+}
+
+.login .panel_content .social {
+  margin-top: 12px;  
 }
 
 .msg {

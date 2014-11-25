@@ -30,7 +30,7 @@ class CampaignControllerTest extends AbstractFrontendTest
         $client = static::createClient();
 
         $campaign = $this->getCampaign('urbantrails-london');
-        $route = $this->getRoute('ttm');
+        $route = $this->getRoute('london');
 
         $crawler = $client->request('GET', '/campaign/' . $campaign->getSlug() . '/trail/' . $route->getSlug());
         $this->assertEquals(Response::HTTP_OK,  $client->getResponse()->getStatusCode());

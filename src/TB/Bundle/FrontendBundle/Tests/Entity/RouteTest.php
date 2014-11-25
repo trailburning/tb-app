@@ -226,13 +226,13 @@ class RouteTest extends AbstractFrontendTest
                 "avatar": "http://assets.trailburning.com/images/profile/mattallbeury/avatar_ma.png", 
                 "name": "mattallbeury", 
                 "title": "Matt Allbeury",
-                "discr": "user"
+                "type": "user"
             },
             "share_media": {
                 "mimetype": "image/jpeg", 
                 "path": "/cb88c97a09a59aa2452c0d0cdfdd2f4ccc211a53_share.jpg"
             },
-            "rating": null,
+            "rating": 0,
             "start": [
                 13.257437,
                 52.508006

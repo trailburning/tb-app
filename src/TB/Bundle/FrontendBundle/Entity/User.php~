@@ -269,6 +269,34 @@ abstract class User extends BaseUser implements Exportable
     private $campaignUnfollowActivities;
     
     /**
+     * @var string
+     *
+     * @ORM\Column(name="oauth_service", type="string", nullable=true)
+     */
+    private $oAuthService;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="oauth_id", type="string", nullable=true)
+     */
+    private $oAuthId;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="oauth_access_token", type="string", nullable=true)
+     */
+    private $oAuthAccessToken;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="avatar_facebook", type="string", length=255, nullable=true)
+     */
+    private $avatarFacebook;
+    
+    /**
      * Constructor
      */
     public function __construct()
@@ -629,7 +657,7 @@ abstract class User extends BaseUser implements Exportable
     public function updateAvatarGravatar()
     {
         if ($this->getEmail() == '') {
-            throw new \Exception('Unable to generate gravatar profile hash, missing email firld for User');
+            throw new \Exception('Unable to generate gravatar profile hash, missing email field for User');
         }
         $hash = md5($this->getEmail());
         $imageUrl = sprintf('http://www.gravatar.com/avatar/%s', $hash);
@@ -650,6 +678,32 @@ abstract class User extends BaseUser implements Exportable
             $this->setAvatarGravatar('');
         }
     }
+    
+    /**
+     * Get the avatar from gravatar
+     */
+    public function updateAvatarFacebook()
+    {
+        if ($this->getOAuthService() == 'facebook') {
+        
+            $imageUrl = sprintf('http://graph.facebook.com/%s/picture?type=large', $this->getOAuthId());
+        
+            $c = curl_init();
+            curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($c, CURLOPT_CUSTOMREQUEST, 'HEAD');
+            curl_setopt($c, CURLOPT_HEADER, 1);
+            curl_setopt($c, CURLOPT_NOBODY, true);
+            curl_setopt($c, CURLOPT_URL, $imageUrl);
+            curl_setopt($c, CURLOPT_FOLLOWLOCATION, 1);
+            curl_exec($c);
+            
+            $url = curl_getinfo($c, CURLINFO_EFFECTIVE_URL);
+            if ($url != $imageUrl) {
+                $this->setAvatarFacebook($url);
+            }
+        }
+    }
+    
 
     /**
      * Add userIFollow
@@ -724,10 +778,33 @@ abstract class User extends BaseUser implements Exportable
      * @param User $user The User to check in the follower
      * @return boolean returns true if the User is following, false if not
      */
-    public function isFollowing(User $user)
+    public function isFollowingUser(User $user)
     {
         foreach ($this->getUserIFollow() as $userIFollowUser) {
             if ($userIFollowUser->getId() === $user->getId()) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    
+    public function isFollowing(User $user)
+    {   
+        return $this->isFollowingUser($user);
+    }
+    
+    /**
+     * Checks if the User is following a given Campaign
+     *
+     * @param Campaign $campaign The Campaign to check in the follower
+     * @return boolean returns true if the User is following, false if not
+     */
+    public function isFollowingCampaign(Campaign $campaign)
+    {
+        foreach ($this->getCampaignsIFollow() as $campaignIFollow) {
+            if ($campaignIFollow->getId() === $campaign->getId()) {
                 return true;
             }
         }
@@ -902,10 +979,17 @@ abstract class User extends BaseUser implements Exportable
     
     public function export()
     {   
+        if ($this instanceof \TB\Bundle\FrontendBundle\Entity\UserProfile) {
+            $discr = 'user';
+        } elseif ($this instanceof \TB\Bundle\FrontendBundle\Entity\BrandProfile) {
+            $discr = 'brand';
+        }
+        
         $data = [
             'name' => $this->getName(),
             'title' => $this->getTitle(),
             'avatar' => $this->getAvatarUrl(),
+            'type' => $discr,
         ];
 
         return $data;
@@ -943,10 +1027,14 @@ abstract class User extends BaseUser implements Exportable
             $url = sprintf('http://assets.trailburning.com/images/profile/%s/%s', $this->getName(), $this->getAvatar());
         } elseif ($this->getAvatarGravatar()) {
             $url = $this->getAvatarGravatar();
-        } elseif($this->getGender() === User::GENDER_FEMALE) {
-            $url = 'http://assets.trailburning.com/images/icons/avatars/avatar_woman.jpg';
+        } elseif ($this instanceof \TB\Bundle\FrontendBundle\Entity\BrandProfile) {
+            $url = null;
         } else {
-            $url = 'http://assets.trailburning.com/images/icons/avatars/avatar_man.jpg';
+            if ($this->getGender() === User::GENDER_FEMALE) {
+                $url = 'http://assets.trailburning.com/images/icons/avatars/avatar_woman.jpg';
+            } else {
+                $url = 'http://assets.trailburning.com/images/icons/avatars/avatar_man.jpg';
+            }
         }
         
         return $url;
@@ -1280,5 +1368,212 @@ abstract class User extends BaseUser implements Exportable
     public function getCampaignsIFollow()
     {
         return $this->campaignsIFollow;
+    }
+
+    /**
+     * Add campaignFollowActivities
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\CampaignFollowActivity $campaignFollowActivities
+     * @return User
+     */
+    public function addCampaignFollowActivity(\TB\Bundle\FrontendBundle\Entity\CampaignFollowActivity $campaignFollowActivities)
+    {
+        $this->campaignFollowActivities[] = $campaignFollowActivities;
+
+        return $this;
+    }
+
+    /**
+     * Remove campaignFollowActivities
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\CampaignFollowActivity $campaignFollowActivities
+     */
+    public function removeCampaignFollowActivity(\TB\Bundle\FrontendBundle\Entity\CampaignFollowActivity $campaignFollowActivities)
+    {
+        $this->campaignFollowActivities->removeElement($campaignFollowActivities);
+    }
+
+    /**
+     * Get campaignFollowActivities
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCampaignFollowActivities()
+    {
+        return $this->campaignFollowActivities;
+    }
+
+    /**
+     * Add campaignUnfollowActivities
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\CampaignUnfollowActivity $campaignUnfollowActivities
+     * @return User
+     */
+    public function addCampaignUnfollowActivity(\TB\Bundle\FrontendBundle\Entity\CampaignUnfollowActivity $campaignUnfollowActivities)
+    {
+        $this->campaignUnfollowActivities[] = $campaignUnfollowActivities;
+
+        return $this;
+    }
+
+    /**
+     * Remove campaignUnfollowActivities
+     *
+     * @param \TB\Bundle\FrontendBundle\Entity\CampaignUnfollowActivity $campaignUnfollowActivities
+     */
+    public function removeCampaignUnfollowActivity(\TB\Bundle\FrontendBundle\Entity\CampaignUnfollowActivity $campaignUnfollowActivities)
+    {
+        $this->campaignUnfollowActivities->removeElement($campaignUnfollowActivities);
+    }
+
+    /**
+     * Get campaignUnfollowActivities
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCampaignUnfollowActivities()
+    {
+        return $this->campaignUnfollowActivities;
+    }
+
+    /**
+     * Set oAuthService
+     *
+     * @param string $oAuthService
+     * @return User
+     */
+    public function setOAuthService($oAuthService)
+    {
+        $this->oAuthService = $oAuthService;
+
+        return $this;
+    }
+
+    /**
+     * Get oAuthService
+     *
+     * @return string 
+     */
+    public function getOAuthService()
+    {
+        return $this->oAuthService;
+    }
+
+    /**
+     * Set oAuthId
+     *
+     * @param string $oAuthId
+     * @return User
+     */
+    public function setOAuthId($oAuthId)
+    {
+        $this->oAuthId = $oAuthId;
+
+        return $this;
+    }
+
+    /**
+     * Get oAuthId
+     *
+     * @return string 
+     */
+    public function getOAuthId()
+    {
+        return $this->oAuthId;
+    }
+
+    /**
+     * Set oAuthAccessToken
+     *
+     * @param string $oAuthAccessToken
+     * @return User
+     */
+    public function setOAuthAccessToken($oAuthAccessToken)
+    {
+        $this->oAuthAccessToken = $oAuthAccessToken;
+
+        return $this;
+    }
+
+    /**
+     * Get oAuthAccessToken
+     *
+     * @return string 
+     */
+    public function getOAuthAccessToken()
+    {
+        return $this->oAuthAccessToken;
+    }
+    
+    public function serialize()
+    {
+        return serialize(array(
+            $this->name,
+            $this->email,
+            $this->firstName,
+            $this->lastName,
+            $this->location,
+            $this->about,
+            $this->avatar,
+            $this->avatarGravatar,
+            $this->activityUnseenCount,
+            $this->activityLastViewed,
+            $this->homepageOrder,
+            $this->gender,
+            $this->newsletter,
+            $this->registeredAt,
+            $this->oAuthService,
+            $this->oAuthId,
+            $this->oAuthAccessToken,
+            parent::serialize(),
+        ));
+    }
+
+    public function unserialize($str)
+    {   
+        list(
+            $this->name,
+            $this->email,
+            $this->firstName,
+            $this->lastName,
+            $this->location,
+            $this->about,
+            $this->avatar,
+            $this->avatarGravatar,
+            $this->activityUnseenCount,
+            $this->activityLastViewed,
+            $this->homepageOrder,
+            $this->gender,
+            $this->newsletter,
+            $this->registeredAt,
+            $this->oAuthService,
+            $this->oAuthId,
+            $this->oAuthAccessToken,
+            $parentData
+        ) = unserialize($str);
+        parent::unserialize($parentData);
+    }
+
+    /**
+     * Set avatarFacebook
+     *
+     * @param string $avatarFacebook
+     * @return User
+     */
+    public function setAvatarFacebook($avatarFacebook)
+    {
+        $this->avatarFacebook = $avatarFacebook;
+
+        return $this;
+    }
+
+    /**
+     * Get avatarFacebook
+     *
+     * @return string 
+     */
+    public function getAvatarFacebook()
+    {
+        return $this->avatarFacebook;
     }
 }

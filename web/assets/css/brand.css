@@ -7,35 +7,424 @@ border-width:1px;
 */  
 }
 
-/* BRAND HEADER */
+/* CONTENT VIEW */
 /******************************************/
-#brand_header {
-  z-index: 100;
+#content_view {
+  display: none;	
   position: relative;
-  margin-top: 45px;
+  top: 45px;  
   width: 100%;
-  height: 448px;
-  overflow: overflow;
 }
 
-#brand_header .image_container {
+.leaflet-popup-content-wrapper {
+  background: #FFF;
+  border-radius: 0px;
+}
+
+.leaflet-popup-content {  
+  margin: 0px;
+  padding: 0px;
+  width: 460px;
+  height: 235px;
+}
+
+/* CAMPAIGN PLAYER */
+/******************************************/
+#campaignplayer {  
   position: relative;
-  opacity: 0;
-  width: 100%;
+  width: 100%;  
   height: 448px;
   overflow: hidden;
 }
 
-#brand_header .brand_logo {
+#campaignplayer #player_big_btn {
   position: absolute;
-  top: 34px;
-  left: 30px;  
+  top: 0px;
+  width: 100%;
+  height: 100%;
 }
 
-#brand_header .tb-credit {
+#campaignplayer  #trail_views {
+  position: relative;
+  width: 100%;
+  height: 100%;  
+}
+
+/* CAMPAIGN LANDING OVERLAY VIEW */
+/******************************************/
+#campaign_landing_overlay_view {
   position: absolute;
-  bottom: 12px;
-  right: 30px;
+  top: 0px;
+}
+
+#campaign_landing_overlay_view .info-hero {
+  position: absolute;
+  top: 0px;
+  left: -800px;
+}
+
+#campaign_landing_overlay_view .back {
+  position: absolute;
+  top: 0px;
+  left: -800px;
+  width: 412px;
+  height: 1000px;
+  background: url("../img/map/background_skew.png") no-repeat top left;
+}
+
+#campaign_landing_overlay_view .info-hero .campaign_title {
+  position: relative;
+  top: 36px;
+  left: -100px;
+}
+
+#campaign_landing_overlay_view .info-hero .campaign_play {
+  position: absolute;
+  top: 332px;
+  left: 184px;
+  font-size: 42px;
+  line-height: 75px;
+  color: #FFF;
+  font-weight: 400;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+#campaign_landing_overlay_view .info-hero .campaign_play .campaign_btn {
+  float: left;
+  margin-right: 18px;
+  width: 75px;
+  height: 75px;
+  background: url(../img/trailplayer/play_toggle.png) no-repeat top left;  
+}
+
+#campaign_landing_overlay_view .info-hero .campaign_play .test {
+  display: inline-block;
+}
+
+#campaign_landing_overlay_view .info-hero .campaign_play:hover .campaign_btn {
+  background-position: 0 -75px;
+}
+
+/* CAMPAIGN MAP OVERLAY VIEW */
+/******************************************/
+#campaign_map_overlay_view {
+  position: absolute;
+  top: 0px;
+}
+
+#campaign_map_overlay_view .info-hero {
+  position: absolute;
+  top: 0px;
+  left: -800px;
+}
+
+#campaign_map_overlay_view .back {
+  position: absolute;
+  top: 0px;
+  left: -800px;
+  width: 412px;
+  height: 1000px;
+  background: url("../img/map/background_skew.png") no-repeat top left;
+}
+
+#campaign_map_overlay_view .info-hero .campaign_title {
+  position: relative;
+  top: 30px;
+  left: -100px;
+}
+
+#campaign_map_overlay_view .info-hero .campaign_title img {
+  width: 286px;
+}
+
+#campaign_map_overlay_view .info-hero .campaign_card {
+  position: absolute;
+  top: 216px;
+  left: 189px;
+}
+
+#campaign_map_overlay_view .trailcards .panel {
+  margin: 0px;
+}
+
+/* TRAIL SLIDES VIEW */
+/******************************************/
+#trail_slides_view {
+  visibility: hidden;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;  
+  height: 100%;
+  overflow: hidden;  
+}
+
+#trail_slides_view .photos_container {  
+  position: relative;  
+  width: 100%;
+  height: 100%;  
+  overflow: hidden;  
+}
+
+#trail_slides_view .image_container {
+  position: absolute;
+  opacity: 0;  
+  top: 0px;
+  left: 0px;  
+  width: 100%;
+  height: 100%;  
+  overflow: hidden;
+}
+
+#trail_slides_view .background_blur .image_container img, #trail_slides_view .background .image_container img {
+  width: 100%;
+}
+
+#trail_slides_view .foreground {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+}
+
+#trail_slides_view .foreground .image_container {
+  position: relative;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
+#trail_slides_view .foreground .image_container img {
+  display: block;
+  margin: 0 auto;
+  height: 100%;
+}
+	
+#trail_slides_view .foreground .image_container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
+#trail_slides_view .slide_btns {
+  display: none; 
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+}
+
+#trail_slides_view .slide_btns .left { 
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 30%;
+  height: 100%;    
+}
+
+#trail_slides_view .slide_btns .left .hot {
+  position: absolute;
+  left: 0px;
+  width: 153px;
+  height: 100%;
+  background: url("../img/trailplayer/arrow_left_back.png") repeat-y top left;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  -moz-transition: opacity 0.5s ease-in-out;
+  -webkit-transition: opacity 0.5s ease-in-out;  	
+}
+
+#trail_slides_view .slide_btns .left .arrow {
+  position: absolute;
+  margin-top: -21px;
+  top: 50%;
+  left: -100px; 
+  width: 27px;
+  height: 43px;
+  background: url("../img/trailplayer/arrow_left.png") no-repeat top left;	
+}
+
+#trail_slides_view .slide_btns .right { 
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: 30%;
+  height: 100%;
+}
+
+#trail_slides_view .slide_btns .right .hot {
+  position: absolute;
+  right: 0px; 
+  width: 153px;
+  height: 100%;
+  background: url("../img/trailplayer/arrow_right_back.png") repeat-y top left;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  -moz-transition: opacity 0.5s ease-in-out;
+  -webkit-transition: opacity 0.5s ease-in-out;  	
+}
+
+#trail_slides_view .slide_btns .right .arrow {
+  position: absolute;
+  margin-top: -21px;
+  top: 50%;
+  right: -100px; 
+  width: 27px;
+  height: 43px;
+  background: url("../img/trailplayer/arrow_right.png") no-repeat top left;	
+}
+
+#trail_slides_view .loader_container {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+}
+
+#trail_slides_view .loader {
+  margin: -44px auto 0px auto;
+  width: 88px;
+  height: 88px;
+}
+
+/* TRAIL MAP VIEW */
+/******************************************/
+#trail_map_view {
+  display: none;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+
+#trail_map_view .map_container {
+  position: relative;
+  width: 100%;
+  height: 700px;
+}
+
+#trail_map_view .leaflet-container {
+  background: #DEDEDE;
+}
+
+#trail_map_view #map_large {
+  width: 100%;
+  height: 100%;
+}
+
+.trail_media_popup_overlay {
+  z-index: 999;
+  display: none;
+  position: absolute;
+  bottom: 13px;
+  left: -133px;
+  width: 266px;
+  height: 200px;  
+  transform: translate3d(709px, 270px, 0px);
+}
+
+/* CAMPAIGN PLAYER */
+/******************************************/
+#campaignplayer {
+  background: #DEDEDE;
+}
+
+/* VIEW CNTRLS */
+/******************************************/
+#campaignplayer #view_map_btns {
+  position: absolute;
+  top: -300px;
+  right: 16px;
+}
+
+html.touch #campaignplayer #view_map_btns {
+  top: 26px;
+}
+
+#campaignplayer #view_player_btns {
+  position: absolute;
+  top: -160px;
+  left: 18px;  
+}
+
+#campaignplayer #view_player_btns .close_btn {
+  width: 30px;
+  height: 30px;
+  background: url(../img/trailplayer/close_btn.png) no-repeat top left;
+}
+
+#campaignplayer #view_player_btns .close_btn:hover {
+  background-position: 0 -30px;
+}
+
+#campaignplayer #slideshow_toggle {
+  position: absolute;
+  top: 60px;
+  right: 63px;  
+}
+
+#campaignplayer #view_toggle {
+  position: absolute;
+  top: 60px;
+  right: 0px;  
+}
+
+#campaignplayer #view_player_btns .button {
+  float:left; 
+  display:block;
+  line-height:20px; 
+  text-indent: -10000px;  
+  background-repeat:no-repeat;
+  background-position:top center;
+  overflow: hidden;   
+  text-decoration: none;
+  width:53px;
+  height:54px;
+}
+
+#campaignplayer #view_player_btns #view_toggle .button {
+  background: url("../img/trailplayer/view_toggle.png") no-repeat top left;
+}
+
+#campaignplayer #view_player_btns #view_toggle .view_map {
+  background-position: 0 0;  
+}
+
+#campaignplayer #view_player_btns #view_toggle .view_map_hover {
+  background-position: -53px 0;  
+}
+
+#campaignplayer #view_player_btns #view_toggle .view_photo {
+  background-position: 0 -54px;
+}
+
+#campaignplayer #view_player_btns #view_toggle .view_photo_hover {
+  background-position: -53px -54px;  
+}
+
+#campaignplayer #view_player_btns #slideshow_toggle .button {
+  background: url("../img/trailplayer/slideshow_toggle.png") no-repeat top left;
+}
+
+#campaignplayer #view_player_btns #slideshow_toggle .slideshow_pause {
+  background-position: 0 0;  
+}
+
+#campaignplayer #view_player_btns #slideshow_toggle .slideshow_pause_hover {
+  background-position: -53px 0;  
+}
+
+#campaignplayer #view_player_btns #slideshow_toggle .slideshow_play {
+  background-position: 0 -54px;
+}
+
+#campaignplayer #view_player_btns #slideshow_toggle .slideshow_play_hover {
+  background-position: -53px -54px;  
 }
 
 /* PANELS */
@@ -206,6 +595,10 @@ border-width:1px;
 
 /* TRAIL */
 /******************************************/
+#trailcard_view .link:hover {
+  cursor: pointer;  
+}
+
 .trailcards .panel {
   float: left;	
   position: relative;

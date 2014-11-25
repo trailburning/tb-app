@@ -605,9 +605,6 @@ class RouteControllerTest extends AbstractApiTestCase
         $client->request('GET', '/v1/route/' . $route->getId() . '/related/campaigns');
         $this->assertEquals(Response::HTTP_OK,  $client->getResponse()->getStatusCode());
           
-        var_export($client->getResponse()->getContent());
-        exit;
-          
         $this->assertJsonResponse($client);
     }
     

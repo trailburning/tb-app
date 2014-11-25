@@ -1,19 +1,26 @@
 <div id="profile_header">
 	<div id='profile_map_view'></div>  
-	<div class="profile_info">		
-    	<div class="tb-avatar tb-avatar-feature"><div class="photo">
-            <img src="{{ get_user_avatar_url(user) }}">
-        </div></div>		    	
-		<div class="profile_title">
-	    <h2 class="tb tb-title">{{ user.firstName }}</h2>
-	    <br/>
-        <h2 class="tb tb-title">{{ user.lastName }}</h2>
-        <br/>
-		{% if app.user %}		
-			{% if app.user.id == user.id %}
-        		<div class="editprofile"><a href="{{ path('fos_user_profile_edit') }}" class="btn btn-tb">Edit Profile</a></div>	
-			{% endif %}
-        {% endif %}
-        </div>      
+	
+	<div class="profile">
+		{% if user.isAmbassador %}
+			<div class="profile_banner"></div>
+		{% endif %}				
+		<div class="profile_info">
+	    	<div class="tb-avatar tb-avatar-feature"><div class="photo">
+	            <img src="{{ get_user_avatar_url(user) }}">
+	        </div></div>		    	
+			<div class="profile_title">
+		    <p><h2 class="tb tb-title">{{ user.firstName }}</h2></p>
+	        <p><h2 class="tb tb-title">{{ user.lastName }}</h2></p>
+	        {% if user.isAmbassador %}
+		        <p class="ambassador_title"><a href="{{ app.request.baseUrl }}/ambassadors"><img src="{{ asset('assets/img/ambassador/title.png') }}" border="0"></a></p>	        
+			{% endif %}				
+			{% if app.user %}		
+				{% if app.user.id == user.id %}
+	        		<div class="editprofile"><a href="{{ path('fos_user_profile_edit') }}" class="btn btn-tb">Edit Profile</a></div>	
+				{% endif %}
+	        {% endif %}
+	        </div>      
+		</div>
 	</div>
 </div>	

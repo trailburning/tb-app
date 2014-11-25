@@ -44,9 +44,9 @@ class ActivityFeedGeneratorTest extends AbstractFrontendTest
         $this->assertTrue(isset($feed['items']), 'Activity contains items array');
         $this->assertInternalType('array', $feed['items'], 'Activity field items is of type array');
         $this->assertTrue(isset($feed['totalItems']), 'Activity contains totalItems field');
-        $this->assertEquals(2, $feed['totalItems'], 'Activity totalItems field value is"2"');
+        $this->assertEquals(3, $feed['totalItems'], 'Activity totalItems field value is"3"');
         $this->assertTrue(isset($feed['newItems']), 'Activity contains newItems field');
-        $this->assertEquals(2, $feed['newItems'], 'Activity newItems field value is"2"');
+        $this->assertEquals(3, $feed['newItems'], 'Activity newItems field value is"3"');
     }
     
     public function testCreateFeedFromRoutePublishActivity()

@@ -37,7 +37,7 @@ class CampaignData extends AbstractFixture implements FixtureInterface, Dependen
         
         $campaignRoute = new CampaignRoute();
         $campaignRoute->setCampaign($campaign);
-        $campaignRoute->setRoute($this->getReference('Route-ttm'));
+        $campaignRoute->setRoute($this->getReference('Route-london'));
         
         $manager->persist($campaignRoute);
         $manager->flush();

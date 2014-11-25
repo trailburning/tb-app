@@ -32,3 +32,6 @@ parameters:
     elasticsearch:
         hosts: 
             - 'e7p15amb:4yexy8z21pg5eee0@boxwood-7916136.eu-west-1.bonsai.io'
+    facebook_app_id: 626606520795449
+    facebook_app_secret: 0cea1f546f305e0213e59983c304a402
+    mandrill_api_key: kRr66_sxVLQJwehdLnakqg

@@ -82,7 +82,7 @@ abstract class AbstractApiTestCase extends WebTestCase
             ->setParameter('type', $type)
             ->setParameter('name', $name);
 
-        $attribute = $query->getSingleResult();
+        $attribute = $query->getOneOrNullResult();
         
         if (!$attribute) {
             $this->fail(sprintf('Missing Attribute with name "%s" and type "%s" in test DB', $name, $type‚));

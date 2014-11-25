@@ -35,6 +35,7 @@ class AppKernel extends Kernel
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new Knp\Bundle\GaufretteBundle\KnpGaufretteBundle(),
             new OldSound\RabbitMqBundle\OldSoundRabbitMqBundle(),
+            new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

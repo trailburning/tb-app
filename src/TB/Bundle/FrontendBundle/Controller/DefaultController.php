@@ -81,15 +81,6 @@ class DefaultController extends Controller
     }
     
     /**
-     * @Route("/ambassadors", name="ambassadors")
-     * @Template()
-     */
-    public function ambassadorsAction()
-    {
-        return [];
-    }
-    
-    /**
      * @Route("/gpxguide", name="gpxguide")
      * @Template()
      */

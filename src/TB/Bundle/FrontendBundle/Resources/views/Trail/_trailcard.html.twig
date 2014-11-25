@@ -1,6 +1,6 @@
 <div class="panel trail_card_panel">
     <div class="title"><h3 class="tb">{{ trail.routeCategory.name }}</h3></div>
-    {% if campaign is defined %}
+    {% if campaign is defined and campaign is not null %}
         <a href="{{ path('campaign_trail', {'trailSlug': trail.slug, 'campaignSlug': campaign.slug}) }}">
     {% else %}
         <a href="{{ path('trail', {'trailSlug': trail.slug}) }}">
@@ -30,7 +30,7 @@
         {% endif %}
 	</div>	
     <div class="summary">
-		<div class="length">{{ trail.length|dimension_format('km', 1000) }}</div>
+		<div class="length">{{ trail.length|kmDistance }} km</div>
 		<div class="altitude">
         {% if trail.tags.ascent %}
         	{{ trail.tags.ascent|dimension_format('m') }} D+

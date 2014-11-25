@@ -15,13 +15,13 @@ var TB_USER_ID = {{ app.user.id }};
 </script>
 
   <div id="home_header">  	
-{#
+
     <div class="hero_image">
       <div class="background">
         <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/o=80/http://assets.trailburning.com/images/campaign/urbantrails/london/8972edd96f999eabf6612d18d9bc2d2b042db5c8.jpg" class="resrc scale" /></div>
       </div>
   	</div>
-#}  	
+  	
 
     <div class="hero_image">
       <div class="background">
@@ -43,12 +43,6 @@ var TB_USER_ID = {{ app.user.id }};
   	
     <div class="hero_image">
       <div class="background">
-        <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/O=80/http://assets.trailburning.com/images/ambassadors/ambassador.jpg" class="resrc scale" /></div>
-	  </div>
-  	</div>  	
-
-    <div class="hero_image">
-      <div class="background">
         <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/o=80/http://assets.trailburning.com/images/editorial/high/4c8173930a2c99ded2e59d66d2627b46825d9c24.jpg" class="resrc scale" /></div>
       </div>
   	</div>
@@ -56,33 +50,25 @@ var TB_USER_ID = {{ app.user.id }};
 	<div class="hero_nav">
 	  <div class="button" data-slide="0"></div><div class="button" data-slide="1"></div><div class="button" data-slide="2"></div><div class="button" data-slide="3"></div><div class="button" data-slide="4"></div>
 	</div>
-{#
+
     <div class="hero_overlay" data-url="{{ app.request.baseUrl }}/competition">
       <div class="left">
     	<div class="title feature">
-<!--	
       	<h1 class="tb tb-title">Rediscover your</h1>
       	<br/>
       	<h1 class="tb tb-title">city runs</h1>
       	<br/>
-		<div class="hero_btn"><a href="{{ app.request.baseUrl }}/competition" class="btn btn-tb-action btn-tb-large">Visit Urban Trails</a></div>      	
--->    		
-      	<h1 class="tb tb-title">Bag a London</h1>
-      	<br/>
-      	<h1 class="tb tb-title">trail and win!</h1>
-      	<br/>
-		<div class="hero_btn"><a href="{{ app.request.baseUrl }}/competition" class="btn btn-tb-action btn-tb-large">Find out more</a></div>      	
-
+		<div class="hero_btn"><a href="{{ app.request.baseUrl }}/urbantrails/london" class="btn btn-tb-action btn-tb-large">Visit Urban Trails</a></div>      	
     	</div>
 	  </div>			  
 	  <div class="right">
-	  	<a href="{{ app.request.baseUrl }}/campaign/urbantrails-london"><img src="http://assets.trailburning.com/images/campaign/urbantrails/london/logo_urbantrails_london.png"></a>
+	  	<a href="{{ app.request.baseUrl }}/urbantrails/london"><img src="http://assets.trailburning.com/images/campaign/urbantrails/london/logo_urbantrails_london.png"></a>
       </div>
 	  <div class="tb-credit">Photo credit: © Nick Baber</div>
 	  <div class="sponsor_content">
 	  </div>  	
   	</div>
-#}  	  	
+  	  	
     <div class="hero_overlay" data-url="{{ app.request.baseUrl }}/profile/mtbuller">
       <div class="left">
     	<div class="title feature">
@@ -154,22 +140,6 @@ var TB_USER_ID = {{ app.user.id }};
 	    </div>
 	  </div>  	
   	</div>
-  	  	
-    <div class="hero_overlay" data-url="{{ app.request.baseUrl }}/ambassadors">
-      <div class="left">
-    	<div class="title">
-      	<h1 class="tb tb-title">I'm #Trailburning</h1>
-      	<br/>
-      	<h1 class="tb tb-title">Ambassadors</h1>
-      	<div class="hero_btn"><a href="{{ app.request.baseUrl }}/ambassadors" class="btn btn-tb-action btn-tb-large">Do you have what it takes?</a></div>
-    	</div>
-	  </div>			  
-	  <div class="right">  
-      </div>
-	  <div class="tb-credit"></div>      
-	  <div class="sponsor_content">
-	  </div>  	
-  	</div>  	
   	  	
     <div class="hero_overlay" data-url="{{ app.request.baseUrl }}/inspire/high">
       <div class="left">

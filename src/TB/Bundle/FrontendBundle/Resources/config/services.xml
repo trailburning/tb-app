@@ -53,10 +53,17 @@
             <tag name="kernel.event_listener" event="fos_user.registration.completed" method="onRegistrationCompleted" />  
         </service>
         
+        <!-- Register event listener addadditional information to the user object from external authentification providers (e.g. Facebook) -->
+        <service id="registration_initialize" class="TB\Bundle\FrontendBundle\EventListener\RegistrationInitializeListener">
+            <argument type="service" id="service_container" />
+            <tag name="kernel.event_listener" event="fos_user.registration.initialize" method="onRegistrationInitialize" />  
+        </service>
+        
         <!-- Register Event Listener to update the user gravatar avatar on every login --> 
         <service id="tb.security.login_listener" class="TB\Bundle\FrontendBundle\EventListener\AuthenticationSuccessListener">  
             <argument type="service" id="service_container" />  
             <argument type="service" id="doctrine.orm.entity_manager" />  
+            <argument type="service" id="tb.facebook.connector" />  
             <tag name="kernel.event_listener" event="security.authentication.success" method="onAuthenticationSuccess" />  
         </service> 
         
@@ -151,6 +158,7 @@
         <service id="tb.mailproxy" class="TB\Bundle\FrontendBundle\Util\Mailproxy">
             <argument type="service" id="service_container" />
             <argument type="service" id="http_client" />
+            <argument type="service" id="tb.mandrill" />
         </service>
         
         <!-- Register Event Listener to create a facebook shareimage when a Route gets published -->
@@ -198,6 +206,32 @@
             <argument type="service" id="doctrine.orm.entity_manager" />
             <argument type="service" id="old_sound_rabbit_mq.main_producer" />
             <tag name="kernel.event_listener" event="fos_user.registration.completed" method="onUserCreate" />  
+        </service>
+
+        <!-- Register Mandrill service -->
+        <service id="tb.mandrill" class="Mandrill">
+            <argument>%mandrill_api_key%</argument>
+        </service>
+        
+        <service id="tb.provider.oauth" class="TB\Bundle\FrontendBundle\Security\OAuthUserProvider">
+            <argument type="service" id="fos_user.user_manager" />
+            <argument type="collection">
+                <argument key="facebook">oAuthId</argument>
+            </argument>
+        </service>
+
+        <service id="tb.user_manager" class="TB\Bundle\FrontendBundle\Security\OAuthUserManager">
+            <argument type="service" id="security.encoder_factory" />
+            <argument type="service" id="fos_user.util.username_canonicalizer" />
+            <argument type="service" id="fos_user.util.email_canonicalizer" />
+            <argument type="service" id="fos_user.entity_manager" />
+            <argument>%fos_user.model.user.class%</argument>
+        </service>
+        
+        <!-- Register custom user profile form as service -->
+        <service id="tb.facebook.connector" class="TB\Bundle\FrontendBundle\Util\FacebookConnector">
+            <argument>%facebook_app_id%</argument>
+            <argument>%facebook_app_secret%</argument>
         </service>
         
     </services>

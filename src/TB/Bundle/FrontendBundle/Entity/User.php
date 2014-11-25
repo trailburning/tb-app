@@ -269,6 +269,34 @@ abstract class User extends BaseUser implements Exportable
     private $campaignUnfollowActivities;
     
     /**
+     * @var string
+     *
+     * @ORM\Column(name="oauth_service", type="string", nullable=true)
+     */
+    private $oAuthService;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="oauth_id", type="string", nullable=true)
+     */
+    private $oAuthId;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="oauth_access_token", type="string", nullable=true)
+     */
+    private $oAuthAccessToken;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="avatar_facebook", type="string", length=255, nullable=true)
+     */
+    private $avatarFacebook;
+    
+    /**
      * Constructor
      */
     public function __construct()
@@ -629,7 +657,7 @@ abstract class User extends BaseUser implements Exportable
     public function updateAvatarGravatar()
     {
         if ($this->getEmail() == '') {
-            throw new \Exception('Unable to generate gravatar profile hash, missing email firld for User');
+            throw new \Exception('Unable to generate gravatar profile hash, missing email field for User');
         }
         $hash = md5($this->getEmail());
         $imageUrl = sprintf('http://www.gravatar.com/avatar/%s', $hash);
@@ -650,6 +678,32 @@ abstract class User extends BaseUser implements Exportable
             $this->setAvatarGravatar('');
         }
     }
+    
+    /**
+     * Get the avatar from gravatar
+     */
+    public function updateAvatarFacebook()
+    {
+        if ($this->getOAuthService() == 'facebook') {
+        
+            $imageUrl = sprintf('http://graph.facebook.com/%s/picture?type=large', $this->getOAuthId());
+        
+            $c = curl_init();
+            curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($c, CURLOPT_CUSTOMREQUEST, 'HEAD');
+            curl_setopt($c, CURLOPT_HEADER, 1);
+            curl_setopt($c, CURLOPT_NOBODY, true);
+            curl_setopt($c, CURLOPT_URL, $imageUrl);
+            curl_setopt($c, CURLOPT_FOLLOWLOCATION, 1);
+            curl_exec($c);
+            
+            $url = curl_getinfo($c, CURLINFO_EFFECTIVE_URL);
+            if ($url != $imageUrl) {
+                $this->setAvatarFacebook($url);
+            }
+        }
+    }
+    
 
     /**
      * Add userIFollow
@@ -733,6 +787,12 @@ abstract class User extends BaseUser implements Exportable
         }
         
         return false;
+    }
+    
+    
+    public function isFollowing(User $user)
+    {   
+        return $this->isFollowingUser($user);
     }
     
     /**
@@ -929,8 +989,11 @@ abstract class User extends BaseUser implements Exportable
             'name' => $this->getName(),
             'title' => $this->getTitle(),
             'avatar' => $this->getAvatarUrl(),
-            'type' => $discr,
         ];
+        
+        if ($this instanceof \TB\Bundle\FrontendBundle\Entity\UserProfile) {
+            $data['is_ambassador'] = $this->getIsAmbassador();
+        }
 
         return $data;
     }
@@ -965,6 +1028,8 @@ abstract class User extends BaseUser implements Exportable
     {
         if ($this->getAvatar()) {
             $url = sprintf('http://assets.trailburning.com/images/profile/%s/%s', $this->getName(), $this->getAvatar());
+        } elseif ($this->getAvatarFacebook()) {
+            $url = $this->getAvatarFacebook();
         } elseif ($this->getAvatarGravatar()) {
             $url = $this->getAvatarGravatar();
         } elseif ($this instanceof \TB\Bundle\FrontendBundle\Entity\BrandProfile) {
@@ -1374,5 +1439,146 @@ abstract class User extends BaseUser implements Exportable
     public function getCampaignUnfollowActivities()
     {
         return $this->campaignUnfollowActivities;
+    }
+
+    /**
+     * Set oAuthService
+     *
+     * @param string $oAuthService
+     * @return User
+     */
+    public function setOAuthService($oAuthService)
+    {
+        $this->oAuthService = $oAuthService;
+
+        return $this;
+    }
+
+    /**
+     * Get oAuthService
+     *
+     * @return string 
+     */
+    public function getOAuthService()
+    {
+        return $this->oAuthService;
+    }
+
+    /**
+     * Set oAuthId
+     *
+     * @param string $oAuthId
+     * @return User
+     */
+    public function setOAuthId($oAuthId)
+    {
+        $this->oAuthId = $oAuthId;
+
+        return $this;
+    }
+
+    /**
+     * Get oAuthId
+     *
+     * @return string 
+     */
+    public function getOAuthId()
+    {
+        return $this->oAuthId;
+    }
+
+    /**
+     * Set oAuthAccessToken
+     *
+     * @param string $oAuthAccessToken
+     * @return User
+     */
+    public function setOAuthAccessToken($oAuthAccessToken)
+    {
+        $this->oAuthAccessToken = $oAuthAccessToken;
+
+        return $this;
+    }
+
+    /**
+     * Get oAuthAccessToken
+     *
+     * @return string 
+     */
+    public function getOAuthAccessToken()
+    {
+        return $this->oAuthAccessToken;
+    }
+    
+    public function serialize()
+    {
+        return serialize(array(
+            $this->name,
+            $this->email,
+            $this->firstName,
+            $this->lastName,
+            $this->location,
+            $this->about,
+            $this->avatar,
+            $this->avatarGravatar,
+            $this->activityUnseenCount,
+            $this->activityLastViewed,
+            $this->homepageOrder,
+            $this->gender,
+            $this->newsletter,
+            $this->registeredAt,
+            $this->oAuthService,
+            $this->oAuthId,
+            $this->oAuthAccessToken,
+            parent::serialize(),
+        ));
+    }
+
+    public function unserialize($str)
+    {   
+        list(
+            $this->name,
+            $this->email,
+            $this->firstName,
+            $this->lastName,
+            $this->location,
+            $this->about,
+            $this->avatar,
+            $this->avatarGravatar,
+            $this->activityUnseenCount,
+            $this->activityLastViewed,
+            $this->homepageOrder,
+            $this->gender,
+            $this->newsletter,
+            $this->registeredAt,
+            $this->oAuthService,
+            $this->oAuthId,
+            $this->oAuthAccessToken,
+            $parentData
+        ) = unserialize($str);
+        parent::unserialize($parentData);
+    }
+
+    /**
+     * Set avatarFacebook
+     *
+     * @param string $avatarFacebook
+     * @return User
+     */
+    public function setAvatarFacebook($avatarFacebook)
+    {
+        $this->avatarFacebook = $avatarFacebook;
+
+        return $this;
+    }
+
+    /**
+     * Get avatarFacebook
+     *
+     * @return string 
+     */
+    public function getAvatarFacebook()
+    {
+        return $this->avatarFacebook;
     }
 }

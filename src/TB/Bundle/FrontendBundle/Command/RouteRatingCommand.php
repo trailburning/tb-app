@@ -48,7 +48,7 @@ class RouteRatingCommand extends ContainerAwareCommand
             } elseif ($count >= 1) {
                 $rating = 1;
             } else {
-                $rating = null;
+                $rating = 0;
             }
             
             $em->createQuery('UPDATE TBFrontendBundle:Route r SET r.rating = :rating WHERE r.id = :id')

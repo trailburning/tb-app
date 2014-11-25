@@ -1,9 +1,19 @@
 <div class="trail_card_sticker">	  		
 	<div class="panel trail_card_panel">
 	    <div class="title"><h3 class="tb">{{ trail.routeCategory.name }}</h3></div>
-	    <a href="{{ path('trail', {'trailSlug': trail.slug}) }}">
+        {% if campaign is defined and campaign is not null %}
+            <a href="{{ path('campaign_trail', {'trailSlug': trail.slug, 'campaignSlug': campaign.slug}) }}">
+        {% else %}
+            <a href="{{ path('trail', {'trailSlug': trail.slug}) }}">
+        {% endif %}
 	    <div class="photo tb-photo-btn">
-	        <div class="image_container fade_on_load"><img src="http://app.resrc.it/o=80/{{ trail.favouriteMedia.absolutePath }}" class="resrc scale" border="0"/></div>
+	        <div class="image_container fade_on_load">
+                {% if trail.favouriteMedia %}	
+                	<img src="http://app.resrc.it/o=80/{{ trail.favouriteMedia.absolutePath }}" class="resrc scale" border="0"/>
+                {% else %}
+                	<img src="http://app.resrc.it/o=80/http://media.trailburning.com/images/default/example_trailcard.jpg" class="resrc scale" border="0"/>
+                {% endif %}
+	        </div>
 	      	<div class="card_title">
 				<h1>{{ trail.shortName ? trail.shortName : trail.name }}</h1>
 				<br/>
@@ -18,7 +28,7 @@
 	    </a>
 		<div class="card_avatar">
             {% if trail.eventRoutes and trail.eventRoutes|length() > 0 %}
-    	        <div class="sponsor"><a href="{{ path('event', {slug: trail.eventRoutes[0].event.slug}) }}"><img src="http://assets.trailburning.com/images/events/{{ trail.eventRoutes[0].event.slug }}/card_trail_sticker_logo.png"></a></div>	       		
+    	        <div class="sponsor"><a href="{{ path('event', {slug: trail.eventRoutes[0].event.slug}) }}"><img src="http://assets.trailburning.com/images/event/{{ trail.eventRoutes[0].event.slug }}/card_trail_sticker_logo.png"></a></div>	       		
             {% elseif trail.user and trail.user.name != 'admin'  %}
 				{% if trail.user is BrandProfile %}
                     <div class="sponsor"><a href="{{ path('profile', {'name': trail.user.name}) }}"><img src="http://assets.trailburning.com/images/profile/{{ trail.user.name }}/card_trail_sticker_logo.png"></a></div>                        
@@ -28,7 +38,7 @@
             {% endif %}
 		</div>	
 	    <div class="summary">
-			<div class="length">{{ trail.length|dimension_format('km', 1000) }}</div>
+			<div class="length">{{ trail.length|kmDistance }} km</div>
 			<div class="altitude">
             {% if trail.tags.ascent %}
             	{{ trail.tags.ascent|dimension_format('m') }} D+

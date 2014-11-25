@@ -1,8 +1,9 @@
 define([
   'underscore', 
   'backbone',
-  'models/TrailModel'
-], function(_, Backbone, TrailModel){
+  'models/TrailModel',
+  'views/maps/MapTrailMarkerPopup'
+], function(_, Backbone, TrailModel, MapTrailMarkerPopup){
 
   var MapTrailMarker = Backbone.View.extend({
     initialize: function(){
@@ -13,6 +14,7 @@ define([
 	  var self = this;
 	      	
       this.trailEvents.dispatcher.on("DistanceMarkers:click", function(evt){
+      	self.showPopup();
 		// fire event
         app.dispatcher.trigger("MapTrailMarker:click", self);                     	  	
       }, this);
@@ -46,12 +48,19 @@ define([
       } 
       this.bTrailVisible = false;   
     },
+    showPopup: function(){
+      this.popup.show();
+    },    
+    hidePopup: function(){
+      this.popup.hide();
+    },
     render: function(){
       var self = this;
 
       if (!this.bRendered) {
         // add to map
         function onClick(evt) {
+		  self.showPopup();        	
 		  // fire event
           app.dispatcher.trigger("MapTrailMarker:click", self);                
 	    }
@@ -63,8 +72,11 @@ define([
 	    }	    
 	    
 	    this.marker = L.marker(new L.LatLng(this.model.get('start')[1], this.model.get('start')[0])).on('click', onClick).on('mouseover', onMouseOver).on('mouseout', onMouseOut);			  
-	    this.marker.setIcon(L.divIcon({className: 'tb-map-location-marker', html: '<div class="marker"></div>', iconSize: [18, 25], iconAnchor: [9, 25]}));      	  
-		this.options.mapCluster.addLayer(this.marker);		
+	    this.marker.setIcon(L.divIcon({className: 'tb-map-location-marker', html: '<div class="marker"></div>', iconSize: [22, 30], iconAnchor: [11, 30]}));      	  
+		this.options.mapCluster.addLayer(this.marker);
+
+	    this.popup = new MapTrailMarkerPopup({ model: this.model, map: this.options.map });
+		this.popup.render();
 	  }
       this.bRendered = true;
                        
@@ -79,6 +91,7 @@ define([
 	  var self = this;
 		
 	  function onClick(evt){
+	  	self.showPopup();
 	    // fire event
         app.dispatcher.trigger("MapTrailMarker:click", self);                
 	  }

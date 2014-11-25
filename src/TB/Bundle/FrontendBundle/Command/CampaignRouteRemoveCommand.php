@@ -36,14 +36,12 @@ class CampaignRouteRemoveCommand extends ContainerAwareCommand
         try {
             $campaignRoute = $query->getSingleResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
-            throw $this->createNotFoundException(
-                sprintf('CampaignRoute %s not found for campaignId %s and routeId %s', $campaignId, $routeId)
-            );
+            throw new \Exception(sprintf('CampaignRoute %s not found for campaignId %s and routeId %s', $campaignId, $routeId));
         }
         
         $em->remove($campaignRoute);
         $em->flush();
 
-        $output->writeln(sprintf('Route %s was removed to campaign %s', $campaignRoute->getRoute()->getSlug(), $campaignRoute->getCampaign()->getSlug()));
+        $output->writeln(sprintf('Route %s was removed from campaign %s', $campaignRoute->getRoute()->getSlug(), $campaignRoute->getCampaign()->getSlug()));
     }
 }

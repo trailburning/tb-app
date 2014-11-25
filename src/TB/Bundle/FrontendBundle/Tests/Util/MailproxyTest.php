@@ -4,13 +4,22 @@ namespace TB\Bundle\FrontendBundle\Tests\Util;
 
 use TB\Bundle\FrontendBundle\Tests\AbstractFrontendTest;
 
-class MediaproxyTest extends AbstractFrontendTest
+class MailproxyTest extends AbstractFrontendTest
 {
     
-    public function testPost()
+    public function setUp() 
     {
-        $mediaproxy = $this->getContainer()->get('tb.mailproxy');
-        $mediaproxy->post('patrick@trailburning.com');
+        $this->mailproxy = $this->getContainer()->get('tb.mailproxy');   
+    }
+    
+    public function testAddNewsletterSubscriber()
+    {
+        // $this->mailproxy->addNewsletterSubscriber('patrick@trailburning.com');
+    }
+    
+    public function testSendWelcomeMail()
+    {
+        // $this->mailproxy->sendWelcomeMail('patrick@trailburning.com', 'Patrick');
     }
     
 }
