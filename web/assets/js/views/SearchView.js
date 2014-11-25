@@ -57,7 +57,7 @@ define([
                 text = item.highlight.suggest_engram;
             }
         }
-    	
+
     	switch (item._type) {
     	  case 'user_profile':
     	    strURL += '/profile/' + item._source.name;
@@ -78,6 +78,10 @@ define([
     	  case 'route':
     	    strURL += '/trail/' + item._source.slug;
     	    strItem = '<a href="' + strURL + '" class="clearfix"><div class="type"><div class="icon_container"><div class="icon trailcard"></div></div></div><div class="match">' + text + '</div></a>';
+    	    break;
+    	  case 'campaign':
+    	    strURL += '/campaign/' + item._source.slug;
+    	    strItem = '<a href="' + strURL + '" class="clearfix"><div class="type"><div class="icon_container"><img src="http://assets.trailburning.com/images/campaign/'+item._source.slug+'/icon.png"></div></div><div class="match">' + text + '</div></a>';
     	    break;
     	}
 

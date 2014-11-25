@@ -914,6 +914,10 @@ a:active .tb-cntrl {
   height: 38px;
 }
 
+.search .ui-autocomplete li .icon_container img {
+  width: 100%;
+}
+
 .search .ui-autocomplete li .icon {
   width: 100%;
   height: 100%;
