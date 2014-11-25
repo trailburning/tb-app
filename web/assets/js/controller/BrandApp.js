@@ -18,17 +18,24 @@ define([
             
 	this.searchView = new SearchView({ el: '#searchview' });
     
-  	var imgLoad = imagesLoaded('.scale');
-  	imgLoad.on('always', function(instance) {
-      for ( var i = 0, len = imgLoad.images.length; i < len; i++ ) {
-        $(imgLoad.images[i].img).addClass('scale_image_ready');
+	$('.scale').imagesLoaded()
+  	  .progress( function(instance, image) {
+  	  	$(image.img).addClass('scale_image_ready');
         // update pos
-        $(imgLoad.images[i].img).imageScale();
-      }
-      // fade in - delay adding class to ensure image is ready  
-      $('.panels .fade_on_load').addClass('tb-fade-in');
-      $('.panels .image_container').css('opacity', 1);
-    });    
+        $(image.img).imageScale();
+  	  	
+    	var elContainer = $(image.img).parent();
+    	if (elContainer.hasClass('fade_on_load')) {
+          // fade in - delay adding class to ensure image is ready  
+          elContainer.addClass('tb-fade-in');
+		  var nRnd = 100 * (Math.floor(Math.random() * 6) + 1);
+		  setTimeout(function(){
+		  	elContainer.css('opacity', 1);
+		  }, nRnd);    		
+    	}
+		// invoke resrc      
+	    resrc.resrc($(image.img));        
+  	});    
   };
     
   return { 

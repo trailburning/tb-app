@@ -89,7 +89,20 @@ class MediaControllerTest extends AbstractApiTestCase
             'The response JSON media mimetype is ok');
         $this->assertRegExp('/\/' . $route->getId() . '\/[\d\w]+\.jpg/', $responseObj->value[0]->versions[0]->path,
             'The response JSON media versions is ok');            
+            
+        // post invalid type
+        
+        $mediaFile = new UploadedFile(
+            realpath(__DIR__ . '/../../DataFixtures/GPX/example.gpx'),
+            'example.gpx'
+        );
+        $client = $this->createClient();
+        $crawler = $client->request('POST', '/v1/route/' . $route->getId() . '/medias/add', [], ['medias' => $mediaFile]);
+        
+        $this->assertEquals(Response::HTTP_BAD_REQUEST,  $client->getResponse()->getStatusCode(),
+            'Response returns Status Code 400');
     }
+    
     
     /**
      * Test postRouteMedias() with multiple images

@@ -71,7 +71,6 @@ var TB_TRAIL_ID = {{ trail.id }};
             <div id="trail_map_view"></div>
             <div id="trail_slides_view"></div>
         </div>
-        
         <div id="trail_overlay">
         	<div class="overlay_background"></div>
             <div class="overlay_content">
@@ -87,8 +86,8 @@ var TB_TRAIL_ID = {{ trail.id }};
                     <div class='toggle_btn'></div>                              
                 </div>
             </div>
-        </div>
-        
+        </div>        
+    	<div id="player_big_btn"></div>        
         <div id="trail_intro_view">
 			<div class="info-hero tb-move-horiz">				  						  				
 			  <div class="trail_title tb-move-horiz {% if event %} no_avatar{% endif %}">
@@ -109,6 +108,12 @@ var TB_TRAIL_ID = {{ trail.id }};
                         <div class="author">by <strong>{{ user.displayName }}</strong></div>
                     {% endif %}
                 {% endif %}                
+                
+                {#
+	        	{% if user.isAmbassador %}
+		        	Ambassador	        
+				{% endif %}				
+				#}            
               </div>
               
         	  {% if event or user is BrandProfile %}
@@ -265,8 +270,6 @@ var TB_TRAIL_ID = {{ trail.id }};
 								    </div>
 								</div>
 							{% endif %}
-{#	
-MLA - HIDE UNTIL URBAN TRAILS LAUNCHES!
 	
 							{% if campaigns and campaigns|length > 0 %}
 								<div class="panel trail_card_panel campaign_panel">
@@ -287,7 +290,6 @@ MLA - HIDE UNTIL URBAN TRAILS LAUNCHES!
                                     {% endfor %}
 								</div>
 							{% endif %}
-#}
                         	
                             {% if event and eventTrails %}
                 				<div class="event_trails_container">

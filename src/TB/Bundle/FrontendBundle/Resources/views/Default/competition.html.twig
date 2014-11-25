@@ -26,7 +26,7 @@ var TB_USER_ID = {{ app.user.id }};
 #}
     <div class="event_back"></div>
     <div class="event_title">
-      <img src="http://assets.trailburning.com/images/campaign/urbantrails/london/logo_urbantrails_london.png" />
+      <a href="{{ app.request.baseUrl }}/urbantrails/london"><img src="http://assets.trailburning.com/images/campaign/urbantrails/london/logo_urbantrails_london.png" /></a>
       <br/>
 	  {% if app.user %}  	      
 	    <a href="{{ path('trailmaker') }}" class="btn btn-tb-action btn-tb-large">Add your Urban Trail</a>

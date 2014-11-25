@@ -241,6 +241,11 @@ define([
       this.trailUploadPhotoProgressView.render(nProgress);
     },
     onTrailUploadPhotoViewError: function(trailUploadPhotoView){
+      this.model.set('errMsg', 'There is a problem with the photo.');
+      if (trailUploadPhotoView.errObj) {
+      	this.model.set('errMsg', trailUploadPhotoView.errObj.usermsg);	          	
+      }    	
+    	
       $('#uploadPhotoerror_view').show();
       
       this.trailUploadPhotoErrorView = new TrailUploadPhotoErrorView({ el: '#overlayContent_view', model: this.model, bMultiUpload: trailUploadPhotoView.multiUpload() });

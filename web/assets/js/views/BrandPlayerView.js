@@ -75,6 +75,14 @@ define([
     buildBtns: function(){
       var self = this;
       
+      $('#player_big_btn').click(function(evt){
+      	self.showPlayer();
+	  });
+
+      $('#player_big_btn').mouseover(function(evt){
+      	$(evt.currentTarget).css('cursor','pointer');
+	  });
+      
       $('#trail_mini_view .toggle_btn').click(function(evt){
         self.onTrailToggleViewBtnClick(evt);
 	  });
@@ -234,6 +242,7 @@ define([
       
 	  var self = this;
 
+	  $('#player_big_btn').hide();
       // add transition for effect      
       $('#campaignplayer').addClass('tb-size');
 	  $('#trail_views').addClass('tb-move-vert');
@@ -258,6 +267,7 @@ define([
       	
       this.nPlayerView = PLAYER_INTRO;
 
+	  $('#player_big_btn').show();
 	  $('#headerview .close_link').hide();
 
       // add transition for effect      
@@ -432,7 +442,7 @@ define([
         case PLAYER_INTRO:
           setTimeout(function() {
 			self.showIntroOverlay();
-          }, 500);
+          }, 1000);
           break;
             
         case PLAYER_SHOW:
