@@ -115,17 +115,14 @@ define([
 	  this.trailMapView.render();
 
 	  var bCookie = false;
-	      	
-	      	console.log('t:'+TB_TRAIL_ID);
-	      	
-      // mla
   	  var nRouteID = $.cookie('route_id');
   	  if (nRouteID != undefined) {
   	  	bCookie = true;
   	  }
-  	  if ($.urlParam('trail') != null) {
+  	  
+  	  if (typeof TB_TRAIL_ID != 'undefined') {
 	    bCookie = false;         
-		nRouteID = $.urlParam('trail');  	  	
+		nRouteID = TB_TRAIL_ID;  	  	
   	  }
   	            
 	  if (nRouteID != undefined) {

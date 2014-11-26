@@ -1,11 +1,3 @@
-$.urlParam = function(name){
-    var results = new RegExp('[\?&amp;]' + name + '=([^&amp;#]*)').exec(window.location.href);
-    if (results) {
-      return results[1] || 0;	
-    }
-    return null;
-}
-
 function formatAltitude(nStr){
 	nStr += '';
     x = nStr.split('.');
