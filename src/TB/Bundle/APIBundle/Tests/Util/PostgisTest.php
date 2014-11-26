@@ -2,11 +2,11 @@
 
 namespace TB\Bundle\ApiBundle\Tests\Util;
 
-use TB\Bundle\APIBundle\Tests\AbstractApiTestCase;
+use TB\Bundle\APIBundle\Tests\AbstractApiTest;
 use TB\Bundle\FrontendBundle\Entity\GpxFile;
 use TB\Bundle\APIBundle\Util\ApiException;
 
-class PostgisTest extends AbstractApiTestCase
+class PostgisTest extends AbstractApiTest
 {
 
     public function testWriteRoute()

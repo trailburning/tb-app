@@ -16,5 +16,10 @@
         <service id="tb.gpxfile.importer" class="TB\Bundle\APIBundle\Util\GpxFileImporter">
         </service>
         
+        <!-- Social  -->
+        <service id="tb.socialmedia" class="TB\Bundle\APIBundle\Util\SocialMedia">
+            <argument type="service" id="twitter_api" />
+        </service>
+        
     </services>
 </container>

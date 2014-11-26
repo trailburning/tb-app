@@ -2,7 +2,7 @@
 
 namespace TB\Bundle\APIBundle\Tests\Controller;
 
-use TB\Bundle\APIBundle\Tests\AbstractApiTestCase;
+use TB\Bundle\APIBundle\Tests\AbstractApiTest;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Tester\ApplicationTester;
 use Symfony\Component\Console\Output\Output;
@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 /**
  *
  */
-class GpxFileControllerTest extends AbstractApiTestCase
+class GpxFileControllerTest extends AbstractApiTest
 {    
     
     /**

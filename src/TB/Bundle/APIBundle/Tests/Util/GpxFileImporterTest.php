@@ -2,9 +2,9 @@
 
 namespace TB\Bundle\ApiBundle\Tests\Util;
 
-use TB\Bundle\APIBundle\Tests\AbstractApiTestCase;
+use TB\Bundle\APIBundle\Tests\AbstractApiTest;
 
-class GpxFileImporterTest extends AbstractApiTestCase
+class GpxFileImporterTest extends AbstractApiTest
 {
 
     /**
