@@ -88,6 +88,20 @@ abstract class AbstractFrontendTest extends WebTestCase
         return $route;
     }
     
+    protected function getRegion($slug)
+    {
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        $region = $em
+            ->getRepository('TBFrontendBundle:Region')
+            ->findOneBySlug($slug);
+        
+        if (!$region) {
+            $this->fail(sprintf('Missing Region with slug "%s" in test DB', $slug));
+        }
+        
+        return $region;
+    }
+    
     protected function getCampaign($slug)
     {
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');

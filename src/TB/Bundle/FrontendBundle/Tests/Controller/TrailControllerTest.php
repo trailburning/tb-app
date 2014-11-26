@@ -132,4 +132,28 @@ class TrailControllerTest extends AbstractFrontendTest
 
         $crawler = $client->request('GET', '/map/trails');
     }
+    
+    public function testMapTrailsTrail()
+    {
+        $this->loadFixtures([
+            'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData',
+        ]);
+        
+        $route = $this->getRoute('grunewald');
+        $client = static::createClient();
+
+        $crawler = $client->request('GET', '/map/trails/trail/' . $route->getSlug());
+    }
+    
+    public function testMapTrailsRegion()
+    {
+        $this->loadFixtures([
+            'TB\Bundle\FrontendBundle\DataFixtures\ORM\RegionData',
+        ]);
+        
+        $region = $this->getRegion('london');
+        $client = static::createClient();
+
+        $crawler = $client->request('GET', '/map/trails/region/' . $region->getSlug());
+    }
 }
