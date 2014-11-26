@@ -29,12 +29,6 @@ define([
       	this.activityFeedView.getActivity();	  	
 	  }
 
-	  // do we have a route to select?
-	  var nRouteID = $.cookie('route_id');
-	  if (nRouteID == undefined) {
-	  	$('#welcome_view').show();
-	  }
-
       this.trailMapView = new MapTrailView({ el: '#trail_map_view', elCntrls: '#view_map_btns', model: this.model });
 //      this.trailCardView = new TrailCardView({ el: '#trailcard_view' });
   	  this.trailMapView.render();
@@ -119,16 +113,41 @@ define([
     playerCheckpoint: function(){
       this.bPlayerReady = true;
 	  this.trailMapView.render();
-    	
-  	  var nRouteID = $.cookie('route_id');          
+
+	  var bCookie = false;
+	      	
+      // mla
+  	  var nRouteID = $.cookie('route_id');
+  	  if (nRouteID != undefined) {
+  	  	bCookie = true;
+  	  }
+  	  if ($.urlParam('trail') != null) {
+	    bCookie = false;         
+		nRouteID = $.urlParam('trail');  	  	
+  	  }
+  	            
 	  if (nRouteID != undefined) {
-	    this.trailMapView.setMapView(new L.LatLng($.cookie('route_lat'), $.cookie('route_lng')), $.cookie('route_zoom'));
-        this.trailMapView.selectTrail(nRouteID);
-	  	// remove
-	  	$.removeCookie('route_id');
-	    $.removeCookie('route_lat');
-	    $.removeCookie('route_lng');
-	    $.removeCookie('route_zoom');        
+	  	var model = this.collection.get(nRouteID);
+	  	if (model) {
+		  	var fLat, fLng, nZoom;
+		  	if (bCookie) {
+			  fLat = $.cookie('route_lat');
+		  	  fLng = $.cookie('route_lng');
+		  	  nZoom = $.cookie('route_zoom');	  		
+		  	}
+		  	else {
+			  fLat = model.get('start')[1];
+		  	  fLng = model.get('start')[0];
+		  	  nZoom = 12;	  			  		
+		  	}
+		    this.trailMapView.setMapView(new L.LatLng(fLat, fLng), nZoom);
+	        this.trailMapView.selectTrail(nRouteID);
+		  	// remove
+		  	$.removeCookie('route_id');
+		    $.removeCookie('route_lat');
+		    $.removeCookie('route_lng');
+		    $.removeCookie('route_zoom');
+	  	}
 	  }          
 	  this.showOverlay();	  
     },    

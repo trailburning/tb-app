@@ -248,7 +248,7 @@ var TB_TRAIL_ID = {{ trail.id }};
                         <div class="right">
                         	<div id="trail_location_view" class="panel trail_location_panel">
 				                <div class="content">
-				                    <div id="trail_location_map" class="trail_location_map"></div>
+				                    <div id="trail_location_map" class="trail_location_map" data-url="{{ path('map_trails_trail', {routeSlug: trail.slug}) }}"></div>
 				                </div>
                         	</div>
                         	

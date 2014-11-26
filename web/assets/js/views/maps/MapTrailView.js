@@ -218,6 +218,7 @@ define([
 
 	  var cardModel = this.collection.get(id);
       trailCardMarker.selected(true);      
+      trailCardMarker.showPopup();      
 
       this.currMarkerOrCluster = this.markerCluster.getVisibleParent(this.currTrailCardMarker.marker);
       if (this.currMarkerOrCluster) {
