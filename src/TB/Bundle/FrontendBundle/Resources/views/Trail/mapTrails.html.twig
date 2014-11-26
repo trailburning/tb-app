@@ -10,6 +10,7 @@
 <script>
 var TB_APP = 'MapTrailsApp';
 var TB_PATH = '{{ app.request.baseUrl }}';
+var TB_TRAIL_ID = {{ route.id }};
 {% if app.user %}		
 var TB_USER_ID = {{ app.user.id }};
 {% endif %}

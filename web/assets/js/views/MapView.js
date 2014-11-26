@@ -116,6 +116,8 @@ define([
 
 	  var bCookie = false;
 	      	
+	      	console.log('t:'+TB_TRAIL_ID);
+	      	
       // mla
   	  var nRouteID = $.cookie('route_id');
   	  if (nRouteID != undefined) {
