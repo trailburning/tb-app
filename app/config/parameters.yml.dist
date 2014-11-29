@@ -35,3 +35,5 @@ parameters:
     facebook_app_id: 626606520795449
     facebook_app_secret: 0cea1f546f305e0213e59983c304a402
     mandrill_api_key: kRr66_sxVLQJwehdLnakqg
+    mailchimp_api_key: 9e963524b377c14854c8370ef44b7f27-us9
+    mailchimp_newsletters_list_id: f5d06e16fa

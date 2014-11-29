@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "2387b3c350fd5050017fd2db81d76f4a",
+    "hash": "d2ff29767632d151684b2cd91d2704cb",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -1878,6 +1878,52 @@
                 "http client"
             ],
             "time": "2014-09-15 12:42:36"
+        },
+        {
+            "name": "mailchimp/mailchimp",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://bitbucket.org/mailchimp/mailchimp-api-php.git",
+                "reference": "7ac99b5ac746d5875c5c350ad7e3b83674c83ec1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://bitbucket.org/mailchimp/mailchimp-api-php/get/7ac99b5ac746d5875c5c350ad7e3b83674c83ec1.zip",
+                "reference": "7ac99b5ac746d5875c5c350ad7e3b83674c83ec1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.0"
+            },
+            "require-dev": {
+                "apigen/apigen": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Mailchimp": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "MailChimp Devs",
+                    "email": "api@mailchimp.com",
+                    "homepage": "http://mailchimp.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "API client library for the MailChimp bulk email as a service platform",
+            "homepage": "https://bitbucket.org/mailchimp/mailchimp-api-php",
+            "keywords": [
+                "api",
+                "email"
+            ],
+            "time": "2014-10-30 19:38:12"
         },
         {
             "name": "mandrill/mandrill",
@@ -3831,6 +3877,7 @@
         "webfactory/exceptions-bundle": 0,
         "react/child-process": 20,
         "hwi/oauth-bundle": 20,
+        "mailchimp/mailchimp": 20,
         "phpunit/phpunit": 0,
         "liip/functional-test-bundle": 20
     },

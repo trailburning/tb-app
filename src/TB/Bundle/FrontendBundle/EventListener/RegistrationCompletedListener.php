@@ -23,11 +23,6 @@ class RegistrationCompletedListener
     public function onRegistrationCompleted(FilterUserResponseEvent $event)
     {
         $mailproxy = $this->container->get('tb.mailproxy');
-        
-        if ($event->getUser()->getNewsletter() == true) {
-            $mailproxy->addNewsletterSubscriber($event->getUser()->getEmail());
-        }
-        
         $mailproxy->sendWelcomeMail($event->getUser()->getEmail(), $event->getUser()->getFirstName());
     }
 }

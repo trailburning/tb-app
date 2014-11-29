@@ -5,6 +5,8 @@ namespace TB\Bundle\FrontendBundle\Util;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Guzzle\Http\Client;
 use Mandrill;
+use Mailchimp_Lists;
+use Exception;
 
 /**
  * 
@@ -13,27 +15,38 @@ class Mailproxy
 {
     protected $httpClient;
     
-    public function __construct(ContainerInterface $container, Client $httpClient, Mandrill $mandrill)
+    public function __construct(ContainerInterface $container, Client $httpClient, Mandrill $mandrill, Mailchimp_Lists $mailchimpLists)
     {
         $this->container = $container;
         $this->httpClient = $httpClient;
         $this->mandrill = $mandrill;
+        $this->mailchimpLists = $mailchimpLists;
     }
     
     public function addNewsletterSubscriber($email)
     {
-        $file = @file_get_contents($this->container->getParameter('mailproxy_email_server'), NULL, stream_context_create(array('http' => array('method' => 'POST', 'content' => http_build_query([
-                'cm-zjdkk-zjdkk' => $email,
-            ])))));
-        
-        // $request = $this->httpClient->post($this->container->getParameter('mailproxy_email_server'), [
-//             'body' => [
-//                 'cm-zjdkk-zjdkk' => 'trost@cynova.net',
-//             ],
-//         ]);
-//         $response = $request->send();
-
-        return true;
+        try {
+            $data = [
+                'email' => $email,
+            ];
+            $this->mailchimpLists->subscribe($this->container->getParameter('mailchimp_newsletters_list_id'), $data);    
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+    
+    public function removeNewsletterSubscriber($email) 
+    {
+        try {
+            $data = [
+                'email' => $email,
+            ];
+            $this->mailchimpLists->unsubscribe($this->container->getParameter('mailchimp_newsletters_list_id'), $data);    
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
     }
     
     public function sendWelcomeMail($email, $firstname) 

@@ -70,6 +70,7 @@
         <!-- Register Event Subscriber to listen on Entity update and persist events -->
         <service id="tb.entity_event_subscriber" class="TB\Bundle\FrontendBundle\EventListener\EntityEventSubscriber">
             <argument type="service" id="service_container" />
+            <argument type="service" id="tb.mailproxy" />
             <tag name="doctrine.event_subscriber" connection="default" />
         </service>
         
@@ -159,6 +160,7 @@
             <argument type="service" id="service_container" />
             <argument type="service" id="http_client" />
             <argument type="service" id="tb.mandrill" />
+            <argument type="service" id="tb.mailchimp_lists" />
         </service>
         
         <!-- Register Event Listener to create a facebook shareimage when a Route gets published -->
@@ -234,5 +236,14 @@
             <argument>%facebook_app_secret%</argument>
         </service>
         
+        <service id="tb.mailchimp" class="Mailchimp">
+            <argument>%mailchimp_api_key%</argument>
+        </service>
+            
+        <service id="tb.mailchimp_lists" class="Mailchimp_Lists">
+            <argument type="service" id="tb.mailchimp" />
+        </service>
+        
+            
     </services>
 </container>
