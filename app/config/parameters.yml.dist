@@ -37,3 +37,4 @@ parameters:
     mandrill_api_key: kRr66_sxVLQJwehdLnakqg
     mailchimp_api_key: 9e963524b377c14854c8370ef44b7f27-us9
     mailchimp_newsletters_list_id: f5d06e16fa
+    mailchimp_webhook_secret: Ugb8h20Jhk9w8hd01n309Jbue2774kH7g3u8

@@ -87,7 +87,7 @@ class EntityEventSubscriber implements EventSubscriber
         $uow->computeChangeSets();
         // Test that publish was set from false to true  by computing a changeset
         $changeset = $uow->getEntityChangeSet($campaignRoute);
-        // accept is in the changeset, the new differs from the old value, accept is true TODO: field accept is currently not present 
+        // accept is in the changeset, the newsletterw differs from the old value, accept is true TODO: field accept is currently not present 
         if (true || (isset($changeset['publish']) && $campaignRoute->getPublish() === true && $changeset['publish'][0] !== $changeset['publish'][1])) {
             // accept is changed from false to true
             $event = new CampaignRouteAcceptEvent($campaignRoute->getCampaign()->getUser(), $campaignRoute->getRoute(), $campaignRoute->getCampaign());

@@ -15,6 +15,7 @@ class MediaImporter
 {
 
     protected $em;
+    
     protected $httpClient;
     
     public function __construct(EntityManager $em, Client $httpClient)

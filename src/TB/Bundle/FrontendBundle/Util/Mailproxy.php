@@ -15,6 +15,12 @@ class Mailproxy
 {
     protected $httpClient;
     
+    protected $container;
+    
+    protected $mandrill;
+    
+    protected $mailchimpLists;
+    
     public function __construct(ContainerInterface $container, Client $httpClient, Mandrill $mandrill, Mailchimp_Lists $mailchimpLists)
     {
         $this->container = $container;

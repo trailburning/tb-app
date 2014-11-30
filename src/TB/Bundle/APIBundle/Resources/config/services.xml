@@ -16,5 +16,10 @@
         <service id="tb.gpxfile.importer" class="TB\Bundle\APIBundle\Util\GpxFileImporter">
         </service>
         
+        <!-- Register Mailchimp Webhook Service -->
+        <service id="tb.mailchimp.webhook" class="TB\Bundle\ApiBundle\Util\MailchimpWebhook">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+        </service>
+        
     </services>
 </container>
