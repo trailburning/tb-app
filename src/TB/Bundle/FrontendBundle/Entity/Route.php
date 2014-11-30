@@ -279,6 +279,13 @@ class Route implements Exportable
      * @ORM\OneToMany(targetEntity="CampaignRoute", mappedBy="route")
      **/
     private $campaignRoutes;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="bitly_url", type="string", length=255, nullable=true)
+     */
+    private $bitlyUrl;
 
     /**
      * Set name
@@ -1553,4 +1560,27 @@ class Route implements Exportable
         return $this->campaignRouteAcceptActivities;
     }
 
+
+    /**
+     * Set bitlyUrl
+     *
+     * @param string $bitlyUrl
+     * @return Route
+     */
+    public function setBitlyUrl($bitlyUrl)
+    {
+        $this->bitlyUrl = $bitlyUrl;
+
+        return $this;
+    }
+
+    /**
+     * Get bitlyUrl
+     *
+     * @return string 
+     */
+    public function getBitlyUrl()
+    {
+        return $this->bitlyUrl;
+    }
 }

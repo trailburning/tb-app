@@ -165,6 +165,8 @@
         <service id="tb.route.publish_listener" class="TB\Bundle\FrontendBundle\EventListener\RoutePublishListener">
             <argument type="service" id="doctrine.orm.entity_manager" />
             <argument type="service" id="old_sound_rabbit_mq.main_producer" />
+            <argument type="service" id="service_container" />
+            <argument type="service" id="router" />
             <tag name="kernel.event_listener" event="tb.route_publish" method="onRoutePublish" />
         </service>
 
@@ -232,6 +234,11 @@
         <service id="tb.facebook.connector" class="TB\Bundle\FrontendBundle\Util\FacebookConnector">
             <argument>%facebook_app_id%</argument>
             <argument>%facebook_app_secret%</argument>
+        </service>
+
+        <!-- Register Bitly  API Client -->
+        <service id="tb.bitly_client" class="Hpatoio\Bitly\Client">
+            <argument>%bitly_api_key%</argument>
         </service>
         
     </services>

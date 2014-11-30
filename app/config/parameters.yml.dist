@@ -35,3 +35,4 @@ parameters:
     facebook_app_id: 626606520795449
     facebook_app_secret: 0cea1f546f305e0213e59983c304a402
     mandrill_api_key: kRr66_sxVLQJwehdLnakqg
+    bitly_api_key: ced960e494dffaaa498c473fc3221a5841f70afa

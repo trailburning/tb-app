@@ -29,6 +29,21 @@ class RoutePublishListenerTest extends AbstractFrontendTest
             ->will($this->returnCallback(array($this, 'assertAMQPMessage'))); // Use this callback to verify AMQP message 
         $this->getContainer()->set('old_sound_rabbit_mq.main_producer', $producer);
         
+        // replace the Bitly CLient with a stub
+        $bitly = $this->getMockBuilder('Hpatoio\Bitly\Client')
+            ->disableOriginalConstructor()
+            ->getMock();
+        
+        $bitly->method('__call')->willReturn([
+            'long_url' => 'http://www.trailburning.com/trail/grunewald',
+            'url' => 'http://bit.ly/15LTaFB',
+            'hash' => '15LTaFB',
+            'global_hash' => '15LTaFC',
+            'new_hash' => 0,
+        ]);
+        
+        $this->getContainer()->set('tb.bitly_client', $bitly);
+        
         $this->loadFixtures([
             'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData',
         ]);
@@ -42,6 +57,9 @@ class RoutePublishListenerTest extends AbstractFrontendTest
         $dispatcher = $this->getContainer()->get('event_dispatcher');
         $event = new RoutePublishEvent($route, $route->getUser());
         $dispatcher->dispatch('tb.route_publish', $event);
+        
+        $em->refresh($route);
+        $this->assertEquals('http://bit.ly/15LTaFB', $route->getBitlyUrl());
         
         $em->refresh($route);
         $this->assertNotNull($route->getPublishedDate());

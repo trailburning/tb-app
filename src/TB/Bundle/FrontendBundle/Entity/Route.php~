@@ -255,9 +255,9 @@ class Route implements Exportable
     /**
      * @var integer
      *
-     * @ORM\Column(name="rating", type="decimal", precision=5, scale=3, nullable=true)
+     * @ORM\Column(name="rating", type="decimal", precision=5, scale=3, options={"default" = 0})
      */
-    private $rating;    
+    private $rating = 0;    
 
     /**
      * @var datetime
@@ -281,11 +281,11 @@ class Route implements Exportable
     private $campaignRoutes;
     
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var string
      *
-     * @ORM\OneToMany(targetEntity="CampaignRouteAcceptActivity", mappedBy="object")
-     **/
-    private $campaignRoutePublishActivities;
+     * @ORM\Column(name="bitly_url", type="string", length=255, nullable=true)
+     */
+    private $bitlyUrl;
 
     /**
      * Set name
@@ -612,6 +612,7 @@ class Route implements Exportable
         $this->routeLikeActivities = new \Doctrine\Common\Collections\ArrayCollection();
         $this->routeUndoLikeActivities = new \Doctrine\Common\Collections\ArrayCollection();        
         $this->attributes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->campaignRouteAcceptActivities = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**
@@ -1558,4 +1559,5 @@ class Route implements Exportable
     {
         return $this->campaignRouteAcceptActivities;
     }
+
 }
