@@ -229,6 +229,13 @@ define([
 	  // fire event
       app.dispatcher.trigger("TrailMapView:selecttrail", id);                
     },    
+    unselectTrail: function(){
+      if (this.currTrailCardMarker) {
+        this.currTrailCardMarker.selected(false);      
+        this.currTrailCardMarker.hidePopup();            	
+        this.currTrailCardMarker = null;	
+      }
+	},    
     viewTrail: function(id, strURL){
 	  var latLng = this.map.getCenter(); 
 	  // save

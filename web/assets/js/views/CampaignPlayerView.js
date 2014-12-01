@@ -237,6 +237,8 @@ define([
       self.bLocked = false;
     },
     showIntroOverlay: function(){
+	  $('.overlay_background').css('opacity', 1);
+    	
       $('#campaign_landing_overlay_view .back').css('left', -144);
       $('#campaign_landing_overlay_view .info-hero').css('left', -144);
       $('#campaign_landing_overlay_view .info-hero .campaign_title').css('left', 189);                                	          
@@ -246,6 +248,8 @@ define([
       $('#campaign_map_overlay_view .info-hero .campaign_title').css('left', -100);
     },
     hideIntroOverlay: function(){    
+	  $('.overlay_background').css('opacity', 0);
+
       $('#campaign_landing_overlay_view .back').css('left', -800);
       $('#campaign_landing_overlay_view .info-hero').css('left', -800);
       $('#campaign_landing_overlay_view .info-hero .campaign_title').css('left', -100);
@@ -349,6 +353,7 @@ define([
           $('#view_toggle .button').addClass('view_map_hover');        
         }
       }
+      this.trailMapView.unselectTrail();
     },
     playerCheckpoint: function(){
       if (!this.bMapReady) {

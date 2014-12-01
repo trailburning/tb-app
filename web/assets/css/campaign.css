@@ -209,6 +209,10 @@ border-width:1px;
   width: 100%;
   height: 110px;	
   background: url(../img/trailplayer/overlay_background.png) repeat-x top left;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  -moz-transition: opacity 0.5s ease-in-out;
+  -webkit-transition: opacity 0.5s ease-in-out;
 }
 
 /* VIEW CNTRLS */
@@ -399,6 +403,9 @@ html.touch #campaignplayer #view_map_btns {
   width: 544px;    
   margin-top: 24px;
   margin-left: 24px;  
+}
+
+.tweet_panel:first-child {
   background: url("../img/social/tweet.gif") no-repeat 0px 26px;
 }
 
@@ -423,11 +430,16 @@ html.touch #campaignplayer #view_map_btns {
 }
 
 .tweet_panel .panel .content {
-  margin: 28px 72px 28px 24px;
+  margin: 28px 28px 28px 24px;
   font-size: 14px;
   font-weight: 300;
   line-height: 1.3em;  
   color: #000000;
+}
+
+.tweet_panel .image_container {
+  margin-top: 16px;
+  width: 100%;
 }
 
 /* TRAIL WEATHER PANEL */
@@ -637,11 +649,14 @@ html.touch #campaignplayer #view_map_btns {
   }
   .trail_location_panel,  
   .campaign_detail_panel,
-  .trail_like_panel,
+  .tweet_panel,
   .trail_weather_panel,
   .trailcards .promo_panel,
   .trailcards .promo_panel .photo .image_container {
     width: 472px;
+  }    
+  .tweet_panel .panel {
+    width: 372px;
   }    
   .trail_weather_panel .detail .text {
     width: 250px;
