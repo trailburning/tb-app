@@ -92,7 +92,7 @@ border-width:1px;
 
 #campaign_landing_overlay_view .info-hero .campaign_play {
   position: absolute;
-  top: 332px;
+  top: 346px;
   left: 184px;
   font-size: 42px;
   line-height: 75px;
@@ -100,6 +100,7 @@ border-width:1px;
   font-weight: 400;
   text-transform: uppercase;
   white-space: nowrap;
+  text-shadow: 1px 1px #000000;  
 }
 
 #campaign_landing_overlay_view .info-hero .campaign_play .campaign_btn {
@@ -160,151 +161,6 @@ border-width:1px;
   margin: 0px;
 }
 
-/* TRAIL SLIDES VIEW */
-/******************************************/
-#trail_slides_view {
-  visibility: hidden;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 100%;  
-  height: 100%;
-  overflow: hidden;  
-}
-
-#trail_slides_view .photos_container {  
-  position: relative;  
-  width: 100%;
-  height: 100%;  
-  overflow: hidden;  
-}
-
-#trail_slides_view .image_container {
-  position: absolute;
-  opacity: 0;  
-  top: 0px;
-  left: 0px;  
-  width: 100%;
-  height: 100%;  
-  overflow: hidden;
-}
-
-#trail_slides_view .background_blur .image_container img, #trail_slides_view .background .image_container img {
-  width: 100%;
-}
-
-#trail_slides_view .foreground {
-  position: absolute;
-  top: 0px;
-  width: 100%;
-  height: 100%;
-}
-
-#trail_slides_view .foreground .image_container {
-  position: relative;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-}
-
-#trail_slides_view .foreground .image_container img {
-  display: block;
-  margin: 0 auto;
-  height: 100%;
-}
-	
-#trail_slides_view .foreground .image_container {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-}
-
-#trail_slides_view .slide_btns {
-  display: none; 
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 100%;
-  height: 100%;
-}
-
-#trail_slides_view .slide_btns .left { 
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 30%;
-  height: 100%;    
-}
-
-#trail_slides_view .slide_btns .left .hot {
-  position: absolute;
-  left: 0px;
-  width: 153px;
-  height: 100%;
-  background: url("../img/trailplayer/arrow_left_back.png") repeat-y top left;
-  opacity: 0;
-  transition: opacity 0.5s ease-in-out;
-  -moz-transition: opacity 0.5s ease-in-out;
-  -webkit-transition: opacity 0.5s ease-in-out;  	
-}
-
-#trail_slides_view .slide_btns .left .arrow {
-  position: absolute;
-  margin-top: -21px;
-  top: 50%;
-  left: -100px; 
-  width: 27px;
-  height: 43px;
-  background: url("../img/trailplayer/arrow_left.png") no-repeat top left;	
-}
-
-#trail_slides_view .slide_btns .right { 
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  width: 30%;
-  height: 100%;
-}
-
-#trail_slides_view .slide_btns .right .hot {
-  position: absolute;
-  right: 0px; 
-  width: 153px;
-  height: 100%;
-  background: url("../img/trailplayer/arrow_right_back.png") repeat-y top left;
-  opacity: 0;
-  transition: opacity 0.5s ease-in-out;
-  -moz-transition: opacity 0.5s ease-in-out;
-  -webkit-transition: opacity 0.5s ease-in-out;  	
-}
-
-#trail_slides_view .slide_btns .right .arrow {
-  position: absolute;
-  margin-top: -21px;
-  top: 50%;
-  right: -100px; 
-  width: 27px;
-  height: 43px;
-  background: url("../img/trailplayer/arrow_right.png") no-repeat top left;	
-}
-
-#trail_slides_view .loader_container {
-  display: none;
-  position: absolute;
-  top: 50%;
-  left: 0px;
-  width: 100%;
-  height: 100%;
-}
-
-#trail_slides_view .loader {
-  margin: -44px auto 0px auto;
-  width: 88px;
-  height: 88px;
-}
-
 /* TRAIL MAP VIEW */
 /******************************************/
 #trail_map_view {
@@ -345,6 +201,14 @@ border-width:1px;
 /******************************************/
 #campaignplayer {
   background: #DEDEDE;
+}
+
+#campaignplayer .overlay_background {
+  position: absolute;
+  bottom: 0px;	
+  width: 100%;
+  height: 110px;	
+  background: url(../img/trailplayer/overlay_background.png) repeat-x top left;
 }
 
 /* VIEW CNTRLS */
@@ -442,21 +306,30 @@ html.touch #campaignplayer #view_map_btns {
 
 /* PANELS */
 /******************************************/
+.panel_container {
+  display: none;
+  position: relative;
+  width: 100%;  
+}
+
+.panel_container .line_break {
+/*	
+  z-index: 100;
+  position: absolute;
+*/  
+  position: absolute;
+  top: 0px;
+  height: 8px;
+  background: url(../img/trailplayer/trans_line.png) repeat-x top left;    
+}
+
 .panel_content {
   position: relative;
-/*  
-  margin: 0px auto 80px auto;
-  width: 1112px;
-*/  
 }
 
 .panels {
   margin: 0px auto 80px auto;
   width: 1112px;
-/*	
-  clear: left;
-  width: 100%;
-*/  
   padding-top: 22px;
 }
 
@@ -468,6 +341,7 @@ html.touch #campaignplayer #view_map_btns {
 .panels .right {
   float: left;
   width: 568px;
+  margin-top: -210px;
 }
 
 .panel .image_container {
@@ -478,10 +352,6 @@ html.touch #campaignplayer #view_map_btns {
   overflow: hidden;
 }
 
-.trails_title {
-  margin-left: 24px;
-}
-
 .trails_title .first-title {
   margin-top: 0px;
 }
@@ -490,10 +360,19 @@ html.touch #campaignplayer #view_map_btns {
 /******************************************/
 .campaign_detail_panel {
   width: 544px;  
+  margin-left: 24px;  
+}
+
+.campaign_detail_panel .photo {
+  margin: 10px 10px 0px 10px;
+}
+
+.campaign_detail_panel .photo .image_container {
+  height: 326px;
 }
 
 .campaign_detail_panel  .content {
-  margin: 34px 72px 28px 24px;
+  margin: 28px 72px 0px 24px;
   font-size: 14px;
   font-weight: 300;
   line-height: 1.3em;  
@@ -501,11 +380,54 @@ html.touch #campaignplayer #view_map_btns {
 }
 
 .campaign_detail_panel  .content h4 {
-  margin: 24px 0px 22px 0px;  
+  margin: 24px 0px 24px 0px;  
 }
 
 .campaign_detail_panel  .content .join {  
   margin-top: 24px;
+}
+
+.campaign_detail_panel .share {
+  margin-right: 16px;
+  margin-bottom: 18px;
+}
+
+/* TWEET PANEL */
+/******************************************/
+.tweet_panel {
+  float: left;
+  width: 544px;    
+  margin-top: 24px;
+  margin-left: 24px;  
+  background: url("../img/social/tweet.gif") no-repeat 0px 26px;
+}
+
+.tweet_panel .panel {
+  position: relative;	
+  margin-left: 100px;
+  width: 444px;  
+  min-height: 117px;
+  overflow: visible;  
+}
+
+.tweet_panel .panel:before {
+  position: absolute;
+  top: 44px;
+  left: -12px;
+  width: 0; 
+  height: 0; 
+  border-top: 12px solid transparent;
+  border-bottom: 12px solid transparent; 	
+  border-right:12px solid white; 
+  content: '';
+}
+
+.tweet_panel .panel .content {
+  margin: 28px 72px 28px 24px;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.3em;  
+  color: #000000;
 }
 
 /* TRAIL WEATHER PANEL */
@@ -624,11 +546,11 @@ html.touch #campaignplayer #view_map_btns {
 .trailcards .panel {
   float: left;	
   position: relative;
-  margin: 24px 0px 0px 24px;
+  margin: 24px 24px 0px 0px;
 }
 
 .trailcards .promo_panel {
-  margin: 24px 0px 0px 24px;
+  margin: 24px 0px 0px 0px;
   width: 544px;
 }
 

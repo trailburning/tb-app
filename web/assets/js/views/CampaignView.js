@@ -36,7 +36,6 @@ define([
       $('#footerview').show();
       
       this.playerView.handleMedia();
-      this.handleResize();
       
 	  function updateFollowBtn() {
 	    if (self.elLikeBtn.hasClass('pressed-btn-tb')) {
