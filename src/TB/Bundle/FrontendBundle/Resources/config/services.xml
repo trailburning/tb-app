@@ -24,13 +24,13 @@
         </service>
         
         <!-- Register media importer service -->
-        <service id="tb.media.importer" class="TB\Bundle\FrontendBundle\Util\MediaImporter">
+        <service id="tb.media.importer" class="TB\Bundle\FrontendBundle\Service\MediaImporter">
             <argument type="service" id="doctrine.orm.entity_manager" />
             <argument type="service" id="http_client" />
         </service>
         
         <!-- Register events finder service -->
-        <service id="tb.events.finder" class="TB\Bundle\FrontendBundle\Util\EventsFinder">
+        <service id="tb.events.finder" class="TB\Bundle\FrontendBundle\Service\EventsFinder">
             <argument type="service" id="doctrine.orm.entity_manager" />
         </service>
         
@@ -146,16 +146,16 @@
         </service>
 
         <!--  Register activity feed generator and as service -->
-        <service id="tb.activity.feed.generator" class="TB\Bundle\FrontendBundle\Util\ActivityFeedGenerator">
+        <service id="tb.activity.feed.generator" class="TB\Bundle\FrontendBundle\Service\ActivityFeedGenerator">
             <argument type="service" id="doctrine.orm.entity_manager" />
         </service>
                 
-        <service id="old_sound_rabbit_mq.main_consumer" class="TB\Bundle\FrontendBundle\Util\MainConsumer">
+        <service id="old_sound_rabbit_mq.main_consumer" class="TB\Bundle\FrontendBundle\Service\MainConsumer">
             <argument type="service" id="old_sound_rabbit_mq.connection.default" />
             <argument type="service" id="service_container" />
         </service>
 
-        <service id="tb.mailproxy" class="TB\Bundle\FrontendBundle\Util\Mailproxy">
+        <service id="tb.mailproxy" class="TB\Bundle\FrontendBundle\Service\Mailproxy">
             <argument type="service" id="service_container" />
             <argument type="service" id="http_client" />
             <argument type="service" id="tb.mandrill" />
@@ -178,7 +178,7 @@
         </service>
 
         <!--  Register image generator as service -->
-        <service id="tb.image.generator" class="TB\Bundle\FrontendBundle\Util\ImageGenerator">
+        <service id="tb.image.generator" class="TB\Bundle\FrontendBundle\Service\ImageGenerator">
             <argument type="service" id="doctrine.orm.entity_manager" />
             <argument type="service" id="trail_media_files_filesystem" />
             <argument type="service" id="asset_files_filesystem" />
@@ -231,7 +231,7 @@
         </service>
         
         <!-- Register custom user profile form as service -->
-        <service id="tb.facebook.connector" class="TB\Bundle\FrontendBundle\Util\FacebookConnector">
+        <service id="tb.facebook.connector" class="TB\Bundle\FrontendBundle\Service\FacebookConnector">
             <argument>%facebook_app_id%</argument>
             <argument>%facebook_app_secret%</argument>
         </service>

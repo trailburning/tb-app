@@ -1,10 +1,10 @@
 <?php 
 
-namespace TB\Bundle\ApiBundle\Tests\Util;
+namespace TB\Bundle\ApiBundle\Tests\Service;
 
 use TB\Bundle\APIBundle\Tests\AbstractApiTest;
 use TB\Bundle\FrontendBundle\Entity\GpxFile;
-use TB\Bundle\APIBundle\Util\ApiException;
+use TB\Bundle\APIBundle\Service\ApiException;
 
 class PostgisTest extends AbstractApiTest
 {

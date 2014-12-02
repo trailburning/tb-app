@@ -181,7 +181,7 @@ services:
         arguments:  [%twitter_settings%]
     
     twitter_api:
-        class:      TB\Bundle\FrontendBundle\Util\TwitterAPI
+        class:      TB\Bundle\FrontendBundle\Service\TwitterAPI
         arguments:  [@twitter_client]
 
 old_sound_rabbit_mq:

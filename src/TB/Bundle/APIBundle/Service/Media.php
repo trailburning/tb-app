@@ -1,6 +1,6 @@
 <?php
 
-namespace TB\Bundle\APIBundle\Util;
+namespace TB\Bundle\APIBundle\Service;
 
 abstract class Media 
 {

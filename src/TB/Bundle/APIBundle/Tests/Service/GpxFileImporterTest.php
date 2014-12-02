@@ -1,6 +1,6 @@
 <?php 
 
-namespace TB\Bundle\ApiBundle\Tests\Util;
+namespace TB\Bundle\ApiBundle\Tests\Service;
 
 use TB\Bundle\APIBundle\Tests\AbstractApiTest;
 

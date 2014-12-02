@@ -4,7 +4,7 @@
  * Inspired from code Copyright (c) Patrick Hayes under BSD License
  */
 
-namespace TB\Bundle\APIBundle\Util;
+namespace TB\Bundle\APIBundle\Service;
 
 use TB\Bundle\FrontendBundle\Entity\Route;
 use TB\Bundle\FrontendBundle\Entity\RoutePoint;

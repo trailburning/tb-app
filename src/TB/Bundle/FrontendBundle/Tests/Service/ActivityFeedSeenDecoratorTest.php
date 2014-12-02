@@ -1,9 +1,9 @@
 <?php 
 
-namespace TB\Bundle\FrontendBundle\Tests\Util;
+namespace TB\Bundle\FrontendBundle\Tests\Service;
 
 use TB\Bundle\FrontendBundle\Tests\AbstractFrontendTest;
-use TB\Bundle\FrontendBundle\Util\ActivityFeedSeenDecorator;
+use TB\Bundle\FrontendBundle\Service\ActivityFeedSeenDecorator;
 use TB\Bundle\FrontendBundle\Entity\UserProfile;
 
 class ActivityFeedSeenDecoratorTest extends AbstractFrontendTest

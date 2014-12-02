@@ -1,6 +1,6 @@
 <?php 
 
-namespace TB\Bundle\FrontendBundle\Tests\Util;
+namespace TB\Bundle\FrontendBundle\Tests\Service;
 
 use TB\Bundle\FrontendBundle\Tests\AbstractFrontendTest;
 use TB\Bundle\FrontendBundle\Entity\RoutePublishActivity;

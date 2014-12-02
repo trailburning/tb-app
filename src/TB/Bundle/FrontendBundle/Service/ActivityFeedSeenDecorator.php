@@ -1,6 +1,6 @@
 <?php
 
-namespace TB\Bundle\FrontendBundle\Util;
+namespace TB\Bundle\FrontendBundle\Service;
 
 use TB\Bundle\FrontendBundle\Entity\User;
 

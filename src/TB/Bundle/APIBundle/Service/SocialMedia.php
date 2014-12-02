@@ -1,8 +1,8 @@
 <?php
 
-namespace TB\Bundle\APIBundle\Util;
+namespace TB\Bundle\APIBundle\Service;
 
-use TB\Bundle\FrontendBundle\Util\TwitterAPI;
+use TB\Bundle\FrontendBundle\Service\TwitterAPI;
 
 class SocialMedia
 {

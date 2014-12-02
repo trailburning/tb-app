@@ -1,11 +1,11 @@
 <?php
 
-namespace TB\Bundle\FrontendBundle\Util;
+namespace TB\Bundle\FrontendBundle\Service;
 
 use OldSound\RabbitMqBundle\RabbitMq\Consumer;
 use PhpAmqpLib\Message\AMQPMessage;
 use Doctrine\ORM\EntityManager;
-use TB\Bundle\FrontendBundle\Util\ActivityFeedGenerator;
+use TB\Bundle\FrontendBundle\Service\ActivityFeedGenerator;
 use PhpAmqpLib\Connection\AMQPConnection;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 

@@ -13,7 +13,7 @@ parameters:
     locale: en
     rest_client_class: Guzzle\Http\Client
     api_host: http://localhost:8888/trailburning_api
-    postgis_class: TB\Bundle\APIBundle\Util\Postgis    
+    postgis_class: TB\Bundle\APIBundle\Service\Postgis    
     s3_client_class: Aws\S3\S3Client
     aws_accesskey: 
     aws_secretkey:     

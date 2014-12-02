@@ -1,6 +1,6 @@
 <?php
 
-namespace TB\Bundle\APIBundle\Util;
+namespace TB\Bundle\APIBundle\Service;
 
 
 class JpegMedia extends Media 

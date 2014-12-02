@@ -1,6 +1,6 @@
 <?php
 
-namespace TB\Bundle\FrontendBundle\Util;
+namespace TB\Bundle\FrontendBundle\Service;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Guzzle\Http\Client;

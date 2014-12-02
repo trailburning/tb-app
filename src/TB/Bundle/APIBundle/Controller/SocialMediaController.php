@@ -6,7 +6,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 
-use TB\Bundle\APIBundle\Util\ApiException;
+use TB\Bundle\APIBundle\Service\ApiException;
 
 class SocialMediaController extends AbstractRestController
 {
