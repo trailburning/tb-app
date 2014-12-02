@@ -37,7 +37,7 @@ parameters:
     mandrill_api_key: kRr66_sxVLQJwehdLnakqg
     bitly_api_key: ced960e494dffaaa498c473fc3221a5841f70afa
     twitter_settings:
-        oauth_access_token: 14104089-miSTbPc4PbpQVWWeRynkuGXm57BqaFiVMWYsWuE9U
-        oauth_access_token_secret: bycgf0qEjxyQMTmpG6ig8eU29USBjnGZZVC97psIG54xT
-        consumer_key: yCy2yKhChLupA5cNr04WYhivw
-        consumer_secret: 9eFG5oCZPSGrEXO59JD160fLTpZDJMqUSdXizbaKtaRgEmCnEF
+        oauth_access_token: 1630556256-M3ghqvQuSrJx83w62UUv02klUjQTX1WniNIbPCC
+        oauth_access_token_secret: d5MZT3aAYnADiDtO19K5HSLzJq6x99EB272fzx5qTTL9m
+        consumer_key: 09mqwXOGvU2jsyGkYlrXH5Oip
+        consumer_secret: ZNEyFv5U2g4I3Dt1f7c7XahmnpAvOJh1HjYGOHiWt0vJs8XO9u
