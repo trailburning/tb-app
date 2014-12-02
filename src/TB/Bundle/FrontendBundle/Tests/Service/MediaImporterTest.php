@@ -1,9 +1,9 @@
 <?php 
 
-namespace TB\Bundle\FrontendBundle\Tests\Util;
+namespace TB\Bundle\FrontendBundle\Tests\Service;
 
 use TB\Bundle\FrontendBundle\Tests\AbstractFrontendTest;
-use TB\Bundle\FrontendBundle\Util\MediaImporter;
+use TB\Bundle\FrontendBundle\Service\MediaImporter;
 use CrEOF\Spatial\PHP\Types\Geometry\Point;
 
 class MediaImporterTest extends AbstractFrontendTest

@@ -1,6 +1,6 @@
 <?php 
 
-namespace TB\Bundle\APIBundle\Util;
+namespace TB\Bundle\APIBundle\Service;
 
 use TB\Bundle\FrontendBundle\Entity\Route;
 use TB\Bundle\FrontendBundle\Entity\RouteType;
@@ -15,7 +15,7 @@ use TB\Bundle\FrontendBundle\Entity\EventRoute;
 use TB\Bundle\FrontendBundle\Entity\Campaign;
 use TB\Bundle\FrontendBundle\Entity\CampaignGroup;
 use CrEOF\Spatial\PHP\Types\Geometry\Point;
-use TB\Bundle\APIBundle\Util;
+use TB\Bundle\APIBundle\Service;
 use PDO;
 
 /**
