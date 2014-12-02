@@ -35,9 +35,14 @@ class Mailproxy
             $data = [
                 'email' => $email,
             ];
-            $this->mailchimpLists->subscribe($this->container->getParameter('mailchimp_newsletters_list_id'), $data);    
+            $parameters = [
+                'double_optin' => false,
+                'send_welcome' => false,
+            ];
+            $this->mailchimpLists->subscribe($this->container->getParameter('mailchimp_newsletters_list_id'), $data, $parameters, 'html', false);    
             return true;
         } catch (Exception $e) {
+            throw $e;
             return false;
         }
     }
