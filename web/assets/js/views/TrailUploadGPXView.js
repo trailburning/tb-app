@@ -53,17 +53,17 @@ define([
             contentType: false,
             processData: false,
             complete : function(res) {
-//              console.log('complete');              
+              console.log('complete');              
               if(bValid && successFn) successFn(res);
             },
             success: function(data) {
-//              console.log(data);
+              console.log(data);
               if (data.value.route_ids.length) {
                 self.model.set('id', data.value.route_ids[0]);  
               }                            
             },
             error: function(data) {
-//              console.log('error');              
+              console.log('error');              
               bValid = false;
               
               var errObj = null;              
