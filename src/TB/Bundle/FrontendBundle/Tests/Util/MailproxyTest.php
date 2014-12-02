@@ -7,7 +7,7 @@ use TB\Bundle\FrontendBundle\Tests\AbstractFrontendTest;
 class MailproxyTest extends AbstractFrontendTest
 {
     
-    public function setUp() 
+    public function setUp()
     {
         $this->mailproxy = $this->getContainer()->get('tb.mailproxy');   
     }
