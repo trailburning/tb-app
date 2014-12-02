@@ -174,6 +174,10 @@ define([
 	  }
 	},
 	blur: function(){	
+	  if (this.bSelected) {
+		return;
+	  }
+				
   	  $(this.marker._icon).removeClass('selected');  	
 	  this.marker.setZIndexOffset(0);
   	
@@ -200,6 +204,8 @@ define([
 	},
 	onMouseOver: function(evt){	
   	  if (!this.bSelected) {
+		// fire event
+        app.dispatcher.trigger("MapTrailMarker:focus", this);                     	  	
   	  	this.focus();
   	  }
     },

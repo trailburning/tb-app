@@ -391,9 +391,17 @@ html.touch #campaignplayer #view_map_btns {
   margin-top: 24px;
 }
 
-.campaign_detail_panel .share {
+.campaign_detail_panel .share_panel {
+  float: right;
   margin-right: 16px;
   margin-bottom: 18px;
+  line-height: 36px;
+  text-transform: uppercase;
+  color: #979797;
+}
+
+.campaign_detail_panel .share {
+  margin-left: 4px;
 }
 
 /* TWEET PANEL */

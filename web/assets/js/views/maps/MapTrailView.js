@@ -14,6 +14,7 @@ define([
       var self = this;
       
       app.dispatcher.on("MapTrailMarker:click", self.onSelectTrail, this);
+      app.dispatcher.on("MapTrailMarker:focus", self.onFocusTrail, this);
       app.dispatcher.on("TrailCardView:click", self.onTrailCardViewClick, this);
       app.dispatcher.on("MapTrailDetail:click", self.onMapTrailDetailClick, this);
             
@@ -254,6 +255,14 @@ define([
 	},        	
     onSelectTrail: function(trailCardMarker){
       this.selectTrail(trailCardMarker.model.id);    	
+    },
+    onFocusTrail: function(trailCardMarker){
+      // ensure all other trails are blurred
+ 	  this.collection.each(function(cardModel) {
+ 	  	if (cardModel.id != trailCardMarker.model.id) {
+ 	  	  cardModel.mapTrailMarker.blur();
+ 	  	}
+	  });    
     }
     
   });
