@@ -2,9 +2,11 @@
     {% set url = url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}
 {% endif %}
 {% if text is not defined  %}
-   	{% set text = 'I\'m #trailburning!' %}    
-	{% if trail is defined %}
-    	{% set text = ['I\'m #trailburning!', ' ', url('trail', {trailSlug: trail.id}), ' @trailburning']|join %}
+   	{% set text = 'I\'m #trailburning!' %}   	    
+	{% if trail is defined %}	
+		{% if trail.bitlyUrl %}
+			{% set text = ['I\'m #trailburning!', ' ', trail.bitlyUrl, ' @trailburning']|join %}	
+		{% endif %}	
     {% endif %}    
 {% endif %}
 
