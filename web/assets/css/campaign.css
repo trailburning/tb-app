@@ -446,6 +446,23 @@ border-width:1px;
   width: 100%;
 }
 
+.tweet_panel a {
+  text-decoration: none:
+}
+
+.tweet_panel a, 
+.tweet_panel a:link, 
+.tweet_panel a:visited {
+  color: #44b6f7;
+  text-decoration: none;
+}
+
+.tweet_panel a:hover, 
+.tweet_panel a:active {
+  color: inherit;
+  text-decoration: none;    
+}
+
 /* TRAIL WEATHER PANEL */
 /******************************************/
 .trail_weather_panel {
