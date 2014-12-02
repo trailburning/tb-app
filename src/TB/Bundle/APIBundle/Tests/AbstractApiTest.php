@@ -12,7 +12,7 @@ use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 /**
  *
  */
-abstract class AbstractApiTestCase extends WebTestCase
+abstract class AbstractApiTest extends WebTestCase
 {
     
     protected static function getKernelClass()
@@ -103,5 +103,13 @@ abstract class AbstractApiTestCase extends WebTestCase
         }
         
         return $campaign;
+    }
+    
+    protected function callProtectedMethod($obj, $methodName, $parameter = array())
+    {
+        $method = new \ReflectionMethod($obj, $methodName);
+        $method->setAccessible(true);
+        
+        return $method->invokeArgs($obj, $parameter);
     }
 }

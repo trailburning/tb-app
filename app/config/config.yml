@@ -174,8 +174,15 @@ services:
         
     postgis:
         class:      %postgis_class%
-        arguments:  [%database_host%, %database_port%, %database_name%, %database_user%, %database_password%]        
+        arguments:  [%database_host%, %database_port%, %database_name%, %database_user%, %database_password%]
         
+    twitter_client:
+        class:      TwitterAPIExchange
+        arguments:  [%twitter_settings%]
+    
+    twitter_api:
+        class:      TB\Bundle\FrontendBundle\Util\TwitterAPI
+        arguments:  [@twitter_client]
 
 old_sound_rabbit_mq:
     connections:
