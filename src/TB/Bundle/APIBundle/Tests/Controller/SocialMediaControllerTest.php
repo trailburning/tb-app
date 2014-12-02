@@ -31,4 +31,16 @@ class SocialMediaControllerTest extends AbstractApiTest
         $this->assertInternalType('array', $responseObj->value, 
             'The response JSON value is an array');   
     }
+    
+    public function testGetSearchError()
+    {
+        $this->loadFixtures([]);
+        
+        $client = $this->createClient();
+        $crawler = $client->request('GET', '/v1/socialmedia');
+        
+        $this->assertEquals(Response::HTTP_BAD_REQUEST,  $client->getResponse()->getStatusCode(),
+            'Response returns Status Code 400');
+        $this->assertJsonResponse($client);  
+    }
 }
