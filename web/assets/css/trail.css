@@ -707,6 +707,14 @@ html.touch #small_sponsor_bar {
   right: 22px;
 }
 
+#trailplayer .campaign_logo {
+  width: 218px;	
+}
+
+#trailplayer .campaign_logo img {
+  width: 100%;
+}
+
 #trailplayer #trail_info {
   position: absolute;
   top: -300px;
