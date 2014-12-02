@@ -57,8 +57,6 @@ define([
         $('#trail_slides_view').css('visibility', 'visible');
 	  }
 	  
-	  console.log('t:'+$('#campaign_map_overlay_view').length);
-	  
 	  var data;
 	  if ($('#campaign_map_overlay_view').length) {
 	    data = {'tags': {'width': 800, 'height': 600}, versions: [{ 'path': '/images/profile/mtbuller/LM_131122_MtBuller_0462_HIGHres.jpg' }]};	
