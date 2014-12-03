@@ -116,6 +116,13 @@ class Editorial
     private $publish = false;
     
     /**
+     * @var string
+     *
+     * @ORM\Column(name="bitly_url", type="string", length=255, nullable=true)
+     */
+    private $bitlyUrl;
+    
+    /**
      * Get id
      *
      * @return integer 
@@ -472,5 +479,28 @@ class Editorial
     public function getPublish()
     {
         return $this->publish;
+    }
+
+    /**
+     * Set bitlyUrl
+     *
+     * @param string $bitlyUrl
+     * @return Editorial
+     */
+    public function setBitlyUrl($bitlyUrl)
+    {
+        $this->bitlyUrl = $bitlyUrl;
+
+        return $this;
+    }
+
+    /**
+     * Get bitlyUrl
+     *
+     * @return string 
+     */
+    public function getBitlyUrl()
+    {
+        return $this->bitlyUrl;
     }
 }

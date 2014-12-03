@@ -162,6 +162,13 @@ class Campaign
     private $shareImage;
     
     /**
+     * @var string
+     *
+     * @ORM\Column(name="bitly_url", type="string", length=255, nullable=true)
+     */
+    private $bitlyUrl;
+    
+    /**
      * Set id
      *
      * @param integer $id
@@ -716,5 +723,28 @@ class Campaign
     public function getShareImage()
     {
         return $this->shareImage;
+    }
+
+    /**
+     * Set bitlyUrl
+     *
+     * @param string $bitlyUrl
+     * @return Campaign
+     */
+    public function setBitlyUrl($bitlyUrl)
+    {
+        $this->bitlyUrl = $bitlyUrl;
+
+        return $this;
+    }
+
+    /**
+     * Get bitlyUrl
+     *
+     * @return string 
+     */
+    public function getBitlyUrl()
+    {
+        return $this->bitlyUrl;
     }
 }
