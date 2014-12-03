@@ -26,6 +26,7 @@ class SocialMediaControllerTest extends AbstractApiTest
         $this->assertEquals(Response::HTTP_OK,  $client->getResponse()->getStatusCode(),
             'Response returns Status Code 200');
         $this->assertJsonResponse($client);  
+        
         $responseObj = json_decode($client->getResponse()->getContent());
         
         $this->assertInternalType('array', $responseObj->value, 

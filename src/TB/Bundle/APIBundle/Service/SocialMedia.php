@@ -38,8 +38,6 @@ class SocialMedia
                     $entities = $tweet->entities;
                     $textAdditionsAtIndex = [];
                     
-                    echo $text . "\n";
-                    
                     if (property_exists($entities, 'hashtags')) {
                         foreach ($entities->hashtags as $hashtag) {
                             $replacement = '<a href="https://twitter.com/hashtag/' . $hashtag->text . '" target="_blank">#' . $hashtag->text . '</a>';
