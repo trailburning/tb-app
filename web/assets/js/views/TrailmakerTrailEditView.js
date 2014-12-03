@@ -22,7 +22,6 @@ define([
       app.dispatcher.on("TrailUploadPhotoView:error", this.onTrailUploadPhotoViewError, this);      
       app.dispatcher.on("TrailUploadPhotoErrorView:closeclick", this.onTrailUploadPhotoErrorViewCloseClick, this);      
 
-
       app.dispatcher.on("TrailMapView:mediaclick", this.onTrailMapViewMediaClick, this);
       app.dispatcher.on("TrailMapView:removemedia", this.onTrailMapViewRemoveMedia, this);
       app.dispatcher.on("TrailMapView:movedmedia", this.onTrailMapViewMoveMedia, this);

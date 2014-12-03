@@ -10,7 +10,8 @@ define([
       
       app.dispatcher.on("TrailSlideshowSlideView:click", this.onTrailSlideshowSlideViewClick, this);
       
-      this.nActiveID = 0;      
+      this.nActiveID = 0;
+	  this.nActiveSlide = 0;
 	  this.bRendered = false;
     },            
     render: function(){
@@ -19,6 +20,24 @@ define([
       // first time
       if (!this.bRendered) {
       	$(this.el).html(this.template());
+      	
+      	$('#slideshow_nav .prev').click(function(evt){
+      		var nSlide = self.collection.length - 1;
+      		if (self.nActiveSlide - 1 >= 0) {
+      		  nSlide = self.nActiveSlide - 1;
+      		}
+      		var model = self.collection.at(nSlide)
+      		self.selectSlide(model.id);
+      	});
+
+      	$('#slideshow_nav .next').click(function(evt){
+      		var nSlide = 0;
+      		if (self.nActiveSlide + 1 < self.collection.length) {
+      		  nSlide = self.nActiveSlide + 1;
+      		}
+      		var model = self.collection.at(nSlide)
+      		self.selectSlide(model.id);
+      	});
       	
 	    this.options.collection.forEach(function(media, nIndex){
 	      self.appendMedia(media);
@@ -100,24 +119,28 @@ define([
 	  });
     },                       		
     gotoSlide: function(mediaID){
-      bAnimate = true;          	
+      var self = this, bAnimate = true;
+                	
       // has the active slide changed?
 	  if (this.nActiveID == mediaID) {
 	    bAnimate = false;
 	  }
     	
 	  var elSlides = $('.slide', this.el);
-	  var nActiveSlide = 0;
-
+      this.nActiveSlide = 0;
 	  $('.photo', $(this.el)).removeClass('active');
 	  elSlides.each(function(nSlide) {
 	  	if ($(this).attr('data-id') == mediaID) {
-	  	  nActiveSlide = nSlide;
+	  	  self.nActiveSlide = nSlide;
 	  	  $('.photo', this).addClass('active');
 	  	}
 	  });
+	  // update nav
+	  $('#slideshow_nav .curr').html(this.nActiveSlide+1);
+	  $('#slideshow_nav .total').html(elSlides.length);
+	  $('#slideshow_nav').show();
 	  
-      this.moveSlides(nActiveSlide, bAnimate);
+      this.moveSlides(this.nActiveSlide, bAnimate);
       
       this.nActiveID = mediaID;          	
     },
