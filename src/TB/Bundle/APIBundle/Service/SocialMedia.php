@@ -28,98 +28,22 @@ class SocialMedia
         
         if (isset($twitterResult->statuses)) {
             foreach ($twitterResult->statuses as $tweet) {
-                $text = $tweet->text;
+                if (property_exists($tweet, 'entities')) {
+                    $text = $this->composeTwitterTextFromEntities($tweet->text, $tweet->entities);
+                } else {
+                    $text = $tweet->text;
+                }
+                
                 $date = new \DateTime($tweet->created_at);
                 $images = [];
                 
-                
-                // TODO: move twitter entities text composition to other class or method and add tests
-                if (property_exists($tweet, 'entities')) {
-                    $entities = $tweet->entities;
-                    $textAdditionsAtIndex = [];
-                    
-                    if (property_exists($entities, 'hashtags')) {
-                        foreach ($entities->hashtags as $hashtag) {
-                            $replacement = '<a href="https://twitter.com/hashtag/' . $hashtag->text . '" target="_blank">#' . $hashtag->text . '</a>';
-                            $replacementLength = $hashtag->indices[1] - $hashtag->indices[0];
-                            
-                            $replacementIndex = $hashtag->indices[0];
-                            
-                            // find text additions made before this entities index, and add the added letters count to the index
-                            $modifiedReplacementIndex = $replacementIndex;
-                            foreach ($textAdditionsAtIndex as $index => $value) {
-                                if ($index < $replacementIndex) {
-                                    $modifiedReplacementIndex += $value;
-                                }
-                            }
-                            
-                            $text = substr_replace($text, $replacement, $hashtag->indices[0], $replacementLength);
-                            $textAdditionsAtIndex[$hashtag->indices[0]] = strlen($replacement) - $replacementLength;
+                // we want to return images in an separate array
+                if (property_exists($tweet, 'entities') && property_exists($tweet->entities, 'media')) {
+                    foreach ($tweet->entities->media as $media) {
+                        if ($media->type == 'photo') {
+                            $images[] = $media->media_url;    
                         }
                     }
-                    
-                    if (property_exists($entities, 'user_mentions')) {
-                        foreach ($entities->user_mentions as $userMention) {
-                            $replacement = '<a href="https://twitter.com/' . $userMention->name . '" target="_blank">@' . $userMention->screen_name . '</a>';
-                            $replacementLength = $userMention->indices[1] - $userMention->indices[0];
-                            $replacementIndex = $userMention->indices[0];
-                            
-                            // find text additions made before this entities index, and add the added letters count to the index
-                            $modifiedReplacementIndex = $replacementIndex;
-                            foreach ($textAdditionsAtIndex as $index => $value) {
-                                if ($index < $replacementIndex) {
-                                    $modifiedReplacementIndex += $value;
-                                }
-                            }
-                            
-                            $text = substr_replace($text, $replacement, $modifiedReplacementIndex, $replacementLength);
-                            $textAdditionsAtIndex[$userMention->indices[0]] = strlen($replacement) - $replacementLength;
-
-                        }
-                    }  
-                    
-                    if (property_exists($entities, 'urls')) {
-                        foreach ($entities->urls as $url) {
-                            $replacement = '<a href="' . $url->expanded_url . '" target="_blank">' . $url->display_url . '</a>';
-                            $replacementLength = $url->indices[1] - $url->indices[0];
-                            $replacementIndex = $url->indices[0];
-                            
-                            // find text additions made before this entities index, and add the added letters count to the index
-                            $modifiedReplacementIndex = $replacementIndex;
-                            foreach ($textAdditionsAtIndex as $index => $value) {
-                                if ($index < $replacementIndex) {
-                                    $modifiedReplacementIndex += $value;
-                                }
-                            }
-                            
-                            $text = substr_replace($text, $replacement, $modifiedReplacementIndex, $replacementLength);
-                            $textAdditionsAtIndex[$url->indices[0]] = strlen($replacement) - $replacementLength;
-                        }
-                    }  
-                                    
-                    if (property_exists($entities, 'media')) {
-                        foreach ($entities->media as $media) {
-                            if ($media->type == 'photo') {
-                                $replacement = '';
-                                $replacementLength = $media->indices[1] - $media->indices[0];
-                                $replacementIndex = $media->indices[0];
-                            
-                                // find text additions made before this entities index, and add the added letters count to the index
-                                $modifiedReplacementIndex = $replacementIndex;
-                                foreach ($textAdditionsAtIndex as $index => $value) {
-                                    if ($index < $replacementIndex) {
-                                        $modifiedReplacementIndex += $value;
-                                    }
-                                }
-                            
-                                $text = substr_replace($text, $replacement, $modifiedReplacementIndex, $replacementLength);
-                                $textAdditionsAtIndex[$media->indices[0]] = strlen($replacement) - $replacementLength;
-                                
-                                
-                                $images[] = $media->media_url;
-                            }
-                        }
-                    }    
                 }
                 
                 $result[] = $this->formatItem(
@@ -129,21 +53,133 @@ class SocialMedia
                     self::TYPE_TWITTER,
                     $images
                 );
-            }
-        }
-        
+            }   
+        }       
+                
         return $result;
-    }
-    
+    }           
+                
     protected function formatItem($text, $date, $user, $type, array $images) 
-    {
+    {           
         return [
             'text' => $text,
             'date' => $date,
             'user' => $user,
             'type' => $type,
             'images' => $images,
-        ];
+        ];      
+    }           
+                
+    protected function composeTwitterTextFromEntities($text, $entities) 
+    {           
+        $supportedEntites = ['hashtags', 'media', 'user_mentions', 'urls'];
+        $foundEntities = [];
+                                       
+        foreach ($supportedEntites as $entityType) {
+            if (property_exists($entities, $entityType)) {
+                foreach ($entities->$entityType as $entity) {
+                    // there is a special case for media entities
+                    if ($entityType == 'media') {
+                        // only include media of type photo
+                        if ($entity->type != 'photo') {
+                            continue;
+                        }
+                        // we want to return photos in an separate array
+                        $images[] = $entity->media_url;
+                    }
+                    
+                    $foundEntities[$entity->indices[0]] = [
+                        'type' => $entityType,
+                        'entity' => $entity,
+                    ];
+                }
+            }
+        }
+        ksort($foundEntities);
+        
+        $addedTextLength = 0;
+        foreach ($foundEntities as $index => $value) {
+            $type = $value['type'];
+            $entity = $value['entity'];
+            
+            switch ($type) {
+                case 'user_mentions':
+                    $replacement = '<a href="https://twitter.com/' . $entity->name . '" target="_blank">@' . $entity->screen_name . '</a>';
+                    $replacementLength = $entity->indices[1] - $entity->indices[0];
+                    // consider previous replacements and the added text length
+                    $text = $this->mb_substr_replace($text, $replacement, $entity->indices[0] + $addedTextLength, $replacementLength);
+                    // save additional text length, to repplace at the correct index in a later replacement
+                    $additionalLength = mb_strlen($replacement) - $replacementLength;
+                    $addedTextLength += $additionalLength;
+                    break;
+                case 'urls':
+                    $replacement = '<a href="' . $entity->expanded_url . '" target="_blank">' . $entity->display_url . '</a>';
+                    $replacementLength = $entity->indices[1] - $entity->indices[0];
+                    // consider previous replacements and the added text length
+                    $text = $this->mb_substr_replace($text, $replacement, $entity->indices[0] + $addedTextLength, $replacementLength);
+                    // save additional text length, to repplace at the correct index in a later replacement
+                    $additionalLength = mb_strlen($replacement) - $replacementLength;
+                    $addedTextLength += $additionalLength;
+                    break;
+                case 'media':
+                    $replacement = '';
+                    $replacementLength = $entity->indices[1] - $entity->indices[0];
+                    // consider previous replacements and the added text length
+                    $text = $this->mb_substr_replace($text, $replacement, $entity->indices[0] + $addedTextLength, $replacementLength);
+                    // save additional text length, to repplace at the correct index in a later replacement
+                    $additionalLength = mb_strlen($replacement) - $replacementLength;
+                    $addedTextLength += $additionalLength;
+                    break;
+                case 'hashtags':
+                    $replacement = '<a href="https://twitter.com/hashtag/' . $entity->text . '" target="_blank">#' . $entity->text . '</a>';
+                    $replacementLength = $entity->indices[1] - $entity->indices[0];
+                    // consider previous replacements and the added text length
+                    $text = $this->mb_substr_replace($text, $replacement, $entity->indices[0] + $addedTextLength, $replacementLength);
+                    // save additional text length, to repplace at the correct index in a later replacement
+                    $additionalLength = mb_strlen($replacement) - $replacementLength;
+                    $addedTextLength += $additionalLength;
+                    break;
+            }
+        }
+        
+        return $text;   
+    }
+    
+    protected function mb_substr_replace($string, $replacement, $start, $length=NULL) 
+    {
+        if (is_array($string)) {
+            $num = count($string);
+            // $replacement
+            $replacement = is_array($replacement) ? array_slice($replacement, 0, $num) : array_pad(array($replacement), $num, $replacement);
+            // $start
+            if (is_array($start)) {
+                $start = array_slice($start, 0, $num);
+                foreach ($start as $key => $value)
+                    $start[$key] = is_int($value) ? $value : 0;
+            }
+            else {
+                $start = array_pad(array($start), $num, $start);
+            }
+            // $length
+            if (!isset($length)) {
+                $length = array_fill(0, $num, 0);
+            }
+            elseif (is_array($length)) {
+                $length = array_slice($length, 0, $num);
+                foreach ($length as $key => $value)
+                    $length[$key] = isset($value) ? (is_int($value) ? $value : $num) : 0;
+            }
+            else {
+                $length = array_pad(array($length), $num, $length);
+            }
+            // Recursive call
+            return array_map(__FUNCTION__, $string, $replacement, $start, $length);
+        }
+        preg_match_all('/./us', (string)$string, $smatches);
+        preg_match_all('/./us', (string)$replacement, $rmatches);
+        if ($length === NULL) $length = mb_strlen($string);
+        array_splice($smatches[0], $start, $length, $rmatches[0]);
+        return join($smatches[0]);
     }
     
 }
