@@ -36,7 +36,7 @@ services:
     
     # Use Test DB in test enviroment
     postgis:
-        class:      %postgis_class%
+        class:      TB\Bundle\APIBundle\Service\Postgis
         arguments:  [%database_host%, %database_port%, %database_name%_test, %database_user%, %database_password%]
         
 # Use in memory file adapter in test enviroment

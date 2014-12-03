@@ -173,7 +173,7 @@ services:
         class:      Guzzle\Http\Client
         
     postgis:
-        class:      %postgis_class%
+        class:      TB\Bundle\APIBundle\Service\Postgis
         arguments:  [%database_host%, %database_port%, %database_name%, %database_user%, %database_password%]
         
     twitter_client:
