@@ -64,6 +64,7 @@ class BitlyUrlCreateCommand extends ContainerAwareCommand
                 $this->em->persist($route);
                 // Don't exceed the bitly API limit
                 usleep(500000);
+                $count++;
             }
         }
         $this->em->flush();
@@ -81,13 +82,54 @@ class BitlyUrlCreateCommand extends ContainerAwareCommand
         foreach ($events as $event) {
             if ($event->getBitlyUrl() == null) {
                 $event->setBitlyUrl($this->generateBitlyUrl('event', ['slug' => $event->getSlug()]));
-                $this->em->persist($route);
+                $this->em->persist($event);
                 // Don't exceed the bitly API limit
                 usleep(500000);
+                $count++;
             }
         }
         $this->em->flush();
-        $this->output->writeln(sprintf('Generated Bitly URL\'s for %s Routes', $count));
+        $this->output->writeln(sprintf('Generated Bitly URL\'s for %s Events', $count));
+    }
+    
+    protected function generateCampaignUrls() 
+    {
+        $campaigns = $this->em->createQuery('
+            SELECT c FROM TBFrontendBundle:Campaign c')
+            ->getResult();
+        
+        $count = 0;
+        foreach ($campaigns as $campaign) {
+            if ($campaign->getBitlyUrl() == null) {
+                $campaign->setBitlyUrl($this->generateBitlyUrl('campaign', ['slug' => $campaign->getSlug()]));
+                $this->em->persist($campaign);
+                // Don't exceed the bitly API limit
+                usleep(500000);
+                $count++;
+            }
+        }
+        $this->em->flush();
+        $this->output->writeln(sprintf('Generated Bitly URL\'s for %s Campaigns', $count));
+    }
+    
+    protected function generateEditorialUrls() 
+    {
+        $editorials = $this->em->createQuery('
+            SELECT e FROM TBFrontendBundle:Editorial e')
+            ->getResult();
+        
+        $count = 0;
+        foreach ($editorials as $editorial) {
+            if ($editorial->getBitlyUrl() == null) {
+                $editorial->setBitlyUrl($this->generateBitlyUrl('campaign', ['slug' => $editorial->getSlug()]));
+                $this->em->persist($editorial);
+                // Don't exceed the bitly API limit
+                usleep(500000);
+                $count++;
+            }
+        }
+        $this->em->flush();
+        $this->output->writeln(sprintf('Generated Bitly URL\'s for %s Editorials', $count));
     }
     
     protected function generateBitlyUrl($route, $parameters) 
