@@ -45,7 +45,7 @@ border-width:1px;
 #campaignplayer {  
   position: relative;
   width: 100%;  
-  height: 448px;
+  height: 358px;
   overflow: hidden;
 }
 
@@ -66,7 +66,8 @@ border-width:1px;
 /******************************************/
 #campaign_landing_overlay_view {
   position: absolute;
-  top: 0px;
+  top: 0px;  
+  width: 412px;
 }
 
 #campaign_landing_overlay_view .info-hero {
@@ -79,20 +80,34 @@ border-width:1px;
   position: absolute;
   top: 0px;
   left: -800px;
-  width: 412px;
+  width: 454px;
   height: 1000px;
-  background: url("../img/map/background_skew.png") no-repeat top left;
+  background: url("../img/map/background_skew_454.png") no-repeat top left;
 }
 
 #campaign_landing_overlay_view .info-hero .campaign_title {
   position: relative;
-  top: 36px;
+  top: 24px;
   left: -100px;
+}
+
+#campaign_landing_overlay_view .info-hero .campaign_title .logo {
+  margin-top: 16px;
+  width: 324px;
+}
+
+#campaign_landing_overlay_view .info-hero .campaign_title .logo img {
+  width: 100%;
+}
+
+#campaign_landing_overlay_view .total {
+  margin-top: 14px;
+  color: #FFF;
 }
 
 #campaign_landing_overlay_view .info-hero .campaign_play {
   position: absolute;
-  top: 346px;
+  top: 252px;
   left: 184px;
   font-size: 42px;
   line-height: 75px;
@@ -108,7 +123,7 @@ border-width:1px;
   margin-right: 18px;
   width: 75px;
   height: 75px;
-  background: url(../img/trailplayer/play_toggle.png) no-repeat top left;  
+  background: url(../img/trailplayer/map_toggle.png) no-repeat top left;  
 }
 
 #campaign_landing_overlay_view .info-hero .campaign_play .test {
@@ -201,18 +216,6 @@ border-width:1px;
 /******************************************/
 #campaignplayer {
   background: #DEDEDE;
-}
-
-#campaignplayer .overlay_background {
-  position: absolute;
-  bottom: 0px;	
-  width: 100%;
-  height: 110px;	
-  background: url(../img/trailplayer/overlay_background.png) repeat-x top left;
-  opacity: 0;
-  transition: opacity 0.5s ease-in-out;
-  -moz-transition: opacity 0.5s ease-in-out;
-  -webkit-transition: opacity 0.5s ease-in-out;
 }
 
 /* VIEW CNTRLS */
@@ -341,7 +344,7 @@ border-width:1px;
 .panels .right {
   float: left;
   width: 568px;
-  margin-top: -210px;
+  margin-top: -204px;
 }
 
 .panel .image_container {
@@ -417,7 +420,7 @@ border-width:1px;
   position: relative;	
   margin-left: 100px;
   width: 444px;  
-  min-height: 117px;
+  min-height: 100px;
   overflow: visible;  
 }
 
@@ -434,7 +437,7 @@ border-width:1px;
 }
 
 .tweet_panel .panel .content {
-  margin: 28px 28px 28px 24px;
+  margin: 20px 28px 20px 24px;
   font-size: 14px;
   font-weight: 300;
   line-height: 1.3em;  

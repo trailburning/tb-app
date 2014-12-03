@@ -10,7 +10,7 @@ define([
     getResults: function(){
       var self = this;
 		  
-	  var strURL = TB_RESTAPI_BASEURL + '/v1/socialmedia?term=urbantrails trailburning';
+	  var strURL = TB_RESTAPI_BASEURL + '/v1/socialmedia?term=' + this.options.search;
       $.ajax({
         type: "GET",
         dataType: "json",
@@ -29,7 +29,7 @@ define([
       	    	if (tweet.images.length) {
       	    	  strImage = '<div class="image_container fade_on_load"><img src="'+tweet.images[0]+'" class="scale" border="0"></div>'; 
       	    	}
-        	    strTweet = '<div class="tweet_panel"><div class="panel"><div class="content"><h4 class="tb">'+tweet.text+strImage+'</h4></div></div></div>';
+        	    strTweet = '<div class="tweet_panel"><div class="panel"><div class="content"><h5 class="tb">'+tweet.text+strImage+'</h5></div></div></div>';
       	    	$(self.el).append(strTweet);
       	    });
       	    self.showImages();           
