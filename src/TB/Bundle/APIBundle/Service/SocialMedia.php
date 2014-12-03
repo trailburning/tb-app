@@ -140,19 +140,12 @@ class SocialMedia
     protected function formatItem($text, $date, $user, $type, array $images) 
     {
         return [
-            'text' => $this->formatText($text),
+            'text' => $text,
             'date' => $date,
             'user' => $user,
             'type' => $type,
             'images' => $images,
         ];
     }
-        
-    protected function formatText($text) 
-    {
-        // replace URL's by a link tag
-        $text = preg_replace("~((?:http|https|ftp)://(?:\S*?\.\S*?))(?=\s|\;|\)|\]|\[|\{|\}|,|\"|'|:|\<|$|\.\s)~i", '<a href="$1" target="_blank">$1</a>', $text);
-        
-        return $text;
-    }
+    
 }
