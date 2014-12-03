@@ -10,7 +10,7 @@ define([
     getResults: function(){
       var self = this;
 		  
-	  var strURL = TB_RESTAPI_BASEURL + '/v1/socialmedia?term=trailburning';
+	  var strURL = TB_RESTAPI_BASEURL + '/v1/socialmedia?term=urbantrails trailburning';
       $.ajax({
         type: "GET",
         dataType: "json",
