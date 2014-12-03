@@ -160,15 +160,13 @@ var TB_USER_ID = {{ app.user.id }};
 #}			                    
 			                </div>
 			                
-			                <div class="share_panel">share
-			                	
+			                <div class="share_panel">share			                	
 			                {{ include('TBFrontendBundle:Default:share.html.twig') }}
 			                </div>
 										                
 			            </div>
-
 			            <div id="twitter_view" class="tweets"></div>
-			        	
+			            			        	
 			        </div>
                     
                 </div>
@@ -180,11 +178,9 @@ var TB_USER_ID = {{ app.user.id }};
 				    <h2 class="tb">Popular Urban Trails</h2>
 				    <div class="desc"><h4 class="tb">Discover Urban Trails shared by the Trailburning Community</h4></div>      
 				    <div class="trailcards panels">  	
-                        
-                	    {% for trail in popularRoutes %}
-                	        {{ include('TBFrontendBundle:Trail:_trailcardSticker.html.twig', {'trail': trail, 'campaign' : campaign}) }}
-                	    {% endfor %}
-                        
+            	    {% for trail in popularRoutes %}
+            	        {{ include('TBFrontendBundle:Trail:_trailcardSticker.html.twig', {'trail': trail, 'campaign' : campaign}) }}
+            	    {% endfor %}
 				    </div>
 				  </div>	   	
 				</div>                
@@ -232,26 +228,6 @@ var TB_USER_ID = {{ app.user.id }};
 </script>
 
 <script type="text/template" id="twitterViewTemplate">
-    <div class="tweet_panel">
-        <div class="panel">
-        	<div class="content">
-        	<h4 class="tb">We now support Facebook login! Come on in and bring your Facebook avatar too - <strong>http://bit.ly/1FoY6uN</strong></h4> 
-        	</div>
-		</div>
-	</div>			            	
-
-    <div class="tweet_panel">
-        <div class="panel">
-        	<div class="content">
-        	<h4 class="tb">
-			It's getting serious, I've bought trail shoes and road running shoes <strong>#Trailburning</strong> <strong>@Trailburning</strong> <strong>#addicted</strong> 									
-			<div class="image_container fade_on_load">
-				<img src="https://pbs.twimg.com/media/ByPGdeIIUAA-ClX.jpg:large" class="scale" border="0">
-			</div>
-			</h4> 
-        	</div>
-		</div>
-	</div>			            	
 </script>
 
 <script type="text/template" id="trailWeatherViewTemplate">
