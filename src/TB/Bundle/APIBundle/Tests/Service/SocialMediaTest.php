@@ -12,9 +12,6 @@ class SocialMediaTest extends AbstractApiTest
         $socialMedia = $this->getContainer()->get('tb.socialmedia');
         
         $result = $socialMedia->search('trailburning');
-        
-        var_export($result);
-        exit;
 
         $this->assertInternalType('array', $result);
         $this->assertEquals(3, count($result));
