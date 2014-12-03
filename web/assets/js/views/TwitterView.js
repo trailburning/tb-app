@@ -10,7 +10,7 @@ define([
     getResults: function(){
       var self = this;
 		  
-	  var strURL = TB_RESTAPI_BASEURL + '/v1/socialmedia?term=trailburning';
+	  var strURL = TB_RESTAPI_BASEURL + '/v1/socialmedia?term=' + this.options.search;
       $.ajax({
         type: "GET",
         dataType: "json",
@@ -22,14 +22,14 @@ define([
 //          console.log('success');
 //          console.log(data);
 
-		  var strTweet;
+		  var strTweet = '', strImage = '';
           if (data.value) {
       	    $.each(data.value, function(key, tweet) {
-//      	    	console.log(tweet);      	    	
-      	    	strTweet = '<div class="tweet_panel"><div class="panel"><div class="content"><h4 class="tb">'+tweet.text+'</h4></div></div></div>';
-      	    	if (key == 0) {
-				  strTweet = '<div class="tweet_panel"><div class="panel"><div class="content"><h4 class="tb">'+tweet.text+'<div class="image_container fade_on_load"><img src="https://pbs.twimg.com/media/ByPGdeIIUAA-ClX.jpg:large" class="scale" border="0"></div></h4></div></div></div>';      	    		
+      	    	strImage = '';
+      	    	if (tweet.images.length) {
+      	    	  strImage = '<div class="image_container fade_on_load"><img src="'+tweet.images[0]+'" class="scale" border="0"></div>'; 
       	    	}
+        	    strTweet = '<div class="tweet_panel"><div class="panel"><div class="content"><h5 class="tb">'+tweet.text+strImage+'</h5></div></div></div>';
       	    	$(self.el).append(strTweet);
       	    });
       	    self.showImages();           

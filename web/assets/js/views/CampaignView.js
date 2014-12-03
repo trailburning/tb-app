@@ -18,7 +18,7 @@ define([
 	  }
       
       this.playerView = new CampaignPlayerView({ el: '#trailplayer', model: this.model, mediaCollection: this.mediaCollection, mediaModel: this.mediaModel });            
-      this.twitterView = new TwitterView({ el: '#twitter_view', model: this.model });
+      this.twitterView = new TwitterView({ el: '#twitter_view', model: this.model, search: 'urbantrails trailburning' });
       this.twitterView.getResults();            
       this.weatherView = new TrailWeatherView({ el: '#trail_weather_view', lat: 51.507351, lon: -0.127758});
 	  this.elLikeBtn = $('.like_btn', $(this.el));

@@ -28,17 +28,23 @@ var TB_USER_ID = {{ app.user.id }};
         <div id="trail_views">        
             <div id="trail_map_view"></div>
         </div>
-        
-        <div class="overlay_background"></div>
-        
 		<div id="player_big_btn"></div>        
         <div id="campaign_landing_overlay_view">        	
         	<div class="back tb-move-horiz"></div>        	
 			<div class="info-hero tb-move-horiz">				  						  				
-			  <div class="campaign_title tb-move-horiz"><img src="http://assets.trailburning.com/{{ campaign.logo }}" /></div>              
+			  <div class="campaign_title tb-move-horiz">			  	
+			  	<div class="logo"><img src="http://assets.trailburning.com/{{ campaign.logo }}" /></div>
+{#
+				<h2 class="tb tb-title">Morning Trails</h2>
+				<br/>
+			  	<h2 class="tb tb-title">with 6amCLUB</h2>
+	
+#}			  				  	
+			  	<h4 class="tb total"><strong>{{ totalRoutesCount }}</strong> Trails</h4>
+			  	</div>              
               <div class="campaign_play">
               	<div class="campaign_btn"></div>
-              	Discover Trails	
+              	View Trails	
 			  </div>              	
 			</div>        	
 		</div>        	

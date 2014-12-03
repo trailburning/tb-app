@@ -141,7 +141,6 @@ define([
       var self = this;
 
 	  var nOffSet = this.nPage * (this.PageSize);
-		  		  
 	  var strURL = TB_RESTAPI_BASEURL + '/v1/routes/search?campaign_id=1&limit=500&offset=0';
       $.ajax({
         type: "GET",
@@ -237,9 +236,7 @@ define([
       self.bLocked = false;
     },
     showIntroOverlay: function(){
-	  $('.overlay_background').css('opacity', 1);
-    	
-      $('#campaign_landing_overlay_view .back').css('left', -144);
+      $('#campaign_landing_overlay_view .back').css('left', 0);
       $('#campaign_landing_overlay_view .info-hero').css('left', -144);
       $('#campaign_landing_overlay_view .info-hero .campaign_title').css('left', 189);                                	          
       
@@ -248,8 +245,6 @@ define([
       $('#campaign_map_overlay_view .info-hero .campaign_title').css('left', -100);
     },
     hideIntroOverlay: function(){    
-	  $('.overlay_background').css('opacity', 0);
-
       $('#campaign_landing_overlay_view .back').css('left', -800);
       $('#campaign_landing_overlay_view .info-hero').css('left', -800);
       $('#campaign_landing_overlay_view .info-hero .campaign_title').css('left', -100);
