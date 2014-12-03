@@ -93,7 +93,7 @@ border-width:1px;
 
 #campaign_landing_overlay_view .info-hero .campaign_title .logo {
   margin-top: 16px;
-  width: 324px;
+  width: 300px;
 }
 
 #campaign_landing_overlay_view .info-hero .campaign_title .logo img {
@@ -109,7 +109,7 @@ border-width:1px;
   position: absolute;
   top: 252px;
   left: 184px;
-  font-size: 42px;
+  font-size: 36px;
   line-height: 75px;
   color: #FFF;
   font-weight: 400;
@@ -124,10 +124,6 @@ border-width:1px;
   width: 75px;
   height: 75px;
   background: url(../img/trailplayer/map_toggle.png) no-repeat top left;  
-}
-
-#campaign_landing_overlay_view .info-hero .campaign_play .test {
-  display: inline-block;
 }
 
 #campaign_landing_overlay_view .info-hero .campaign_play:hover .campaign_btn {
@@ -145,6 +141,14 @@ border-width:1px;
   position: absolute;
   top: 0px;
   left: -800px;
+}
+
+#campaign_map_overlay_view .info-hero .campaign_title .logo {
+  width: 260px;
+}
+
+#campaign_map_overlay_view .info-hero .campaign_title .logo img {
+  width: 100%;
 }
 
 #campaign_map_overlay_view .back {
