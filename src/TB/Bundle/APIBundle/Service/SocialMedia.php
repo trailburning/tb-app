@@ -123,11 +123,6 @@ class SocialMedia
                         }
                     }    
                 }
-                echo $text . "\n";
-                exit;
-                
-                var_export($tweet->entities);
-                exit;
                 
                 $result[] = $this->formatItem(
                     $text, 
