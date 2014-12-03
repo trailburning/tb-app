@@ -96,7 +96,7 @@ define([
       
       var elContentView = $('#content_view');
       var nContentY = elContentView.position().top;
-      var nContentHeight = $(window).height() - nContentY;
+      var nContentHeight = $(window).height() - nContentY - 60;
   	  if (nContentHeight < this.nPlayerMinHeight) {
   	  	nContentHeight = this.nPlayerMinHeight;
 	  }
