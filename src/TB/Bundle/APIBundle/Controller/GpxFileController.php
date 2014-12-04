@@ -9,8 +9,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 
 use TB\Bundle\FrontendBundle\Entity\GpxFile;
-use TB\Bundle\APIBundle\Util\GpxFileImporter;
-use TB\Bundle\APIBundle\Util\ApiException;
+use TB\Bundle\APIBundle\Service\GpxFileImporter;
+use TB\Bundle\APIBundle\Service\ApiException;
 
 class GpxFileController extends AbstractRestController
 {

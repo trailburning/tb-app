@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Gaufrette\Filesystem;
 use Gaufrette\Adapter\MetadataSupporter;
 use Gaufrette\Adapter\AwsS3;
-use TB\Bundle\FrontendBundle\Util\MediaImporter;
+use TB\Bundle\FrontendBundle\Service\MediaImporter;
 
 /**
  * Media

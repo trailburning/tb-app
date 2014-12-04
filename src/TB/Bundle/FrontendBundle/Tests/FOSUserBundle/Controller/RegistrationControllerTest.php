@@ -25,7 +25,7 @@ class RegistrationControllerTest extends AbstractFrontendTest
 
         // TODO: mock doesn't work
         //// Replace the Mailproxy Service with a Stub
-        // $mailproxy = $this->getMockBuilder('TB\Bundle\FrontendBundle\Util\Mailproxy')
+        // $mailproxy = $this->getMockBuilder('TB\Bundle\FrontendBundle\Service\Mailproxy')
         //     ->disableOriginalConstructor()
         //     ->getMock();
         //// Test that the sendWelcomeMail() method gets called once

@@ -7,13 +7,18 @@
     <services>
         
         <!-- Register media importer service -->
-        <service id="tb.media.importer" class="TB\Bundle\FrontendBundle\Util\MediaImporter">
+        <service id="tb.media.importer" class="TB\Bundle\FrontendBundle\Service\MediaImporter">
             <argument type="service" id="doctrine.orm.entity_manager" />
             <argument type="service" id="http_client" />
         </service>
         
         <!-- Register GPX importer service -->
-        <service id="tb.gpxfile.importer" class="TB\Bundle\APIBundle\Util\GpxFileImporter">
+        <service id="tb.gpxfile.importer" class="TB\Bundle\APIBundle\Service\GpxFileImporter">
+        </service>
+        
+        <!-- Social  -->
+        <service id="tb.socialmedia" class="TB\Bundle\APIBundle\Service\SocialMedia">
+            <argument type="service" id="twitter_api" />
         </service>
         
     </services>

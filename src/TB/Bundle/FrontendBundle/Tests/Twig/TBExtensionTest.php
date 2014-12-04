@@ -3,7 +3,7 @@
 namespace TB\Bundle\FrontendBundle\Twig\Entity;
 
 use TB\Bundle\FrontendBundle\Tests\AbstractFrontendTest;
-use TB\Bundle\FrontendBundle\Util\MediaImporter;
+use TB\Bundle\FrontendBundle\Service\MediaImporter;
 use CrEOF\Spatial\PHP\Types\Geometry\Point;
 use TB\Bundle\FrontendBundle\Entity\RouteLike;
 use TB\Bundle\FrontendBundle\Entity\User;

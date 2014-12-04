@@ -245,7 +245,7 @@ class ActivityListenerTest extends AbstractFrontendTest
         $user = $this->getUser('mattallbeury');
         
         // Replace the ActivityFeedgenerator Service with a Stub
-        $generator = $this->getMockBuilder('TB\Bundle\FrontendBundle\Util\ActivityFeedGenerator')
+        $generator = $this->getMockBuilder('TB\Bundle\FrontendBundle\Service\ActivityFeedGenerator')
             ->disableOriginalConstructor()
             ->getMock();
         // Test that the createFeedFromActivity() method gets called exactly once
