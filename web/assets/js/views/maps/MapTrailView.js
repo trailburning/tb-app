@@ -136,6 +136,10 @@ define([
       if (this.bRendered) {
         this.map.invalidateSize(false);
 	    this.map.fitBounds(this.markerCluster.getBounds(), {padding: [200, 200], animate: false});
+	    // apply zoom out
+	    if (this.options.nZoomOut) {
+	      this.map.zoomOut(this.options.nZoomOut, {animate: false});	
+	    }
 	    this.updateZoomCtrls();
         return;         
       }        

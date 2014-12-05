@@ -139,12 +139,10 @@ var TB_TRAIL_ID = {{ trail.id }};
 		{% if campaign %}
 			<div class="event_logo campaign_logo">
     			{% if campaign.title != '6amCLUB' %}
-    			<a href="{{ app.request.baseUrl }}/campaign/{{ campaign.slug}}"><img src="http://assets.trailburning.com/images/campaign/urbantrails/london/logo_urbantrails_london.png" border="0"></a>
+    			<a href="{{ app.request.baseUrl }}/campaign/{{ campaign.slug}}"><img src="http://assets.trailburning.com/{{ campaign.logo }}" border="0"></a>
     			{% endif %}
 			</div>
-        {% endif %}
-        
-	    {% if user is BrandProfile %}
+	    {% elseif user is BrandProfile %}
 			<div class="event_logo">
     			<a href="{{ path('profile', {'name': user.name}) }}"><img src="http://assets.trailburning.com/images/profile/{{ user.name }}/logo.png" border="0"></a>
 			</div>

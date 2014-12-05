@@ -41,7 +41,7 @@ var TB_USER_ID = {{ app.user.id }};
 				{% else %}
 					<div class="logo"><img src="http://assets.trailburning.com/{{ campaign.logo }}" /></div>
 				{% endif %}			  				  	
-			  	<h4 class="tb total"><strong>{{ totalRoutesCount }}</strong> Trails&nbsp;&nbsp;|&nbsp;&nbsp;{% if campaign.title == '6amCLUB' %}#6amCLUB{% else %}#urbantrails{% endif %}			  		
+			  	<h4 class="tb total"><strong>{{ totalRoutesCount }}</strong> Trails&nbsp;&nbsp;|&nbsp;&nbsp;{% if campaign.title == '6amCLUB' %}#6amCLUB{% elseif campaign.title == 'mtbuller' %}@mtbuller{% else %}#urbantrails{% endif %}			  		
 			  	</h4>
 			  	</div>              
               <div class="campaign_play">
@@ -111,10 +111,10 @@ var TB_USER_ID = {{ app.user.id }};
                 <div class="panels clearfix">     
 			        <div class="left">        
 						<div class="trails_title"><h2 class="tb tb-title first-title ">
-						{% if campaign.title == '6amCLUB' %}
-						Latest Trails
+						{% if campaign.title == 'London' %}
+						Latest Urban Trails						
 						{% else %}
-						Latest Urban Trails
+						Latest Trails
 						{% endif %}
 						</h2></div>			        	
 						
@@ -122,7 +122,7 @@ var TB_USER_ID = {{ app.user.id }};
 						
 			        	<div class="event_container trailcards">
                     	    {% for trail in latestRoutes %}
-                    	      {% if campaign.title != '6amCLUB' %}
+                    	      {% if campaign.title == 'London' %}
                     	        {% if loop.index < 3 %}
                     	    	  {{ include('TBFrontendBundle:Trail:_trailcard.html.twig', {'trail': trail, 'campaign' : campaign}) }}
                     	    	{% endif %}
@@ -131,7 +131,7 @@ var TB_USER_ID = {{ app.user.id }};
                     	      {% endif %}
                     	    {% endfor %}
 						
-							{% if campaign.title != '6amCLUB' %}	
+							{% if campaign.title == 'London' %}	
 							<div class="panel trail_card_panel promo_panel">
 								<div class="title"><h3 class="tb">Add your trail</h3></div>								                            	
                             	<a href="{{ app.request.baseUrl }}/competition">
@@ -200,7 +200,10 @@ var TB_USER_ID = {{ app.user.id }};
 				  <div class="fixed_content">
 					{% if campaign.title == '6amCLUB' %}
 				    <h2 class="tb">Popular Trails</h2>
-				    <div class="desc"><h4 class="tb">Discover Trails shared by the #6amCLUB Community</h4></div>      
+				    <div class="desc"><h4 class="tb">Discover Trails shared by the #6amCLUB Community</h4></div>
+				    {% elseif campaign.title == 'mtbuller' %}      
+				    <h2 class="tb">Popular Trails</h2>
+				    <div class="desc"><h4 class="tb">Discover Trails shared by Mt Buller</h4></div>
 					{% else %}
 				    <h2 class="tb">Popular Urban Trails</h2>
 				    <div class="desc"><h4 class="tb">Discover Urban Trails shared by the Trailburning Community</h4></div>      

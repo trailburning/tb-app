@@ -18,14 +18,26 @@ define([
 	  }
       
       this.playerView = new CampaignPlayerView({ el: '#trailplayer', model: this.model, mediaCollection: this.mediaCollection, mediaModel: this.mediaModel });
-      var strTwitterSearch = 'urbantrails trailburning';
+      var fLat, fLng, strTwitterSearch;
       if (CAMPAIGN_TITLE == '6amCLUB') {
       	strTwitterSearch = '6amclub trailburning';
+      	fLat = 0;
+      	fLng = 0;
+      }
+      if (CAMPAIGN_TITLE == 'Mt Buller') {
+      	strTwitterSearch = 'mtbuller';
+      	fLat = -37.132552;
+      	fLng = 146.454196;
+      }
+      if (CAMPAIGN_TITLE == 'London') {
+      	strTwitterSearch = 'urbantrails trailburning';
+      	fLat = 51.507351;
+      	fLng = -0.127758;
       }
                   
       this.twitterView = new TwitterView({ el: '#twitter_view', model: this.model, search: strTwitterSearch });
       this.twitterView.getResults();            
-      this.weatherView = new TrailWeatherView({ el: '#trail_weather_view', lat: 51.507351, lon: -0.127758});
+      this.weatherView = new TrailWeatherView({ el: '#trail_weather_view', lat: fLat, lon: fLng });
 	  this.elLikeBtn = $('.like_btn', $(this.el));
       
       this.playerView.updatePlayerHeight();
