@@ -12,8 +12,7 @@ define([
     },            
     render: function(){
       var self = this, bAvatar = true;;
-      
-                      
+                            
       switch (this.model.get('verb')) {
 		case 'tb_welcome':
 		  this.model.set('displayPublished', 'Now');
@@ -44,7 +43,7 @@ define([
       	  switch (this.model.get('verb')) {
 			case 'accept':	  
 			  bAvatar = false;
-	      	  this.model.set('actorAvatarURL', 'http://assets.trailburning.com/images/campaign/urbantrails/icon.png');
+	      	  this.model.set('actorAvatarURL', 'http://assets.trailburning.com/images' + this.model.get('target').url + '/icon.png');
 	      	  this.model.set('activityURL', this.model.get('object').url);
 	      	  this.model.set('actorDisplayName', this.model.get('target').displayName);
 	      	  this.model.set('preVerbDisplayName', 'has');
