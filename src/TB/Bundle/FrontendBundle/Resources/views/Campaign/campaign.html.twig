@@ -18,11 +18,12 @@
 <script>
 var TB_APP = 'CampaignApp';
 var TB_PATH = '{{ app.request.baseUrl }}';
+var CAMPAIGN_ID = {{ campaign.id }};
+var CAMPAIGN_TITLE = '{{ campaign.title }}';
 {% if app.user %}		
 var TB_USER_ID = {{ app.user.id }};
 {% endif %}
 </script>
-
 <div id="content_view">	
     <div id="campaignplayer">
         <div id="trail_views">        
@@ -33,14 +34,15 @@ var TB_USER_ID = {{ app.user.id }};
         	<div class="back tb-move-horiz"></div>        	
 			<div class="info-hero tb-move-horiz">				  						  				
 			  <div class="campaign_title tb-move-horiz">			  	
-			  	<div class="logo"><img src="http://assets.trailburning.com/{{ campaign.logo }}" /></div>
-{#
-				<h2 class="tb tb-title">Morning Trails</h2>
-				<br/>
-			  	<h2 class="tb tb-title">with 6amCLUB</h2>
-	
-#}			  				  	
-			  	<h4 class="tb total"><strong>{{ totalRoutesCount }}</strong> Trails&nbsp;&nbsp;|&nbsp;&nbsp;#urbantrails</h4>
+			  	{% if campaign.title == '6amCLUB' %}
+					<h2 class="tb tb-title">Morning Trails</h2>
+					<br/>
+				  	<h2 class="tb tb-title">with #6amCLUB</h2>
+				{% else %}
+					<div class="logo"><img src="http://assets.trailburning.com/{{ campaign.logo }}" /></div>
+				{% endif %}			  				  	
+			  	<h4 class="tb total"><strong>{{ totalRoutesCount }}</strong> Trails&nbsp;&nbsp;|&nbsp;&nbsp;{% if campaign.title == '6amCLUB' %}#6amCLUB{% else %}#urbantrails{% endif %}			  		
+			  	</h4>
 			  	</div>              
               <div class="campaign_play">
               	<div class="campaign_btn"></div>
@@ -52,7 +54,13 @@ var TB_USER_ID = {{ app.user.id }};
         <div id="campaign_map_overlay_view">
 			<div class="info-hero tb-move-horiz">				  						  				
 			  <div class="campaign_title tb-move-horiz">
+			  {% if campaign.title == '6amCLUB' %}
+			    <h2 class="tb tb-title">Morning Trails</h2>
+				<br/>
+				<h2 class="tb tb-title">with #6amCLUB</h2>
+			  {% else %}
 			  	<div class="logo"><img src="http://assets.trailburning.com/{{ campaign.logo }}" /></div>
+			  {% endif %}			  				  	
 			  </div>	
 			</div>        	
 		</div>        	
@@ -102,15 +110,28 @@ var TB_USER_ID = {{ app.user.id }};
 
                 <div class="panels clearfix">     
 			        <div class="left">        
-						<div class="trails_title"><h2 class="tb tb-title first-title ">Latest Urban Trails</h2></div>			        	
+						<div class="trails_title"><h2 class="tb tb-title first-title ">
+						{% if campaign.title == '6amCLUB' %}
+						Latest Trails
+						{% else %}
+						Latest Urban Trails
+						{% endif %}
+						</h2></div>			        	
 						
                         {% if latestRoutes and latestRoutes|length > 0 %}
 						
 			        	<div class="event_container trailcards">
                     	    {% for trail in latestRoutes %}
+                    	      {% if campaign.title != '6amCLUB' %}
+                    	        {% if loop.index < 3 %}
+                    	    	  {{ include('TBFrontendBundle:Trail:_trailcard.html.twig', {'trail': trail, 'campaign' : campaign}) }}
+                    	    	{% endif %}
+                    	      {% else %}
                     	        {{ include('TBFrontendBundle:Trail:_trailcard.html.twig', {'trail': trail, 'campaign' : campaign}) }}
+                    	      {% endif %}
                     	    {% endfor %}
 						
+							{% if campaign.title != '6amCLUB' %}	
 							<div class="panel trail_card_panel promo_panel">
 								<div class="title"><h3 class="tb">Add your trail</h3></div>								                            	
                             	<a href="{{ app.request.baseUrl }}/competition">
@@ -132,23 +153,25 @@ var TB_USER_ID = {{ app.user.id }};
                                 	<div class="more"><a class="btn btn-tb-action" href="{{ app.request.baseUrl }}/competition">How to Win</a></div>
                             	</div>
                         	</div>
-                        			
+                        	{% endif %}
 						</div>
 						
 						{% endif %}
 			            
-                        <div id="trail_weather_view" class="panel trail_weather_panel"></div>			            
+			            {% if campaign.title != '6amCLUB' %}
+                        <div id="trail_weather_view" class="panel trail_weather_panel"></div>
+                        {% endif %}			            
 			        </div>
 			      
 			        <div class="right">
 			            <div class="panel campaign_detail_panel">
 			            	<div class="photo">
-			            		<div class="image_container fade_on_load"><img data-src="http://app.resrc.it/o=80/http://assets.trailburning.com/images/campaign/urbantrails/london/8972edd96f999eabf6612d18d9bc2d2b042db5c8.jpg" class="resrc scale" border="0"></div>
+			            		<div class="image_container fade_on_load"><img data-src="http://app.resrc.it/o=80/http://assets.trailburning.com/{{ campaign.image }}" class="resrc scale" border="0"></div>
 			            	</div>
 			            	
 			                <div class="content">
 			                    <h3 class="tb title">About {{ campaign.text }}</h3>               
-                	  			<h4 class="tb">{{ campaign.synopsis|nl2br }}</h4>
+                	  			<h4 class="tb">{{ campaign.synopsis|raw }}</h4>
 {#	                	  			
 			                    <div class="join">
 							    {% if app.user %}  	      
@@ -174,9 +197,14 @@ var TB_USER_ID = {{ app.user.id }};
                 {% if popularRoutes and popularRoutes|length > 0 %}
                 
 				<div class="likedtrails_content">
-				  <div class="fixed_content">				
+				  <div class="fixed_content">
+					{% if campaign.title == '6amCLUB' %}
+				    <h2 class="tb">Popular Trails</h2>
+				    <div class="desc"><h4 class="tb">Discover Trails shared by the #6amCLUB Community</h4></div>      
+					{% else %}
 				    <h2 class="tb">Popular Urban Trails</h2>
 				    <div class="desc"><h4 class="tb">Discover Urban Trails shared by the Trailburning Community</h4></div>      
+					{% endif %}				  	
 				    <div class="trailcards panels">  	
             	    {% for trail in popularRoutes %}
             	        {{ include('TBFrontendBundle:Trail:_trailcardSticker.html.twig', {'trail': trail, 'campaign' : campaign}) }}

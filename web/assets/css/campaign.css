@@ -164,6 +164,9 @@ border-width:1px;
   position: relative;
   top: 30px;
   left: -100px;
+  
+  white-space: nowrap;
+  
 }
 
 #campaign_map_overlay_view .info-hero .campaign_title img {
