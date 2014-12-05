@@ -138,7 +138,9 @@ var TB_TRAIL_ID = {{ trail.id }};
 
 		{% if campaign %}
 			<div class="event_logo campaign_logo">
+    			{% if campaign.title != '6amCLUB' %}
     			<a href="{{ app.request.baseUrl }}/campaign/{{ campaign.slug}}"><img src="http://assets.trailburning.com/images/campaign/urbantrails/london/logo_urbantrails_london.png" border="0"></a>
+    			{% endif %}
 			</div>
         {% endif %}
         
@@ -274,7 +276,17 @@ var TB_TRAIL_ID = {{ trail.id }};
     	                            	<a href="{{ path('campaign', { slug: campaign.slug}) }}">
     	                                <div class="photo tb-photo-btn">
     	                                    <div class="image_container fade_on_load"><img src="http://app.resrc.it/o=80/http://assets.trailburning.com/{{ campaign.image }}" class="resrc scale" border="0"></div>                                    
-    	                                    <div class="overlay"><div class="logo"><img src="http://assets.trailburning.com/{{ campaign.logo }}"></div></div>                                    
+    	                                    <div class="overlay">
+    	                                    	<div class="logo">
+    	                                    	{% if campaign.title == '6amCLUB' %}
+												<h3 class="tb tb-title">Morning Trails</h3>
+												<br/>
+											  	<h3 class="tb tb-title">with #6amCLUB</h3>
+    	                                    	{% else %}
+    	                                    	<img src="http://assets.trailburning.com/{{ campaign.logo }}">
+    	                                    	{% endif %}    	                                    	
+    	                                    	</div>
+    	                                    </div>                                    
     	                                    <div class="card_title">
     	                                    <h1>This trail is featured</h1>
     	                                    <br>

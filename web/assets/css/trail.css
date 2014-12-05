@@ -1090,6 +1090,7 @@ html.touch #small_sponsor_bar {
 
 .campaign_panel .overlay .logo {
   margin: 26px 0px 0px 26px;
+  white-space: nowrap;
 }
 
 .campaign_panel .overlay .logo img {
@@ -1107,7 +1108,7 @@ html.touch #small_sponsor_bar {
 
 .campaign_panel .photo .card_title {
   bottom: 22px;
-  left: 26px;	
+  left: 31px;	
 }
 
 /* TRAIL WEATHER PANEL */
