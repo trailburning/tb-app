@@ -268,8 +268,9 @@ var TB_TRAIL_ID = {{ trail.id }};
 							{% endif %}
 	
 							{% if campaigns and campaigns|length > 0 %}
-								<div class="panel trail_card_panel campaign_panel">
                                     {% for campaign in campaigns %}
+                                      {% if campaign.title != 'Mt Buller' and campaign.title != '6amCLUB' %}
+									  <div class="panel trail_card_panel campaign_panel">
                                         <div class="content">                                            
     	                            	<a href="{{ path('campaign', { slug: campaign.slug}) }}">
     	                                <div class="photo tb-photo-btn">
@@ -292,9 +293,10 @@ var TB_TRAIL_ID = {{ trail.id }};
     	                                    </div>
     	                                </div>
     	                            	</a>
-    	                            	</div>    
+    	                            	</div>  
+									  </div>
+    	                              {% endif %}  
                                     {% endfor %}
-								</div>
 							{% endif %}
                         	
                             {% if event and eventTrails %}
