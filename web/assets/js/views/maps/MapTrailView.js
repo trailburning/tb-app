@@ -217,7 +217,6 @@ define([
       if (this.currTrailCardMarker) {
       	this.currTrailCardMarker.selected(false);
       }
-      
       var trailCardMarker = this.collection.get(id).mapTrailMarker;
       this.currTrailCardMarker = trailCardMarker;
 
