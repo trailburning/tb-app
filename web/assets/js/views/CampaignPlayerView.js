@@ -37,12 +37,12 @@ define([
       app.dispatcher.on("TrailMapView:zoominclick", self.onTrailMapViewZoomInClick, this);
       app.dispatcher.on("TrailMapView:zoomoutclick", self.onTrailMapViewZoomOutClick, this);
 
-	  var nZoomOut = 0;
+	  var nZoom = 0;
       if (CAMPAIGN_TITLE == 'Mt Buller') {
-        nZoomOut = 10;
+        nZoom = 13;
 	  }
 
-      this.trailMapView = new MapTrailView({ el: '#trail_map_view', elCntrls: '#view_map_btns', model: this.model, nZoomOut: nZoomOut });
+      this.trailMapView = new MapTrailView({ el: '#trail_map_view', elCntrls: '#view_map_btns', model: this.model, nZoom: nZoom });
 
 	  this.getResults();
 	  this.buildBtns();
