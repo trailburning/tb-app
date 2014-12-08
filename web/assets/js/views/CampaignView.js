@@ -30,7 +30,7 @@ define([
       	fLng = 146.454196;
       }
       if (CAMPAIGN_TITLE == 'London') {
-      	strTwitterSearch = 'urbantrails trailburning';
+      	strTwitterSearch = 'urbantrails trailburning from:trailburning';
       	fLat = 51.507351;
       	fLng = -0.127758;
       }
