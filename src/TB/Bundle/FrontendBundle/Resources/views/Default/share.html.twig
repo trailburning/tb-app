@@ -2,10 +2,29 @@
     {% set url = url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}
 {% endif %}
 {% if text is not defined  %}
-   	{% set text = 'I\'m #trailburning!' %}   	    
+   	{% set text = 'I\'m #trailburning!' %}
+
+   	{% if campaign is defined %}
+   	  {% if campaign.bitlyUrl %}
+   	    {% set text = ['#trailburning', ' ', campaign.bitlyUrl]|join %}
+   	  {% endif %}
+	{% endif %}   	   	    
+
+   	{% if editorial is defined %}
+   	  {% if editorial.bitlyUrl %}
+   	    {% set text = ['#trailburning', ' ', editorial.bitlyUrl]|join %}
+   	  {% endif %}
+	{% endif %}   	   	    
+   	
+   	{% if event is defined %}
+   	  {% if event.bitlyUrl %}
+   	    {% set text = [event.title|nl2br, ' ', '#trailburning', ' ', event.bitlyUrl]|join %}
+   	  {% endif %}
+	{% endif %}   	   	    
+   	   	    
 	{% if trail is defined %}	
 		{% if trail.bitlyUrl %}
-			{% set text = ['I\'m #trailburning!', ' ', trail.bitlyUrl, ' @trailburning']|join %}	
+			{% set text = ['I\'m #trailburning!', ' ', trail.bitlyUrl]|join %}	
 		{% endif %}	
     {% endif %}    
 {% endif %}

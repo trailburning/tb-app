@@ -182,7 +182,7 @@ html.touch #small_sponsor_bar {
 
 .editorial_panel .content .content_header .line {
   float: left;
-  width: 578px;
+  width: 528px;
   margin-top: 27px;
   border-top-style: solid;
   border-top-width: 1px;
@@ -517,7 +517,7 @@ html.touch #small_sponsor_bar {
     width: 268px;
   }
   .editorial_panel .content .content_header .line {
-	width: 460px;
+	width: 410px;
   }
   #column_wrapper .columns {
 	margin: 37px 0px 0px 0px;
