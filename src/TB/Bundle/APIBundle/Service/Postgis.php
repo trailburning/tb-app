@@ -440,7 +440,7 @@ class Postgis extends \PDO
         $routes = array();
         if ($row = $pq->fetch(\PDO::FETCH_ASSOC)) {
             $count = $row['count'];
-            $q = 'SELECT r.id, r.name, r.slug, r.region, r.length, ST_AsText(r.centroid) AS centroid, ST_AsText(r.start) AS start, r.tags, r.rating, rt.id AS rt_id, rt.name AS rt_name, rc.id AS rc_id, rc.name AS rc_name, r.about, u.id AS user_id, u.name AS user_name, u.discr, u.first_name, u.last_name, u.display_name, u.avatar, u.avatar_gravatar, u.gender, u.is_ambassador, m.id AS m_id, ST_AsText(m.coords) AS m_coords, m.tags AS m_tags, m.filename AS m_filename, m.path AS m_path
+            $q = 'SELECT r.id, r.name, r.slug, r.region, r.length, ST_AsText(r.centroid) AS centroid, ST_AsText(r.start) AS start, r.tags, r.rating, rt.id AS rt_id, rt.name AS rt_name, rc.id AS rc_id, rc.name AS rc_name, r.about, u.id AS user_id, u.name AS user_name, u.discr, u.first_name, u.last_name, u.display_name, u.avatar, u.avatar_gravatar, u.avatar_facebook, u.gender, u.is_ambassador, m.id AS m_id, ST_AsText(m.coords) AS m_coords, m.tags AS m_tags, m.filename AS m_filename, m.path AS m_path
                   FROM routes r
                   INNER JOIN fos_user u ON r.user_id=u.id
                   LEFT JOIN route_type rt ON r.route_type_id=rt.id
@@ -519,6 +519,7 @@ class Postgis extends \PDO
                     $user->setLastName($row['last_name']);
                     $user->setAvatar($row['avatar']);
                     $user->setAvatarGravatar($row['avatar_gravatar']);
+                    $user->setAvatarFacebook($row['avatar_facebook']);
                     $user->setGender($row['gender']);
                     $user->setIsAmbassador($row['is_ambassador']);
                 } elseif ($row['discr'] == 'brand') {
@@ -527,6 +528,7 @@ class Postgis extends \PDO
                     $user->setDisplayName($row['display_name']);
                     $user->setAvatar($row['avatar']);
                     $user->setAvatarGravatar($row['avatar_gravatar']);
+                    $user->setAvatarFacebook($row['avatar_facebook']);
                 }
                 $route->setUser($user);
                 
@@ -772,7 +774,7 @@ class Postgis extends \PDO
             throw (new ApiException(sprintf('Route with id %s not found', $routeId), 404));
         }
         
-        $q = 'SELECT r.id, r.name, r.slug, r.region, r.length, ST_AsText(r.centroid) AS centroid, ST_AsText(r.start) AS start, r.tags, r.rating, rt.id AS rt_id, rt.name AS rt_name, rc.id AS rc_id, rc.name AS rc_name, r.about, m.id AS m_id, ST_AsText(m.coords) AS m_coords, m.tags AS m_tags, m.filename AS m_filename, m.path AS m_path, u.id AS user_id, u.name AS user_name, u.discr, u.first_name, u.last_name, u.display_name, u.avatar, u.avatar_gravatar, u.gender, u.is_ambassador, e.id AS event_id, e.title AS event_title, e.slug AS event_slug
+        $q = 'SELECT r.id, r.name, r.slug, r.region, r.length, ST_AsText(r.centroid) AS centroid, ST_AsText(r.start) AS start, r.tags, r.rating, rt.id AS rt_id, rt.name AS rt_name, rc.id AS rc_id, rc.name AS rc_name, r.about, m.id AS m_id, ST_AsText(m.coords) AS m_coords, m.tags AS m_tags, m.filename AS m_filename, m.path AS m_path, u.id AS user_id, u.name AS user_name, u.discr, u.first_name, u.last_name, u.display_name, u.avatar, u.avatar_gravatar, u.avatar_facebook, u.gender, u.is_ambassador, e.id AS event_id, e.title AS event_title, e.slug AS event_slug
               FROM routes r
               INNER JOIN fos_user u ON r.user_id=u.id
               LEFT JOIN route_type rt ON r.route_type_id=rt.id
@@ -863,6 +865,7 @@ class Postgis extends \PDO
                 $user->setLastName($row['last_name']);
                 $user->setAvatar($row['avatar']);
                 $user->setAvatarGravatar($row['avatar_gravatar']);
+                $user->setAvatarFacebook($row['avatar_facebook']);
                 $user->setGender($row['gender']);
                 $user->setIsAmbassador($row['is_ambassador']);
             } elseif ($row['discr'] == 'brand') {
@@ -871,6 +874,7 @@ class Postgis extends \PDO
                 $user->setDisplayName($row['display_name']);
                 $user->setAvatar($row['avatar']);
                 $user->setAvatarGravatar($row['avatar_gravatar']);
+                $user->setAvatarFacebook($row['avatar_facebook']);
             }
             $route->setUser($user);
             
