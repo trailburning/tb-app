@@ -169,6 +169,13 @@ class Campaign
     private $bitlyUrl;
     
     /**
+     * @var string
+     *
+     * @ORM\Column(name="watermark_image", type="string", length=100, nullable=true)
+     */
+    private $watermarkImage;
+    
+    /**
      * Set id
      *
      * @param integer $id
@@ -746,5 +753,28 @@ class Campaign
     public function getBitlyUrl()
     {
         return $this->bitlyUrl;
+    }
+
+    /**
+     * Set watermarkImage
+     *
+     * @param string $watermarkImage
+     * @return Campaign
+     */
+    public function setWatermarkImage($watermarkImage)
+    {
+        $this->watermarkImage = $watermarkImage;
+
+        return $this;
+    }
+
+    /**
+     * Get watermarkImage
+     *
+     * @return string 
+     */
+    public function getWatermarkImage()
+    {
+        return $this->watermarkImage;
     }
 }

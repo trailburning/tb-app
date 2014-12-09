@@ -2,9 +2,9 @@
 
 namespace TB\Bundle\APIBundle\Tests\Service;
 
-use TB\Bundle\APIBundle\Tests\AbstractApiTestCase;
+use TB\Bundle\APIBundle\Tests\AbstractApiTest;
 
-class MailchimpWebhookTest extends AbstractApiTestCase
+class MailchimpWebhookTest extends AbstractApiTest
 {
 
     public function testProcessSubscribe()
