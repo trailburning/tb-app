@@ -269,7 +269,7 @@ var TB_TRAIL_ID = {{ trail.id }};
 	
 							{% if campaigns and campaigns|length > 0 %}
                                     {% for campaign in campaigns %}
-                                      {% if campaign.title != 'Mt Buller' and campaign.title != '6amCLUB' %}
+                                      {% if campaign.title != '6amCLUB' %}
 									  <div class="panel trail_card_panel campaign_panel">
                                         <div class="content">                                            
     	                            	<a href="{{ path('campaign', { slug: campaign.slug}) }}">
