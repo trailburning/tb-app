@@ -100,7 +100,7 @@ class Campaign
     /**
      * @var integer
      *
-     * @ORM\Column(name="region_id", type="integer")
+     * @ORM\Column(name="region_id", type="integer", nullable=true)
      */
     private $regionId;
     
@@ -167,6 +167,41 @@ class Campaign
      * @ORM\Column(name="bitly_url", type="string", length=255, nullable=true)
      */
     private $bitlyUrl;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="twitter_tags", type="string", length=255, nullable=true)
+     */
+    private $twitterTags;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="twitter_query", type="string", length=255, nullable=true)
+     */
+    private $twitterQuery;
+    
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="competition", type="boolean", options={"default" = false})
+     */
+    private $competition = false;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="popular_title", type="string", length=255, nullable=true)
+     */
+    private $popularTitle;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="popular_text", type="string", length=255, nullable=true)
+     */
+    private $popularText;
     
     /**
      * Set id
@@ -746,5 +781,120 @@ class Campaign
     public function getBitlyUrl()
     {
         return $this->bitlyUrl;
+    }
+
+    /**
+     * Set twitterTags
+     *
+     * @param string $twitterTags
+     * @return Campaign
+     */
+    public function setTwitterTags($twitterTags)
+    {
+        $this->twitterTags = $twitterTags;
+
+        return $this;
+    }
+
+    /**
+     * Get twitterTags
+     *
+     * @return string 
+     */
+    public function getTwitterTags()
+    {
+        return $this->twitterTags;
+    }
+
+    /**
+     * Set twitterQuery
+     *
+     * @param string $twitterQuery
+     * @return Campaign
+     */
+    public function setTwitterQuery($twitterQuery)
+    {
+        $this->twitterQuery = $twitterQuery;
+
+        return $this;
+    }
+
+    /**
+     * Get twitterQuery
+     *
+     * @return string 
+     */
+    public function getTwitterQuery()
+    {
+        return $this->twitterQuery;
+    }
+
+    /**
+     * Set competition
+     *
+     * @param boolean $competition
+     * @return Campaign
+     */
+    public function setCompetition($competition)
+    {
+        $this->competition = $competition;
+
+        return $this;
+    }
+
+    /**
+     * Get competition
+     *
+     * @return boolean 
+     */
+    public function getCompetition()
+    {
+        return $this->competition;
+    }
+
+    /**
+     * Set popularTitle
+     *
+     * @param string $popularTitle
+     * @return Campaign
+     */
+    public function setPopularTitle($popularTitle)
+    {
+        $this->popularTitle = $popularTitle;
+
+        return $this;
+    }
+
+    /**
+     * Get popularTitle
+     *
+     * @return string 
+     */
+    public function getPopularTitle()
+    {
+        return $this->popularTitle;
+    }
+
+    /**
+     * Set popularText
+     *
+     * @param string $popularText
+     * @return Campaign
+     */
+    public function setPopularText($popularText)
+    {
+        $this->popularText = $popularText;
+
+        return $this;
+    }
+
+    /**
+     * Get popularText
+     *
+     * @return string 
+     */
+    public function getPopularText()
+    {
+        return $this->popularText;
     }
 }

@@ -83,6 +83,13 @@ class Region implements Exportable
      * @ORM\OneToMany(targetEntity="Campaign", mappedBy="region")
      **/
     private $campaigns;
+    
+    /**
+     * @var Point point
+     *
+     * @ORM\Column(name="centroid", type="point", columnDefinition="GEOMETRY(POINT,4326)", nullable=true)
+     */
+    private $centroid;
 
     /**
      * Get id
@@ -341,5 +348,28 @@ class Region implements Exportable
     public function getCampaigns()
     {
         return $this->campaigns;
+    }
+
+    /**
+     * Set centroid
+     *
+     * @param point $centroid
+     * @return Region
+     */
+    public function setCentroid($centroid)
+    {
+        $this->centroid = $centroid;
+
+        return $this;
+    }
+
+    /**
+     * Get centroid
+     *
+     * @return point 
+     */
+    public function getCentroid()
+    {
+        return $this->centroid;
     }
 }
