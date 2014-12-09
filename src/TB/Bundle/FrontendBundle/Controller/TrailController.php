@@ -370,11 +370,41 @@ class TrailController extends Controller
     
     /**
      * @Route("/map/trails", name="map_trails")
+     * @Route("/map/trails/trail/{routeSlug}", name="map_trails_trail")
+     * @Route("/map/trails/region/{regionSlug}", name="map_trails_region")
      * @Template()
      */    
-    public function mapTrailsAction(Request $request)
+    public function mapTrailsAction($routeSlug = null, $regionSlug = null)
     {
+        $route = null;
+        if ($routeSlug) {
+            $route = $this->getDoctrine()
+                ->getRepository('TBFrontendBundle:Route')
+                ->findOneBySlug($routeSlug);
+            
+            if (!$route) {
+                throw $this->createNotFoundException(
+                    sprintf('Trail %s not found', $routeSlug)
+                );
+            }
+        }
         
-        return [];
+        $region = null;
+        if ($regionSlug) {
+            $region = $this->getDoctrine()
+                ->getRepository('TBFrontendBundle:Region')
+                ->findOneBySlug($regionSlug);
+            
+            if (!$region) {
+                throw $this->createNotFoundException(
+                    sprintf('Region %s not found', $regionSlug)
+                );
+            }
+        }
+        
+        return [
+            'route' => $route,
+            'region' => $region,
+        ];
     }
 }

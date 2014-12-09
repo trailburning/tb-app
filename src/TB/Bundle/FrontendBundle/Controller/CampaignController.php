@@ -44,7 +44,7 @@ class CampaignController extends Controller
                 WHERE c.campaignId=:campaignId
                 ORDER BY c.acceptedAt DESC')
             ->setParameter('campaignId', $campaign->getId())
-            ->setMaxResults(2);
+            ->setMaxResults(4);
         $latestRoutes = $query->getResult();
         
         $query = $this->getDoctrine()->getManager()

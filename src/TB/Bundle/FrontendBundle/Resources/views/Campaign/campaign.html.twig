@@ -18,61 +18,50 @@
 <script>
 var TB_APP = 'CampaignApp';
 var TB_PATH = '{{ app.request.baseUrl }}';
+var CAMPAIGN_ID = {{ campaign.id }};
+var CAMPAIGN_TITLE = '{{ campaign.title }}';
 {% if app.user %}		
 var TB_USER_ID = {{ app.user.id }};
 {% endif %}
 </script>
-
 <div id="content_view">	
     <div id="campaignplayer">
         <div id="trail_views">        
             <div id="trail_map_view"></div>
-            <div id="trail_slides_view"></div>
         </div>
 		<div id="player_big_btn"></div>        
         <div id="campaign_landing_overlay_view">        	
         	<div class="back tb-move-horiz"></div>        	
 			<div class="info-hero tb-move-horiz">				  						  				
-			  <div class="campaign_title tb-move-horiz"><img src="http://assets.trailburning.com/{{ campaign.logo }}" /></div>              
+			  <div class="campaign_title tb-move-horiz">			  	
+			  	{% if campaign.title == '6amCLUB' %}
+					<h2 class="tb tb-title">Morning Trails</h2>
+					<br/>
+				  	<h2 class="tb tb-title">with #6amCLUB</h2>
+				{% else %}
+					<div class="logo"><img src="http://assets.trailburning.com/{{ campaign.logo }}" /></div>
+				{% endif %}			  				  	
+			  	<h4 class="tb total"><strong>{{ totalRoutesCount }}</strong> Trails&nbsp;&nbsp;|&nbsp;&nbsp;{% if campaign.title == '6amCLUB' %}#6amCLUB{% elseif campaign.title == 'Mt Buller' %}@mtbuller{% else %}#urbantrails{% endif %}			  		
+			  	</h4>
+			  	</div>              
               <div class="campaign_play">
               	<div class="campaign_btn"></div>
-              	Discover Trails	
+              	Explore Trails	
 			  </div>              	
 			</div>        	
 		</div>        	
 
         <div id="campaign_map_overlay_view">
-<!--        	
-        	<div class="back tb-move-horiz"></div>
--->        	        	
 			<div class="info-hero tb-move-horiz">				  						  				
-			  <div class="campaign_title tb-move-horiz"><img src="http://assets.trailburning.com/{{ campaign.logo }}" /></div>
-<!--			                
-              <div class="campaign_card">
-				<div class="trailcards">
-					<div id="trailcard_view">
-						<div class="panel trail_card_panel campaign_card_panel">
-						    <div class="photo tb-photo-btn">
-						      <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/o=80/http://assets.trailburning.com/{{ campaign.image }}" class="resrc scale" border="0"/></div>
-						      <div class="card_title">
-						        <h1>Rediscover your</h1>
-						        <br/>
-						        <h1>city runs</h1>
-						        <br/>
-						        <h2>London, UK</h2>
-						      </div>
-						    </div>
-							<div class="card_avatar">
-						      <a href="{{ app.request.baseUrl }}/campaign/{{ campaign.slug }}"><img src="http://assets.trailburning.com/images/campaign/urbantrails/logo_urbantrails.jpg"></a>
-						    </div>
-						    <div class="summary">
-							  <div class="length">{{ totalRoutesCount }} Trails</div>
-						    </div>
-						</div>						
-					</div>
-				</div>
-			  </div>              	
--->				
+			  <div class="campaign_title tb-move-horiz">
+			  {% if campaign.title == '6amCLUB' %}
+			    <h2 class="tb tb-title">Morning Trails</h2>
+				<br/>
+				<h2 class="tb tb-title">with #6amCLUB</h2>
+			  {% else %}
+			  	<div class="logo"><img src="http://assets.trailburning.com/{{ campaign.logo }}" /></div>
+			  {% endif %}			  				  	
+			  </div>	
 			</div>        	
 		</div>        	
         
@@ -95,7 +84,10 @@ var TB_USER_ID = {{ app.user.id }};
     </div>
   
     <div class="panel_container">       
-        <div class="panel_content_container">       
+        <div class="panel_content_container">
+        	
+			<div class="line_break"></div>
+        	       
             <div class="panel_content">       
 				<div class="crumb_content fixed_content">
 	                <div id="bigbar">
@@ -112,41 +104,34 @@ var TB_USER_ID = {{ app.user.id }};
 					<div class="crumbs">
 					    <div class="crumb_links"><a href="{{ app.request.baseUrl }}/campaign/{{ campaign.slug }}">{{ campaign.displayTitle }}</a></div>
 					</div>
-			        {{ include('TBFrontendBundle:Default:share.html.twig') }}
+			        
 	                </div>
                 </div>
 
                 <div class="panels clearfix">     
 			        <div class="left">        
-			            <div class="panel campaign_detail_panel">
-			                <div class="content">
-			                    <h3 class="tb title">About {{ campaign.title }}</h3>               
-                	  			<h4 class="tb">	 
-                                    {{ campaign.synopsis|nl2br }}
-                				</h4>
-			                    <div class="join">
-							    {% if app.user %}  	      
-						  	      <a href="{{ path('trailmaker') }}" class="btn btn-tb-action btn-tb-large">Add your Urban Trail</a>
-							    {% else %}
-						  	      <a href="{{ app.request.baseUrl }}/tour" class="btn btn-tb-action btn-tb-large">Add your Urban Trail</a>
-							    {% endif %}
-			                    </div>
-			                </div>
-			            </div>
-			            
-                        <div id="trail_weather_view" class="panel trail_weather_panel"></div>			            
-			        </div>
-			      
-			        <div class="right">
-						<div class="trails_title"><h2 class="tb tb-title first-title ">Latest Urban Trails</h2></div>			        	
+						<div class="trails_title"><h2 class="tb tb-title first-title ">
+						{% if campaign.title == 'London' %}
+						Latest Urban Trails						
+						{% else %}
+						Latest Trails
+						{% endif %}
+						</h2></div>			        	
 						
                         {% if latestRoutes and latestRoutes|length > 0 %}
 						
 			        	<div class="event_container trailcards">
                     	    {% for trail in latestRoutes %}
+                    	      {% if campaign.title == 'London' %}
+                    	        {% if loop.index < 3 %}
+                    	    	  {{ include('TBFrontendBundle:Trail:_trailcard.html.twig', {'trail': trail, 'campaign' : campaign}) }}
+                    	    	{% endif %}
+                    	      {% else %}
                     	        {{ include('TBFrontendBundle:Trail:_trailcard.html.twig', {'trail': trail, 'campaign' : campaign}) }}
+                    	      {% endif %}
                     	    {% endfor %}
 						
+							{% if campaign.title == 'London' %}	
 							<div class="panel trail_card_panel promo_panel">
 								<div class="title"><h3 class="tb">Add your trail</h3></div>								                            	
                             	<a href="{{ app.request.baseUrl }}/competition">
@@ -168,11 +153,43 @@ var TB_USER_ID = {{ app.user.id }};
                                 	<div class="more"><a class="btn btn-tb-action" href="{{ app.request.baseUrl }}/competition">How to Win</a></div>
                             	</div>
                         	</div>
-                        			
+                        	{% endif %}
 						</div>
 						
 						{% endif %}
-			        	
+			            
+			            {% if campaign.title != '6amCLUB' %}
+                        <div id="trail_weather_view" class="panel trail_weather_panel"></div>
+                        {% endif %}			            
+			        </div>
+			      
+			        <div class="right">
+			            <div class="panel campaign_detail_panel">
+			            	<div class="photo">
+			            		<div class="image_container fade_on_load"><img data-src="http://app.resrc.it/o=80/http://assets.trailburning.com/{{ campaign.image }}" class="resrc scale" border="0"></div>
+			            	</div>
+			            	
+			                <div class="content">
+			                    <h3 class="tb title">About {{ campaign.text }}</h3>               
+                	  			<h4 class="tb">{{ campaign.synopsis|raw }}</h4>
+{#	                	  			
+			                    <div class="join">
+							    {% if app.user %}  	      
+						  	      <a href="{{ path('trailmaker') }}" class="btn btn-tb-action btn-tb-large">Add your Urban Trail</a>
+							    {% else %}
+						  	      <a href="{{ app.request.baseUrl }}/tour" class="btn btn-tb-action btn-tb-large">Add your Urban Trail</a>
+							    {% endif %}
+			                    </div>
+#}			                    
+			                </div>
+			                
+			                <div class="share_panel">share			                	
+			                {{ include('TBFrontendBundle:Default:share.html.twig') }}
+			                </div>
+										                
+			            </div>
+			            <div id="twitter_view" class="tweets"></div>
+			            			        	
 			        </div>
                     
                 </div>
@@ -180,131 +197,28 @@ var TB_USER_ID = {{ app.user.id }};
                 {% if popularRoutes and popularRoutes|length > 0 %}
                 
 				<div class="likedtrails_content">
-				  <div class="fixed_content">				
+				  <div class="fixed_content">
+					{% if campaign.title == '6amCLUB' %}
+				    <h2 class="tb">Popular Trails</h2>
+				    <div class="desc"><h4 class="tb">Discover Trails shared by the #6amCLUB Community</h4></div>
+				    {% elseif campaign.title == 'Mt Buller' %}      
+				    <h2 class="tb">Popular Trails</h2>
+				    <div class="desc"><h4 class="tb">Discover Trails shared by Mt Buller</h4></div>
+					{% else %}
 				    <h2 class="tb">Popular Urban Trails</h2>
 				    <div class="desc"><h4 class="tb">Discover Urban Trails shared by the Trailburning Community</h4></div>      
+					{% endif %}				  	
 				    <div class="trailcards panels">  	
-                        
-                	    {% for trail in popularRoutes %}
-                	        {{ include('TBFrontendBundle:Trail:_trailcardSticker.html.twig', {'trail': trail, 'campaign' : campaign}) }}
-                	    {% endfor %}
-                        
-{#                        <div class="trail_card_sticker">
-                            <div class="panel trail_card_panel">
-                                <div class="title"><h3 class="tb">Canal</h3></div>
-                                <a href="../trail/regent-s-canal-london">
-                                <div class="photo tb-photo-btn">
-                                  <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/O=80/http://media.trailburning.com/288/9ee9b1fd51ec603cbe8d3a2fa867a19f9fb902f9.jpg" class="resrc scale" border="0"></div>
-                                  <div class="card_title">
-                                    <h1>Regent's Canal</h1>
-                                    <br>
-                                    <h2>London</h2>
-                                    <br>
-                                    <h2>
-                                    <span class="stars">
-                                      <span class="star star_full"></span>
-                                      <span class="star star_half"></span>
-                                      <span class="star"></span>
-                                      <span class="star"></span>
-                                      <span class="star"></span>
-                                    </span>
-                                    </h2>
-                                  </div>
-                                </div>
-                                </a>
-                                <div class="card_avatar">
-                                  <div class="tb-avatar"><div class="photo"><a href="../profile/mattallbeury"><img src="http://www.gravatar.com/avatar/e426b949d824bc81fe01caf1ad88abd7"></a></div></div>
-                                </div>
-                                <div class="summary">
-                                  <div class="length">11 km</div>
-                                  <div class="altitude">
-                                  78 D+
-                                  <br>
-                                  102 D-
-                                  </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="trail_card_sticker">
-                            <div class="panel trail_card_panel">
-                                <div class="title"><h3 class="tb">Canal</h3></div>
-                                <a href="../trail/regent-s-canal-london">
-                                <div class="photo tb-photo-btn">
-                                  <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/O=80/http://media.trailburning.com/288/9ee9b1fd51ec603cbe8d3a2fa867a19f9fb902f9.jpg" class="resrc scale" border="0"></div>
-                                  <div class="card_title">
-                                    <h1>Regent's Canal</h1>
-                                    <br>
-                                    <h2>London</h2>
-                                    <br>
-                                    <h2>
-                                    <span class="stars">
-                                      <span class="star star_full"></span>
-                                      <span class="star star_half"></span>
-                                      <span class="star"></span>
-                                      <span class="star"></span>
-                                      <span class="star"></span>
-                                    </span>
-                                    </h2>
-                                  </div>
-                                </div>
-                                </a>
-                                <div class="card_avatar">
-                                  <div class="tb-avatar"><div class="photo"><a href="../profile/mattallbeury"><img src="http://www.gravatar.com/avatar/e426b949d824bc81fe01caf1ad88abd7"></a></div></div>
-                                </div>
-                                <div class="summary">
-                                  <div class="length">11 km</div>
-                                  <div class="altitude">
-                                  78 D+
-                                  <br>
-                                  102 D-
-                                  </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="trail_card_sticker">
-                            <div class="panel trail_card_panel">
-                                <div class="title"><h3 class="tb">Canal</h3></div>
-                                <a href="../trail/regent-s-canal-london">
-                                <div class="photo tb-photo-btn">
-                                  <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/O=80/http://media.trailburning.com/288/9ee9b1fd51ec603cbe8d3a2fa867a19f9fb902f9.jpg" class="resrc scale" border="0"></div>
-                                  <div class="card_title">
-                                    <h1>Regent's Canal</h1>
-                                    <br>
-                                    <h2>London</h2>
-                                    <br>
-                                    <h2>
-                                    <span class="stars">
-                                      <span class="star star_full"></span>
-                                      <span class="star star_half"></span>
-                                      <span class="star"></span>
-                                      <span class="star"></span>
-                                      <span class="star"></span>
-                                    </span>
-                                    </h2>
-                                  </div>
-                                </div>
-                                </a>
-                                <div class="card_avatar">
-                                  <div class="tb-avatar"><div class="photo"><a href="../profile/mattallbeury"><img src="http://www.gravatar.com/avatar/e426b949d824bc81fe01caf1ad88abd7"></a></div></div>
-                                </div>
-                                <div class="summary">
-                                  <div class="length">11 km</div>
-                                  <div class="altitude">
-                                  78 D+
-                                  <br>
-                                  102 D-
-                                  </div>
-                                </div>
-                            </div>
-                        </div> #}
+            	    {% for trail in popularRoutes %}
+            	        {{ include('TBFrontendBundle:Trail:_trailcardSticker.html.twig', {'trail': trail, 'campaign' : campaign}) }}
+            	    {% endfor %}
 				    </div>
 				  </div>	   	
 				</div>                
 
                 {% endif %}
             </div>
+            
         </div>
     </div>  
 </div>
@@ -342,6 +256,9 @@ var TB_USER_ID = {{ app.user.id }};
   <div class="map_container">
     <div id='map_large'></div>
   </div>
+</script>
+
+<script type="text/template" id="twitterViewTemplate">
 </script>
 
 <script type="text/template" id="trailWeatherViewTemplate">

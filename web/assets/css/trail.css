@@ -707,6 +707,14 @@ html.touch #small_sponsor_bar {
   right: 22px;
 }
 
+#trailplayer .campaign_logo {
+  width: 218px;	
+}
+
+#trailplayer .campaign_logo img {
+  width: 100%;
+}
+
 #trailplayer #trail_info {
   position: absolute;
   top: -300px;
@@ -1058,48 +1066,6 @@ html.touch #small_sponsor_bar {
 
 .trail_like_panel .content h4 {
   margin: 24px 0px 22px 0px;  
-}
-
-/* CAMPAIGN PANEL */
-/******************************************/
-.campaign_panel {
-  margin: 24px 0px 0px 24px;
-  width: 542px;
-  height: 370px;
-}
-
-.campaign_panel .content {
-  margin: 11px;
-}
-
-.campaign_panel .overlay {
-  position: absolute;
-  top: 0px;
-  width: 170px;
-  height: 348px;
-  background: url("../img/campaign/background_skew.png") no-repeat top left;	
-}
-
-.campaign_panel .overlay .logo {
-  margin: 26px 0px 0px 26px;
-}
-
-.campaign_panel .overlay .logo img {
-  width: 234px;
-}
-
-.campaign_panel .photo {
-  position: relative;
-}
-
-.campaign_panel .photo .image_container {
-  width: 520px;
-  height: 348px;  
-}
-
-.campaign_panel .photo .card_title {
-  bottom: 22px;
-  left: 26px;	
 }
 
 /* TRAIL WEATHER PANEL */

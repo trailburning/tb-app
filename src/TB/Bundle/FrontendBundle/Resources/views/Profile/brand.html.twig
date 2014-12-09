@@ -66,10 +66,28 @@ var TB_BRAND_ID = {{ brand.id }};
         <div class="right">
         	
         {% if routes %}
-    		<div class="trails_title">
-    		<h2 class="tb tb-title first-title ">Discover the trails</h2>
-    		</div>
-			
+    		<div class="trails_title"><h2 class="tb tb-title first-title ">Discover the trails</h2></div>
+        		
+              {% if brand.id == 215 %}
+				<div class="panel trail_card_panel campaign_panel">
+					<div class="content">                                            
+    	            <a href="{{ app.request.baseUrl }}/campaign/mtbuller">
+    	            <div class="photo tb-photo-btn">
+    	            	<div class="image_container fade_on_load tb-fade-in"><img src="http://app.resrc.it/s=w920,pd1/o=80/http://assets.trailburning.com/images/campaign/mtbuller/LM_131122_MtBuller_0462_HIGHres.jpg" class="resrc scale" border="0"></div>                                    
+						<div class="overlay">
+    	                	<div class="logo"><img src="http://assets.trailburning.com/images/campaign/mtbuller/logo.png"></div>
+						</div>                                    
+    	                <div class="card_title">
+    	                <h1>Discover Mt Buller</h1>
+    	                <br>
+    	                <h1>running trails.</h1>
+    	       			</div>
+    	         	</div>
+    	         	</a>
+    	        	</div>    
+				</div>                                    								               
+              {% endif %}   
+        		
         	<div class="event_container trailcards">
                 {% for route in routes %}
     				<div class="panel trail_card trail_card_panel">

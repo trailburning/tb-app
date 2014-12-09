@@ -69,12 +69,12 @@ class SearchIndexCommand extends ContainerAwareCommand
         if ($id == null) {
             $routes = $this->em->createQuery('
                     SELECT r FROM TBFrontendBundle:Route r
-                    WHERE r.publish = true AND r.approved = true')
+                    WHERE r.publish = true')
                 ->getResult();
         } else {
             $routes = $this->em->createQuery('
                     SELECT r FROM TBFrontendBundle:Route r
-                    WHERE r.publish = true AND r.approved = true
+                    WHERE r.publish = true
                     AND r.id = :id')
                 ->setParameter('id', $id)
                 ->getResult();

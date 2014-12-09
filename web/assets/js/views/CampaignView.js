@@ -3,8 +3,9 @@ define([
   'backbone',
   'views/ActivityFeedView',
   'views/CampaignPlayerView',  
+  'views/TwitterView',  
   'views/TrailWeatherView'
-], function(_, Backbone, ActivityFeedView, CampaignPlayerView, TrailWeatherView){
+], function(_, Backbone, ActivityFeedView, CampaignPlayerView, TwitterView, TrailWeatherView){
   
   var CampaignView = Backbone.View.extend({
     initialize: function(){
@@ -16,8 +17,27 @@ define([
       	this.activityFeedView.getActivity();	  	
 	  }
       
-      this.playerView = new CampaignPlayerView({ el: '#trailplayer', model: this.model, mediaCollection: this.mediaCollection, mediaModel: this.mediaModel });            
-      this.weatherView = new TrailWeatherView({ el: '#trail_weather_view', lat: 51.507351, lon: -0.127758});
+      this.playerView = new CampaignPlayerView({ el: '#trailplayer', model: this.model, mediaCollection: this.mediaCollection, mediaModel: this.mediaModel });
+      var fLat, fLng, strTwitterSearch;
+      if (CAMPAIGN_TITLE == '6amCLUB') {
+      	strTwitterSearch = '6amclub trailburning';
+      	fLat = 0;
+      	fLng = 0;
+      }
+      if (CAMPAIGN_TITLE == 'Mt Buller') {
+      	strTwitterSearch = 'mtbuller';
+      	fLat = -37.132552;
+      	fLng = 146.454196;
+      }
+      if (CAMPAIGN_TITLE == 'London') {
+      	strTwitterSearch = 'urbantrails trailburning from:trailburning';
+      	fLat = 51.507351;
+      	fLng = -0.127758;
+      }
+                  
+      this.twitterView = new TwitterView({ el: '#twitter_view', model: this.model, search: strTwitterSearch });
+      this.twitterView.getResults();            
+      this.weatherView = new TrailWeatherView({ el: '#trail_weather_view', lat: fLat, lon: fLng });
 	  this.elLikeBtn = $('.like_btn', $(this.el));
       
       this.playerView.updatePlayerHeight();
@@ -36,7 +56,6 @@ define([
       $('#footerview').show();
       
       this.playerView.handleMedia();
-      this.handleResize();
       
 	  function updateFollowBtn() {
 	    if (self.elLikeBtn.hasClass('pressed-btn-tb')) {

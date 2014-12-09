@@ -4,7 +4,7 @@ namespace TB\Bundle\APIBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use TB\Bundle\APIBundle\Util\ApiException;
+use TB\Bundle\APIBundle\Service\ApiException;
 use TB\Bundle\FrontendBundle\Event\CampaignFollowEvent;
 use TB\Bundle\FrontendBundle\Event\CampaignUnfollowEvent;
 

@@ -14,6 +14,7 @@ define([
       var self = this;
       
       app.dispatcher.on("MapTrailMarker:click", self.onSelectTrail, this);
+      app.dispatcher.on("MapTrailMarker:focus", self.onFocusTrail, this);
       app.dispatcher.on("TrailCardView:click", self.onTrailCardViewClick, this);
       app.dispatcher.on("MapTrailDetail:click", self.onMapTrailDetailClick, this);
             
@@ -135,6 +136,10 @@ define([
       if (this.bRendered) {
         this.map.invalidateSize(false);
 	    this.map.fitBounds(this.markerCluster.getBounds(), {padding: [200, 200], animate: false});
+	    // apply zoom
+	    if (this.options.nZoom) {
+	      this.map.setZoom(this.options.nZoom, {animate: false});	
+	    }
 	    this.updateZoomCtrls();
         return;         
       }        
@@ -212,12 +217,12 @@ define([
       if (this.currTrailCardMarker) {
       	this.currTrailCardMarker.selected(false);
       }
-      
       var trailCardMarker = this.collection.get(id).mapTrailMarker;
       this.currTrailCardMarker = trailCardMarker;
 
 	  var cardModel = this.collection.get(id);
       trailCardMarker.selected(true);      
+      trailCardMarker.showPopup();      
 
       this.currMarkerOrCluster = this.markerCluster.getVisibleParent(this.currTrailCardMarker.marker);
       if (this.currMarkerOrCluster) {
@@ -228,6 +233,13 @@ define([
 	  // fire event
       app.dispatcher.trigger("TrailMapView:selecttrail", id);                
     },    
+    unselectTrail: function(){
+      if (this.currTrailCardMarker) {
+        this.currTrailCardMarker.selected(false);      
+        this.currTrailCardMarker.hidePopup();            	
+        this.currTrailCardMarker = null;	
+      }
+	},    
     viewTrail: function(id, strURL){
 	  var latLng = this.map.getCenter(); 
 	  // save
@@ -246,6 +258,14 @@ define([
 	},        	
     onSelectTrail: function(trailCardMarker){
       this.selectTrail(trailCardMarker.model.id);    	
+    },
+    onFocusTrail: function(trailCardMarker){
+      // ensure all other trails are blurred
+ 	  this.collection.each(function(cardModel) {
+ 	  	if (cardModel.id != trailCardMarker.model.id) {
+ 	  	  cardModel.mapTrailMarker.blur();
+ 	  	}
+	  });    
     }
     
   });

@@ -14,7 +14,6 @@ define([
 	  var self = this;
 	      	
       this.trailEvents.dispatcher.on("DistanceMarkers:click", function(evt){
-      	self.showPopup();
 		// fire event
         app.dispatcher.trigger("MapTrailMarker:click", self);                     	  	
       }, this);
@@ -60,7 +59,6 @@ define([
       if (!this.bRendered) {
         // add to map
         function onClick(evt) {
-		  self.showPopup();        	
 		  // fire event
           app.dispatcher.trigger("MapTrailMarker:click", self);                
 	    }
@@ -91,7 +89,6 @@ define([
 	  var self = this;
 		
 	  function onClick(evt){
-	  	self.showPopup();
 	    // fire event
         app.dispatcher.trigger("MapTrailMarker:click", self);                
 	  }
@@ -177,6 +174,10 @@ define([
 	  }
 	},
 	blur: function(){	
+	  if (this.bSelected) {
+		return;
+	  }
+				
   	  $(this.marker._icon).removeClass('selected');  	
 	  this.marker.setZIndexOffset(0);
   	
@@ -203,6 +204,8 @@ define([
 	},
 	onMouseOver: function(evt){	
   	  if (!this.bSelected) {
+		// fire event
+        app.dispatcher.trigger("MapTrailMarker:focus", this);                     	  	
   	  	this.focus();
   	  }
     },

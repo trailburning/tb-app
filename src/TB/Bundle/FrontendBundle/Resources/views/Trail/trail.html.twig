@@ -27,10 +27,6 @@
 {% if trail.shareMedia is not null %}http://media.trailburning.com{{ trail.shareMedia.sharePath }}{% else %}http://www.trailburning.com/assets/img/social/tb_profile_icon.png{% endif %}
 {% endblock %}
 
-{% block tweettext %}
-Hello World
-{% endblock %}
-
 {% block stylesheets %}
 <link href="{{ asset('assets/css/trail.css') }}" rel="stylesheet" type="text/css">
 {% endblock %}
@@ -141,12 +137,12 @@ var TB_TRAIL_ID = {{ trail.id }};
         {% endif %}
 
 		{% if campaign %}
-			<div class="event_logo">
-    			<a href="{{ app.request.baseUrl }}/campaign/{{ campaign.slug}}"><img src="http://assets.trailburning.com/images/campaign/urbantrails/london/logo_urbantrails_london.png" width="218" border="0"></a>
+			<div class="event_logo campaign_logo">
+    			{% if campaign.title != '6amCLUB' %}
+    			<a href="{{ app.request.baseUrl }}/campaign/{{ campaign.slug}}"><img src="http://assets.trailburning.com/{{ campaign.logo }}" border="0"></a>
+    			{% endif %}
 			</div>
-        {% endif %}
-        
-	    {% if user is BrandProfile %}
+	    {% elseif user is BrandProfile %}
 			<div class="event_logo">
     			<a href="{{ path('profile', {'name': user.name}) }}"><img src="http://assets.trailburning.com/images/profile/{{ user.name }}/logo.png" border="0"></a>
 			</div>
@@ -248,7 +244,7 @@ var TB_TRAIL_ID = {{ trail.id }};
                         <div class="right">
                         	<div id="trail_location_view" class="panel trail_location_panel">
 				                <div class="content">
-				                    <div id="trail_location_map" class="trail_location_map"></div>
+				                    <div id="trail_location_map" class="trail_location_map" data-url="{{ path('map_trails_trail', {routeSlug: trail.slug}) }}"></div>
 				                </div>
                         	</div>
                         	
@@ -272,13 +268,24 @@ var TB_TRAIL_ID = {{ trail.id }};
 							{% endif %}
 	
 							{% if campaigns and campaigns|length > 0 %}
-								<div class="panel trail_card_panel campaign_panel">
                                     {% for campaign in campaigns %}
+                                      {% if campaign.title != '6amCLUB' %}
+									  <div class="panel trail_card_panel campaign_panel">
                                         <div class="content">                                            
     	                            	<a href="{{ path('campaign', { slug: campaign.slug}) }}">
     	                                <div class="photo tb-photo-btn">
     	                                    <div class="image_container fade_on_load"><img src="http://app.resrc.it/o=80/http://assets.trailburning.com/{{ campaign.image }}" class="resrc scale" border="0"></div>                                    
-    	                                    <div class="overlay"><div class="logo"><img src="http://assets.trailburning.com/{{ campaign.logo }}"></div></div>                                    
+    	                                    <div class="overlay">
+    	                                    	<div class="logo">
+    	                                    	{% if campaign.title == '6amCLUB' %}
+												<h3 class="tb tb-title">Morning Trails</h3>
+												<br/>
+											  	<h3 class="tb tb-title">with #6amCLUB</h3>
+    	                                    	{% else %}
+    	                                    	<img src="http://assets.trailburning.com/{{ campaign.logo }}">
+    	                                    	{% endif %}    	                                    	
+    	                                    	</div>
+    	                                    </div>                                    
     	                                    <div class="card_title">
     	                                    <h1>This trail is featured</h1>
     	                                    <br>
@@ -286,9 +293,10 @@ var TB_TRAIL_ID = {{ trail.id }};
     	                                    </div>
     	                                </div>
     	                            	</a>
-    	                            	</div>    
+    	                            	</div>  
+									  </div>
+    	                              {% endif %}  
                                     {% endfor %}
-								</div>
 							{% endif %}
                         	
                             {% if event and eventTrails %}

@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Gaufrette\Filesystem;
 use Gaufrette\Adapter\MetadataSupporter;
 use Gaufrette\Adapter\AwsS3;
-use TB\Bundle\FrontendBundle\Util\MediaImporter;
+use TB\Bundle\FrontendBundle\Service\MediaImporter;
 
 /**
  * Media
@@ -85,7 +85,7 @@ class Media implements Exportable
     
     
     /**
-     * @Assert\File(maxSize="4M")
+     * @Assert\File(maxSize="6M")
      */
     private $file;
 

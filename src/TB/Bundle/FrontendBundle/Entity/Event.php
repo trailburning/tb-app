@@ -196,6 +196,13 @@ class Event implements Exportable
     private $publish = false;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="bitly_url", type="string", length=255, nullable=true)
+     */
+    private $bitlyUrl;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -906,5 +913,28 @@ class Event implements Exportable
     public function getPublish()
     {
         return $this->publish;
+    }
+
+    /**
+     * Set bitlyUrl
+     *
+     * @param string $bitlyUrl
+     * @return Event
+     */
+    public function setBitlyUrl($bitlyUrl)
+    {
+        $this->bitlyUrl = $bitlyUrl;
+
+        return $this;
+    }
+
+    /**
+     * Get bitlyUrl
+     *
+     * @return string 
+     */
+    public function getBitlyUrl()
+    {
+        return $this->bitlyUrl;
     }
 }

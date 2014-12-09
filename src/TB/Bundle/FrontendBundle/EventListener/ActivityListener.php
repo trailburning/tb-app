@@ -4,7 +4,7 @@ namespace TB\Bundle\FrontendBundle\EventListener;
 
 use Doctrine\ORM\EntityManager;
 use OldSound\RabbitMqBundle\RabbitMq\Producer;
-use TB\Bundle\FrontendBundle\Util\ActivityFeedGenerator;
+use TB\Bundle\FrontendBundle\Service\ActivityFeedGenerator;
 
 use TB\Bundle\FrontendBundle\Event\RoutePublishEvent;
 use TB\Bundle\FrontendBundle\Event\UserFollowEvent;

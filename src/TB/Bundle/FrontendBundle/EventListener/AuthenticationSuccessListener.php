@@ -6,7 +6,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Doctrine\ORM\EntityManager;
 use FOS\UserBundle\Model\UserInterface;
 use Symfony\Component\Security\Core\Event\AuthenticationEvent;
-use TB\Bundle\FrontendBundle\Util\FacebookConnector;
+use TB\Bundle\FrontendBundle\Service\FacebookConnector;
 
 /**
  * 

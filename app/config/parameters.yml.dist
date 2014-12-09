@@ -13,7 +13,7 @@ parameters:
     locale: en
     rest_client_class: Guzzle\Http\Client
     api_host: http://localhost:8888/trailburning_api
-    postgis_class: TB\Bundle\APIBundle\Util\Postgis    
+    postgis_class: TB\Bundle\APIBundle\Service\Postgis    
     s3_client_class: Aws\S3\S3Client
     aws_accesskey: 
     aws_secretkey:     
@@ -23,18 +23,24 @@ parameters:
     rabbit_mq_vhost: /
     rabbit_mq_main_queue: main
     mailproxy_email_server: http://augmentedmediaprojectsltd.createsend.com/t/t/s/zjdkk/
-    session_prefix: sess_  
+    session_prefix: sess_
     session_expire: 86400
     memcached_host: 127.0.0.1
     memcached_port: 11211
     memcached_username: 
-    memcached_password:   
+    memcached_password:
     elasticsearch:
         hosts: 
             - 'e7p15amb:4yexy8z21pg5eee0@boxwood-7916136.eu-west-1.bonsai.io'
     facebook_app_id: 626606520795449
     facebook_app_secret: 0cea1f546f305e0213e59983c304a402
     mandrill_api_key: kRr66_sxVLQJwehdLnakqg
-    mailchimp_api_key: 9e963524b377c14854c8370ef44b7f27-us9
-    mailchimp_newsletters_list_id: f5d06e16fa
+    mailchimp_api_key: e6571cc449ac9a0b4c3eea948c96c550-us9
+    mailchimp_newsletters_list_id: bf0990bdec
     mailchimp_webhook_secret: Ugb8h20Jhk9w8hd01n309Jbue2774kH7g3u8
+    bitly_api_key: ced960e494dffaaa498c473fc3221a5841f70afa
+    twitter_settings:
+        oauth_access_token: 1630556256-M3ghqvQuSrJx83w62UUv02klUjQTX1WniNIbPCC
+        oauth_access_token_secret: d5MZT3aAYnADiDtO19K5HSLzJq6x99EB272fzx5qTTL9m
+        consumer_key: 09mqwXOGvU2jsyGkYlrXH5Oip
+        consumer_secret: ZNEyFv5U2g4I3Dt1f7c7XahmnpAvOJh1HjYGOHiWt0vJs8XO9u

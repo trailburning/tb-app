@@ -157,8 +157,13 @@ define([
               popupAnchor:  [16, 44]
           }
       });      
+      
+      function onClick(evt) {
+      	window.location = $('#trail_location_map').attr('data-url'); 
+      }
+      
       var startIcon = new LocationIcon({iconUrl: 'http://assets.trailburning.com/images/icons/location.png'});
-      L.marker([jsonPoint.coords[1], jsonPoint.coords[0]], {icon: startIcon}).addTo(map);      
+      L.marker([jsonPoint.coords[1], jsonPoint.coords[0]], {icon: startIcon}).on('click', onClick).addTo(map);      
 
       var latlng = new L.LatLng(jsonPoint.coords[1], jsonPoint.coords[0]);
       map.setView(latlng, 12);
