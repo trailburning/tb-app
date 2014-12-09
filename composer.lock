@@ -3967,12 +3967,9 @@
         "webfactory/exceptions-bundle": 0,
         "react/child-process": 20,
         "hwi/oauth-bundle": 20,
-<<<<<<< HEAD
         "mailchimp/mailchimp": 20,
-=======
         "hpatoio/bitly-api": 20,
         "j7mbo/twitter-api-php": 20,
->>>>>>> dev
         "phpunit/phpunit": 0,
         "liip/functional-test-bundle": 20
     },
