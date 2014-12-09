@@ -22,7 +22,7 @@
         </service>
         
         <!-- Register Mailchimp Webhook Service -->
-        <service id="tb.mailchimp.webhook" class="TB\Bundle\ApiBundle\Service\MailchimpWebhook">
+        <service id="tb.mailchimp.webhook" class="TB\Bundle\APIBundle\Service\MailchimpWebhook">
             <argument type="service" id="doctrine.orm.entity_manager" />
         </service>
         
