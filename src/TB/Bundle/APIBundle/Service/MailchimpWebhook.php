@@ -1,6 +1,6 @@
 <?php
 
-namespace TB\Bundle\APIBundle\Util;
+namespace TB\Bundle\APIBundle\Service;
 
 use Doctrine\ORM\EntityManager;
 use Exception;

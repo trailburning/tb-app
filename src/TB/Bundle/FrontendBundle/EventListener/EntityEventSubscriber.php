@@ -14,7 +14,7 @@ use TB\Bundle\FrontendBundle\Event\RoutePublishEvent;
 use TB\Bundle\FrontendBundle\Event\RouteUpdateEvent;
 use TB\Bundle\FrontendBundle\Event\CampaignRouteAcceptEvent;
 
-use TB\Bundle\FrontendBundle\Util\Mailproxy;
+use TB\Bundle\FrontendBundle\Service\Mailproxy;
 
 /**
  * Listen for Dcotrine postPersist and postUpdate events
