@@ -14,17 +14,9 @@ border-width:1px;
   margin-top: 109px;
 }
 
-.tour_content .sticker {
-  position: absolute;
-  top: 0px;
-  left: 50%;
-  margin-top: -26px;
-  margin-left: -83px;
-}
-
 .tour_content .content {
   width: 1114px;
-  padding-top: 164px;
+  padding-top: 64px;
   margin: 0px auto 54px auto;
   text-align: center;
   color: #979797;
@@ -37,14 +29,6 @@ border-width:1px;
 
 .tour_content .panel {
   float: none;
-}
-
-.tour_content .memo {
-  font-size: 22px;
-  line-height: 1.3em;
-  margin: 58px auto 64px auto;
-  width: 614px;
-  text-align: center;  
 }
  
 /* STEPS */
@@ -70,7 +54,7 @@ border-width:1px;
 #step1 {
   position: relative;
   margin-top: 82px;
-  height: 372px;
+  height: 496px;
   width: 100%;
 }
 
@@ -78,63 +62,67 @@ border-width:1px;
   position: absolute;
   padding-top: 42px;
   top: 0px;
-  left: 84px;
-  width: 304px;
+  left: 80px;
+  width: 410px;
   text-align: right;
 }
 
 #step1 .step1_left_init, #step1_left.outViewPort {
-  left: -304px;
+  left: -410px;
 }
 
 #step1_right {
   position: absolute;
   top: 0px;
-  width: 590px;
-  height: 372px;
-  right: 60px;
+  width: 532px;
+  height: 496px;
+  right: 0px;
 }
 
 #step1 .step1_right_init, #step1_right.outViewPort {
-  right: -590px;
+  right: -532px;
+}
+
+#step1_right img {
+  float: right;	
 }
 
 #step2 {
   position: relative;
   margin-top: 42px;
-  height: 380px;
+  height: 600px;
   width: 100%;
 }
 
 #step2_left {
   position: absolute;
   top: 0px;
-  left: 42px;
-  width: 614px;
-  height: 380px;
+  left: 38px;
+  width: 426px;
+  height: 600px;
 }
 
 #step2_left.outViewPort {
-  left: -614px;
+  left: -426px;
 }
 
 #step2_right {
   position: absolute;
   padding-top: 70px;
   top: 0px;
-  right: 80px;
-  width: 372px;
+  right: 140px;
+  width: 400px;
   text-align: left;
 }
 
 #step2_right.outViewPort {
-  right: -372px;
+  right: -400px;
 }
 
 #step3 {
   position: relative;
-  margin-top: 0px;
-  height: 767px;
+  margin-top: 78px;
+  height: 708px;
   width: 100%;
 }
 
@@ -142,128 +130,106 @@ border-width:1px;
   position: absolute;
   padding-top: 48px;
   top: 0px;
-  left: 202px;
-  width: 350px;
+  left: 80px;
+  width: 420px;
   text-align: right;
 }
 
 #step3_left.outViewPort {
-  left: -350px;
-}
-
-#step3_middle {
-  position: absolute;
-  padding-top: 218px;
-  top: 0px;
-  left: 118px;
-  width: 894px;
-  height: 548px;
-}
-
-#step3_middle.outViewPort {
-  left: -894px;
+  left: -420px;
 }
 
 #step3_right {
   position: absolute;
   top: 0px;
-  right: 0px;
-  width: 464px;
-  height: 582px;
+  width: 708px;
+  height: 708px;
   right: 76px; 
 }
 
+#step3_right img {
+  float: right;	
+}
+
 #step3_right.outViewPort {
-  right: -464px;
+  right: -708px;
 }
 
 #step4 {
   position: relative;
-  margin-top: 12px;
-  height: 838px;
+  margin-top: 112px;
+  height: 528px;
   width: 100%;
 }
 
 #step4_left {
   position: absolute;
   top: 0px;
-  left: 94px;
-  width: 446px;
-  height: 454px;
+  left: 58px;
+  width: 542px;
+  height: 528px;
 }
 
 #step4_left.outViewPort {
-  left: -446px;
+  left: -542px;
 }
 
-#step4_middle {
+#step4_right {
   position: absolute;
-  padding-top: 284px;  
-  left: 120px;
-  width: 880px;
-  height: 554px;
-}
-
-#step4_1_right {
-  position: absolute;
-  padding-top: 62px;
+  padding-top: 36px;
   top: 0px;
-  right: 292px; 
-  width: 256px;
+  right: 120px;
+  width: 400px;
   text-align: left;
 }
 
-#step4_1_right.outViewPort {
-  right: -256px;
-}
-
-#step4_2_right {
-  position: absolute;
-  padding-top: 254px;  
-  top: 0px;
-  right: 140px;
-  width: 186px;
-  height: 186px;
-}
-
-#step4_2_right.outViewPort {
-  right: -140px;
+#step4_right.outViewPort {
+  right: -400px;
 }
 
 #step5 {
   position: relative;
-  margin-top: 50px;
-  height: 444px;
+  margin-top: 82px;
+  height: 549px;
   width: 100%;
 }
 
 #step5_left {
   position: absolute;
+  padding-top: 36px;
   top: 0px;
-  left: 192px;
-  width: 338px;
-  height: 444px;
+  left: 100px;
+  width: 400px;
+  text-align: right;
 }
 
 #step5_left.outViewPort {
-  left: -338px;
+  left: -410px;
 }
 
 #step5_right {
   position: absolute;
-  padding-top: 52px;
   top: 0px;
-  right: 168px;
-  width: 388px;
-  text-align: left;
+  width: 542px;
+  height: 549px;
+  right: 58px;
+}
+
+#step5_right img {
+  float: right;	
 }
 
 #step5_right.outViewPort {
-  right: -388px;
+  right: -542px;
 }
 
-#step5 .maketrails {
-  margin-top: 32px;
+#cta {
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
+
+#cta .contact {
+  margin-top: 28px;
 }
 
 /* RESPONSIVE */
@@ -283,130 +249,101 @@ border-width:1px;
   }
   #step1 {
     margin-top: 71px;
-    height: 324px;
+    height: 432px;
   }
   #step1_left {
     padding-top: 37px;
-    left: 73px;
-    width: 264px;
+    width: 357px;
   }
   #step1 .step1_left_init, #step1_left.outViewPort {
-    left: -264px;
+    left: -357px;
   }
   #step1_right {
-    width: 513px;
-    height: 324px;
-    right: 52px;
+    width: 463px;
+    height: 432px;
   }
   #step1 .step1_right_init, #step1_right.outViewPort {
-    right: -513px;
-  }  
+    right: 463px;
+  }
   #step2 {
     margin-top: 37px;
-    height: 331px;
+    height: 522px;
   }
   #step2_left {
-    left: 37px;
-    width: 534px;
-    height: 331px;
+    width: 371px;
+    height: 522px;
   }
   #step2_left.outViewPort {
-    left: -534px;
+    left: -371px;
   }
   #step2_right {
     padding-top: 61px;
-    right: 70px;
-    width: 324px;
+    width: 348px;
   }
   #step2_right.outViewPort {
-    right: -324px;
+    right: -348px;
   }
   #step3 {
-    height: 667px;
+    margin-top: 68px;
+    height: 616px;
   }
   #step3_left {
     padding-top: 42px;
-    left: 176px;
-    width: 305px;
+    width: 366px;
   }
   #step3_left.outViewPort {
-    left: -305px;
-  }
-  #step3_middle {
-    padding-top: 190px;
-    left: 103px;
-    width: 778px;
-    height: 477px;
-  }
-  #step3_middle.outViewPort {
-    left: -778px;
+    left: -366px;
   }
   #step3_right {
-    width: 404px;
-    height: 506px;
-    right: 66px; 
+    width: 616px;
+    height: 616px;
   }
   #step3_right.outViewPort {
-    right: -404px;
+    right: -616px;
   }
   #step4 {
-    margin-top: 10px;
-    height: 729px;
+    margin-top: 97px;
+    height: 459px;
   }
   #step4_left {
-    left: 82px;
-    width: 388px;
-    height: 395px;
+    width: 472px;
+    height: 459px;
   }
   #step4_left.outViewPort {
-    left: -388px;
+    left: -472px;
   }
-  #step4_middle {
-    padding-top: 245px;  
-    left: 104px;
-    width: 766px;
-    height: 482px;
+  #step4_right {
+    padding-top: 31px;
+    width: 348px;
   }
-  #step4_1_right {
-    padding-top: 54px;
-    right: 254px; 
-    width: 223px;
-  }
-  #step4_1_right.outViewPort {
-    right: -223px;
-  }
-  #step4_2_right {
-    padding-top: 221px;  
-    right: 122px;
-    width: 162px;
-    height: 162px;
-  }
-  #step4_2_right.outViewPort {
-    right: -122px;
+  #step4_right.outViewPort {
+    right: -348px;
   }
   #step5 {
-    margin-top: 44px;
-    height: 386px;
+    margin-top: 71px;
+    height: 478px;
   }
   #step5_left {
-    left: 167px;
-    width: 294px;
-    height: 386px;
+    padding-top: 31px;
+    width: 348px;
   }
   #step5_left.outViewPort {
-    left: -294px;
+    left: -348px;
   }
   #step5_right {
-    padding-top: 45px;
-    right: 146px;
-    width: 338px;
+    width: 472px;
+    height: 478px;
   }
   #step5_right.outViewPort {
-    right: -338px;
+    right: -472px;
   }
-  #step5 .maketrails {
-    margin-top: 28px;
+  #cta {
+    margin-top: 87px;
+    margin-bottom: 87px;
   }
+  #cta .contact {
+    margin-top: 24px;
+  }  
 }
 
 /* Small devices (tablets, 768px) */
