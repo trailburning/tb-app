@@ -24,7 +24,7 @@ border-width:1px;
 
 .tour_content .content {
   width: 1114px;
-  padding-top: 164px;
+  padding-top: 64px;
   margin: 0px auto 54px auto;
   text-align: center;
   color: #979797;
@@ -225,6 +225,10 @@ border-width:1px;
 
 #step5_right.outViewPort {
   right: -542px;
+}
+
+#step6 {
+  margin-top: 100px;
 }
 
 /* RESPONSIVE */
