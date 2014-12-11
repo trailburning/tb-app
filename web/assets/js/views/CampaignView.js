@@ -18,19 +18,18 @@ define([
 	  }
       
       this.playerView = new CampaignPlayerView({ el: '#trailplayer', model: this.model, mediaCollection: this.mediaCollection, mediaModel: this.mediaModel });
-      var fLat, fLng, bShowRetweets = true;
+      var fLat = 0, fLng = 0, bShowRetweets = true;
+      if (CAMPAIGN_REGION_CENTRE_LAT && CAMPAIGN_REGION_CENTRE_LNG) {
+      	fLat = CAMPAIGN_REGION_CENTRE_LAT;
+      	fLng = CAMPAIGN_REGION_CENTRE_LNG;
+      }
+      
       if (CAMPAIGN_TITLE == '6amCLUB') {
-      	fLat = 0;
-      	fLng = 0;
       	bShowRetweets = false;
       }
       if (CAMPAIGN_TITLE == 'Mt Buller') {
       	fLat = -37.132552;
       	fLng = 146.454196;
-      }
-      if (CAMPAIGN_TITLE == 'London') {
-      	fLat = 51.507351;
-      	fLng = -0.127758;
       }
  
       this.twitterView = new TwitterView({ el: '#twitter_view', model: this.model, search: CAMPAIGN_TWITTER_QUERY, bShowRetweets: bShowRetweets });

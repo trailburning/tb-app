@@ -21,10 +21,18 @@ var TB_PATH = '{{ app.request.baseUrl }}';
 var CAMPAIGN_ID = {{ campaign.id }};
 var CAMPAIGN_TITLE = '{{ campaign.title }}';
 var CAMPAIGN_TWITTER_QUERY = '{{ campaign.twitterQuery }}';
+var CAMPAIGN_REGION_CENTRE_LAT = 0;
+var CAMPAIGN_REGION_CENTRE_LNG = 0; 
+{% if campaign.region %}
+var CAMPAIGN_REGION_CENTRE_LAT = {{ campaign.region.centroid.latitude }};
+var CAMPAIGN_REGION_CENTRE_LNG = {{ campaign.region.centroid.longitude }}; 
+{% endif %}
+
 {% if app.user %}		
 var TB_USER_ID = {{ app.user.id }};
 {% endif %}
 </script>
+
 <div id="content_view">	
     <div id="campaignplayer">
         <div id="trail_views">        
@@ -34,7 +42,7 @@ var TB_USER_ID = {{ app.user.id }};
         <div id="campaign_landing_overlay_view">        	
         	<div class="back tb-move-horiz"></div>        	
 			<div class="info-hero tb-move-horiz">				  						  				
-			  <div class="campaign_title tb-move-horiz">			  	
+			  <div class="campaign_title tb-move-horiz">		
 			  	{% if campaign.title == '6amCLUB' %}
 					<h2 class="tb tb-title">Morning Trails</h2>
 					<br/>
