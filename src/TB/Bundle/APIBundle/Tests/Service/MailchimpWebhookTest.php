@@ -21,7 +21,7 @@ class MailchimpWebhookTest extends AbstractApiTest
         
         $webhook = $this->getContainer()->get('tb.mailchimp.webhook');
         $data = [
-            'email' => 'mattallbeury@trailburning.com'
+            'email' => 'test@trailburning.com'
         ];
         
         $this->assertFalse($user->getNewsletter());
@@ -39,7 +39,7 @@ class MailchimpWebhookTest extends AbstractApiTest
         $user->setNewsletter(true);
         $webhook = $this->getContainer()->get('tb.mailchimp.webhook');
         $data = [
-            'email' => 'mattallbeury@trailburning.com'
+            'email' => 'test@trailburning.com'
         ];
         
         $this->assertTrue($user->getNewsletter());
