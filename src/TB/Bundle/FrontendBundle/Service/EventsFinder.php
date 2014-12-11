@@ -5,7 +5,7 @@ namespace TB\Bundle\FrontendBundle\Service;
 use Doctrine\ORM\EntityManager;
 
 /**
- * Helper Calss to query events
+ * Helper Class to query events
  */
 class EventsFinder
 {
