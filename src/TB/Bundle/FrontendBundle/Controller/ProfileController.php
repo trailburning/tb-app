@@ -124,10 +124,6 @@ class ProfileController extends Controller
                 ->getRepository('TBFrontendBundle:Event')
                     ->findByUser($user);
             
-            $campaigns = $this->getDoctrine()
-                ->getRepository('TBFrontendBundle:Campaign')
-                    ->findByUser($user);
-            
             $client = $this->get('rest_client');
             $request = $client->get('v1/routes/user/' . $user->getId());
             $response = $request->send();
@@ -150,7 +146,6 @@ class ProfileController extends Controller
                     'brand' => $user, 
                     'routes' => $routes, 
                     'events' => $events, 
-                    'campaigns' => $campaigns, 
                     'breadcrumb' => $breadcrumb
                 ]
             );

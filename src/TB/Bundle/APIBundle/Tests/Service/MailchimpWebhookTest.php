@@ -2,9 +2,9 @@
 
 namespace TB\Bundle\APIBundle\Tests\Service;
 
-use TB\Bundle\APIBundle\Tests\AbstractApiTest;
+use TB\Bundle\APIBundle\Tests\AbstractApiTestCase;
 
-class MailchimpWebhookTest extends AbstractApiTest
+class MailchimpWebhookTest extends AbstractApiTestCase
 {
 
     public function testProcessSubscribe()
@@ -21,7 +21,7 @@ class MailchimpWebhookTest extends AbstractApiTest
         
         $webhook = $this->getContainer()->get('tb.mailchimp.webhook');
         $data = [
-            'email' => 'mattallbeury@trailburning.com'
+            'email' => 'test@trailburning.com'
         ];
         
         $this->assertFalse($user->getNewsletter());
@@ -36,9 +36,10 @@ class MailchimpWebhookTest extends AbstractApiTest
         ]); 
         
         $user = $this->getUser('mattallbeury');
+        $user->setNewsletter(true);
         $webhook = $this->getContainer()->get('tb.mailchimp.webhook');
         $data = [
-            'email' => 'mattallbeury@trailburning.com'
+            'email' => 'test@trailburning.com'
         ];
         
         $this->assertTrue($user->getNewsletter());

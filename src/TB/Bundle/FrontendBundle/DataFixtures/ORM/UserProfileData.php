@@ -24,7 +24,6 @@ class UserProfileData extends AbstractFixture implements FixtureInterface
         $user->setSynopsis('I\'m all over the great outdoors, never happier than hitting the trails - whatever the weather! You name it and I\'m running in it, although not so much into mud, yes Tough Mudder I\'m looking at you!');
         $user->setLocation(new Point(52.508006, 13.257437, 4326));
         $user->setEnabled(true);
-        $user->setNewsletter(false);
 
         $manager->persist($user);
         $manager->flush();
@@ -40,7 +39,6 @@ class UserProfileData extends AbstractFixture implements FixtureInterface
         $user->setSynopsis('It started as an innocent 4km run between work and home about 5 years ago and slowly progressed to road marathons, triathlons, and now trail ultras. My name is Paul and I\'m addicted to running.');
         $user->setLocation(new Point(52.508006, 13.257437, 4326));
         $user->setEnabled(true);
-        $user->setNewsletter(false);
 
         $manager->persist($user);
         $manager->flush();

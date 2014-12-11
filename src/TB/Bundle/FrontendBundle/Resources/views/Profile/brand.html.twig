@@ -65,81 +65,78 @@ var TB_BRAND_ID = {{ brand.id }};
       
         <div class="right">
         	
-        {% if routes or campaigns %}
+        {% if routes %}
     		<div class="trails_title"><h2 class="tb tb-title first-title ">Discover the trails</h2></div>
-                
-            {% if campaigns %}
-                {% for campaign in campaigns %}
-                    <div class="panel trail_card_panel campaign_panel">
-                    	<div class="content">                                            
-                        <a href="{{ path('campaign', {slug: campaign.slug}) }}">
-                        <div class="photo tb-photo-btn">
-                        	<div class="image_container fade_on_load tb-fade-in"><img src="http://app.resrc.it/s=w920,pd1/o=80/http://assets.trailburning.com/{{ campaign.image }}" class="resrc scale" border="0"></div>                                    
-                    		<div class="overlay">
-                            	<div class="logo"><img src="http://assets.trailburning.com/{{ campaign.logo }}"></div>
-                    		</div>                                    
-                            <div class="card_title">
-                            <h1>Discover {{ campaign.displayTitle }}</h1>
-                            <br>
-                            <h1>running trails.</h1>
-                    		</div>
-                     	</div>
-                     	</a>
-                    	</div>    
-                    </div>                                    								               
-                {% endfor %}
-            {% endif %}   
-                        
-            {% if routes %}
-            	<div class="event_container trailcards">
-                    {% for route in routes %}
-        				<div class="panel trail_card trail_card_panel">
-        					<div class="title">
-        						<h3 class="tb">{{ route.category.name}}</h3>
-        					</div>
-        					<a href="{{ path('trail', {'trailSlug': route.slug}) }}">
-        					<div class="photo tb-photo-btn">
-        						<div class="image_container fade_on_load">
-        							{% if route.media is defined %}
-        							<img src="http://app.resrc.it/O=80/http://media.trailburning.com{{ route.media.versions[0].path }}" class="resrc scale" border="0"/>
-        							{% else %}
-        							<img src="http://app.resrc.it/s=w260,pd1/o=80/http://assets.trailburning.com/images/default/example_trailcard.jpg" class="resrc scale" border="0"/>
-        							{% endif %}
-        						</div>
-        						<div class="card_title">
-        							<h1>{{ route.name }}</h1>
-        							<br/>
-        							<h2>{{ route.region }}</h2>
-        							<br/>
-        							<h2>{{ include('TBFrontendBundle:Trail:_trailcardRating.html.twig', {'trail': route}) }}</h2>
-        						</div>
-    {#
-    							<div class="trail_level ts_green"></div>    							
-    #}    						
-        					</div></a>					
+        		
+              {% if brand.id == 215 %}
+				<div class="panel trail_card_panel campaign_panel">
+					<div class="content">                                            
+    	            <a href="{{ app.request.baseUrl }}/campaign/mtbuller">
+    	            <div class="photo tb-photo-btn">
+    	            	<div class="image_container fade_on_load tb-fade-in"><img src="http://app.resrc.it/s=w920,pd1/o=80/http://assets.trailburning.com/images/campaign/mtbuller/LM_131122_MtBuller_0462_HIGHres.jpg" class="resrc scale" border="0"></div>                                    
+						<div class="overlay">
+    	                	<div class="logo"><img src="http://assets.trailburning.com/images/campaign/mtbuller/logo.png"></div>
+						</div>                                    
+    	                <div class="card_title">
+    	                <h1>Discover Mt Buller</h1>
+    	                <br>
+    	                <h1>running trails.</h1>
+    	       			</div>
+    	         	</div>
+    	         	</a>
+    	        	</div>    
+				</div>                                    								               
+              {% endif %}   
+        		
+        	<div class="event_container trailcards">
+                {% for route in routes %}
+    				<div class="panel trail_card trail_card_panel">
+    					<div class="title">
+    						<h3 class="tb">{{ route.category.name}}</h3>
+    					</div>
+    					<a href="{{ path('trail', {'trailSlug': route.slug}) }}">
+    					<div class="photo tb-photo-btn">
+    						<div class="image_container fade_on_load">
+    							{% if route.media is defined %}
+    							<img src="http://app.resrc.it/O=80/http://media.trailburning.com{{ route.media.versions[0].path }}" class="resrc scale" border="0"/>
+    							{% else %}
+    							<img src="http://app.resrc.it/s=w260,pd1/o=80/http://assets.trailburning.com/images/default/example_trailcard.jpg" class="resrc scale" border="0"/>
+    							{% endif %}
+    						</div>
+    						<div class="card_title">
+    							<h1>{{ route.name }}</h1>
+    							<br/>
+    							<h2>{{ route.region }}</h2>
+    							<br/>
+    							<h2>{{ include('TBFrontendBundle:Trail:_trailcardRating.html.twig', {'trail': route}) }}</h2>
+    						</div>
+{#
+							<div class="trail_level ts_green"></div>    							
+#}    						
+    					</div></a>					
                                 
-                            <div class="card_avatar sponsor"><a href="{{ path('profile', {'name': brand.name}) }}"><img src="http://assets.trailburning.com/images/profile/{{ brand.name }}/card_trail_sticker_logo.png"></a></div>                        
-        					<div class="summary">
-        						<div class="length">{{ route.length|dimension_format('km', 1000) }}</div>
-        						<div class="altitude">
-                                {% if route.tags.ascent %}
-                                	{{ route.tags.ascent|dimension_format('m') }} D+
-                                    {% if route.tags.descent %}
-                                    	<br/>{{ route.tags.descent|dimension_format('m') }} D-
-                                    {% endif %}
+                        <div class="card_avatar sponsor"><a href="{{ path('profile', {'name': brand.name}) }}"><img src="http://assets.trailburning.com/images/profile/{{ brand.name }}/card_trail_sticker_logo.png"></a></div>                        
+    					<div class="summary">
+    						<div class="length">{{ route.length|dimension_format('km', 1000) }}</div>
+    						<div class="altitude">
+                            {% if route.tags.ascent %}
+                            	{{ route.tags.ascent|dimension_format('m') }} D+
+                                {% if route.tags.descent %}
+                                	<br/>{{ route.tags.descent|dimension_format('m') }} D-
                                 {% endif %}
-        						</div>
-        					</div>
-    {#							    					
-    						<div class="card_avatar">
-    			       		{{ include('TBFrontendBundle:Profile:_userAvatar.html.twig', {user: route.user}) }}
-    						</div>	
-    #}				       		
+                            {% endif %}
+    						</div>
+    					</div>
+{#							    					
+						<div class="card_avatar">
+			       		{{ include('TBFrontendBundle:Profile:_userAvatar.html.twig', {user: route.user}) }}
+						</div>	
+#}				       		
     					
-        				</div>
-                    {% endfor %}
-                </div>
-            {% endif %}
+    				</div>
+                {% endfor %}
+            </div>
+            
         {% endif %}
         	
         {% if brand.id == 220 %}

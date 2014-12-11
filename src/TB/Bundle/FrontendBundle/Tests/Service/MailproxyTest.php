@@ -9,6 +9,7 @@ class MailproxyTest extends AbstractFrontendTest
     
     public function setUp()
     {
+        parent::setUp();
         $this->mailproxy = $this->getContainer()->get('tb.mailproxy');   
     }
     

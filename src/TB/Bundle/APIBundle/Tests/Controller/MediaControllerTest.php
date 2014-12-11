@@ -198,7 +198,7 @@ class MediaControllerTest extends AbstractApiTest
         $this->assertJsonResponse($client);  
         
         $responseObj = json_decode($client->getResponse()->getContent());
-        $this->assertEquals('The file is too large (4.58 MB). Allowed maximum size is 4 MB.', $responseObj->usermsg,
+        $this->assertEquals('The file is too large (6.41 MB). Allowed maximum size is 6 MB.', $responseObj->usermsg,
             'Too large file throws error and displays appropriate message'); 
     }
     
