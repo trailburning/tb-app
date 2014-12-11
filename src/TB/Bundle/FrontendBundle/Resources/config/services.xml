@@ -251,6 +251,8 @@
             <argument type="service" id="tb.mailchimp" />
         </service>
         
+        <service id="tb.gpx_generator" class="TB\Bundle\FrontendBundle\Service\GPXGenerator">
+        </service>
             
     </services>
 </container>
