@@ -7,7 +7,9 @@ use TB\Bundle\FrontendBundle\Entity\Route;
 use TB\Bundle\FrontendBundle\Entity\Editorial;
 use TB\Bundle\FrontendBundle\Entity\Event;
 use TB\Bundle\FrontendBundle\Entity\BrandProfile;
+use TB\Bundle\FrontendBundle\Entity\Campaign;
 use Gaufrette\Filesystem;
+use \Exception;
 
 /**
  * 
@@ -46,7 +48,7 @@ class ImageGenerator
         // Update the Media object and set the share image path
         $media->setSharePath($shareImagePath);
         $this->em->persist($media);
-        $this->em->flush($media);
+        $this->em->flush();
 
         return true;
     }
@@ -74,7 +76,7 @@ class ImageGenerator
         // Update the Media object and set the share image path
         $editorial->setShareImage($shareImagePath);
         $this->em->persist($editorial);
-        $this->em->flush($editorial);
+        $this->em->flush();
 
         return true;
     }
@@ -108,7 +110,7 @@ class ImageGenerator
         // Update the Media object and set the share image path
         $event->setShareImage($shareImagePath);
         $this->em->persist($event);
-        $this->em->flush($event);
+        $this->em->flush();
 
         return true;
     }
@@ -142,7 +144,38 @@ class ImageGenerator
         // Update the Media object and set the share image path
         $profile->setShareImage($shareImagePath);
         $this->em->persist($profile);
-        $this->em->flush($profile);
+        $this->em->flush();
+
+        return true;
+    }
+    
+    public function createCampaignShareImage(Campaign $campaign)
+    {
+        if ($campaign->getImage() === null) {
+            throw new Exception(sprintf('Missing image for Campaign with id %s', $campaign->getId()));
+        }
+        
+        if (!$this->assetsFilesystem->has($campaign->getImage())) {
+            throw new Exception(sprintf('Missing image %s on filesystem for Campaign with id %s', $campaign->getImage(), $campaign->getId()));
+        }
+        
+        if ($campaign->getWatermarkImage() === null) {
+            throw new Exception(sprintf('Missing watermarkImage image for Campaign with id %s', $campaign->getId()));
+        }
+        
+        if (!$this->assetsFilesystem->has($campaign->getWatermarkImage())) {
+            throw new Exception(sprintf('Missing image %s on filesystem for Campaign with id %s', $campaign->getWatermarkImage(), $campaign->getId()));
+        }
+        
+        // Construct the share image filepath from the name of the campaign image
+        $pathParts = pathinfo($campaign->getImage());
+        $shareImagePath = sprintf('images/campaign/%s/%s_share.%s', $campaign->getSlug(), $pathParts['filename'], $pathParts['extension']);
+        
+        $this->createShareImage($campaign->getImage(), $shareImagePath, $campaign->getWatermarkImage(), $this->assetsFilesystem);
+        
+        $campaign->setShareImage($shareImagePath);
+        $this->em->persist($campaign);
+        $this->em->flush();
 
         return true;
     }
@@ -150,7 +183,14 @@ class ImageGenerator
     protected function createShareImage($imagePath, $shareImagePath, $watermarkPath, $filesystem, $logoPath = null)
     {
         $image = imagecreatefromstring($filesystem->read($imagePath));
-        $watermark = imagecreatefrompng($watermarkPath);
+        if (preg_match('/^\//', $watermarkPath)) {
+            // path to watermark is an absolute path, open the file from the filesystem
+            $watermark = imagecreatefrompng($watermarkPath);    
+        } else {
+            // the path is points to a file on the gaufrette filesystem, read it from that filesystem
+            $watermark = imagecreatefromstring($filesystem->read($watermarkPath));
+        }
+        
         $watermarkWidth = imagesx($watermark);
         $watermarkHeight = imagesy($watermark);
         $watermarkRatio = $watermarkWidth / $watermarkHeight;

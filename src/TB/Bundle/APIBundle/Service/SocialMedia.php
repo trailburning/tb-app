@@ -104,7 +104,7 @@ class SocialMedia
             
             switch ($type) {
                 case 'user_mentions':
-                    $replacement = '<a href="https://twitter.com/' . $entity->screen_name . '" target="_blank">@' . $entity->name . '</a>';
+                    $replacement = '<a href="https://twitter.com/' . $entity->screen_name . '" target="_blank">@' . $entity->screen_name . '</a>';
                     $replacementLength = $entity->indices[1] - $entity->indices[0];
                     // consider previous replacements and the added text length
                     $text = $this->mb_substr_replace($text, $replacement, $entity->indices[0] + $addedTextLength, $replacementLength);

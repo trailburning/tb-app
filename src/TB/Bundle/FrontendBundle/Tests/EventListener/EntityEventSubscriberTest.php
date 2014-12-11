@@ -14,6 +14,7 @@ class EntityEventSubscriberTest extends AbstractFrontendTest
 
     protected function setUp()
     {
+        parent::setUp();
         $this->em = $this->getContainer()->get('doctrine.orm.entity_manager');
     }
     

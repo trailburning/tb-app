@@ -6,7 +6,8 @@ use Doctrine\ORM\EntityManager;
 use TB\Bundle\FrontendBundle\Entity\Route;
 use TB\Bundle\FrontendBundle\Entity\RoutePoint;
 use CrEOF\Spatial\PHP\Types\Geometry\Point;
-use Guzzle\Http\Client;
+use TB\Bundle\FrontendBundle\Service\Timezone;
+use Exception;
 
 /**
 * 
@@ -16,12 +17,12 @@ class MediaImporter
 
     protected $em;
     
-    protected $httpClient;
+    protected $timezone;
     
-    public function __construct(EntityManager $em, Client $httpClient)
+    public function __construct(EntityManager $em, Timezone $timezone)
     {
         $this->em = $em;
-        $this->httpClient = $httpClient;
+        $this->timezone = $timezone;
     }
     
     /**
@@ -35,22 +36,12 @@ class MediaImporter
     public function getRouteTimezone(Route $route)
     {
         if ($route->getCentroid() === null) {
-            throw new \Exception('centroid is not set');
+            throw new Exception('centroid is not set');
         }
         
         $firstRoutePoint = $this->getFirstRoutePoint($route);
-                
-        $url = sprintf('https://maps.googleapis.com/maps/api/timezone/json?location=%s,%s&timestamp=%s', $firstRoutePoint->getCoords()->getLatitude(), $firstRoutePoint->getCoords()->getLongitude(), $firstRoutePoint->getTags()['datetime']);
         
-        $request = $this->httpClient->get($url);
-        $request->send();
-        $response = $request->getResponse();
-        
-        if ($response->getStatusCode() !== 200) {
-            throw new \Exception('Unable to get timezone from google timezone api, http status code %s for URL: %s', $response->getStatusCode(), $url);
-        }
-        
-        $timezone = $response->json()['timeZoneId'];
+        $timezone = $this->timezone->getTimezoneForGeoPoint($firstRoutePoint->getCoords()->getLongitude(), $firstRoutePoint->getCoords()->getLatitude(), $firstRoutePoint->getTags()['datetime']);
         
         return $timezone;
     }
@@ -67,7 +58,7 @@ class MediaImporter
     public function getRouteTimezoneOffset(Route $route)
     {
         if ($route->getId() == 0) {
-            throw new \Exception('The Route must be persisted before calculating a timezone offset');
+            throw new Exception('The Route must be persisted before calculating a timezone offset');
         }
         
         // get the datetime tag of the first RoutePoint from this Media's Route to calculate the Routes timezone offset
@@ -78,17 +69,17 @@ class MediaImporter
         $routeId = $route->getId();
         $stmt->bindParam(':route_id', $routeId, \PDO::PARAM_INT);
         if (!$stmt->execute()) {
-            throw new \Exception('failed to fetch first RoutePoint for Route');
+            throw new Exception('failed to fetch first RoutePoint for Route');
         }
         
         if ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
             $tags = json_decode('{' . str_replace('"=>"', '":"', $row['tags']) . '}', true);
         } else {
-            throw new \Exception(sprintf('Missing RoutePoints for Route with id: %s', $route->getId()));
+            throw new Exception(sprintf('Missing RoutePoints for Route with id: %s', $route->getId()));
         }
         
         if (!isset($tags['datetime'])) {
-            throw new \Exception(sprintf('missing datetime tag for RoutePoint with id: %s', $row['id']));
+            throw new Exception(sprintf('missing datetime tag for RoutePoint with id: %s', $row['id']));
         }
         
         // get the timezone from this Route
@@ -127,18 +118,18 @@ class MediaImporter
         $stmt->bindValue(':route_id', $route->getId(), \PDO::PARAM_INT);
         $stmt->bindParam(':timestamp', $unixtimestamp, \PDO::PARAM_INT);
         if (!$stmt->execute()) {
-            throw new \Exception('Failed to fetch nearest RoutePoint by datetime');
+            throw new Exception('Failed to fetch nearest RoutePoint by datetime');
         }
 
         if ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
             $id = $row['id'];
         } else {
-            throw new \Exception(sprintf('Route with id %s has no RoutePoints', $route->getId()));
+            throw new Exception(sprintf('Route with id %s has no RoutePoints', $route->getId()));
         } 
 
         $routePoint = $this->em->getRepository('TBFrontendBundle:RoutePoint')->findOneById($id);
         if (!$routePoint) {
-            throw new \Exception(sprintf('failed to fetch RoutePoint with id: %s', $id));
+            throw new Exception(sprintf('failed to fetch RoutePoint with id: %s', $id));
         }
         
         return $routePoint;
@@ -164,18 +155,18 @@ class MediaImporter
         // $stmt->bindValue(':long', $point->getLongitude(), \PDO::PARAM_STR);
         // $stmt->bindParam(':lat', $point->getLatitude(), \PDO::PARAM_STR);
         if (!$stmt->execute()) {
-            throw new \Exception('Failed to fetch nearest RoutePoint by Point');
+            throw new Exception('Failed to fetch nearest RoutePoint by Point');
         }
 
         if ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
             $id = $row['id'];
         } else {
-            throw new \Exception(sprintf('Route with id %s has no RoutePoints', $route->getId()));
+            throw new Exception(sprintf('Route with id %s has no RoutePoints', $route->getId()));
         } 
 
         $routePoint = $this->em->getRepository('TBFrontendBundle:RoutePoint')->findOneById($id);
         if (!$routePoint) {
-            throw new \Exception(sprintf('failed to fetch RoutePoint with id: %s', $id));
+            throw new Exception(sprintf('failed to fetch RoutePoint with id: %s', $id));
         }
         
         return $routePoint;
@@ -196,7 +187,7 @@ class MediaImporter
         try {
             $routePoint = $query->getSingleResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
-            throw new \Exception(sprintf('First RoutePoint not found for Route with id: %s', $route->getId()));
+            throw new Exception(sprintf('First RoutePoint not found for Route with id: %s', $route->getId()));
         }
         
         return $routePoint;
