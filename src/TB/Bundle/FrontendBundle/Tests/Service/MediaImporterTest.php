@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace TB\Bundle\FrontendBundle\Tests\Service;
 
@@ -11,9 +11,7 @@ class MediaImporterTest extends AbstractFrontendTest
     
     public function testGetGeometryPointFromExifNoGpsImage()
     {
-        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $client = $this->getContainer()->get('http_client');
-        $mediaImporter = new MediaImporter($em, $client);
+        $mediaImporter = $this->getContainer()->get('tb.media.importer');
         
         $exiftags = exif_read_data(realpath(__DIR__ . '/../../DataFixtures/Media/no_metadata.jpg'));
         $result = $mediaImporter->getGeometryPointFromExif($exiftags);
@@ -22,9 +20,7 @@ class MediaImporterTest extends AbstractFrontendTest
     
     public function testGetGeometryPointFromExif()
     {
-        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $client = $this->getContainer()->get('http_client');
-        $mediaImporter = new MediaImporter($em, $client);
+        $mediaImporter = $this->getContainer()->get('tb.media.importer');
         
         $exiftags = exif_read_data(realpath(__DIR__ . '/../../DataFixtures/Media/gps_example/IMG_3255.JPG'));
 
@@ -45,11 +41,11 @@ class MediaImporterTest extends AbstractFrontendTest
         $this->loadFixtures([
             'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData'
         ]);
-        
+
         $mediaImporter = $this->getContainer()->get('tb.media.importer');
         $route = $this->getRoute('grunewald');
         $timezone = $mediaImporter->getRouteTimezone($route);
-        
+
         $this->assertEquals('Europe/Berlin', $timezone, 'Route::getTimezone() return the correct timezone "Europe/Berlin"');
     }
     
@@ -108,11 +104,7 @@ class MediaImporterTest extends AbstractFrontendTest
             'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData',           
         ]);
         
-        // Get Route from DB with the slug "grunewald"..
-        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $client = $this->getContainer()->get('http_client');
-        $mediaImporter = new MediaImporter($em, $client);
-        
+        $mediaImporter = $this->getContainer()->get('tb.media.importer');
         $route = $this->getRoute('grunewald');
         
         $point = new Point(13.249617, 52.501565, 4326);

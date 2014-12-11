@@ -171,6 +171,7 @@ class Campaign
     /**
      * @var string
      *
+<<<<<<< HEAD
      * @ORM\Column(name="twitter_tags", type="string", length=255, nullable=true)
      */
     private $twitterTags;
@@ -202,6 +203,11 @@ class Campaign
      * @ORM\Column(name="popular_text", type="string", length=255, nullable=true)
      */
     private $popularText;
+
+    /**
+     * @ORM\Column(name="watermark_image", type="string", length=100, nullable=true)
+     */
+    private $watermarkImage;
     
     /**
      * Set id
@@ -896,5 +902,26 @@ class Campaign
     public function getPopularText()
     {
         return $this->popularText;
+    }
+    
+   /**
+    * Set watermarkImage
+    *
+    * @param string $watermarkImage
+    * @return Campaign
+    */
+   public function setWatermarkImage($watermarkImage)
+   {
+       $this->watermarkImage = $watermarkImage;
+   }
+
+    /**
+     * Get watermarkImage
+     *
+     * @return string 
+     */
+    public function getWatermarkImage()
+    {
+        return $this->watermarkImage;
     }
 }
