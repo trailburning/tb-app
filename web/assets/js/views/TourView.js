@@ -14,11 +14,24 @@ define([
       $('#step1_left').removeClass('step1_left_init');
       $('#step1_right').removeClass('step1_right_init');
 
-	  this.loadAndShow($('#step1'));      
-	  this.loadAndShow($('#step2'));
-	  this.loadAndShow($('#step3'));      
-	  this.loadAndShow($('#step4'));      
-	  this.loadAndShow($('#step5'));         
+	  if ($('#step1').length) {
+	    this.loadAndShow($('#step1'));      	  	
+	  }
+	  if ($('#step2').length) {
+	    this.loadAndShow($('#step2'));
+	  }
+	  if ($('#step3').length) {
+	    this.loadAndShow($('#step3'));      
+	  }
+	  if ($('#step4').length) {
+	    this.loadAndShow($('#step4'));      
+	  }
+	  if ($('#step5').length) {
+	    this.loadAndShow($('#step5'));         
+	  }
+	  if ($('#step6').length) {
+	    this.loadAndShow($('#step6'));         
+	  }
 
       if (typeof TB_USER_ID != 'undefined') {
   	    this.activityFeedView = new ActivityFeedView({ el: '#activity_feed_view' });

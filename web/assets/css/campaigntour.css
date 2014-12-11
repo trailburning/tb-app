@@ -223,8 +223,40 @@ border-width:1px;
   right: -542px;
 }
 
+#step6 {
+  position: relative;
+  margin-top: 82px;
+  height: 528px;
+  width: 100%;
+}
+
+#step6_left {
+  position: absolute;
+  top: 0px;
+  left: 58px;
+  width: 542px;
+  height: 549px;
+}
+
+#step6_left.outViewPort {
+  left: -542px;
+}
+
+#step6_right {
+  position: absolute;
+  padding-top: 36px;
+  top: 0px;
+  right: 100px;
+  width: 420px;
+  text-align: left;
+}
+
+#step6_right.outViewPort {
+  right: -420px;
+}
+
 #cta {
-  margin-top: 100px;
+  margin-top: 80px;
   margin-bottom: 100px;
 }
 
@@ -337,8 +369,26 @@ border-width:1px;
   #step5_right.outViewPort {
     right: -472px;
   }
+  #step6 {
+    margin-top: 71px;
+    height: 459px;
+  }
+  #step6_left {
+    width: 472px;
+    height: 478px;
+  }
+  #step6_left.outViewPort {
+    left: -472px;
+  }
+  #step6_right {
+    padding-top: 31px;
+    width: 365px;
+  }
+  #step6_right.outViewPort {
+    right: -365px;
+  }
   #cta {
-    margin-top: 87px;
+    margin-top: 70px;
     margin-bottom: 87px;
   }
   #cta .contact {
