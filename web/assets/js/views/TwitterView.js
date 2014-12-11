@@ -31,10 +31,8 @@ define([
       	    	}
         	    strTweet = '<div class="tweet_panel"><a class="icon" href="https://twitter.com/search?q='+self.options.search+'" target="_blank"></a><div class="panel"><div class="content"><h5 class="tb">'+tweet.text+strImage+'</h5><div class="details"><time class="timeago" datetime="'+tweet.date+'"></time>&nbsp;&nbsp;<strong>'+tweet.user+'</strong></div></div></div></div>';
       	    	$(self.el).append(strTweet);
-      	    });
-      	    
-      	    $("time.timeago").timeago();
-      	    
+      	    });      	    
+      	    $("time.timeago").timeago();      	    
       	    self.showImages();           
           }
         }
