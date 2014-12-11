@@ -2,13 +2,13 @@
 
 namespace TB\Bundle\APIBundle\Tests\Controller;
 
-use TB\Bundle\APIBundle\Tests\AbstractApiTestCase;
+use TB\Bundle\APIBundle\Tests\AbstractApiTest;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  *
  */
-class WebhookMailchimpControllerTest extends AbstractApiTestCase
+class WebhookMailchimpControllerTest extends AbstractApiTest
 {
     
     /**
