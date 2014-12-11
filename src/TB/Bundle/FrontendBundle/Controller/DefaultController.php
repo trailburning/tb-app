@@ -88,13 +88,4 @@ class DefaultController extends Controller
     {
         return [];
     }
-    
-    /**
-     * @Route("/campaigntour", name="campaigntour")
-     * @Template()
-     */
-    public function campaigntourAction()
-    {
-        return [];
-    }
 }
