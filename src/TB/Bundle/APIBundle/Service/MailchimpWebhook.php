@@ -52,7 +52,7 @@ class MailchimpWebhook
             
         $user = $this->em->getRepository('TBFrontendBundle:User')->findOneByEmailCanonical($data['email']);
         if (!$user) {
-            throw new \Exception(sprintf('User not found for email %s', $data['email']));
+            throw new Exception(sprintf('User not found for email %s', $data['email']));
         }
         
         $user->setNewsletter(false);

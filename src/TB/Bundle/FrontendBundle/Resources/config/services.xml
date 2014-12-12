@@ -26,6 +26,11 @@
         <!-- Register media importer service -->
         <service id="tb.media.importer" class="TB\Bundle\FrontendBundle\Service\MediaImporter">
             <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="tb.timezone" />
+        </service>
+        
+        <!-- Register Timezone service -->
+        <service id="tb.timezone" class="TB\Bundle\FrontendBundle\Service\Timezone">
             <argument type="service" id="http_client" />
         </service>
         

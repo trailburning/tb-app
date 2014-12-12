@@ -19,6 +19,51 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 abstract class AbstractFrontendTest extends WebTestCase 
 {
     
+    protected function setUp()
+    {
+        // replace the Bitly Client with a Mock
+        $bitly = $this->getMockBuilder('Hpatoio\Bitly\Client')
+            ->disableOriginalConstructor()
+            ->getMock();
+        
+        $bitly->method('__call')->willReturn([
+            'long_url' => 'http://www.trailburning.com/trail/grunewald',
+            'url' => 'http://bit.ly/15LTaFB',
+            'hash' => '15LTaFB',
+            'global_hash' => '15LTaFC',
+            'new_hash' => 0,
+        ]);
+        
+        $this->getContainer()->set('tb.bitly_client', $bitly);
+        
+        // Replace the RabbitMQ Producer Service with a Mock
+        $producer = $this->getMockBuilder('OldSound\RabbitMqBundle\RabbitMq\Producer')
+            ->disableOriginalConstructor()
+            ->getMock();
+        // Test that the publish() method gets called three times, two times when two Routes are created from fixtures,
+        // and once when the tb.route_publish Event is fired manually in this test
+        $producer->expects($this->any())
+            ->method('publish')
+            ->willReturn(true);
+        $this->getContainer()->set('old_sound_rabbit_mq.main_producer', $producer);
+        
+        // Replace the Mailproxy Service with a Mock
+        $mailproxy = $this->getMockBuilder('TB\Bundle\FrontendBundle\Service\Mailproxy')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $mailproxy->method('addNewsletterSubscriber')->willReturn(true);
+        $mailproxy->method('removeNewsletterSubscriber')->willReturn(true);
+        $mailproxy->method('sendWelcomeMail')->willReturn(true);
+        $this->getContainer()->set('tb.mailproxy', $mailproxy);
+        
+        // Replace the Timezone Service with a Mock
+        $timezone = $this->getMockBuilder('TB\Bundle\FrontendBundle\Service\Timezone')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $timezone->method('getTimezoneForGeoPoint')->willReturn('Europe/Berlin');
+        $this->getContainer()->set('tb.timezone', $timezone);
+    }    
+    
     protected static function getKernelClass()
     {
         require_once self::getPhpUnitXmlDir() . '/frontend/AppKernel.php';

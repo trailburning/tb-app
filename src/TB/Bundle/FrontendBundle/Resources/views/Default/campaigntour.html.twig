@@ -1,0 +1,121 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}Trailburning Tour{% endblock %}
+
+{% block stylesheets %}
+<link href="{{ asset('assets/css/campaigntour.css') }}" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block body %}
+<script>
+var TB_APP = 'TourApp';
+{% if app.user %}		
+var TB_USER_ID = {{ app.user.id }};
+{% endif %}
+var elementsToTrack = ["#step1_left", "#step1_right", "#step2_left", "#step2_right", "#step3_left", "#step3_right", "#step4_left", "#step4_right", "#step5_left", "#step5_right", "#step6_left", "#step6_right"];
+</script>
+
+<div class="tour_content">
+	<div class="panel content">
+	  	<h2 class="tb">Campaigns by Trailburning.</h2>
+	  	<div class="desc">
+	    	<h4 class="tb">Location-based campaigns designed to connect your brand, product or tourism region with an active lifestyle audience.</h4>	
+	  	</div>
+	
+	  	<div id="steps">  		
+	    	<div id="step1" class="animate">
+	      		<div id="step1_left" class="step1_left_init">
+	      		<h3 class="tb">Layer location into your next campaign</h3>
+	      		<h4 class="tb">
+	      		Location-based Campaigns are built into Trailburning as a unique way for brands, retailers and tourism agencies to engage with new audiences and your customers.
+	      		<br/><br/>
+				We unite active sport content with a specific location, and use Campaigns to position your brand right there.
+				</h4>
+		  		</div>  	
+		  		<div id="step1_right" class="image_container fade_on_load step1_right_init"><img src="http://assets.trailburning.com/images/campaigntour/step1.png"></div>	
+	    	</div>
+	    	<div id="step2" class="animate">
+		  		<div id="step2_left" class="image_container fade_on_load"><img src="http://assets.trailburning.com/images/campaigntour/step2.png"></div>	
+	      		<div id="step2_right">
+	      		<h3 class="tb">Tangible geo-media content marketing</h3>
+	      		<h4 class="tb">
+				We turn running routes and hiking trails into your content channel.
+				<br/><br/>
+				Target any location and Campaigns can  showcase trail runs for local runners, present the best hikes in the Swiss Alps or promote your team’s top 5 spots to cycle – that’s right – cycle, MTB, canoe, snowboard!
+				<br/><br/> 
+				Everything is a trail, and Trailburning transforms the outdoors into unique, tangible content marketing.	      			
+	      		</h4>
+		  		</div>  	
+	    	</div>
+	    	<div id="step3" class="animate">
+	      		<div id="step3_right" class="image_container fade_on_load"><img src="http://assets.trailburning.com/images/campaigntour/step3.png"></div>  	
+		  		<div id="step3_left">
+		  		<h3 class="tb">Engage and connect with your audience</h3>
+	      		<h4 class="tb">
+	      		Use Campaigns to engage a local or global audience with your content or region.
+	      		<br/><br/>
+				And because your content is location-based your brand’s message is in context with the physical world.
+				<br/><br/>
+				As your audience follows your campaign, we can provide leads to your online store, social network and product or brand pages.
+	      		</h4>
+		  		</div>	
+	    	</div>
+	    	<div id="step4" class="animate">
+		  		<div id="step4_left" class="image_container fade_on_load"><img src="http://assets.trailburning.com/images/campaigntour/step4.png"></div>	
+	      		<div id="step4_right">
+	      		<h4 class="tb">CAMPAIGN EXAMPLE</h4>
+	      		<h3 class="tb">Tourism Marketing</h3>
+	      		<h4 class="tb">
+				Create an active lifestyle profile for your tourism region. Entice travellers by showing off your  running, cycling, MTB’ing and skiing trails.  	      			
+				<br/><br/>
+				We make it easy for followers to share and promote your outdoor active-based content on Facebook, Twitter and Google+.
+				<br/><br/>
+				<a href="{{ app.request.baseUrl }}/campaign/mtbuller" class="btn btn-tb">View Campaign</a>
+	      		</h4>
+		  		</div>  	
+	    	</div>
+	    	<div id="step5" class="animate">
+	      		<div id="step5_left" class="step1_left_init">
+	      		<h4 class="tb">CAMPAIGN EXAMPLE</h4>
+	      		<h3 class="tb">Brand Marketing</h3>
+	      		<h4 class="tb">
+				Use your brand to create compelling trail content, sponsor existing content or even launch a crowdsourcing competition as a part of your campaign’s message.
+				<br/><br/>
+				Run regular content marketing campaigns via email and our “baked in” social media tools present every item shared from Trailburning with your branding.	      			
+				<br/><br/>
+				<a href="{{ app.request.baseUrl }}/campaign/urbantrails-london" class="btn btn-tb">View Campaign</a>
+	      		</h4>
+		  		</div>  	
+		  		<div id="step5_right" class="image_container fade_on_load"><img src="http://assets.trailburning.com/images/campaigntour/step5.png"></div>	
+	      	</div>		  	  	
+	    	<div id="step6" class="animate">
+		  		<div id="step6_left" class="image_container fade_on_load"><img src="http://assets.trailburning.com/images/campaigntour/step6.png"></div>	
+	      		<div id="step6_right">
+	      		<h4 class="tb">CAMPAIGN EXAMPLE</h4>
+	      		<h3 class="tb">Social Marketing</h3>
+	      		<h4 class="tb">
+				Campaigns by Trailburning gives you a landing page for people to make and socialise content for your brand.
+				<br/><br/>
+				Want to launch a new #movement – like the #6amCLUB? Use Campaigns to conduct local area marketing for loyal retail customers or launch a social media campaign to attract a new audience.	      		
+				<br/><br/>
+				<a href="{{ app.request.baseUrl }}/campaign/6amclub" class="btn btn-tb">View Campaign</a>
+	      		</h4>
+		  		</div>  	
+	    	</div>	    	
+		</div>
+				    	
+    	<div id="cta">
+	  		<h2 class="tb">Create Your Campaign</h2>
+	  		<div class="desc">
+	    		<h4 class="tb">Lets discuss opportunities to create a unique Location-Based Campaign for your brand, retail outlet or tourism agency.</h4>
+	    		<div class="contact"><a href="mailto:hello@trailburning.com" class="btn btn-tb-action btn-tb-large submit">Contact us about a Campaign</a></div>
+	  		</div>
+	  	</div>  	
+	</div>
+</div>
+  	
+{% endblock %}
+
+{% block javascripts %}
+<script src="{{ asset('assets/js/libs/divPeek.min.js') }}"></script>
+{% endblock %}

@@ -14,15 +14,25 @@ class UserProfileTest extends AbstractFrontendTest
      */
     public function testSluggableName()
     {
-        $this->loadFixtures([]);        
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         
         $user = new UserProfile();
-        $user->setEmail('test@mail');
+        $user->setEmail('test@trailburning.com');
         $user->setPassword('password');
         $user->setFirstName('first');
         $user->setlastName('last name');
+        $user->setNewsletter(false);
         $user->setLocation(new Point(52.508006, 13.257437, 4326));
+
+        // Replace the Mailproxy Service with a Mock
+        $mailproxy = $this->getMockBuilder('TB\Bundle\FrontendBundle\Service\Mailproxy')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $mailproxy->method('addNewsletterSubscriber')->willReturn(true);
+        $mailproxy->method('removeNewsletterSubscriber')->willReturn(true);
+        $mailproxy->method('sendWelcomeMail')->willReturn(true);
+        $this->getContainer()->set('tb.mailproxy', $mailproxy);
+
 
         $em->persist($user);
         $em->flush();
@@ -61,6 +71,7 @@ class UserProfileTest extends AbstractFrontendTest
         $user->setPassword('password');
         $user->setFirstName('first');
         $user->setlastName('last name');
+        $user->setNewsletter(false);
         $user->setLocation(new Point(52.508006, 13.257437, 4326));
 
         $em->persist($user);

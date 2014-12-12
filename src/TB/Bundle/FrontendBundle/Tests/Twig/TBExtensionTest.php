@@ -13,6 +13,7 @@ class TBExtensionTest extends AbstractFrontendTest
         
     public function setUp()
     {
+        parent::setUp();
         $this->extension = $this->getContainer()->get('tb.twig.tb_extension');
     }
     
