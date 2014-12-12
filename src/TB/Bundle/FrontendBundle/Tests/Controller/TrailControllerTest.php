@@ -4,6 +4,7 @@ namespace TB\Bundle\FrontendBundle\Tests\Controller;
 
 use TB\Bundle\FrontendBundle\Tests\AbstractFrontendTest;
 use Symfony\Component\HttpFoundation\Response;
+use DOMDocument;
 
 /**
  *
@@ -155,5 +156,24 @@ class TrailControllerTest extends AbstractFrontendTest
         $client = static::createClient();
 
         $crawler = $client->request('GET', '/map/trails/region/' . $region->getSlug());
+    }
+    
+    public function testTrailGPX()
+    {
+        $this->loadFixtures([
+            'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData',
+        ]);
+
+        $client = $this->createClient();
+        $crawler = $client->request('GET', '/trail/grunewald.gpx');
+        $this->assertEquals(Response::HTTP_OK,  $client->getResponse()->getStatusCode());
+        $this->assertEquals('application/gpx+xml',  $client->getResponse()->headers->get('Content-Type'),
+            'Content-Type Header is "application/json"');
+        
+        $xml = $client->getResponse()->getContent();
+
+        $document = new DOMDocument(); 
+        $document->loadXML($xml); 
+        $this->assertTrue($document->schemaValidate(realpath(__DIR__ . '/../../DataFixtures/GPX/gpx.xsd')));
     }
 }

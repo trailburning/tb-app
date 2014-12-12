@@ -173,7 +173,6 @@
             <argument type="service" id="doctrine.orm.entity_manager" />
             <argument type="service" id="old_sound_rabbit_mq.main_producer" />
             <argument type="service" id="service_container" />
-            <argument type="service" id="router" />
             <tag name="kernel.event_listener" event="tb.route_publish" method="onRoutePublish" />
         </service>
 
@@ -257,6 +256,7 @@
         </service>
         
         <service id="tb.gpx_generator" class="TB\Bundle\FrontendBundle\Service\GPXGenerator">
+            <argument type="service" id="router" />
         </service>
             
     </services>
