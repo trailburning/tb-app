@@ -32,6 +32,13 @@
 	  {% if trail is not null %}	
 		  {% if trail.bitlyUrl %}
 			{% set text = ['I\'m #trailburning!', ' ', trail.bitlyUrl]|join %}	
+				
+   			{% if campaign is defined %}
+   			  {% if campaign is not null %}
+   			    {% set text = [campaign.twitterTags, ' ', trail.bitlyUrl]|join %}
+   			  {% endif %}
+   	  		{% endif %}
+		  
 		  {% endif %}	
       {% endif %}
     {% endif %}    
