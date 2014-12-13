@@ -115,7 +115,7 @@ class MainConsumer extends Consumer
         // The script outputs 'OK' for success, test only the last 2 characters to handle php error messages and other debug output of the command
         $isSuccess =  (substr(trim($output), -2) == 'OK') ? true : false;
         if ($isSuccess === true) {
-            return true
+            return true;
         } else {
             throw new \Exception(sprintf('command failed: %s', $command));
         }
