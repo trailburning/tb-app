@@ -109,7 +109,7 @@ class MainConsumer extends Consumer
         // Any other value not equal to false will acknowledge the message and remove it from the queue
         $isSuccess = $this->callCommand($command);
         if ($isSuccess === false) {
-            $output->writeln(sprintf('<error>Command failed: %s</error>', $command));
+            throw new \Exception(sprintf('Command failed: %s', $command));
             
             return false;
         } else {
