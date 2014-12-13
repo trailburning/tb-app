@@ -361,7 +361,7 @@ class SearchIndexCommand extends ContainerAwareCommand
             $this->client->index($params);
         }
         
-        $output->writeln(sprintf('%s ragion(s) were indexed', count($regions)));
+        $output->writeln(sprintf('%s regions(s) were indexed', count($regions)));
         $output->writeln('OK');
     }
 }

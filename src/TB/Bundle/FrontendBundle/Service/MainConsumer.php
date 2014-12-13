@@ -85,25 +85,36 @@ class MainConsumer extends Consumer
         
         switch ($obj->type) {
             case 'activity':
-                $isSuccess = $this->callCommand(sprintf('tb:activity:create-feed %s --fault-tolerant true', $obj->id));
+                $command = sprintf('tb:activity:create-feed %s --fault-tolerant true', $obj->id);      
                 break;
             case 'routeShareImage':
-                $isSuccess = $this->callCommand(sprintf('tb:route:create-share-image %s --fault-tolerant true', $obj->id));
+                $command = sprintf('tb:route:create-share-image %s --fault-tolerant true', $obj->id);
                 break;
             case 'routeIndex':
-                $isSuccess = $this->callCommand(sprintf('tb:search:index route %s', $obj->id));
+                $command = sprintf('tb:search:index route %s', $obj->id);
                 break;
             case 'userIndex':
-                $isSuccess = $this->callCommand(sprintf('tb:search:index user_profile %s', $obj->id));
+                $command = sprintf('tb:search:index user_profile %s', $obj->id);
                 break;                                
             default:
-                $isSuccess = false;
+                $command = false;
                 break;
         }
         
+        if ($command === false) {
+            return false;
+        } 
+        
         // When $isSuccess is false, the message will be rejected by the consumer and requeued by RabbitMQ.
         // Any other value not equal to false will acknowledge the message and remove it from the queue
-        return $isSuccess;
+        $isSuccess = $this->callCommand($command);
+        if ($isSuccess === false) {
+            $output->writeln(sprintf('<error>Command failed: %s</error>', $command));
+            
+            return false;
+        } else {
+            return true;
+        }
     }
     
     public function callCommand($command)
