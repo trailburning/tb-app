@@ -23,7 +23,7 @@ class RouteCreateShareImageCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $id = $input->getArgument('id');
-        $faultTolerant = $input->getOption('consumer-count');
+        $faultTolerant = $input->getOption('fault-tolerant');
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         
         $route = $em->getRepository('TBFrontendBundle:Route')->findOneById($id);
