@@ -16,7 +16,7 @@ class ActivityCreateFeedCommand extends ContainerAwareCommand
             ->setName('tb:activity:create-feed')
             ->setDescription('Create the UserActivity feed for an Activity item')
             ->addArgument('id', InputArgument::REQUIRED, 'The id of the Activity item')
-            ->addOption('fault-tolerant', 'f', InputOption::VALUE_OPTIONAL, 'Returns OK', false)
+            ->addOption('fault-tolerant', 'f', InputOption::VALUE_OPTIONAL, 'If set to true, no exception is thrown', false)
         ;
     }
 

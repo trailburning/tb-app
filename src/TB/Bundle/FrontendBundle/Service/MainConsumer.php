@@ -88,7 +88,7 @@ class MainConsumer extends Consumer
                 $isSuccess = $this->callCommand(sprintf('tb:activity:create-feed %s --fault-tolerant true', $obj->id));
                 break;
             case 'routeShareImage':
-                $isSuccess = $this->callCommand(sprintf('tb:route:create-share-image %s', $obj->id));
+                $isSuccess = $this->callCommand(sprintf('tb:route:create-share-image %s --fault-tolerant true', $obj->id));
                 break;
             case 'routeIndex':
                 $isSuccess = $this->callCommand(sprintf('tb:search:index route %s', $obj->id));
