@@ -31,7 +31,6 @@ class ActivityCreateFeedCommand extends ContainerAwareCommand
             if ($faultTolerant === false) {
                 throw new \Exception(sprintf('Activity with id %s not found', $id));
             } else {
-                $output->writeln(sprintf('Activity with id %s not found', $id));
                 $output->writeln('OK');
                 
                 return true;

@@ -31,7 +31,6 @@ class RouteCreateShareImageCommand extends ContainerAwareCommand
             if ($faultTolerant === false) {
                 throw new \Exception(sprintf('Route with id %s not found', $id));
             } else {
-                $output->writeln(sprintf('Route with id %s not found', $id));
                 $output->writeln('OK');
                 
                 return true;
