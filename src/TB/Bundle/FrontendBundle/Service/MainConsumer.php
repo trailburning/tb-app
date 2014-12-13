@@ -85,10 +85,10 @@ class MainConsumer extends Consumer
         
         switch ($obj->type) {
             case 'activity':
-                $isSuccess = $this->callCommand(sprintf('tb:activity:create-feed %s', $obj->id));
+                $isSuccess = $this->callCommand(sprintf('tb:activity:create-feed %s --fault-tolerant=true', $obj->id));
                 break;
             case 'routeShareImage':
-                $isSuccess = $this->callCommand(sprintf('tb:route:create-share-image %s', $obj->id));
+                $isSuccess = $this->callCommand(sprintf('tb:route:create-share-image %s --fault-tolerant=true', $obj->id));
                 break;
             case 'routeIndex':
                 $isSuccess = $this->callCommand(sprintf('tb:search:index route %s', $obj->id));
@@ -116,12 +116,7 @@ class MainConsumer extends Consumer
         }
         
         // The script outputs 'OK' for success, test only the last 2 characters to handle php error messages and other debug output of the command
-        $isSuccess =  (substr(trim($output), -2) == 'OK') ? true : false;
-        if ($isSuccess === true) {
-            return true;
-        } else {
-            throw new \Exception(sprintf('command "%s" failed with output: %s', $command, $output));
-        }
+        return (substr(trim($output), -2) == 'OK') ? true : false;
     }
     
 }
