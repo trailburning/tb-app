@@ -85,36 +85,25 @@ class MainConsumer extends Consumer
         
         switch ($obj->type) {
             case 'activity':
-                $command = sprintf('tb:activity:create-feed %s --fault-tolerant true', $obj->id);      
+                $isSuccess = $this->callCommand(sprintf('tb:activity:create-feed %s', $obj->id));
                 break;
             case 'routeShareImage':
-                $command = sprintf('tb:route:create-share-image %s --fault-tolerant true', $obj->id);
+                $isSuccess = $this->callCommand(sprintf('tb:route:create-share-image %s', $obj->id));
                 break;
             case 'routeIndex':
-                $command = sprintf('tb:search:index route %s', $obj->id);
+                $isSuccess = $this->callCommand(sprintf('tb:search:index route %s', $obj->id));
                 break;
             case 'userIndex':
-                $command = sprintf('tb:search:index user_profile %s', $obj->id);
+                $isSuccess = $this->callCommand(sprintf('tb:search:index user_profile %s', $obj->id));
                 break;                                
             default:
-                $command = false;
+                $isSuccess = false;
                 break;
         }
-        
-        if ($command === false) {
-            return false;
-        } 
         
         // When $isSuccess is false, the message will be rejected by the consumer and requeued by RabbitMQ.
         // Any other value not equal to false will acknowledge the message and remove it from the queue
-        $isSuccess = $this->callCommand($command);
-        if ($isSuccess === false) {
-            throw new \Exception(sprintf('Command failed: %s', $command));
-            
-            return false;
-        } else {
-            return true;
-        }
+        return $isSuccess;
     }
     
     public function callCommand($command)
@@ -124,7 +113,12 @@ class MainConsumer extends Consumer
         $output = fread($handle, 2096);
         
         // The script outputs 'OK' for success, test only the last 2 characters to handle php error messages and other debug output of the command
-        return (substr(trim($output), -2) == 'OK') ? true : false;
+        $isSuccess =  (substr(trim($output), -2) == 'OK') ? true : false;
+        if ($isSuccess === true) {
+            return true
+        } else {
+            throw new \Exception(sprintf('command failed: %s', $command));
+        }
     }
     
 }
