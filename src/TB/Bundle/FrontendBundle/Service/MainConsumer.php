@@ -117,7 +117,7 @@ class MainConsumer extends Consumer
         if ($isSuccess === true) {
             return true;
         } else {
-            throw new \Exception(sprintf('command failed: %s', $command));
+            throw new \Exception(sprintf('command "%s" failed with output: %s', $command, $output));
         }
     }
     
