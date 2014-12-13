@@ -78,11 +78,6 @@ class SearchIndexCommand extends ContainerAwareCommand
                     AND r.id = :id')
                 ->setParameter('id', $id)
                 ->getResult();
-            
-            if (count($routes) == 0) {
-                $output->writeln(sprintf('<error>No Route found for specified id %s </error>', $id));
-                exit;
-            }
         }
         
         
@@ -126,10 +121,6 @@ class SearchIndexCommand extends ContainerAwareCommand
                     WHERE u.id = :id')
                 ->setParameter('id', $id)
                 ->getResult();
-            if (count($users) == 0) {
-                $output->writeln(sprintf('<error>No User found for specified id %s </error>', $id));
-                exit;
-            }
         }
         
         foreach ($users as $user) {
@@ -167,10 +158,6 @@ class SearchIndexCommand extends ContainerAwareCommand
                     WHERE b.id = :id')
                 ->setParameter('id', $id)
                 ->getResult();
-            if (count($brands) == 0) {
-                $output->writeln(sprintf('<error>No Brand found for specified id %s </error>', $id));
-                exit;
-            }
         }
         
         foreach ($brands as $brand) {
@@ -206,11 +193,7 @@ class SearchIndexCommand extends ContainerAwareCommand
                     SELECT e FROM TBFrontendBundle:Event e
                     WHERE e.id = :id')
                 ->setParameter('id', $id)
-                ->getResult();
-            if (count($events) == 0) {
-                $output->writeln(sprintf('<error>No Event found for specified id %s </error>', $id));
-                exit;
-            }                
+                ->getResult();         
         }
         
         foreach ($events as $event) {
@@ -248,11 +231,7 @@ class SearchIndexCommand extends ContainerAwareCommand
                     SELECT e FROM TBFrontendBundle:Editorial e
                     WHERE e.id = :id')
                 ->setParameter('id', $id)
-                ->getResult();
-            if (count($editorials) == 0) {
-                $output->writeln(sprintf('<error>No Editorial found for specified id %s </error>', $id));
-                exit;
-            }                
+                ->getResult();         
         }
         
         foreach ($editorials as $editorial) {
@@ -290,11 +269,7 @@ class SearchIndexCommand extends ContainerAwareCommand
                     SELECT c FROM TBFrontendBundle:Campaign c
                     WHERE c.id = :id')
                 ->setParameter('id', $id)
-                ->getResult();
-            if (count($editorials) == 0) {
-                $output->writeln(sprintf('<error>No Campaign found for specified id %s </error>', $id));
-                exit;
-            }                
+                ->getResult();         
         }
         
         foreach ($campaigns as $campaign) {
@@ -326,21 +301,13 @@ class SearchIndexCommand extends ContainerAwareCommand
                     SELECT r FROM TBFrontendBundle:Region r
                     WHERE r.area IS NOT NULL')
                 ->getResult();            
-            if (count($regions) == 0) {
-                $output->writeln('<error>No CampaigRegionsns found</error>');
-                exit;
-            }
         } else {
             $regions = $this->em->createQuery('
                     SELECT c FROM TBFrontendBundle:Campaign c
                     WHERE IS NOT NULL
                     AND c.id = :id')
                 ->setParameter('id', $id)
-                ->getResult();
-            if (count($regions) == 0) {
-                $output->writeln(sprintf('<error>No Region found for specified id %s </error>', $id));
-                exit;
-            }                
+                ->getResult();         
         }
         
         foreach ($regions as $region) {
