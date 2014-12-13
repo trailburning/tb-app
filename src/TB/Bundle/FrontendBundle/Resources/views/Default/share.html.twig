@@ -6,8 +6,9 @@
 
    	{% if campaign is defined %}
    	  {% if campaign is not null %}
+	    {% set text = [campaign.twitterTags]|join %}
    	    {% if campaign.bitlyUrl %}
-   	      {% set text = ['#trailburning', ' ', campaign.bitlyUrl]|join %}
+	      {% set text = [campaign.twitterTags, ' ', campaign.bitlyUrl]|join %}
    	    {% endif %}
 	  {% endif %}
 	{% endif %}   	   	    
