@@ -3,8 +3,8 @@ define([
   'backbone',
   'views/ActivityFeedView',
   'views/HomeHerosView',
-  'views/TwitterFeedView'  
-], function(_, Backbone, ActivityFeedView, HomeHerosView, TwitterFeedView){
+  'views/TwitterView'  
+], function(_, Backbone, ActivityFeedView, HomeHerosView, TwitterView){
   
   var HomeView = Backbone.View.extend({
     initialize: function(){
@@ -35,9 +35,9 @@ define([
       this.homeHerosView = new HomeHerosView({ el: '#home_header' });
 	  this.homeHerosView.render();
 	
-	  var strTwitterQuery = "trailburning from:trailburning";
-//      this.twitterView = new TwitterView({ el: '#twitter_view', model: this.model, search: strTwitterQuery, bShowRetweets: true });
-      this.twitterView = new TwitterFeedView({ el: '#twitter_view', model: this.model, screenname: 'trailburning' });
+	  var strTwitterQuery = "@trailburning";
+      this.twitterView = new TwitterView({ el: '#twitter_view', model: this.model, search: strTwitterQuery, bShowRetweets: true });
+//      this.twitterView = new TwitterFeedView({ el: '#twitter_view', model: this.model, screenname: 'trailburning' });
       this.twitterView.getResults();            
 	
       $(window).resize(function() {
