@@ -35,8 +35,9 @@ define([
       this.homeHerosView = new HomeHerosView({ el: '#home_header' });
 	  this.homeHerosView.render();
 	
-	  var strTwitterQuery = "trailburning from:trailburning";
+	  var strTwitterQuery = "@trailburning";
       this.twitterView = new TwitterView({ el: '#twitter_view', model: this.model, search: strTwitterQuery, bShowRetweets: true });
+//      this.twitterView = new TwitterFeedView({ el: '#twitter_view', model: this.model, screenname: 'trailburning' });
       this.twitterView.getResults();            
 	
       $(window).resize(function() {
