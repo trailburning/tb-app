@@ -323,10 +323,6 @@ border-width:1px;
 }
 
 .panel_container .line_break {
-/*	
-  z-index: 100;
-  position: absolute;
-*/  
   position: absolute;
   top: 0px;
   height: 8px;
@@ -450,13 +446,12 @@ border-width:1px;
   content: '';
 }
 
-.tweet_panel .panel .content {
+.tweet_panel .panel .panel_content  {
   margin: 20px 28px 10px 24px;
   font-size: 14px;
   font-weight: 300;
   line-height: 1.3em;  
-  color: #979797;
-  
+  color: #979797; 
 }
 
 .tweet_panel .image_container {
