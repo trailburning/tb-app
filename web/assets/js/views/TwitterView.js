@@ -38,7 +38,7 @@ define([
       	    	else {
       	    	  strImage = '';
       	    	  if (tweet.images.length) {
-      	    	    strImage = '<div class="image_container fade_on_load"><img src="'+tweet.images[0]+'" class="scale" border="0"></div>'; 
+      	    	    strImage = '<a href="'+tweet.images[0].expanded_url+'" target="_blank"><div class="image_container fade_on_load"><img src="'+tweet.images[0].media_url+'" class="scale" border="0"></div></a>'; 
       	    	  }
         	      strTweet = '<div class="tweet_panel"><a class="icon" href="https://twitter.com/search?q='+self.options.search+'" target="_blank"></a><div class="panel"><div class="panel_content "><h5 class="tb">'+tweet.text+strImage+'</h5><div class="details"><time class="timeago" datetime="'+tweet.date+'"></time>&nbsp;&nbsp;<strong>'+tweet.user+'</strong></div></div></div></div>';
       	    	  $(self.el).append(strTweet);
