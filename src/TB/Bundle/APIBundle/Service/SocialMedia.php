@@ -28,6 +28,8 @@ class SocialMedia
         
         if (isset($twitterResult->statuses)) {
             foreach ($twitterResult->statuses as $tweet) {
+                
+                
                 if (property_exists($tweet, 'entities')) {
                     $text = $this->composeTwitterTextFromEntities($tweet->text, $tweet->entities);
                 } else {
@@ -41,7 +43,10 @@ class SocialMedia
                 if (property_exists($tweet, 'entities') && property_exists($tweet->entities, 'media')) {
                     foreach ($tweet->entities->media as $media) {
                         if ($media->type == 'photo') {
-                            $images[] = $media->media_url;    
+                            $images[] = [
+                                'media_url' => $media->media_url,
+                                'expanded_url' => $media->expanded_url,
+                            ];
                         }
                     }
                 }
@@ -84,8 +89,6 @@ class SocialMedia
                         if ($entity->type != 'photo') {
                             continue;
                         }
-                        // we want to return photos in an separate array
-                        $images[] = $entity->media_url;
                     }
                     
                     $foundEntities[$entity->indices[0]] = [
