@@ -165,9 +165,6 @@ class GPXGenerator
         $trkpt->setAttribute('lat', $routePoint->getCoords()->getLatitude());
         
         $tags = $routePoint->getTags();
-        if (isset($tags['altitude'])) {
-            $trkpt->appendChild($document->createElement('ele', $tags['altitude']));
-        }
         if (isset($tags['datetime'])) {
             $trkpt->appendChild($document->createElement('time', date($this->datetimeFormat, $tags['datetime'])));
         }
