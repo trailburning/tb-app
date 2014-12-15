@@ -14,7 +14,7 @@ function getTweets() {
 	
 	$query = array( // query parameters
 	    'screen_name' => $_GET['screenname'],
-	    'count' => '50'
+	    'count' => $_GET['limit']
 	);
 	
 	$oauth = array(
@@ -93,16 +93,7 @@ function getTweets() {
 }
 
 $cache_file = 'cache/tweets.json';
-$cache_life = '7200'; //caching time - 2 hours
 
-$filemtime = @filemtime($cache_file);  // returns FALSE if file does not exist
-if (!$filemtime or (time() - $filemtime >= $cache_life)){
-	$json = getTweets();
-	// save
-    file_put_contents($cache_file, $json);
-}else{
-	// read
-    $json = file_get_contents($cache_file);
-}
+$json = getTweets();
 echo $json;
 ?>
