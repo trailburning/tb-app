@@ -10,7 +10,7 @@ define([
     getResults: function(){
       var self = this;
 		  
-      var strURL = '/server/tweet.php?screenname=' + this.options.screenname + '&limit=3';      
+      var strURL = '/demos/server/tweet.php?screenname=' + this.options.screenname + '&limit=3';      
       $.ajax({
         type: "GET",
         dataType: "json",
