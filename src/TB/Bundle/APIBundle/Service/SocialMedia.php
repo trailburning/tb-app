@@ -30,13 +30,11 @@ class SocialMedia
         // exit;
         
         if (isset($twitterResult->statuses)) {
-            foreach ($twitterResult->statuses as $tweet) {
-                
-                if (property_exists($tweet, 'entities')) {
-                    $text = $this->composeTwitterTextFromEntities($tweet->text, $tweet->entities);
-                } else {
-                    $text = $tweet->text;
-                }
+            foreach ($twitterResult->statuses as $tweet) { 
+                $text = $tweet->text;
+                $text = preg_replace("/(http:\/\/|(www\.))(([^\s<]{4,68})[^\s<]*)/", '<a href="http://$2$3" target="_blank">$1$2$4</a>', $text);
+                $text = preg_replace("/@(\w+)/", "<a href=\"http://www.twitter.com/\\1\" target=\"_blank\">@\\1</a>", $text);
+                $text = preg_replace("/#(\w+)/", "<a href=\"http://search.twitter.com/search?q=\\1\" target=\"_blank\">#\\1</a>", $text);
                 
                 $date = new \DateTime($tweet->created_at);
                 $images = [];
@@ -45,8 +43,6 @@ class SocialMedia
                 if (property_exists($tweet, 'entities') && property_exists($tweet->entities, 'media')) {
                     foreach ($tweet->entities->media as $media) {                        
                         if ($media->type == 'photo') {
-                            // var_export($media);
-                            // exit;
                             $images[] = [
                                 'media_url' => $media->media_url,
                                 'expanded_url' => $media->expanded_url,
