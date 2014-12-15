@@ -26,8 +26,8 @@ class SocialMedia
         
         $result = [];
         
-        var_export($twitterResult->statuses);
-        exit;
+        // var_export($twitterResult->statuses);
+        // exit;
         
         if (isset($twitterResult->statuses)) {
             foreach ($twitterResult->statuses as $tweet) {
@@ -43,8 +43,10 @@ class SocialMedia
                 
                 // we want to return images in an separate array
                 if (property_exists($tweet, 'entities') && property_exists($tweet->entities, 'media')) {
-                    foreach ($tweet->entities->media as $media) {
+                    foreach ($tweet->entities->media as $media) {                        
                         if ($media->type == 'photo') {
+                            // var_export($media);
+                            // exit;
                             $images[] = [
                                 'media_url' => $media->media_url,
                                 'expanded_url' => $media->expanded_url,
