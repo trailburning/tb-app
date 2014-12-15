@@ -16,17 +16,25 @@ class RouteCreateShareImageCommand extends ContainerAwareCommand
             ->setName('tb:route:create-share-image')
             ->setDescription('Create the Routes share image')
             ->addArgument('id', InputArgument::REQUIRED, 'The id of the Route')
+            ->addOption('fault-tolerant', 'f', InputOption::VALUE_OPTIONAL, 'If set to true, no exception is thrown', false)
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $id = $input->getArgument('id');
+        $faultTolerant = $input->getOption('fault-tolerant');
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         
         $route = $em->getRepository('TBFrontendBundle:Route')->findOneById($id);
         if (!$route) {
-            throw new \Exception(sprintf('Route with id %s not found', $id));
+            if ($faultTolerant === false) {
+                throw new \Exception(sprintf('Route with id %s not found', $id));
+            } else {
+                $output->writeln('OK');
+                
+                return true;
+            }
         }
         
         $imageGenerator = $this->getContainer()->get('tb.image.generator');   
