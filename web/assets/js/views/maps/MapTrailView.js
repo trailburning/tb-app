@@ -209,6 +209,11 @@ define([
    	  this.map.setView(latLng, nZoom, {animate: false});
     },
     selectTrail: function(id){
+	  var cardModel = this.collection.get(id);
+	  if (!cardModel) {
+	  	return false;
+	  }
+    	
 	  if (this.currMarkerOrCluster) {
 	  	$(this.currMarkerOrCluster._icon).removeClass('selected');
 	  	this.currMarkerOrCluster = null;
@@ -220,7 +225,6 @@ define([
       var trailCardMarker = this.collection.get(id).mapTrailMarker;
       this.currTrailCardMarker = trailCardMarker;
 
-	  var cardModel = this.collection.get(id);
       trailCardMarker.selected(true);      
       trailCardMarker.showPopup();      
 
@@ -231,7 +235,9 @@ define([
       
       this.nCurrCard = this.collection.indexOf(cardModel);
 	  // fire event
-      app.dispatcher.trigger("TrailMapView:selecttrail", id);                
+      app.dispatcher.trigger("TrailMapView:selecttrail", id);
+      
+      return true;                
     },    
     unselectTrail: function(){
       if (this.currTrailCardMarker) {

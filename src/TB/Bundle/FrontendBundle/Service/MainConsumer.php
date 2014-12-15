@@ -85,10 +85,10 @@ class MainConsumer extends Consumer
         
         switch ($obj->type) {
             case 'activity':
-                $isSuccess = $this->callCommand(sprintf('tb:activity:create-feed %s', $obj->id));
+                $isSuccess = $this->callCommand(sprintf('tb:activity:create-feed %s --fault-tolerant=true', $obj->id));
                 break;
             case 'routeShareImage':
-                $isSuccess = $this->callCommand(sprintf('tb:route:create-share-image %s', $obj->id));
+                $isSuccess = $this->callCommand(sprintf('tb:route:create-share-image %s --fault-tolerant=true', $obj->id));
                 break;
             case 'routeIndex':
                 $isSuccess = $this->callCommand(sprintf('tb:search:index route %s', $obj->id));
@@ -110,7 +110,10 @@ class MainConsumer extends Consumer
     {
         $console = realpath(__DIR__ . '/../../../../../app/console');
         $handle = popen(sprintf('php -dmemory_limit=256M %s %s', $console, $command), 'r');
-        $output = fread($handle, 2096);
+        $output = '';
+        while (!feof($handle)) {
+            $output .= fread($handle, 2096);
+        }
         
         // The script outputs 'OK' for success, test only the last 2 characters to handle php error messages and other debug output of the command
         return (substr(trim($output), -2) == 'OK') ? true : false;

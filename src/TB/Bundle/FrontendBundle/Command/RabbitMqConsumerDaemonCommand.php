@@ -35,27 +35,6 @@ class RabbitMqConsumerDaemonCommand extends ContainerAwareCommand
             $processes[] = $process;
         }
         
-        // $loop->addPeriodicTimer(1, function($timer) use (&$processes) {
-        //     foreach ($processes as &$process) {
-        //         if ($process->isRunning()) {
-        //             echo sprintf("Process with pid %s is running\n", $process->getPid());
-        //         } else {
-        //             $process->start($timer->getLoop());
-        //             echo sprintf("Starting process with pid %s\n", $process->getPid());
-        //         }
-        //     }
-        // });
-        //
-        // $loop->addPeriodicTimer(2, function($timer) use (&$processes) {
-        //     foreach ($processes as &$process) {
-        //         if ($process->isRunning()) {
-        //             $process->close();
-        //
-        //             echo sprintf("Terminating process with pid %s, exit code %s, term signal %s\n", $process->getPid());
-        //         }
-        //     }
-        // });
-        
         $loop->run();
     }
 }
