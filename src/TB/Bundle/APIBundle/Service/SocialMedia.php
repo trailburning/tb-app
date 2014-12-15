@@ -26,9 +26,11 @@ class SocialMedia
         
         $result = [];
         
+        var_export($twitterResult->statuses);
+        exit;
+        
         if (isset($twitterResult->statuses)) {
             foreach ($twitterResult->statuses as $tweet) {
-                
                 
                 if (property_exists($tweet, 'entities')) {
                     $text = $this->composeTwitterTextFromEntities($tweet->text, $tweet->entities);
