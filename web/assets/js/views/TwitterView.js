@@ -10,7 +10,17 @@ define([
     getResults: function(){
       var self = this;
 		  
-	  var strURL = TB_RESTAPI_BASEURL + '/v1/socialmedia?term=' + this.options.search;
+	  var strURL = TB_RESTAPI_BASEURL + '/v1/socialmedia';
+	  if (this.options.search) {
+		strURL += '?term=' + this.options.search;
+	  }
+	  else if (this.options.user) {
+	    strURL += '?user=' + this.options.user;
+	  }
+	  else {
+	  	return;
+	  }
+		  
       $.ajax({
         type: "GET",
         dataType: "json",
