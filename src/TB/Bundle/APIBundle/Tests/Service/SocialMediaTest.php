@@ -7,14 +7,24 @@ use TB\Bundle\APIBundle\Tests\AbstractApiTest;
 class SocialMediaTest extends AbstractApiTest
 {
     
-    public function testSearch() 
+    public function testSearch()
+    {
+        $socialMedia = $this->getContainer()->get('tb.socialmedia');
+
+        $results = $socialMedia->search('6amclub');
+
+        $this->assertInternalType('array', $results);
+        $this->assertEquals(3, count($results));
+    }
+    
+    public function testTimeline() 
     {
         $socialMedia = $this->getContainer()->get('tb.socialmedia');
         
-        $result = $socialMedia->search('6amclub');
+        $results = $socialMedia->timeline('trailburning');
 
-        $this->assertInternalType('array', $result);
-        $this->assertEquals(3, count($result));
+        $this->assertInternalType('array', $results);
+        $this->assertEquals(3, count($results));
     }
     
     public function testComposeTwitterTextFromEntities() 

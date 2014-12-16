@@ -15,17 +15,19 @@ class SocialMediaController extends AbstractRestController
      * @Route("/socialmedia")
      * @Method("GET")
      */
-    public function getSearchAction(Request $request)
+    public function getSocialmediaAction(Request $request)
     {
-        if (!$request->query->has('term')) {
-            throw new ApiException('Missing mandatory parameter "term"', 400);
+        $socialMedia = $this->container->get('tb.socialmedia');        
+        if ($request->query->has('term')) {
+            $term = $request->query->get('term');
+            $result = $socialMedia->search($term);
+        } elseif ($request->query->has('user')) {
+            $user = $request->query->get('user');
+            $result = $socialMedia->timeline($user);
+        } else {
+            throw new ApiException('Either "term" or "user" must be specified as parameter', 400);
         }
         
-        $term = $request->query->get('term');
-        
-        $socialMedia = $this->container->get('tb.socialmedia');
-        
-        $result = $socialMedia->search($term);
         $output = ['usermsg' => 'success', 'value' => $result];
 
        return $this->getRestResponse($output);
