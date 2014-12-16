@@ -26,15 +26,12 @@ class SocialMedia
         
         $result = [];
         
-        // var_export($twitterResult->statuses);
-        // exit;
-        
         if (isset($twitterResult->statuses)) {
             foreach ($twitterResult->statuses as $tweet) { 
                 $text = $tweet->text;
                 $text = preg_replace("/(http:\/\/|(www\.))(([^\s<]{4,68})[^\s<]*)/", '<a href="http://$2$3" target="_blank">$1$2$4</a>', $text);
-                $text = preg_replace("/@(\w+)/", "<a href=\"http://www.twitter.com/\\1\" target=\"_blank\">@\\1</a>", $text);
-                $text = preg_replace("/#(\w+)/", "<a href=\"http://search.twitter.com/search?q=\\1\" target=\"_blank\">#\\1</a>", $text);
+                $text = preg_replace("/@(\w+)/", "<a href=\"https://twitter.com/\\1\" target=\"_blank\">@\\1</a>", $text);
+                $text = preg_replace("/#(\w+)/", "<a href=\"https://twitter.com/hashtag/\\1\" target=\"_blank\">#\\1</a>", $text);
                 
                 $date = new \DateTime($tweet->created_at);
                 $images = [];
