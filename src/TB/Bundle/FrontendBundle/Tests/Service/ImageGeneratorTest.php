@@ -16,7 +16,7 @@ class ImageGeneratorTest extends AbstractFrontendTest
             'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData',
         ]);
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $imageGenerator = $this->getContainer()->get('tb.image.generator');
+        $imageGenerator = $this->getContainer()->get('tb.image.generator'); 
         $filesystem = $this->getContainer()->get('trail_media_files_filesystem'); 
         $debugFilesystem = $this->getContainer()->get('debug_filesystem'); 
         $route = $this->getRoute('grunewald');
@@ -109,4 +109,37 @@ class ImageGeneratorTest extends AbstractFrontendTest
         // Copy the file to a local filesystem for debug
         $debugFilesystem->write('event_share.jpg', $filesystem->read($event->getShareImage()), true);
     }
+    
+    public function testCreateCampaignShareImage()
+    {
+        $this->loadFixtures([
+            'TB\Bundle\FrontendBundle\DataFixtures\ORM\CampaignData',
+        ]);
+        
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        $imageGenerator = $this->getContainer()->get('tb.image.generator');
+        $filesystem = $this->getContainer()->get('asset_files_filesystem'); 
+        $debugFilesystem = $this->getContainer()->get('debug_filesystem'); 
+        
+        $campaign = $this->getCampaign('urbantrails-london');
+        
+        // Copy the campaign test image to the test filesystem at the expected path
+        $filesystem->write($campaign->getImage(), file_get_contents(realpath(__DIR__ . '/../../DataFixtures/Media/campaign/image.jpg')));
+        
+        // Copy the campaign test watermark to the test filesystem at the expected path
+        $filesystem->write($campaign->getWatermarkImage(), file_get_contents(realpath(__DIR__ . '/../../DataFixtures/Media/campaign/watermark.png')));
+        
+        $result = $imageGenerator->createCampaignShareImage($campaign);
+        $this->assertTrue($result, 'ImageGenerator::createCampaignShareImage() returns true');
+        
+        $em->refresh($campaign);
+        $this->assertRegExp('/.*_share.jpg$/', $campaign->getShareImage(), 
+            'The Campaign shareImage field was set');
+        $this->assertTrue($filesystem->has($campaign->getShareImage()),
+            'The share image was created');
+        
+        // Copy the file to a local filesystem for debug
+        $debugFilesystem->write('campaign_share.jpg', $filesystem->read($campaign->getShareImage()), true);
+    }
+    
 }    
