@@ -16,7 +16,7 @@ use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 class SocialMediaControllerTest extends AbstractApiTest
 {
     
-    public function testGetSearch()
+    public function testGetSocialmediaByTerm()
     {
         $this->loadFixtures([]);
         
@@ -33,7 +33,24 @@ class SocialMediaControllerTest extends AbstractApiTest
             'The response JSON value is an array');   
     }
     
-    public function testGetSearchError()
+    public function testGetSocialmediaByUser()
+    {
+        $this->loadFixtures([]);
+        
+        $client = $this->createClient();
+        $crawler = $client->request('GET', '/v1/socialmedia?user=trailrunning');
+        
+        $this->assertEquals(Response::HTTP_OK,  $client->getResponse()->getStatusCode(),
+            'Response returns Status Code 200');
+        $this->assertJsonResponse($client);  
+        
+        $responseObj = json_decode($client->getResponse()->getContent());
+        
+        $this->assertInternalType('array', $responseObj->value, 
+            'The response JSON value is an array');   
+    }
+    
+    public function testGetSocialmediaError()
     {
         $this->loadFixtures([]);
         

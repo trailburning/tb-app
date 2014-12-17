@@ -175,21 +175,65 @@ var TB_USER_ID = {{ app.user.id }};
   </div>    
 
   <div class="discover_content">
-    <div class="content clearfix">        	
+    <div class="centre_content clearfix">      
 	  	<h2 class="tb">Discover New Trails</h2>
 	  	<div class="desc">
 	  	  <h4 class="tb">Get inspired by the latest trails shared in the Trailburning Community</h4>	
 	  	</div>
-        
         {{ render(controller('TBFrontendBundle:Trail:homepageTrails')) }}
-            	  	
 	  	<div class="more_btn"><a href="{{ app.request.baseUrl }}/map/trails" class="btn btn-tb btn-tb-small">More Trails</a></div>
     </div>                
   </div>                
     
   <div class="trails_content">
   	<div class="line_break"></div>
-  	<div class="content">
+
+      <div class="col_panels clearfix">     
+	    <div class="left">
+	      <div id="twitter_view" class="tweets">&nbsp;</div>	
+	    </div>
+	    <div class="right">
+	    		    	
+	    	<div class="panel trail_card_panel campaign_panel">
+                                        <div class="content">                                            
+    	                            	<a href="{{ app.request.baseUrl }}/campaign/urbantrails-london">
+    	                                <div class="photo tb-photo-btn">
+    	                                    <div class="image_container fade_on_load tb-fade-in" style="overflow: hidden; opacity: 1;"><img src="http://app.resrc.it/s=w530,pd1/o=80/http://assets.trailburning.com/images/campaign/urbantrails/london/shutterstock_148485164.jpg" class="resrc scale scale_image_ready" border="0" alt="" data-resrc-width="522" style="opacity: 1; position: absolute; top: 0px; left: -1px; width: 522px; height: 348px; max-width: none;"></div>                                    
+    	                                    <div class="overlay">
+    	                                    	<div class="logo"><img src="http://assets.trailburning.com/images/campaign/urbantrails/london/logo_urbantrails_london.png"></div>
+    	                                    </div>                                    
+    	                                    <div class="card_title">
+    	                                    <h1>Rediscover your London runs</h1>
+    	                                    <br>
+    	                                    <h1>with Urban Trails.</h1>
+    	                                    </div>
+    	                                </div>
+    	                            	</a>
+    	                            	</div>  
+									  </div>
+									  
+			<div class="panel trail_card_panel campaign_panel">
+								<div class="content">                                            
+			    	            <a href="{{ app.request.baseUrl }}/campaign/mtbuller">
+			    	            <div class="photo tb-photo-btn">
+			    	            	<div class="image_container fade_on_load tb-fade-in" style="overflow: hidden; opacity: 1;"><img src="http://app.resrc.it/s=w530,pd1/o=80/http://assets.trailburning.com/images/campaign/mtbuller/LM_131122_MtBuller_0462_HIGHres.jpg" class="resrc scale scale_image_ready" border="0" alt="" data-resrc-width="522" style="opacity: 1; position: absolute; top: 0px; left: -1.14192495921697px; width: 522px; height: 348px; max-width: none;"></div>                                    
+									<div class="overlay">
+			    	                	<div class="logo"><img src="http://assets.trailburning.com/images/campaign/mtbuller/logo.png"></div>
+									</div>                                    
+			    	                <div class="card_title">
+			    	                <h1>Discover Mt Buller</h1>
+			    	                <br>
+			    	                <h1>running trails.</h1>
+			    	       			</div>
+			    	         	</div>
+			    	         	</a>
+			    	        	</div>    
+							</div>	    	
+									  
+	    </div>
+	  </div>
+
+  	<div class="centre_content">
 
         {% if app.user %}
             {{ render(controller('TBFrontendBundle:Trail:homepageUserTrails')) }}
@@ -213,7 +257,7 @@ var TB_USER_ID = {{ app.user.id }};
   </div>
   
   <div class="guide_content clearfix">      
-    <div class="content">      
+    <div class="centre_content ">      
       <h2 class="tb title">Make your own Trail Card</h2>
       <div class="desc"><h4 class="tb">Create Trail Cards to present your own trail adventures</h4></div>  
       <div class="guide_items clearfix">

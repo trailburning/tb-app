@@ -27,6 +27,19 @@ class TwitterAPI
         return json_decode($response);
     }
     
+    public function statusesUserTimeline(array $parameters) 
+    {
+        $url = 'https://api.twitter.com/1.1/statuses/user_timeline.json';
+        $requestMethod = 'GET';
+        
+        $response = $this->twitterClient
+            ->setGetfield($this->buildGetField($parameters))
+            ->buildOauth($url, $requestMethod)
+            ->performRequest();
+    
+        return json_decode($response);
+    }
+    
     protected function buildGetField(array $parameters) 
     {
         $fields = [];

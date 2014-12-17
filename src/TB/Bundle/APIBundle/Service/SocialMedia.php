@@ -17,6 +17,26 @@ class SocialMedia
     
     public function search($term) 
     {   
+        $results = $this->getSearchResults($term);
+        if (isset($results->statuses)) {
+            $results = $this->formatResults($results->statuses);    
+        } else {
+            $results = [];
+        }
+                
+        return $results;
+    }
+    
+    public function timeline($user) 
+    {   
+        $results = $this->getTimelineResults($user);
+        $results = $this->formatResults($results);
+                
+        return $results;
+    }   
+    
+    protected function getSearchResults($term) 
+    {
         $twitterResult = $this->twitterAPI->searchTweets([
             'q' => $term, 
             'result_type' => 'recent', 
@@ -24,41 +44,67 @@ class SocialMedia
             'lang' => 'en',
         ]);
         
-        $result = [];
+        return $twitterResult;
+    }
+    
+    protected function getTimelineResults($user) 
+    {
+        $twitterResult = $this->twitterAPI->statusesUserTimeline([
+            'screen_name' => $user, 
+            'count' => 3,
+        ]);
         
-        if (isset($twitterResult->statuses)) {
-            foreach ($twitterResult->statuses as $tweet) {
-                if (property_exists($tweet, 'entities')) {
-                    $text = $this->composeTwitterTextFromEntities($tweet->text, $tweet->entities);
-                } else {
-                    $text = $tweet->text;
+        return $twitterResult;
+    }        
+    
+    protected function formatResults($results) 
+    {
+        $formatedResult = [];
+        
+        foreach ($results as $tweet) { 
+            $text = $this->formatTwitterText($tweet->text);
+            $date = new \DateTime($tweet->created_at);
+            $images = $this->getTweetEntityImages($tweet);
+            
+            $formatedResult[] = $this->formatItem(
+                $text, 
+                $date->format('Y-m-d H:i:s'), 
+                $tweet->user->name,
+                self::TYPE_TWITTER,
+                $images
+            );
+        }   
+        
+        return $formatedResult;
+    }
+       
+    protected function formatTwitterText($text) 
+    {
+        $text = preg_replace("/(http:\/\/|(www\.))(([^\s<]{4,68})[^\s<]*)/", '<a href="http://$2$3" target="_blank">$1$2$4</a>', $text);
+        $text = preg_replace("/@(\w+)/", "<a href=\"https://twitter.com/\\1\" target=\"_blank\">@\\1</a>", $text);
+        $text = preg_replace("/#(\w+)/", "<a href=\"https://twitter.com/hashtag/\\1\" target=\"_blank\">#\\1</a>", $text);
+        
+        return $text;
+    }
+    
+    protected function getTweetEntityImages($tweet) 
+    {
+        $images = [];
+        
+        if (property_exists($tweet, 'entities') && property_exists($tweet->entities, 'media')) {
+            foreach ($tweet->entities->media as $media) {                        
+                if ($media->type == 'photo') {
+                    $images[] = [
+                        'media_url' => $media->media_url,
+                        'expanded_url' => $media->expanded_url,
+                    ];
                 }
-                
-                $date = new \DateTime($tweet->created_at);
-                $images = [];
-                
-                // we want to return images in an separate array
-                if (property_exists($tweet, 'entities') && property_exists($tweet->entities, 'media')) {
-                    foreach ($tweet->entities->media as $media) {
-                        if ($media->type == 'photo') {
-                            $images[] = $media->media_url;    
-                        }
-                    }
-                }
-                
-                $result[] = $this->formatItem(
-                    $text, 
-                    $date->format('Y-m-d H:i:s'), 
-                    $tweet->user->name,
-                    self::TYPE_TWITTER,
-                    $images
-                );
-            }   
-        }       
-                
-        return $result;
-    }           
-                
+            }
+        }
+        
+        return $images;
+    }
+                   
     protected function formatItem($text, $date, $user, $type, array $images) 
     {           
         return [
@@ -68,8 +114,8 @@ class SocialMedia
             'type' => $type,
             'images' => $images,
         ];      
-    }           
-                
+    }
+    
     protected function composeTwitterTextFromEntities($text, $entities) 
     {           
         $supportedEntites = ['hashtags', 'media', 'user_mentions', 'urls'];
@@ -84,8 +130,6 @@ class SocialMedia
                         if ($entity->type != 'photo') {
                             continue;
                         }
-                        // we want to return photos in an separate array
-                        $images[] = $entity->media_url;
                     }
                     
                     $foundEntities[$entity->indices[0]] = [
