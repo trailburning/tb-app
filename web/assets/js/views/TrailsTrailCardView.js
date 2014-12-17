@@ -32,6 +32,10 @@ define([
         $(this.el).html(this.template(attribs));
         $(this.el).addClass('trail_card_panel');
                 
+        if (!this.model.get('user').is_ambassador) {
+      	  $('.card_flag', $(this.el)).hide();
+        }
+                
         var nRating = this.model.get('rating');
         if (!nRating) {
           // do not show no stars

@@ -475,6 +475,16 @@ a:active .tb-cntrl {
   font-family: 'Signika', sans-serif;
 }
 
+.tb-trailpopup .card_flag {
+  position: absolute;
+  top: 0px;
+  left: 18px;
+  width: 47px;
+  height: 116px;
+  background: url("../img/ambassador/trailcard_flag.png") no-repeat top left;
+  background-size: 47px 116px;
+}
+
 .tb-trailpopup .card_avatar {
   position: absolute;
   top: 18px;
