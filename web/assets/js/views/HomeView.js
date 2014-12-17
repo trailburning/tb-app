@@ -9,8 +9,6 @@ define([
   
   var HomeView = Backbone.View.extend({
     initialize: function(){
-      app.dispatcher.on("HomeHerosView:firsthero", this.onFirstHomeHeroViewReady, this);
-      
       var self = this;
         
 	  this.collection = new Backbone.Collection();
@@ -19,6 +17,7 @@ define([
 	  if (typeof TB_USER_ID != 'undefined') {
       	this.activityFeedView = new ActivityFeedView({ el: '#activity_feed_view' });
       	this.activityFeedView.render();
+	  	this.activityFeedView.getActivity();
 	  }
 	  
 	  $('.discover_content .scale, .trails_content .scale').imagesLoaded()
@@ -51,6 +50,8 @@ define([
 	  var strTwitterUser = "trailburning";
       this.twitterView = new TwitterView({ el: '#twitter_view', model: this.model, user: strTwitterUser, bShowRetweets: true });
       this.twitterView.getResults();            
+	
+	  this.getResults();
 	
       $(window).resize(function() {
         self.handleResize(); 
@@ -95,21 +96,16 @@ define([
 		  self.trailMapView.updateTrails();
 		  
 		  $('#trail_map_view #map_large').show();		  	
+	  	  $('#view_map_btns').show();
+
 	  	  self.trailMapView.render();		  
         }
       });        
     },        
     handleResize: function(){
       $("img.scale_image_ready").imageScale();
-	},    
-	onFirstHomeHeroViewReady: function(){
-	  $('#view_map_btns').show();
-	  this.getResults();
-	  if (this.activityFeedView) {
-	  	this.activityFeedView.getActivity();
-	  }      		  			
 	}
-    
+	
   });
 
   return HomeView;
