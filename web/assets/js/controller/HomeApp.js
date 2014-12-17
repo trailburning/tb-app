@@ -1,11 +1,12 @@
 var app = app || {};
 
 define([
-  'underscore', 
+  'underscore',
+  'modernizr', 
   'backbone',
   'views/HomeView',      
   'views/SearchView'
-], function(_, Backbone, AppView, SearchView){
+], function(_, Modernizr, Backbone, AppView, SearchView){
   app.dispatcher = _.clone(Backbone.Events);
   
   var initialize = function() {

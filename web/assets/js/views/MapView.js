@@ -30,7 +30,6 @@ define([
 	  }
 
       this.trailMapView = new MapTrailView({ el: '#trail_map_view', elCntrls: '#view_map_btns', model: this.model });
-//      this.trailCardView = new TrailCardView({ el: '#trailcard_view' });
   	  this.trailMapView.render();
 
 	  this.getResults();

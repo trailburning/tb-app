@@ -3,12 +3,15 @@ define([
   'backbone',
   'views/ActivityFeedView',
   'views/HomeHerosView',
+  'views/maps/MapTrailView',
   'views/TwitterView'  
-], function(_, Backbone, ActivityFeedView, HomeHerosView, TwitterView){
+], function(_, Backbone, ActivityFeedView, HomeHerosView, MapTrailView, TwitterView){
   
   var HomeView = Backbone.View.extend({
     initialize: function(){
       var self = this;
+        
+	  this.collection = new Backbone.Collection();
         
 	  if (typeof TB_USER_ID != 'undefined') {
       	this.activityFeedView = new ActivityFeedView({ el: '#activity_feed_view' });
@@ -35,6 +38,10 @@ define([
       this.homeHerosView = new HomeHerosView({ el: '#home_header' });
 	  this.homeHerosView.render();
 	
+      this.trailMapView = new MapTrailView({ el: '#trail_map_view', elCntrls: '#view_map_btns', model: this.model });
+	  this.trailMapView.render();	  
+	  this.getResults();
+	
 	  var strTwitterUser = "trailburning";
       this.twitterView = new TwitterView({ el: '#twitter_view', model: this.model, user: strTwitterUser, bShowRetweets: true });
       this.twitterView.getResults();            
@@ -58,6 +65,34 @@ define([
     
       $('#footerview').show();
     },
+    getResults: function(){
+      var self = this;
+
+	  var strURL = TB_RESTAPI_BASEURL + '/v1/routes/search?limit=500&offset=0';
+	  	  
+      $.ajax({
+        type: "GET",
+        dataType: "json",
+        url: strURL,
+        error: function(data) {
+//          console.log('error:'+data.responseText);      
+        },
+        success: function(data) {      
+//          console.log('success');
+//          console.log(data);
+          var model;
+      	  $.each(data.value.routes, function(key, card) {
+	    	model = new Backbone.Model(card);
+	    	self.trailMapView.addTrail(model);
+	    	self.collection.add(model);	    
+		  });
+		  self.trailMapView.updateTrails();
+		  
+		  $('#trail_map_view #map_large').show();		  	
+	  	  self.trailMapView.render();		  
+        }
+      });        
+    },        
     handleResize: function(){
       $("img.scale_image_ready").imageScale();
 	}    
