@@ -9,16 +9,18 @@ define([
   
   var HomeView = Backbone.View.extend({
     initialize: function(){
+      app.dispatcher.on("HomeHerosView:firsthero", this.onFirstHomeHeroViewReady, this);
+      
       var self = this;
         
 	  this.collection = new Backbone.Collection();
+      this.activityFeedView = null;
         
 	  if (typeof TB_USER_ID != 'undefined') {
       	this.activityFeedView = new ActivityFeedView({ el: '#activity_feed_view' });
       	this.activityFeedView.render();
-      	this.activityFeedView.getActivity();	  	
 	  }
-        
+	  
 	  $('.discover_content .scale, .trails_content .scale').imagesLoaded()
   	    .progress( function(instance, image) {
   	  	  $(image.img).addClass('scale_image_ready');
@@ -29,10 +31,15 @@ define([
     	  if (elContainer.hasClass('fade_on_load')) {
             // fade in - delay adding class to ensure image is ready  
             elContainer.addClass('tb-fade-in');
-            elContainer.css('opacity', 1);    		
+		    var nRnd = 100 * (Math.floor(Math.random() * 6) + 1);
+		    setTimeout(function(){
+		  	  elContainer.css('opacity', 1);
+		    }, nRnd);
     	  }
-		  // invoke resrc      
-	      resrc.resrc($(image.img));        
+    	  if ($(image.img).hasClass('resrc')) {
+		    // invoke resrc      
+	        resrc.resrc($(image.img));        
+    	  }    	  
   	  });    
   	
       this.homeHerosView = new HomeHerosView({ el: '#home_header' });
@@ -40,7 +47,6 @@ define([
 	
       this.trailMapView = new MapTrailView({ el: '#trail_map_view', elCntrls: '#view_map_btns', model: this.model });
 	  this.trailMapView.render();	  
-	  this.getResults();
 	
 	  var strTwitterUser = "trailburning";
       this.twitterView = new TwitterView({ el: '#twitter_view', model: this.model, user: strTwitterUser, bShowRetweets: true });
@@ -95,7 +101,14 @@ define([
     },        
     handleResize: function(){
       $("img.scale_image_ready").imageScale();
-	}    
+	},    
+	onFirstHomeHeroViewReady: function(){
+	  $('#view_map_btns').show();
+	  this.getResults();
+	  if (this.activityFeedView) {
+	  	this.activityFeedView.getActivity();
+	  }      		  			
+	}
     
   });
 

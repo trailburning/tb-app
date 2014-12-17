@@ -271,7 +271,7 @@ html.touch .hero_nav .button {
   position: relative;
   width: 100%; 
   height: 498px;
-  background: #8BD1E3;
+  background: #F0F0F0;    
 }
 
 #trail_map_view {
@@ -310,6 +310,7 @@ html.touch .hero_nav .button {
 /* VIEW CNTRLS */
 /******************************************/
 #view_map_btns {
+  display: none;
   position: absolute;
   top: 18px;
   right: 16px;

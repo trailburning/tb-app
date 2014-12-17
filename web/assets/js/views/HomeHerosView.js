@@ -107,10 +107,13 @@ define([
       	
       	this.bWaiting = false;
       	
-      	var nDelay = 2000;
       	if (this.bFirstHero) {
       	  this.bFirstHero = false;
-      	  nDelay = 0;
+      	  
+		  setTimeout(function(){
+            // fire event
+            app.dispatcher.trigger("HomeHerosView:firsthero", self);                              	  
+		  }, 2000);      	  
       	}
       	
   		this.transition();
