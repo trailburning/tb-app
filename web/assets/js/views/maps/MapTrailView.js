@@ -249,10 +249,10 @@ define([
     viewTrail: function(id, strURL){
 	  var latLng = this.map.getCenter(); 
 	  // save
-	  $.cookie('route_id', id);
-	  $.cookie('route_lat', latLng.lat);
-	  $.cookie('route_lng', latLng.lng);
-	  $.cookie('route_zoom', this.map.getZoom());
+	  $.cookie('route_id', id, { path: '/' });
+	  $.cookie('route_lat', latLng.lat, { path: '/' });
+	  $.cookie('route_lng', latLng.lng, { path: '/' });
+	  $.cookie('route_zoom', this.map.getZoom(), { path: '/' });
 	  	  	  	
 	  window.location = strURL;	  	
 	},        
