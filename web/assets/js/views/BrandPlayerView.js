@@ -450,12 +450,12 @@ define([
 		  if (nRouteID != undefined) {
     	    this.trailMapView.setMapView(new L.LatLng($.cookie('route_lat'), $.cookie('route_lng')), $.cookie('route_zoom'));
             this.trailMapView.selectTrail(nRouteID);
-		  	// remove
-		  	$.removeCookie('route_id');
-		    $.removeCookie('route_lat');
-		    $.removeCookie('route_lng');
-		    $.removeCookie('route_zoom');        
 		  }          
+		  // remove
+		  $.removeCookie('route_id');
+		  $.removeCookie('route_lat');
+		  $.removeCookie('route_lng');
+		  $.removeCookie('route_zoom');        
           break;
       }
     },    
