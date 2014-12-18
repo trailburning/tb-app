@@ -15,9 +15,9 @@ class SocialMedia
         $this->twitterAPI = $twitterAPI;
     }
     
-    public function search($term) 
+    public function search($term, $count = 3) 
     {   
-        $results = $this->getSearchResults($term);
+        $results = $this->getSearchResults($term, $count);
         if (isset($results->statuses)) {
             $results = $this->formatResults($results->statuses);    
         } else {
@@ -27,31 +27,31 @@ class SocialMedia
         return $results;
     }
     
-    public function timeline($user) 
+    public function timeline($user, $count = 3) 
     {   
-        $results = $this->getTimelineResults($user);
+        $results = $this->getTimelineResults($user, $count);
         $results = $this->formatResults($results);
                 
         return $results;
     }   
     
-    protected function getSearchResults($term) 
+    protected function getSearchResults($term, $count) 
     {
         $twitterResult = $this->twitterAPI->searchTweets([
             'q' => $term, 
             'result_type' => 'recent', 
-            'count' => 3,
+            'count' => $count,
             'lang' => 'en',
         ]);
         
         return $twitterResult;
     }
     
-    protected function getTimelineResults($user) 
+    protected function getTimelineResults($user, $count) 
     {
         $twitterResult = $this->twitterAPI->statusesUserTimeline([
             'screen_name' => $user, 
-            'count' => 3,
+            'count' => $count,
         ]);
         
         return $twitterResult;

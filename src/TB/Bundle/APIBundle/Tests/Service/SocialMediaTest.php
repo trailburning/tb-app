@@ -11,26 +11,19 @@ class SocialMediaTest extends AbstractApiTest
     {
         $socialMedia = $this->getContainer()->get('tb.socialmedia');
 
-        $results = $socialMedia->search('6amclub');
+        $results = $socialMedia->search('6amclub', 4);
 
         $this->assertInternalType('array', $results);
-        $this->assertEquals(3, count($results));
+        $this->assertEquals(4, count($results));
     }
     
     public function testTimeline() 
     {
         $socialMedia = $this->getContainer()->get('tb.socialmedia');
         
-        $results = $socialMedia->timeline('trailburning');
+        $results = $socialMedia->timeline('trailburning', 4);
 
         $this->assertInternalType('array', $results);
-        $this->assertEquals(3, count($results));
-    }
-    
-    public function testComposeTwitterTextFromEntities() 
-    {
-        $socialMedia = $this->getContainer()->get('tb.socialmedia');
-        
-        // $result =
+        $this->assertEquals(4, count($results));
     }
 }    

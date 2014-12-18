@@ -18,12 +18,13 @@ class SocialMediaController extends AbstractRestController
     public function getSocialmediaAction(Request $request)
     {
         $socialMedia = $this->container->get('tb.socialmedia');        
+        $count = $request->query->get('count', 3);
         if ($request->query->has('term')) {
             $term = $request->query->get('term');
-            $result = $socialMedia->search($term);
+            $result = $socialMedia->search($term, $count);
         } elseif ($request->query->has('user')) {
             $user = $request->query->get('user');
-            $result = $socialMedia->timeline($user);
+            $result = $socialMedia->timeline($user, $count);
         } else {
             throw new ApiException('Either "term" or "user" must be specified as parameter', 400);
         }
