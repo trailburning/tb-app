@@ -493,6 +493,7 @@ a:active .tb-cntrl {
 .tb-trailpopup .card {
   position: relative;
   width: 260px;
+  height: 230px;
 }
 
 .tb-trailpopup .image_container {
