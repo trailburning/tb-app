@@ -24,6 +24,10 @@ define([
 	  else {
 	  	return;
 	  }
+	
+	  if (this.options.count) {
+	    strURL += '&count=' + this.options.count;	
+	  }	  	
 		  
       $.ajax({
         type: "GET",
@@ -40,23 +44,12 @@ define([
 		  var strTweet = '', strImage = '';
           if (data.value) {
       	    $.each(data.value, function(key, tweet) {
-      	    	var bRetweet = false;
-      	    	
-      	    	if (tweet.text.indexOf('RT') == 0) {
-      	    	  bRetweet = true;
-      	    	}
-      	    	
-      	    	if (self.options.bShowRetweets == false && bRetweet) {
-      	    	  // no retweets thanks
-      	    	}
-      	    	else {
-      	    	  strImage = '';
-      	    	  if (tweet.images.length) {
-      	    	    strImage = '<a href="'+tweet.images[0].expanded_url+'" target="_blank"><div class="image_container fade_on_load"><img src="'+tweet.images[0].media_url+'" class="scale" border="0"></div></a>'; 
-      	    	  }
-        	      strTweet = '<div class="tweet_panel"><a class="icon" href="'+self.strTwitterURL+'" target="_blank"></a><div class="panel"><div class="panel_content "><h5 class="tb">'+tweet.text+strImage+'</h5><div class="details"><time class="timeago" datetime="'+tweet.date+'"></time>&nbsp;&nbsp;<strong>'+tweet.user+'</strong></div></div></div></div>';
-      	    	  $(self.el).append(strTweet);
-      	    	}
+      	   	  strImage = '';
+      	      if (tweet.images.length) {
+      	   		strImage = '<a href="'+tweet.images[0].expanded_url+'" target="_blank"><div class="image_container fade_on_load"><img src="'+tweet.images[0].media_url+'" class="scale" border="0"></div></a>'; 
+      	      }
+              strTweet = '<div class="tweet_panel"><a class="icon" href="'+self.strTwitterURL+'" target="_blank"></a><div class="panel"><div class="panel_content "><h5 class="tb">'+tweet.text+strImage+'</h5><div class="details"><time class="timeago" datetime="'+tweet.date+'"></time>&nbsp;&nbsp;<strong>'+tweet.user+'</strong></div></div></div></div>';
+          	  $(self.el).append(strTweet);
       	    });
       	    
       	    $("time.timeago").timeago();

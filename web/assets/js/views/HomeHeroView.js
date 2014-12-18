@@ -4,7 +4,6 @@ define([
 ], function(_, Backbone){
 
   var OFFSCREEN_Y = 500;
-  var SHOW_CONTENT_DELAY = 500;
 
   var HomeHeroView = Backbone.View.extend({
     initialize: function(){
@@ -56,7 +55,7 @@ define([
         app.dispatcher.trigger("HomeHeroView:ready", self);                        
 	  });
     },
-    show: function(){
+    show: function(nShowContentDelay){
       this.Active = true;
       var self = this;
 
@@ -93,7 +92,7 @@ define([
           self.elCredit.css('top', $('#home_header').height() - self.elCredit.height() - 12);
           self.elSponsor.css('top', $('#home_header').height() - self.elSponsor.height() - 12);                                 
 	  	}
-  	  }, SHOW_CONTENT_DELAY);      
+  	  }, nShowContentDelay);      
     },	
     hide: function(){
       this.Active = false;

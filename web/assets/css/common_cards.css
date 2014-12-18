@@ -214,6 +214,15 @@
   line-height: 74px;
 }
 
+.trail_card_panel .card_flag {
+  position: absolute;
+  top: 0px;
+  right: 18px;
+  width: 47px;
+  height: 53px;
+  background: url("../img/ambassador/trailcard_flag.png") no-repeat top left;
+}
+
 .trail_card_panel .card_avatar {
   position: absolute;
   top: 92px;

@@ -24,6 +24,10 @@ define([
   	  // reset      
       $('.tb-trailpopup.fade_on_load').removeClass('tb-fade-in');
       $('.tb-trailpopup.image_container').css('opacity', 0);
+        
+	  if (!this.model.get('user').is_ambassador) {
+        $('.tb-trailpopup .card_flag').hide();
+      }
             
       var nRating = this.model.get('rating');
       if (!nRating) {

@@ -9,6 +9,8 @@ define([
 
   var HERO_TIMER = 10000;
 
+  var SHOW_CONTENT_DELAY = 500;
+
   var HomeHerosView = Backbone.View.extend({
     initialize: function(){
       app.dispatcher.on("HomeHeroView:ready", this.onHomeHeroViewReady, this);
@@ -106,13 +108,6 @@ define([
         $('#tb-loader-overlay').fadeOut();	
       	
       	this.bWaiting = false;
-      	
-      	var nDelay = 2000;
-      	if (this.bFirstHero) {
-      	  this.bFirstHero = false;
-      	  nDelay = 0;
-      	}
-      	
   		this.transition();
       }
 
@@ -129,7 +124,12 @@ define([
 
       this.nCurrHero = this.nLoadingHero;
       
-      this.arrHeros[this.nCurrHero].show();      
+      var nDelay = SHOW_CONTENT_DELAY;
+      if (this.bFirstHero) {
+      	this.bFirstHero = false;
+      	nDelay = 1000;
+      }
+      this.arrHeros[this.nCurrHero].show(nDelay);      
       this.arrHeros[this.nCurrHero].setZIndex(2, 2);
 
 	  // no more slides          	    	

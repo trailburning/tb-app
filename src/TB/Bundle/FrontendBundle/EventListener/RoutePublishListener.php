@@ -19,8 +19,6 @@ class RoutePublishListener
     protected $producer;
     
     protected $container;
-    
-    protected $router;
 
     public function __construct(EntityManager $em, Producer $producer, ContainerInterface $container)
     {

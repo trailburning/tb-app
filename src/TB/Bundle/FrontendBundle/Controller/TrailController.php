@@ -7,6 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class TrailController extends Controller
 {
@@ -51,6 +52,32 @@ class TrailController extends Controller
         }
        
         return $this->redirect($this->generateUrl('trail', ['trailSlug' => $trail->getSlug()]), 301);
+    }
+    
+    /**
+     * @Route("/trail/{trailSlug}.gpx", name="trail_gpx")
+     */
+    public function trailGPXAction($trailSlug)
+    {   
+        $gpxGenerator = $this->container->get('tb.gpx_generator');
+        
+        $trail = $this->getDoctrine()
+            ->getRepository('TBFrontendBundle:Route')
+            ->findOneBySlug($trailSlug);
+
+        if (!$trail) {
+            throw $this->createNotFoundException(
+                sprintf('Trail %s not found', $trailSlug)
+            );
+        }
+        
+        $xml = $gpxGenerator->generateXML($trail);
+        $response = new Response($xml);
+        $response->headers->set('Content-Type', 'application/gpx+xml');
+        $response->headers->set('Content-Disposition', sprintf('attachment; filename="%s.gpx"', $trail->getSlug()));
+        $response->setStatusCode(200);
+        
+        return $response;
     }
     
     /**

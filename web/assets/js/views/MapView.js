@@ -30,7 +30,6 @@ define([
 	  }
 
       this.trailMapView = new MapTrailView({ el: '#trail_map_view', elCntrls: '#view_map_btns', model: this.model });
-//      this.trailCardView = new TrailCardView({ el: '#trailcard_view' });
   	  this.trailMapView.render();
 
 	  this.getResults();
@@ -141,12 +140,12 @@ define([
 		  	}
 		    this.trailMapView.setMapView(new L.LatLng(fLat, fLng), nZoom);
 	        this.trailMapView.selectTrail(nRouteID);
-		  	// remove
-		  	$.removeCookie('route_id');
-		    $.removeCookie('route_lat');
-		    $.removeCookie('route_lng');
-		    $.removeCookie('route_zoom');
 	  	}
+	  	// remove
+	  	$.removeCookie('route_id', { path: '/' });
+	    $.removeCookie('route_lat', { path: '/' });
+	    $.removeCookie('route_lng', { path: '/' });
+	    $.removeCookie('route_zoom', { path: '/' });
 	  }          
 	  this.showOverlay();	  
     },    
