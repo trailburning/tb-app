@@ -29,7 +29,7 @@ class Mailproxy
         $this->mailchimpLists = $mailchimpLists;
     }
     
-    public function addNewsletterSubscriber($email)
+    public function addNewsletterSubscriber($email, $firstname = '', $lastname = '')
     {
         try {
             $data = [
@@ -38,11 +38,33 @@ class Mailproxy
             $parameters = [
                 'double_optin' => false,
                 'send_welcome' => false,
+                'FNAME' => $firstname,
+                'LNAME' => $lastname,
             ];
             $this->mailchimpLists->subscribe($this->container->getParameter('mailchimp_newsletters_list_id'), $data, $parameters, 'html', false);    
+            
             return true;
         } catch (Exception $e) {
-            throw $e;
+            // TODO: log error
+            return false;
+        }
+    }
+    
+    public function editNewsletterSubscriber($email, $firstname = '', $lastname = '')
+    {
+        try {
+            $data = [
+                'email' => $email,
+            ];
+            $parameters = [
+                'FNAME' => $firstname,
+                'LNAME' => $lastname,
+            ];
+            $this->mailchimpLists->updateMember($this->container->getParameter('mailchimp_newsletters_list_id'), $data, $parameters, 'html', false);    
+            
+            return true;
+        } catch (Exception $e) {
+            // TODO: log error
             return false;
         }
     }
@@ -53,9 +75,11 @@ class Mailproxy
             $data = [
                 'email' => $email,
             ];
-            $this->mailchimpLists->unsubscribe($this->container->getParameter('mailchimp_newsletters_list_id'), $data);    
+            $this->mailchimpLists->unsubscribe($this->container->getParameter('mailchimp_newsletters_list_id'), $data);
+            
             return true;
         } catch (Exception $e) {
+            // TODO: log error
             return false;
         }
     }
@@ -84,9 +108,8 @@ class Mailproxy
             $result = $this->mandrill->messages->sendTemplate($template_name, $template_content, $message, $async);
             
             return true;
-        } catch (Mandrill_Error $e) {
-            // Mandrill errors are thrown as exceptions
-            // echo 'A mandrill error occurred: ' . get_class($e) . ' - ' . $e->getMessage();
+        } catch (Exception $e) {
+            // TODO: log error
             return false;
         }
     }

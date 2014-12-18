@@ -21,7 +21,14 @@ abstract class AbstractFrontendTest extends WebTestCase
     
     protected function setUp()
     {
-        // replace the Bitly Client with a Mock
+        $this->replaceBitlyServiceWithMock();
+        $this->replaceRabbitMQProducerServiceWithMock();
+        $this->replaceMailproxyServiceWithMock();
+        $this->replaceTimezoneServiceWithMock();
+    }   
+    
+    protected function replaceBitlyServiceWithMock() 
+    {
         $bitly = $this->getMockBuilder('Hpatoio\Bitly\Client')
             ->disableOriginalConstructor()
             ->getMock();
@@ -35,34 +42,39 @@ abstract class AbstractFrontendTest extends WebTestCase
         ]);
         
         $this->getContainer()->set('tb.bitly_client', $bitly);
-        
-        // Replace the RabbitMQ Producer Service with a Mock
+    }
+    
+    protected function replaceRabbitMQProducerServiceWithMock() 
+    {
         $producer = $this->getMockBuilder('OldSound\RabbitMqBundle\RabbitMq\Producer')
             ->disableOriginalConstructor()
             ->getMock();
-        // Test that the publish() method gets called three times, two times when two Routes are created from fixtures,
-        // and once when the tb.route_publish Event is fired manually in this test
         $producer->expects($this->any())
             ->method('publish')
             ->willReturn(true);
         $this->getContainer()->set('old_sound_rabbit_mq.main_producer', $producer);
-        
-        // Replace the Mailproxy Service with a Mock
+    }
+    
+    protected function replaceMailproxyServiceWithMock() 
+    {
         $mailproxy = $this->getMockBuilder('TB\Bundle\FrontendBundle\Service\Mailproxy')
             ->disableOriginalConstructor()
             ->getMock();
         $mailproxy->method('addNewsletterSubscriber')->willReturn(true);
+        $mailproxy->method('editNewsletterSubscriber')->willReturn(true);
         $mailproxy->method('removeNewsletterSubscriber')->willReturn(true);
         $mailproxy->method('sendWelcomeMail')->willReturn(true);
         $this->getContainer()->set('tb.mailproxy', $mailproxy);
-        
-        // Replace the Timezone Service with a Mock
+    } 
+    
+    protected function replaceTimezoneServiceWithMock() 
+    {
         $timezone = $this->getMockBuilder('TB\Bundle\FrontendBundle\Service\Timezone')
             ->disableOriginalConstructor()
             ->getMock();
         $timezone->method('getTimezoneForGeoPoint')->willReturn('Europe/Berlin');
         $this->getContainer()->set('tb.timezone', $timezone);
-    }    
+    }
     
     protected static function getKernelClass()
     {
