@@ -48,7 +48,7 @@ define([
 	  this.trailMapView.render();	  
 	
 	  var strTwitterUser = "trailburning";
-      this.twitterView = new TwitterView({ el: '#twitter_view', model: this.model, user: strTwitterUser, bShowRetweets: true });
+      this.twitterView = new TwitterView({ el: '#twitter_view', model: this.model, user: strTwitterUser, count: 4 });
       this.twitterView.getResults();            
 	
 	  this.getResults();
