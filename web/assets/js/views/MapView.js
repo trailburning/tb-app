@@ -140,12 +140,12 @@ define([
 		  	}
 		    this.trailMapView.setMapView(new L.LatLng(fLat, fLng), nZoom);
 	        this.trailMapView.selectTrail(nRouteID);
-		  	// remove
-		  	$.removeCookie('route_id');
-		    $.removeCookie('route_lat');
-		    $.removeCookie('route_lng');
-		    $.removeCookie('route_zoom');
 	  	}
+	  	// remove
+	  	$.removeCookie('route_id', { path: '/' });
+	    $.removeCookie('route_lat', { path: '/' });
+	    $.removeCookie('route_lng', { path: '/' });
+	    $.removeCookie('route_zoom', { path: '/' });
 	  }          
 	  this.showOverlay();	  
     },    

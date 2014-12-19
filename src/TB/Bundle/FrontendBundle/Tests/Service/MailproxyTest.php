@@ -15,14 +15,20 @@ class MailproxyTest extends AbstractFrontendTest
     
     public function testAddNewsletterSubscriber()
     {
-        // $result = $this->mailproxy->addNewsletterSubscriber('patrick@trailburning.com');
-        // $this->assertTrue($result);
+        $result = $this->mailproxy->addNewsletterSubscriber('test@trailburning.com', 'test', 'tester');
+        $this->assertTrue($result);
     }
     
     public function testRemoveNewsletterSubscriber()
     {
-        // $result = $this->mailproxy->removeNewsletterSubscriber('patrick@trailburning.com');
-        // $this->assertTrue($result);
+        $result = $this->mailproxy->removeNewsletterSubscriber('test@trailburning.com');
+        $this->assertTrue($result);
+    }
+    
+    public function testEditNewsletterSubscriber()
+    {
+        $result = $this->mailproxy->editNewsletterSubscriber('test@trailburning.com', 'testedited', 'testeredited');
+        $this->assertTrue($result);
     }
     
     public function testSendWelcomeMail()

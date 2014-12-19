@@ -14,9 +14,13 @@
                 	<img src="http://app.resrc.it/o=80/http://media.trailburning.com/images/default/example_trailcard.jpg" class="resrc scale" border="0"/>
                 {% endif %}
 	        </div>
-			{% if trail.user.isAmbassador %}
-	        	<div class="card_flag"></div>
+	        
+			{% if trail.user.isAmbassador is defined %}
+				{% if trail.user.isAmbassador %}
+	        		<div class="card_flag"></div>
+				{% endif %}	        	        
 			{% endif %}	        
+			
 	      	<div class="card_title">
 				<h1>{{ trail.shortName ? trail.shortName : trail.name }}</h1>
 				<br/>

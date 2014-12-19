@@ -108,7 +108,7 @@ class EntityEventSubscriber implements EventSubscriber
         if (isset($changeset['newsletter']) && $changeset['newsletter'][0] !== $changeset['newsletter'][1]) {
             if ($user->getNewsletter() == true) {
                 // user subscribed to newsletter
-                $this->mailproxy->addNewsletterSubscriber($user->getEmail());
+                $this->mailproxy->addNewsletterSubscriber($user->getEmail(), $user->getFirstName(), $user->getLastName());
             } else {
                 // user unsubscribed from newsletter
                 $this->mailproxy->removeNewsletterSubscriber($user->getEmail());

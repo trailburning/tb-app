@@ -49,8 +49,6 @@ Grindelwald has something to offer everyone. The village is lively, sporty and a
         $region->setLogo('london.png');
         $region->setLink('http://www.london.com');
         
-        
-        
         $points = [
             [51.707659, -0.409927],
             [51.689785, -0.095444],
