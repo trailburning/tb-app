@@ -24,27 +24,28 @@ var TB_USER_ID = {{ app.user.id }};
 
     <div class="hero_image">
       <div class="background">
-        <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/o=80/http://assets.trailburning.com/images/profile/mtbuller/LM_131120_MtBuller_0311.jpg" class="resrc scale" /></div>
+        <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/o=80/http://assets.trailburning.com/images/editorial/highlands/313593cc63d7cec329eaaaefe2f65eed47488abc.JPG" class="resrc scale" /></div>
       </div>
   	</div>
 
     <div class="hero_image">
       <div class="background">
+        <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/o=80/http://assets.trailburning.com/images/profile/mtbuller/LM_131120_MtBuller_0311.jpg" class="resrc scale" /></div>
+      </div>
+  	</div>
+{#
+    <div class="hero_image">
+      <div class="background">
         <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/o=80/http://assets.trailburning.com/images/campaign/urbantrails/london/8972edd96f999eabf6612d18d9bc2d2b042db5c8.jpg" class="resrc scale" /></div>
       </div>
   	</div>
-  	
+ 	
     <div class="hero_image">
       <div class="background">
         <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/o=80/http://assets.trailburning.com/images/editorial/wild/image_edited2.jpg" class="resrc scale" /></div>
       </div>
   	</div>
-  	
-    <div class="hero_image">
-      <div class="background">
-        <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/o=80/http://assets.trailburning.com/images/editorial/highlands/313593cc63d7cec329eaaaefe2f65eed47488abc.JPG" class="resrc scale" /></div>
-      </div>
-  	</div>
+#}  	
   	
     <div class="hero_image">
       <div class="background">
@@ -53,7 +54,7 @@ var TB_USER_ID = {{ app.user.id }};
   	</div>
 
 	<div class="hero_nav">
-	  <div class="button" data-slide="0"></div><div class="button" data-slide="1"></div><div class="button" data-slide="2"></div><div class="button" data-slide="3"></div><div class="button" data-slide="4"></div><div class="button" data-slide="5"></div>
+	  <div class="button" data-slide="0"></div><div class="button" data-slide="1"></div><div class="button" data-slide="2"></div><div class="button" data-slide="3"></div>
 	</div>
 
     <div class="hero_overlay" data-url="{{ app.request.baseUrl }}/campaign/6amclub">
@@ -63,7 +64,7 @@ var TB_USER_ID = {{ app.user.id }};
       	<br/>
       	<h1 class="tb tb-title">with #6amCLUB</h1>
       	<br/>
-		<div class="hero_btn"><a href="{{ app.request.baseUrl }}/campaign/6amclub" class="btn btn-tb-action btn-tb-large">Love the Morning</a></div>      	
+		<div class="hero_btn"><a href="{{ app.request.baseUrl }}/campaign/6amclub" class="btn btn-tb-action btn-tb-large">Run the Morning</a></div>      	
     	</div>
 	  </div>			  
 	  <div class="right">
@@ -75,6 +76,33 @@ var TB_USER_ID = {{ app.user.id }};
       </div>
 	  <div class="tb-credit"></div>
 	  <div class="sponsor_content">
+	  </div>  	
+  	</div>
+
+    <div class="hero_overlay" data-url="{{ app.request.baseUrl }}/inspire/highlands">
+      <div class="left">
+    	<div class="title feature">
+      	<h1 class="tb tb-title">Finding solace in the</h1>
+      	<br/>
+      	<h1 class="tb tb-title">Scottish Highlands</h1>
+      	<br/>
+	  	<div class="author">by <strong>Phil Shipman</strong></div>	      
+      	<div class="hero_btn"><a href="inspire/highlands" class="btn btn-tb-inspire"><div class="tb-logo"></div> Inspire</a></div>
+    	</div>
+	  </div>			  
+	  <div class="right">
+	  	<a href="profile/philipshipman">  
+    	<div class="tb-avatar feature_avatar">
+      		<div class="photo"><img src="http://assets.trailburning.com/images/profile/philipshipman/avatar.jpg"></div>
+    	</div>		    	
+    	</a>
+      </div>
+	  <div class="tb-credit"></div>
+	  <div class="sponsor_content">
+	    <div class="brand">
+		  <div class="strap">brought to you by</div>
+		  <div class="logo"><a href="{{ app.request.baseUrl }}/profile/ashmei"><img src="http://assets.trailburning.com/images/profile/ashmei/editorial_sponsor_logo_big.png" border="0"></a></div>
+	    </div>
 	  </div>  	
   	</div>
 
@@ -95,7 +123,7 @@ var TB_USER_ID = {{ app.user.id }};
 	  <div class="sponsor_content">
 	  </div>  	
   	</div>
-
+{#
     <div class="hero_overlay" data-url="{{ app.request.baseUrl }}/competition">
       <div class="left">
     	<div class="title feature">
@@ -140,33 +168,7 @@ var TB_USER_ID = {{ app.user.id }};
 	    </div>
 	  </div>  	
   	</div>
-  	  	
-    <div class="hero_overlay" data-url="{{ app.request.baseUrl }}/inspire/highlands">
-      <div class="left">
-    	<div class="title feature">
-      	<h1 class="tb tb-title">Finding solace in the</h1>
-      	<br/>
-      	<h1 class="tb tb-title">Scottish Highlands</h1>
-      	<br/>
-	  	<div class="author">by <strong>Phil Shipman</strong></div>	      
-      	<div class="hero_btn"><a href="inspire/highlands" class="btn btn-tb-inspire"><div class="tb-logo"></div> Inspire</a></div>
-    	</div>
-	  </div>			  
-	  <div class="right">
-	  	<a href="profile/philipshipman">  
-    	<div class="tb-avatar feature_avatar">
-      		<div class="photo"><img src="http://assets.trailburning.com/images/profile/philipshipman/avatar.jpg"></div>
-    	</div>		    	
-    	</a>
-      </div>
-	  <div class="tb-credit"></div>
-	  <div class="sponsor_content">
-	    <div class="brand">
-		  <div class="strap">brought to you by</div>
-		  <div class="logo"><a href="{{ app.request.baseUrl }}/profile/ashmei"><img src="http://assets.trailburning.com/images/profile/ashmei/editorial_sponsor_logo_big.png" border="0"></a></div>
-	    </div>
-	  </div>  	
-  	</div>
+#}  	  	
   	  	
     <div class="hero_overlay" data-url="{{ app.request.baseUrl }}/inspire/high">
       <div class="left">
