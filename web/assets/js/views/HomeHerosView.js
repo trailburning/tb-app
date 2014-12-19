@@ -127,7 +127,7 @@ define([
       var nDelay = SHOW_CONTENT_DELAY;
       if (this.bFirstHero) {
       	this.bFirstHero = false;
-      	nDelay = 1000;
+      	nDelay = 2000;
       }
       this.arrHeros[this.nCurrHero].show(nDelay);      
       this.arrHeros[this.nCurrHero].setZIndex(2, 2);
