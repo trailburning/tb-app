@@ -160,6 +160,11 @@
             <argument type="service" id="old_sound_rabbit_mq.connection.default" />
             <argument type="service" id="service_container" />
         </service>
+        
+        <service id="old_sound_rabbit_mq.debug_consumer" class="TB\Bundle\FrontendBundle\Service\DebugConsumer">
+            <argument type="service" id="old_sound_rabbit_mq.connection.default" />
+            <argument type="service" id="service_container" />
+        </service>
 
         <service id="tb.mailproxy" class="TB\Bundle\FrontendBundle\Service\Mailproxy">
             <argument type="service" id="service_container" />

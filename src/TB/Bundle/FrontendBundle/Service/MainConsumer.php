@@ -3,6 +3,7 @@
 namespace TB\Bundle\FrontendBundle\Service;
 
 use OldSound\RabbitMqBundle\RabbitMq\Consumer;
+use OldSound\RabbitMqBundle\RabbitMq\ConsumerInterface;
 use PhpAmqpLib\Message\AMQPMessage;
 use Doctrine\ORM\EntityManager;
 use TB\Bundle\FrontendBundle\Service\ActivityFeedGenerator;
@@ -28,6 +29,9 @@ class MainConsumer extends Consumer
     {
         $this->container = $container;
         $this->setExchangeOptions(['name' => $container->getParameter('rabbit_mq_main_queue'), 'type' => 'direct']);
+        
+        $arguments = ['x-dead-letter-exchange' => ['S', 'debug']];
+        $this->setQueueOptions(['name' => $container->getParameter('rabbit_mq_main_queue'), 'arguments' => $arguments]);
         $this->setQueueOptions(['name' => $container->getParameter('rabbit_mq_main_queue')]);
         $this->callback = array($this, 'execute');
         $this->maxConsumerCount = 3;
@@ -85,10 +89,10 @@ class MainConsumer extends Consumer
         
         switch ($obj->type) {
             case 'activity':
-                $isSuccess = $this->callCommand(sprintf('tb:activity:create-feed %s --fault-tolerant=true', $obj->id));
+                $isSuccess = $this->callCommand(sprintf('tb:activity:create-feed %s', $obj->id));
                 break;
             case 'routeShareImage':
-                $isSuccess = $this->callCommand(sprintf('tb:route:create-share-image %s --fault-tolerant=true', $obj->id));
+                $isSuccess = $this->callCommand(sprintf('tb:route:create-share-image %s', $obj->id));
                 break;
             case 'routeIndex':
                 $isSuccess = $this->callCommand(sprintf('tb:search:index route %s', $obj->id));
@@ -101,9 +105,7 @@ class MainConsumer extends Consumer
                 break;
         }
         
-        // When $isSuccess is false, the message will be rejected by the consumer and requeued by RabbitMQ.
-        // Any other value not equal to false will acknowledge the message and remove it from the queue
-        return $isSuccess;
+        return ($isSuccess) ? ConsumerInterface::MSG_ACK : ConsumerInterface::MSG_REJECT;
     }
     
     public function callCommand($command)
