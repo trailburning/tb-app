@@ -1,60 +1,68 @@
 define([
   'underscore', 
-  'backbone'
-], function(_, Backbone){
+  'backbone',
+  'models/TrailMediaModel',
+  'views/TrailSliderView',
+  'views/TrailMapView'
+], function(_, Backbone, TrailMediaModel, TrailSliderView, TrailMapView){
 
   var AppView = Backbone.View.extend({
     initialize: function(){
 	  var self = this;
 	  
-	  $('.royalSlider').show();
-
-  	  $(".royalSlider").royalSlider({
-  	  	imageScaleMode: 'fill',
-  	  	controlNavigation: 'none',
-  	  	slidesSpacing: 0,
-  	  	loop: true,
-//  	  	transitionType: 'fade',
-        keyboardNavEnabled: true,
-        autoScaleSlider: false,
-    	fullscreen: {
-    		enabled: true,
-    		nativeFS: false
+      app.dispatcher.on("TrailSliderView:slidechanged", self.onTrailSlideChanged, this);
+	  app.dispatcher.on("TrailMapMediaMarkerView:mediaclick", self.onTrailMapMediaMarkerClick, this);
+	  
+	  var MediaCollection = Backbone.Collection.extend({
+    	comparator: function(item) {
+    		// sort by datetime
+        	return item.get('tags').datetime;
     	}
-      });  	
-      
-	  var slider = $(".royalSlider").data('royalSlider');
-//      slider.enterFullscreen();
-
-	  slider.ev.on('rsAfterSlideChange', function(event) {
-	    // triggers after slide change
-	    
-	    console.log(slider.currSlide);
 	  });
-  	  
-      function buildMap() {
-        var fLat = 59.312483;
-        var fLng = 18.071243;
-        console.log(fLat);
-        console.log(fLng);
+      this.mediaCollection = new MediaCollection();    
+      this.mediaModel = new TrailMediaModel();
+	  
+      this.trailSliderView = new TrailSliderView({ el: '.royalSlider', model: this.model, mediaCollection: this.mediaCollection, mediaModel: this.mediaModel });                  
+	  this.trailMapView = new TrailMapView({ el: '#location_map', elCntrls: '#view_map_btns', model: this.model });
+	  	  
+      // get trail    
+//      this.model.set('id', 534);             
+      this.model.set('id', 159);             
+      this.model.fetch({
+        success: function () {        
+          self.mediaModel.url = TB_RESTAPI_BASEURL + '/v1/route/'+self.model.get('id')+'/medias';
+          self.mediaModel.fetch({
+            success: function () {
+              self.handleMedia(self.mediaModel);
+            }
+          });        
+        }      
+      });      
+	},
+    handleMedia: function(){
+      var self = this;
+
+      this.trailMapView.render();
       
-        var map = L.mapbox.map('location_map', 'mallbeury.map-kply0zpa', {dragging: false, touchZoom: false, scrollWheelZoom:false, doubleClickZoom:false, boxZoom:false, tap:false, zoomControl:false, zoomAnimation:false, attributionControl:false});
-
-        var LocationIcon = L.Icon.extend({
-          options: {
-              iconSize:     [36, 47],
-              iconAnchor:   [16, 44],
-              popupAnchor:  [16, 44]
-          }
-        });      
-        var startIcon = new LocationIcon({iconUrl: 'http://assets.trailburning.com/images/icons/location.png'});
-        L.marker([fLat, fLng], {icon: startIcon}).addTo(map);      
-
-        var latlng = new L.LatLng(fLat, fLng);
-        map.setView(latlng, 12);
-      }                    
-      buildMap();  	  
-	}
+      var jsonMedia = this.mediaModel.get('value');
+      // add to collection
+      $.each(jsonMedia, function(key, media) {
+      	var model = new Backbone.Model(media);
+        self.mediaCollection.add(model);      
+        self.trailMapView.addMedia(model);
+      });
+      this.trailMapView.renderMarkers();
+      this.trailSliderView.render();
+	},
+    onTrailSlideChanged: function(nSlide){
+      this.trailMapView.gotoMedia(nSlide);
+	},
+    onTrailMapMediaMarkerClick: function(mapMediaMarkerView){
+      // look up model in collection
+      var nMedia = this.mediaCollection.indexOf(mapMediaMarkerView.model);
+      
+      this.trailSliderView.gotoMedia(nMedia);
+    },
 	
   });
 

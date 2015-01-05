@@ -47,6 +47,7 @@ define([
       $('#tb-loader-overlay').fadeIn();
       
       // get trail    
+      console.log(this.options.nTrail);
       this.model.set('id', this.options.nTrail);             
       this.model.fetch({
         success: function () {        
@@ -95,7 +96,6 @@ define([
       }
     	
       var strURL = TB_RESTAPI_BASEURL + '/v1/route/'+nTrail+'/' + strMethod;
-      console.log(strURL);      
       $.ajax({
         type: "PUT",
         dataType: "json",
@@ -165,7 +165,6 @@ define([
       var startIcon = new LocationIcon({iconUrl: 'http://assets.trailburning.com/images/icons/location.png'});
       L.marker([jsonPoint.coords[1], jsonPoint.coords[0]], {icon: startIcon}).on('click', onClick).addTo(map);      
 
-console.log(jsonPoint.coords[1]+':'+jsonPoint.coords[0]);
       var latlng = new L.LatLng(jsonPoint.coords[1], jsonPoint.coords[0]);
       map.setView(latlng, 12);
     },
