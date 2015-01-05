@@ -165,6 +165,7 @@ define([
       var startIcon = new LocationIcon({iconUrl: 'http://assets.trailburning.com/images/icons/location.png'});
       L.marker([jsonPoint.coords[1], jsonPoint.coords[0]], {icon: startIcon}).on('click', onClick).addTo(map);      
 
+console.log(jsonPoint.coords[1]+':'+jsonPoint.coords[0]);
       var latlng = new L.LatLng(jsonPoint.coords[1], jsonPoint.coords[0]);
       map.setView(latlng, 12);
     },
