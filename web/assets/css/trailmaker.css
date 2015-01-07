@@ -15,7 +15,6 @@ border-width:1px;
 /******************************************/
 #contentview {
   position: relative;
-  margin-top: 45px;    
 }
 
 /* TRAIL MAP */
@@ -53,6 +52,7 @@ border-width:1px;
 }
 
 #trail_info {
+  z-index: 101;
   position: absolute;
   top: -300px;
   left: 24px;
@@ -933,9 +933,6 @@ border-width:1px;
  
 /* Medium devices (desktops, 992px and up) */
 @media (max-width: 1199px) {  
-  #appview {
-    min-width: 992px;
-  }
   #step_welcome_view .panel_content {
     width: 968px;
   }

@@ -1,6 +1,5 @@
 /* TB DEFAULTS */
 /******************************************/
-
 @font-face {
   font-family: 'StrangeloveText';
   src: url('fonts/StrangeloveText.eot?#iefix') format('embedded-opentype'),  url('fonts/StrangeloveText.woff') format('woff'), url('fonts/StrangeloveText.ttf')  format('truetype'), url('fonts/StrangeloveText.svg#StrangeloveText') format('svg');
@@ -42,11 +41,13 @@ h1, h2, h3, h4, h5, h6 {
 
 /* APP */
 /******************************************/
-#appview, #big_sponsor_bar, #small_sponsor_bar {
+#big_sponsor_bar, #small_sponsor_bar {
   min-width: 1200px;
 }
 
 #bodyview {
+  position: relative;
+  margin-top: 0px;
   min-height: 800px;
 }
 
@@ -794,23 +795,55 @@ a:active .tb-cntrl {
 /* HEADER */
 /******************************************/
 #headerview {
-  min-width: 1200px;	
+  position: relative;
   z-index: 200;
-  position: fixed;
-  top: 0px;
-  width: 100%;
-  height: 45px;  
   background: #1f1f1f;
 }
 
-#headerview .left {
-  float: left;
-  margin: 0px 0px 0px 16px;
+#headerview .nav-collapse {
+  display: block;
+}
+
+#headerview .navbar-inner {
+  min-height: 45px;
+  padding: 0px;
+  margin: 0px;
+}
+
+#headerview .navbar-fixed-top {
+  margin: 0px;
+}
+
+#headerview .hamburger {
+  position: absolute;
+  top: 8px;
+  left: 2px;
+}
+
+#headerview .navbar .btn-navbar {
+  float: left;  
+  background: none;
+  border: 0px;
+  box-shadow: none;
+}	
+
+#headerview .navbar .btn-navbar .icon-bar {
+  width: 24px;
+  height: 3px;
+}
+
+#headerview .navbar .nav-collapse .nav>li>a {
+  padding: 0px 16px 0px 16px;	
+  font-weight: normal;
+  color: #FFF;
+  font-size: 16px;
+  line-height: 32px;
 }
 
 #headerview .right {
-  float: right;
-  margin: 0px 18px 0px 0px;
+  position: absolute;
+  top: 0px;
+  right: 16px;
   font-size: 14px;  
 }
 
@@ -832,6 +865,10 @@ a:active .tb-cntrl {
   text-decoration: none;    
 }
 
+#headerview #searchview {
+  display: none;	
+}
+
 #headerview .right .discover .search-btn {
   margin: 0;
   padding: 0;  
@@ -848,17 +885,26 @@ a:active .tb-cntrl {
   background-color: #4B4B4B;
 }
 
-#headerview .left .logo {
-  float: left;
+#headerview .logo {
+  width: 100%;	
+  margin: 14px 0px 0px 0px;
+
+/*  
   margin: 14px 0px 0px 0px;
   width: 132px;
+*/    
   height: 17px;
-  line-height: 17px;  
+  line-height: 17px;
 }
 
-#headerview .left .logo a {
+#headerview .logo a {
+/*	
   float:left; 
+*/  
   display:block;
+text-align: center;
+margin: 0 auto;
+
   line-height:20px; 
   text-indent: -10000px;  
   overflow: hidden;   
@@ -868,16 +914,20 @@ a:active .tb-cntrl {
   background: url("../img/header/tb_logo.png") no-repeat top left;
 }
 
-#headerview .left .logo a:hover {
+#headerview .logo a:hover {
   background-position: 0 -17px;
 }
 
-#headerview .left .links {
+#headerview .main_links {
+  display: none;
+}
+
+#headerview .main_links .links {
   float: left;
   margin: 16px 0px 0px 17px;
 }
 
-#headerview .left .link {
+#headerview .main_links .link {
   float: left;
   margin: 0px 15px 0px 15px;
   color: #44b6f7;
@@ -1373,6 +1423,11 @@ a:active .tb-cntrl {
   margin: 0px 10px 0px 10px;
 }
 
+#footerview .right .email,
+#footerview .right .googleplus {
+  display: none;
+}
+
 #footerview a.button {
   float:left; 
   display:block;
@@ -1703,7 +1758,7 @@ form label {
   form label {
     font-size: 18px;
   }      
-  #headerview, #appview, #big_sponsor_bar, #small_sponsor_bar {
+  #big_sponsor_bar, #small_sponsor_bar {
     min-width: 992px;
   }      
   .tb-avatar-highlight {
@@ -1716,6 +1771,33 @@ form label {
   }  
 }
 
-/* Small devices (tablets, 768px) */
-@media (max-width: 768px) {  
+@media (min-width: 768px) {  
+  #footerview .right .email,
+  #footerview .right .googleplus {
+    display: block;
+  }
+}
+
+@media (min-width: 979px) {
+  #headerview .logo {  	
+    float: left;
+    width: auto;
+    margin-left: 16px;
+  }
+  #headerview .logo a {
+    text-align: left;
+    margin: 0px;
+  }
+  #headerview .main_links {
+    display: block;
+  }
+  #headerview #searchview {
+    display: block;	
+  }
+  #headerview .nav-collapse {
+    display: none;
+  }
+  #bodyview {
+    margin-top: 45px;
+  }
 }

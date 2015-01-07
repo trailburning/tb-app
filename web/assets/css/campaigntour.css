@@ -11,7 +11,7 @@ border-width:1px;
 /******************************************/
 .tour_content {
   position: relative;
-  margin-top: 109px;
+  margin-top: 64px;
 }
 
 .tour_content .content {
@@ -398,4 +398,10 @@ border-width:1px;
 
 /* Small devices (tablets, 768px) */
 @media (max-width: 768px) {  
+}
+
+@media (min-width: 979px) {
+  .tour_content {
+    margin-top: 109px;
+  }
 }

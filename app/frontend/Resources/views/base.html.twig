@@ -52,72 +52,95 @@
     <body>
         <div id="appview">      
             <div id="headerview">
-                <div class="left">
-                    <div class="logo"><a href="{{ app.request.baseUrl }}/">Home></a></div>
-			      	<div class="links">
-						<div class="link main"><a href="{{ app.request.baseUrl }}/map/trails">Explore</a></div>			      	
-						<div class="link main"><a href="{{ app.request.baseUrl }}/inspire">Inspire</a></div>
-						<div class="link main"><a href="{{ app.request.baseUrl }}/ambassadors">Ambassadors</a></div>			      	
-						<div class="link main"><a href="{{ app.request.baseUrl }}/tour">Tour</a></div>
-			      	</div>
-                </div>    
-                
-			    <div class="right navbar">
-			    	<div id="searchview" class="search ui-front">			    	
-	    			  <ul class="nav pull-right">
-	    				<li class="ui-widget">	    					
-						<form class="form-search" method="get" id="search" action="">			    	
-	    					<input type="text" class="searchBox" id="searchBox" name="search_text">
-							<button type="submit">
-				  			<i class="ico" data-icon="n-search-16"></i>
-							</button>
-	    				</form>
-				        </li>
-				      </ul>
-			    	</div>
-                	{% if app.user %}
-				    	<div class="profile">
-				    		<ul class="nav pull-right">
-						    	<li class="dropdown">
-						    	<a href="#" class="dropdown-toggle show_activity" data-toggle="dropdown">
-						    	<div class="tb-avatar"><div class="photo">        
-		            	  		    <img src="{{ get_user_avatar_url(app.user) }}">
-								</div></div>			
-								{% if app.user.activityUnseenCount > 0 %}
-								  <div class="activity">{{ app.user.activityUnseenCount }}</div>
-								{% endif %} 		        		
-						    	</a>
-						        <ul class="dropdown-menu activity-menu">
-						        	<div class="header">
-						        		<div class="title"><h4 class="tb">Activity</h4></div>
-						        		<div class="viewprofile"><a href="{{ path('profile', {name: app.user.name}) }}">View profile</a></div>
-						        	</div>
-						        	
-						        	<div class="activity_list_container">
-						        	  <div id="activity_feed_view" class="activity_list tb-move"></div>
-						        	</div>
-						
-						        	<div class="footer">
-						  				<div class="profile_btn"><a href="javascript:void(0)" class="btn btn-tb btn-tb-small more_btn" disabled="disabled">More notifications</a></div>
-						        		<div class="signout"><a href="{{ path('fos_user_security_logout') }}">Sign out</a></div>
-						        	</div>
-						        </ul>
-						    	</li>
-				    		</ul>
+    	
+			    <div class="navbar navbar-inverse navbar-fixed-top">
+			      <div class="navbar-inner">
+			        <div class="container-fixed">
+					  <div class="hamburger">
+			          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+			            <span class="icon-bar"></span>
+			            <span class="icon-bar"></span>
+			            <span class="icon-bar"></span>
+			          </button>
+			          </div>
+			          <div class="logo"><a href="{{ app.request.baseUrl }}/">Home></a></div>
+					  <div class="main_links">
+				      	<div class="links">
+							<div class="link main"><a href="{{ app.request.baseUrl }}/map/trails">Explore</a></div>			      	
+							<div class="link main"><a href="{{ app.request.baseUrl }}/inspire">Inspire</a></div>
+							<div class="link main"><a href="{{ app.request.baseUrl }}/ambassadors">Ambassadors</a></div>			      	
+							<div class="link main"><a href="{{ app.request.baseUrl }}/tour">Tour</a></div>
 				      	</div>
-			    	{% else %}
-			      		<div class="signin">
-			      			<div class="links">
-			      				<div class="link main"><a href="{{ path('fos_user_security_login') }}">Sign in</a></div> 
-			      			</div>
-			      			<a href="{{ path('fos_user_registration_register') }}" class="btn btn-tb-action btn-tb-small">Join</a>	
-			      		</div>
-			    	{% endif %}
-			    </div>    
-                {% block breadcrumb %}{% endblock %}
-                <div class="trans-line"></div>        
-            </div>    
+					  </div>
 
+					    <div class="right navbar">
+					    	<div id="searchview" class="search ui-front">			    	
+			    			  <ul class="nav pull-right">
+			    				<li class="ui-widget">	    					
+								<form class="form-search" method="get" id="search" action="">			    	
+			    					<input type="text" class="searchBox" id="searchBox" name="search_text">
+									<button type="submit">
+						  			<i class="ico" data-icon="n-search-16"></i>
+									</button>
+			    				</form>
+						        </li>
+						      </ul>
+					    	</div>
+		                	{% if app.user %}
+						    	<div class="profile">
+						    		<ul class="nav pull-right">
+								    	<li class="dropdown">
+								    	<a href="#" class="dropdown-toggle show_activity" data-toggle="dropdown">
+								    	<div class="tb-avatar"><div class="photo">        
+				            	  		    <img src="{{ get_user_avatar_url(app.user) }}">
+										</div></div>			
+										{% if app.user.activityUnseenCount > 0 %}
+										  <div class="activity">{{ app.user.activityUnseenCount }}</div>
+										{% endif %} 		        		
+								    	</a>
+								        <ul class="dropdown-menu activity-menu">
+								        	<div class="header">
+								        		<div class="title"><h4 class="tb">Activity</h4></div>
+								        		<div class="viewprofile"><a href="{{ path('profile', {name: app.user.name}) }}">View profile</a></div>
+								        	</div>
+								        	
+								        	<div class="activity_list_container">
+								        	  <div id="activity_feed_view" class="activity_list tb-move"></div>
+								        	</div>
+								
+								        	<div class="footer">
+								  				<div class="profile_btn"><a href="javascript:void(0)" class="btn btn-tb btn-tb-small more_btn" disabled="disabled">More notifications</a></div>
+								        		<div class="signout"><a href="{{ path('fos_user_security_logout') }}">Sign out</a></div>
+								        	</div>
+								        </ul>
+								    	</li>
+						    		</ul>
+						      	</div>
+					    	{% else %}
+					      		<div class="signin">
+					      			<div class="links">
+					      				<div class="link main"><a href="{{ path('fos_user_security_login') }}">Sign in</a></div> 
+					      			</div>
+					      			<a href="{{ path('fos_user_registration_register') }}" class="btn btn-tb-action btn-tb-small">Join</a>	
+					      		</div>
+					    	{% endif %}
+					    </div>    
+			          
+			        </div>
+			      </div>
+			      
+		          <div class="nav-collapse collapse">
+		            <ul class="nav">
+		              <li><a href="{{ app.request.baseUrl }}/map/trails">Explore</a></li>
+		              <li><a href="{{ app.request.baseUrl }}/inspire">Inspire</a></li>
+		              <li><a href="{{ app.request.baseUrl }}/ambassadors">Ambassadors</a></li>
+		              <li><a href="{{ app.request.baseUrl }}/tour">Tour</a></li>
+		            </ul>
+		          </div><!--/.nav-collapse -->
+			      
+			    </div>	
+            </div>
+            
 			<div id="bodyview">
             {% block body %}{% endblock %}
             </div>
@@ -139,7 +162,7 @@
                     <div class="social pinterest"><a href="https://www.pinterest.com/trailburning/" target="_blank" class="button btnPinterest">Pinterest</a></div>          	
 #}                              
                 </div>
-            </div>     
+            </div>                     
         </div>      
 
 		<script type="text/template" id="activityFeedViewTemplate">

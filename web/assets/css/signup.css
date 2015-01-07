@@ -25,7 +25,6 @@ a:active {
 /******************************************/
 #contentview {
   position: relative;
-  margin-top: 45px;      
   min-height: 800px;
 }
 
@@ -233,9 +232,6 @@ a:active {
  
 /* Medium devices (desktops, 992px and up) */
 @media (max-width: 1199px) {  
-  #appview {
-    min-width: 992px;
-  }  
   .panel_content {
     width: 534px;
   }   
