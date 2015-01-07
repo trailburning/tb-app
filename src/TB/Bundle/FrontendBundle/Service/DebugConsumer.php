@@ -13,7 +13,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 /**
  * Extends the Consumer to to set a max consumer count and a time after the consumer stops
  */
-class MainConsumer extends Consumer
+class DebugConsumer extends Consumer
 {
     protected $container;
     
@@ -28,11 +28,9 @@ class MainConsumer extends Consumer
     public function __construct(AMQPConnection $conn, ContainerInterface $container, AMQPChannel $ch = null, $consumerTag = null)
     {
         $this->container = $container;
-        $this->setExchangeOptions(['name' => $container->getParameter('rabbit_mq_main_queue'), 'type' => 'direct']);
+        $this->setExchangeOptions(['name' => 'debug', 'type' => 'fanout']);
         
-        $arguments = ['x-dead-letter-exchange' => ['S', 'debug']];
-        $this->setQueueOptions(['name' => $container->getParameter('rabbit_mq_main_queue'), 'arguments' => $arguments]);
-        $this->setQueueOptions(['name' => $container->getParameter('rabbit_mq_main_queue')]);
+        $this->setQueueOptions(['name' => 'debug']);
         $this->callback = array($this, 'execute');
         $this->maxConsumerCount = 3;
         $this->ttl = 1800;
@@ -105,7 +103,7 @@ class MainConsumer extends Consumer
                 break;
         }
         
-        return ($isSuccess) ? ConsumerInterface::MSG_ACK : ConsumerInterface::MSG_REJECT;
+        return ($isSuccess) ? ConsumerInterface::MSG_ACK : ConsumerInterface::MSG_REJECT_REQUEUE;
     }
     
     public function callCommand($command)
