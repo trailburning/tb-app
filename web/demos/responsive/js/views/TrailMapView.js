@@ -226,7 +226,6 @@ define([
     },
     setView: function(bFull){    	
       if (bFull == this.bFullView) {
-      	console.log('RET');
       	return;
       }
       

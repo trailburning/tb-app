@@ -43,7 +43,6 @@ define([
  	      nHeight = 1050;
  	    }
  	    
-// 	    strImage = 'http://tbmedia.imgix.net//media.trailburning.com'+model.get('versions')[0].path+'?fm=jpg&q=80&w=1280&fit=fill';
  	    strImage = 'http://tbmedia.imgix.net//media.trailburning.com'+model.get('versions')[0].path+'?fm=jpg&q=80&w='+nWidth+'&fit=fill';
 	  	if (Number(model.get('tags').height) > Number(model.get('tags').width)) {
 	  	  // fix width and height and add background

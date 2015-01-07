@@ -20,9 +20,16 @@ body, html {
   width: 100%;
 }
 
+#trail_view .line_break {
+  float: left;
+  width: 100%;
+  height: 8px;
+  background: url(../img/trailplayer/trans_line.png) repeat-x top left;
+}
+
 .royalSlider,
 .location_map {	
-  height: 300px;	
+  height: 240px;	
 }
 
 .royalSlider {
@@ -120,11 +127,77 @@ body, html {
   from {transform: rotate(0deg);}
   to {transform: rotate(359deg);}
 }
- 
+
+/* VIEW BTNS */
+/******************************************/
+#view_btns {
+  display: none;
+  z-index: 100;
+  position: absolute;
+  top: 354px;
+  right: 254px;
+  width: 53px;
+  height: 54px;
+}
+
+#view_btns div {
+  display: none;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+
+#view_btns div:hover {
+  cursor: pointer;  
+}
+
+/* TRAIL ALTITUDE VIEW */
+/******************************************/
+#trail_altitude_view {
+  display: none;
+  border: none;
+  float: left;
+  top: 348px;
+  left: 12px;
+  width: 600px;
+  height: 200px;
+}
+
+.trail_altitude_panel .profile {
+  position: absolute;
+}
+
+.trail_altitude_panel .profile .marker_container .alt {
+  position: absolute;
+  bottom: 0px;
+  left: 10px;
+  font-family: "Arial";  
+  font-size: 14px;
+  color: #44B6F7;
+  text-align: right;
+}
+
+.trail_altitude_panel .profile .tb-map-marker {
+  z-index: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+
 #content_view {
   width: 100%;
   margin: 0 auto;
   text-align: center;
+}
+
+#content_view .line_break {
+/*	
+position: absolute;
+top: 0px;
+*/
+  width: 100%;
+  height: 8px;
+  background: url(../img/trailplayer/trans_line.png) repeat-x top left;
 }
 
 #content_view img {
@@ -132,39 +205,56 @@ body, html {
 }
  
 @media (min-width: 768px) {
+  #trail_view .line_break {  	
+    display: none;
+  }
+
+  .royalSlider,
+  .location_map {	
+    height: 460px;	
+  }
+	
+  .mini {
+    z-index: 100;
+    float: none;
+    position: absolute;
+    top: 288px;
+    right: 12px;
+    width: 300px;
+    height: 160px;
+    background: rgba(0, 0, 0, 0.4);  
+    border: 2px solid rgba(0, 0, 0, 0.5);;  
+  }	
+
+  .royalSlider.mini .rsOverflow {
+    width: 300px;
+    height: 160px;
+  }
+
+  #view_btns {
+    display: block;
+    top: 294px;
+  }
+}
+
+@media (min-width: 992px) {
   .royalSlider,
   .location_map {	
     height: 560px;	
   }
-	
-  .royalSlider.mini {
-    z-index: 100;
-    float: none;
-    position: absolute;
-    top: 348px;
-    right: 12px;
+  
+  .mini {
+  	top: 348px;
     width: 300px;
     height: 200px;
-    background: rgba(0, 0, 0, 0.4);  
-    border: 2px solid rgba(0, 0, 0, 0.5);;  
-  }
-
+  }	  
+  
   .royalSlider.mini .rsOverflow {
     width: 300px;
     height: 200px;
   }
-
-  .location_map.mini {	
-    z-index: 100;
-    position: absolute;
-    top: 348px;
-    right: 12px;
-    width: 300px;
-    height: 200px;
-    background: rgba(0, 0, 0, 0.4);  
-    border: 2px solid rgba(0, 0, 0, 0.5);;  
-  }	
-}
-
-@media (min-width: 992px) {
+  
+  #view_btns {
+    top: 354px;
+  }  
 }

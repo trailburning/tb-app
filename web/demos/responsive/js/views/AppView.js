@@ -3,8 +3,9 @@ define([
   'backbone',
   'models/TrailMediaModel',
   'views/TrailSliderView',
-  'views/TrailMapView'
-], function(_, Backbone, TrailMediaModel, TrailSliderView, TrailMapView){
+  'views/TrailMapView',
+  'views/TrailAltitudeView'
+], function(_, Backbone, TrailMediaModel, TrailSliderView, TrailMapView, TrailAltitudeView){
 
   var AppView = Backbone.View.extend({
     initialize: function(){
@@ -24,31 +25,33 @@ define([
 	  
       this.trailSliderView = new TrailSliderView({ el: '.royalSlider', model: this.model, mediaCollection: this.mediaCollection, mediaModel: this.mediaModel });                  
 	  this.trailMapView = new TrailMapView({ el: '#location_map', elCntrls: '#view_map_btns', model: this.model });
+	  this.trailAltitudeView = new TrailAltitudeView({ el: '#trail_altitude_view', model: this.model });
 	  	  
 	  this.bFullMap = false
 	  
-	  $('#location_map').addClass('mini');
-	  $('.toggle-btn').click(function(evt){
-	  	switch (self.bFullMap) {
-	  	  case true:
-	  	    self.bFullMap = false;
-	  	    $('#location_map').addClass('mini');
-	  	    $('.royalSlider').removeClass('mini');
-	  	    self.trailSliderView.render();
-//	  	    self.trailMapView.render();
-	  	    self.trailMapView.setView(false);
-	  	    break;
+	  $('#view_btns .map_btn').click(function(evt){
+	    self.bFullMap = true;
+	  	$('#view_btns .map_btn').hide();
+	  	$('#view_btns .photo_btn').show();
 	  	    
-	  	  case false:
-	  	    self.bFullMap = true;
-	  	    $('#location_map').removeClass('mini');
-	  	    $('.royalSlider').addClass('mini');
-	  	    self.trailSliderView.render();
-//	  	    self.trailMapView.render();
-	  	    self.trailMapView.setView(true);	  	    
-	  	    break;	  		
-	  	}
-	  });	  	  
+	  	$('#location_map').removeClass('mini');
+	  	$('.royalSlider').addClass('mini');
+	  	self.trailSliderView.render();
+	  	self.trailMapView.setView(true);	  	    	  	
+	  });
+	  
+	  $('#view_btns .photo_btn').click(function(evt){
+  	    self.bFullMap = false;
+  	    $('#view_btns .photo_btn').hide();
+  	    $('#view_btns .map_btn').show();
+  	    
+  	    $('#location_map').addClass('mini');
+  	    $('.royalSlider').removeClass('mini');
+  	    self.trailSliderView.render();
+  	    self.trailMapView.setView(false);
+	  });
+	  
+	  $('#location_map').addClass('mini');
 	  	  
       $(window).resize(function() {
         self.handleResize();
@@ -69,17 +72,13 @@ define([
       });      
 	},	
 	handleResize: function(){
-	  console.log('r:'+$('.location_map').hasClass('mini'));
-	  console.log('t:'+$('.location_map').css('float'));
+	  // update map based on how the map is being displayed.
 	  if ($('.location_map').css('float') == 'none') {
-	  	console.log('MINI');
 	  	this.trailMapView.setView(false);
 	  }
 	  else {
-	  	console.log('FULL');
 	  	this.trailMapView.setView(true);
 	  }
-
 	},
     handleMedia: function(){
       var self = this;
@@ -92,20 +91,27 @@ define([
       	var model = new Backbone.Model(media);
         self.mediaCollection.add(model);      
         self.trailMapView.addMedia(model);
+        self.trailAltitudeView.addMedia(model);
       });
+      
+      this.trailAltitudeView.render();
       this.trailMapView.renderMarkers();
       this.trailSliderView.render();
+      
+	  $('#view_btns .map_btn').show();
       
       this.handleResize();
 	},
     onTrailSlideChanged: function(nSlide){
       this.trailMapView.gotoMedia(nSlide);
+      this.trailAltitudeView.gotoMedia(nSlide);
 	},
     onTrailMapMediaMarkerClick: function(mapMediaMarkerView){
       // look up model in collection
       var nMedia = this.mediaCollection.indexOf(mapMediaMarkerView.model);
       
       this.trailSliderView.gotoMedia(nMedia);
+      this.trailAltitudeView.gotoMedia(nSlide);
     },
 	
   });
