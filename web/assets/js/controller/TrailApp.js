@@ -4,10 +4,11 @@ define([
   'underscore', 
   'modernizr',
   'backbone',
+  'royalslider',
   'models/TrailModel',
   'views/TrailView',
   'views/SearchView'    
-], function(_, Modernizr, Backbone, TrailModel, AppView, SearchView){
+], function(_, Modernizr, Backbone, royalslider, TrailModel, AppView, SearchView){
   app.dispatcher = _.clone(Backbone.Events);
     
   var initialize = function() {

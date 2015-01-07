@@ -42,12 +42,8 @@ define([
       $('#trailplayer').show();
       $('.panel_container').show();
       $('#footerview').show();
-      
-      // show loader
-      $('#tb-loader-overlay').fadeIn();
-      
+            
       // get trail    
-      console.log(this.options.nTrail);
       this.model.set('id', this.options.nTrail);             
       this.model.fetch({
         success: function () {        
@@ -185,8 +181,8 @@ define([
       $(document).keydown(function(e){
       	switch (e.keyCode) {
       	  case 27: // close player
-            e.preventDefault();
-            self.trailPlayerView.hidePlayer();
+//            e.preventDefault();
+//            self.trailPlayerView.hidePlayer();
       	    break;
       	  case 13: // toggle overlay
             e.preventDefault();
