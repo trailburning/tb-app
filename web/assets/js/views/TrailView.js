@@ -47,6 +47,7 @@ define([
       $('#tb-loader-overlay').fadeIn();
       
       // get trail    
+      console.log(this.options.nTrail);
       this.model.set('id', this.options.nTrail);             
       this.model.fetch({
         success: function () {        
@@ -95,7 +96,6 @@ define([
       }
     	
       var strURL = TB_RESTAPI_BASEURL + '/v1/route/'+nTrail+'/' + strMethod;
-      console.log(strURL);      
       $.ajax({
         type: "PUT",
         dataType: "json",
