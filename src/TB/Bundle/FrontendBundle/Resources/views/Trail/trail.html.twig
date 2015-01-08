@@ -69,7 +69,6 @@ var TB_TRAIL_ID = {{ trail.id }};
             </div>
         </div>
         <div id="trail_overlay">
-        	<div class="overlay_background"></div>
             <div class="overlay_content">
                 <div id="trail_stats_view" class="trailstats_panel"></div>
                 <div id="trail_altitude_view" class="trail_altitude_panel"></div>
@@ -84,47 +83,6 @@ var TB_TRAIL_ID = {{ trail.id }};
                 </div>
             </div>
         </div>        
-    	<div id="player_big_btn"></div>        
-        <div id="trail_intro_view">
-			<div class="info-hero tb-move-horiz">				  						  				
-			  <div class="trail_title tb-move-horiz {% if event %} no_avatar{% endif %}">
-                {% if event %}
-                  <h2 class="tb tb-title">{{ event.title }}</h2>
-                  <br/>
-                  <h2 class="tb tb-title">{{ trail.name }}</h2>
-                {% else %}                
-                  <h2 class="tb tb-title">{{ trail.name }}</h2>
-                  <br/>
-                  <h2 class="tb tb-title">{{ trail.region }}</h2>
-                {% endif %}                
-                {% if user.id != 1 %}
-                    <br/> 
-                    {% if user is UserProfile %}
-                        <div class="author">by <strong>{{ user.firstName }} {{ user.lastName }}</strong></div>
-                    {% elseif user is BrandProfile %}
-                        <div class="author">by <strong>{{ user.displayName }}</strong></div>
-                    {% endif %}
-                {% endif %}                
-                
-                {#
-	        	{% if user.isAmbassador %}
-		        	Ambassador	        
-				{% endif %}				
-				#}            
-              </div>
-              
-        	  {% if event or user is BrandProfile %}
-	          {% else %}
-	          	<div class="trail_avatar">
-		        	<div class="tb-avatar tb-avatar-feature"><div class="photo"><a href="{{ path('profile', {'name': user.name}) }}"><img src="{{ get_user_avatar_url(user) }}"></a></div></div>
-		        </div>
-	          {% endif %}
-              
-              <div class="trail_play">
-              	<div class="trail_btn"></div>Play Trail	
-			  </div>              	
-			</div>        	
-		</div>        	
                 
     	{% if event %}
 			<div class="event_logo">
@@ -145,33 +103,6 @@ var TB_TRAIL_ID = {{ trail.id }};
         {% endif %}
         
         
-        <div id="trail_info">           	
-        	{% if event %}
-        	{% else %}
-	            <div class="trail_avatar">
-	            	<div class="tb-avatar tb-avatar-feature"><div class="photo"><a href="{{ path('profile', {'name': user.name}) }}"><img src="{{ get_user_avatar_url(user) }}"></a></div></div>
-	            </div>
-            {% endif %}
-            <div class="trail_title{% if event %} no_avatar{% endif %}">
-                {% if event %}
-                    <h2 class="tb tb-title">{{ event.title }}</h2>
-                    <br/>
-                    <h2 class="tb tb-title">{{ trail.name }}</h2>
-                {% else %}
-                    <h2 class="tb tb-title">{{ trail.name }}</h2>
-                    <br/>
-                    <h2 class="tb tb-title">{{ trail.region }}</h2>
-                {% endif %}
-                {% if user.id != 1 %}
-                    <br/> 
-                    {% if user is UserProfile %}
-                        <div class="author">by <strong>{{ user.firstName }} {{ user.lastName }}</strong></div>
-                    {% elseif user is BrandProfile %}
-                        <div class="author">by <strong>{{ user.displayName }}</strong></div>
-                    {% endif %}
-                {% endif %}
-            </div>
-        </div>
         <div id="view_map_btns">        
             <div class='controls'>
                 <span class="btn btn-tb zoomin_btn">+</span>          
@@ -179,13 +110,6 @@ var TB_TRAIL_ID = {{ trail.id }};
                 <span class="btn btn-tb view_btn">Satellite</span>          
             </div>    
         </div>    
-        <div id="view_player_btns">
-          	<div class="close_btn"></div>	
-<!--        	
-            <div id="slideshow_toggle"><span class="button"></span></div>
-            <div id="view_toggle"><span id="view_toggle_btn" class="button">Change View</span></div>
--->            
-        </div>
     </div>
   
     <div class="panel_container">       
@@ -416,6 +340,43 @@ var TB_TRAIL_ID = {{ trail.id }};
 
 <script src="{{ asset('assets/js/libs/jquery.ui.widget.js') }}"></script>
 <script src="{{ asset('assets/js/libs/jquery.touchwipe.min.js') }}"></script>
+
+<script type="text/template" id="trailDetailTemplate">
+	<div class="trail_details">				  						  				
+	  <div class="trail_title {% if event %} no_avatar{% endif %}">
+	    {% if event %}
+	      <h2 class="tb tb-title">{{ event.title }}</h2>
+	      <br/>
+	      <h2 class="tb tb-title">{{ trail.name }}</h2>
+	    {% else %}                
+	      <h2 class="tb tb-title">{{ trail.name }}</h2>
+	      <br/>
+	      <h2 class="tb tb-title">{{ trail.region }}</h2>
+	    {% endif %}                
+	    {% if user.id != 1 %}
+	        <br/> 
+	        {% if user is UserProfile %}
+	            <div class="author">by <strong>{{ user.firstName }} {{ user.lastName }}</strong></div>
+	        {% elseif user is BrandProfile %}
+	            <div class="author">by <strong>{{ user.displayName }}</strong></div>
+	        {% endif %}
+	    {% endif %}                
+	    
+	    {#
+		{% if user.isAmbassador %}
+	    	Ambassador	        
+		{% endif %}				
+		#}            
+	  </div>
+	  
+	  {% if event or user is BrandProfile %}
+	  {% else %}
+	  	<div class="trail_avatar">
+	    	<div class="tb-avatar tb-avatar-feature"><div class="photo"><a href="{{ path('profile', {'name': user.name}) }}"><img src="{{ get_user_avatar_url(user) }}"></a></div></div>
+	    </div>
+	  {% endif %}
+	</div>        	
+</script>
 
 <script type="text/template" id="trailStatsViewTemplate">
   <div class="content">

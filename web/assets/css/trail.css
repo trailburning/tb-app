@@ -115,7 +115,7 @@ html.touch #small_sponsor_bar {
 #trailplayer {
   position: relative;
   width: 100%;  
-  height: 560px;
+  height: 448px;
   overflow: hidden;
 }
 
@@ -131,6 +131,7 @@ html.touch #small_sponsor_bar {
   position: relative;
   width: 100%;
   height: 100%;  
+  background: #000;
 }
 
 #trail_overlay {
@@ -141,17 +142,6 @@ html.touch #small_sponsor_bar {
   height: 228px;
 }
 
-#trail_overlay .overlay_background {
-  position: absolute;
-  width: 100%;
-  height: 100%;  
-  background: url(../img/trailplayer/overlay_background.png) repeat-x top left;
-  opacity: 0;
-  transition: opacity 0.5s ease-in-out;
-  -moz-transition: opacity 0.5s ease-in-out;
-  -webkit-transition: opacity 0.5s ease-in-out;
-}
-
 #trail_overlay .overlay_content {
   position: relative;
   top: 0px;  
@@ -159,58 +149,6 @@ html.touch #small_sponsor_bar {
   height: 100%;
   margin: 0px auto 0px auto;
   overflow: hidden;
-}
-
-/* TRAIL INTRO VIEW */
-/******************************************/
-#trail_intro_view {
-  z-index: 1000;
-  position: absolute;
-  top: 0px;
-}
-
-#trail_intro_view .info-hero {
-  position: absolute;
-  top: 0px;
-  left: -800px;
-  width: 412px;
-  height: 1000px;
-  background: url(../img/trailplayer/background_skew.png) no-repeat top left;  
-}
-
-#trail_intro_view .info-hero .trail_avatar {
-  position: absolute;
-  top: 36px;
-  left: 20px;
-}
-
-#trail_intro_view .info-hero .trail_title {
-  position: relative;
-  top: 36px;
-  left: -200px;
-}
-
-#trail_intro_view .info-hero .trail_play {
-  position: absolute;
-  top: 332px;
-  left: 40px;
-  font-size: 42px;
-  line-height: 75px;
-  color: #FFF;
-  font-weight: 400;
-  text-transform: uppercase;
-}
-
-#trail_intro_view .info-hero .trail_play .trail_btn {
-  float: left;
-  margin-right: 18px;
-  width: 75px;
-  height: 75px;
-  background: url(../img/trailplayer/play_toggle.png) no-repeat top left;  
-}
-
-#trail_intro_view .info-hero .trail_play:hover .trail_btn {
-  background-position: 0 -75px;
 }
 
 /* TRAIL STATS VIEW */
@@ -318,6 +256,7 @@ html.touch #small_sponsor_bar {
 /* TRAIL ALTITUDE VIEW */
 /******************************************/
 #trail_altitude_view {
+  display: none;
   position: absolute;
   top: 350px;
   left: 256px;
@@ -504,7 +443,48 @@ html.touch #small_sponsor_bar {
   display: none;
   float: left;
   width: 100%;
-  height: 560px;
+  height: 448px;  
+  background: #000;
+}
+
+.royalSlider.rsDefault .rsOverflow, .royalSlider.rsDefault .rsSlide {
+  background: #000;
+}
+
+.royalSlider .trail_details {
+  position: absolute;
+  top: 36px;
+  left: 20px;
+}
+
+.royalSlider .trail_avatar {
+  float: left;
+  width: 180px;
+}
+
+.royalSlider .trail_avatar img {
+  width: 100%;
+}
+
+.royalSlider .no_avatar {
+  left: 0px;
+}
+
+.royalSlider .trail_title {
+  float: left;
+}
+
+.royalSlider .trail_title .author {
+  display: inline-block;
+  margin: 13px 0px 0px 2px;
+  padding: 5px 10px 5px 10px;
+  font-size: 22px;
+  line-height: 1em;
+  font-weight: 400;
+  color: #FFF;
+  border: none;
+  background-color: #000;  
+  background: rgba(0, 0, 0, 0.6);  
 }
 
 .rsDefault .rsPreloader { 
@@ -812,48 +792,6 @@ html.touch #small_sponsor_bar {
 
 #trailplayer .campaign_logo img {
   width: 100%;
-}
-
-#trailplayer #trail_info {
-  position: absolute;
-  top: -300px;
-  left: 24px;
-}
-
-#trailplayer .trail_avatar {
-  position: absolute;
-  top: -300px;
-  left: 0px;
-  width: 130px;
-}
-
-#trailplayer .trail_avatar img {
-  width: 100%;
-}
-
-#trailplayer .trail_title {
-  position: relative;
-  top: -100px;
-  left: 144px;
-  color: #44b6f7;
-  white-space: nowrap;
-}
-
-#trailplayer .no_avatar {
-  left: 0px;
-}
-
-#trailplayer .trail_title .author {
-  display: inline-block;
-  margin: 13px 0px 0px 2px;
-  padding: 5px 10px 5px 10px;
-  font-size: 22px;
-  line-height: 1em;
-  font-weight: 400;
-  color: #FFF;
-  border: none;
-  background-color: #000;  
-  background: rgba(0, 0, 0, 0.6);  
 }
 
 /* VIEW CNTRLS */
@@ -1555,13 +1493,6 @@ html.touch #small_sponsor_bar {
  
 /* Medium devices (desktops, 992px and up) */
 @media (max-width: 1199px) {	
-  #trail_overlay .overlay_content {
-    width: 992px;
-  }	  
-  #trailplayer .trail_title {
-    position: relative;
-    left: 128px;
-  }
   #trail_stats_view {
     position: absolute;
     width: 194px;

@@ -33,7 +33,6 @@ define([
       this.trailActivitiesView = new TrailActivitiesView({ el: '#trailactivities_view', model: this.model, bReadonly: true });
       
       this.buildBtns();      
-      this.trailPlayerView.updatePlayerHeight();
       
       $(window).resize(function() {
         self.handleResize();
