@@ -11,15 +11,19 @@ define([
     },            
     setActive: function(bActive){
       if (bActive) {
-        $('.marker', this.el).addClass('marker_active');        
-        $('.marker', this.el).css('zIndex', 200);
+      	$('.tb-map-marker', this.el).addClass('focus');
+        $('.tb-map-marker', this.el).css('zIndex', 200);      	
+//        $('.marker', this.el).addClass('marker_active');        
+//        $('.marker', this.el).css('zIndex', 200);
 
         $('.alt', this.el).show();
         $('.alt', this.el).css({ opacity: 1 });
       }
       else {
-        $('.marker', this.el).removeClass('marker_active');        
-        $('.marker', this.el).css('zIndex', 100);
+      	$('.tb-map-marker', this.el).removeClass('focus');
+        $('.tb-map-marker', this.el).css('zIndex', 100);      	
+//        $('.marker', this.el).removeClass('marker_active');        
+//        $('.marker', this.el).css('zIndex', 100);
         
         $('.alt', this.el).css({ opacity: 0 });
       }
@@ -34,7 +38,7 @@ define([
       elAlt.html(Math.round(this.model.get('tags').altitude) + ' m');
       elAlt.addClass('tb-fade');
       
-      var elMarker = $('.marker', this.el); 
+      var elMarker = $('.tb-map-marker', this.el); 
 
       elMarker.mouseover(function(evt){              
         $(evt.currentTarget).css('cursor','pointer');      

@@ -53,7 +53,9 @@ define([
       }
       if (this.arrMediaPoints.length) {      
         this.currMediaMarker = this.arrMediaPoints[nMedia];
-        this.currMediaMarker.setActive(true);
+        if (this.currMediaMarker) {
+          this.currMediaMarker.setActive(true);	
+        }        
       }
     },    
     addMedia: function(mediaModel){

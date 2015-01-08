@@ -65,11 +65,44 @@ var TB_TRAIL_ID = {{ trail.id }};
     <div id="trailplayer">
         <div id="trail_views">        
             <div id="trail_slides_view" class="royalSlider rsDefault"></div>
-            <div id="trail_map_view" class="trail_map_view"></div>
+            <div id="trail_map_view" class="trail_map_view tb-move-vert"></div>
+            <div id="trail_author_view" class="tb-move-vert">
+				<div class="trail_details">
+				  {% if event or user is BrandProfile %}
+				  {% else %}
+				  	<div class="trail_avatar">
+				    	<div class="tb-avatar tb-avatar-feature"><div class="photo"><a href="{{ path('profile', {'name': user.name}) }}"><img src="{{ get_user_avatar_url(user) }}"></a></div></div>
+				    </div>
+				  {% endif %}
+				  <div class="trail_title {% if event %} no_avatar{% endif %}">
+				    {% if event %}
+				      <h2 class="tb tb-title">{{ event.title }}</h2>
+				      <br/>
+				      <h2 class="tb tb-title">{{ trail.name }}</h2>
+				    {% else %}                
+				      <h2 class="tb tb-title">{{ trail.name }}</h2>
+				      <br/>
+				      <h2 class="tb tb-title">{{ trail.region }}</h2>
+				    {% endif %}                
+				    {% if user.id != 1 %}
+				        <br/> 
+				        {% if user is UserProfile %}
+				            <div class="author">by <strong>{{ user.firstName }} {{ user.lastName }}</strong></div>
+				        {% elseif user is BrandProfile %}
+				            <div class="author">by <strong>{{ user.displayName }}</strong></div>
+				        {% endif %}
+				    {% endif %}                
+				    
+				    {#
+					{% if user.isAmbassador %}
+				    	Ambassador	        
+					{% endif %}				
+					#}            
+				  </div>				  
+				</div>        	
+            </div>
         </div>
-        
-		<div id="trail_altitude_view" class="trail_altitude_panel"></div>
-        
+                
 {#        
         <div id="trail_overlay">
             <div class="overlay_content">
@@ -174,6 +207,8 @@ var TB_TRAIL_ID = {{ trail.id }};
 							</div>    
                         </div>  
                         <div class="right">
+							<div id="trail_altitude_view" class="panel trail_altitude_panel"></div>
+                        	
                         	<div id="trail_location_view" class="panel trail_location_panel">
 				                <div class="content">
 				                    <div id="trail_location_map" class="trail_location_map" data-url="{{ path('map_trails_trail', {routeSlug: trail.slug}) }}"></div>
@@ -237,7 +272,7 @@ var TB_TRAIL_ID = {{ trail.id }};
 				                            <h3 class="tb">{{ eventTrail.routeType ? eventTrail.routeType.name : 'Run' }}</h3>
 				                            <a href="{{ path('trail', {trailSlug: eventTrail.slug}) }}">
 				                                <div class="photo tb-photo-btn">
-				                                    <div class="image_container"><img src="http://app.resrc.it/{{ eventTrail.favouriteMedia.absolutePath }}" class="resrc scale" border="0"/></div>
+				                                    <div class="image_container fade_on_load"><img src="http://app.resrc.it/{{ eventTrail.favouriteMedia.absolutePath }}" class="resrc scale" border="0"/></div>
 				                                    <div class="card_title">
 				                                        {% if eventTrail.eventRoutes[0].date %}
 				                                            <h1>{{ eventTrail.eventRoutes[0].date|date('d.m.y') }}</h1>
@@ -346,43 +381,6 @@ var TB_TRAIL_ID = {{ trail.id }};
 <script src="{{ asset('assets/js/libs/jquery.ui.widget.js') }}"></script>
 <script src="{{ asset('assets/js/libs/jquery.touchwipe.min.js') }}"></script>
 
-<script type="text/template" id="trailDetailTemplate">
-	<div class="trail_details">				  						  				
-	  <div class="trail_title {% if event %} no_avatar{% endif %}">
-	    {% if event %}
-	      <h2 class="tb tb-title">{{ event.title }}</h2>
-	      <br/>
-	      <h2 class="tb tb-title">{{ trail.name }}</h2>
-	    {% else %}                
-	      <h2 class="tb tb-title">{{ trail.name }}</h2>
-	      <br/>
-	      <h2 class="tb tb-title">{{ trail.region }}</h2>
-	    {% endif %}                
-	    {% if user.id != 1 %}
-	        <br/> 
-	        {% if user is UserProfile %}
-	            <div class="author">by <strong>{{ user.firstName }} {{ user.lastName }}</strong></div>
-	        {% elseif user is BrandProfile %}
-	            <div class="author">by <strong>{{ user.displayName }}</strong></div>
-	        {% endif %}
-	    {% endif %}                
-	    
-	    {#
-		{% if user.isAmbassador %}
-	    	Ambassador	        
-		{% endif %}				
-		#}            
-	  </div>
-	  
-	  {% if event or user is BrandProfile %}
-	  {% else %}
-	  	<div class="trail_avatar">
-	    	<div class="tb-avatar tb-avatar-feature"><div class="photo"><a href="{{ path('profile', {'name': user.name}) }}"><img src="{{ get_user_avatar_url(user) }}"></a></div></div>
-	    </div>
-	  {% endif %}
-	</div>        	
-</script>
-
 <script type="text/template" id="trailStatsViewTemplate">
   <div class="content">
     <div class="trail_player_cntrls">
@@ -416,7 +414,7 @@ var TB_TRAIL_ID = {{ trail.id }};
 
 <script type="text/template" id="trailMediaMarkerViewTemplate">
   <div class="marker_container">
-    <div class="marker"></div>
+    <div class="tb-map-marker"><div class="marker"></div></div>
     <div class="alt"></div>  
   </div>
 </script>

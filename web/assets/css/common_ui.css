@@ -1682,10 +1682,10 @@ form label {
 }
 
 .tb-move-vert {
-  -webkit-transition: top 1s;
-  -moz-transition: top 1s;
-  -o-transition: top 1s;
-  transition: top 1s;    
+  -webkit-transition: top 1s, bottom 1s;
+  -moz-transition: top 1s, bottom 1s;
+  -o-transition: top 1s, bottom 1s;
+  transition: top 1s, bottom 1s;    
   -webkit-transform:translate3d(0,0,0);              
 }
 

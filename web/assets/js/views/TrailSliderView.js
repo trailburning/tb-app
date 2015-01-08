@@ -14,6 +14,31 @@ define([
 	  
 	  $('.royalSlider').show();
     },
+    addSlide: function(model){
+ 	  var nWidth = 768;
+ 	  var nHeight = 576;
+ 	  if (Modernizr.mq('only all and (min-width: 768px)')) {
+ 	    nWidth = 992;
+ 	    nHeight = 744;
+ 	  }
+ 	  if (Modernizr.mq('only all and (min-width: 992px)')) {
+ 	    nWidth = 1024;
+ 	    nHeight = 768;
+ 	  }
+ 	  if (Modernizr.mq('only all and (min-width: 1200px)')) {
+ 	    nWidth = 1400;
+ 	    nHeight = 1050;
+ 	  }
+ 	    
+ 	  strImage = 'http://tbmedia.imgix.net//media.trailburning.com'+model.get('versions')[0].path+'?fm=jpg&q=80&w='+nWidth+'&fit=fill';
+	  if (Number(model.get('tags').height) > Number(model.get('tags').width)) {
+	  	// fix width and height and add background
+//	  	strImage = 'http://tbmedia.imgix.net//media.trailburning.com'+model.get('versions')[0].path+'?fm=jpg&q=80&w='+nWidth+'&h='+nHeight+'&fit=fill&bg=000000';
+ 	  }
+ 	    
+ 	  var strHTML = '<div class="rsImg">'+strImage+'</div>';
+	  $(this.el).append(strHTML);
+    },
     render: function(){
       var self = this;
       
@@ -25,36 +50,7 @@ define([
       
       var strImage;
  	  this.mediaCollection.each(function(model) {
-// 	    console.log(model);
-// 	    console.log(model.get('versions')[0].path);
- 	    
- 	    var nWidth = 768;
- 	    var nHeight = 576;
- 	    if (Modernizr.mq('only all and (min-width: 768px)')) {
- 	      nWidth = 992;
- 	      nHeight = 744;
- 	    }
- 	    if (Modernizr.mq('only all and (min-width: 992px)')) {
- 	      nWidth = 1024;
- 	      nHeight = 768;
- 	    }
- 	    if (Modernizr.mq('only all and (min-width: 1200px)')) {
- 	      nWidth = 1400;
- 	      nHeight = 1050;
- 	    }
- 	    
- 	    strImage = 'http://tbmedia.imgix.net//media.trailburning.com'+model.get('versions')[0].path+'?fm=jpg&q=80&w='+nWidth+'&fit=fill';
-	  	if (Number(model.get('tags').height) > Number(model.get('tags').width)) {
-	  	  // fix width and height and add background
-	  	  strImage = 'http://tbmedia.imgix.net//media.trailburning.com'+model.get('versions')[0].path+'?fm=jpg&q=80&w='+nWidth+'&h='+nHeight+'&fit=fill&bg=000000';
- 	    }
- 	    
- 	    var strHTML = '<div class="rsImg">'+strImage+'</div>';
- 	    var index = self.mediaCollection.indexOf(model); 	    
- 	    if (index == 0) {
- 	      strHTML = '<div><div class="rsImg">'+strImage+'</div><div class="trail_details"><div class="trail_avatar rsABlock"><div class="tb-avatar tb-avatar-feature"><div class="photo"><a href="/trailburning/app_dev.php/profile/giacomodangelo"><img src="http://assets.trailburning.com/images/icons/avatars/avatar_man.jpg"></a></div></div></div><div class="trail_title rsABlock"><h2 class="tb tb-title">The Hermitage of St. Liberato</h2><br><h2 class="tb tb-title">Marche</h2><br><div class="author">by <strong>Testing</strong></div></div></div></div>'
- 	    }
-	    $(self.el).append(strHTML);
+ 	  	self.addSlide(model); 	  	
 	  });    	
     		  
       var strTransition = 'slide';

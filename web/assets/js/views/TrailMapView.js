@@ -103,9 +103,11 @@ define([
       
       if (this.arrMapMediaViews.length) {
         this.currMapMediaView = this.arrMapMediaViews[nMedia];
-        this.currMapMediaView.setActive(true);
-        // centre on active marker
-        this.map.panTo(this.currMapMediaView.marker.getLatLng(), {animate: true, duration: 1});
+        if (this.currMapMediaView) {
+          this.currMapMediaView.setActive(true);
+          // centre on active marker
+          this.map.panTo(this.currMapMediaView.marker.getLatLng(), {animate: true, duration: 1});        	
+        }
       }
     },
     addMedia: function(mediaModel){

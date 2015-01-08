@@ -103,21 +103,24 @@ define([
       $('#trail_altitude_view').addClass('tb-move-vert');            
       $('#trail_mini_view').addClass('tb-move-vert');      
       
+      var model;
       // set hero slide if we have one
       if (this.model.get('value').route.media) {
-//      	this.trailSlidesView.setHeroSlideId(this.model.get('value').route.media.id);
+      	model = new Backbone.Model(this.model.get('value').route.media);
+      	this.trailSliderView.addSlide(model);
       }      
       
       var jsonMedia = this.mediaModel.get('value');
       // add to collection
       $.each(jsonMedia, function(key, media) {
-        self.mediaCollection.add(new Backbone.Model(media));      
+	    model = new Backbone.Model(media);
+        self.mediaCollection.push(model);
       });
+      
       // iterate collection
  	  this.mediaCollection.each(function(model) {
         self.trailMapView.addMedia(model);
         self.trailAltitudeView.addMedia(model);
-//        self.trailSlidesView.addMedia(model);
       });      
       
       this.trailAltitudeView.render();
@@ -407,11 +410,15 @@ define([
       this.nCurrSlide = nSlide;
 
       if (this.nCurrSlide == 0) {
+		$('#trail_author_view').addClass('active');
+		$('#trail_map_view').removeClass('active');
  	  }
  	  else {
-        this.trailMapView.gotoMedia(this.nCurrSlide);            	
-        this.trailAltitudeView.gotoMedia(this.nCurrSlide);            	
+	    $('#trail_author_view').removeClass('active');
+	    $('#trail_map_view').addClass('active');	      
  	  }
+      this.trailMapView.gotoMedia(this.nCurrSlide);            	
+      this.trailAltitudeView.gotoMedia(this.nCurrSlide);            	
 	},
     
 /*    
