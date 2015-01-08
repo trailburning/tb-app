@@ -64,14 +64,18 @@ var TB_TRAIL_ID = {{ trail.id }};
 {% endif %}	
     <div id="trailplayer">
         <div id="trail_views">        
-            <div id="trail_map_view"></div>
-            <div id="trail_slides_view" class="royalSlider rsDefault">            	
-            </div>
+            <div id="trail_slides_view" class="royalSlider rsDefault"></div>
+            <div id="trail_map_view" class="trail_map_view"></div>
         </div>
+        
+		<div id="trail_altitude_view" class="trail_altitude_panel"></div>
+        
+{#        
         <div id="trail_overlay">
             <div class="overlay_content">
                 <div id="trail_stats_view" class="trailstats_panel"></div>
                 <div id="trail_altitude_view" class="trail_altitude_panel"></div>
+
                 <div id="trail_mini_view">
                     <div id="trail_minimap_view" class="trail_minimap"></div>                    
                     <div id="trail_minislides_view"></div>                                        
@@ -81,9 +85,10 @@ var TB_TRAIL_ID = {{ trail.id }};
                     <div class='border_bottom'></div>
                     <div class='toggle_btn'></div>                              
                 </div>
+                
             </div>
         </div>        
-                
+#}                
     	{% if event %}
 			<div class="event_logo">
     			<a href="{{ app.request.baseUrl }}/event/{{ event.slug}}"><img src="http://assets.trailburning.com/images/event/{{ event.slug }}/{{ event.logo }}" border="0"></a>

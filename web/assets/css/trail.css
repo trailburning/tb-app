@@ -119,14 +119,6 @@ html.touch #small_sponsor_bar {
   overflow: hidden;
 }
 
-#trailplayer #player_big_btn {
-  z-index: 1000;
-  position: absolute;
-  top: 0px;
-  width: 100%;
-  height: 100%;
-}
-
 #trailplayer #trail_views {
   position: relative;
   width: 100%;
@@ -296,12 +288,19 @@ html.touch #small_sponsor_bar {
 /* TRAIL MINI VIEW */
 /******************************************/
 #trail_mini_view {
+/*	
   position: absolute;
   top: 400px;
   left: 904px;
   width: 254px;
   height: 188px;
   background: rgba(0, 0, 0, 0.4);
+*/    
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 254px;
+  height: 188px;
 }
 
 #trail_mini_view .border_top {  
@@ -345,98 +344,9 @@ html.touch #small_sponsor_bar {
   height: 188px;	
 }
 
-/* TRAIL MINI MAP VIEW */
-/******************************************/
-#trail_minimap_view {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 254px;
-  height: 188px;
-}
-
-#trail_minimap_view #minimap {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 100%;
-  height: 100%;
-  background-color: transparent;
-  cursor: default;   
-}
-
-/* TRAIL MINI SLIDE VIEW */
-/******************************************/
-#trail_minislides_view {
-  visibility: hidden;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 254px;
-  height: 188px;
-  overflow: hidden;
-}
-
-#trail_minislides_view .photos_container {  
-  position: relative;  
-  width: 100%;
-  height: 100%;  
-  overflow: hidden;  
-}
-
-#trail_minislides_view .image_container {
-  position: absolute;
-  opacity: 0;  
-  top: 0px;
-  left: 0px;  
-  width: 100%;
-  height: 100%;  
-  overflow: hidden;
-}
-
-#trail_minislides_view .background_blur .image_container img, #trail_minislides_view .background .image_container img {
-  width: 100%;
-}
-
-#trail_minislides_view .foreground {
-  position: absolute;
-  top: 0px;
-  width: 100%;
-  height: 100%;
-}
-
-#trail_minislides_view .foreground .image_container {
-  position: relative;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-}
-
-#trail_minislides_view .foreground .image_container img {
-  display: block;
-  margin: 0 auto;
-  height: 100%;
-}
-	
-#trail_minislides_view .foreground .image_container {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-}
-
 /* TRAIL SLIDES VIEW */
 /******************************************/
 #trail_slides_view {
-/*	
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 100%;  
-  height: 100%;
-  overflow: hidden;
-*/    
 }
 
 .royalSlider {
@@ -451,15 +361,9 @@ html.touch #small_sponsor_bar {
   background: #000;
 }
 
-.royalSlider .trail_details {
-  position: absolute;
+.royalSlider .trail_avatar {
   top: 36px;
   left: 20px;
-}
-
-.royalSlider .trail_avatar {
-  float: left;
-  width: 180px;
 }
 
 .royalSlider .trail_avatar img {
@@ -471,7 +375,8 @@ html.touch #small_sponsor_bar {
 }
 
 .royalSlider .trail_title {
-  float: left;
+  top: 36px;
+  left: 200px;
 }
 
 .royalSlider .trail_title .author {
@@ -714,8 +619,10 @@ html.touch #small_sponsor_bar {
 /******************************************/
 #trail_map_view {
   position: absolute;
-  top: 0px;
-  left: 0px;
+  bottom: 6px;
+  right: 6px;
+  width: 254px;
+  height: 188px;
 }
 
 #trail_map_view .map_container {
@@ -780,6 +687,7 @@ html.touch #small_sponsor_bar {
 }
 
 #trailplayer .event_logo {
+  z-index: 1000;
   position: absolute;
   top: 23px;
   right: 22px;
@@ -1622,4 +1530,54 @@ html.touch #small_sponsor_bar {
   #editorial_sponsor_bar {
     margin-bottom: 43px;
   }  
+}
+
+@media (min-width: 768px) {
+/*	
+  .royalSlider,
+  .trail_map_view {	
+    height: 460px;	
+  }
+*/	
+  .mini {
+    z-index: 100;
+/*    
+    float: none;
+    position: absolute;
+    top: 288px;
+    right: 12px;
+    width: 300px;
+    height: 160px;
+*/    
+    background: rgba(0, 0, 0, 0.4);  
+    border: 2px solid rgba(0, 0, 0, 0.5);;  
+  }	
+/*
+  .royalSlider.mini .rsOverflow {
+    width: 300px;
+    height: 160px;
+  }
+*/  
+}
+
+@media (min-width: 992px) {
+/*	
+  .royalSlider,
+  .trail_map_view {	
+    height: 560px;	
+  }
+*/  
+  .mini {
+/*  	
+  	top: 348px;
+    width: 300px;
+    height: 200px;
+*/    
+  }	  
+/*  
+  .royalSlider.mini .rsOverflow {
+    width: 300px;
+    height: 200px;
+  }
+*/  
 }

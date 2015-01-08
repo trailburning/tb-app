@@ -18,9 +18,9 @@ define([
       this.currElMarker = null;
       
       this.objTrailMarginRect = new Object();
-      this.strLineColour = '#FFF';
-      this.objTrailMarginRect.left = 75;// allow space to alt title
-      this.objTrailMarginRect.right = 50;
+      this.strLineColour = '#44B6F7';
+      this.objTrailMarginRect.left = 20;// allow space to alt title
+      this.objTrailMarginRect.right = 20;
       this.objTrailMarginRect.top = 40;
       this.objTrailMarginRect.bottom = 60;
       
@@ -51,7 +51,6 @@ define([
       if (this.currMediaMarker) {
         this.currMediaMarker.setActive(false);
       }
-      
       if (this.arrMediaPoints.length) {      
         this.currMediaMarker = this.arrMediaPoints[nMedia];
         this.currMediaMarker.setActive(true);
@@ -158,7 +157,7 @@ define([
       
       this.context.beginPath();
 
-      this.context.fillStyle = 'rgba(255,255,255,1)';
+      this.context.fillStyle = 'rgba(68,182,247,1)';
       this.context.font = nTextHeight + 'px Arial';
       this.context.textAlign = 'center';
       
@@ -189,7 +188,7 @@ define([
       }
               
       this.context.lineWidth = 2;
-      this.context.strokeStyle = 'rgba(255,255,255,1)';
+      this.context.strokeStyle = 'rgba(68,182,247,1)';
       this.context.stroke();
     },    
     renderTrail: function(jsonPoints, fTrailLengthMetres) {
@@ -281,12 +280,8 @@ define([
         nX -= 7;
         nY -= 7;
       
-        $('.marker', viewMediaMarkerView.el).css('left', nX);
-        $('.marker', viewMediaMarkerView.el).css('top', nY);
-        
-        $('.alt', viewMediaMarkerView.el).css('left', 0);
-        $('.alt', viewMediaMarkerView.el).width(nXOffset + this.objTrailMarginRect.left - 20);
-        $('.alt', viewMediaMarkerView.el).css('top', nY);        
+        $('.tb-map-marker', viewMediaMarkerView.el).css('left', nX);
+        $('.tb-map-marker', viewMediaMarkerView.el).css('top', nY);
       }      
     }            
   });

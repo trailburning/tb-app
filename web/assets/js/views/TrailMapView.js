@@ -9,10 +9,9 @@ define([
 
   var TrailMapView = Backbone.View.extend({
     initialize: function(){
-      this.template = _.template($('#trailMapViewTemplate').text());        
-            
       this.elCntrls = this.options.elCntrls;            
       this.bRendered = false;
+      this.bFullView = false;
       this.map = null;
       this.polyline = null;
       this.arrLineCordinates = [];
@@ -106,7 +105,7 @@ define([
         this.currMapMediaView = this.arrMapMediaViews[nMedia];
         this.currMapMediaView.setActive(true);
         // centre on active marker
-        this.map.panTo(this.currMapMediaView.marker.getLatLng(), {animate: true, duration: 2});
+        this.map.panTo(this.currMapMediaView.marker.getLatLng(), {animate: true, duration: 1});
       }
     },
     addMedia: function(mediaModel){
@@ -156,7 +155,6 @@ define([
       
 	  var marker = L.marker(this.arrLineCordinates[0]).addTo(this.map);			        
       marker.setIcon(L.divIcon({className: 'tb-map-location-marker', html: '<div class="marker"></div>', iconSize: [22, 30], iconAnchor: [11, 30],}));
-	  $(marker._icon).addClass('selected');
     },        
     render: function(){
       if (!this.model) {
@@ -170,20 +168,22 @@ define([
       // already rendered?  Just update
       if (this.bRendered) {
         this.map.invalidateSize();
-        this.map.fitBounds(this.polyline.getBounds(), {padding: [30, 30], animate: false});
-        this.map.zoomOut(1, {animate: false});
+        if (this.bFullView) {
+          this.map.fitBounds(this.red_polyline.getBounds(), {padding: [30, 30], animate: false});
+        }
+        else {
+          this.map.fitBounds(this.white_polyline.getBounds(), {padding: [30, 30], animate: false});        	
+        }
         return;         
       }        
                 
       var self = this;
-                
-      var attribs = this.model.toJSON();
-      $(this.el).html(this.template(attribs));
                         
-      this.map = L.mapbox.map('map_large', null, {dragging: true, touchZoom: false, scrollWheelZoom:false, doubleClickZoom:false, boxZoom:false, tap:false, zoomControl:false, zoomAnimation:true, attributionControl:false});
-      this.layer_street = L.mapbox.tileLayer('mallbeury.8d4ad8ec');
+      this.map = L.mapbox.map(this.el.id, null, {dragging: true, touchZoom: false, scrollWheelZoom:false, doubleClickZoom:false, boxZoom:false, tap:false, zoomControl:false, zoomAnimation:true, attributionControl:false});
+      this.layer_mini_street = L.mapbox.tileLayer('mallbeury.8f5ac718');     
+      this.layer_full_street = L.mapbox.tileLayer('mallbeury.8d4ad8ec');
       this.layer_sat = L.mapbox.tileLayer('mallbeury.map-eorpnyp3');      
-      this.map.addLayer(this.layer_street);
+      this.map.addLayer(this.layer_mini_street);
 
 	  this.map.on('click', function() {
         for (var nMedia=0; nMedia < self.arrMapMediaViews.length; nMedia++) {
@@ -196,15 +196,25 @@ define([
         self.arrLineCordinates.push([Number(point.coords[1]), Number(point.coords[0])]);        
       });
 
-      var polyline_options = {
+      var white_polyline_options = {
+        color: '#FFF',
+        opacity: 1,
+        weight: 4,
+        clickable: false,
+    	distanceMarkers: { lazy: true }
+      };         
+      this.white_polyline = L.polyline(self.arrLineCordinates, white_polyline_options).addTo(this.map);
+
+      var red_polyline_options = {
         color: '#ed1c24',
         opacity: 1,
         weight: 4,
         clickable: false,
     	distanceMarkers: { lazy: true }
       };         
-      this.polyline = L.polyline(self.arrLineCordinates, polyline_options).addTo(this.map);          
-      this.map.fitBounds(self.polyline.getBounds(), {padding: [30, 30]});
+      this.red_polyline = L.polyline(self.arrLineCordinates, red_polyline_options);
+  
+      this.map.fitBounds(self.white_polyline.getBounds(), {padding: [30, 30]});
                
       this.buildBtns();           
       
@@ -213,7 +223,35 @@ define([
       this.bRendered = true;
                         
       return this;
-    }    
+    },
+    setView: function(bFull){    	
+      if (bFull == this.bFullView) {
+      	return;
+      }
+      
+      if (bFull) {
+      	this.bFullView = true;
+      	
+      	this.red_polyline.addTo(this.map);
+      	this.map.removeLayer(this.white_polyline);
+      	
+        this.map.removeLayer(this.layer_mini_street);
+        this.map.addLayer(this.layer_full_street);  
+        this.layer_full_street.redraw();
+      }
+      else {
+      	this.bFullView = false;
+      	
+      	this.white_polyline.addTo(this.map);
+      	this.map.removeLayer(this.red_polyline);
+      	
+        this.map.removeLayer(this.layer_full_street);
+        this.map.addLayer(this.layer_mini_street);  
+        this.layer_mini_street.redraw();      	
+      }
+      this.render();
+    }
+    
   });
 
   return TrailMapView;

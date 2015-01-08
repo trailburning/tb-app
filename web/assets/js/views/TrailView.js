@@ -192,10 +192,10 @@ define([
           	self.trailPlayerView.toggleSlideshow();      	  
       	    break;
       	  case 37: // previos slide
-			self.trailPlayerView.showPrevSlide();      	  
+//			self.trailPlayerView.showPrevSlide();      	  
       	    break;
       	  case 39: // next slide
-			self.trailPlayerView.showNextSlide();      	  
+//			self.trailPlayerView.showNextSlide();      	  
       	    break;
       	  case 86: // toggle view
 			self.trailPlayerView.toggleView();      	  
