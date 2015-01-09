@@ -99,16 +99,17 @@ define([
       var self = this;
       
       $('#view_map_btns').addClass('tb-move-vert');
-      $('#trail_stats_view').addClass('tb-move-vert');
-      $('#trail_altitude_view').addClass('tb-move-vert');            
-      $('#trail_mini_view').addClass('tb-move-vert');      
       
       var model;
       // set hero slide if we have one
       if (this.model.get('value').route.media) {
+      	console.log('H');
       	model = new Backbone.Model(this.model.get('value').route.media);
       	this.trailSliderView.addSlide(model);
       }      
+      else {
+      	console.log('NO H');
+      }
       
       var jsonMedia = this.mediaModel.get('value');
       // add to collection
@@ -134,7 +135,6 @@ define([
 //	  this.nCurrSlide = this.trailSlidesView.getHeroSlide();
 	  this.nCurrSlide = 0;
 //      this.trailSlidesView.gotoSlide(this.nCurrSlide);
-	  this.trailStatsView.setCurrSlide(this.nCurrSlide+1);
       
       this.bPlayerReady = true;
     },        
@@ -211,7 +211,8 @@ define([
       this.gotoMedia(nSlide);
     },    
     gotoMedia: function(nSlide){          
-//      this.trailSlidesView.gotoSlide(nSlide);
+    	console.log(nSlide);
+      this.trailSliderView.gotoSlide(nSlide+1);
 	  this.trailStatsView.setCurrSlide(nSlide+1);
       
       this.trailMapView.gotoMedia(nSlide);
@@ -219,12 +220,6 @@ define([
       this.trailAltitudeView.gotoMedia(nSlide);
       
       this.nCurrSlide = nSlide;    
-      
-      // render next slide to avoid stalling when in slide show
-      if (nSlide < this.mediaCollection.length-1) {            
-//        this.trailSlidesView.render(nSlide+1);
-      }              
-      this.updatePlayerHeight();      
     },
     toggleSlideshow: function(){
       if (this.nPlayerView != PLAYER_SHOW) {
@@ -412,13 +407,18 @@ define([
       if (this.nCurrSlide == 0) {
 		$('#trail_author_view').addClass('active');
 		$('#trail_map_view').removeClass('active');
+		$('#trail_stats_view').removeClass('active');
+        this.trailMapView.reset();            	
+        this.trailAltitudeView.reset();            	
  	  }
  	  else {
 	    $('#trail_author_view').removeClass('active');
-	    $('#trail_map_view').addClass('active');	      
+	    $('#trail_map_view').addClass('active');
+	    $('#trail_stats_view').addClass('active');	      
+		this.trailStatsView.setCurrSlide(this.nCurrSlide);
+        this.trailMapView.gotoMedia(this.nCurrSlide-1);            	
+        this.trailAltitudeView.gotoMedia(this.nCurrSlide-1);            	
  	  }
-      this.trailMapView.gotoMedia(this.nCurrSlide);            	
-      this.trailAltitudeView.gotoMedia(this.nCurrSlide);            	
 	},
     
 /*    

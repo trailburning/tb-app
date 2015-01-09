@@ -1,4 +1,4 @@
-a/* APP */
+/* APP */
 /******************************************/
 #appview {
 /*  
@@ -171,11 +171,19 @@ html.touch #small_sponsor_bar {
 /* TRAIL STATS VIEW */
 /******************************************/
 #trail_stats_view {
+  z-index: 1000;
   position: absolute;
+  bottom: -100px;
+/*  
   top: 300px;
   left: 0px;
+*/  
   width: 216px;
-  height: 218px;  
+  height: 75px;  
+}
+
+#trail_stats_view.active {
+  bottom: 22px;
 }
 
 .trailstats_panel .content {
@@ -216,7 +224,7 @@ html.touch #small_sponsor_bar {
 
 .trailstats_panel .content .slides {
   position: absolute;  
-  bottom: 64px;
+  bottom: 0px;
   left: 93px;	
   height: 75px;
 }

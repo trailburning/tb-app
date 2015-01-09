@@ -95,6 +95,12 @@ define([
         }
       });
     },
+    reset: function(){
+      if (this.currMapMediaView) {
+        this.currMapMediaView.setActive(false);
+      }
+    },
+    
     gotoMedia: function(nMedia){
       // restore previous
       if (this.currMapMediaView) {

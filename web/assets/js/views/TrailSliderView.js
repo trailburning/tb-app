@@ -39,6 +39,9 @@ define([
  	  var strHTML = '<div class="rsImg">'+strImage+'</div>';
 	  $(this.el).append(strHTML);
     },
+    gotoSlide: function(nSlide){
+      this.slider.goTo(nSlide);
+    },
     render: function(){
       var self = this;
       

@@ -803,6 +803,10 @@ a:active .tb-cntrl {
   display: block;
 }
 
+#headerview .navbar .nav-collapse {
+  background: #1b1b1b;
+}
+
 #headerview .navbar-inner {
   min-height: 45px;
   padding: 0px;

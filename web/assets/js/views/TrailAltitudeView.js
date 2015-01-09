@@ -46,6 +46,11 @@ define([
         }
       }; 
     },            
+    reset: function(){
+      if (this.currMediaMarker) {
+        this.currMediaMarker.setActive(false);
+      }
+    },
     gotoMedia: function(nMedia){
       // restore previous
       if (this.currMediaMarker) {

@@ -36,8 +36,11 @@ define([
 		  	elContainer.css('opacity', 1);
 		  }, nRnd);
     	}
-		// invoke resrc      
-	    resrc.resrc($(image.img));        
+		// invoke resrc
+    	if ($(image.img).hasClass('resrc')) {
+		  // invoke resrc      
+	      resrc.resrc($(image.img));        
+    	}    	  
   	});    
     
   	$('#footerview').show();  	
