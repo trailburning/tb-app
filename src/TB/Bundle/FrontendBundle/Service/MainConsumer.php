@@ -32,7 +32,6 @@ class MainConsumer extends Consumer
         
         $arguments = ['x-dead-letter-exchange' => ['S', 'debug']];
         $this->setQueueOptions(['name' => $container->getParameter('rabbit_mq_main_queue'), 'arguments' => $arguments]);
-        $this->setQueueOptions(['name' => $container->getParameter('rabbit_mq_main_queue')]);
         $this->callback = array($this, 'execute');
         $this->maxConsumerCount = 3;
         $this->ttl = 1800;
