@@ -796,7 +796,7 @@ a:active .tb-cntrl {
 /******************************************/
 #headerview {
   position: relative;
-  z-index: 1001;
+  z-index: 1001;  
 }
 
 #headerview .nav-collapse {
@@ -808,6 +808,7 @@ a:active .tb-cntrl {
 }
 
 #headerview .navbar-inner {
+  position: relative;
   min-height: 45px;
   padding: 0px;
   margin: 0px;
@@ -1784,6 +1785,10 @@ form label {
 }
 
 @media (min-width: 979px) {
+  html.touch #headerview .navbar-fixed-top {
+    position: static;
+  }
+	
   #headerview .logo {  	
     float: left;
     width: auto;
@@ -1802,7 +1807,13 @@ form label {
   #headerview .nav-collapse {
     display: none;
   }
+    
   #bodyview {
     margin-top: 45px;
   }
+  
+  html.touch #bodyview {
+    margin-top: 0px;
+  }
+  
 }

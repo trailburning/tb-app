@@ -174,7 +174,7 @@ var TB_TRAIL_ID = {{ trail.id }};
 				                	
                 {{ include('TBFrontendBundle:Default:share.html.twig') }}
                 </div>
-                
+
                 <div class="panels clearfix">     
                     <div class="two_col_panels">
                         <div class="left">
@@ -210,7 +210,8 @@ var TB_TRAIL_ID = {{ trail.id }};
 					            </div>
 					            <div  id="trailactivities_view" class="activities"></div>                
 							</div>    
-                        </div>  
+                        </div>
+                        
                         <div class="right">
 							<div id="trail_altitude_view" class="panel trail_altitude_panel"></div>
                         	
@@ -319,7 +320,7 @@ var TB_TRAIL_ID = {{ trail.id }};
                             {% endif %}                            
                         </div>  
                     </div>
-                    
+
                     {% if editorial and editorialTrails %}
                         <div class="panel editorial_panel">
                 	
@@ -356,8 +357,8 @@ var TB_TRAIL_ID = {{ trail.id }};
                 </div>                                
             </div>
         	<div class="line_break"></div>            
-        	
-			{% if editorial and editorialTrails %}        	
+              
+  			{% if editorial and editorialTrails %}        	
             	<div id="editorial_sponsor_bar">
 					<div class="sponsor_content">
 						<div class="link"></div>
@@ -373,8 +374,7 @@ var TB_TRAIL_ID = {{ trail.id }};
 					</div>
                 </div>
         	{% endif %}        	
-        </div>
-  
+  		</div>  		
     </div>  
 </div>  
           

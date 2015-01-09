@@ -40,6 +40,7 @@ define([
 	  $(this.el).append(strHTML);
     },
     gotoSlide: function(nSlide){
+    	return;
       this.slider.goTo(nSlide);
     },
     toggleFullscreen: function(){
@@ -70,7 +71,6 @@ define([
 	  }
 	  	  
   	  $(".royalSlider").royalSlider({
-//  	  	imageScaleMode: 'fit-if-smaller',
   	  	imageScaleMode: 'fill',
   	  	controlNavigation: 'none',
   	  	slidesSpacing: 0,
@@ -81,10 +81,7 @@ define([
     	fullscreen: {
     	  enabled: true,
     	  nativeFS: false
-    	},
-    	block: {
-    		// animated blocks options go gere
-    	}    	
+    	}
       });  	
       
 	  this.slider = $(".royalSlider").data('royalSlider');

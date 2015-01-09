@@ -107,6 +107,7 @@ define([
   	  this.trailMapView.render();
 	},
 	handleResize: function(){
+	  this.trailSliderView.render();
 	  // update map based on how the map is being displayed.
 	  if ($('#trail_map_view').css('float') == 'none') {
 	  	this.trailMapView.setView(false);
@@ -114,6 +115,13 @@ define([
 	  else {
 	  	this.trailMapView.setView(true);
 	  }
+	  
+//	  $("#headerview").css("z-index", "5");
+	  
+//	  $('#headerview').hide().show(0);
+	  
+//	  $('#headerview').width($(window).width());
+//	  $('#headerview .navbar-inner').width($(window).width());
 	},
     handleMedia: function(){
       var self = this;
@@ -412,14 +420,12 @@ define([
       if (this.nCurrSlide == 0) {
 		$('#trail_author_view').addClass('active');
 	    $('#trail_map_view').addClass('active');
-//		$('#trail_map_view').removeClass('active');
 		$('#trail_stats_view').removeClass('active');
         this.trailMapView.reset();            	
         this.trailAltitudeView.reset();            	
  	  }
  	  else {
 	    $('#trail_author_view').removeClass('active');
-//	    $('#trail_map_view').addClass('active');
 	    $('#trail_stats_view').addClass('active');	      
 		this.trailStatsView.setCurrSlide(this.nCurrSlide);
         this.trailMapView.gotoMedia(this.nCurrSlide-1);            	
