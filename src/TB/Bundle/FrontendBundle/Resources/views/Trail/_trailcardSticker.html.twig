@@ -1,8 +1,12 @@
 <div class="trail_card_sticker">	  		
 	<div class="panel trail_card_panel">
-	    <div class="title"><h3 class="tb">{{ trail.routeCategory.name }}</h3></div>
+	    <div class="title"><h3 class="tb">{{ trail.routeCategory.name }}</h3></div>	    
         {% if campaign is defined and campaign is not null %}
+          {% if campaigntrails is defined %}
             <a href="{{ path('campaign_trail', {'trailSlug': trail.slug, 'campaignSlug': campaign.slug}) }}">
+          {% else %}
+            <a href="{{ path('trail', {'trailSlug': trail.slug}) }}">
+          {% endif %}
         {% else %}
             <a href="{{ path('trail', {'trailSlug': trail.slug}) }}">
         {% endif %}

@@ -210,7 +210,7 @@ var TB_USER_ID = {{ app.user.id }};
 				    <div class="desc"><h4 class="tb">{{ campaign.popularText }}</h4></div>
 				    <div class="trailcards panels">  	
             	    {% for trail in popularRoutes %}
-            	        {{ include('TBFrontendBundle:Trail:_trailcardSticker.html.twig', {'trail': trail, 'campaign' : campaign}) }}
+            	        {{ include('TBFrontendBundle:Trail:_trailcardSticker.html.twig', {'trail': trail, 'campaign' : campaign, 'campaigntrails': true}) }}
             	    {% endfor %}
 				    </div>
 				  </div>	   	
