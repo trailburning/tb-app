@@ -269,7 +269,7 @@ define([
         url: strURL,
         data: postArray,
         error: function(data) {
-//          console.log('error:'+data.responseText);      
+          console.log('error:'+data.responseText);      
 //          console.log(data);      
         },
         success: function(data) {      
