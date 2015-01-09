@@ -179,26 +179,9 @@ define([
       // keyboard control
       $(document).keydown(function(e){
       	switch (e.keyCode) {
-      	  case 27: // close player
-//            e.preventDefault();
-//            self.trailPlayerView.hidePlayer();
-      	    break;
-      	  case 13: // toggle overlay
+      	  case 13: // toggle fullscreen
             e.preventDefault();
-            self.trailPlayerView.togglePlayer();
-      	    break;
-      	  case 32: // toggle slideshow
-          	e.preventDefault();
-          	self.trailPlayerView.toggleSlideshow();      	  
-      	    break;
-      	  case 37: // previos slide
-//			self.trailPlayerView.showPrevSlide();      	  
-      	    break;
-      	  case 39: // next slide
-//			self.trailPlayerView.showNextSlide();      	  
-      	    break;
-      	  case 86: // toggle view
-			self.trailPlayerView.toggleView();      	  
+            self.trailPlayerView.toggleFullscreen();
       	    break;
       	}
       });

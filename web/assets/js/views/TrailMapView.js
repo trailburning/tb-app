@@ -98,9 +98,17 @@ define([
     reset: function(){
       if (this.currMapMediaView) {
         this.currMapMediaView.setActive(false);
+        
+        var fLatLng;
+        if (this.bFullView) {
+          fLatLng = this.red_polyline.getBounds().getCenter();
+        }
+        else {
+          fLatLng = this.white_polyline.getBounds().getCenter();
+        }
+		this.map.panTo(fLatLng, {animate: true, duration: 1});
       }
-    },
-    
+    },    
     gotoMedia: function(nMedia){
       // restore previous
       if (this.currMapMediaView) {

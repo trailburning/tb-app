@@ -66,7 +66,10 @@ var TB_TRAIL_ID = {{ trail.id }};
 	<div id="trail_view">	
 	    <div id="trail_slides_view" class="royalSlider rsDefault"></div>
 	    <div class="line_break"></div>
-	    <div id="trail_map_view" class="trail_map_view tb-move-vert"></div>	    
+	    <div id="trail_map_view" class="trail_map_view tb-move-vert"></div>
+	    
+	    <div class="toggleBtn"><div class="toggleIcn"></div></div>	    
+	    	    
 	    <div id="trail_stats_view" class="trailstats_panel tb-move-vert"></div>
 	    
 	    <div id="trail_author_view" class="tb-move-vert">
@@ -171,15 +174,12 @@ var TB_TRAIL_ID = {{ trail.id }};
 				                	
                 {{ include('TBFrontendBundle:Default:share.html.twig') }}
                 </div>
-
+                
                 <div class="panels clearfix">     
                     <div class="two_col_panels">
                         <div class="left">
                             <div class="panel trail_detail_panel clearfix">
                                 <div class="content">
-                                	
-                                	<span class="btn toggle">Toggle</span>
-                                	
                                     <h3 class="tb">About the trail</h3>                   
        								{% if event %}
 									{% else %}                                                     

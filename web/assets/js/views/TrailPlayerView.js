@@ -53,7 +53,7 @@ define([
 
 	  $('#trail_map_view').addClass('mini');
 
-	  $('.toggle').click(function(evt){
+	  $('.toggleBtn').click(function(evt){
 	  	if ($('#trail_map_view').hasClass('mini')) {
 	  	  $('#trail_map_view').removeClass('mini');
 	  	  $('.royalSlider').addClass('mini');
@@ -123,13 +123,9 @@ define([
       var model;
       // set hero slide if we have one
       if (this.model.get('value').route.media) {
-      	console.log('H');
       	model = new Backbone.Model(this.model.get('value').route.media);
       	this.trailSliderView.addSlide(model);
       }      
-      else {
-      	console.log('NO H');
-      }
       
       var jsonMedia = this.mediaModel.get('value');
       // add to collection
@@ -158,20 +154,9 @@ define([
       
       this.bPlayerReady = true;
     },        
-    showOverlay: function(){
-      $('.overlay_background').css('opacity', 1);
-
-      $('#trail_stats_view').css('top', 20);
-      $('#trail_altitude_view').css('top', 20);        
-      $('#trail_mini_view').css('top', 20);
-	},
-    hideOverlay: function(){
-	  $('.overlay_background').css('opacity', 0);
-
-      $('#trail_stats_view').css('top', 300);
-      $('#trail_altitude_view').css('top', 350);
-      $('#trail_mini_view').css('top', 400);    
-	},
+    toggleFullscreen: function(){
+      this.trailSliderView.toggleFullscreen();
+    },
     startSlideShow: function(){
       this.nSlideShowState = SLIDESHOW_PLAYING;
 
@@ -426,14 +411,15 @@ define([
 
       if (this.nCurrSlide == 0) {
 		$('#trail_author_view').addClass('active');
-		$('#trail_map_view').removeClass('active');
+	    $('#trail_map_view').addClass('active');
+//		$('#trail_map_view').removeClass('active');
 		$('#trail_stats_view').removeClass('active');
         this.trailMapView.reset();            	
         this.trailAltitudeView.reset();            	
  	  }
  	  else {
 	    $('#trail_author_view').removeClass('active');
-	    $('#trail_map_view').addClass('active');
+//	    $('#trail_map_view').addClass('active');
 	    $('#trail_stats_view').addClass('active');	      
 		this.trailStatsView.setCurrSlide(this.nCurrSlide);
         this.trailMapView.gotoMedia(this.nCurrSlide-1);            	

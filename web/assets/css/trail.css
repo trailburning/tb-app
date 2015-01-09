@@ -196,13 +196,13 @@ html.touch #small_sponsor_bar {
   z-index: 100;
   position: absolute;
   bottom: -100px;
-  left: 16px;
+  left: 8px;
   width: 216px;
   height: 75px;  
 }
 
 #trail_stats_view.active {
-  bottom: 0px;
+  bottom: 8px;
 }
 
 .trailstats_panel .content {
@@ -246,11 +246,6 @@ html.touch #small_sponsor_bar {
   position: absolute;  
   bottom: 0px;
   left: 0px;	
-  height: 75px;
-}
-
-.trailstats_panel .content .slides h2.tb {
-  line-height: 75px;
 }
 
 .trailstats_panel .content h2 {
@@ -389,6 +384,10 @@ html.touch #small_sponsor_bar {
   float: left;
   width: 100%;
   background: #000;
+}
+
+#trail_slides_view.royalSlider.rsFullscreen {
+  border: none;    	
 }
 
 .royalSlider.rsDefault .rsOverflow, .royalSlider.rsDefault .rsSlide {
@@ -923,7 +922,6 @@ html.touch #small_sponsor_bar {
 /* TRAIL ACTIVITY PANEL */
 /******************************************/
 .activity_panel {
-  display: none;
   float: left;
   width: 100%;	
   margin-top: 28px;
@@ -1488,6 +1486,61 @@ html.touch #small_sponsor_bar {
   }        
 }
 
+@media (max-width: 968px) {	  
+  .panel_content {
+    width: 100%;
+    margin-bottom: 64px;
+  	text-align: center;
+  }
+
+  #bigbar {
+  	display: inline-block;
+    width: 95%;
+  }
+   
+  .panels {
+    clear: both;	
+  }
+  
+  .two_col_panels {
+    position: relative;
+  	clear: both;
+  	width: 100%;
+  	margin: 0 auto;
+  	text-align: center;
+  	display: inline;
+  }
+  
+  .two_col_panels .left,
+  .two_col_panels .right {
+  	width: 100%;  	
+  }
+  
+  .panel {
+  	margin: 0px 24px 24px 24px;
+    width: 472px;
+  	display: inline-block;
+  	text-align: left;
+  	float: none;
+  }
+
+  #trail_altitude_view {
+	margin: 0px 24px 24px 24px;
+  }
+
+  .activity_panel {
+  	margin: 0px 24px 24px 24px;
+    width: 472px;
+  	display: inline-block;
+  	text-align: left;
+  	float: none;
+  }
+   
+  .recommend_panel {
+  	display: none;
+  }
+}
+
 /* Small devices (tablets, 768px) */
 @media (max-width: 768px) {  
 }
@@ -1515,6 +1568,34 @@ html.touch #small_sponsor_bar {
     height: 448px;  	
   }
  
+  .toggleBtn {
+  	z-index: 101;
+	right: 220px;
+	bottom: 154px;
+	width: 44px;
+	height: 44px;	
+	display: block;
+	position: absolute;
+	cursor: pointer;
+  }
+
+  .toggleIcn {
+	display: block;
+	margin: 6px;
+	width: 32px;
+	height: 32px;
+	background: url('../royalslider/skins/default/rs-default.png') 0 0;
+	background-color: #000;
+	background-color: rgba(0,0,0,0.75);
+	border-radius: 2px;
+  }
+  .toggleIcn:hover {
+	background-color: rgba(0,0,0,0.9);
+  }
+  .toggleIcn {
+	background-position: -32px 0;
+  }
+
   .royalSlider.mini,
   #trail_map_view.mini {
   	z-index: 100;  	
@@ -1524,7 +1605,7 @@ html.touch #small_sponsor_bar {
     width: 254px;
     height: 188px;
     background: rgba(0, 0, 0, 0.4);  
-    border: 2px solid rgba(0, 0, 0, 0.5);;  
+    border: 2px solid rgba(0, 0, 0, 0.5);
   }	  
   .royalSlider.mini {
   	bottom: 6px;
@@ -1554,7 +1635,7 @@ html.touch #small_sponsor_bar {
     width: 254px;
     height: 188px;
     background: rgba(0, 0, 0, 0.4);  
-    border: 2px solid rgba(0, 0, 0, 0.5);;  
+    border: 2px solid rgba(0, 0, 0, 0.5);  
   }	  
   .royalSlider.mini {
   	bottom: 6px;

@@ -42,6 +42,14 @@ define([
     gotoSlide: function(nSlide){
       this.slider.goTo(nSlide);
     },
+    toggleFullscreen: function(){
+      if (this.slider.isFullscreen) {
+        this.slider.exitFullscreen();	
+      }
+      else {
+        this.slider.enterFullscreen();	
+      }
+    },
     render: function(){
       var self = this;
       
