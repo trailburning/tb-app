@@ -11,6 +11,7 @@ define([
 	  this.mediaCollection = this.options.mediaCollection;
 	  this.mediaModel = this.options.mediaModel;
 	  this.slider = null;
+	  this.bFireSlideChange = false;
 	  
 	  $('.royalSlider').show();
     },
@@ -40,7 +41,6 @@ define([
 	  $(this.el).append(strHTML);
     },
     gotoSlide: function(nSlide){
-    	return;
       this.slider.goTo(nSlide);
     },
     toggleFullscreen: function(){
@@ -86,10 +86,27 @@ define([
       
 	  this.slider = $(".royalSlider").data('royalSlider');
 
+	  this.slider.ev.on('rsBeforeMove', function(event, type, userAction ) {
+	  	// don't fire event if slider moved externally
+	  	switch (type) {
+	  	  case 'next':
+	  	  case 'prev':
+	  	    self.bFireSlideChange = true;
+	  	    break;
+	  	  default:
+	  	    self.bFireSlideChange = false;
+	  	    break;
+	  	}
+	  });
+
 	  this.slider.ev.on('rsBeforeAnimStart', function(event) {
-	    app.dispatcher.trigger("TrailSliderView:slidechanged", self.slider.currSlide.id);
+	  	if (self.bFireSlideChange) {
+	  	  // fire event
+	      app.dispatcher.trigger("TrailSliderView:slidechanged", self.slider.currSlide.id);	  		
+	  	}
 	  });	  
-	     
+	  
+	  this.bFireSlideChange = true;   
       // fire event
       app.dispatcher.trigger("TrailSliderView:slidechanged", this.slider.currSlide.id);
       

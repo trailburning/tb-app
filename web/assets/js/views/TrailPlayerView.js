@@ -52,12 +52,14 @@ define([
       this.trailMapView = new TrailMapView({ el: '#trail_map_view', elCntrls: '#view_map_btns', model: this.model });
 
 	  $('#trail_map_view').addClass('mini');
+	  $('#trail_view .trail_grad_back').show();
 
 	  $('.toggleBtn').click(function(evt){
 	  	if ($('#trail_map_view').hasClass('mini')) {
 	  	  $('#trail_map_view').removeClass('mini');
 	  	  $('.royalSlider').addClass('mini');
 	  	  $('#trail_stats_view').hide();
+	  	  $('.trail_grad_back').hide();
 	  	  self.trailSliderView.render();
 	  	  self.trailMapView.setView(true);	  	    	  	
 	  	}
@@ -65,6 +67,7 @@ define([
   	      $('#trail_map_view').addClass('mini');
   	      $('.royalSlider').removeClass('mini');
   	      $('#trail_stats_view').show();
+  	      $('.trail_grad_back').show();
   	      self.trailSliderView.render();
   	      self.trailMapView.setView(false);
 	  	}	  	
@@ -115,13 +118,6 @@ define([
 	  else {
 	  	this.trailMapView.setView(true);
 	  }
-	  
-//	  $("#headerview").css("z-index", "5");
-	  
-//	  $('#headerview').hide().show(0);
-	  
-//	  $('#headerview').width($(window).width());
-//	  $('#headerview .navbar-inner').width($(window).width());
 	},
     handleMedia: function(){
       var self = this;
@@ -156,9 +152,7 @@ define([
 	  this.trailStatsView.setTotalSlides(this.mediaCollection.length);
                       
 	  // start with hero slide
-//	  this.nCurrSlide = this.trailSlidesView.getHeroSlide();
 	  this.nCurrSlide = 0;
-//      this.trailSlidesView.gotoSlide(this.nCurrSlide);
       
       this.bPlayerReady = true;
     },        
@@ -223,8 +217,7 @@ define([
       }
       this.gotoMedia(nSlide);
     },    
-    gotoMedia: function(nSlide){          
-    	console.log(nSlide);
+    gotoMedia: function(nSlide){         
       this.trailSliderView.gotoSlide(nSlide+1);
 	  this.trailStatsView.setCurrSlide(nSlide+1);
       

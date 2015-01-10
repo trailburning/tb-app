@@ -20,7 +20,7 @@ border-width:1px;
 /******************************************/
 #small_sponsor_bar {
   display: none;
-  z-index: 199;
+  z-index: 2000;
   position: fixed;
   top: 45px;
   width: 100%;
@@ -106,10 +106,6 @@ html.touch #small_sponsor_bar {
 /* CONTENT VIEW */
 /******************************************/
 #content_view {
-/*	
-  position: relative;
-  width: 100%;
-*/  
 }
 
 /* TRAIL VIEW */
@@ -117,12 +113,27 @@ html.touch #small_sponsor_bar {
 #trail_view {
   position: relative;
   width: 100%;  
-  height: 600px;
+  height: 300px;
+}
+
+#trail_view .trail_grad_back {
+  display: none;
+  z-index: 100;
+  position: absolute;
+  bottom: -100px;
+  left: 0px;
+  width: 100%;
+  height: 75px;
+  background: url(../img/trailplayer/overlay_background.png) repeat-x top left;
 }
 
 .royalSlider,
 #trail_map_view {	
   height: 300px;  	
+}
+
+#trail_map_view {	
+  display: none;
 }
 
 #trail_view .line_break {
@@ -132,26 +143,10 @@ html.touch #small_sponsor_bar {
   background: url(../img/trailplayer/trans_line.png) repeat-x top left;
 }
 
-/*
-#trailplayer {
-  position: relative;
-  width: 100%;  
-  height: 448px;
-  overflow: hidden;
-}
-*/
-/*
-#trailplayer #trail_views {
-  position: relative;
-  width: 100%;
-  height: 100%;  
-  background: #000;
-}
-*/
 /* TRAIL AUTHOR */
 /******************************************/
 #trail_author_view {
-  z-index: 1000;
+  z-index: 100;
   position: absolute;
   top: -300px;
   left: 16px;	
@@ -193,6 +188,7 @@ html.touch #small_sponsor_bar {
 /* TRAIL STATS VIEW */
 /******************************************/
 #trail_stats_view {
+  display: none;
   z-index: 100;
   position: absolute;
   bottom: -100px;
@@ -1550,11 +1546,7 @@ html.touch #small_sponsor_bar {
     display: block;
   }	
   #content_view.sponsor_header {
-    margin-top: 43px;
-    top: 43px;
-  }  
-  #editorial_sponsor_bar {
-    margin-bottom: 43px;
+    margin-top: 87px;
   }  
 }
 
@@ -1568,6 +1560,14 @@ html.touch #small_sponsor_bar {
     height: 448px;  	
   }
  
+  #trail_view .trail_grad_back {
+    bottom: 0px;    	
+  }
+  
+  #trail_stats_view {
+    display: block;
+  }
+ 	
   .toggleBtn {
   	z-index: 101;
 	right: 220px;
@@ -1614,6 +1614,11 @@ html.touch #small_sponsor_bar {
     width: 254px;
     height: 188px;
   }
+  
+  #trail_map_view {	
+    display: block;
+  }
+  
   #trail_map_view.mini.active {
     bottom: 6px;
   }  

@@ -795,7 +795,7 @@ a:active .tb-cntrl {
 /******************************************/
 #headerview {
   position: relative;
-  z-index: 1001;  
+  z-index: 101;
 }
 
 #headerview .nav-collapse {
