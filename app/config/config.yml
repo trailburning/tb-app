@@ -198,7 +198,7 @@ old_sound_rabbit_mq:
         main:
             connection:       default
             exchange_options: {name: %rabbit_mq_main_queue%, type: direct}
-            queue_options:    {name: %rabbit_mq_main_queue%}
+            queue_options:    {name: %rabbit_mq_main_queue%, arguments: {'x-dead-letter-exchange' : ['S', 'debug'] }}
             
         debug:
             connection:       default

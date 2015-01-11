@@ -185,7 +185,7 @@ class UserTest extends AbstractFrontendTest
         $user->setOAuthId(863323267041867);
         $user->updateAvatarFacebook();
         
-        $this->assertRegExp('/^https:\/\/fbcdn-profile-a\.akamaihd\.net\/hprofile-ak-prn2\/v\/t1\.0-1\/p200x200/', $user->getAvatarFacebook());
+        $this->assertRegExp('/^https:\/\/fbcdn-profile-a\.akamaihd\.net\/hprofile.*/', $user->getAvatarFacebook());
         
         $user = $this->getMockForAbstractClass('TB\Bundle\FrontendBundle\Entity\User');
         $user->setOAuthService('facebook');
