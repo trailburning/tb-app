@@ -11,9 +11,8 @@ define([
 	  this.mediaCollection = this.options.mediaCollection;
 	  this.mediaModel = this.options.mediaModel;
 	  this.slider = null;
-	  this.bFireSlideChange = false;
 	  
-	  $('.royalSlider').show();
+	  $(this.el).show();
     },
     addSlide: function(model){
  	  var nWidth = 768;
@@ -70,7 +69,7 @@ define([
 	  	strTransition = 'fade';
 	  }
 	  	  
-  	  $(".royalSlider").royalSlider({
+  	  this.slider = $(this.el).royalSlider({
   	  	imageScaleMode: 'fill',
   	  	controlNavigation: 'none',
   	  	slidesSpacing: 0,
@@ -82,43 +81,29 @@ define([
     	  enabled: true,
     	  nativeFS: false
     	}
-      });  	
-      
-	  this.slider = $(".royalSlider").data('royalSlider');
+      }).data('royalSlider');
+
+      $(this.el).append('<div class="toggleBtn"><div class="toggleIcn photo"></div></div>');
 
 	  this.slider.ev.on('rsBeforeMove', function(event, type, userAction ) {
-	  	// don't fire event if slider moved externally
-	  	switch (type) {
-	  	  case 'next':
-	  	  case 'prev':
-	  	    self.bFireSlideChange = true;
-	  	    break;
-	  	  default:
-	  	    self.bFireSlideChange = false;
-	  	    break;
-	  	}
+	  	// fire event
+	    app.dispatcher.trigger("TrailSliderView:slidemoving", type);	  		
 	  });
-
-	  this.slider.ev.on('rsBeforeAnimStart', function(event) {
-	  	if (self.bFireSlideChange) {
-	  	  // fire event
-	      app.dispatcher.trigger("TrailSliderView:slidechanged", self.slider.currSlide.id);	  		
-	  	}
-	  });	  
 	  
 	  this.slider.ev.on('rsEnterFullscreen', function() {
 	  	$('#trail_author_view').hide();
 	  	$('#trail_fullscreen_author_view').show();
+	  	$('.toggleBtn', this.el).hide();
 	  });
 	  
 	  this.slider.ev.on('rsExitFullscreen', function() {
 	  	$('#trail_fullscreen_author_view').hide();
 	  	$('#trail_author_view').show();
+	  	$('.toggleBtn', this.el).show();
 	  });
 	  	  
-	  this.bFireSlideChange = true;   
       // fire event
-      app.dispatcher.trigger("TrailSliderView:slidechanged", this.slider.currSlide.id);
+      app.dispatcher.trigger("TrailSliderView:ready");
       
       this.bRendered = true;                
 	},

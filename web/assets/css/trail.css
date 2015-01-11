@@ -1579,14 +1579,9 @@ html.touch #small_sponsor_bar {
   #trail_stats_view {
     display: block;
   }
- 	
+
   .toggleBtn {
   	z-index: 101;
-	right: 220px;
-	bottom: 154px;
-	width: 44px;
-	height: 44px;	
-	display: block;
 	position: absolute;
 	cursor: pointer;
   }
