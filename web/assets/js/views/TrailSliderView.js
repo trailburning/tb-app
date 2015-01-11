@@ -106,6 +106,16 @@ define([
 	  	}
 	  });	  
 	  
+	  this.slider.ev.on('rsEnterFullscreen', function() {
+	  	$('#trail_author_view').hide();
+	  	$('#trail_fullscreen_author_view').show();
+	  });
+	  
+	  this.slider.ev.on('rsExitFullscreen', function() {
+	  	$('#trail_fullscreen_author_view').hide();
+	  	$('#trail_author_view').show();
+	  });
+	  	  
 	  this.bFireSlideChange = true;   
       // fire event
       app.dispatcher.trigger("TrailSliderView:slidechanged", this.slider.currSlide.id);

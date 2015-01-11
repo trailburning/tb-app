@@ -156,23 +156,35 @@ html.touch #small_sponsor_bar {
   top: 16px;
 }
 
-#trail_author_view .trail_avatar {
+#trail_fullscreen_author_view {
+  display: none;
+  position: absolute;
+  top: -300px;
+  left: 16px;	
+  z-index: 2147483647 !important;
+}
+
+#trail_fullscreen_author_view.active {
+  top: 16px;
+}
+
+.trail_author_view .trail_avatar {
   float: left;
   margin-right: 30px;
 }
 
-#trail_author_view .trail_avatar img {
+.trail_author_view .trail_avatar img {
   width: 100%;
 }
 
-#trail_author_view .no_avatar {
+.trail_author_view .no_avatar {
 }
 
-#trail_author_view .trail_title {
+.trail_author_view .trail_title {
   float: left;
 }
 
-#trail_author_view .trail_title .author {
+.trail_author_view .trail_title .author {
   display: inline-block;
   margin: 13px 0px 0px 2px;
   padding: 5px 10px 5px 10px;
@@ -1579,12 +1591,12 @@ html.touch #small_sponsor_bar {
 	cursor: pointer;
   }
 
-  .toggleIcn {
-	display: block;
+  .toggleIcn {  	
+	display: none;
 	margin: 6px;
 	width: 32px;
 	height: 32px;
-	background: url('../royalslider/skins/default/rs-default.png') 0 0;
+	background: url('../img/trailplayer/btns_sm.png') 0 0;
 	background-color: #000;
 	background-color: rgba(0,0,0,0.75);
 	border-radius: 2px;
@@ -1592,7 +1604,10 @@ html.touch #small_sponsor_bar {
   .toggleIcn:hover {
 	background-color: rgba(0,0,0,0.9);
   }
-  .toggleIcn {
+  .toggleIcn.map {
+	background-position: 0 0;
+  }
+  .toggleIcn.photo {
 	background-position: -32px 0;
   }
 

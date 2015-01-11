@@ -54,8 +54,12 @@ define([
 	  $('#trail_map_view').addClass('mini');
 	  $('#trail_view .trail_grad_back').show();
 
+	  $('.toggleIcn.map').show();
 	  $('.toggleBtn').click(function(evt){
 	  	if ($('#trail_map_view').hasClass('mini')) {
+	  	  $('.toggleIcn.map').hide();
+	  	  $('.toggleIcn.photo').show();
+	  	  
 	  	  $('#trail_map_view').removeClass('mini');
 	  	  $('.royalSlider').addClass('mini');
 	  	  $('#trail_stats_view').hide();
@@ -64,6 +68,9 @@ define([
 	  	  self.trailMapView.setView(true);	  	    	  	
 	  	}
 	  	else {
+	  	  $('.toggleIcn.photo').hide();
+	  	  $('.toggleIcn.map').show();
+	  	  
   	      $('#trail_map_view').addClass('mini');
   	      $('.royalSlider').removeClass('mini');
   	      $('#trail_stats_view').show();
@@ -217,7 +224,9 @@ define([
       }
       this.gotoMedia(nSlide);
     },    
-    gotoMedia: function(nSlide){         
+    gotoMedia: function(nSlide){
+      this.nCurrSlide = nSlide;    
+    	         
       this.trailSliderView.gotoSlide(nSlide+1);
 	  this.trailStatsView.setCurrSlide(nSlide+1);
       
@@ -225,7 +234,8 @@ define([
       
       this.trailAltitudeView.gotoMedia(nSlide);
       
-      this.nCurrSlide = nSlide;    
+	  $('#trail_author_view').removeClass('active');
+	  $('#trail_fullscreen_author_view').removeClass('active');
     },
     toggleSlideshow: function(){
       if (this.nPlayerView != PLAYER_SHOW) {
@@ -412,6 +422,8 @@ define([
 
       if (this.nCurrSlide == 0) {
 		$('#trail_author_view').addClass('active');
+		$('#trail_fullscreen_author_view').addClass('active');
+		
 	    $('#trail_map_view').addClass('active');
 		$('#trail_stats_view').removeClass('active');
         this.trailMapView.reset();            	
@@ -419,6 +431,8 @@ define([
  	  }
  	  else {
 	    $('#trail_author_view').removeClass('active');
+	    $('#trail_fullscreen_author_view').removeClass('active');
+	    
 	    $('#trail_stats_view').addClass('active');	      
 		this.trailStatsView.setCurrSlide(this.nCurrSlide);
         this.trailMapView.gotoMedia(this.nCurrSlide-1);            	
