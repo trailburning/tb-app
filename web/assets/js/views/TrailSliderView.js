@@ -77,6 +77,11 @@ define([
   	  	transitionType: strTransition,
         keyboardNavEnabled: true,
         autoScaleSlider: false,
+	    autoPlay: {
+    	  enabled: true,
+    	  pauseOnHover: true,
+    	  delay: 8000
+    	},        
     	fullscreen: {
     	  enabled: true,
     	  nativeFS: false
@@ -89,7 +94,7 @@ define([
 	  	// fire event
 	    app.dispatcher.trigger("TrailSliderView:slidemoving", type);	  		
 	  });
-	  
+	  	  
 	  this.slider.ev.on('rsEnterFullscreen', function() {
 	  	$('#trail_author_view').hide();
 	  	$('#trail_fullscreen_author_view').show();
