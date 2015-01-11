@@ -117,13 +117,12 @@ html.touch #small_sponsor_bar {
 }
 
 #trail_view .trail_grad_back {
-  display: none;
   z-index: 100;
   position: absolute;
-  bottom: -100px;
+  bottom: 0px;
   left: 0px;
   width: 100%;
-  height: 75px;
+  height: 140px;
   background: url(../img/trailplayer/overlay_background.png) repeat-x top left;
 }
 
@@ -1571,11 +1570,7 @@ html.touch #small_sponsor_bar {
   #trail_map_view {	
     height: 448px;  	
   }
- 
-  #trail_view .trail_grad_back {
-    bottom: 0px;    	
-  }
-  
+
   #trail_stats_view {
     display: block;
   }

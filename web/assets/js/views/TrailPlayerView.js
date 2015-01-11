@@ -42,13 +42,12 @@ define([
       app.dispatcher.on("TrailSliderView:ready", self.onTrailSliderReady, this);
       app.dispatcher.on("TrailSliderView:slidemoving", self.onTrailSliderMoving, this);
 
-      this.trailStatsView = new TrailStatsView({ el: '#trail_stats_view', model: this.model });
       this.trailAltitudeView = new TrailAltitudeView({ el: '#trail_altitude_view', model: this.model });
       this.trailSliderView = new TrailSliderView({ el: '.royalSlider', model: this.model, mediaCollection: this.mediaCollection, mediaModel: this.mediaModel });                  
       this.trailMapView = new TrailMapView({ el: '#trail_map_view', elCntrls: '#view_map_btns', model: this.model });
 
 	  $('#trail_map_view').addClass('mini');
-	  $('#trail_view .trail_grad_back').show();
+//	  $('#trail_view .trail_grad_back').show();
 
 	  this.buildBtns();
     },
@@ -124,10 +123,7 @@ define([
       this.trailAltitudeView.render();
       this.trailMapView.renderMarkers();
       this.trailSliderView.render();
-      
-      this.trailStatsView.render();
-	  this.trailStatsView.setTotalSlides(this.mediaCollection.length);
-                      
+                            
 	  // start with hero slide
 	  this.nCurrSlide = 0;
       
@@ -140,7 +136,6 @@ define([
 	  	  $('#trail_map_view').removeClass('mini');
 	  	  $('.royalSlider').addClass('mini');
 	  	  $('#trail_stats_view').hide();
-	  	  $('.trail_grad_back').hide();
 	  	  self.trailSliderView.render();
 	  	  self.trailMapView.setView(true);	  	    	  	
 	  	}
@@ -151,7 +146,6 @@ define([
   	      $('#trail_map_view').addClass('mini');
   	      $('.royalSlider').removeClass('mini');
   	      $('#trail_stats_view').show();
-  	      $('.trail_grad_back').show();
   	      self.trailSliderView.render();
   	      self.trailMapView.setView(false);
 	  	}	  	
@@ -249,6 +243,10 @@ define([
     },
     onTrailSliderReady: function(){
       var self = this;
+      
+      this.trailStatsView = new TrailStatsView({ el: '#trail_stats_view', model: this.model });
+      this.trailStatsView.render();
+	  this.trailStatsView.setTotalSlides(this.mediaCollection.length);
       
       $('#trail_author_view').addClass('active');
 	  $('#trail_fullscreen_author_view').addClass('active');
