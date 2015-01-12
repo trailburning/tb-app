@@ -79,7 +79,8 @@ define([
         autoScaleSlider: false,
 	    autoPlay: {
     	  enabled: true,
-    	  pauseOnHover: true,
+    	  pauseOnHover: false,
+    	  stopAtAction: false,
     	  delay: 8000
     	},        
     	fullscreen: {
@@ -90,7 +91,6 @@ define([
 
       $(this.el).append('<div class="toggleBtn"><div class="toggleIcn photo"></div></div>');
 	  $('.rsContainer', this.el).append('<div class="trail_grad_back"></div>');
-	  $('.rsContainer', this.el).append('<div id="trail_stats_view" class="trailstats_panel tb-move-vert"></div>');
      
 	  this.slider.ev.on('rsBeforeMove', function(event, type, userAction ) {
 	  	// fire event
@@ -98,12 +98,17 @@ define([
 	  });
 	  	  
 	  this.slider.ev.on('rsEnterFullscreen', function() {
+	  	
+	  	$('#trail_stats_view').addClass('fullscreen');
+	  	
 	  	$('#trail_author_view').hide();
 	  	$('#trail_fullscreen_author_view').show();
 	  	$('.toggleBtn', this.el).hide();
 	  });
 	  
 	  this.slider.ev.on('rsExitFullscreen', function() {
+	  	$('#trail_stats_view').removeClass('fullscreen');
+	  	
 	  	$('#trail_fullscreen_author_view').hide();
 	  	$('#trail_author_view').show();
 	  	$('.toggleBtn', this.el).show();
@@ -116,6 +121,12 @@ define([
 	},
 	gotoMedia: function(nMedia){
 	  this.slider.goTo(nMedia);
+    },
+	play: function(){
+	  this.slider.startAutoPlay();
+    },
+	stop: function(){
+	  this.slider.stopAutoPlay();
     }
     
   });

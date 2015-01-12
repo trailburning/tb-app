@@ -70,15 +70,14 @@ var TB_TRAIL_ID = {{ trail.id }};
 	      <div class="toggleBtn"><div class="toggleIcn map"></div></div>	    
 	    </div>
 	    
-	    <div id="trail_author_view" class="trail_author_view tb-move-vert">
-			<div class="trail_details">
+	    <div id="trail_author_view" class="trail_author_view">
 			  {% if event or user is BrandProfile %}
 			  {% else %}
-			  	<div class="trail_avatar">
+			  	<div class="trail_avatar tb-move-vert">
 			    	<div class="tb-avatar tb-avatar-feature"><div class="photo"><a href="{{ path('profile', {'name': user.name}) }}"><img src="{{ get_user_avatar_url(user) }}"></a></div></div>
 			    </div>
 			  {% endif %}
-			  <div class="trail_title {% if event %} no_avatar{% endif %}">
+			  <div class="trail_title tb-move-vert {% if event %} no_avatar{% endif %}">
 			    {% if event %}
 			      <h2 class="tb tb-title">{{ event.title }}</h2>
 			      <br/>
@@ -103,8 +102,9 @@ var TB_TRAIL_ID = {{ trail.id }};
 				{% endif %}				
 				#}            
 			  </div>				  
-			</div>
 		</div>        	
+                
+		<div id="trail_stats_view" class="trailstats_panel"></div>
                 
     	{% if event %}
 			<div class="event_logo">
@@ -122,8 +122,7 @@ var TB_TRAIL_ID = {{ trail.id }};
 			<div class="event_logo">
     			<a href="{{ path('profile', {'name': user.name}) }}"><img src="http://assets.trailburning.com/images/profile/{{ user.name }}/logo.png" border="0"></a>
 			</div>
-        {% endif %}
-        
+        {% endif %}        
         
         <div id="view_map_btns">        
             <div class='controls'>
@@ -134,15 +133,14 @@ var TB_TRAIL_ID = {{ trail.id }};
         </div>    
     </div>
   
-    <div id="trail_fullscreen_author_view" class="trail_author_view tb-move-vert">
-		<div class="trail_details">
+    <div id="trail_fullscreen_author_view" class="trail_author_view">
 		  {% if event or user is BrandProfile %}
 		  {% else %}
-		  	<div class="trail_avatar">
+		  	<div class="trail_avatar tb-move-vert">
 		    	<div class="tb-avatar tb-avatar-feature"><div class="photo"><a href="{{ path('profile', {'name': user.name}) }}"><img src="{{ get_user_avatar_url(user) }}"></a></div></div>
 		    </div>
 		  {% endif %}
-		  <div class="trail_title {% if event %} no_avatar{% endif %}">
+		  <div class="trail_title tb-move-vert {% if event %} no_avatar{% endif %}">
 		    {% if event %}
 		      <h2 class="tb tb-title">{{ event.title }}</h2>
 		      <br/>
@@ -167,7 +165,6 @@ var TB_TRAIL_ID = {{ trail.id }};
 			{% endif %}				
 			#}            
 		  </div>				  
-		</div>
 	</div>        	
   
     <div class="panel_container">       
@@ -402,14 +399,12 @@ var TB_TRAIL_ID = {{ trail.id }};
 <script src="{{ asset('assets/js/libs/jquery.touchwipe.min.js') }}"></script>
 
 <script type="text/template" id="trailStatsViewTemplate">
-  <div class="content">
-    <div class="trail_player_cntrls">
-  	  <div class="play_btn"></div>	      	
-  	  <div class="pause_btn"></div>	      	
-    </div>              	
-    <div class="slides">
-    	<h2 class="tb"><span class="current">0</span>/<span class="total">0</span></h2>
-    </div>
+  <div class="trail_player_cntrls tb-move-vert">
+    <div class="play_btn"></div>	      	
+  	<div class="pause_btn"></div>	      	
+  </div>              	
+  <div class="slides tb-move-vert">
+    <h2 class="tb"><span class="current">0</span>/<span class="total">0</span></h2>
   </div>
 </script>
 
