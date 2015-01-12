@@ -177,13 +177,14 @@ html.touch #small_sponsor_bar {
   width: 100%;
 }
 
-#trail_fullscreen_author_view  .trail_title.no_avatar,
+#trail_fullscreen_author_view .trail_title.no_avatar,
 #trail_author_view .trail_title.no_avatar {
   left: 16px;
 }
 
 #trail_fullscreen_author_view .trail_title,
 #trail_author_view .trail_title {
+  display: none;
   z-index: 100;
   position: absolute;
   top: -300px;
@@ -1542,6 +1543,11 @@ html.touch #small_sponsor_bar {
     display: block;
   }
 
+  #trail_fullscreen_author_view .trail_title,
+  #trail_author_view .trail_title {
+    display: block;
+  }
+  
   .toggleBtn {
   	z-index: 101;
 	position: absolute;

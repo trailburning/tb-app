@@ -7,7 +7,6 @@
   font-style: normal;
 }
 
-
 body {  
   margin: 0;
   padding: 0;
@@ -816,7 +815,8 @@ a:active .tb-cntrl {
 }
 
 #headerview .navbar-fixed-top {
-  margin: 0px;
+  margin: 0px;  
+  -webkit-transform: translate3d(0, 0, 0);  
 }
 
 #headerview .hamburger {
@@ -1779,10 +1779,6 @@ form label {
 }
 
 @media (min-width: 979px) {
-  html.touch #headerview .navbar-fixed-top {
-    position: static;
-  }
-	
   #headerview .logo {  	
     float: left;
     width: auto;
@@ -1801,13 +1797,8 @@ form label {
   #headerview .nav-collapse {
     display: none;
   }
-    
-  #bodyview {
+  
+  #bodyview {  	
     margin-top: 45px;
   }
-  
-  html.touch #bodyview {
-    margin-top: 0px;
-  }
-  
 }

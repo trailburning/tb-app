@@ -81,6 +81,12 @@ define([
 	  else {
 	  	this.trailMapView.setView(true);
 	  }
+
+	  // when royalslider resizes sometimes the header redraws the incorrect width.
+	  // fixed by forcing width to be that of royalslider 
+	  var nWidth = $('.royalSlider').width();
+	  $('#headerview').width(nWidth);
+	  $('#headerview .navbar').width(nWidth);
 	},
     handleMedia: function(){
       var self = this;

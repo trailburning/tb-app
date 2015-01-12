@@ -12,7 +12,7 @@ border-width:1px;
 #big_sponsor_bar {
   display: none;
   position: absolute;
-  top: 0px;
+  top: 45px;
   width: 100%;
   height: 119px;
   background-color: #202020;  
@@ -27,7 +27,7 @@ border-width:1px;
 /******************************************/
 #small_sponsor_bar {
   display: none;
-  z-index: 199;
+  z-index: 99;
   position: fixed;
   top: 0px;
   width: 100%;
@@ -45,7 +45,7 @@ html.no-touch #small_sponsor_bar {
 
 html.touch #small_sponsor_bar {
   display: none;
-  top: 45px;
+  top: 0px;
 }
 
 #small_sponsor_bar .sponsor_content {
@@ -606,9 +606,6 @@ html.touch #small_sponsor_bar {
     display: block;
   }	
   .panel_content {
-/*  	
-    margin-top: 145px;
-*/    
     margin-top: 145px;
   }
 }
