@@ -676,9 +676,10 @@ html.touch #small_sponsor_bar {
 /* VIEW CNTRLS */
 /******************************************/
 #view_map_btns {
+  display: none;
   position: absolute;
-  top: -300px;
-  left: 82px;
+  top: 16px;
+  right: 16px;
 }
 
 #view_player_btns {

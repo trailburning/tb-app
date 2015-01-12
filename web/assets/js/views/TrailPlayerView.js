@@ -123,8 +123,10 @@ define([
 	  	  $('#trail_map_view').removeClass('mini');
 	  	  $('.royalSlider').addClass('mini');
 	  	  $('#trail_stats_view').hide();
+	  	  $('.event_logo').hide();
+	  	  $('#view_map_btns').show();	  	  
 	  	  self.trailSliderView.render();
-	  	  self.trailMapView.setView(true);	  	    	  	
+	  	  self.trailMapView.setView(true);
 	  	}
 	  	else {
 	  	  $('.toggleIcn.photo').hide();
@@ -133,6 +135,8 @@ define([
   	      $('#trail_map_view').addClass('mini');
   	      $('.royalSlider').removeClass('mini');
   	      $('#trail_stats_view').show();
+	  	  $('.event_logo').show();
+	  	  $('#view_map_btns').hide();	  	  
   	      self.trailSliderView.render();
   	      self.trailMapView.setView(false);
 	  	}	  	
