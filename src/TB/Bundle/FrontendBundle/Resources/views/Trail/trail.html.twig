@@ -194,7 +194,7 @@ var TB_TRAIL_ID = {{ trail.id }};
                         <div class="left">
                             <div class="panel trail_detail_panel clearfix">
                                 <div class="content">
-                                    <h3 class="tb">About the trail</h3>                   
+                                    <h3 class="tb">{{ trail.name }}</h3>                   
        								{% if event %}
 									{% else %}                                                     
 										{{ include('TBFrontendBundle:Trail:_trailcardRating.html.twig', {'trail': trail}) }}
