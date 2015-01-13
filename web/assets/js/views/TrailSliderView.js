@@ -81,7 +81,7 @@ define([
     	  enabled: true,
     	  pauseOnHover: false,
     	  stopAtAction: false,
-    	  delay: 8000
+    	  delay: self.options.nHoldSlide
     	},        
     	fullscreen: {
     	  enabled: true,

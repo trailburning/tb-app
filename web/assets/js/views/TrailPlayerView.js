@@ -7,7 +7,7 @@ define([
   'views/TrailAltitudeView'  
 ], function(_, Backbone, TrailSliderView, TrailMapView, TrailStatsView, TrailAltitudeView){
   
-  var HOLD_SLIDE = 8000;
+  var HOLD_SLIDE = 5000;
   
   var TrailPlayerView = Backbone.View.extend({
     initialize: function(){
@@ -31,7 +31,7 @@ define([
       app.dispatcher.on("TrailSliderView:slidemoving", self.onTrailSliderMoving, this);
 
       this.trailAltitudeView = new TrailAltitudeView({ el: '#trail_altitude_view', model: this.model });
-      this.trailSliderView = new TrailSliderView({ el: '.royalSlider', model: this.model, mediaCollection: this.mediaCollection, mediaModel: this.mediaModel });                  
+      this.trailSliderView = new TrailSliderView({ el: '.royalSlider', model: this.model, mediaCollection: this.mediaCollection, mediaModel: this.mediaModel, nHoldSlide: HOLD_SLIDE });                  
       this.trailMapView = new TrailMapView({ el: '#trail_map_view', elCntrls: '#view_map_btns', model: this.model });
 
 	  $('#trail_map_view').addClass('mini');
