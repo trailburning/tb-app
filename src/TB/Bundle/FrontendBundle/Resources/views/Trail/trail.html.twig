@@ -77,12 +77,12 @@ var TB_TRAIL_ID = {{ trail.id }};
 			    	<div class="tb-avatar tb-avatar-feature"><div class="photo"><a href="{{ path('profile', {'name': user.name}) }}"><img src="{{ get_user_avatar_url(user) }}"></a></div></div>
 			    </div>
 			  {% endif %}
-			  <div class="trail_title tb-move-vert {% if event %} no_avatar{% endif %}">
+			  <div class="trail_title tb-move-vert {% if event or user is BrandProfile %} no_avatar{% endif %}">
 			    {% if event %}
 			      <h2 class="tb tb-title">{{ event.title }}</h2>
 			      <br/>
 			      <h2 class="tb tb-title">{{ trail.name }}</h2>
-			    {% else %}                
+			    {% else %}
 			      <h2 class="tb tb-title">{{ trail.name }}</h2>
 			      <br/>
 			      <h2 class="tb tb-title">{{ trail.region }}</h2>
@@ -142,7 +142,7 @@ var TB_TRAIL_ID = {{ trail.id }};
 		    	<div class="tb-avatar tb-avatar-feature"><div class="photo"><a href="{{ path('profile', {'name': user.name}) }}"><img src="{{ get_user_avatar_url(user) }}"></a></div></div>
 		    </div>
 		  {% endif %}
-		  <div class="trail_title tb-move-vert {% if event %} no_avatar{% endif %}">
+		  <div class="trail_title tb-move-vert {% if event or user is BrandProfile %} no_avatar{% endif %}">
 		    {% if event %}
 		      <h2 class="tb tb-title">{{ event.title }}</h2>
 		      <br/>
