@@ -87,6 +87,32 @@ class MediaTest extends AbstractFrontendTest
             'the datetime was extracted from image metadata');
     }
     
+    public function testReadMetadataWrongDimensionImage()
+    {
+        $this->loadFixtures([
+            'TB\Bundle\FrontendBundle\DataFixtures\ORM\RouteData',
+        ]);        
+        
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        $route = $this->getRoute('grunewald');
+        
+        $mediaImporter = $this->getContainer()->get('tb.media.importer');
+        
+        $filepath = realpath(__DIR__ . '/../../DataFixtures/Media/wrong_dimension.jpg');
+        
+        $exiftags = exif_read_data($filepath);
+        
+        $file = new UploadedFile($filepath, 'wrong_dimension.jpg');
+        
+        $media = new Media();
+        $media->setRoute($route);
+        $media->setFile($file);
+        $media->readMetadata($mediaImporter);
+        
+        $this->assertEquals(4608, $media->getTags()['width']);
+        $this->assertEquals(3456, $media->getTags()['height']);
+    }
+    
     public function testUpload()
     {
         $this->loadFixtures([

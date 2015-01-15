@@ -4,7 +4,7 @@ namespace TB\Bundle\FrontendBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\File\File;
 use Gaufrette\Filesystem;
 use Gaufrette\Adapter\MetadataSupporter;
 use Gaufrette\Adapter\AwsS3;
@@ -21,6 +21,15 @@ class Media implements Exportable
     
     const BUCKET_NAME = '';
     const S3_SERVER = 'http://media.trailburning.com';
+    
+    const EXIF_ORIENTATION_TOP_LEFT_SIDE = 1;
+    const EXIF_ORIENTATION_TOP_RIGHT_SIDE = 2;
+    const EXIF_ORIENTATION_BOTTOM_RIGHT_SIDE = 3;
+    const EXIF_ORIENTATION_BOTTOM_LEFT_SIDE = 4;
+    const EXIF_ORIENTATION_LEFT_SIDE_TOP = 5;
+    const EXIF_ORIENTATION_RIGHT_SIDE_TOP = 6;
+    const EXIF_ORIENTATION_RIGHT_SIDE_BOTTOM = 7;
+    const EXIF_ORIENTATION_LEFT_SIDE_BOTTOM = 8;
     
     /**
      * @var integer
@@ -159,7 +168,7 @@ class Media implements Exportable
      *
      * @param UploadedFile $file
      */
-    public function setFile(UploadedFile $file)
+    public function setFile(File $file)
     {
        $this->file = $file;
     }
@@ -248,6 +257,7 @@ class Media implements Exportable
         }
         
         $tags = $this->getTags();
+        
         $exiftags = exif_read_data($this->file->getPathname());
 
         if (isset($exiftags['FileSize'])) { 
@@ -286,13 +296,21 @@ class Media implements Exportable
         
         $tags['datetime'] = $datetime;
        
-        
-        if (isset($exiftags['COMPUTED']) && isset($exiftags['COMPUTED']['Width'])) {
-            $tags['width'] = $exiftags['COMPUTED']['Width']; 
-        }
-        
-        if (isset($exiftags['COMPUTED']) && isset($exiftags['COMPUTED']['Height'])) {
-            $tags['height'] = $exiftags['COMPUTED']['Height']; 
+        if (isset($tags['Orientation']) 
+            && in_array($tags['Orientation'], [self::EXIF_ORIENTATION_LEFT_SIDE_TOP, self::EXIF_ORIENTATION_RIGHT_SIDE_TOP, self::EXIF_ORIENTATION_RIGHT_SIDE_BOTTOM, self::EXIF_ORIENTATION_LEFT_SIDE_BOTTOM])) {
+            if (isset($exiftags['COMPUTED']) && isset($exiftags['COMPUTED']['Width'])) {
+                $tags['height'] = $exiftags['COMPUTED']['Width']; 
+            }
+            if (isset($exiftags['COMPUTED']) && isset($exiftags['COMPUTED']['Height'])) {
+                $tags['width'] = $exiftags['COMPUTED']['Height']; 
+            }
+        } else {
+            if (isset($exiftags['COMPUTED']) && isset($exiftags['COMPUTED']['Width'])) {
+                $tags['width'] = $exiftags['COMPUTED']['Width']; 
+            }
+            if (isset($exiftags['COMPUTED']) && isset($exiftags['COMPUTED']['Height'])) {
+                $tags['height'] = $exiftags['COMPUTED']['Height']; 
+            }
         }    
         
         //get the longitude, latitude and altitude from the nearest RoutePoint by datetime

@@ -85,6 +85,7 @@ class GPXGeneratorTest extends AbstractFrontendTest
 </gpx>';
         
         $xml = $gpxGenerator->generateXML($route);   
+        
         $this->assertEquals($expected, $xml);
         
         $document = new DOMDocument(); 
