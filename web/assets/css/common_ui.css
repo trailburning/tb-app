@@ -1780,7 +1780,7 @@ form label {
   }
 }
 
-@media (min-width: 979px) {
+@media (min-width: 980px) {  
   #headerview .logo {  	
     float: left;
     width: auto;
