@@ -143,7 +143,7 @@ define([
           this.model.set('sponsorURL', 'event/ultraks');
           break;	         
       	case 'pitschen-16k-st-moritz':        	  
-      	case 'grand-30k-st-moritz':
+      	case 'media-30k-st-moritz':
       	case 'grand-46k-st-moritz':
       	  bEvent = true;	          	
       	  this.model.set('sponsorURL', 'event/ultraksengadin');
