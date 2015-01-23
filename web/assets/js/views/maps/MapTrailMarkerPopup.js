@@ -146,7 +146,7 @@ define([
       	case 'grand-30k-st-moritz':
       	case 'grand-46k-st-moritz':
       	  bEvent = true;	          	
-      	  model.set('sponsorURL', 'event/ultraksengadin');
+      	  this.model.set('sponsorURL', 'event/ultraksengadin');
       	  break;	          	             	  
         case 'e16':
         case 'e51':
