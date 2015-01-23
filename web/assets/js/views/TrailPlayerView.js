@@ -94,11 +94,6 @@ define([
       $('#view_map_btns').addClass('tb-move-vert');
       
       var model;
-      // set hero slide if we have one
-      if (this.model.get('value').route.media) {
-      	model = new Backbone.Model(this.model.get('value').route.media);
-      	this.trailSliderView.addSlide(model);
-      }      
       
       var jsonMedia = this.mediaModel.get('value');
       // add to collection
@@ -106,6 +101,14 @@ define([
 	    model = new Backbone.Model(media);
         self.mediaCollection.push(model);
       });
+
+      // default to 1st slide
+      model = this.mediaCollection.at(0);      
+      if (this.model.get('value').route.media) {
+      	// add hero slide if we have one
+      	model = new Backbone.Model(this.model.get('value').route.media);
+      }      
+      this.trailSliderView.addSlide(model);
       
       // iterate collection
  	  this.mediaCollection.each(function(model) {
@@ -218,7 +221,9 @@ define([
 	  else if (nSlide < 0) {
 	  	nSlide = this.mediaCollection.length;
 	  }
+	  
 	  this.nCurrSlide = nSlide;
+	  	  
       if (this.nCurrSlide == 0) {
 	    $('#trail_author_view .trail_title').addClass('active');
 	    $('#trail_fullscreen_author_view .trail_title').addClass('active'); 	  	
