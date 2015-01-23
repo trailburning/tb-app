@@ -52,13 +52,18 @@ define([
       	    $.each(data.value.routes, function(key, card) {
       	      bEvent = false;
 	          model = new Backbone.Model(card);
-	          
 	          switch (model.get('slug')) {
 	          	case '16km':
 	          	case '30km':
 	          	case '46km':
 	          	  bEvent = true;	          	
 	          	  model.set('sponsorURL', 'event/ultraks');
+	          	  break;	  
+	          	case 'pitschen-16k-st-moritz':        	  
+	          	case 'grand-30k-st-moritz':
+	          	case 'grand-46k-st-moritz':
+	          	  bEvent = true;	          	
+	          	  model.set('sponsorURL', 'event/ultraksengadin');
 	          	  break;	          	  
 	          	case 'e16':
 	          	case 'e51':

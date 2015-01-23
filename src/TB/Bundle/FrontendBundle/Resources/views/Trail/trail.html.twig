@@ -87,7 +87,7 @@ var TB_TRAIL_ID = {{ trail.id }};
 			      <br/>
 			      <h2 class="tb tb-title">{{ trail.region }}</h2>
 			    {% endif %}                
-			    {% if user.id != 1 %}
+			    {% if user.id != 1 and not event %}
 			        <br/> 
 			        {% if user is UserProfile %}
 			            <div class="author">by <strong>{{ user.firstName }} {{ user.lastName }}</strong></div>
