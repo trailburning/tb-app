@@ -71,11 +71,17 @@ var TB_EDITORIAL_TRAILS = [
 	  			</a></div></div>
 	  		</div>
 	  		<div class="hero">
-				<div class="image_container fade_on_load"><img src="http://app.resrc.it/o=80/http://assets.trailburning.com/images/editorial/{{ editorial.slug }}/{{ editorial.image }}" class="scale"></div>
+{#	  			
+			  <div class="responsive-container">	      	
+				<div class="video_player" data-autoplay="false" data-url="http://vimeo.com/84511336"></div>	      	
+			  </div>			  
+#}
+			  <div class="image_container fade_on_load"><img src="http://app.resrc.it/o=80/http://assets.trailburning.com/images/editorial/{{ editorial.slug }}/{{ editorial.image }}" class="scale"></div>
 				{% if editorial.imageCredit is not null %}				
 				  <div class="tb-credit">Photo credit: © <a href="{{ editorial.imageCreditURL }}" onClick="trackOutboundLink(this, 'Outbound Links', '{{ editorial.imageCreditUrl | url_truncate }}'); return false;">{{ editorial.imageCredit }}</a></div>
 				{% endif %}
-			</div>
+			  </div>
+			
 	  		<div class="content">
 	  			<div class="content_header">
 		  			<div class="header">by <strong>{{ editorial.user.title }}</strong>&nbsp;&nbsp;&nbsp;<span class="date">{{ editorial.date|date('d/m/Y') }}</span></div>

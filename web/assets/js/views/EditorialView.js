@@ -2,8 +2,9 @@ define([
   'underscore', 
   'backbone',
   'views/ActivityFeedView',  
-  'views/EditorialMapView'
-], function(_, Backbone, ActivityFeedView, EditorialMapView){
+  'views/EditorialMapView',
+  'views/VideoView'
+], function(_, Backbone, ActivityFeedView, EditorialMapView, VideoView){
 
   var STATE_BIG_SPONSOR = 1;
   var STATE_SMALL_SPONSOR = 2;
@@ -49,6 +50,11 @@ define([
 		lastNeverTallest: true,
 		buildOnce : true
 	  });    
+
+      $('.video_player').each(function(index) {
+        this.videoView = new VideoView({ el: this });
+        this.videoView.render();
+      });
 
       $('.column_wrapper').css('visibility', 'visible');
       $('#footerview').show();
