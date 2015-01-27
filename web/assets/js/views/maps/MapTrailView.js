@@ -8,7 +8,12 @@ define([
   var MAP_SAT_VIEW = 1;
 
   var MapTrailView = Backbone.View.extend({
-    initialize: function(){
+	options: {
+	  mapStreet: 'mallbeury.8d4ad8ec',
+      mapMargin: 200,
+  	},  	
+    initialize: function(options){
+      this.options = _.defaults(options || {}, this.options);
       this.template = _.template($('#trailMapViewTemplate').text());        
             
       var self = this;
@@ -135,7 +140,7 @@ define([
       // already rendered?  Just update
       if (this.bRendered) {
         this.map.invalidateSize(false);
-	    this.map.fitBounds(this.markerCluster.getBounds(), {padding: [200, 200], animate: false});
+	    this.map.fitBounds(this.markerCluster.getBounds(), {padding: [this.options.mapMargin, this.options.mapMargin], animate: false});
 	    // apply zoom
 	    if (this.options.nZoom) {
 	      this.map.setZoom(this.options.nZoom, {animate: false});	
@@ -149,7 +154,7 @@ define([
       $(this.el).html(this.template());
                         
       this.map = L.mapbox.map('map_large', null, {dragging: true, touchZoom: false, scrollWheelZoom:false, doubleClickZoom:false, boxZoom:false, tap:false, zoomControl:false, zoomAnimation:true, attributionControl:false, minZoom: 2, maxZoom: 17});
-      this.layer_street = L.mapbox.tileLayer('mallbeury.8d4ad8ec');
+      this.layer_street = L.mapbox.tileLayer(this.options.mapStreet);
       this.layer_sat = L.mapbox.tileLayer('mallbeury.map-eorpnyp3');      
       this.map.addLayer(this.layer_street);
 
@@ -209,8 +214,10 @@ define([
    	  this.map.setView(latLng, nZoom, {animate: false});
     },
     selectTrail: function(id){
+    	console.log(id);
 	  var cardModel = this.collection.get(id);
 	  if (!cardModel) {
+	  	console.log('ret');
 	  	return false;
 	  }
     	

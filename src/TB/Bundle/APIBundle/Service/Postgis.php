@@ -189,13 +189,16 @@ class Postgis extends \PDO
         $route = new Route();
 
         $this->beginTransaction();
-        $q = "SELECT r.name AS name, 
+        $q = "SELECT r.id,
+        			 r.name AS name, 
                      r.slug AS slug,
                      r.region AS region, 
                      r.length as length,
                      r.tags as rtags,
                      r.about,
                      r.rating,
+                     u.id AS user_id, u.name AS user_name,u.discr,
+                     u.first_name, u.last_name, u.display_name, u.avatar, u.avatar_gravatar, u.avatar_facebook, u.gender, u.is_ambassador,
                      ST_AsText(r.centroid) AS centroid,
                      ST_AsText(r.start) AS start,
                      ST_AsText(Box2D(ST_MakeLine(rp.coords ORDER BY rp.point_number ASC))) as bbox,
@@ -210,12 +213,13 @@ class Postgis extends \PDO
                      m.path AS m_path,
                      m.share_path AS m_share_path
               FROM routes r
+              INNER JOIN fos_user u ON r.user_id=u.id              
               INNER JOIN route_points rp ON r.id=rp.route_id
               LEFT JOIN route_type rt ON r.route_type_id=rt.id
               LEFT JOIN route_category rc ON r.route_category_id=rc.id
               LEFT JOIN medias m ON r.media_id=m.id
               WHERE r.id=?
-              GROUP BY r.id, length, r.tags, r.slug, r.region, r.about, rt.id, rc.id, m.id";
+              GROUP BY r.id, length, r.tags, r.slug, r.region, r.about, rt.id, rc.id, u.id, m.id";
         $pq = $this->prepare($q);
         $success = $pq->execute(array($routeId));
         if (!$success) {
@@ -225,6 +229,7 @@ class Postgis extends \PDO
         $this->commit();
 
         if ($row = $pq->fetch(\PDO::FETCH_ASSOC)) {
+        	$route->setId($row['id']);
             $route->setName($row['name']);
             $route->setSlug($row['slug']);
             $route->setRegion($row['region']);
@@ -264,8 +269,27 @@ class Postgis extends \PDO
                 $tags = json_decode('{' . str_replace('"=>"', '":"', $row['m_tags']) . '}', true);
                 $media->setTags($tags);
                 $route->setMedia($media);
+            }            
+            if ($row['discr'] == 'user') {
+                $user = new UserProfile();
+                $user->setName($row['user_name']);
+                $user->setFirstName($row['first_name']);
+                $user->setLastName($row['last_name']);
+                $user->setAvatar($row['avatar']);
+                $user->setAvatarGravatar($row['avatar_gravatar']);
+                $user->setAvatarFacebook($row['avatar_facebook']);
+                $user->setGender($row['gender']);
+                $user->setIsAmbassador($row['is_ambassador']);
+            } elseif ($row['discr'] == 'brand') {
+                $user = new BrandProfile();
+                $user->setName($row['user_name']);
+                $user->setDisplayName($row['display_name']);
+                $user->setAvatar($row['avatar']);
+                $user->setAvatarGravatar($row['avatar_gravatar']);
+                $user->setAvatarFacebook($row['avatar_facebook']);
             }
-            
+            $route->setUser($user);
+			
             $attributes = $this->getRouteAttributes($routeId);
             foreach ($attributes as $attribute) {
                 $route->addAttribute($attribute);

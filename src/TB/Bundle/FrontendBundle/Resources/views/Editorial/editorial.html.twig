@@ -25,7 +25,7 @@ var TB_USER_ID = {{ app.user.id }};
 var TB_EDITORIAL_TRAILS = [
     {% for editorialRoute in editorialRoutes %}
         {% set route = editorialRoute.route %}
-        { long: {{ route.start.longitude }}, lat: {{ route.start.latitude }}, short_name: "{{ route.shortName }}", region: "{{ route.region }}", url: "{{ path('editorial_trail', {trailSlug: route.slug, editorialSlug: editorial.slug}) }}" },          
+        { id: {{ route.id }}, long: {{ route.start.longitude }}, lat: {{ route.start.latitude }}, short_name: "{{ route.shortName }}", region: "{{ route.region }}", url: "{{ path('editorial_trail', {trailSlug: route.slug, editorialSlug: editorial.slug}) }}" },          
     {% endfor %}
 ];
 </script>
@@ -140,8 +140,15 @@ var TB_EDITORIAL_TRAILS = [
 		  			<div class="line"></div>
 	  			</div>
   				
-				<div id="editorial_region_view">		  				
-					<div id="editorial_map_view" class="editorial_map"></div>		  				
+				<div id="editorial_region_view">					
+				    <div id="editorial_map_view"></div>       
+				  	<div id="view_map_btns">        
+						<div class='controls'>
+				    	<span class="btn btn-tb zoomin_btn">+</span>          
+				    	<span class="btn btn-tb zoomout_btn">-</span>
+				    	<span class="btn btn-tb view_btn">Satellite</span>
+				    	</div>          
+					</div>      	
 	            	<div class='border_top'></div>
 	            	<div class='border_left'></div>
   				</div>
@@ -151,7 +158,14 @@ var TB_EDITORIAL_TRAILS = [
 				<div class="single_region">		  				
 
 				<div id="editorial_region_view">		  				
-					<div id="editorial_map_view" class="editorial_map"></div>		  				
+				    <div id="editorial_map_view"></div>       
+				  	<div id="view_map_btns">        
+						<div class='controls'>
+				    	<span class="btn btn-tb zoomin_btn">+</span>          
+				    	<span class="btn btn-tb zoomout_btn">-</span>
+				    	<span class="btn btn-tb view_btn">Satellite</span>
+				    	</div>          
+					</div>      	
 	            	<div class='border_top'></div>
 	            	<div class='border_left'></div>
   				</div>
@@ -182,9 +196,66 @@ var TB_EDITORIAL_TRAILS = [
 {% endblock %}
 
 {% block javascripts %}
+{#
 <script type="text/template" id="editorialMapViewTemplate">
   <div id='map'></div>  
 </script>
+#}
+
+<script type="text/template" id="trailMapViewTemplate">
+  <div class="map_container">
+    <div id='map_large'></div>
+  </div>
+</script>
+
+<script type="text/template" id="trailMarkerPopupViewTemplate">
+  <div class="tb-trailpopup">
+  	<div class="card">
+  	  <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/O=80/http://media.trailburning.com<%= versionLargePath %>" class="resrc scale"></div>
+	  <div class="card_flag"></div>
+  	  <div class="card_title">
+  	  <h1><%= name %></h1><br/>
+  	  <h2><%= region %></h2><br/>
+  	  <h2><span class="stars"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></span></h2>
+  	  </div>
+    </div>
+    <div class="card_avatar">    
+	  <div class="tb-avatar"><div class="photo"><a href="{{ app.request.baseUrl }}/profile/<%= user.name %>"><img src="<%= user.avatar %>"></a></div></div>    	
+    </div>
+    <div class="detail_container">
+      <h3 class="tb"><%= category.name %></h3>
+      <div class="summary">
+	    <div class="length"><%= length_km %> km</div>
+	    <div class="altitude"><%= ascent_m %> D+<br/><%= descent_m %> D-</div>
+      </div>
+      <div class="btns"><span data-url="{{ app.request.baseUrl }}/trail/<%= slug %>" data-id="<%= id %>" class="btn btn-tb-action btnView">View the Trail</span></div>
+    </div>
+  </div>              
+</script>
+
+<script type="text/template" id="trailEventMarkerPopupViewTemplate">
+  <div class="tb-trailpopup">
+  	<div class="card">
+  	  <div class="image_container fade_on_load"><img data-src="http://app.resrc.it/O=80/http://media.trailburning.com<%= versionLargePath %>" class="resrc scale"></div>
+  	  <div class="card_title">
+  	  <h1><%= name %></h1><br/>
+  	  <h2><%= region %></h2><br/>
+  	  </div>
+    </div>
+    <div class="card_avatar">    
+	  <a href="{{ app.request.baseUrl }}/<%= sponsorURL %>"><img src="http://assets.trailburning.com/images/<%= sponsorURL %>/card_trail_sticker_logo.png"></a>    	
+    </div>
+    <div class="detail_container">
+      <h3 class="tb"><%= category.name %></h3>
+      <div class="summary">
+	    <div class="length"><%= length_km %> km</div>
+	    <div class="altitude"><%= ascent_m %> D+<br/><%= descent_m %> D-</div>
+      </div>
+      <div class="btns"><span data-url="{{ app.request.baseUrl }}/trail/<%= slug %>" data-id="<%= id %>" class="btn btn-tb-action btnView">View the Trail</span></div>
+    </div>
+  </div>              
+</script>
+
 <script src="{{ asset('assets/js/libs/jquery.columnizer.js') }}"></script>
 
 {% endblock %}

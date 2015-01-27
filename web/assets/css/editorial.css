@@ -360,25 +360,47 @@ html.touch #small_sponsor_bar {
 }    
 
 #editorial_map_view {
-  position: absolute;
-  top: 0px;
-  left: 0px;
   width: 100%;
   height: 100%;
 }
 
-#editorial_map_view #map {
-  position: absolute;
-  top: 0px;
-  left: 0px;
+#editorial_map_view .map_container {
+  position: relative;
   width: 100%;
   height: 100%;
-  background-color: transparent; 
 }
 
-.leaflet-container {
-  cursor: auto;
+#editorial_map_view .leaflet-container {
+  background: #8BD1E3;
 }
+
+#editorial_map_view #map_large {
+  display: none;
+  width: 100%;
+  height: 100%;
+}
+
+.leaflet-popup-content-wrapper {
+  background: #FFF;
+  border-radius: 0px;
+}
+
+.leaflet-popup-content {  
+  margin: 0px;
+  padding: 0px;
+  width: 460px;
+  height: 235px;
+}
+
+/* VIEW CNTRLS */
+/******************************************/
+#view_map_btns {
+  display: none;
+  position: absolute;
+  top: 18px;
+  right: 16px;
+}
+
 #editorial_region_view .border_top {  
   position: absolute;
   top: 0px;
@@ -393,24 +415,6 @@ html.touch #small_sponsor_bar {
   width: 2px;
   height: 100%;  
   border-left: 2px solid rgba(0, 0, 0, 0.1);
-}
-
-#editorial_region_view .leaflet-popup-content {
-  padding: 5px; 
-}
-
-#editorial_region_view .trail_location_popup {
-  width: 170px;	
-}
-
-#editorial_region_view .trail_location_popup .icon {
-  float: left;
-  width: 40px;	
-}
-
-#editorial_region_view .trail_location_popup .detail {
-  float: left;	
-  width: 130px;	
 }
 
 /* EDITORIAL CARDS */

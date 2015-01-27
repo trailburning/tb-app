@@ -1,10 +1,11 @@
 define([
   'underscore', 
   'backbone',
+  'models/TrailModel',
   'views/ActivityFeedView',  
-  'views/EditorialMapView',
+  'views/maps/MapTrailView',
   'views/VideoView'
-], function(_, Backbone, ActivityFeedView, EditorialMapView, VideoView){
+], function(_, Backbone, TrailModel, ActivityFeedView, MapTrailView, VideoView){
 
   var STATE_BIG_SPONSOR = 1;
   var STATE_SMALL_SPONSOR = 2;
@@ -15,6 +16,9 @@ define([
       
       this.nSponsorState = STATE_BIG_SPONSOR;
       this.nPrevScrollY = 0;
+      
+      this.nTrailsLoaded = 0;
+      this.nTotalTrails = 0;
       
 	  $(window).scroll(function () {
         self.handleScroll(); 
@@ -34,8 +38,8 @@ define([
       	this.activityFeedView.getActivity();	  	
 	  }
       
-      this.editorialMapView = new EditorialMapView({ el: '#editorial_map_view' });          
-      self.editorialMapView.render();
+      this.trailMapView = new MapTrailView({ el: '#editorial_map_view', elCntrls: '#view_map_btns', model: this.model, mapStreet: 'mallbeury.map-kply0zpa', mapMargin: 120 });
+	  this.trailMapView.render();	  
 
 	  $('#column_wrapper_intro').columnize({
 		columns : 2,
@@ -60,7 +64,38 @@ define([
       $('#footerview').show();
 	  
 	  this.handleResize();      
+	  this.getResults();
     },
+    getResult: function(nTrail){    	
+      var self = this, trailModel = new TrailModel();
+      
+      trailModel.set('id', nTrail);             
+      trailModel.fetch({
+        success: function () {        
+	      var model = new Backbone.Model(trailModel.get('value').route);
+	      self.trailMapView.addTrail(model);
+	      self.nTrailsLoaded++;
+	      
+	      if (self.nTrailsLoaded == self.nTotalTrails) {
+	   		$('#editorial_map_view #map_large').show();		  	
+  	  		$('#view_map_btns').show();
+	      	
+		  	self.trailMapView.updateTrails();
+		  	self.trailMapView.render();          
+	      }
+        }      
+      });      
+    	
+    },
+    getResults: function(){
+      var self = this, model;
+
+      this.nTotalTrails = TB_EDITORIAL_TRAILS.length;
+
+      _.each(TB_EDITORIAL_TRAILS, function (trail) {        
+        self.getResult(trail.id);  	    
+      }, this);
+    },       
     handleResize: function(){
       $("img.scale_image_ready").imageScale();
     },
