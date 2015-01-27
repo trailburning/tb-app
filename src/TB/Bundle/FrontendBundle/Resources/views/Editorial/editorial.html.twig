@@ -25,7 +25,7 @@ var TB_USER_ID = {{ app.user.id }};
 var TB_EDITORIAL_TRAILS = [
     {% for editorialRoute in editorialRoutes %}
         {% set route = editorialRoute.route %}
-        { id: {{ route.id }}, long: {{ route.start.longitude }}, lat: {{ route.start.latitude }}, short_name: "{{ route.shortName }}", region: "{{ route.region }}", url: "{{ path('editorial_trail', {trailSlug: route.slug, editorialSlug: editorial.slug}) }}" },          
+        { id: {{ route.id }} },          
     {% endfor %}
 ];
 </script>
@@ -86,9 +86,7 @@ var TB_EDITORIAL_TRAILS = [
 	  			<div class="content_header">
 		  			<div class="header">by <strong>{{ editorial.user.title }}</strong>&nbsp;&nbsp;&nbsp;<span class="date">{{ editorial.date|date('d/m/Y') }}</span></div>
 		  			<div class="line"></div>
-		  			<div class="share_bar">
-      					{{ include('TBFrontendBundle:Default:share.html.twig') }} 	  				
-		  			</div>
+		  			<div class="share_bar">{{ include('TBFrontendBundle:Default:share.html.twig') }}</div>
 	  			</div>	  			
 	  			
 				<div id="column_wrapper_intro" class="column_wrapper">
@@ -228,7 +226,7 @@ var TB_EDITORIAL_TRAILS = [
 	    <div class="length"><%= length_km %> km</div>
 	    <div class="altitude"><%= ascent_m %> D+<br/><%= descent_m %> D-</div>
       </div>
-      <div class="btns"><span data-url="{{ app.request.baseUrl }}/trail/<%= slug %>" data-id="<%= id %>" class="btn btn-tb-action btnView">View the Trail</span></div>
+      <div class="btns"><span data-url="{{ app.request.baseUrl }}/inspire/{{ editorial.slug }}/trail/<%= slug %>" data-id="<%= id %>" class="btn btn-tb-action btnView">View the Trail</span></div>
     </div>
   </div>              
 </script>

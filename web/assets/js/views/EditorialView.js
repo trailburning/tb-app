@@ -66,13 +66,14 @@ define([
 	  this.handleResize();      
 	  this.getResults();
     },
-    getResult: function(nTrail){    	
+    getResult: function(trail){    	
       var self = this, trailModel = new TrailModel();
       
-      trailModel.set('id', nTrail);             
+      trailModel.set('id', trail.id);             
       trailModel.fetch({
         success: function () {        
 	      var model = new Backbone.Model(trailModel.get('value').route);
+	      
 	      self.trailMapView.addTrail(model);
 	      self.nTrailsLoaded++;
 	      
@@ -93,7 +94,7 @@ define([
       this.nTotalTrails = TB_EDITORIAL_TRAILS.length;
 
       _.each(TB_EDITORIAL_TRAILS, function (trail) {        
-        self.getResult(trail.id);  	    
+        self.getResult(trail);  	    
       }, this);
     },       
     handleResize: function(){

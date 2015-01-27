@@ -214,7 +214,6 @@ define([
    	  this.map.setView(latLng, nZoom, {animate: false});
     },
     selectTrail: function(id){
-    	console.log(id);
 	  var cardModel = this.collection.get(id);
 	  if (!cardModel) {
 	  	console.log('ret');
