@@ -44,8 +44,6 @@ define([
     function builtEventMap() {
       var fLat = TB_EVENT_LAT;
       var fLng = TB_EVENT_LONG;
-      console.log(fLat);
-      console.log(fLng);
       
       var map = L.mapbox.map('event_location_map', 'mallbeury.map-kply0zpa', {dragging: false, touchZoom: false, scrollWheelZoom:false, doubleClickZoom:false, boxZoom:false, tap:false, zoomControl:false, zoomAnimation:false, attributionControl:false});
 

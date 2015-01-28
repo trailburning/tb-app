@@ -895,7 +895,7 @@ a:active .tb-cntrl {
 }
 
 #headerview .logo {
-  width: 100%;	
+  width: 100%;
   margin: 14px 0px 0px 0px;
   height: 17px;
   line-height: 17px;
@@ -1357,6 +1357,8 @@ a:active .tb-cntrl {
 
 #headerview .navbar .nav .dropdown-menu li .logo {
   display: none;
+  height: 48px;	
+  margin: 0;
 }
 
 #headerview .navbar .nav .dropdown-menu li .note {
@@ -1778,7 +1780,7 @@ form label {
   }
 }
 
-@media (min-width: 979px) {
+@media (min-width: 980px) {  
   #headerview .logo {  	
     float: left;
     width: auto;

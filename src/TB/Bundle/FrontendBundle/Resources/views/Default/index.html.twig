@@ -218,7 +218,7 @@ var TB_USER_ID = {{ app.user.id }};
 	  	
     </div>                
   </div>                
-  
+
   <div id="mapview">
     <div id="trail_map_view"></div>       
   	<div id="view_map_btns">        
@@ -228,15 +228,16 @@ var TB_USER_ID = {{ app.user.id }};
     	<span class="btn btn-tb view_btn">Satellite</span>
     	</div>          
 	</div>      	
-  </div>
+  </div>	
     
   <div class="trails_content">
   	<div class="line_break"></div>
-
+	
       <div class="col_panels clearfix">     
 	    <div class="left">
 	      <div id="twitter_view" class="tweets">&nbsp;</div>	
 	    </div>
+      	
 	    <div class="right">
 	    		    	
 	    	<div class="panel trail_card_panel campaign_panel">
@@ -278,7 +279,7 @@ var TB_USER_ID = {{ app.user.id }};
     	                            	</a>
     	                            	</div>  
 									  </div>
-{#	
+{#
 			<div class="panel trail_card_panel campaign_panel">
 								<div class="content">                                            
 			    	            <a href="{{ app.request.baseUrl }}/campaign/mtbuller">
@@ -296,7 +297,7 @@ var TB_USER_ID = {{ app.user.id }};
 			    	         	</a>
 			    	        	</div>    
 							</div>	    	
-#}
+#}	
 									  
 	    </div>
 	  </div>
@@ -318,8 +319,9 @@ var TB_USER_ID = {{ app.user.id }};
 	  	<div class="more_btn"><a href="{{ app.request.baseUrl }}/events" class="btn btn-tb btn-tb-small">More Events</a></div>
 
     </div>
-  </div>
     
+  </div>
+
   <div class="discover_content">
     <div class="centre_content clearfix">      
 	  	<h2 class="tb">Discover New Trails</h2>
@@ -329,7 +331,9 @@ var TB_USER_ID = {{ app.user.id }};
         {{ render(controller('TBFrontendBundle:Trail:homepageTrails')) }}
 	  	<div class="more_btn"><a href="{{ app.request.baseUrl }}/trails" class="btn btn-tb btn-tb-small">More Trails</a></div>
     </div>                
-  </div>                
+  </div>                	
+    
+  
 {#	
   <div class="guide_content clearfix">      
     <div class="centre_content ">      
@@ -363,7 +367,6 @@ var TB_USER_ID = {{ app.user.id }};
 
 <script type="text/template" id="homeHeroViewTemplate">
 </script>
-
 
 <script type="text/template" id="trailMapViewTemplate">
   <div class="map_container">

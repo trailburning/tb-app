@@ -1,14 +1,6 @@
 /* APP */
 /******************************************/
 #appview {
-/*  
-border-style:solid;
-border-width:1px;
-*/  
-}
-
-.centre_content {
-  width: 1140px;
 }
 
 .line_break {
@@ -218,19 +210,23 @@ html.touch .hero_nav .button {
 /******************************************/
 .col_panels  {
   position: relative;
-  margin: 0px auto 0px auto;
-  width: 1112px;
+  width: 100%;
   padding-top: 22px;
 }
 
-.col_panels  .left {
-  float: left;
-  width: 544px;
+.col_panels .trail_card_panel {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.col_panels .left {	
+  width: 472px;
+  margin: 0px auto 0px auto;
 }
 
 .col_panels  .right {
-  float: left;
-  width: 568px;
+  width: 472px;  
+  margin: 0px auto 0px auto;
 }
 
 /* DISCOVER */
@@ -511,25 +507,38 @@ html.touch .hero_nav .button {
 
 /* RESPONSIVE */
 /******************************************/
+@media (min-width: 992px) {
+  .col_panels {
+  	 width: 968px;
+     margin: 0px auto 0px auto;
+  }
+  .col_panels .trail_card_panel {
+  	margin-left: 24px;
+  } 
+  .col_panels .left {
+  	float: left;
+  	margin: 0px;	
+  }
+  .col_panels .right {
+  	float: left;	
+  	margin: 0px;	
+  }	
+}
 
-/* Large devices (large desktops, 1200px and up) */
 @media (min-width: 1200px) {
+  .col_panels {
+	width: 1112px;
+  }
+  .col_panels .left {
+  	width: 544px;
+  }
+  .col_panels .right {
+  	width: 568px;
+  }	
 }
  
 /* Medium devices (desktops, 992px and up) */
 @media (max-width: 1199px) {  
-  .centre_content {
-    width: 992px;
-  }
-  .col_panels  {
-    width: 968px;
-  }    
-  .col_panels  .left {
-    width: 472px;
-  }
-  .col_panels  .right {
-    width: 496px;
-  }
   .campaign_panel,
   .tweet_panel {
     width: 472px;
@@ -553,10 +562,6 @@ html.touch .hero_nav .button {
   .guide_content .guide_item .guide_image {
     width: 165px;	
   }
-}
-
-/* Small devices (tablets, 768px) */
-@media (max-width: 768px) {  
 }
 
 .image {

@@ -3,7 +3,7 @@
 		<div class="title"><h3 class="tb">{{ route.routeCategory.name }}</h3></div>
         <a href="{{ path('editorial_trail', {trailSlug: route.slug, editorialSlug: editorial.slug}) }}">
         <div class="photo tb-photo-btn">
-        	<div class="image_container"><img src="http://app.resrc.it/o=80/{{ route.favouriteMedia.absolutePath }}" class="resrc scale" border="0"/></div>
+        	<div class="image_container fade_on_load"><img src="http://app.resrc.it/o=80/{{ route.favouriteMedia.absolutePath }}" class="resrc scale" border="0"/></div>
 			{% if route.user.isAmbassador %}
 	        	<div class="card_flag"></div>
 			{% endif %}	        

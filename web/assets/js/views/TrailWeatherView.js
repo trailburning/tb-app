@@ -121,7 +121,7 @@ define([
             strUnits = 'imperial';
             break;
         }
-        var strURL = WEATHER_BASEURL + '?lat='+self.options.lat+'&lon='+self.options.lon+'&units=metric';
+        var strURL = WEATHER_BASEURL + '?appid=ebd0689d6c9224dd829e3624ec18181d&lat='+self.options.lat+'&lon='+self.options.lon+'&units=metric';
         $.ajax({
           dataType: "jsonp",
           url: strURL,
@@ -129,6 +129,7 @@ define([
             updateWeather(data);
           },
           error: function(data) {
+          	console.log('ERR');
             updateWeatherERR();
           }                     
         });        
