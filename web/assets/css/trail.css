@@ -142,9 +142,24 @@ html.touch #small_sponsor_bar {
   background: url(../img/trailplayer/overlay_background.png) repeat-x top left;
 }
 
-.royalSlider,
-#trail_map_view {	
-  height: 300px;  	
+#trail_map_view {
+  width: 100%;	
+  height: 600px;  	
+}
+
+#trail_detail_view {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: 50%;	
+  height: 600px;  	
+}
+
+#trail_detail_view {
+/*	
+  background-color: rgba(0,0,0,0.3);
+*/
+  background: url(../img/trailplayer/grad_back.png) no-repeat top left;  
 }
 
 #trail_view .line_break {
@@ -371,10 +386,16 @@ html.touch #small_sponsor_bar {
 
 /* ROYAL SLIDER */
 /******************************************/
+#trail_slides_container {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
 .royalSlider {
   display: none;
-  float: left;
-  width: 100%;
+  margin: 0 auto 0 auto;
+  width: 80%;
   background: #000;
 }
 
@@ -612,10 +633,8 @@ html.touch #small_sponsor_bar {
 /* TRAIL MAP VIEW */
 /******************************************/
 #trail_map_view {
-  float: left;
   position: relative;
   background: transparent;
-  width: 100%;
   overflow: hidden;
 }
 
@@ -1530,6 +1549,7 @@ html.touch #small_sponsor_bar {
 }
 
 @media (min-width: 768px) {
+/*	
   #trail_view .line_break {  	
     display: none;
   }
@@ -1600,9 +1620,11 @@ html.touch #small_sponsor_bar {
   #trail_map_view.mini.active {
     bottom: 6px;
   }  
+*/  
 }
 
 @media (min-width: 992px) {
+/*	
   #trail_view,
   .royalSlider,
   #trail_map_view {	
@@ -1630,4 +1652,5 @@ html.touch #small_sponsor_bar {
   #trail_map_view.mini.active {
     bottom: 6px;
   }
+*/  
 }

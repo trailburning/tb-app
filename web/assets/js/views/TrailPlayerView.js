@@ -76,17 +76,18 @@ define([
 	  this.trailSliderView.render();
 	  // update map based on how the map is being displayed.
 	  if ($('#trail_map_view').css('float') == 'none') {
-	  	this.trailMapView.setView(false);
+//	  	this.trailMapView.setView(false);
 	  }
 	  else {
-	  	this.trailMapView.setView(true);
+//	  	this.trailMapView.setView(true);
 	  }
+	  this.trailMapView.setView(true);
 
 	  // when royalslider resizes sometimes the header redraws the incorrect width.
 	  // fixed by forcing width to be that of royalslider 
-	  var nWidth = $('.royalSlider').width();
-	  $('#headerview').width(nWidth);
-	  $('#headerview .navbar').width(nWidth);
+//	  var nWidth = $('.royalSlider').width();
+//	  $('#headerview').width(nWidth);
+//	  $('#headerview .navbar').width(nWidth);
 	},
     handleMedia: function(){
       var self = this;

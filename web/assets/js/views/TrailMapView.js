@@ -9,6 +9,14 @@ define([
 
   var TrailMapView = Backbone.View.extend({
     initialize: function(){
+    	
+		L.Map.prototype.panToOffset = function (latlng, offset, options) {
+		    var x = this.latLngToContainerPoint(latlng).x - offset[0]
+		    var y = this.latLngToContainerPoint(latlng).y - offset[1]
+		    var point = this.containerPointToLatLng([x, y])
+		    return this.setView(point, this._zoom, { pan: options })
+		}    	
+    	
       this.elCntrls = this.options.elCntrls;            
       this.bRendered = false;
       this.bFullView = false;
@@ -120,7 +128,10 @@ define([
         if (this.currMapMediaView) {
           this.currMapMediaView.setActive(true);
           // centre on active marker
-          this.map.panTo(this.currMapMediaView.marker.getLatLng(), {animate: true, duration: 1});        	
+//          this.map.panTo(this.currMapMediaView.marker.getLatLng(), {animate: true, duration: 1});        	
+          
+          var contentWidth = $(document).width() / 2;
+          this.map.panToOffset(this.currMapMediaView.marker.getLatLng(), [-(contentWidth/2), 0], {animate: true, duration: 1});        	
         }
       }
     },
@@ -180,26 +191,26 @@ define([
       if (!this.model.get('id')) {
         return;
       }
+
+      var contentWidth = $(document).width() / 2;
        
       // already rendered?  Just update
       if (this.bRendered) {
         this.map.invalidateSize();
-        if (this.bFullView) {
-          this.map.fitBounds(this.red_polyline.getBounds(), {padding: [30, 30], animate: false});
-        }
-        else {
-          this.map.fitBounds(this.white_polyline.getBounds(), {padding: [30, 30], animate: false});        	
-        }
+//        this.map.fitBounds(this.red_polyline.getBounds(), {padding: [30, 30], animate: false});
+        this.map.fitBounds(this.red_polyline.getBounds(), {paddingTopLeft: [30, 30], paddingBottomRight: [contentWidth/2, 30], animate: false});
         return;         
       }        
                 
       var self = this;
                         
-      this.map = L.mapbox.map(this.el.id, null, {dragging: true, touchZoom: false, scrollWheelZoom:false, doubleClickZoom:false, boxZoom:false, tap:false, zoomControl:false, zoomAnimation:true, attributionControl:false});
-      this.layer_mini_street = L.mapbox.tileLayer('mallbeury.8f5ac718');     
-      this.layer_full_street = L.mapbox.tileLayer('mallbeury.8d4ad8ec');
+      this.map = L.mapbox.map(this.el.id, null, {dragging: true, touchZoom: false, scrollWheelZoom:true, doubleClickZoom:false, boxZoom:false, tap:false, zoomControl:false, zoomAnimation:true, attributionControl:false});
+//      this.layer_mini_street = L.mapbox.tileLayer('mallbeury.8f5ac718');     
+      this.layer_full_street = L.mapbox.tileLayer('mallbeury.8d4ad8ec');      
+//      this.layer_full_street = L.mapbox.tileLayer('mallbeury.map-kply0zpa');      
       this.layer_sat = L.mapbox.tileLayer('mallbeury.map-eorpnyp3');      
-      this.map.addLayer(this.layer_mini_street);
+//      this.map.addLayer(this.layer_mini_street);
+      this.map.addLayer(this.layer_full_street);
 
       var data = this.model.get('value');      
       $.each(data.route.route_points, function(key, point) {
@@ -224,7 +235,8 @@ define([
       };         
       this.red_polyline = L.polyline(self.arrLineCordinates, red_polyline_options);
   
-      this.map.fitBounds(self.white_polyline.getBounds(), {padding: [30, 30]});
+//      this.map.fitBounds(self.white_polyline.getBounds(), {paddingTopLeft: [200, 0], padding: [30, 30]});
+      this.map.fitBounds(self.white_polyline.getBounds(), {paddingTopLeft: [30, 30], paddingBottomRight: [contentWidth/2, 30]});
                
       this.buildBtns();           
       

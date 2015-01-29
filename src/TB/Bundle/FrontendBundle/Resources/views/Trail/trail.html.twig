@@ -64,11 +64,17 @@ var TB_TRAIL_ID = {{ trail.id }};
 {% endif %}	
 
 	<div id="trail_view">	
-	    <div id="trail_slides_view" class="royalSlider rsDefault"></div>
-	    <div class="line_break"></div>
-	    <div id="trail_map_view" class="trail_map_view tb-move-vert">
+	    <div id="trail_map_view" class="trail_map_view">
 	      <div class="toggleBtn"><div class="toggleIcn map"></div></div>	    
 	    </div>
+		
+		<div id="trail_detail_view">
+		  <div id="trail_slides_container">
+		  	<div id="trail_slides_view" class="royalSlider rsDefault"></div>
+		  </div>
+		</div>
+	    
+	    <div class="line_break"></div>
 	    
 	    <div id="trail_author_view" class="trail_author_view">
 			  {% if event or user is BrandProfile %}
