@@ -266,7 +266,6 @@ class Media implements Exportable
         
         $geoPoint = $mediaImporter->getGeometryPointFromExif($exiftags);
         
-        
         if ($geoPoint) {
             // When the image has GPS data, get the datetime from the nearest RoutePoint by GPS
             $routePoint = $mediaImporter->getNearestRoutePointByGeoPoint($this->getRoute(), $geoPoint);
@@ -296,8 +295,8 @@ class Media implements Exportable
         
         $tags['datetime'] = $datetime;
        
-        if (isset($tags['Orientation']) 
-            && in_array($tags['Orientation'], [self::EXIF_ORIENTATION_LEFT_SIDE_TOP, self::EXIF_ORIENTATION_RIGHT_SIDE_TOP, self::EXIF_ORIENTATION_RIGHT_SIDE_BOTTOM, self::EXIF_ORIENTATION_LEFT_SIDE_BOTTOM])) {
+        if (isset($exiftags['Orientation']) 
+            && in_array($exiftags['Orientation'], [self::EXIF_ORIENTATION_LEFT_SIDE_TOP, self::EXIF_ORIENTATION_RIGHT_SIDE_TOP, self::EXIF_ORIENTATION_RIGHT_SIDE_BOTTOM, self::EXIF_ORIENTATION_LEFT_SIDE_BOTTOM])) {
             if (isset($exiftags['COMPUTED']) && isset($exiftags['COMPUTED']['Width'])) {
                 $tags['height'] = $exiftags['COMPUTED']['Width']; 
             }
@@ -311,7 +310,7 @@ class Media implements Exportable
             if (isset($exiftags['COMPUTED']) && isset($exiftags['COMPUTED']['Height'])) {
                 $tags['height'] = $exiftags['COMPUTED']['Height']; 
             }
-        }    
+        }
         
         //get the longitude, latitude and altitude from the nearest RoutePoint by datetime
         $routePoint = $mediaImporter->getNearestRoutePointByTime($this->getRoute(), $datetime);
