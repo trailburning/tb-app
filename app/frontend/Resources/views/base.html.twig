@@ -13,7 +13,10 @@
         <title>{% block title %}Trailburning{% endblock %}</title>
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
         <link href="http://fonts.googleapis.com/css?family=Signika:400,300,700" rel="stylesheet">
-        <link href="http://api.tiles.mapbox.com/mapbox.js/v1.6.3/mapbox.css" rel="stylesheet">
+{#
+        <link href="http://api.tiles.mapbox.com/mapbox.js/v1.6.3/mapbox.css" rel="stylesheet">	
+#}        
+    	<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.5.2/mapbox-gl.css' rel='stylesheet' />
         
         <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
         <link href="{{ asset('assets/css/bootstrap-responsive.min.css') }}" rel="stylesheet">
@@ -199,6 +202,8 @@
         <script src="{{ asset('assets/js/libs/bootstrap-select.min.js') }}"></script>
 
         <script src='http://api.tiles.mapbox.com/mapbox.js/v2.1.2/mapbox.js'></script>
+ 		<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.5.2/mapbox-gl.js'></script>
+        
         <script src='http://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js'></script>
 
         <script src="{{ asset('assets/js/libs/leaflet.geometryutil.js') }}"></script>

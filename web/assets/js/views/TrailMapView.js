@@ -10,12 +10,19 @@ define([
   var TrailMapView = Backbone.View.extend({
     initialize: function(){
     	
-		L.Map.prototype.panToOffset = function (latlng, offset, options) {
-		    var x = this.latLngToContainerPoint(latlng).x - offset[0]
-		    var y = this.latLngToContainerPoint(latlng).y - offset[1]
-		    var point = this.containerPointToLatLng([x, y])
-		    return this.setView(point, this._zoom, { pan: options })
-		}    	
+		L.LatLng.prototype.bearingTo = function(other) {
+		    var d2r  = L.LatLng.DEG_TO_RAD;
+		    var r2d  = L.LatLng.RAD_TO_DEG;
+		    var lat1 = this.lat * d2r;
+		    var lat2 = other.lat * d2r;
+		    var dLon = (other.lng-this.lng) * d2r;
+		    var y    = Math.sin(dLon) * Math.cos(lat2);
+		    var x    = Math.cos(lat1)*Math.sin(lat2) - Math.sin(lat1)*Math.cos(lat2)*Math.cos(dLon);
+		    var brng = Math.atan2(y, x);
+		    brng = parseInt( brng * r2d );
+		    brng = (brng + 360) % 360;
+		    return brng;
+		};
     	
       this.elCntrls = this.options.elCntrls;            
       this.bRendered = false;
@@ -109,12 +116,12 @@ define([
         
         var fLatLng;
         if (this.bFullView) {
-          fLatLng = this.red_polyline.getBounds().getCenter();
+//          fLatLng = this.red_polyline.getBounds().getCenter();
         }
         else {
-          fLatLng = this.white_polyline.getBounds().getCenter();
+//          fLatLng = this.white_polyline.getBounds().getCenter();
         }
-		this.map.panTo(fLatLng, {animate: true, duration: 1});
+//		this.map.panTo(fLatLng, {animate: true, duration: 1});
       }
     },    
     gotoMedia: function(nMedia){
@@ -127,11 +134,23 @@ define([
         this.currMapMediaView = this.arrMapMediaViews[nMedia];
         if (this.currMapMediaView) {
           this.currMapMediaView.setActive(true);
-          // centre on active marker
-//          this.map.panTo(this.currMapMediaView.marker.getLatLng(), {animate: true, duration: 1});        	
           
-          var contentWidth = $(document).width() / 2;
-          this.map.panToOffset(this.currMapMediaView.marker.getLatLng(), [-(contentWidth/2), 0], {animate: true, duration: 1});        	
+          // get next point for bearing
+          var nNextMedia = nMedia + 1;
+          if (nNextMedia >= this.arrMapMediaViews.length) {
+            nNextMedia = 0;
+          }
+          var nextMapMediaView = this.arrMapMediaViews[nNextMedia];
+		  
+		  var currLatLng = L.latLng(this.currMapMediaView.model.get('coords').lat, this.currMapMediaView.model.get('coords').long);
+		  var nextLatLng = L.latLng(nextMapMediaView.model.get('coords').lat, nextMapMediaView.model.get('coords').long);
+ 
+ 		  var nBearing = currLatLng.bearingTo(nextLatLng);
+ 
+          // centre on active marker
+          this.map.stop();
+//          this.map.flyTo([this.currMapMediaView.model.get('coords').lat, this.currMapMediaView.model.get('coords').long], 15, nBearing, {speed: 0.4, curve: 0.4});          
+          this.map.easeTo([this.currMapMediaView.model.get('coords').lat, this.currMapMediaView.model.get('coords').long], 16, nBearing, {duration: 2000});          
         }
       }
     },
@@ -172,16 +191,81 @@ define([
     renderMarkers: function(){
       if (!this.arrMapMediaViews.length) {
         return;
-      }
+      }      	        
       
-      var trailMapMediaView = null;
-      for (var nMedia=0; nMedia < this.arrMapMediaViews.length; nMedia++) {
-        trailMapMediaView = this.arrMapMediaViews[nMedia];
-        trailMapMediaView.render();
-      }
+      var self = this;
       
-	  var marker = L.marker(this.arrLineCordinates[0]).addTo(this.map);			        
-      marker.setIcon(L.divIcon({className: 'tb-map-location-marker', html: '<div class="marker"></div>', iconSize: [22, 30], iconAnchor: [11, 30],}));
+		mapboxgl.util.getJSON('https://www.mapbox.com/mapbox-gl-styles/styles/outdoors-v6.json', function (err, style) {
+		  if (err) throw err;
+		  		
+		  style.layers.push({
+		    "id": "route",
+		    "type": "line",
+		    "source": "route",
+		    "layout": {
+		      "line-join": "round",
+		      "line-cap": "round"
+		    },
+		    "paint": {
+		      "line-color": "#44B6F7",
+		      "line-width": 3
+		    }
+		  });
+
+		  style.layers.push({
+		    "id": "markers",
+		    "type": "symbol",
+		    "source": "markers",
+		    "layout": {
+		      "icon-image": "{marker-symbol}-12",
+		      "text-field": "{title}",
+		      "text-font": "Open Sans Semibold, Arial Unicode MS Bold",
+		      "text-offset": [0, 0.6],
+		      "text-anchor": "top"
+		    },
+		    "paint": {
+		      "text-size": 16
+		    }
+		  });
+
+		  self.map = new mapboxgl.Map({
+			  container: self.el.id,
+			  style: style,
+			  center: [40, -74.50]
+			});
+
+		 var geoJSON = {
+		    "type": "Feature",
+		    "properties": {},
+		    "geometry": {
+		      "type": "LineString",
+		      "coordinates": []
+		    }
+		  };		
+		  var route = new mapboxgl.GeoJSONSource({ data: geoJSON });
+		  
+	      var data = self.model.get('value');      
+	      $.each(data.route.route_points, function(key, point) {
+	        self.arrLineCordinates.push([Number(point.coords[1]), Number(point.coords[0])]);        
+		    route._data.geometry.coordinates.push([Number(point.coords[0]), Number(point.coords[1])]);
+	      });
+		  		  		  
+		 var geoJSON = {
+		    "type": "FeatureCollection",
+		    "features": []};		
+		  var markers = new mapboxgl.GeoJSONSource({ data: geoJSON });
+	  	  
+	      var trailMapMediaView = null;
+	      for (var nMedia=0; nMedia < self.arrMapMediaViews.length; nMedia++) {
+	        trailMapMediaView = self.arrMapMediaViews[nMedia];
+	        trailMapMediaView.render(markers);
+	      }
+	      
+		  self.map.addSource('route', route);
+	  	  self.map.addSource('markers', markers);      
+	  	  
+	  	  self.map.setView([self.arrLineCordinates[0][0], self.arrLineCordinates[0][1]], 13, 0);	  	  
+      });
     },        
     render: function(){
       if (!this.model) {
@@ -196,52 +280,19 @@ define([
        
       // already rendered?  Just update
       if (this.bRendered) {
-        this.map.invalidateSize();
+//        this.map.invalidateSize();
 //        this.map.fitBounds(this.red_polyline.getBounds(), {padding: [30, 30], animate: false});
-        this.map.fitBounds(this.red_polyline.getBounds(), {paddingTopLeft: [30, 30], paddingBottomRight: [contentWidth/2, 30], animate: false});
+//        this.map.fitBounds(this.red_polyline.getBounds(), {paddingTopLeft: [30, 30], paddingBottomRight: [contentWidth/2, 30], animate: false});
         return;         
       }        
                 
       var self = this;
                         
-      this.map = L.mapbox.map(this.el.id, null, {dragging: true, touchZoom: false, scrollWheelZoom:true, doubleClickZoom:false, boxZoom:false, tap:false, zoomControl:false, zoomAnimation:true, attributionControl:false});
-//      this.layer_mini_street = L.mapbox.tileLayer('mallbeury.8f5ac718');     
-      this.layer_full_street = L.mapbox.tileLayer('mallbeury.8d4ad8ec');      
-//      this.layer_full_street = L.mapbox.tileLayer('mallbeury.map-kply0zpa');      
-      this.layer_sat = L.mapbox.tileLayer('mallbeury.map-eorpnyp3');      
-//      this.map.addLayer(this.layer_mini_street);
-      this.map.addLayer(this.layer_full_street);
+//      this.map = L.mapbox.map(this.el.id, null, {dragging: true, touchZoom: false, scrollWheelZoom:true, doubleClickZoom:false, boxZoom:false, tap:false, zoomControl:false, zoomAnimation:true, attributionControl:false});
 
-      var data = this.model.get('value');      
-      $.each(data.route.route_points, function(key, point) {
-        self.arrLineCordinates.push([Number(point.coords[1]), Number(point.coords[0])]);        
-      });
-
-      var white_polyline_options = {
-        color: '#FFF',
-        opacity: 1,
-        weight: 4,
-        clickable: false,
-    	distanceMarkers: { lazy: true }
-      };         
-      this.white_polyline = L.polyline(self.arrLineCordinates, white_polyline_options).addTo(this.map);
-
-      var red_polyline_options = {
-        color: '#ed1c24',
-        opacity: 1,
-        weight: 4,
-        clickable: false,
-    	distanceMarkers: { lazy: true }
-      };         
-      this.red_polyline = L.polyline(self.arrLineCordinates, red_polyline_options);
-  
-//      this.map.fitBounds(self.white_polyline.getBounds(), {paddingTopLeft: [200, 0], padding: [30, 30]});
-      this.map.fitBounds(self.white_polyline.getBounds(), {paddingTopLeft: [30, 30], paddingBottomRight: [contentWidth/2, 30]});
                
       this.buildBtns();           
-      
-      this.renderMarkers();                        
-                        
+                              
       this.bRendered = true;
                         
       return this;
@@ -250,7 +301,7 @@ define([
       if (bFull == this.bFullView) {
       	return;
       }
-      
+/*      
       if (bFull) {
       	this.bFullView = true;
       	
@@ -272,6 +323,7 @@ define([
         this.layer_mini_street.redraw();      	
       }
       this.render();
+*/      
     }
     
   });

@@ -78,7 +78,7 @@ define([
         keyboardNavEnabled: true,
         autoScaleSlider: false,
 	    autoPlay: {
-    	  enabled: true,
+//    	  enabled: true,
     	  pauseOnHover: false,
     	  stopAtAction: false,
     	  delay: self.options.nHoldSlide
