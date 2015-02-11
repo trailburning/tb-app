@@ -12,34 +12,31 @@ define([
       var self = this;
         
 	  this.collection = new Backbone.Collection();
-      this.activityFeedView = null;
-        
-	  if (typeof TB_USER_ID != 'undefined') {
-      	this.activityFeedView = new ActivityFeedView({ el: '#activity_feed_view' });
-      	this.activityFeedView.render();
-	  	this.activityFeedView.getActivity();
-	  }
 	  
 	  $('.discover_content .scale, .trails_content .scale').imagesLoaded()
   	    .progress( function(instance, image) {
   	  	  $(image.img).addClass('scale_image_ready');
-          // update pos
+          // invoke scale
           $(image.img).imageScale();
   	  	
     	  var elContainer = $(image.img).parent();
     	  if (elContainer.hasClass('fade_on_load')) {
             // fade in  
             elContainer.addClass('tb-fade-in');
-		    var nRnd = 100 * (Math.floor(Math.random() * 6) + 1);
-		    setTimeout(function(){
-		  	  elContainer.css('opacity', 1);
-		    }, nRnd);
+		  	elContainer.css('opacity', 1);
     	  }
     	  if ($(image.img).hasClass('resrc')) {
 		    // invoke resrc      
 	        resrc.resrc($(image.img));        
     	  }    	  
   	  });    
+
+      this.activityFeedView = null;
+	  if (typeof TB_USER_ID != 'undefined') {
+      	this.activityFeedView = new ActivityFeedView({ el: '#activity_feed_view' });
+      	this.activityFeedView.render();
+	  	this.activityFeedView.getActivity();
+	  }
   	
       this.homeHerosView = new HomeHerosView({ el: '#home_header' });
 	  this.homeHerosView.render();
@@ -75,18 +72,14 @@ define([
     getResults: function(){
       var self = this;
 
-	  var strURL = TB_RESTAPI_BASEURL + '/v1/routes/search?limit=500&offset=0';
-	  	  
+	  var strURL = TB_RESTAPI_BASEURL + '/v1/routes/search?limit=500&offset=0';	  	  
       $.ajax({
         type: "GET",
         dataType: "json",
         url: strURL,
         error: function(data) {
-//          console.log('error:'+data.responseText);      
         },
         success: function(data) {      
-//          console.log('success');
-//          console.log(data);
           var model;
       	  $.each(data.value.routes, function(key, card) {
 	    	model = new Backbone.Model(card);
