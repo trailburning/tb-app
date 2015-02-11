@@ -1739,6 +1739,10 @@ form label {
 .leaflet-control.mapbox-control-info {
   visibility: hidden;
 }
+
+.leaflet-popup-close-button+.leaflet-popup-content-wrapper .leaflet-popup-content {
+  padding-top: 0px;
+}
 	
 /* Medium devices (desktops, 992px and up) */
 @media (max-width: 1199px) {

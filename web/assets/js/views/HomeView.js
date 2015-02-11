@@ -28,7 +28,7 @@ define([
   	  	
     	  var elContainer = $(image.img).parent();
     	  if (elContainer.hasClass('fade_on_load')) {
-            // fade in - delay adding class to ensure image is ready  
+            // fade in  
             elContainer.addClass('tb-fade-in');
 		    var nRnd = 100 * (Math.floor(Math.random() * 6) + 1);
 		    setTimeout(function(){

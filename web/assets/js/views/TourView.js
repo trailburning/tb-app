@@ -40,14 +40,9 @@ define([
       }
     },        
     loadAndShow: function(elContainer){
-      var self = this;
-      
       var elWaitForImg = $('.fade_on_load', elContainer);      
       var imgLoad1 = imagesLoaded(elWaitForImg);
 	  imgLoad1.on('always', function(instance) {
-        for ( var i = 0, len = imgLoad1.images.length; i < len; i++ ) {
-          $(imgLoad1.images[i].img).addClass('scale_image_ready');
-        }
         // fade in - delay adding class to ensure image is ready  
         $('.fade_on_load', elContainer).addClass('tb-fade-in');
         $('.image_container', elContainer).css('opacity', 1);
