@@ -3,13 +3,13 @@ define([
   'backbone',
   'models/TrailMediaModel',    
   'views/ActivityFeedView',
-  'views/TrailPlayerView',  
+  'views/TrailPlayerView', 
+  'views/TrailDetailView',
+  'views/TrailMapRegionView', 
   'views/TrailWeatherView',
   'views/TrailActivitiesView'
-], function(_, Backbone, TrailMediaModel, ActivityFeedView, TrailPlayerView, TrailWeatherView, TrailActivitiesView){
+], function(_, Backbone, TrailMediaModel, ActivityFeedView, TrailPlayerView, TrailDetailView, TrailMapRegionView, TrailWeatherView, TrailActivitiesView){
 
-  var TICKLE_TIMER = 5000;
-  
   var TrailView = Backbone.View.extend({
     initialize: function(){
       var self = this;
@@ -31,6 +31,8 @@ define([
       
       this.trailPlayerView = new TrailPlayerView({ el: '#trailplayer', model: this.model, mediaCollection: this.mediaCollection, mediaModel: this.mediaModel });                  
       this.trailActivitiesView = new TrailActivitiesView({ el: '#trailactivities_view', model: this.model, bReadonly: true });
+      this.trailDetailView = new TrailDetailView({ el: '.trail_detail_panel', model: this.model });
+      this.trailMapRegionView = new TrailMapRegionView({ el: '#trail_location_map', model: this.model });      
       
       this.buildBtns();      
       
@@ -46,10 +48,7 @@ define([
       this.model.set('id', this.options.nTrail);             
       this.model.fetch({
         success: function () {        
-          self.handleTrail();
-          
-          self.trailPlayerView.render();
-            
+          self.handleTrail();                      
           self.mediaModel.url = TB_RESTAPI_BASEURL + '/v1/route/'+self.model.get('id')+'/medias';
           self.mediaModel.fetch({
             success: function () {
@@ -95,73 +94,22 @@ define([
         type: "PUT",
         dataType: "json",
         url: strURL,
-        headers: {'Trailburning-User-ID': TB_USER_ID},
-        error: function(data) {
-//          console.log('error:'+data.responseText);      
-        },
-        success: function(data) {      
-//          console.log('success');
-//          console.log(data);
-        }
+        headers: {'Trailburning-User-ID': TB_USER_ID}
       });        
     },        
     handleResize: function(){
       this.trailPlayerView.handleResize();
     },
-    handleTrail: function(){      
-      // render activities
+    handleTrail: function(){
+      this.trailPlayerView.render();
       this.trailActivitiesView.render();
-      // render weather
       this.trailWeatherView = new TrailWeatherView({ el: '#trail_weather_view', lat: this.model.get('value').route.start[1], lon: this.model.get('value').route.start[0] });
       this.trailWeatherView.render();
       if (this.model.get('value').route.attributes != undefined) {
         $('.activity_panel').show();
       }
-      
-      var self = this;          
-      this.nTickleTimer = setInterval(function() {
-        self.onTickleTimer();
-      }, TICKLE_TIMER);     
-      
-      $(window).mousemove(function(evt) {
-        self.tickle();
-      });
-      
-      var jsonRoute = this.model.get('value').route;
-      var elTrailLength = $('.trail_detail_panel .length .marker');
-      if (elTrailLength.length) {
-        elTrailLength.html(Math.ceil(jsonRoute.length/1000));
-      }
-        
-      var elTrailTerrain = $('.trail_detail_panel .ascent .marker');
-      if (elTrailTerrain.length) {
-        elTrailTerrain.html(formatAltitude(Math.floor(jsonRoute.tags.ascent)));
-      }
-
-      var elTrailTerrain = $('.trail_detail_panel .descent .marker');
-      if (elTrailTerrain.length) {
-        elTrailTerrain.html(formatAltitude(Math.floor(jsonRoute.tags.descent)));
-      }
-      
-      var jsonPoint = this.model.get('value').route.route_points[0]; 
-      var map = L.mapbox.map('trail_location_map', 'mallbeury.map-kply0zpa', {dragging: false, touchZoom: false, scrollWheelZoom:false, doubleClickZoom:false, boxZoom:false, tap:false, zoomControl:false, zoomAnimation:false, attributionControl:false});
-      var LocationIcon = L.Icon.extend({
-          options: {
-              iconSize:     [36, 47],
-              iconAnchor:   [16, 44],
-              popupAnchor:  [16, 44]
-          }
-      });      
-      
-      function onClick(evt) {
-      	window.location = $('#trail_location_map').attr('data-url'); 
-      }
-      
-      var startIcon = new LocationIcon({iconUrl: 'http://assets.trailburning.com/images/icons/location.png'});
-      L.marker([jsonPoint.coords[1], jsonPoint.coords[0]], {icon: startIcon}).on('click', onClick).addTo(map);      
-
-      var latlng = new L.LatLng(jsonPoint.coords[1], jsonPoint.coords[0]);
-      map.setView(latlng, 12);
+      this.trailDetailView.render();
+	  this.trailMapRegionView.render();
     },
     handleMedia: function(){
       var self = this;
@@ -173,8 +121,6 @@ define([
       $.each(jsonMedia, function(key, media) {
         self.mediaCollection.add(new Backbone.Model(media));      
       });
-
-      this.handleResize();
       
       // keyboard control
       $(document).keydown(function(e){
@@ -185,18 +131,7 @@ define([
       	    break;
       	}
       });
-    },
-    tickle: function(){
-      this.nTickleCount++;
-    },
-    onTickleTimer: function(){
-      return;
-    	
-//      console.log("onTickleTimer:"+this.nOldTickleCount+' : '+this.nTickleCount);
-      if (this.nOldTickleCount == this.nTickleCount) {
-        this.hideDetailOverlay();
-      }
-      this.nOldTickleCount = this.nTickleCount;         
+      this.handleResize();
     }
     
   });

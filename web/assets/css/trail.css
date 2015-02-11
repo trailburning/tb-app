@@ -893,6 +893,7 @@ html.touch #small_sponsor_bar {
 /* TRAIL ACTIVITY PANEL */
 /******************************************/
 .activity_panel {
+  display: none;
   float: left;
   width: 100%;	
   margin-top: 28px;
