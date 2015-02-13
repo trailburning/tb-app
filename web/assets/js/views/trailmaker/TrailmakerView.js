@@ -3,10 +3,10 @@ define([
   'backbone',
   'models/TrailMediasModel',
   'views/ActivityFeedView',  
-  'views/TrailmakerMapView',
-  'views/TrailmakerTrailCreateView',
-  'views/TrailmakerTrailEditView',
-  'views/TrailmakerTrailPublishedView'
+  'views/trailmaker/TrailmakerMapView',
+  'views/trailmaker/TrailmakerTrailCreateView',
+  'views/trailmaker/TrailmakerTrailEditView',
+  'views/trailmaker/TrailmakerTrailPublishedView'
 ], function(_, Backbone, TrailMediasModel, ActivityFeedView, TrailMapView, TrailCreateView, TrailEditView, TrailPublishedView){
 
   var TITLE_TIMER = 10000;

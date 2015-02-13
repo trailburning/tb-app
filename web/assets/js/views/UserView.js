@@ -3,7 +3,7 @@ define([
   'backbone',
   'models/TrailModel',
   'views/OverlayView',
-  'views/TrailmakerDeleteTrailView',
+  'views/trailmaker/TrailmakerDeleteTrailView',
   'views/ProfileMapView',  
   'views/ActivityFeedView'  
 ], function(_, Backbone, TrailModel, OverlayView, TrailmakerDeleteTrailView, ProfileMapView, ActivityFeedView){

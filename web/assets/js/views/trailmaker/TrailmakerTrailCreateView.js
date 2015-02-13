@@ -1,12 +1,12 @@
 define([
   'underscore', 
   'backbone',
-  'views/TrailUploadGPXView',
-  'views/TrailUploadGPXProgressView',  
-  'views/TrailUploadGPXErrorView',
-  'views/TrailUploadPhotoView',
-  'views/TrailUploadPhotoProgressView',
-  'views/TrailSlideshowView'  
+  'views/trailmaker/TrailUploadGPXView',
+  'views/trailmaker/TrailUploadGPXProgressView',  
+  'views/trailmaker/TrailUploadGPXErrorView',
+  'views/trailmaker/TrailUploadPhotoView',
+  'views/trailmaker/TrailUploadPhotoProgressView',
+  'views/trailmaker/TrailSlideshowView'  
 ], function(_, Backbone, TrailUploadGPXView, TrailUploadGPXProgressView, TrailUploadGPXErrorView, TrailUploadPhotoView, TrailUploadPhotoProgressView, TrailSlideshowView){
 
   var STATE_UPLOAD = 0;

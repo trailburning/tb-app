@@ -2,11 +2,11 @@ define([
   'underscore', 
   'backbone',
   'views/OverlayView',  
-  'views/TrailUploadPhotoView',
-  'views/TrailUploadPhotoProgressView',
-  'views/TrailUploadPhotoErrorView',
-  'views/TrailSlideshowView',
-  'views/TrailmakerCampaignsView',
+  'views/trailmaker/TrailUploadPhotoView',
+  'views/trailmaker/TrailUploadPhotoProgressView',
+  'views/trailmaker/TrailUploadPhotoErrorView',
+  'views/trailmaker/TrailSlideshowView',
+  'views/trailmaker/TrailmakerCampaignsView',
   'views/TrailActivitiesView'
 ], function(_, Backbone, OverlayView, TrailUploadPhotoView, TrailUploadPhotoProgressView, TrailUploadPhotoErrorView, TrailSlideshowView, TrailmakerCampaignsView, TrailActivitiesView){
 

@@ -613,7 +613,7 @@ a:active .tb-cntrl {
 /******************************************/
 #tb-content-overlay {
   display: none;
-  z-index: 101;
+  z-index: 100;
   position: absolute;
   top: 0px;  
   width: 100%; 
@@ -624,7 +624,7 @@ a:active .tb-cntrl {
 
 #tb-overlay-view {
   display: none;
-  z-index: 102;
+  z-index: 100;
   position: absolute;
   top: 0px;
   width: 100%; 
