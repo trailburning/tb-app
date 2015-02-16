@@ -180,6 +180,18 @@
     	  </a>
 		</script>
 
+    	<script src="http://www.imgix.com/libraries/imgix.js" type="text/javascript"></script>  
+        <script>
+		imgix.onready(function() {
+    	  imgix.fluid({
+    	  	updateOnResize: true,
+            updateOnResizeDown: true,
+            pixelStep: 5,
+            autoInsertCSSBestPractices: true
+          });
+        });
+        </script>
+
         <script>
         resrc = {
           options: {

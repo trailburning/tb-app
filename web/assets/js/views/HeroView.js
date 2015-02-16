@@ -37,7 +37,7 @@ define([
 	  // update pos
 	  $('img.scale_image_ready', $(this.el)).imageScale();
 	  // fade in - delay adding class to ensure image is ready  
-	  $('.fade_on_load', $(this.el)).addClass('tb-fade-in-no-delay');
+	  $('.fade_on_load_wait', $(this.el)).addClass('tb-fade-in-no-delay');
 	  $('.image_container', $(this.el)).css('opacity', 1);
 	  // force update to fix blurry bug
 	  resrc.resrcAll();

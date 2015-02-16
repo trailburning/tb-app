@@ -36,33 +36,22 @@ define([
 	if ($('#hero_images').length) {		
       this.herosView = new HerosView({ el: '#hero_images' });
 	  this.herosView.render();
-	  
-      var imgLoad = imagesLoaded('.panel_content .scale, promo_content .scale');
-      imgLoad.on('always', function(instance) {
-        for ( var i = 0, len = imgLoad.images.length; i < len; i++ ) {
-          $(imgLoad.images[i].img).addClass('scale_image_ready');
-        }
-        // update pos
-        $(".panel_content img.scale_image_ready, .promo_content img.scale_image_ready").imageScale();
-        // fade in - delay adding class to ensure image is ready  
-        $('.panel_content .fade_on_load, .promo_content .fade_on_load').addClass('tb-fade-in');
-        $('.panel_content .image_container, .promo_content .image_container').css('opacity', 1);
-      });	  
 	}
-	else {
-      var imgLoad = imagesLoaded('.scale');
-      imgLoad.on('always', function(instance) {
-        for ( var i = 0, len = imgLoad.images.length; i < len; i++ ) {
-          $(imgLoad.images[i].img).addClass('scale_image_ready');
+		
+    $('img').imagesLoaded()
+      .progress( function(instance, image) {
+	    if ($(image.img).hasClass('scale')) {
+  	      $(image.img).addClass('scale_image_ready');
+          $(image.img).imageScale();
         }
-        // update pos
-        $("img.scale_image_ready").imageScale();
-        // fade in - delay adding class to ensure image is ready  
-        $('.fade_on_load').addClass('tb-fade-in');
-        $('.image_container').css('opacity', 1);
-      });		
-	}
 
+	    var elContainer = $(image.img).closest('.image_container');
+	    if (elContainer.hasClass('fade_on_load')) {
+          elContainer.addClass('tb-fade-in');
+	      elContainer.css('opacity', 1);
+	    }
+    });    
+	
     function checkCookies() {    
 	  $.cookie('test', 'trailburning');
 	  var strTest = $.cookie('test');
