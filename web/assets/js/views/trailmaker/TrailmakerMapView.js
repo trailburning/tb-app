@@ -91,7 +91,7 @@ define([
       this.timezoneData = timezoneData;
     },
     addMarker: function(jsonMedia, bPlaceOnTrail){
-      var trailMapMediaMarkerView = new TrailMapMediaMarkerView({ model: jsonMedia, trailModel: this.model, map: this.map, timezoneData: this.timezoneData, placeOnTrail: bPlaceOnTrail });
+      var trailMapMediaMarkerView = new TrailMapMediaMarkerView({ model: jsonMedia, trailModel: this.model, map: this.map, arrLine: this.arrLineCordinates, timezoneData: this.timezoneData, placeOnTrail: bPlaceOnTrail });
 
       trailMapMediaMarkerView.render();
       this.arrMapMediaViews.push(trailMapMediaMarkerView);        

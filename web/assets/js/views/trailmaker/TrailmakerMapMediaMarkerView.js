@@ -21,6 +21,17 @@ define([
         this.nSize = this.options.size;
       }
 
+	  // line for snapping marker
+	  this.routeLine = {
+	    "type": "Feature",
+	    "properties": {},
+	    "geometry": {
+	      "type": "LineString",
+	      "coordinates": []
+	    }
+	  };
+	  this.routeLine.geometry.coordinates = this.options.arrLine;
+
       var MediaIcon = null;
       switch (this.nSize) {
         case DEF_ICONS:
@@ -152,26 +163,21 @@ define([
     },
     placeMarker: function(){
       var self = this;
-      
-      // look for closest point      
-      var nClosestDistance = -1, nDistance = 0, nDistanceToMarker = 0, nLength = 0, latlng = null, prevLatLng = null;;
-      var data = this.trailModel.get('value');
-      
-      $.each(data.route.route_points, function(key, point) {
-        nDistance = self.marker.getLatLng().distanceTo([Number(point.coords[1]), Number(point.coords[0])]);
 
-        latlng = L.latLng(Number(point.coords[1]), Number(point.coords[0]));
-        if (prevLatLng) {
-          nLength += latlng.distanceTo(prevLatLng);
-        }        
-        prevLatLng = latlng;
-        
-        if (nDistance < nClosestDistance || nClosestDistance == -1) {
-          nClosestDistance = nDistance;       
-          self.point = point;    
-          nDistanceToMarker = nLength;
-        }        
-      });
+      var data = this.trailModel.get('value');
+            	
+	  var pt = {
+	    "type": "Feature",
+	    "properties": {},
+	    "geometry": {
+	      "type": "Point",
+	      "coordinates": [this.marker.getLatLng().lat, this.marker.getLatLng().lng]
+	    }
+	  };
+	  var snapped = turf.pointOnLine(this.routeLine, pt);
+	  // retrieve snapped point 	
+	  this.point = data.route.route_points[snapped.properties.index+1]; 
+      
       // position on closest point      
       this.marker.setLatLng([Number(this.point.coords[1]), Number(this.point.coords[0])]);            
       // adjust to UTC            
