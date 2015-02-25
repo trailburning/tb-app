@@ -90,6 +90,26 @@ class GpxFile
     }
     
     /**
+     * Creates file from str
+     * mla - test PUTting GPX str from Moves.
+     *
+     * @return the name of the uploaded file
+     */
+    public function uploadFromStrTest(Filesystem $filesystem, $strSource)
+    {
+        $filename = sprintf('%s/%s/%s/%s.gpx', date('Y'), date('m'), date('d'), uniqid());
+        
+        $adapter = $filesystem->getAdapter();
+        $adapter->write($filename, $strSource);
+        $this->setPath($filename);
+        
+        // clean up the file property as you won't need it anymore
+        $this->file = null;
+        
+        return $filename;
+    }
+
+    /**
      * Move the file to the provided Filesystem
      * Sets the filename to the path field
      *
@@ -101,12 +121,11 @@ class GpxFile
         if (null === $this->getFile()) {
             throw new \Exception('gpxFile is empty');
         }
-        
-        $file = $this->getFile();
-        
+
         $filename = sprintf('%s/%s/%s/%s.gpx', date('Y'), date('m'), date('d'), uniqid());
         
         $adapter = $filesystem->getAdapter();
+        $file = $this->getFile();
         // $adapter->setMetadata($filename, array('contentType' => $file->getClientMimeType())); // doesn't work with in_memory adapter
         $adapter->write($filename, file_get_contents($file->getPathname()));
         $this->setPath($filename);

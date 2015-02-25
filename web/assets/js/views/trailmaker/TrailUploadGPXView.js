@@ -12,26 +12,79 @@ define([
 
       $(this.el).html(this.template());
 
-	  if (nTrail) {
+	   if (nTrail) {
         // fire event
         app.dispatcher.trigger("TrailUploadGPXView:uploaded", self);                
-		return;
-	  }
+		  return;
+	   }
 
       $('#gpxfileupload').change(function(){
         $('#uploadGPX_view').hide();
         $('#uploadGPXprogress_view').show();
         self.upload();
       }); 
-                            
+     
+      $('#movesupload').click(function(evt){
+        self.movestest();
+      });
+
       return this;
+    },
+    movestest: function(){
+      var self = this;
+
+        var strURL = '../demos/moves/OAuth2/profile.php';
+        $.ajax({
+          dataType: "html",
+          url: strURL,
+          success: function(data) {
+//            console.log('SUCCESS');
+            self.uploadmovestest(data);
+          },
+          error: function(data) {
+//            console.log('ERR');            
+          }                     
+        });        
+
+    },
+    uploadmovestest: function(strGPX){
+      var bValid = true;
+      var self = this;      
+        
+      var strURL = TB_RESTAPI_BASEURL + '/v1/gpx';      
+    
+          var postArray = {gpxfile:strGPX};
+
+          $.ajax({
+            type: "PUT",
+            dataType: "json",
+            headers: {'Trailburning-User-ID': TB_USER_ID},
+            url: strURL,
+            data: postArray,
+            error: function(data) {
+//              console.log('error:'+data.responseText);      
+//              console.log(data);      
+            },
+            success: function(data) {                    
+//              console.log('success');
+//              console.log(data);
+//              console.log(data);
+              if (data.value.route_ids.length) {
+                self.model.set('id', data.value.route_ids[0]);  
+              }                            
+              // fire event
+              app.dispatcher.trigger("TrailUploadGPXView:uploaded", self);                              
+            }
+          });        
+
+
     },
     upload: function(){
       var bValid = true;
       var self = this;      
         
       var strURL = TB_RESTAPI_BASEURL + '/v1/import/gpx';      
-        
+    
       $.fn.upload = function(remote,successFn,progressFn) {
         return this.each(function() {    
           var formData = new FormData();
@@ -76,7 +129,7 @@ define([
           });
         });
       };   
-      
+
       $('#uploadGPXForm').upload(strURL, function(res) {
         // fire event
         app.dispatcher.trigger("TrailUploadGPXView:uploaded", self);                

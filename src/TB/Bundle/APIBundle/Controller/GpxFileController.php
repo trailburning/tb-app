@@ -32,6 +32,69 @@ class GpxFileController extends AbstractRestController
     }
     
     /**
+     * @Route("/gpx")
+     * @Method("PUT")
+     */
+    public function putImport(Request $request)
+    {   
+        if (!$request->headers->has('Trailburning-User-ID')) {
+            throw new ApiException('Header Trailburning-User-ID is not set', 400);
+        }
+
+        $request = $this->getRequest();
+
+        $userId = $request->headers->get('Trailburning-User-ID');
+        $user = $this->getDoctrine()
+            ->getRepository('TBFrontendBundle:User')
+            ->findOneById($userId);
+
+        if (!$user) {
+            throw $this->createNotFoundException(
+                sprintf('User with id "%s" not found', $userId)
+            );
+        }
+
+        if (!$request->request->get('gpxfile')) {
+            throw (new ApiException('gpxfile variable not set', 400));
+        }
+        
+        $importer = $this->get('tb.gpxfile.importer');
+        try {
+            $routes = $importer->parse($request->request->get('gpxfile'));
+        } catch (\Exception $e) {
+            throw new ApiException('Problem parsing GPX file - not a valid GPX file?', 400);
+        }
+        
+        // Reject routes without datetime
+        foreach ($routes as $route) {
+            if (!isset($route->getRoutePoints()[0]->getTags()['datetime'])) {
+                throw new ApiException('The GPX file has no datetime information', 400);
+            }
+        }
+    
+        $filesystem = $this->get('gpx_files_filesystem');
+        $postgis = $this->get('postgis');
+        
+        $gpxFile = new GpxFile();    
+        $filename = $gpxFile->uploadFromStrTest($filesystem, $request->request->get('gpxfile'));
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($gpxFile);
+        $em->flush();
+        
+        $importedRoutesIds = array();
+        foreach ($routes as $route) {
+            $route->setGpxFileId($gpxFile->getId());
+            $route->setUserId($user->getId());
+            $importedRoutesIds[] = $postgis->writeRoute($route);
+        }
+
+        $output = array('usermsg' => 'GPX successfully imports', "value" => json_decode('{"route_ids": '.json_encode($importedRoutesIds).'}'));
+
+        return $this->getRestResponse($output);
+    }
+
+    /**
      * @Route("/import/gpx")
      * @Method("POST")
      */
