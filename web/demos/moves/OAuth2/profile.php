@@ -17,7 +17,7 @@ $client->setAccessToken($access_token);
 //$response = $client->fetch('https://api.moves-app.com/api/1.1/user/profile');
 
 $params = array('trackPoints' => 'true');
-$response = $client->fetch('https://api.moves-app.com/api/1.1/user/storyline/daily/20150224', $params);
+$response = $client->fetch('https://api.moves-app.com/api/1.1/user/storyline/daily/20150301', $params);
 
 $segments = $response['result'][0]['segments'];
 
@@ -25,10 +25,19 @@ echo '<?xml version="1.0"?><gpx creator="Trailburning http://www.trailburning.co
 
 foreach($segments as $segment) { //foreach element in $arr	
 	if ($segment['type'] == 'move') {
-		$points = $segment['activities'][0]['trackPoints'];
-		foreach($points as $point) {
-    		echo '<trkpt lat="' . $point['lat'] . '" lon="' . $point['lon'] . '"><ele>0</ele><time>' . $point['time'] . '</time></trkpt>';
+		if ($segment['activities'][0]['activity'] == 'running') {
+			$points = $segment['activities'][0]['trackPoints'];
+			foreach($points as $point) {
 
+//<time>2012-10-01T10:15:31.000Z</time>
+//<time>20150301T072533+0100</time> $point['time']
+//<time>2015-03-01T07:25:33+0100</time> $point['time']
+//				$strTime = '2012-10-01T10:15:31.000Z';
+				$strTime = substr($point['time'], 0, 4) . '-' . substr($point['time'], 4, 2) . '-' . substr($point['time'], 6, 2) . 'T' . substr($point['time'], 9, 2) . ':' . substr($point['time'], 11, 2) . ':' . substr($point['time'], 13, 2) . '.000Z';
+//				echo $strTime . '<br/>';
+	    		echo '<trkpt lat="' . $point['lat'] . '" lon="' . $point['lon'] . '"><ele>0</ele><time>' . $strTime . '</time></trkpt>';
+
+			}
 		}
 	}
 }
