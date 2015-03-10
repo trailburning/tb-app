@@ -216,15 +216,19 @@ define([
 		    "id": "markers",
 		    "type": "symbol",
 		    "source": "markers",
+        "minzoom": 1,
+        "maxzoom": 20,
 		    "layout": {
 		      "icon-image": "{marker-symbol}-12",
 		      "text-field": "{title}",
 		      "text-font": "Open Sans Semibold, Arial Unicode MS Bold",
 		      "text-offset": [0, 0.6],
-		      "text-anchor": "top"
+		      "text-anchor": "top",
+          "text-allow-overlap": true,
+          "icon-ignore-placement": true
 		    },
 		    "paint": {
-		      "text-size": 16
+		      "text-size": 12
 		    }
 		  });
 
