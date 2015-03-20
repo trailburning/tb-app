@@ -24,27 +24,60 @@
     <body>
         <div id="appview">      
             <div id="headerview">
-            	
-				<div class="left">
-                    <div class="logo"><a href="/">Home></a></div>
-			      	<div class="links">
-						<div class="link main"><a href="/map/trails">Explore</a></div>			      	
-						<div class="link main"><a href="/inspire">Inspire</a></div>			      	
-						<div class="link main"><a href="/tour">Tour</a></div>
-			      	</div>
-                </div>    
+          <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-inner">
+              
+            <div class="hamburger">
+                <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+                </div>
+                <div class="logo"><a href="/">Home></a></div>
+            <div class="main_links">
+                <div class="links">
+              <div class="link main"><a href="/map/trails">Explore</a></div>              
+              <div class="link main"><a href="/inspire">Inspire</a></div>
+              <div class="link main"><a href="/ambassadors">Ambassadors</a></div>             
+              <div class="link main"><a href="/tour">Tour</a></div>
+                </div>
+            </div>
+
+              <div class="right">
+                <div id="searchview" class="search ui-front">           
+                  <ul class="nav pull-right">
+                  <li class="ui-widget">                
+                <form class="form-search" method="get" id="search" action="">           
+                    <input type="text" class="searchBox" id="searchBox" name="search_text">
+                  <button type="submit">
+                    <i class="ico" data-icon="n-search-16"></i>
+                  </button>
+                  </form>
+                    </li>
+                  </ul>
+                </div>
+                                          <div class="signin">
+                      <div class="links">
+                        <div class="link main"><a href="/login">Sign in</a></div> 
+                      </div>
+                      <a href="/register/" class="btn btn-tb-action btn-tb-small">Join</a>  
+                    </div>
+                              </div>    
                 
-			    <div class="right navbar">
-                	<div class="signin">
-			      		<div class="links">
-			      			<div class="link main"><a href="/login">Sign in</a></div> 
-			      		</div>
-			      		<a href="/register" class="btn btn-tb-action btn-tb-small">Join</a>	
-			      	</div>
-			    </div>    
-                
-                <div class="trans-line"></div>        
-            </div>    
+            </div>
+            
+              <div class="nav-collapse collapse">
+                <ul class="nav">
+                  <li><a href="/map/trails">Explore</a></li>
+                  <li><a href="/inspire">Inspire</a></li>
+                  <li><a href="/ambassadors">Ambassadors</a></li>
+                  <li><a href="/tour">Tour</a></li>
+                </ul>
+              </div><!--/.nav-collapse -->
+            
+          </div>  
+            </div>
 
 			<div id="bodyview">
             <script>
