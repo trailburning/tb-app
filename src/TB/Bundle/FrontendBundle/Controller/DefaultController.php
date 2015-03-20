@@ -97,4 +97,13 @@ class DefaultController extends Controller
     {
         return [];
     }	
+
+    /**
+     * @Route("/trailplayertour", name="trailplayertour")
+     * @Template()
+     */
+    public function trailplayertourAction()
+    {
+        return [];
+    }       
 }

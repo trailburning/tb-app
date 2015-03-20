@@ -1,0 +1,186 @@
+body { 
+  margin:0; 
+  padding:0; 
+  background: #F0F0F0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0px;
+}
+
+h1 {
+  color: #44B6F7;
+}
+
+.container-fluid {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.rowFullWidth {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+.panel-body {
+  position: relative;
+}
+
+.list-group {
+  margin-top: 16px;
+}
+
+/* HEADER */
+/******************************************/
+.header {  
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.header .logo {
+  position: absolute;
+  top: 0px;
+  margin: 14px 0px 0px 16px;
+  height: 17px;
+  line-height: 17px;
+}
+
+.header .logo a {
+  display: block;
+  text-align: center;
+  margin: 0 auto;
+  line-height: 20px;
+  text-indent: -10000px;
+  overflow: hidden;
+  text-decoration: none;
+  width: 132px;
+  height: 17px;
+  background: url("../../img/header/tb_logo.png") no-repeat top left;  
+}
+
+.header .image-container {  
+  position: relative;
+  width: 100%;
+  height: 431px;
+  opacity: 0;
+}
+
+.header .header-text-container {
+  position: absolute;
+  bottom: 32px;
+  width: 100%;
+  text-align: center;
+}
+
+.header .header-text {
+  margin: 0 auto 0 auto;
+  display: inline-block;
+  width: 50%;
+  text-align: left;
+}
+
+.header h1 {
+  margin: 0px 0px 16px 0px;
+  font-size: 60px;
+  color: #FFF;
+}
+
+.header h2 {
+  font-size: 24px;
+  color: #FFF;
+} 
+
+/* JOURNEY */
+/******************************************/
+.journey-panel {
+  margin-top: 40px;
+}
+
+/* HIGHLIGHT */
+/******************************************/
+.highlight-panel {
+  margin-top: 40px;
+  font-family: 'Signika', sans-serif;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 1.3em;
+  color: #444444;
+}
+
+.highlight-panel h4.tb {
+  margin-top: 24px;
+}
+
+/* BUTTON VIEW */
+/******************************************/
+.button {
+  z-index: 3;
+  position: absolute;
+  top: 247px;
+  right: 30px;
+}
+
+/* STORY VIEW */
+/******************************************/
+.story-view {
+  width: 100%;
+  height: 260px;
+}
+
+.story-view .story-items {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.story-view .story-item {
+  z-index: 1;
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+
+.story-view .title-item {
+  z-index: 1;
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+
+.story-view .story-item.focus {
+  z-index: 2;
+}
+
+.story-view .image-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  -webkit-transition: opacity 1s;
+  -moz-transition: opacity 1s;
+  -o-transition: opacity 1s;
+  transition: opacity 1s;    
+  -webkit-transform:translate3d(0,0,0);                  
+}
+
+/* MAP VIEW */
+/******************************************/
+.map-view {
+  width: 100%;
+  height: 192px;
+  background: #FFF;
+  overflow: hidden;  
+}
+
+.fade-in {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  -moz-transition: opacity 0.5s ease-in-out;
+  -webkit-transition: opacity 0.5s ease-in-out;
+  transition-delay: 0.5s;
+}
