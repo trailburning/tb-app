@@ -114,6 +114,11 @@ a:active {
   margin-top: 40px;
 }
 
+.journey-panel .list-group .list-group-item .row-picture.brand img {
+  background: transparent;
+  height: auto;
+}
+
 /* HIGHLIGHT */
 /******************************************/
 .highlight-panel {

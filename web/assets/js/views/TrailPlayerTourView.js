@@ -46,7 +46,7 @@ define([
       // Prague to London
 //      this.journeyView1 = new JourneyView({ el: '.journey-view.drive', nZoom: 6, nLabelWidth: 100, strType: 'drive' });      
       // Melbourne to Mount Buller
-      this.journeyView1 = new JourneyView({ el: '.journey-view.drive', nZoom: 10, nLabelWidth: 120, nRoutePoints: 200, strType: 'drive' });      
+      this.journeyView1 = new JourneyView({ el: '.journey-view.drive', nZoom: 10, nLabelWidth: 160, nRoutePoints: 200, strType: 'drive' });      
       this.journeyView1.render();
 
       this.journeyView2 = new JourneyView({ el: '.journey-view.hike', nZoom: 14, nLabelWidth: 120, nRoutePoints: 300, strType: 'hike' });      
