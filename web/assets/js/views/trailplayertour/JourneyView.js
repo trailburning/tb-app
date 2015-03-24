@@ -47,6 +47,34 @@ define([
       $('.next-btn', $(this.el)).click(function(evt){
         self.nextPoint();
       });            
+
+      $('.story-items', $(this.el)).click(function(evt){
+        if ($('.fullscreen').length) {
+          self.fullscreenClose();
+        }
+        else {
+          self.fullscreenOpen();  
+        }
+      });            
+
+      $('.fullscreen-btn', $(this.el)).click(function(evt){
+        if ($('.rsDefault.rsFullscreen').length) {
+          self.fullscreenClose();
+        }
+        else {
+          self.fullscreenOpen();  
+        }        
+      });            
+
+      // keyboard control
+      $(document).keydown(function(e){
+        switch (e.keyCode) {
+          case 27: // close fullscreen
+            e.preventDefault();
+            self.fullscreenClose();
+            break;
+        }
+      });      
     },
     render: function(){      
       if (this.options.strType == 'drive') {
@@ -183,6 +211,22 @@ define([
         self.storyView.render();
         self.mapView.render();
         self.getTBRoute(strName);
+      });
+    },
+    fullscreenOpen: function(){
+      $('.rsDefault', $(this.el)).addClass('rsFullscreen');
+      $('.story-view', $(this.el)).addClass('fullscreen');
+      $('.scale-image-ready').each(function(index) {
+          // update pos
+          $(this).imageScale();
+      });
+    },
+    fullscreenClose: function(){
+      $('.rsDefault', $(this.el)).removeClass('rsFullscreen');
+      $('.story-view', $(this.el)).removeClass('fullscreen');
+      $('.scale-image-ready').each(function(index) {
+          // update pos
+          $(this).imageScale();
       });
     },
     nextPoint: function(){

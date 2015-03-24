@@ -18,8 +18,7 @@ define([
         .progress( function(instance, image) {
           $(image.img).addClass('scale-image-ready');
           // update pos
-          $(image.img).imageScale();
-          
+          $(image.img).imageScale({rescaleOnResize: true});          
           var elContainer = $(image.img).parent();
           if (elContainer.hasClass('fade-on-load')) {
               // fade in - delay adding class to ensure image is ready  
