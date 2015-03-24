@@ -82,10 +82,7 @@ a:active {
   text-align: center;
 }
 
-.header .header-text {
-  margin: 0 auto 0 auto;
-  display: inline-block;
-  width: 50%;
+.header .title {
   text-align: left;
 }
 
@@ -101,11 +98,15 @@ a:active {
 .header h2 {
   font-size: 24px;
   font-family: 'Signika', sans-serif;
-  font-weight: normal;
+  font-weight: light;
   font-size: 32px;
   line-height: 1.3em;
   color: #FFF;
 } 
+
+.header h2 strong {
+  font-weight: normal;
+}
 
 /* JOURNEY */
 /******************************************/
@@ -308,6 +309,10 @@ a:active {
 }
 
 @media (min-width: 768px) {  
+  .header .header-text-container {
+    bottom: 100px;
+  }
+
   #footerview .right .email,
   #footerview .right .googleplus {
     display: block;
@@ -315,6 +320,10 @@ a:active {
 }
 
 @media (min-width: 992px) {  
+  .header .header-text-container {
+    bottom: 140px;
+  }
+
   .highlight-panel {
     margin-top: 40px;
   }
