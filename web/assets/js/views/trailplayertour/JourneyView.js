@@ -101,11 +101,11 @@ define([
     testHarnessJourney: function(){            
       this.testAddPoint(-37.75194, 144.91955, 'Melbourne Docklands', 'http://tbassets.imgix.net//assets.trailburning.com/images/tour/trailplayer/WP1 - MelbourneDocklandsTwilight_wikicommons.jpg?fm=jpg&q=80');
       this.testAddPoint(-37.87763, 145.32616, 'Ferny Creek', 'http://tbassets.imgix.net//assets.trailburning.com/images/tour/trailplayer/WP2_FernyCreek.jpg?fm=jpg&q=80');
-      this.testAddPoint(-37.86184, 145.35719, 'Sassasfras', 'http://tbassets.imgix.net//assets.trailburning.com/images/tour/trailplayer/WP3_sassasfras.jpg?fm=jpg&q=80');
+      this.testAddPoint(-37.86184, 145.35719, 'Sassafras', 'http://tbassets.imgix.net//assets.trailburning.com/images/tour/trailplayer/WP3_sassasfras.jpg?fm=jpg&q=80');
       this.testAddPoint(-37.72891, 145.37779, 'Yarra Valley', 'http://tbassets.imgix.net//assets.trailburning.com/images/tour/trailplayer/WP4 - Yarra_Valley,_vineyards_at_Yarra_Yering.jpg?fm=jpg&q=80');
       this.testAddPoint(-37.65311, 145.51924, 'Healesville', 'http://tbassets.imgix.net//assets.trailburning.com/images/tour/trailplayer/WP5 - Healesville_Hotel.JPG?fm=jpg&q=80');
       this.testAddPoint(-37.21242, 145.42568, 'Yea Wetlands', 'http://tbassets.imgix.net//assets.trailburning.com/images/tour/trailplayer/WP6-Yea_wetlands_1.JPG?fm=jpg&q=80');
-      this.testAddPoint(-37.02884, 145.87020, 'Goulburn River', 'http://tbassets.imgix.net//assets.trailburning.com/images/tour/trailplayer/WP7 - Goulburn_River_High_Country_Rail_Trail_bridge_at_Bonnie_Doon copy.jpg?fm=jpg&q=80');
+      this.testAddPoint(-37.02884, 145.87020, 'Boonie Doon', 'http://tbassets.imgix.net//assets.trailburning.com/images/tour/trailplayer/WP7 - Goulburn_River_High_Country_Rail_Trail_bridge_at_Bonnie_Doon copy.jpg?fm=jpg&q=80');
       this.testAddPoint(-37.13255, 146.45420, 'Mount Buller', 'http://tbassets.imgix.net//assets.trailburning.com/images/profile/mtbuller/brand_hero3.jpg?fm=jpg&q=80');
 
 /*
