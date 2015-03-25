@@ -43,8 +43,20 @@ define([
 ], function(_, Backbone, JourneyView){
   var AppView = Backbone.View.extend({
     initialize: function(){
-      // Prague to London
-//      this.journeyView1 = new JourneyView({ el: '.journey-view.drive', nZoom: 6, nLabelWidth: 100, strType: 'drive' });      
+      var el = $('.scale');
+      $(el).imagesLoaded()
+        .progress( function(instance, image) {
+          $(image.img).addClass('scale-image-ready');
+          // update pos
+          $(image.img).imageScale({rescaleOnResize: true});          
+          var elContainer = $(image.img).parent();
+          if (elContainer.hasClass('fade-on-load')) {
+              // fade in - delay adding class to ensure image is ready  
+            elContainer.addClass('fade-in');
+            elContainer.css('opacity', 1);
+          }
+      });    
+
       // Melbourne to Mount Buller
       this.journeyView1 = new JourneyView({ el: '.journey-view.drive', nZoom: 10, nLabelWidth: 160, nRoutePoints: 200, strType: 'drive' });      
       this.journeyView1.render();

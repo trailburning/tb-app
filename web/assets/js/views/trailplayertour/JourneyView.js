@@ -13,8 +13,8 @@ define([
 
       this.nZoom = this.options.nZoom;      
 
-      this.nCurrPoint = 0;
-      this.nNextPoint = 0;
+      this.nCurrPoint = -1;
+      this.nNextPoint = -1;
 
       this.arrPoints = [];
       this.arrMarkers = [];
@@ -46,6 +46,10 @@ define([
 
       $('.next-btn', $(this.el)).click(function(evt){
         self.nextPoint();
+      });            
+
+      $('.prev-btn', $(this.el)).click(function(evt){
+        self.prevPoint();
       });            
 
       $('.story-items', $(this.el)).click(function(evt){
@@ -229,6 +233,90 @@ define([
           $(this).imageScale();
       });
     },
+    prevPoint: function(){
+      if (this.bLocked) {
+        return;
+      }
+      this.bLocked = true;
+
+      var self = this;
+
+      if (this.nCurrPoint != this.nNextPoint) {
+        this.storyView.hide(this.nCurrPoint);        
+      }    
+      else {
+        $('.story-view .title-item', $(this.el)).css('opacity', 0);
+      }
+
+      this.nCurrPoint = this.nCurrPoint - 1;
+      if (this.nCurrPoint < 0) {
+        this.nCurrPoint = this.arrPoints.length - 1;
+      }
+
+      $('.locationlabel', $(this.el)).hide();
+      var elMarker = $('.locationmarker:eq('+this.nCurrPoint+')', $(this.el));
+      if (elMarker.length) {
+        $('.locationlabel', elMarker).show();
+      }
+      this.storyView.show(this.nCurrPoint);      
+
+      this.nNextPoint = this.nCurrPoint - 1;
+      if (this.nNextPoint < 0) {
+        this.nNextPoint = this.arrPoints.length - 1;
+      }
+
+      console.log('n:'+this.nNextPoint);
+
+      var currLatLng = this.arrPoints[this.nCurrPoint];
+      var nextLatLng = this.arrPoints[this.nNextPoint];
+
+      // look up closest point on line
+      if (this.arrNormalizedLineCordinates.length) {
+        var pt = {
+          "type": "Feature",
+          "properties": {},
+          "geometry": {
+            "type": "Point",
+            "coordinates": [currLatLng.lat, currLatLng.lng]
+          }
+        };
+
+        // retrieve snapped point   
+        var snapped = turf.pointOnLine(this.normalizedRouteLine, pt);
+        var nIndex = snapped.properties.index-2;
+        if (nIndex < 0) {
+          nIndex = self.arrNormalizedLineCordinates.length - 1;
+        }
+
+        var point = self.arrNormalizedLineCordinates[nIndex]; 
+        nextLatLng = new L.LatLng(point[0], point[1]); 
+      }
+
+      var point1 = {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [currLatLng.lng, currLatLng.lat]
+        }
+      };
+
+      var point2 = {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [nextLatLng.lng, nextLatLng.lat]
+        }
+      };
+
+      var nBearing = Math.round(turf.bearing(point1, point2));
+
+      nBearing = -nBearing;
+      this.mapView.moveMap(currLatLng, nBearing);
+
+      setTimeout(function(){ 
+        self.bLocked = false;
+      }, 500);           
+    },
     nextPoint: function(){
       if (this.bLocked) {
         return;
@@ -244,7 +332,10 @@ define([
         $('.story-view .title-item', $(this.el)).css('opacity', 0);
       }
 
-      this.nCurrPoint = this.nNextPoint;
+      this.nCurrPoint = this.nCurrPoint + 1;
+      if (this.nCurrPoint >= this.arrPoints.length) {
+        this.nCurrPoint = 0;
+      }
 
       $('.locationlabel', $(this.el)).hide();
       var elMarker = $('.locationmarker:eq('+this.nCurrPoint+')', $(this.el));

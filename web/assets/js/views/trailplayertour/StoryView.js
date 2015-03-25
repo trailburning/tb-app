@@ -14,7 +14,8 @@ define([
         this.arrItems.push(new StoryItemView({ el: el[nItem] }));
       }
 
-      $('.scale').imagesLoaded()
+      var el = $('.scale', $(this.el));
+      $(el).imagesLoaded()
         .progress( function(instance, image) {
           $(image.img).addClass('scale-image-ready');
           // update pos
