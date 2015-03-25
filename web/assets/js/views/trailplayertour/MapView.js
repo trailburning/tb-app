@@ -58,8 +58,8 @@ define([
     playAttractor: function(nBearing){
       var strBearing = String(nBearing+'_short');
 
-      TweenMax.to($('.pivotmarker', $(this.el)), 4, {rotationY: strBearing, ease:Sine.easeInOut});
-      TweenMax.to($('.rotating', $(this.el)), 4, {rotationZ: strBearing, ease:Sine.easeInOut});
+      TweenMax.to($('.pivotmarker', $(this.el)), 2, {rotationY: strBearing, ease:Sine.easeInOut});
+      TweenMax.to($('.rotating', $(this.el)), 2, {rotationZ: strBearing, ease:Sine.easeInOut});
     },
     toggleView: function(){
       $('.rotating', $(this.el)).addClass('transform-tween');
