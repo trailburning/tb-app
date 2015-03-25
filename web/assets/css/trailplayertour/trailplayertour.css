@@ -172,6 +172,13 @@ a:active {
   z-index: 3;
   position: absolute;
   top: 231px;
+}
+
+.journey-view .button.left {
+  left: 30px;
+}
+
+.journey-view .button.right {
   right: 30px;
 }
 
