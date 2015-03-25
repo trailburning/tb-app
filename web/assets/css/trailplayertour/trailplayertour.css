@@ -128,7 +128,7 @@ a:active {
 }
 
 .description {
-  margin-top: 60px;
+  margin-top: 40px;
   text-align: left;
 }
 
@@ -137,7 +137,7 @@ a:active {
   font-family: 'Signika', sans-serif;
   font-weight: normal;
   font-size: 3em;
-  line-height: 1em;
+  line-height: 1.3em;
   color: #44B6F7;
 }
 
@@ -146,7 +146,7 @@ a:active {
   font-family: 'Signika', sans-serif;
   font-weight: 300;
   font-size: 2.2em;
-  line-height: 1.4em;
+  line-height: 1.3em;
   color: #000;
 }
 
@@ -212,11 +212,13 @@ a:active {
 /******************************************/
 .highlight-panel {
   margin-top: 0px;
+/*  
   font-family: 'Signika', sans-serif;
   font-weight: 300;
   font-size: 2em;
   line-height: 1.3em;
   color: #444444;
+*/  
 }
 
 .highlight-panel .next-btn {
@@ -230,7 +232,19 @@ a:active {
 .highlight-panel h1 {
   padding-top: 16px;
   padding-bottom: 24px;
-  font-size: 1.2em;
+  font-family: 'Signika', sans-serif;
+  font-weight: normal;
+  font-size: 3em;
+  line-height: 1.3em;
+  color: #44B6F7;
+}
+
+.highlight-panel p {
+  font-family: 'Signika', sans-serif;
+  font-weight: 300;
+  font-size: 2.2em;
+  line-height: 1.3em;
+  color: #000;
 }
 
 /* STORY VIEW */
@@ -426,6 +440,7 @@ a:active {
   }
 
   .description {
+    margin-top: 120px;
     text-align: center;
   }
 
