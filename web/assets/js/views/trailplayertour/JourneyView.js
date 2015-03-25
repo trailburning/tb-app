@@ -85,7 +85,8 @@ define([
         this.testHarnessJourney();
       }
       else {
-        this.testHarnessTBTrail('mt_buller');
+//        this.testHarnessTBTrail('mt_buller');
+        this.testHarnessTBTrail('jack_bobridge');        
 //        this.testHarnessTBTrail('park');
 //        this.testHarness25Zero();
       }
