@@ -172,7 +172,7 @@ define([
         }
       }
 
-      var directionsURL = 'https://api.tiles.mapbox.com/v4/directions/mapbox.driving/'+ strPoints +'.json?access_token=pk.eyJ1IjoiZHVuY2FuZ3JhaGFtIiwiYSI6IlJJcWdFczQifQ.9HUpTV1es8IjaGAf_s64VQ';
+      var directionsURL = 'https://api.tiles.mapbox.com/v4/directions/mapbox.driving/'+ strPoints +'.json?access_token=' + L.mapbox.accessToken;
       $.get(directionsURL, function(data){
         $.each(data.routes[0].geometry.coordinates, function(key, val) {
           self.arrLineCordinates.push([Number(val[0]), Number(val[1])]);
