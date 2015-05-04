@@ -91,6 +91,10 @@ define([
 	          	  bEvent = true;	          	
 	          	  model.set('sponsorURL', 'event/heysen105');
 	          	  break;
+		        case 'yurrebilla-ultra-marathon-56km-adelaide-hills':
+		          bEvent = true;              
+		          this.model.set('sponsorURL', 'event/yurrebillaultra');
+		          break;            	          	  
 	          	case 'scenic-trail-24k-d-2200m-lugano-capriasca-switzerland':
 	          	case 'scenic-trail-54k-d-3900m-lugano-capriasca-switzerland':
 	          	  bEvent = true;	          	
