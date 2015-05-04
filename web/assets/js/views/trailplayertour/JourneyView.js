@@ -210,7 +210,7 @@ define([
         $.each( jsonMedia, function( key, val ) {
           self.arrPoints.push(new L.LatLng(val.coords.lat, val.coords.long));
           self.arrMarkers.push(new MarkerView({lat: val.coords.lat, long: val.coords.long, title: 'elevation ' + Math.round(val.tags.altitude) + 'm'}));
-          $("<div class='story-item fade-in'><div class='image-container fade-on-load'><img src='http://tbmedia.imgix.net//media.trailburning.com"+val.versions[0].path+"?fm=jpg&q=80&w=1024&fit=fill' class='scale'></div></div>").appendTo($('.story-items', $(self.el)));
+          $("<div class='story-item fade-in'><div class='image-container fade-on-load'><img src='http://tbmedia2.imgix.net/"+val.versions[0].path+"?fm=jpg&q=80&w=1024&fit=fill' class='scale'></div></div>").appendTo($('.story-items', $(self.el)));
         });
 
         self.storyView.render();
