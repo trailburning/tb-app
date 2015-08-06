@@ -13,23 +13,37 @@
         {% block meta %}{% endblock %}
         <title>{% block title %}Trailburning{% endblock %}</title>
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+
         <link href="http://fonts.googleapis.com/css?family=Signika:400,300,700" rel="stylesheet">
+
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
         <link href="http://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.css" rel="stylesheet">
-        
+        <link href='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css' rel='stylesheet' />
+        <link href='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css' rel='stylesheet' />    
+
+        {% if name is defined and name == 'ultraksdemo' %}
         <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
         <link href="{{ asset('assets/css/bootstrap-responsive.min.css') }}" rel="stylesheet">
         <link href="{{ asset('assets/css/bootstrap-select.min.css') }}" rel="stylesheet">      
-		<link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="stylesheet">
+
+        <link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="stylesheet">
+
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/common_ui.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/campaignviewer.css') }}">        
+        {% else %}                         
+        <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
+        <link href="{{ asset('assets/css/bootstrap-responsive.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('assets/css/bootstrap-select.min.css') }}" rel="stylesheet">      
+        <link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="stylesheet">
         
-		<link href="{{ asset('assets/royalslider/royalslider.css') }}" rel="stylesheet">
-		<link href="{{ asset('assets/royalslider/skins/default/rs-default.css') }}" rel="stylesheet"> 
+        <link href="{{ asset('assets/royalslider/royalslider.css') }}" rel="stylesheet">
+        <link href="{{ asset('assets/royalslider/skins/default/rs-default.css') }}" rel="stylesheet"> 
         
         <link href="{{ asset('assets/css/common_ui.css') }}" rel="stylesheet" type="text/css">
-        <link href="{{ asset('assets/css/common_cards.css') }}" rel="stylesheet" type="text/css">
-        
-		<link href='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css' rel='stylesheet' />
-		<link href='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css' rel='stylesheet' />    
-        
+        <link href="{{ asset('assets/css/common_cards.css') }}" rel="stylesheet" type="text/css">        
+        {% endif %}                         
+                        
         {% block stylesheets %}{% endblock %}
         <script>
             var _gaq = _gaq || [];
@@ -82,7 +96,7 @@
 			    			  <ul class="nav pull-right">
 			    				<li class="ui-widget">	    					
 								<form class="form-search" method="get" id="search" action="">			    	
-			    					<input type="text" class="searchBox" id="searchBox" name="search_text">
+                                    <input type="text" class="searchBox" id="searchBox" name="search_text">
 									<button type="submit">
 						  			<i class="ico" data-icon="n-search-16"></i>
 									</button>
@@ -90,6 +104,7 @@
 						        </li>
 						      </ul>
 					    	</div>
+
 		                	{% if app.user %}
 						    	<div class="profile">
 						    		<ul class="nav pull-right">
@@ -205,6 +220,8 @@
         </script>
 		<script src="//use.resrc.it"></script>
 
+        {% if name is defined and name == 'ultraksdemo' %}
+        {% else %}                         
         <script src="{{ asset('assets/js/libs/jquery-1.8.3.min.js') }}"></script>
         <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
         <script src="{{ asset('assets/js/libs/bootstrap.min.js') }}"></script>
@@ -219,15 +236,20 @@
         <script src="{{ asset('assets/js/libs/leaflet-distance-marker.js') }}"></script>
 
         <script src="{{ asset('assets/js/libs/helper.js') }}"></script>
-		<script src="{{ asset('assets/js/libs/jquery.cookie.js') }}"></script>
+        <script src="{{ asset('assets/js/libs/jquery.cookie.js') }}"></script>
         <script src="{{ asset('assets/js/libs/imagesloaded.pkgd.min.js') }}"></script>
         <script src="{{ asset('assets/js/libs/image-scale.min.js') }}"></script>
 
         <script src="{{ asset('assets/js/libs/jquery.timeago.js') }}"></script>
         <script src="{{ asset('assets/js/libs/jquery-dateFormat.min.js') }}"></script>
+        {% endif %}                         
 
         {% block javascripts %}{% endblock %}
 
-        <script data-main="{{ asset('assets/js/main') }}" src="{{ asset('assets/js/libs/require.js') }}"></script>        
+        {% if name is defined and name == 'ultraksdemo' %}
+        {% else %}  
+        <script data-main="{{ asset('assets/js/main') }}" src="{{ asset('assets/js/libs/require.js') }}"></
+        script>        
+        {% endif %}                                                
     </body>
 </html>

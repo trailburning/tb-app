@@ -1735,6 +1735,25 @@ form label {
   background: url(../img/trans_line.png) repeat-x top left;  
 }
 
+.ellip {
+  display: block;
+  height: 100%;
+}
+
+.ellip-line {
+  display: inline-block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-wrap: normal;
+  max-width: 100%;
+}
+
+.ellip,
+.ellip-line {
+  position: relative;
+  overflow: hidden;
+}
+
 /* Mapbox */
 .leaflet-control.mapbox-control-info {
   visibility: hidden;

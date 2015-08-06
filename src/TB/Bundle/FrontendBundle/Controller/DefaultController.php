@@ -106,4 +106,15 @@ class DefaultController extends Controller
     {
         return [];
     }       
+
+    /**
+     * @Route("/ultraksdemo", name="ultraksdemo")
+     * @Template()
+     */
+    public function ultraksdemoAction()
+    {
+        return array(
+            'name' => 'ultraksdemo'
+        );      
+    }       
 }
