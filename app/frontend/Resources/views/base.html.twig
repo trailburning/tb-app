@@ -150,6 +150,13 @@
 
             <div id="footerview">
                 <div class="left">
+
+        {% if name is defined and name == 'ultraksdemo' %}
+            T1
+        {% else %}                          
+            T2
+        {% endif %}                         
+                
                   <div class="copyright">Copyright © 2015, Augmented Media Projects Ltd</div>    
                   <div class="links">
                     <div class="link"><a href="{{ app.request.baseUrl }}/about">About</a></div>
