@@ -22,7 +22,7 @@
         <link href='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css' rel='stylesheet' />
         <link href='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css' rel='stylesheet' />    
 
-        {% if name is defined and name == 'ultraksdemo' %}
+<!--
         <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
         <link href="{{ asset('assets/css/bootstrap-responsive.min.css') }}" rel="stylesheet">
         <link href="{{ asset('assets/css/bootstrap-select.min.css') }}" rel="stylesheet">      
@@ -31,7 +31,8 @@
 
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/common_ui.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/campaignviewer.css') }}">        
-        {% else %}                         
+-->        
+        
         <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
         <link href="{{ asset('assets/css/bootstrap-responsive.min.css') }}" rel="stylesheet">
         <link href="{{ asset('assets/css/bootstrap-select.min.css') }}" rel="stylesheet">      
@@ -42,7 +43,7 @@
         
         <link href="{{ asset('assets/css/common_ui.css') }}" rel="stylesheet" type="text/css">
         <link href="{{ asset('assets/css/common_cards.css') }}" rel="stylesheet" type="text/css">        
-        {% endif %}                         
+        
                         
         {% block stylesheets %}{% endblock %}
         <script>
@@ -220,8 +221,7 @@
         </script>
 		<script src="//use.resrc.it"></script>
 
-        {% if name is defined and name == 'ultraksdemo' %}
-        {% else %}                         
+<!--
         <script src="{{ asset('assets/js/libs/jquery-1.8.3.min.js') }}"></script>
         <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
         <script src="{{ asset('assets/js/libs/bootstrap.min.js') }}"></script>
@@ -242,14 +242,12 @@
 
         <script src="{{ asset('assets/js/libs/jquery.timeago.js') }}"></script>
         <script src="{{ asset('assets/js/libs/jquery-dateFormat.min.js') }}"></script>
-        {% endif %}                         
+-->
 
         {% block javascripts %}{% endblock %}
 
-        {% if name is defined and name == 'ultraksdemo' %}
-        {% else %}  
         <script data-main="{{ asset('assets/js/main') }}" src="{{ asset('assets/js/libs/require.js') }}"></
         script>        
-        {% endif %}                                                
+
     </body>
 </html>
