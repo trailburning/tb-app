@@ -228,6 +228,13 @@ h5.tb {
   color: #979797;
 }
 
+h6.tb {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.3em;
+  color: #979797;
+}
+
 /* TB COMMON STYLES */
 /******************************************/
 .tb-step-marker {

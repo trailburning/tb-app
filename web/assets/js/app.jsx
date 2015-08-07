@@ -208,7 +208,7 @@ var app = app || {};
     
     var trailLayer = omnivore.gpx(strGPX, null, customLayer)
     .on('ready', function() {
-        map.fitBounds(trailLayer.getBounds());
+        map.fitBounds(trailLayer.getBounds(), {padding: [20, 20]});
 
         trailLayer.eachLayer(function (layer) {
           var arrCoords = new Array;

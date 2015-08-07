@@ -15,7 +15,10 @@ var TB_USER_ID = {{ app.user.id }};
 var TB_DATA = '{{ asset('assets/data') }}';
 </script>
 
-<div id="def_header"><h3 class="title tb">Matterhorn Ultraks 2015</h3></div>
+<div id="def_header">
+  <h3 class="title tb">Matterhorn Ultraks 2015</h3>
+  <div class="logo"><a href="{{ app.request.baseUrl }}/event/ultraks"><img src="http://assets.trailburning.com/images/event/ultraks/card_logo_ultraks.png" border="0"></a></div>
+</div>
 
 <div class="line_break"></div>
 
@@ -33,6 +36,21 @@ var TB_DATA = '{{ asset('assets/data') }}';
 
 <div id="postDetail" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
   <div id="postDetail-mount-point" class="modal-dialog">          
+  </div>
+</div>
+
+<div class="panel_content">          
+  <div class="panel_intro">
+    <div class="desc clearfix">    
+    <h3 class="tb">
+    Post your photos on <i class="fa fa-instagram"></i> Instagram!</h3>        
+    <h4 class="tb">
+    Are you training for the <a href="http://www.ultraks.com" target="_blank">Matterhorn Ultraks</a>?  Take a photo and share it on <a href="https://instagram.com" target="_blank">Instagram</a> with <a href="https://instagram.com/explore/tags/ultraks/" target="_blank">#ultraks</a> to see it here!
+    </h4>
+    <h6 class="smallprint tb">
+    The small print - this page has been built for fun and is not endorsed by Matterhorn Ultraks or their partners.
+    </h6>    
+    </div>
   </div>
 </div>
 
