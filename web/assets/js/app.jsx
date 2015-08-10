@@ -14,6 +14,7 @@ var app = app || {};
   app.dispatcher = _.clone(Backbone.Events);
 
   app.dispatcher.on("MapView:click", onMapMarkerViewClick, this);
+  app.dispatcher.on("MapView:centreclick", onMapViewCentreClick, this);
 
   L.mapbox.accessToken = 'pk.eyJ1IjoibWFsbGJldXJ5IiwiYSI6IjJfV1MzaE0ifQ.scrjDE31p7wBx7-GemqV3A';
   var map = L.mapbox.map('map_view', 'mallbeury.8d4ad8ec', {dragging: true, touchZoom: false, scrollWheelZoom: false, doubleClickZoom:false, boxZoom:false, tap:false, zoomControl:false, zoomAnimation:false, attributionControl:false, minZoom: 2, maxZoom: 17});
@@ -26,6 +27,7 @@ var app = app || {};
       "coordinates": []
     }
   };
+  var trailLayer = null;
 
   var collectionPosts = new Backbone.Collection();
   var modelPost = null;
@@ -195,6 +197,7 @@ var app = app || {};
 
   function renderDialogDetail(nSelected) {
     var modelPost = collectionPosts.at(nSelected);    
+    dialogDetail = React.render(<DialogDetail link_url={ modelPost.get("link_url") } user_url={ modelPost.get("user_url") } username={ modelPost.get("username") } user_avatar={ modelPost.get("user_avatar") } created_time={ modelPost.get("created_time") } caption={ modelPost.get("caption") } image_standard_res={ "" } onPrevClick={ onPrevClick } onNextClick={ onNextClick } />, elDialogDetailContainer);
     dialogDetail = React.render(<DialogDetail link_url={ modelPost.get("link_url") } user_url={ modelPost.get("user_url") } username={ modelPost.get("username") } user_avatar={ modelPost.get("user_avatar") } created_time={ modelPost.get("created_time") } caption={ modelPost.get("caption") } image_standard_res={ modelPost.get("image_standard_res") } onPrevClick={ onPrevClick } onNextClick={ onNextClick } />, elDialogDetailContainer);
   }
 
@@ -206,9 +209,9 @@ var app = app || {};
       }
     });
     
-    var trailLayer = omnivore.gpx(strGPX, null, customLayer)
+    trailLayer = omnivore.gpx(strGPX, null, customLayer)
     .on('ready', function() {
-        map.fitBounds(trailLayer.getBounds(), {padding: [20, 20]});
+        centreMap();        
 
         trailLayer.eachLayer(function (layer) {
           var arrCoords = new Array;
@@ -225,6 +228,10 @@ var app = app || {};
     });
 
     trailLayer.addTo(map); 
+  }
+
+  function centreMap() {
+    map.fitBounds(trailLayer.getBounds(), {padding: [20, 20]});
   }
 
   function onSlideFocus(nSelected) {
@@ -256,4 +263,8 @@ var app = app || {};
     renderSlideList(nSelected);
   }
 
+  function onMapViewCentreClick() {
+    centreMap();
+  }
+  
 })();

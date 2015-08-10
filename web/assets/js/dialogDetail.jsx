@@ -18,17 +18,13 @@ var app = app || {};
     componentDidUpdate: function() {
     },
 
-    render: function() {        
+    render: function() {      
       var strTimeAgo = $.format.prettyDate(this.props.created_time);
 
       return (
         <div className="post-detail-block">
           <div className="dialog-container">
-            <div className="image">
-            <a href={this.props.link_url} target="_blank">
-            <img src={this.props.image_standard_res} />
-            </a>
-            </div>          
+            <div className="image"><a href={this.props.link_url} target="_blank"><img src={this.props.image_standard_res} /></a></div>          
             <div className="container">
               <div className="details">
                 <div className="poster clearfix">

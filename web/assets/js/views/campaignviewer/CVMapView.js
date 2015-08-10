@@ -103,6 +103,11 @@
     buildBtns: function(){
       var self = this;
 
+      $('.centre_btn', $(this.options.elCntrls)).click(function(evt){       
+        // fire event
+        app.dispatcher.trigger("MapView:centreclick", self);                
+      });
+
       $('.zoomin_btn', $(this.options.elCntrls)).click(function(evt){       
         if (!$(this).attr('disabled')) {
           $('.view_btn', $(self.options.elCntrls)).attr('disabled', false);              
