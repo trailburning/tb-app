@@ -14,10 +14,15 @@ var app = app || {};
   app.dispatcher = _.clone(Backbone.Events);
 
   app.dispatcher.on("MapView:click", onMapMarkerViewClick, this);
+  app.dispatcher.on("MapView:zoominclick", onMapViewZoomInClick, this);
+  app.dispatcher.on("MapView:zoomoutclick", onMapViewZoomOutClick, this);
   app.dispatcher.on("MapView:centreclick", onMapViewCentreClick, this);
 
   L.mapbox.accessToken = 'pk.eyJ1IjoibWFsbGJldXJ5IiwiYSI6IjJfV1MzaE0ifQ.scrjDE31p7wBx7-GemqV3A';
-  var map = L.mapbox.map('map_view', 'mallbeury.8d4ad8ec', {dragging: true, touchZoom: false, scrollWheelZoom: false, doubleClickZoom:false, boxZoom:false, tap:false, zoomControl:false, zoomAnimation:false, attributionControl:false, minZoom: 2, maxZoom: 17});
+  var map = L.mapbox.map('map_view', 'mallbeury.8d4ad8ec', {dragging: true, touchZoom: false, scrollWheelZoom: false, doubleClickZoom:false, boxZoom:false, tap:false, zoomControl:false, zoomAnimation:true, markerZoomAnimation:true, attributionControl:false, minZoom: 2, maxZoom: 17});
+
+  var markerLayer = L.layerGroup();
+  var trailLayer = L.layerGroup();
 
   var routeLine = {
     "type": "Feature",
@@ -152,7 +157,8 @@ var app = app || {};
       DialogDetail = app.DialogDetail;   
 
       renderSlideList(nInitialSlide);    
-      renderDistanceMarkers();  
+      addDistanceMarkers();  
+      renderTrail(true, true);
 
       $("#slideList-mount-point").swipe( { allowPageScroll:"vertical",
           //Generic swipe handler for all directions
@@ -173,11 +179,11 @@ var app = app || {};
 //    console.log(JSON.stringify(along));
     var modelDistance = new Backbone.Model({lat: along.geometry.coordinates[0], lng: along.geometry.coordinates[1], distance: nKM}); 
 
-    var distanceMarkerView = new DistanceMarkerView({model: modelDistance, map: map});
+    var distanceMarkerView = new DistanceMarkerView({model: modelDistance, layer: markerLayer, map: map});
     distanceMarkerView.render();
   }
 
-  function renderDistanceMarkers() {
+  function addDistanceMarkers() {
     var length = turf.lineDistance(routeLine, 'kilometers');    
     var nInc = 5;
     var nMarkers = Math.floor(length / nInc);
@@ -188,7 +194,7 @@ var app = app || {};
       if (nCurrMarker) {
         addDistanceMarker(nCurrMarker);  
       }      
-    }
+    }    
   }
 
   function renderSlideList(nSelected) {
@@ -201,11 +207,27 @@ var app = app || {};
     dialogDetail = React.render(<DialogDetail link_url={ modelPost.get("link_url") } user_url={ modelPost.get("user_url") } username={ modelPost.get("username") } user_avatar={ modelPost.get("user_avatar") } created_time={ modelPost.get("created_time") } caption={ modelPost.get("caption") } image_standard_res={ modelPost.get("image_standard_res") } onPrevClick={ onPrevClick } onNextClick={ onNextClick } />, elDialogDetailContainer);
   }
 
+  function renderTrail(bTrail, bMarkers) {
+    if (bTrail) {
+      map.addLayer(trailLayer);  
+    }
+    else {      
+      map.removeLayer(trailLayer);    
+    }
+
+    if (bMarkers) {
+      map.addLayer(markerLayer);  
+    }
+    else {
+      map.removeLayer(markerLayer);    
+    }
+  }
+
   function addTrail() {
     var customLayer = L.geoJson(null, {
       // http://leafletjs.com/reference.html#geojson-style
       style: function(feature) {
-        return { color: "#000000", weight: 4, opacity: 0.8};
+        return { color: "#000000", weight: 3, opacity: 0.8, stroke: true};
       }
     });
     
@@ -222,12 +244,14 @@ var app = app || {};
           }
           routeLine.geometry.coordinates = arrCoords;
 //          console.log(JSON.stringify(routeLine));
+
+          var marker = L.marker(new L.LatLng(arrLatLngs[0].lat, arrLatLngs[0].lng));        
+          marker.setIcon(L.divIcon({className: 'tb-map-location-marker', html: '<div class="marker"></div>', iconSize: [22, 30], iconAnchor: [11, 30]}));          
+          marker.addTo(map); 
         });
 
         getFeed();
-    });
-
-    trailLayer.addTo(map); 
+    });    
   }
 
   function centreMap() {
@@ -253,6 +277,26 @@ var app = app || {};
     slideList.nextSlide();
   }
 
+  function onMapViewZoomInClick() {
+//    console.log("in:"+map.getZoom());
+    if (map.getZoom() >= 9) {
+      renderTrail(true, false);
+    }
+    if (map.getZoom() >= 11) {
+      renderTrail(true, true);
+    }
+  }
+  
+  function onMapViewZoomOutClick() {
+//    console.log("out:"+map.getZoom());
+    if (map.getZoom() <= 12) {
+      renderTrail(true, false);
+    }
+    if (map.getZoom() <= 10) {
+      renderTrail(false, false);
+    }
+  }
+
   function onMapMarkerViewClick(modelPost) {
     var currModelPost = collectionPosts.get(modelPost.id);
 
@@ -265,6 +309,7 @@ var app = app || {};
 
   function onMapViewCentreClick() {
     centreMap();
+    renderTrail(true, true);
   }
   
 })();
