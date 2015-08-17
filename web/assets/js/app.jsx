@@ -9,7 +9,7 @@
 var app = app || {};
 
 (function () {
-	'use strict';
+  'use strict';
 
   app.dispatcher = _.clone(Backbone.Events);
 
@@ -43,11 +43,23 @@ var app = app || {};
   var elDialogDetailContainer = $('#postDetail-mount-point').get(0);
 
   var strGPX = TB_DATA + "/trail_ultraks.gpx";
-//  var strGPX = "data/trail_tblw.gpx";
-//  var strGPX = "data/trail_test1.gpx";
-//  var strGPX = "data/trail_test2.gpx";
+//  var strGPX = TB_DATA + "/trail_tblw.gpx";
+
   addTrail();
 //  getFeed();
+
+  // Register event handler for when media point is clicked
+  Piste.mediaPointClicked = function ( id ) {
+      console.log( 'Clicked media point', id );
+
+      // When clicked, pan to media point
+      Piste.panToMediaPoint( id );
+
+      // Also select clicked point (note multiple selection also supported)
+      Piste.selectMediaPoints( [id] );
+
+      slideList.nextSlide();
+  };
 
   $('#footerview').show();
 
@@ -77,7 +89,7 @@ var app = app || {};
 
   function getFeed() {
     var url = "http://www.eggontop.com/live/trailburning/tb-campaignviewer/server/feed_ultraks.php";
-//    var url = "http://localhost:8888/projects/Trailburning/tb-campaignviewer/server/feed_ultraks.php";
+//    var url = "http://localhost:8888/projects/Trailburning/tb-campaignviewer/server/feed_blw_sydney.php";
     
     var strInstagramURL = "http://www.instagram.com/";
 
@@ -153,10 +165,10 @@ var app = app || {};
       mapView = new MapView({ map: map, elCntrls: '#view_map_btns', collectionPosts: collectionPosts });            
       mapView.render();
 
-      SlideList = app.SlideList;   
-      DialogDetail = app.DialogDetail;   
+      SlideList = app.SlideList;
+      DialogDetail = app.DialogDetail;
 
-      renderSlideList(nInitialSlide);    
+      renderSlideList(nInitialSlide);
       addDistanceMarkers();  
       renderTrail(true, true);
 
@@ -177,8 +189,7 @@ var app = app || {};
   function addDistanceMarker(nKM) {
     var along = turf.along(routeLine, nKM, 'kilometers');
 //    console.log(JSON.stringify(along));
-    var modelDistance = new Backbone.Model({lat: along.geometry.coordinates[0], lng: along.geometry.coordinates[1], distance: nKM}); 
-
+    var modelDistance = new Backbone.Model({lat: along.geometry.coordinates[1], lng: along.geometry.coordinates[0], distance: nKM});     
     var distanceMarkerView = new DistanceMarkerView({model: modelDistance, layer: markerLayer, map: map});
     distanceMarkerView.render();
   }
@@ -240,10 +251,9 @@ var app = app || {};
           var arrLatLngs = layer.getLatLngs();
 
           for (var n=0; n < arrLatLngs.length; n++) {
-            arrCoords.push([arrLatLngs[n].lat, arrLatLngs[n].lng]);
+            arrCoords.push([arrLatLngs[n].lng, arrLatLngs[n].lat]);              
           }
           routeLine.geometry.coordinates = arrCoords;
-//          console.log(JSON.stringify(routeLine));
 
           var marker = L.marker(new L.LatLng(arrLatLngs[0].lat, arrLatLngs[0].lng));        
           marker.setIcon(L.divIcon({className: 'tb-map-location-marker', html: '<div class="marker"></div>', iconSize: [22, 30], iconAnchor: [11, 30]}));          

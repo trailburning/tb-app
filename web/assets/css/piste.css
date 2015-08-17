@@ -1,0 +1,174 @@
+#app {
+  margin: 0 !important;
+  width: 100% !important;
+  height: 486px !important;
+  overflow: hidden;
+}
+
+/* Hide in 3D view */
+#map_view,
+#view_map_btns .controls {
+  display: none;
+}
+
+
+/* Credits and disclaimers */
+.credits {
+  position: absolute;
+  right: 65px;
+  bottom: 10px;
+  font-size: 8pt;
+  line-height: 6pt;
+  text-align: right;
+  color: #ffffff;
+}
+.mod-touch {
+  /* No side box present in touch version */
+}
+.mod-touch .credits {
+  right: 10px;
+}
+.credits a {
+  color: #ffffff;
+}
+#app-container {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+}
+#container {
+  position: absolute;
+  height: 100%;
+  left: 0;
+  right: 0;
+  background: #1d2024;
+}
+#engine-container {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  background: #1d2024;
+}
+#engine-container canvas {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+}
+#engine-container:focus {
+  border: none;
+  outline: none;
+}
+.labelContainer {
+  width: 100%;
+  height: 100%;
+}
+.label {
+  color: white;
+  font-size: 16px;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+  webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  -webkit-user-drag: none;
+  /* Prevents dragging of images/divs etc */
+  user-drag: none;
+}
+.label i {
+  font-size: 10px;
+  padding-right: 4px;
+}
+.mediapoint {
+  webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  -webkit-user-drag: none;
+  /* Prevents dragging of images/divs etc */
+  user-drag: none;
+}
+.mediapoint {
+  position: relative;
+  bottom: 42px;
+  right: 13px;
+  width: 26px;
+  height: 26px;
+  line-height: 26px;
+  font-size: 0.8em;
+  text-align: center;
+  color: #FFFFFF;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 5px;
+}
+.mediapoint:hover {
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.9);
+}
+.mediapoint.selected {
+  background: rgba(255, 38, 38, 0.9);
+}
+.mediapoint.video {
+  font-size: 1.1em;
+}
+.mediapoint:before {
+  content: ' ';
+  position: absolute;
+  bottom: -5px;
+  left: 8px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 5px 5px 0 5px;
+  border-color: rgba(0, 0, 0, 0.6) transparent transparent transparent;
+}
+.mediapoint:hover:before {
+  border-color: rgba(0, 0, 0, 0.9) transparent transparent transparent;
+}
+.mediapoint.selected:before {
+  border-color: rgba(255, 38, 38, 0.9) transparent transparent transparent;
+}
+.no-wegl {
+  padding: 40px;
+}
+.no-webgl h1 {
+  margin-top: 60px;
+  width: 100%;
+  text-align: center;
+  font-size: 40px;
+}
+.no-webgl p {
+  text-align: center;
+  width: 100%;
+}
+.no-webgl div {
+  width: 40%;
+  corner-radius: 25%;
+  margin: 0 auto;
+}
+.no-webgl img {
+  margin: 40px 0;
+  width: 100%;
+  border-radius: 50%;
+  border: solid 4px #67717f;
+}
+.credits {
+  right: 10px;
+}

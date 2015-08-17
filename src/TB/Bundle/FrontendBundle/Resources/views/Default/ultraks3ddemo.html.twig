@@ -1,0 +1,118 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}Trailburning Ultraks 3D{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/campaignviewer.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/piste.css') }}">
+{% endblock %}
+
+{% block body %}
+<script>
+var TB_APP = 'BaseApp';
+{% if app.user %}		
+var TB_USER_ID = {{ app.user.id }};
+{% endif %}
+var TB_DATA = '{{ asset('assets/data') }}';
+</script>
+
+<div id="def_header">
+  <h3 class="title tb">Matterhorn Ultraks 2015</h3>
+  <div class="logo"><a href="{{ app.request.baseUrl }}/event/ultraks"><img src="http://assets.trailburning.com/images/event/ultraks/card_logo_ultraks.png" border="0"></a></div>
+</div>
+
+<div class="line_break"></div>
+
+<div id="map_view_container">
+  <!-- 3D render will be injected here, style `app` element to position -->
+  <div id="app">
+    <div id="container">
+      <div id="engine-container"></div>
+      <div id="loading-splash">
+        <div class="preloader">
+          <i class="fa fa-spinner fa-spin"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="map_view"></div>
+  <div id="view_map_btns">
+    <div class='controls'>
+      <span class="btn btn-tb zoomin_btn">+</span>
+      <span class="btn btn-tb zoomout_btn">-</span>
+      <span class="btn btn-tb centre_btn"><i class="fa fa-map-marker"></i></span>
+    </div>
+  </div>
+</div>
+
+<div id="slideList-mount-point" class="postFeedBlock"></div>
+
+<div id="postDetail" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+  <div id="postDetail-mount-point" class="modal-dialog">
+  </div>
+</div>
+
+<div class="panel_content">
+  <div class="panel_intro">
+    <div class="desc clearfix">
+    <h3 class="tb">
+    Post your photos on <i class="fa fa-instagram"></i> Instagram!</h3>
+    <h4 class="tb">
+    Are you training for the <a href="http://www.ultraks.com" target="_blank">Matterhorn Ultraks</a>?  Take a photo and share it on <a href="https://instagram.com" target="_blank">Instagram</a> by adding <a href="https://instagram.com/explore/tags/ultraks/" target="_blank">#ultraks</a> and <a href="https://instagram.com/explore/tags/trailburning/" target="_blank">#trailburning</a> to see it on this page.
+    </h4>
+    <h6 class="smallprint tb">
+    The small print - this page has been built for fun and is not endorsed by Matterhorn Ultraks or their partners.
+    </h6>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+<!-- Example of how to use Piste API -->
+<script type="text/javascript">
+    if ( typeof Piste === 'undefined' ) { Piste = {}; }
+</script>
+
+<script src="{{ asset('assets/js/node_modules/react/dist/react.js') }}"></script>
+<script src="{{ asset('assets/js/node_modules/react/dist/JSXTransformer.js') }}"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+
+<script src="{{ asset('assets/js/node_modules/underscore/underscore.js') }}"></script>
+<script src="{{ asset('assets/js/node_modules/backbone/backbone.js') }}"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+<script src='http://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.js'></script>
+<script src='http://api.tiles.mapbox.com/mapbox.js/plugins/turf/v1.4.0/turf.min.js'></script>
+
+<script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.2.0/leaflet-omnivore.min.js'></script>
+<script src='http://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js'></script>
+
+<script src="{{ asset('assets/js/libs/jquery-dateFormat.min.js') }}"></script>
+<script src="{{ asset('assets/js/libs/jquery.touchSwipe.min.js') }}"></script>
+
+<script src="{{ asset('assets/js/views/campaignviewer/CVActivityFeedItemView.js') }}"></script>
+<script src="{{ asset('assets/js/views/campaignviewer/CVActivityFeedView.js') }}"></script>
+<script src="{{ asset('assets/js/views/campaignviewer/CVSearchView.js') }}"></script>
+<script src="{{ asset('assets/js/views/campaignviewer/CVDistanceMarkerView.js') }}"></script>
+<script src="{{ asset('assets/js/views/campaignviewer/CVMarkerView.js') }}"></script>
+<script src="{{ asset('assets/js/views/campaignviewer/CVMapView.js') }}"></script>
+
+<!-- jsx is an optional syntactic sugar that transforms methods in React's
+`render` into an HTML-looking format. Since the two models above are
+unrelated to React, we didn't need those transforms. -->    
+<script type="text/jsx" src="{{ asset('assets/js/slide.jsx') }}"></script>
+<script type="text/jsx" src="{{ asset('assets/js/slideList.jsx') }}"></script>
+<script type="text/jsx" src="{{ asset('assets/js/dialogDetail.jsx') }}"></script>
+<script type="text/jsx" src="{{ asset('assets/js/app.jsx') }}"></script>
+
+<script data-main="https://s3.amazonaws.com/piste.io.matterhorn/piste.io.matterhorn" src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.18/require.min.js"></script>
+<!--
+<script data-main="https://s3.amazonaws.com/piste.io.twentyfivezero/piste.io.twentyfivezero" src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.18/require.min.js"></script>
+-->
+{% endblock %}
