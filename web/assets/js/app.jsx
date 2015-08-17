@@ -58,7 +58,7 @@ var app = app || {};
       // Also select clicked point (note multiple selection also supported)
       Piste.selectMediaPoints( [id] );
 
-      slideList.nextSlide();
+      renderSlideList(id);
   };
 
   $('#footerview').show();
@@ -88,7 +88,13 @@ var app = app || {};
   });
 
   function getFeed() {
-    var url = "http://www.eggontop.com/live/trailburning/tb-campaignviewer/server/feed_ultraks.php";
+    var url;
+    if (TB_PAGE == "Ultraks3DDemo") {
+      url = TB_DATA + "/instagram_matterhorn_demo.json";
+    }
+    else {
+      url = "http://www.eggontop.com/live/trailburning/tb-campaignviewer/server/feed_ultraks.php";
+    }
 //    var url = "http://localhost:8888/projects/Trailburning/tb-campaignviewer/server/feed_blw_sydney.php";
     
     var strInstagramURL = "http://www.instagram.com/";
@@ -271,6 +277,15 @@ var app = app || {};
   function onSlideFocus(nSelected) {
     nCurrSlideFocus = nSelected;
     mapView.setSelected(nSelected); 
+
+    if (TB_PAGE == "Ultraks3DDemo") {
+      // When clicked, pan to media point
+      Piste.panToMediaPoint( nSelected );
+
+      // Also select clicked point (note multiple selection also supported)
+      Piste.selectMediaPoints( [nSelected] );
+    }
+
     renderDialogDetail(nSelected);
   }
 

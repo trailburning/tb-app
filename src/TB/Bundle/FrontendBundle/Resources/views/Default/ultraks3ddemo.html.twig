@@ -10,7 +10,8 @@
 {% block body %}
 <script>
 var TB_APP = 'BaseApp';
-{% if app.user %}		
+var TB_PAGE = 'Ultraks3DDemo';
+{% if app.user %}
 var TB_USER_ID = {{ app.user.id }};
 {% endif %}
 var TB_DATA = '{{ asset('assets/data') }}';
