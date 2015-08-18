@@ -90,7 +90,8 @@ var app = app || {};
   function getFeed() {
     var url;
     if (TB_PAGE == "Ultraks3DDemo") {
-      url = TB_DATA + "/instagram_matterhorn_demo.json";
+//      url = TB_DATA + "/instagram_matterhorn_demo.json";
+      url = "http://www.eggontop.com/live/trailburning/tb-campaignviewer/server/feed_ultraks3d.php";
     }
     else {
       url = "http://www.eggontop.com/live/trailburning/tb-campaignviewer/server/feed_ultraks.php";
