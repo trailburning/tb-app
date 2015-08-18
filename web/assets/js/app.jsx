@@ -48,9 +48,10 @@ var app = app || {};
   addTrail();
 //  getFeed();
 
-  // Register event handler for when media point is clicked
-  Piste.mediaPointClicked = function ( id ) {
-      console.log( 'Clicked media point', id );
+  if (TB_PAGE == "Ultraks3DDemo") {
+    // Register event handler for when media point is clicked
+    Piste.mediaPointClicked = function ( id ) {
+//      console.log( 'Clicked media point', id );
 
       // When clicked, pan to media point
       Piste.panToMediaPoint( id );
@@ -59,7 +60,8 @@ var app = app || {};
       Piste.selectMediaPoints( [id] );
 
       renderSlideList(id);
-  };
+    };
+  }
 
   $('#footerview').show();
 
