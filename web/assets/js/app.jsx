@@ -33,6 +33,7 @@ var app = app || {};
     }
   };
   var trailLayer = null;
+  var trailHeadLatLng = new L.LatLng(0, 0);
 
   var collectionPosts = new Backbone.Collection();
   var modelPost = null;
@@ -109,65 +110,71 @@ var app = app || {};
 
       feed = result.data;
        
-      $.each(result.data, function(index, item) {        
+      var fLat, fLng;
+      $.each(result.data, function(index, item) {
         if (item.location) {
-          if (item.location.latitude && item.location.longitude) {
-            var date = new Date(parseInt(item.created_time) * 1000);
-            var strCaption = "";
-            if (item.caption) {
-              strCaption = item.caption.text;
-            }
+          fLat = item.location.latitude;
+          fLng = item.location.longitude;
+        }
+        else {
+          fLat = trailHeadLatLng.latitude;
+          fLng = trailHeadLatLng.longitude;
+        }
+
+        var date = new Date(parseInt(item.created_time) * 1000);
+        var strCaption = "";
+        if (item.caption) {
+          strCaption = item.caption.text;
+        }
 
 //            if (routeLine.geometry.coordinates.length) {
-            if (1 == 2) {
-              // look for point on line
-              var pt = {
-                "type": "Feature",
-                "properties": {},
-                "geometry": {
-                  "type": "Point",
-                  "coordinates": [item.location.latitude, item.location.longitude]
-                }
-              }
-
-              var snapped = turf.pointOnLine(routeLine, pt);
-              // images < 1 km from trail
-              if (snapped.properties.dist < 1) {
-                modelPost = new Backbone.Model({
-                  id: item.id, 
-                  image_low_res: item.images.low_resolution.url, 
-                  image_standard_res: item.images.standard_resolution.url, 
-                  caption: strCaption,
-                  lat: item.location.latitude, 
-                  lng: item.location.longitude,
-                  link_url: item.link,
-                  username: item.user.username,
-                  user_url: strInstagramURL + item.user.username,
-                  user_avatar: item.user.profile_picture,
-                  created_time: date.getTime()
-                });
-                collectionPosts.add(modelPost);
-              }
+        if (1 == 2) {
+          // look for point on line
+          var pt = {
+            "type": "Feature",
+            "properties": {},
+            "geometry": {
+              "type": "Point",
+              "coordinates": [fLat, fLng]
             }
-            else {
-              modelPost = new Backbone.Model({
-                id: item.id, 
-                image_low_res: item.images.low_resolution.url, 
-                image_standard_res: item.images.standard_resolution.url, 
-                caption: strCaption,
-                lat: item.location.latitude, 
-                lng: item.location.longitude,
-                link_url: item.link,
-                username: item.user.username,
-                user_url: strInstagramURL + item.user.username,
-                user_avatar: item.user.profile_picture,
-                created_time: date.getTime()
-              });
-              collectionPosts.add(modelPost);
-            }                        
-          }          
+          }
+
+          var snapped = turf.pointOnLine(routeLine, pt);
+          // images < 1 km from trail
+          if (snapped.properties.dist < 1) {
+            modelPost = new Backbone.Model({
+              id: item.id, 
+              image_low_res: item.images.low_resolution.url, 
+              image_standard_res: item.images.standard_resolution.url, 
+              caption: strCaption,
+              lat: fLat, 
+              lng: fLng,
+              link_url: item.link,
+              username: item.user.username,
+              user_url: strInstagramURL + item.user.username,
+              user_avatar: item.user.profile_picture,
+              created_time: date.getTime()
+            });
+            collectionPosts.add(modelPost);
+          }
         }
-      });      
+        else {
+          modelPost = new Backbone.Model({
+            id: item.id, 
+            image_low_res: item.images.low_resolution.url, 
+            image_standard_res: item.images.standard_resolution.url, 
+            caption: strCaption,
+            lat: fLat, 
+            lng: fLng,
+            link_url: item.link,
+            username: item.user.username,
+            user_url: strInstagramURL + item.user.username,
+            user_avatar: item.user.profile_picture,
+            created_time: date.getTime()
+          });
+          collectionPosts.add(modelPost);
+        }
+      });
 
       var nInitialSlide = 0;
 
@@ -264,7 +271,10 @@ var app = app || {};
           }
           routeLine.geometry.coordinates = arrCoords;
 
-          var marker = L.marker(new L.LatLng(arrLatLngs[0].lat, arrLatLngs[0].lng));        
+          trailHeadLatLng.latitude = arrLatLngs[0].lat;
+          trailHeadLatLng.longitude = arrLatLngs[0].lng;
+
+          var marker = L.marker(trailHeadLatLng);
           marker.setIcon(L.divIcon({className: 'tb-map-location-marker', html: '<div class="marker"></div>', iconSize: [22, 30], iconAnchor: [11, 30]}));          
           marker.addTo(map); 
         });
