@@ -278,16 +278,17 @@ var app = app || {};
   }
 
   function onSlideFocus(nSelected) {
+    if (TB_PAGE == "Ultraks3DDemo") {
+      if (nSelected != nCurrSlideFocus) {
+        // When clicked, pan to media point
+        Piste.panToMediaPoint( nSelected );
+        // Also select clicked point (note multiple selection also supported)
+        Piste.selectMediaPoints( [nSelected] );
+      }
+    }
+
     nCurrSlideFocus = nSelected;
     mapView.setSelected(nSelected); 
-
-    if (TB_PAGE == "Ultraks3DDemo") {
-      // When clicked, pan to media point
-      Piste.panToMediaPoint( nSelected );
-
-      // Also select clicked point (note multiple selection also supported)
-      Piste.selectMediaPoints( [nSelected] );
-    }
 
     renderDialogDetail(nSelected);
   }
