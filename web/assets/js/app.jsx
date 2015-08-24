@@ -112,14 +112,15 @@ var app = app || {};
        
       var fLat, fLng;
       $.each(result.data, function(index, item) {
+        console.log(item.location);
         if (item.location) {
           fLat = item.location.latitude;
           fLng = item.location.longitude;
-        }
-        else {
-          fLat = trailHeadLatLng.latitude;
-          fLng = trailHeadLatLng.longitude;
-        }
+//        }
+//        else {
+//          fLat = trailHeadLatLng.latitude;
+//          fLng = trailHeadLatLng.longitude;
+//        }
 
         var date = new Date(parseInt(item.created_time) * 1000);
         var strCaption = "";
@@ -173,6 +174,8 @@ var app = app || {};
             created_time: date.getTime()
           });
           collectionPosts.add(modelPost);
+        }
+
         }
       });
 
