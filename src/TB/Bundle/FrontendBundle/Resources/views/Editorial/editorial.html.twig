@@ -14,6 +14,11 @@
 
 {% block stylesheets %}
 <link href="{{ asset('assets/css/editorial.css') }}" rel="stylesheet" type="text/css">
+
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/campaignviewer2.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/piste.css') }}">
+
 {% endblock %}
 
 {% block body %}
@@ -34,7 +39,8 @@ var TB_EDITORIAL_TRAILS = [
 	<div class="sponsor_content">
 		<div class="link"><a href="{{ app.request.baseUrl }}/inspire"><img src="{{ asset('assets/img/sponsor/arrow_big.png') }}">&nbsp;&nbsp;&nbsp;&nbsp;Back to Inspire</a></div>
 		<div class="brand">
-		 	{% if editorial.id == 11 %}
+      {% if editorial.id == 12 %}
+		 	{% elseif editorial.id == 11 %}
 			<div class="strap">brought to you by</div>
 			<div class="logo"><a href="http://www.likethewindmagazine.com/" target="_blank"><img src="http://assets.trailburning.com/images/profile/likethewind/editorial_sponsor_logo_big.png" border="0"></a></div>
 		 	{% else %}		
@@ -50,7 +56,8 @@ var TB_EDITORIAL_TRAILS = [
 	<div class="sponsor_content">
 		<div class="link"><a href="{{ app.request.baseUrl }}/inspire"><img src="{{ asset('assets/img/sponsor/arrow_small.png') }}">&nbsp;&nbsp;&nbsp;&nbsp;Back to Inspire</a></div>
 		<div class="brand">
-		 	{% if editorial.id == 11 %}
+      {% if editorial.id == 12 %}
+		 	{% elseif editorial.id == 11 %}
 				<div class="strap">brought to you by</div>
 				<div class="logo"><a href="http://www.likethewindmagazine.com/" target="_blank"><img src="http://assets.trailburning.com/images/profile/likethewind/editorial_sponsor_logo_small.png" border="0"></a></div>
 		 	{% else %}		
@@ -76,11 +83,29 @@ var TB_EDITORIAL_TRAILS = [
 				<div class="video_player" data-autoplay="false" data-url="http://vimeo.com/84511336"></div>	      	
 			  </div>			  
 #}
-			  <div class="image_container fade_on_load"><img src="http://tbassets2.imgix.net/images/editorial/{{ editorial.slug }}/{{ editorial.image }}?fm=jpg&q=80" class="scale"/></div>
-				{% if editorial.imageCredit is not null %}				
-				  <div class="tb-credit">Photo credit: © <a href="{{ editorial.imageCreditURL }}" onClick="trackOutboundLink(this, 'Outbound Links', '{{ editorial.imageCreditUrl | url_truncate }}'); return false;">{{ editorial.imageCredit }}</a></div>
-				{% endif %}
-			  </div>
+
+        {% if editorial.id == 12 %}
+          <div id="app">
+            <div id="container">
+              <div id="engine-container"></div>
+              <div id="loading-splash">
+                <div class="preloader">
+                  <i class="fa fa-spinner fa-spin"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="slideList-mount-point" class="postFeedBlock"></div>
+        {% endif %}
+
+        {% if editorial.id != 12 %}
+  			  <div class="image_container fade_on_load"><img src="http://tbassets2.imgix.net/images/editorial/{{ editorial.slug }}/{{ editorial.image }}?fm=jpg&q=80" class="scale"/></div>
+  				{% if editorial.imageCredit is not null %}				
+  				  <div class="tb-credit">Photo credit: © <a href="{{ editorial.imageCreditURL }}" onClick="trackOutboundLink(this, 'Outbound Links', '{{ editorial.imageCreditUrl | url_truncate }}'); return false;">{{ editorial.imageCredit }}</a></div>
+  				{% endif %}
+  			  </div>
+        {% endif %}
 			
 	  		<div class="content">
 	  			<div class="content_header">
@@ -98,12 +123,12 @@ var TB_EDITORIAL_TRAILS = [
 	  			</div>	  			
 	  			</div>	  			
 	  			
-	  			<div id="trail_header" class="section_header clearfix">
-		  			<div class="header"><h2 class="tb">Discover the Trails</h2></div>
-		  			<div class="line"></div>
-	  			</div>
+        {% if editorialRoutes and editorialRoutes|length > 0 %}
 
-                {% if editorialRoutes and editorialRoutes|length > 0 %}
+          <div id="trail_header" class="section_header clearfix">
+            <div class="header"><h2 class="tb">Discover the Trails</h2></div>
+            <div class="line"></div>
+          </div>
 
 				{% if editorialRoutes[0].text is not null %}
 
@@ -191,6 +216,11 @@ var TB_EDITORIAL_TRAILS = [
 	</div>
 </div>  
 
+<div id="postDetail" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+  <div id="postDetail-mount-point" class="modal-dialog">
+  </div>
+</div>
+
 {% endblock %}
 
 {% block javascripts %}
@@ -255,5 +285,35 @@ var TB_EDITORIAL_TRAILS = [
 </script>
 
 <script src="{{ asset('assets/js/libs/jquery.columnizer.js') }}"></script>
+
+{% if editorial.id == 12 %}
+
+<!-- Example of how to use Piste API -->
+<script type="text/javascript">
+    if ( typeof Piste === 'undefined' ) { Piste = {}; }
+</script>
+
+<script src="{{ asset('assets/js/libs/modernizr.custom.76241.js') }}"></script>
+
+<script src="{{ asset('assets/js/node_modules/react/dist/react.js') }}"></script>
+<script src="{{ asset('assets/js/node_modules/react/dist/JSXTransformer.js') }}"></script>
+
+<script src="{{ asset('assets/js/libs/underscore-min.js') }}"></script>
+<script src="{{ asset('assets/js/libs/backbone-min.js') }}"></script>
+
+<script src="{{ asset('assets/js/libs/jquery.touchSwipe.min.js') }}"></script>
+
+<script src="{{ asset('assets/js/views/campaignviewer/CVActivityFeedItemView.js') }}"></script>
+<script src="{{ asset('assets/js/views/campaignviewer/CVActivityFeedView.js') }}"></script>
+<script src="{{ asset('assets/js/views/campaignviewer/CVSearchView.js') }}"></script>
+
+<script type="text/jsx" src="{{ asset('assets/js/slide.jsx') }}"></script>
+<script type="text/jsx" src="{{ asset('assets/js/slideList.jsx') }}"></script>
+<script type="text/jsx" src="{{ asset('assets/js/dialogDetail.jsx') }}"></script>
+<script type="text/jsx" src="{{ asset('assets/js/appEditorial.jsx') }}"></script>
+
+<script data-main="https://s3.amazonaws.com/piste.io.matterhorn/piste.io.matterhorn" src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.18/require.min.js"></script>
+
+{% endif %}
 
 {% endblock %}

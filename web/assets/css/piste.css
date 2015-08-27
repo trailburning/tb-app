@@ -1,7 +1,7 @@
 #app {
   margin: 0 !important;
   width: 100% !important;
-  height: 486px !important;
+  height: 444px !important;
   overflow: hidden;
 }
 
@@ -10,7 +10,6 @@
 #view_map_btns .controls {
   display: none;
 }
-
 
 /* Credits and disclaimers */
 .credits {

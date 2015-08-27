@@ -37,6 +37,8 @@ var app = app || {};
 
       this.elMountPoint = $(React.findDOMNode(this));
 
+      this.nContainerWidth = this.elMountPoint.width();
+
       this.elMountPoint.css("width", $(".slide", this.elMountPoint).first().width() * this.state.slides.length);
 
       $(window).resize(function() {
@@ -77,14 +79,15 @@ var app = app || {};
 
       var nLeft = this.elMountPoint.position().left + elSlideMountPoint.position().left;
       var nSlideWidth = elSlideMountPoint.width();
-      var nWindowWidth = $(window).width();
+//      var nWindowWidth = $(window).width();
+//      this.nContainerWidth = $(window).width();
 
       var nMargin = elSlideMountPoint.width() / 2;
       if (nSelected == 0 || (nSelected == this.state.slides.length-1)) {
         nMargin = 0;
       }
-      if ((nLeft + nSlideWidth) > nWindowWidth) {
-        this.elMountPoint.css("left", this.elMountPoint.position().left - ((nLeft + nSlideWidth) - nWindowWidth + nMargin));
+      if ((nLeft + nSlideWidth) > this.nContainerWidth) {
+        this.elMountPoint.css("left", this.elMountPoint.position().left - ((nLeft + nSlideWidth) - this.nContainerWidth + nMargin));
       }
       if ((nLeft) < 0) {
         this.elMountPoint.css("left", this.elMountPoint.position().left - nLeft + nMargin);

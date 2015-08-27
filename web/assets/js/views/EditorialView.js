@@ -13,7 +13,7 @@ define([
   var AppView = Backbone.View.extend({
     initialize: function(){
       var self = this;
-      
+            
       this.nSponsorState = STATE_BIG_SPONSOR;
       this.nPrevScrollY = 0;
       
@@ -37,8 +37,8 @@ define([
       	this.activityFeedView.render();
       	this.activityFeedView.getActivity();	  	
 	  }
-      
-      this.trailMapView = new MapTrailView({ el: '#editorial_map_view', elCntrls: '#view_map_btns', model: this.model, mapStreet: 'mallbeury.map-kply0zpa', mapMargin: 120 });
+    
+    this.trailMapView = new MapTrailView({ el: '#editorial_map_view', elCntrls: '#view_map_btns', model: this.model, mapStreet: 'mallbeury.map-kply0zpa', mapMargin: 120 });
 	  this.trailMapView.render();	  
 
 	  $('#column_wrapper_intro').columnize({

@@ -250,8 +250,14 @@
         {% block javascripts %}{% endblock %}
 
         {% if name is defined and (name == 'ultraksdemo' or name == 'ultraks3ddemo') %}
-        {% else %}                          
-        <script data-main="{{ asset('assets/js/main') }}" src="{{ asset('assets/js/libs/require.js') }}"></script>
-        {% endif %}         
+        {% else %}
+
+            {% if editorial is defined and editorial.id == 12 %}
+
+            {% else %}
+            <script data-main="{{ asset('assets/js/main') }}" src="{{ asset('assets/js/libs/require.js') }}"></script>
+            {% endif %}
+        
+        {% endif %}
     </body>
 </html>

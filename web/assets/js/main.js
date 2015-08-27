@@ -13,7 +13,8 @@ if (typeof TB_APP != 'undefined') {
     require(['controller/' + TB_APP], function(App){
     	App.initialize();
     })
+
     define('gmaps', ['async!https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places'], function() {
         return google.maps;
     });
-}                               
+}

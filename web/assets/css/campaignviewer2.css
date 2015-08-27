@@ -1,0 +1,315 @@
+.modal {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1050;
+    display: none;
+    overflow: hidden;
+    -webkit-overflow-scrolling: touch;
+    outline: 0;
+
+    background-color: transparent;
+    margin: 0;
+    width: auto;
+    border: none;
+    border-radius: 0;
+}
+
+.modal.fade.in {
+    top: 0px;
+}
+
+/* POST DETAIL BLOCK */
+/******************************************/
+#postDetail {
+}
+
+#postDetail .modal-dialog {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background-color: #FFFFFF;
+}
+
+#postDetail .post-detail-block {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+#postDetail .post-detail-block .dialog-container {
+  padding-top: 24px;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+#postDetail .post-detail-block  .image {
+  display: block;
+  position: relative;
+  text-align: center;
+  margin: 0 auto;
+  width: 492px;
+  height: 492px;
+  background-image: url("../img/campaignviewer/photo_background.png");
+  background-repeat: no-repeat;
+}
+
+#postDetail .post-detail-block  .image img {
+  position: absolute;
+  top: 36px;
+  left: 33px;
+  width: 441px;
+  height: 441px;
+}
+
+#postDetail .post-detail-block .container {
+  float: left;
+  width: 100%;  
+  overflow: hidden;
+}
+
+#postDetail .post-detail-block .details {
+  margin: 20px auto 0 auto;
+  width: 452px;
+  font-family: 'Signika', sans-serif;
+  font-size: 1.3em;
+  line-height: 1.4em;
+  color: #979797;
+}
+
+#postDetail .post-detail-block .details .poster .tb-avatar {
+  float: left;
+}
+
+#postDetail .post-detail-block .details .poster .name {
+  float: left;
+  margin-left: 14px;
+  font-size: 2em;
+  line-height: 48px;
+  color: #44b6f7;
+}
+
+#postDetail .post-detail-block .details .timeago {
+  margin-top: 16px;
+  color: #CCCCCC;
+  font-size: 1em;
+  line-height: 1.6em;
+}
+
+#postDetail .post-detail-block .details .text {
+  width: 328px;
+  word-wrap: break-word;
+  overflow: hidden;
+}
+
+#postDetail .icon {
+  display: none;
+  position: absolute;
+  top: 50%;
+  margin-top: -30px;
+  width: 60px;
+  height: 60px;
+  line-height: 60px;
+  font-size: 1.6em;
+  color: #FFFFFF;
+  text-align: center;
+  border-radius: 50%;
+  background-color: #44B6F7;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+#postDetail .prev {
+  left: -30px;
+}
+
+#postDetail .prev .fa {
+  margin-left: -5px;
+}
+
+#postDetail .next {
+  right: -30px;
+}
+
+#postDetail .next .fa {
+  margin-left: 5px;
+}
+
+#postDetail .icon .fa {
+  font-size: 2em;
+  line-height: 60px;
+}
+
+/* POST FEED BLOCK */
+/******************************************/
+.postFeedBlock {
+  position: relative;
+  margin-top: -65px;
+  width: 100%;
+  height: 370px;
+  overflow: hidden;
+}
+
+.postFeedBlock .slideContainer {
+  position: absolute;
+  top: 35px;
+  left: 0px;
+  transition: all 300ms ease;    
+}
+
+.postFeedBlock .slideContainer .slide {
+  position: relative;
+  float: left;
+  width: 245px;
+  height: 332px;
+  transition: all 300ms ease;    
+}
+
+.postFeedBlock .slideContainer .slide .image {
+  display: inline-block;
+}
+
+.postFeedBlock .slideContainer .slide .image:hover {
+  cursor: pointer;
+}
+
+.postFeedBlock .slideContainer .slide.focus .image:hover {
+  cursor: zoom-in;
+}
+
+.postFeedBlock .slideContainer .post {
+  width: 235px;
+  height: 322px;
+  margin: 5px;
+  background-color: #FFFFFF;
+  *zoom: 1;
+  -webkit-box-shadow: 2px 4px 5px 0px rgba(0, 0, 0, 0.1);
+     -moz-box-shadow: 2px 4px 5px 0px rgba(0, 0, 0, 0.1);
+          box-shadow: 2px 4px 5px 0px rgba(0, 0, 0, 0.1);
+}
+
+.postFeedBlock .slideContainer .slide.focus {
+  margin-top: -30px;
+}
+
+.postFeedBlock .slideContainer .slide .content {
+  margin: 0;
+  font-family: 'Signika', sans-serif;
+  font-size: 14px;
+  color: #979797;
+  border: 5px solid #FFF;
+  overflow: hidden;
+}
+
+.postFeedBlock .slideContainer .slide .content img { 
+  vertical-align: top;
+  width: 100%;
+}
+
+.postFeedBlock .slideContainer .slide .content .avatar {
+  float: left;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.postFeedBlock .slideContainer .slide .details {
+  padding: 8px 5px 0 5px;
+}
+
+.postFeedBlock .slideContainer .slide .content .text {
+  float: left;
+  width: 171px;
+  height: 80px;
+  margin-left: 10px;
+}
+
+.postFeedBlock .slideContainer .slide .content .caption {
+  width: 100%;
+  height: 40px;
+  word-wrap: break-word;
+}
+
+.postFeedBlock .slideContainer .slide .content .name {
+  width: 100%;
+  font-size: 1.2em;
+  line-height: 1.2em;
+  height: 1.2em;
+  font-weight: 700;  
+}
+
+.postFeedBlock .slideContainer .slide .content .timeago {
+  color: #CCCCCC;
+  font-size: 1em;
+  line-height: 1.6em;
+}
+
+.postFeedBlock .slideContainer .slide .frame {
+  display: none;
+}
+
+.postFeedBlock .slideContainer .slide.focus .frame {
+  display: block;
+}
+
+.postFeedBlock .slideContainer .slide .frame .corner {
+  position: absolute;
+  width: 25px;
+  height: 25px;
+}
+
+.postFeedBlock .slideContainer .slide .frame .top {
+  top: 1px;
+  right: 1px;
+  background: url("../img/campaignviewer/corner_top_right.png") no-repeat top left;
+}
+
+.postFeedBlock .slideContainer .slide .frame .bottom {
+  bottom: 1px;
+  left: 1px;
+  background: url("../img/campaignviewer/corner_bottom_left.png") no-repeat top left;
+}
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+  #postDetail .modal-dialog {    
+    margin: 64px auto;
+    width: 574px;
+    height: 726px;
+  }  
+
+  #postDetail .post-detail-block  .image {
+    float: left;
+    margin: 0 0 0 36px;
+  }
+
+  #postDetail .icon {
+    display: block;
+  }  
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+  #postDetail .modal-dialog {
+    margin: 60px auto 0 auto;
+    width: 908px;
+    height: 556px;
+  }  
+
+  #postDetail .post-detail-block .details {
+    margin-top: 26px;
+    width: 338px;
+  }
+
+  #postDetail .post-detail-block .container {
+    width: 338px;  
+  }
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+}
