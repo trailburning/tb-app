@@ -97,9 +97,9 @@ var app = app || {};
       url = "http://www.eggontop.com/live/trailburning/tb-campaignviewer/server/feed_ultraks3d.php";
     }
     else {
-      url = "http://www.eggontop.com/live/trailburning/tb-campaignviewer/server/feed_ultraks.php";
+      url = "http://www.eggontop.com/live/trailburning/tb-campaignviewer/server/feed_cache.php?tag=ultraks";
+//      url = "http://localhost:8888/projects/Trailburning/tb-campaignviewer/server/feed_cache.php?tag=ultraks";
     }
-//    var url = "http://localhost:8888/projects/Trailburning/tb-campaignviewer/server/feed_blw_sydney.php";
     
     var strInstagramURL = "http://www.instagram.com/";
 
