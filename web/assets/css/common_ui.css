@@ -228,6 +228,13 @@ h5.tb {
   color: #979797;
 }
 
+h6.tb {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.3em;
+  color: #979797;
+}
+
 /* TB COMMON STYLES */
 /******************************************/
 .tb-step-marker {
@@ -1733,6 +1740,25 @@ form label {
   width: 100%;
   height: 2px;
   background: url(../img/trans_line.png) repeat-x top left;  
+}
+
+.ellip {
+  display: block;
+  height: 100%;
+}
+
+.ellip-line {
+  display: inline-block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-wrap: normal;
+  max-width: 100%;
+}
+
+.ellip,
+.ellip-line {
+  position: relative;
+  overflow: hidden;
 }
 
 /* Mapbox */
