@@ -171,7 +171,6 @@ class Campaign
     /**
      * @var string
      *
-<<<<<<< HEAD
      * @ORM\Column(name="twitter_tags", type="string", length=255, nullable=true)
      */
     private $twitterTags;
