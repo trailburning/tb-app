@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>TwentyFiveZero</title>
+<meta name="viewport" content="user-scalable=no, width=device-width, height=device-height, maximum-scale=1.0, minimum-scale=1.0, initial-scale=1.0">
+<meta name="google" value="notranslate">
+
+<link href="http://fonts.googleapis.com/css?family=Lobster" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="assets/css/fonts.css">
+<link href="//vjs.zencdn.net/4.12/video-js.css" rel="stylesheet">
+<link href="assets/css/piste.css" rel="stylesheet">
+<link href="assets/css/web_platform.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container-fluid">
+  <div id="menus-view">
+    <div class="menus">
+      <div class="left pull-left">
+      <ul>
+        <li><a href=""><h2>Climb It.</h2><h1>Change.</h1></a></li>
+        <li class="active"><a href=""><h2>25<span class="small">zero</span></h2><h1>Expeditions</h1></a></li>
+        <li><a href=""><h2>Get Involved</h2><h1>Virtual Expeditions</h1></a></li>
+        <li><a href=""><h2>Make A Difference</h2><h1>Paris Climate Conference</h1></a></li>
+      </ul>
+      </div>
+      <div class="right pull-right">
+        <div class="text-right"><h2>Show Your Support</h2></div>
+        <a href="" class="btn">Sign The Petition</a><a href="" class="btn strong">Donate</a>
+      </div>
+    </div>
+    <div class="menus-collapse">
+      <div class="menu-toggle">
+        <div class="main pull-left">
+          <span class="back-btn-container nav-toggle-btn"><span class="btn menu back-btn"><i class="fa fa-arrow-left"></i> Back</span></span>
+          <span class="main-btn-container nav-toggle-btn"><a class="btn menu menu-btn" role="button" data-toggle="collapse" href="#mainmenu"><i class="fa fa-bars"></i> 25Zero</a></span>
+        </div>
+        <div class="title pull-left">
+        <h1>Expedition:</h1>
+        <h2>Chimborazo, Equador</h2>
+        </div>
+
+      </div>
+      <div class="collapse" id="mainmenu">
+      <ul>
+        <li><a href=""><h2>Climb It.</h2><h1>Change.</h1></a></li>
+        <li class="active"><a href=""><h2>25<span class="small">zero</span></h2><h1>Expeditions</h1></a></li>
+        <li><a href=""><h2>Get Involved</h2><h1>Virtual Expeditions</h1></a></li>
+        <li><a href=""><h2>Make A Difference</h2><h1>Paris Climate Conference</h1></a></li>
+      </ul>
+      </div>
+    </div>
+  </div>
+
+  <div id="journey-view">
+    <div class="journey-detail-view">
+      <h1>Expedition:</h1>
+      <h2>Chimborazo, Equador (6,268M)</h2>
+    </div>
+
+    <div class="journey-container-view">
+      <div id="expedition-view"></div>
+      <div id="event-view"></div>
+      <div id="event-slideshow-view"></div>
+
+      <div class="btn-container">
+        <div class="back-btn-container nav-toggle-btn"><span class="btn back-btn">Back</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/template" id="expeditionViewTemplate">
+  <div class="row">
+    <div class="col-md-8 nopadding map-view">
+      <div id="piste-view">
+        <div id="container">
+          <div id="engine-container"></div>
+          <div id="loading-splash">
+            <div class="preloader"><i class="fa fa-spinner fa-spin"></i></div>
+          </div>
+        </div>
+      </div>
+      <div class="btn arrow-nav prev-btn"><i class="fa fa-arrow-left"></i></div>
+      <div class="btn arrow-nav next-btn"><i class="fa fa-arrow-right"></i></div>
+    </div>
+    <div class="col-md-4 nopadding event-list-view">
+      <div class="events-container">
+        <div class="events">
+          <ul>
+          <% _.each(journeyEvents, function(journeyEvent, index) { %>
+            <li class="event" id="<%= journeyEvent.id %>"><div class="step-container"><div class="step"><span class="pos"><%= index+1 %></span></div></div><div class="title"><h1><%= journeyEvent.custom1 %></h1><h2><%= journeyEvent.custom2 %></h2><h3><%= journeyEvent.alt %> M</h3></div><div class="categories pull-right">
+            <% _.each(journeyEvent.assetTypes, function(assetType) { %>
+  <!--
+              <span class="btn category-btn" id="<%= assetType.name %>"><%= assetType.name %></span>
+  --> 
+              <i class="fa fa-apple"></i>&nbsp;
+            <% }); %>
+            </div></li>
+          <% }); %>
+          <li class="blank"></li>
+          </ul>
+        </div>
+      </div>
+      <div class="grad"></div>
+    </div>
+  </div>
+
+<!--  
+-->  
+  <div class="flares">
+    <div class="flare flare1"></div>
+    <div class="flare flare2"></div>
+    <div class="flare flare3"></div>
+    <div class="flare flare4"></div>
+  </div>
+
+</script>
+
+<script type="text/template" id="eventViewTemplate">
+  <div class="row">
+    <% var expeditionAssets = _.filter(assets, function(asset, index){  %>
+      <% if (asset.category == 'expedition') { %>
+        <% return asset %>
+      <% } %>
+    <% }) %>
+
+    <% _.each(expeditionAssets, function(asset, index) { %>
+      <% var colClass = 'col-sm-6' %>
+      <% if (index == 0) { %>
+        <% var colClass = 'col-sm-8' %>
+      <% } %>
+      <% if (index == 1) { %>
+        <% var colClass = 'col-sm-12' %>
+      <% } %>
+
+      <% if (_.where(asset.medias, {type:'video'}).length) { %>
+        <div class="<%= colClass %> nopadding">
+          <div class="scale-container image" style="background-image: url(http://tbmedia2.imgix.net/<%= _.where(asset.medias, {type:'image'})[0].path %>?fm=jpg&q=80)" id="<%= asset.id %>"><div class="media-icon"><i class="fa fa-video-camera"></i></div></div>
+        </div>
+      <% } else if (_.where(asset.medias, {type:'audio'}).length) { %>
+        <div class="<%= colClass %> nopadding">
+          <div class="scale-container image" style="background-image: url(http://tbmedia2.imgix.net/<%= _.where(asset.medias, {type:'image'})[0].path %>?fm=jpg&q=80)" id="<%= asset.id %>"><div class="media-icon"><i class="fa fa-microphone"></i></div></div>
+        </div>
+      <% } else { %>
+        <% _.each(asset.medias, function(media) { %>
+          <% if (media.type == 'image') { %>
+            <div class="<%= colClass %> nopadding">
+              <div class="scale-container" id="<%= asset.id %>">
+                <% if (media.orientation == 'portrait') { %>
+                  <div class="image" style="background-image: url(http://tbmedia2.imgix.net/<%= media.path %>?fm=jpg&q=80&blur=100)"></div>
+                  <div class="image portrait fix" style="background-image: url(http://tbmedia2.imgix.net/<%= media.path %>?fm=jpg&q=80)"></div>
+                <% } else { %>
+                  <div class="image" style="background-image: url(http://tbmedia2.imgix.net/<%= media.path %>?fm=jpg&q=80)"></div>
+                <% } %>
+              </div>
+            </div>
+          <% } %>
+        <% }); %>
+      <% } %>
+
+      <% if (index == 0) { %>
+        <div class="col-sm-4 nopadding">
+          <div class="text text-scale">
+            <div class="content"><%= about %></div>
+          </div>
+        </div>
+      <% } %>
+
+    <% }); %>
+  </div>
+  <div class="row">
+    <% _.each(assetTypes, function(assetType) { %>
+      <span class="btn category-btn category" id="<%= assetType.name %>"><i class="fa fa-apple"></i> <%= assetType.name %></span>
+    <% }); %>
+  </div>
+</script>
+
+<script type="text/template" id="eventSlideshowViewTemplate">
+  <div class="row">
+    <div class="col-sm-12 nopadding">
+      <%= category %>
+      <span class="btn prev-btn">Prev</span>
+      <span class="btn next-btn">Next</span>
+
+      <div class="slideshow-view">
+        <div class="slideshow-container">
+        <% _.each(journeyAssets, function(asset) { %>
+          <% if (_.where(asset.medias, {type:'video'}).length) { %>
+            <div class="slide-view">
+              <div class="col-sm-8 nopadding">
+                <div class="scale-container">
+                <video id="media-<%= asset.id %>" url="http://media.trailburning.com/<%= _.where(asset.medias, {type:'video'})[0].path %>" class="media-player video-js vjs-default-skin"
+                  controls preload="auto" width="auto" height="auto"
+                  poster="http://tbmedia2.imgix.net/<%= _.where(asset.medias, {type:'image'})[0].path %>?fm=jpg&q=80"
+                  data-setup='{"example_option":true}'>
+                 <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
+                </video>
+                </div>
+              </div>
+              <div class="col-sm-4 nopadding"><div class="text-scale"><%= asset.about %></div></div>
+            </div>
+          <% } else if (_.where(asset.medias, {type:'audio'}).length) { %>
+            <div class="slide-view">
+              <div class="col-sm-8 nopadding">
+                <div class="scale-container">
+                <audio id="media-<%= asset.id %>" url="http://media.trailburning.com/<%= _.where(asset.medias, {type:'audio'})[0].path %>" class="media-player video-js vjs-default-skin"
+                  controls preload="auto" width="auto" height="auto"
+                  poster="http://tbmedia2.imgix.net/<%= _.where(asset.medias, {type:'image'})[0].path %>?fm=jpg&q=80"
+                  data-setup='{"example_option":true}'>
+                 <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
+                </audio>
+                </div>
+              </div>
+              <div class="col-sm-4  nopadding"><div class="text-scale"><%= asset.about %></div></div>
+            </div>
+          <% } else { %>
+            <div class="slide-view">
+              <div class="col-sm-8 nopadding">
+                <% var media = _.where(asset.medias, {type:'image'})[0] %>
+
+                <div class="scale-container" id="<%= asset.id %>">
+                  <% if (media.orientation == 'portrait') { %>
+                    <div class="image" style="background-image: url(http://tbmedia2.imgix.net/<%= media.path %>?fm=jpg&q=80&blur=100)"></div>
+                    <div class="image portrait fix" style="background-image: url(http://tbmedia2.imgix.net/<%= media.path %>?fm=jpg&q=80)"></div>
+                  <% } else { %>
+                    <div class="image" style="background-image: url(http://tbmedia2.imgix.net/<%= media.path %>?fm=jpg&q=80)"></div>
+                  <% } %>
+                </div>
+              </div>
+              <div class="col-sm-4 nopadding"><div class="text-scale"><%= asset.about %></div></div>
+            </div>
+          <% } %>
+        <% }); %>
+        </div>
+      </div>
+    </div>
+  </div>
+</script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.touchswipe/1.6.12/jquery.touchSwipe.min.js"></script>
+<script src="//vjs.zencdn.net/4.12/video.js"></script>
+<script data-main="assets/js/main" src="assets/js/libs/require.js"></script>
+
+<!-- Example of how to use Piste API -->
+<script type="text/javascript">
+if ( typeof Piste === 'undefined' ) { Piste = {}; }
+</script>
+
+</body>
+</html>
