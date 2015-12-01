@@ -29,6 +29,7 @@ define([
     app.dispatcher.on("EventView:backClick", onGoBack, this);
     app.dispatcher.on("AssetView:removed", onAssetRemoved, this);
     app.dispatcher.on("AssetView:backClick", onGoBack, this);
+    app.dispatcher.on("AssetView:mediauploadError", onShowError, this);
 
     var self = this;
     var journeyModel = null; eventModel = null, assetID = null;
@@ -179,6 +180,16 @@ define([
       assetID = selAssetID;
 
       changeView(VIEW_ASSET);
+    }
+
+    function onShowError(errObj) {
+      if (errObj) {
+        $('.modal-body', $('#modalError')).html(errObj.messages[0]);
+      }
+      else {
+        $('.modal-body', $('#modalError')).html('Your file is bigger than the 20Mb maximum.  Please reduce the size and try again.');
+      }
+      $('#modalError').modal('show');
     }
 
     getJourneys();
