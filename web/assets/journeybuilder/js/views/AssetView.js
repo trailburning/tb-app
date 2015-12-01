@@ -121,6 +121,8 @@ define([
     updateAsset: function(elForm){
       var self = this;
 
+      var $btn = $('#save-asset-btn').button('loading')
+
       // replace newline
       var strAbout = $('#form_about', elForm).val().replace(/(?:\n)/g, '\r')
 
@@ -142,6 +144,8 @@ define([
           },
           success: function(data) {
             console.log('success');
+
+            $btn.button('reset')
           }
         }); 
       }

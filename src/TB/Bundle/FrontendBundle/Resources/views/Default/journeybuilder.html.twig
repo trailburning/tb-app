@@ -18,7 +18,6 @@
 
 <script>
 var TB_USER = {{ app.user.id }};
-//var TB_USER = 310;
 </script>
 
 </head>
@@ -101,21 +100,24 @@ var TB_USER = {{ app.user.id }};
       <div class="assets">
         <ul class="sortable">
         <% _.each(event.assets, function(asset, index) { %>
-          <li class="asset sort-item" id="<%= asset.id %>"><div class="category-container"><div class="category"><i class="fontastic icon-25zero-<%= asset.category.name %>"></i></div></div><div class="title"><h1><%= asset.name %></h1><h2><%= asset.credit %></h2></div>
+          <% var imgMedia = _.where(asset.media, {mime_type:'image/jpeg'})[0] %>
 
+          <li class="asset sort-item" id="<%= asset.id %>"><div class="category-container"><div class="category"><i class="fontastic icon-25zero-<%= asset.category.name %>"></i></div></div><div class="title"><h1><%= asset.name %></h1><h2><%= asset.credit %></h2></div>
             <div class="asset-image pull-right">
             <% if (_.where(asset.media, {mime_type:'video/mp4'}).length) { %>
-              <div class="image" style="background-image: url(<%= _.where(asset.media, {mime_type:'image/jpeg'})[0].path %>?fm=jpg&w=1024&q=80)" id="<%= asset.id %>"></div>
+              <% if (imgMedia) { %>
+                <div class="image" style="background-image: url(<%= imgMedia.path %>?fm=jpg&w=1024&q=80)" id="<%= asset.id %>"></div>
+              <% } %>
               <div class="media-icon"><i class="fontastic icon-25zero-movie"></i></div>
             <% } else if (_.where(asset.media, {mime_type:'audio/mpeg'}).length) { %>
-              <div class="image" style="background-image: url(<%= _.where(asset.media, {mime_type:'image/jpeg'})[0].path %>?fm=jpg&w=1024&q=80)" id="<%= asset.id %>"></div>
+              <% if (imgMedia) { %>
+                <div class="image" style="background-image: url(<%= imgMedia.path %>?fm=jpg&w=1024&q=80)" id="<%= asset.id %>"></div>
+              <% } %>
               <div class="media-icon"><i class="fontastic icon-25zero-sound"></i></div>
             <% } else { %>
               <% if (_.where(asset.media, {mime_type:'image/jpeg'}).length) { %>
                 <% var imageMedia = _.where(asset.media, {mime_type:'image/jpeg'})[0] %>
                 <div class="image" style="background-image: url(<%= imageMedia.path %>?fm=jpg&w=1024&q=80)"></div>
-              <% } else { %>
-                <div class="image" style="background-image: url(http://tbassets2.imgix.net/images/brands/25zero/furniture/placeholder.jpg?fm=jpg&w=1024&q=80)"></div>
               <% } %>
             <% } %>
             </div>
@@ -126,7 +128,9 @@ var TB_USER = {{ app.user.id }};
     </div>
 
     <div class="col-md-12 nopadding">
-    <span class="btn update-btn">Update Sort Order</span>
+      <div class="sort-ctrl">
+      <span class="btn update-btn">Update Sort Order</span>
+      </div>
     </div>
   </div>
 </script>
@@ -143,7 +147,6 @@ var TB_USER = {{ app.user.id }};
       <div class="col-md-8 nopadding">
 
         <form name="assetForm" id="assetForm" method="post">
-
         <div class="form-group">
           <label for="form_name">Category</label>
           <div class="btn-group" data-toggle="buttons"><label class="btn category-btn category dark <% if (asset.category.name == 'expedition') { %>active<% } %>"><input type="radio" name="form_category" id="form_category" value="1" <% if (asset.category.name == 'expedition') { %>checked="checked"<% } %>/>Expedition</label> 
@@ -157,7 +160,7 @@ var TB_USER = {{ app.user.id }};
 
         <div class="form-group">
           <label for="form_name">Caption</label>
-          <input class="field form-control" name="form_name" id="form_name" value="<%= asset.name %>">
+          <input class="field form-control" name="form_name" id="form_name" value="<%= asset.name %>" required>
         </div>
         <div class="form-group">
           <label for="form_credit">Credit</label>
@@ -165,14 +168,13 @@ var TB_USER = {{ app.user.id }};
         </div>
         <div class="form-group">
           <label for="form_about">About</label>
-          <textarea class="field form-control" name="form_about" id="form_about"><%= asset.about %></textarea>
+          <textarea class="field form-control" name="form_about" id="form_about" required><%= asset.about %></textarea>
         </div>
 
         <div class="btns">
-          <button class="btn" type="submit" value="save">SAVE ASSET</button>
+          <button type="submit" id="save-asset-btn" data-loading-text="SAVING..." class="btn" autocomplete="off">SAVE ASSET</button>
           <div class="pull-right"><span class="remove-btn btn">Delete Asset <i class="fa fa-trash"></i></span></div>
         </div>
-
         </form>
       </div>
 
@@ -218,7 +220,7 @@ var TB_USER = {{ app.user.id }};
           <h4 class="modal-title" id="myModalLabel">Confirm Asset Delete</h4>
         </div>
         <div class="modal-body">
-        Are you sure ou wish to delete this asset?
+        Are you sure you wish to delete this asset?
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -240,7 +242,12 @@ var TB_USER = {{ app.user.id }};
        <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
       </video>
     <% } else if (media.mime_type == 'audio/mpeg') { %>
-
+      <video id="media-<%= media.id %>" url="<%= media.path %>" class="media-player video-js vjs-default-skin"
+        controls preload="auto" width="auto" height="auto"
+        poster=""
+        data-setup='{"example_option":true}'>
+       <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
+      </video>
     <% } else { %>
       <div class="image" style="background-image: url(<%= media.path %>?fm=jpg&w=1024&q=80)"></div>
     <% } %>

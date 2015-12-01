@@ -153,7 +153,6 @@ define([
     function onAssetCreate() {
       var json = {'category': 1,
                   'name': 'Asset Name',
-                  'credit': 'Asset Credit',
                   'about': 'About the Asset'};
 
       var strURL = TB_RESTAPI_BASEURL + '/events/' + eventModel.get('id') + '/assets';
@@ -171,7 +170,7 @@ define([
           console.log('success');
           console.log(data);
 
-          eventView.getEventAndRender(eventModel);
+          eventView.getEventAndRender(journeyModel, eventModel);
         }
       }); 
     }
