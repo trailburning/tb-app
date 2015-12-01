@@ -40,8 +40,6 @@ define([
     updatePosition: function(assetID, nPosition){
       var self = this;
 
-      console.log('U:'+nPosition);
-
       var json = {'position': nPosition};
 
       var strURL = TB_RESTAPI_BASEURL + '/assets/' + assetID;
@@ -64,9 +62,7 @@ define([
 
       var arrSortedIDs = $(".sortable", this.el).sortable("toArray");
       $.each(arrSortedIDs, function(index, id) {
-        var nPos = index + 1;
-        console.log(nPos+' : '+id);
-        self.updatePosition(id, nPos);
+        self.updatePosition(id, index);
       });
     },
 
