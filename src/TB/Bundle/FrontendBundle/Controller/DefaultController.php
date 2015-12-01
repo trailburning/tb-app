@@ -128,4 +128,15 @@ class DefaultController extends Controller
             'name' => 'ultraks3ddemo'
         );      
     }           
+
+    /**
+     * @Route("/journeybuilder", name="journeybuilder")
+     * @Template()
+     */
+    public function journeybuilderAction()
+    {
+        return array(
+            'name' => 'journeybuilder'
+        );      
+    }           
 }

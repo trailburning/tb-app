@@ -40,7 +40,7 @@ var TB_USER_LAT = {{ user.location.latitude }};
       	  <h2 class="tb tb-title">My Trails</h2>
     	</div>
 
-    	<div class="mytrails_content fixed_content">    	
+    	<div class="mytrails_content fixed_content">
 	  	  <div class="trailcards panels clearfix">
 	  	  	
 	   	    <div class="panel trail_card trail_card_panel">
@@ -60,6 +60,25 @@ var TB_USER_LAT = {{ user.location.latitude }};
 		      </div>
 	        </div>
 	  	  	
+          {% if app.user.id == 2 or app.user.id == 310 %}
+            <div class="panel trail_card trail_card_panel">
+            <div class="title"><h3 class="tb">Journeys</h3></div>
+              <a href="{{ app.request.baseUrl }}/journeybuilder">
+              <div class="photo tb-photo-btn">
+                <div class="image_container fade_on_load"><img src="{{ asset('assets/img/editor/create.jpg') }}" class="scale" border="0"/></div>
+              <div class="card_title">
+            <h1>Ready to share</h1>
+            <br/>
+            <h1>your journey?</h1>
+              </div>
+              </div>
+              </a>
+            <div class="summary">
+              <div class="cntrls"><a class="btn btn-tb-action" href="{{ app.request.baseUrl }}/journeybuilder">Journey Builder</a></div>
+            </div>
+            </div>
+          {% endif %}
+
           {% if unpublishedRoutes %}
 			  {% for route in unpublishedRoutes %}
 	   	      <div class="panel trail_card trail_card_panel" data-id="{{ route.id }}" data-name="{{ route.name }}">

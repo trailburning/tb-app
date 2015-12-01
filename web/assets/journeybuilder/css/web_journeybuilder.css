@@ -1,0 +1,450 @@
+/* JOURNEY VIEW */
+/******************************************/
+#journey-view {
+  position: relative;
+  background: #FFF;
+}
+
+#journey-view strong {
+    font-family: 'DINWeb-Black';
+    font-weight: normal;
+}
+#journey-view h1 {
+  padding: 0 0 4px 0;
+  font-size: 2em;
+  font-family: 'DINWeb-Black';
+  color: #4b6579;
+}
+
+#journey-view h2 {
+  font-size: 2em;
+  font-family: PFDinTextPro-Regular;
+  color: #4b6579;
+}
+
+#journey-view .detail-view {
+  padding: 24px 28px 10px 28px;
+  background: #FFF;
+}
+
+#journey-view .step {
+  background: #89a1b3;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  overflow: hidden;
+  font-family: 'DINWeb-Black';
+  font-size: 1.1em;
+  line-height: 35px;
+  text-align: center;
+  color: #FFF;
+}
+#journey-view .step .pos {
+  display: inline-block;
+  margin-left: -2px; 
+}
+
+/* JOURNEYS VIEW */
+/******************************************/
+#journeys-view .journeys h1 {
+  padding: 0 0 4px 0;
+  font-size: 1em;
+  line-height: 36px;
+  font-family: 'DINWeb-Black';
+  color: #89a1b3;
+}
+
+#journeys-view .journeys ul li:hover h1,
+#journeys-view .journeys ul li.active h1 {
+  color: #4b6579;
+}
+
+#journeys-view .journeys ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#journeys-view .journeys ul li {
+  clear: both;
+  height: 68px;
+  padding: 0 18px 0 32px;
+}
+#journeys-view .journeys ul li:hover,
+#journeys-view .journeys ul li.active {
+  cursor: pointer;
+  background: #EEEEF0;
+}
+
+#journeys-view .journeys .step-container {
+  float: left;
+  height: 100%;
+  border-left: 1px solid #EEEEF0;
+}
+
+#journeys-view .journeys .step {
+  position: relative;
+  margin-top: 15px; 
+  margin-left: -16px;
+}
+#journeys-view .journeys ul li:hover .step,
+#journeys-view .journeys ul li.active .step {
+  background: #1E3847;
+}
+
+#journeys-view .journeys .title {
+  float: left;
+  margin-top: 12px; 
+  padding-left: 18px;
+}
+
+#journeys-view .journeys .journey {
+  height: 68px;
+}
+
+/* EVENTS VIEW */
+/******************************************/
+#events-view .detail-view {
+  position: relative;
+  padding-left: 94px;
+}
+
+#events-view .detail-view .btn-container {
+  position: absolute;
+  top: 22px;
+  left: -24px;
+}
+
+#events-view .events h1 {
+  padding: 0 0 4px 0;
+  font-size: 1em;
+  font-family: 'DINWeb-Black';
+  color: #89a1b3;
+}
+
+#events-view .events h2,
+#events-view .events h3 {
+  padding: 0 0 4px 0;
+  font-size: 1em;
+  font-family: PFDinTextPro-Regular;
+  color: #89a1b3;
+}
+#events-view .events h3 {
+  font-size: 0.8em;
+  color: #d4e1ea;
+}
+
+#events-view .events ul li:hover h1,
+#events-view .events ul li.active h1,
+#events-view .events ul li:hover h2,
+#events-view .events ul li.active h2 {
+  color: #4b6579;
+}
+
+#events-view .events ul li:hover h3,
+#events-view .events ul li.active h3 {
+  color: #89a1b3;
+}
+
+#events-view .events ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#events-view .events ul li {
+  clear: both;
+  height: 68px;
+  padding: 0 18px 0 32px;
+}
+#events-view .events ul li:hover,
+#events-view .events ul li.active {
+  cursor: pointer;
+  background: #EEEEF0;
+}
+#events-view .events ul li.blank {
+  display: none;
+  height: 40px;
+  cursor: default;
+  background: transparent;
+}
+
+#events-view .events .step-container {
+  float: left;
+  height: 100%;
+  border-left: 1px solid #EEEEF0;
+}
+
+#events-view .events .step {
+  position: relative;
+  margin-top: 15px; 
+  margin-left: -16px;
+}
+#events-view .events ul li:hover .step,
+#events-view .events ul li.active .step {
+  background: #1E3847;
+}
+
+#events-view .events .title {
+  float: left;
+  margin-top: 12px; 
+  padding-left: 18px;
+}
+
+#events-view .events .categories {
+  float: left;
+  margin-top: 12px; 
+  color: #89a1b3;
+  font-size: 1.2em;
+}
+#events-view .events ul li:hover .categories,
+#events-view .events ul li.active .categories {
+  color: #1E3847;
+}
+
+#events-view .event {
+  height: 68px;
+}
+
+/* EVENT VIEW */
+/******************************************/
+#event-view .detail-view {
+  position: relative;
+  padding-left: 94px;
+}
+
+#event-view .detail-view .btn-container {
+  position: absolute;
+  top: 22px;
+  left: -24px;
+}
+
+#event-view .create-btn {
+  margin-right: 18px;
+  margin-bottom: 10px;
+}
+
+#event-view .update-btn {
+/*  
+  display: none;
+*/  
+  margin: 18px 0 18px 18px;
+}
+
+#event-view .assets h1 {
+  padding: 0 0 4px 0;
+  font-size: 1em;
+  font-family: 'DINWeb-Black';
+  color: #89a1b3;
+}
+
+#event-view .assets h2,
+#event-view .assets h3 {
+  padding: 0 0 4px 0;
+  font-size: 1em;
+  font-family: PFDinTextPro-Regular;
+  color: #89a1b3;
+}
+#event-view .assets h3 {
+  font-size: 0.8em;
+  color: #d4e1ea;
+}
+
+#event-view .assets ul li:hover h1,
+#event-view .assets ul li.active h1,
+#event-view .assets ul li:hover h2,
+#event-view .assets ul li.active h2 {
+  color: #4b6579;
+}
+
+#event-view .assets ul li:hover h3,
+#event-view .assets ul li.active h3 {
+  color: #89a1b3;
+}
+
+#event-view .assets ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#event-view .assets ul li {
+  clear: both;
+  height: 68px;
+  padding: 0 18px 0 32px;
+}
+#event-view .assets ul li:hover,
+#event-view .assets ul li.active {
+  cursor: pointer;
+  background: #EEEEF0;
+}
+#event-view .assets ul li.blank {
+  display: none;
+  height: 40px;
+  cursor: default;
+  background: transparent;
+}
+
+#event-view .assets .category-container {
+  float: left;
+  height: 100%;
+}
+
+#event-view .assets .category {
+  position: relative;
+  margin-top: 15px; 
+  margin-left: -16px;
+  width: 32px;
+  height: 32px;
+  font-size: 1.1em;
+  line-height: 35px;
+  text-align: center;
+  color: #4b6579;
+}
+
+#event-view .assets .title {
+  float: left;
+  margin-top: 12px; 
+  padding-left: 18px;
+}
+
+#event-view .assets .categories {
+  float: left;
+  margin-top: 12px; 
+  color: #89a1b3;
+  font-size: 1.2em;
+}
+#event-view .assets ul li:hover .categories,
+#event-view .assets ul li.active .categories {
+  color: #1E3847;
+}
+
+#event-view .assets .asset {
+  height: 68px;
+}
+
+#event-view .assets .asset-image {
+  position: relative;
+  margin-top: 5px;
+  width: 100px;
+  height: 58px;
+}
+
+/* ASSET VIEW */
+/******************************************/
+#asset-view .detail-view {
+  position: relative;
+  padding-left: 94px;
+}
+
+#asset-view .detail-view .btn-container {
+  position: absolute;
+  top: 22px;
+  left: -24px;
+}
+
+#asset-view form {
+  margin: 56px 0 32px 94px;
+}
+
+#asset-view form .category {
+  margin: 0 8px 8px 0;
+}
+
+#asset-view .field {
+  width: 50%;
+  border: none;
+  margin: 0 5px 0 0;
+  padding: 4px 8px 4px 8px;
+  color: #89a1b3;
+  background: #FFF;
+  border-radius: 0;
+}
+
+#asset-view textarea.field {
+  resize: none;
+  width: 100%;
+  height: 280px;
+}
+
+#asset-view .media-collection-view {
+  margin: 56px 20px 0 20px;
+}
+
+#asset-view .media-collection-view .media-view {
+  position: relative;
+}
+
+#asset-view .media-collection-view .media-view .info {
+  height: 60px;
+  padding-top: 8px;
+}
+
+#asset-view .media-collection-view .media-view .delete-btn {
+}
+
+#asset-view .media-collection-view .image {
+  width: 100%;
+  height: 180px;
+}
+
+#asset-view .progress_container {
+  margin-bottom: 16px;
+  width: 100%;
+  height: 16px;
+}
+
+#asset-view .ui-progressbar {
+  height: 16px;
+  background: #F0F0F0;
+}
+
+#asset-view .ui-progressbar-value {
+  height: 100%;
+  background: #f83d3d;
+}
+
+/* IMAGE/TEXT */
+/******************************************/
+.scale-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  background-size: 100% auto;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.overlay {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(30, 56, 71, 0.7);
+}
+.image.portrait {
+  background-size: auto 100%;
+}
+.image.landscape {
+  background-size: 100% auto;
+}
+.image.fix {
+  position: absolute;
+  top: 0;
+}
+
+/* Small devices (tablets, 992px and up) */
+@media (min-width: 992px) {
+  #journey-view {
+    margin: 0 auto 0 auto;
+    width: 960px;
+  }
+
+  #asset-view .field {
+    background: #EFEFEF;
+  }
+}

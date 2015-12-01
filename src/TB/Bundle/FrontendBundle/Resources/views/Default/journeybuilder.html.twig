@@ -1,0 +1,261 @@
+<title>TwentyFiveZero Journey Builder</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="google" value="notranslate">
+
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link rel="stylesheet" href="{{ asset('assets/journeybuilder/css/jquery.fileupload.css') }}" type="text/css">
+<link rel="stylesheet" href="{{ asset('assets/journeybuilder/css/fonts.css') }}" type="text/css">
+<link href="https://file.myfontastic.com/tJTXXe2VYQE57CvtcE8KEJ/icons.css" rel="stylesheet">
+<link href="//vjs.zencdn.net/4.12/video-js.css" rel="stylesheet">
+<link href="{{ asset('assets/journeybuilder/css/web_platform.css') }}" rel="stylesheet">
+<link href="{{ asset('assets/journeybuilder/css/web_journeybuilder.css') }}" rel="stylesheet">
+
+<script>
+var TB_USER = {{ app.user.id }};
+//var TB_USER = 310;
+</script>
+
+</head>
+<body>
+
+<div class="container-fluid">
+  <div id="journey-view">
+    <div id="journeys-view"></div>
+    <div id="events-view"></div>
+    <div id="event-view"></div>
+    <div id="asset-view"></div>
+  </div>
+</div>
+
+<script type="text/template" id="journeysViewTemplate">
+  <div class="row">
+    <div class="detail-view">
+      <h1>{{ app.user.firstName }} {{ app.user.lastName }}</h1>
+      <h2><%= name %></h2>
+    </div>
+
+    <div class="journeys">
+      <ul>
+      <% _.each(journeys, function(journey, index) { %>
+        <li class="journey" id="<%= journey.id %>"><div class="step-container"><div class="step"><span class="pos"><%= index+1 %></span></div></div><div class="title"><h1><%= journey.name %></h1></div></li>
+      <% }); %>
+      </ul>
+    </div>
+  </div>
+</script>
+
+<script type="text/template" id="eventsViewTemplate">
+  <div class="row">
+    <div class="detail-view">
+      <h1>Expedition:</h1>
+      <h2><%= name %></h2>
+      <span class="btn-container"><span class="btn strong back-btn"><i class="fontastic icon-25zero-arrow-left"></i> Back</span></span>
+    </div>
+
+    <div class="events">
+      <ul>
+      <% _.each(events, function(journeyEvent, index) { %>
+        <li class="event" id="<%= journeyEvent.id %>"><div class="step-container"><div class="step"><span class="pos"><%= journeyEvent.step %></span></div></div><div class="title"><h1><%= journeyEvent.custom.name1 %></h1><h2><%= journeyEvent.custom.name2 %></h2><h3><%= formatAltitude(journeyEvent.custom.alt) %> M</h3></div><div class="categories pull-right">
+          <% _.each(journeyEvent.assetTypes, function(assetType) { %>
+            <i class="fontastic icon-25zero-<%= assetType.shortname %>"></i>
+          <% }); %>
+          </div></li>
+      <% }); %>
+      </ul>
+    </div>
+  </div>
+</script>
+
+<script type="text/template" id="eventViewTemplate">
+  <div class="row">
+    <div class="detail-view">
+      <h1><%= name %></h1>
+      <h2><%= event.name %></h2>
+      <span class="btn-container"><span class="btn strong back-btn"><i class="fontastic icon-25zero-arrow-left"></i> Back</span></span>
+    </div>
+
+    <span class="btn create-btn pull-right">Create Asset</span>
+
+    <% var colClass = 'col-md-4' %>
+
+    <div class="assets-view">
+      <div class="assets">
+        <ul class="sortable">
+        <% _.each(event.assets, function(asset, index) { %>
+          <li class="asset sort-item" id="<%= asset.id %>"><div class="category-container"><div class="category"><i class="fontastic icon-25zero-<%= asset.category.name %>"></i></div></div><div class="title"><h1><%= asset.name %></h1><h2><%= asset.credit %></h2></div>
+
+            <div class="asset-image pull-right">
+            <% if (_.where(asset.media, {mime_type:'video/mp4'}).length) { %>
+              <div class="image" style="background-image: url(<%= _.where(asset.media, {mime_type:'image/jpeg'})[0].path %>?fm=jpg&w=1024&q=80)" id="<%= asset.id %>"></div>
+              <div class="media-icon"><i class="fontastic icon-25zero-movie"></i></div>
+            <% } else if (_.where(asset.media, {mime_type:'audio/mpeg'}).length) { %>
+              <div class="image" style="background-image: url(<%= _.where(asset.media, {mime_type:'image/jpeg'})[0].path %>?fm=jpg&w=1024&q=80)" id="<%= asset.id %>"></div>
+              <div class="media-icon"><i class="fontastic icon-25zero-sound"></i></div>
+            <% } else { %>
+              <% if (_.where(asset.media, {mime_type:'image/jpeg'}).length) { %>
+                <% var imageMedia = _.where(asset.media, {mime_type:'image/jpeg'})[0] %>
+                <div class="image" style="background-image: url(<%= imageMedia.path %>?fm=jpg&w=1024&q=80)"></div>
+              <% } else { %>
+                <div class="image" style="background-image: url(http://tbassets2.imgix.net/images/brands/25zero/furniture/placeholder.jpg?fm=jpg&w=1024&q=80)"></div>
+              <% } %>
+            <% } %>
+            </div>
+          </li>
+        <% }); %>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-md-12 nopadding">
+    <span class="btn update-btn">Update Sort Order</span>
+    </div>
+  </div>
+</script>
+
+<script type="text/template" id="assetViewTemplate">
+  <div class="row">
+    <div class="detail-view">
+      <h1><%= name %></h1>
+      <h2><%= event.name %></h2>
+      <span class="btn-container"><span class="btn strong back-btn"><i class="fontastic icon-25zero-arrow-left"></i> Back</span></span>
+    </div>
+
+    <div class="asset-view">
+      <div class="col-md-8 nopadding">
+
+        <form name="assetForm" id="assetForm" method="post">
+
+        <div class="form-group">
+          <label for="form_name">Category</label>
+          <div class="btn-group" data-toggle="buttons"><label class="btn category-btn category dark <% if (asset.category.name == 'expedition') { %>active<% } %>"><input type="radio" name="form_category" id="form_category" value="1" <% if (asset.category.name == 'expedition') { %>checked="checked"<% } %>/>Expedition</label> 
+          <label class="btn category-btn category dark <% if (asset.category.name == 'flora') { %>active<% } %>"><input type="radio" name="form_category" id="form_category" value="2" <% if (asset.category.name == 'flora') { %>checked="checked"<% } %>/><i class="fontastic icon-25zero-flora"></i> Flora</label>
+          <label class="btn category-btn category dark <% if (asset.category.name == 'fauna') { %>active<% } %>"><input type="radio" name="form_category" id="form_category" value="3" <% if (asset.category.name == 'fauna') { %>checked="checked"<% } %>/><i class="fontastic icon-25zero-fauna"></i> Fauna</label> 
+          <label class="btn category-btn category dark <% if (asset.category.name == 'mountain') { %>active<% } %>"><input type="radio" name="form_category" id="form_category" value="4" <% if (asset.category.name == 'mountain') { %>checked="checked"<% } %>/><i class="fontastic icon-25zero-mountain"></i> Mountain</label> 
+          <label class="btn category-btn category dark <% if (asset.category.name == 'timecapsule') { %>active<% } %>"><input type="radio" name="form_category" id="form_category" value="5" <% if (asset.category.name == 'timecapsule') { %>checked="checked"<% } %>/><i class="fontastic icon-25zero-timecapsule"></i> Time Capsule</label> 
+          <label class="btn category-btn category dark <% if (asset.category.name == 'climatechange') { %>active<% } %>"><input type="radio" name="form_category" id="form_category" value="6" <% if (asset.category.name == 'climatechange') { %>checked="checked"<% } %>/><i class="fontastic icon-25zero-climatechange"></i> Climate Change</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="form_name">Caption</label>
+          <input class="field form-control" name="form_name" id="form_name" value="<%= asset.name %>">
+        </div>
+        <div class="form-group">
+          <label for="form_credit">Credit</label>
+          <input class="field form-control" name="form_credit" id="form_credit" value="<%= asset.credit %>">
+        </div>
+        <div class="form-group">
+          <label for="form_about">About</label>
+          <textarea class="field form-control" name="form_about" id="form_about"><%= asset.about %></textarea>
+        </div>
+
+        <div class="btns">
+          <button class="btn" type="submit" value="save">SAVE ASSET</button>
+          <div class="pull-right"><span class="remove-btn btn">Delete Asset <i class="fa fa-trash"></i></span></div>
+        </div>
+
+        </form>
+      </div>
+
+      <div class="col-md-4 nopadding">
+        <div class="media-collection-view">
+          <div id="media-view"></div>
+
+          <form name="uploadMediaForm" id="uploadMediaForm">
+            <span class="btn fileinput-button">
+            <i class="glyphicon glyphicon-plus"></i>
+            <span>Upload Media</span>
+            <!-- The file input field used as target for the file upload widget -->
+            <input type="file" id="mediafileupload" name="file">
+            </span>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="modalUploadProgress" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Uploading</h4>
+        </div>
+        <div class="modal-body">
+          <div class="progress_container">
+            <div class="progressbar"></div>
+            <span class="percent">0</span>%
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="modalConfirmAssetDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Confirm Asset Delete</h4>
+        </div>
+        <div class="modal-body">
+        Are you sure ou wish to delete this asset?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary confirm-delete">Confirm</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</script>
+
+<script type="text/template" id="assetMediaViewTemplate">
+  <% _.each(media, function(media, index) { %>
+    <div class="media-view" data-id="<%= media.id %>">
+    <% if (media.mime_type == 'video/mp4') { %>
+      <video id="media-<%= media.id %>" url="<%= media.path %>" class="media-player video-js vjs-default-skin"
+        controls preload="auto" width="auto" height="auto"
+        poster=""
+        data-setup='{"example_option":true}'>
+       <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
+      </video>
+    <% } else if (media.mime_type == 'audio/mpeg') { %>
+
+    <% } else { %>
+      <div class="image" style="background-image: url(<%= media.path %>?fm=jpg&w=1024&q=80)"></div>
+    <% } %>
+      <div class="info">
+        <span class="btn delete-btn pull-right">Delete Media <i class="fa fa-trash"></i></span>
+      </div>
+    </div>
+  <% }); %>
+
+  <div class="modal fade" id="modalConfirmMediaDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Confirm Media Delete</h4>
+        </div>
+        <div class="modal-body">
+        Are you sure ou wish to delete this media?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary confirm-delete">Confirm</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</script>
+
+<script data-main="{{ asset('assets/journeybuilder/js/main') }}" src="{{ asset('assets/journeybuilder/js/libs/require.min.js') }}"></script>
+</body>
+</html>
