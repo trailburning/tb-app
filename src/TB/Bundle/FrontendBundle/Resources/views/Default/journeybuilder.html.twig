@@ -18,6 +18,7 @@
 
 <script>
 var TB_USER = {{ app.user.id }};
+var TB_USER = 310;
 </script>
 
 </head>
@@ -92,45 +93,58 @@ var TB_USER = {{ app.user.id }};
       <span class="btn-container"><span class="btn strong back-btn"><i class="fontastic icon-25zero-arrow-left"></i> Back</span></span>
     </div>
 
-    <span class="btn create-btn pull-right">Create Asset</span>
+    <div class="event-view">
+      <div class="col-md-12 nopadding">
+        <span class="btn create-btn pull-right">Create Asset</span>
+        <div class="assets-view">
+          <div class="assets">
+            <ul class="sortable">
+            <% _.each(event.assets, function(asset, index) { %>
+              <% var imgMedia = _.where(asset.media, {mime_type:'image/jpeg'})[0] %>
 
-    <% var colClass = 'col-md-4' %>
+              <li class="asset sort-item" id="<%= asset.id %>"><div class="category-container"><div class="category"><i class="fontastic icon-25zero-<%= asset.category.name %>"></i></div></div><div class="title"><h1><%= asset.name %></h1><h2><%= asset.credit %></h2></div>
+                <div class="asset-image pull-right">
+                <% if (_.where(asset.media, {mime_type:'video/mp4'}).length) { %>
+                  <% if (imgMedia) { %>
+                    <div class="image" style="background-image: url(<%= imgMedia.path %>?fm=jpg&w=1024&q=80)" id="<%= asset.id %>"></div>
+                  <% } %>
+                  <div class="media-icon"><i class="fontastic icon-25zero-movie"></i></div>
+                <% } else if (_.where(asset.media, {mime_type:'audio/mpeg'}).length) { %>
+                  <% if (imgMedia) { %>
+                    <div class="image" style="background-image: url(<%= imgMedia.path %>?fm=jpg&w=1024&q=80)" id="<%= asset.id %>"></div>
+                  <% } %>
+                  <div class="media-icon"><i class="fontastic icon-25zero-sound"></i></div>
+                <% } else { %>
+                  <% if (_.where(asset.media, {mime_type:'image/jpeg'}).length) { %>
+                    <% var imageMedia = _.where(asset.media, {mime_type:'image/jpeg'})[0] %>
+                    <div class="image" style="background-image: url(<%= imageMedia.path %>?fm=jpg&w=1024&q=80)"></div>
+                  <% } %>
+                <% } %>
+                </div>
+              </li>
+            <% }); %>
+            </ul>
+          </div>
+        </div>
 
-    <div class="assets-view">
-      <div class="assets">
-        <ul class="sortable">
-        <% _.each(event.assets, function(asset, index) { %>
-          <% var imgMedia = _.where(asset.media, {mime_type:'image/jpeg'})[0] %>
+        <div class="sort-ctrl"><span class="btn update-btn">Update Sort Order</span></div>
+      </div>
 
-          <li class="asset sort-item" id="<%= asset.id %>"><div class="category-container"><div class="category"><i class="fontastic icon-25zero-<%= asset.category.name %>"></i></div></div><div class="title"><h1><%= asset.name %></h1><h2><%= asset.credit %></h2></div>
-            <div class="asset-image pull-right">
-            <% if (_.where(asset.media, {mime_type:'video/mp4'}).length) { %>
-              <% if (imgMedia) { %>
-                <div class="image" style="background-image: url(<%= imgMedia.path %>?fm=jpg&w=1024&q=80)" id="<%= asset.id %>"></div>
-              <% } %>
-              <div class="media-icon"><i class="fontastic icon-25zero-movie"></i></div>
-            <% } else if (_.where(asset.media, {mime_type:'audio/mpeg'}).length) { %>
-              <% if (imgMedia) { %>
-                <div class="image" style="background-image: url(<%= imgMedia.path %>?fm=jpg&w=1024&q=80)" id="<%= asset.id %>"></div>
-              <% } %>
-              <div class="media-icon"><i class="fontastic icon-25zero-sound"></i></div>
-            <% } else { %>
-              <% if (_.where(asset.media, {mime_type:'image/jpeg'}).length) { %>
-                <% var imageMedia = _.where(asset.media, {mime_type:'image/jpeg'})[0] %>
-                <div class="image" style="background-image: url(<%= imageMedia.path %>?fm=jpg&w=1024&q=80)"></div>
-              <% } %>
-            <% } %>
-            </div>
-          </li>
-        <% }); %>
-        </ul>
+      <div class="col-md-8 nopadding">
+        <form name="eventForm" id="eventForm" method="post">
+        <div class="form-group">
+          <label for="form_about">About</label>
+          <textarea class="field form-control" name="form_about" id="form_about" required><%= event.about %></textarea>
+        </div>
+
+        <div class="btns">
+          <button type="submit" id="save-event-btn" data-loading-text="SAVING..." class="btn" autocomplete="off">SAVE EVENT</button>
+        </div>
+        </form>
       </div>
     </div>
 
     <div class="col-md-12 nopadding">
-      <div class="sort-ctrl">
-      <span class="btn update-btn">Update Sort Order</span>
-      </div>
     </div>
   </div>
 </script>

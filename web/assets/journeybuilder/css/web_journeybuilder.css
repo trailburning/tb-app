@@ -219,6 +219,26 @@
   left: -24px;
 }
 
+#event-view form {
+  margin: 56px 10px 32px 10px;
+}
+
+#event-view .field {
+  width: 50%;
+  border: none;
+  margin: 0 5px 0 0;
+  padding: 4px 8px 4px 8px;
+  color: #89a1b3;
+  background: #EFEFEF;
+  border-radius: 0;
+}
+
+#event-view textarea.field {
+  resize: none;
+  width: 100%;
+  height: 280px;
+}
+
 #event-view .create-btn {
   margin-right: 18px;
   margin-bottom: 10px;
@@ -345,7 +365,7 @@
 }
 
 #asset-view form {
-  margin: 56px 0 32px 94px;
+  margin: 56px 10px 32px 10px;
 }
 
 #asset-view form .category {
@@ -358,7 +378,7 @@
   margin: 0 5px 0 0;
   padding: 4px 8px 4px 8px;
   color: #89a1b3;
-  background: #FFF;
+  background: #EFEFEF;
   border-radius: 0;
 }
 
@@ -445,7 +465,8 @@
     width: 960px;
   }
 
-  #asset-view .field {
-    background: #EFEFEF;
+  #event-view form,
+  #asset-view form {
+    margin: 56px 0 32px 94px;
   }
 }

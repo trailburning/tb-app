@@ -66,6 +66,37 @@ define([
       });
     },
 
+    updateEvent: function(elForm){
+      var self = this;
+
+      var $btn = $('#save-event-btn').button('loading')
+
+      // replace newline
+      var strAbout = $('#form_about', elForm).val().replace(/(?:\n)/g, '\r')
+
+      var json = {'about': strAbout};
+
+      if (this.eventModel.get('id')) {
+        var strURL = TB_RESTAPI_BASEURL + '/events/' + this.eventModel.get('id');
+        $.ajax({
+          type: "PUT",
+          dataType: "json",
+          url: strURL,
+          data: json,
+          error: function(data) {
+            console.log('error');
+            console.log(data);
+          },
+          success: function(data) {
+            console.log('success');
+
+            $btn.button('reset')
+          }
+        }); 
+      }
+
+    },
+
     getEventAndRender: function(journeyModel, eventModel){
       this.journeyModel = journeyModel;
       
@@ -87,7 +118,7 @@ define([
       this.journeyModel.set('event', this.eventModel.toJSON());
 
       var attribs = this.journeyModel.toJSON();
-      $(this.el).html(CRtoBR(this.template(attribs)));
+      $(this.el).html(this.template(attribs));
 
       this.updateMediaHeight();
 
@@ -104,6 +135,12 @@ define([
       $('.back-btn', this.el).click(function(evt){
         // fire event
         app.dispatcher.trigger("EventView:backClick");
+      });
+
+      $("#eventForm").submit(function(evt){
+        evt.preventDefault();
+
+        self.updateEvent(this);
       });
 
       $('.update-btn', this.el).click(function(evt){
