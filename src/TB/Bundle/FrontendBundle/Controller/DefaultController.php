@@ -108,6 +108,15 @@ class DefaultController extends Controller
     }       
 
     /**
+     * @Route("/journey", name="journey")
+     * @Template()
+     */
+    public function journeyAction()
+    {
+        return [];
+    }       
+
+    /**
      * @Route("/ultraksdemo", name="ultraksdemo")
      * @Template()
      */
