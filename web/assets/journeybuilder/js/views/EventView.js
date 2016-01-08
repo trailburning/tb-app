@@ -86,10 +86,13 @@ alert('SAVE');
           url: strURL,
           data: json,
           error: function(data) {
-            console.log('error');
+            alert('ERROR');
+            alert(data);
+//            console.log('error');
 //            console.log(data);
           },
           success: function(data) {
+            alert('SUCCESS');
 //            console.log('success');
             $btn.button('reset')
           }
@@ -139,7 +142,6 @@ alert('SAVE');
       });
 
       $("#eventForm").submit(function(evt){
-        alert('SUBMIT');
         evt.preventDefault();
 
         self.updateEvent(this);
