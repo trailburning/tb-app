@@ -69,7 +69,7 @@ define([
     updateEvent: function(elForm){
       var self = this;
 
-      var $btn = $('#save-event-btn').button('loading')
+//      var $btn = $('#save-event-btn').button('loading')
 
       // replace newline
       var strAbout = $('#form_about', elForm).val().replace(/(?:\n)/g, '\r')
@@ -89,7 +89,7 @@ define([
           },
           success: function(data) {
 //            console.log('success');
-            $btn.button('reset')
+//            $btn.button('reset')
           }
         }); 
       }
