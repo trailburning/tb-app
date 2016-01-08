@@ -136,17 +136,12 @@ define([
         app.dispatcher.trigger("EventView:backClick");
       });
 
-      $('#save-event-btn', this.el).click(function(evt){
-        self.updateEvent($('#eventForm'));
-      });
-
-/*
       $("#eventForm").submit(function(evt){
         evt.preventDefault();
 
         self.updateEvent(this);
       });
-*/
+
       $('.update-btn', this.el).click(function(evt){
         $('.update-btn', self.el).hide();
         self.updateSortOrder();
