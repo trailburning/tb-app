@@ -69,8 +69,6 @@ define([
     updateEvent: function(elForm){
       var self = this;
 
-alert('SAVE');
-
       var $btn = $('#save-event-btn').button('loading')
 
       // replace newline
@@ -86,13 +84,10 @@ alert('SAVE');
           url: strURL,
           data: json,
           error: function(data) {
-            alert('ERROR');
-            alert(data);
 //            console.log('error');
 //            console.log(data);
           },
           success: function(data) {
-            alert('SUCCESS');
 //            console.log('success');
             $btn.button('reset')
           }

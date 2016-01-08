@@ -40,8 +40,6 @@ define([
 
       this.destroyMedia();
 
-console.log(this.model);
-
       var attribs = this.model.toJSON();
       $(this.el).html(this.template(attribs));
 

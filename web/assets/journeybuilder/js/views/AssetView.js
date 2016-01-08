@@ -139,12 +139,11 @@ define([
           url: strURL,
           data: json,
           error: function(data) {
-            console.log('error');
-            console.log(data);
+//            console.log('error');
+//            console.log(data);
           },
           success: function(data) {
-            console.log('success');
-
+//            console.log('success');
             $btn.button('reset')
           }
         }); 
