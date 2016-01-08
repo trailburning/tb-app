@@ -69,6 +69,8 @@ define([
     updateEvent: function(elForm){
       var self = this;
 
+alert('SAVE');
+
       var $btn = $('#save-event-btn').button('loading')
 
       // replace newline
@@ -85,11 +87,10 @@ define([
           data: json,
           error: function(data) {
             console.log('error');
-            console.log(data);
+//            console.log(data);
           },
           success: function(data) {
-            console.log('success');
-
+//            console.log('success');
             $btn.button('reset')
           }
         }); 
@@ -138,6 +139,7 @@ define([
       });
 
       $("#eventForm").submit(function(evt){
+        alert('SUBMIT');
         evt.preventDefault();
 
         self.updateEvent(this);

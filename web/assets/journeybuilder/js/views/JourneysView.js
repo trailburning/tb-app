@@ -26,7 +26,6 @@ define([
       var url = TB_RESTAPI_BASEURL + '/journeys/user/' + TB_USER;
       $.getJSON(url, function(result){
         self.model = new Backbone.Model(result.body);
-        console.log(self.model);
 
         self.journeysCollection = new Backbone.Collection(result.body.journeys);
         self.render();
@@ -41,7 +40,6 @@ define([
 
       $('.journey', this.el).click(function(evt){
         var journeyModel = self.journeysCollection.get($(this).attr('id'));
-        console.log(journeyModel);
         // fire event
         app.dispatcher.trigger("JourneysView:journeySelect", journeyModel);
       });
