@@ -55,15 +55,15 @@ body {
 
 .text {
   padding: 5px;
-  font-size: 1.6em;
-  line-height: 1.2em;
+  font-size: 1.4em;
+  line-height: 1.4em;
 }
 
 /* Small devices (tablets, 768px and up) */
 @media (min-width: 768px) {
   .text {
     padding: 40px;
-    font-size: 1.4em;
-    line-height: 1.2em;
+    font-size: 1.3em;
+    line-height: 1.4em;
   }
 }
