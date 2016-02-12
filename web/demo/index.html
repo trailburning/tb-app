@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <link href="//vjs.zencdn.net/4.12/video-js.css" rel="stylesheet">
+<link href="http://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.css" rel="stylesheet">
 <link href="assets/css/web_platform.css" rel="stylesheet">
 
 </head>
@@ -76,6 +77,12 @@
 
   <% }); %>
   </div>
+
+  <div class="row map">
+    <div class="col-md-8 col-md-offset-2 nopadding map-view">
+      <div id="mapbox-view"></div>
+    </div>
+  </div>  
 </script>
 
 <script data-main="assets/js/main-app" src="assets/js/libs/require.min.js"></script>

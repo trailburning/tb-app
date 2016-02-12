@@ -8,6 +8,7 @@ require.config({
     bootstrap: '//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min',
     mapbox: 'http://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox',
     turf: 'http://api.tiles.mapbox.com/mapbox.js/plugins/turf/v1.4.0/turf.min',
+    markercluster: 'http://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster',
     videojs: '//vjs.zencdn.net/4.12/video',
     imageScale: 'libs/image-scale.min'
   },
@@ -19,8 +20,11 @@ require.config({
       deps: ['jquery'],
       exports: 'imageScale'
     },
-    'bootstrap' : {
+    'bootstrap': {
       deps: ['jquery']
+    },
+    'markercluster': {
+      deps: ['mapbox']
     }
   }
 });
