@@ -1,3 +1,5 @@
+var MAX_ASSETS = 3;
+
 define([
   'underscore', 
   'backbone',
@@ -13,6 +15,8 @@ define([
 
       this.template = _.template($('#assetsViewTemplate').text());
 
+      var self = this;
+
       this.jsonRoute = {
         "type": "Feature",
         "properties": {
@@ -27,13 +31,55 @@ define([
 
       this.markerLayer = L.layerGroup();
 
+      var nMaxAssets = MAX_ASSETS;
+      this.jsonBlocks = {blocks: []};
+      var jsonBlock = {assets: []};
+
+      // setup blocks
       $.each(this.options.jsonAssets, function(index, jsonAsset) {
         // mla - test text
-        var fRnd = Math.floor(Math.random() * (1 - 0 + 1)) + 0;
-        if (fRnd == 1) {
+        var fRnd = Math.floor(Math.random() * (2 - 0 + 1)) + 0;
+        if (fRnd == 2) {
           jsonAsset.about = 'This is example text used to describe this piece of media.';
         }
+
+        if (jsonAsset.about != undefined) {
+          // push curr block
+          if (jsonBlock.assets.length) {
+            self.jsonBlocks.blocks.push(jsonBlock);
+            jsonBlock = null;
+          }
+          // create block for this asset and push
+          jsonBlock = {assets: []};
+          jsonBlock.assets.push(jsonAsset);
+          self.jsonBlocks.blocks.push(jsonBlock);
+          jsonBlock = null;
+
+          jsonBlock = {assets: []};
+        }
+        else if (jsonBlock.assets.length == nMaxAssets) {
+          self.jsonBlocks.blocks.push(jsonBlock);
+          jsonBlock = null;
+
+          jsonBlock = {assets: []};
+          jsonBlock.assets.push(jsonAsset);
+
+          if (nMaxAssets == MAX_ASSETS) {
+            nMaxAssets = MAX_ASSETS - 1;
+          }
+          else {
+            nMaxAssets = MAX_ASSETS;
+          }
+        }
+        else {
+          jsonBlock.assets.push(jsonAsset);
+        }
+
       });
+      //one left to push
+      if (jsonBlock) {
+        self.jsonBlocks.blocks.push(jsonBlock);
+      }
     },
     
     resize: function(nHeightWideAspectPercent){
@@ -46,7 +92,7 @@ define([
     render: function(){
       var self = this;
 
-      this.model.set('assets', this.options.jsonAssets);
+      this.model.set('assetBlocks', this.jsonBlocks);
 
       var attribs = this.model.toJSON();
       $(this.el).html(this.template(attribs));

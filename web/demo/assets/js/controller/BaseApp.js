@@ -45,8 +45,7 @@ define([
       resize();
     });
 
-//    getJourney(53);
-    getJourney(425);
+    getJourney(TB_TRAIL);
   };
 
   return {
