@@ -38,8 +38,8 @@ define([
       // setup blocks
       $.each(this.options.jsonAssets, function(index, jsonAsset) {
         // mla - test text
-        var fRnd = Math.floor(Math.random() * (2 - 0 + 1)) + 0;
-        if (fRnd == 2) {
+        var fRnd = Math.floor(Math.random() * (4 - 0 + 1)) + 0;
+        if (fRnd == 4) {
           jsonAsset.about = 'This is example text used to describe this piece of media.';
         }
 
