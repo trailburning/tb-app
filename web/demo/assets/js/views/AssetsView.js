@@ -32,6 +32,7 @@ define([
       this.markerLayer = L.layerGroup();
 
       var nMaxAssets = MAX_ASSETS;
+      var bAdShown = false;
       this.jsonBlocks = {blocks: []};
       var jsonBlock = {assets: []};
 
@@ -91,7 +92,8 @@ define([
 
         if (jsonBlock.assets.length == (nMaxAssets - 1)) {
           var fRnd = Math.floor(Math.random() * (4 - 0 + 1)) + 0;
-          if (fRnd == 4) {
+          if (fRnd == 1 && !bAdShown) {
+            bAdShown = true;
             // add placeholder
             var jsonAdAsset = {type: 'advert', filename: 'http://tbassets2.imgix.net/images/competition/_0001_sky.jpg', tags: {height: 806, width: 806}};
             processAsset(jsonAdAsset);
