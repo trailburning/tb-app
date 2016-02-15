@@ -19,8 +19,6 @@
 <body>
 
 <script>
-//var TB_TRAIL = 53;
-//var TB_TRAIL = 425;
 var TB_TRAIL = 626;
 </script>
 
@@ -51,14 +49,21 @@ var TB_TRAIL = 626;
         <% mediaCols = 4 %>
       <% } %>
 
+      <% var strImage = '' %>
+      <% if (asset.type == 'advert') { %>
+        <% strImage = asset.filename %>
+      <% } else { %>  
+        <% strImage = 'http://tbmedia2.imgix.net/' + asset.versions[0].path %>
+      <% } %>
+
       <div class="col-md-<%= mediaCols %> nopadding">
         <div class="scale-container">
-          <% if (Number(asset.tags.height) > Number(asset.tags.width)) { %>
-            <div class="image" style="background-image: url(http://tbmedia2.imgix.net/<%= asset.versions[0].path %>?fm=jpg&w=1024&q=80&blur=100)"></div>
+          <% if (Number(asset.tags.height) >= Number(asset.tags.width)) { %>
+            <div class="image" style="background-image: url(<%= strImage %>?fm=jpg&w=1024&q=80&blur=100)"></div>
             <div class="overlay"></div>
-            <div class="image portrait fix" style="background-image: url(http://tbmedia2.imgix.net/<%= asset.versions[0].path %>?fm=jpg&w=1024&q=80)"></div>
+            <div class="image portrait fix" style="background-image: url(<%= strImage %>?fm=jpg&w=1024&q=80)"></div>
           <% } else { %>
-            <div class="image" style="background-image: url(http://tbmedia2.imgix.net/<%= asset.versions[0].path %>?fm=jpg&q=80&w=1024&fit=fill);"></div>
+            <div class="image" style="background-image: url(<%= strImage %>?fm=jpg&q=80&w=1024&fit=fill);"></div>
           <% } %>
         </div>
       </div>

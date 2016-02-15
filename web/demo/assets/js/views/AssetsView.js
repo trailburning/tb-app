@@ -35,34 +35,38 @@ define([
       this.jsonBlocks = {blocks: []};
       var jsonBlock = {assets: []};
 
-      // setup blocks
-      $.each(this.options.jsonAssets, function(index, jsonAsset) {
-        // mla - test text
-        var fRnd = Math.floor(Math.random() * (4 - 0 + 1)) + 0;
-        if (fRnd == 4) {
-          jsonAsset.about = 'This is example text used to describe this piece of media.';
-        }
-
-        if (jsonAsset.about != undefined) {
-          // push curr block
-          if (jsonBlock.assets.length) {
-            self.jsonBlocks.blocks.push(jsonBlock);
-            jsonBlock = null;
-          }
-          // create block for this asset and push
-          jsonBlock = {assets: []};
-          jsonBlock.assets.push(jsonAsset);
+      function writeBlock() {
+        // push curr block
+        if (jsonBlock.assets.length) {
           self.jsonBlocks.blocks.push(jsonBlock);
           jsonBlock = null;
+        }
+      }
 
-          jsonBlock = {assets: []};
+      function createBlock() {
+        // create block for this asset and push
+        jsonBlock = {assets: []};
+      }
+
+      function pushAsset(jsonAsset) {
+        jsonBlock.assets.push(jsonAsset);
+      }
+
+      function processAsset(jsonAsset) {
+        if (jsonAsset.about != undefined) {
+          writeBlock();
+
+          createBlock();
+          pushAsset(jsonAsset);
+          writeBlock();
+
+          createBlock();
         }
         else if (jsonBlock.assets.length == nMaxAssets) {
-          self.jsonBlocks.blocks.push(jsonBlock);
-          jsonBlock = null;
+          writeBlock();
 
-          jsonBlock = {assets: []};
-          jsonBlock.assets.push(jsonAsset);
+          createBlock();
+          pushAsset(jsonAsset);
 
           if (nMaxAssets == MAX_ASSETS) {
             nMaxAssets = MAX_ASSETS - 1;
@@ -72,9 +76,29 @@ define([
           }
         }
         else {
-          jsonBlock.assets.push(jsonAsset);
+          pushAsset(jsonAsset);
+        }
+      }
+
+      // setup blocks
+      $.each(this.options.jsonAssets, function(index, jsonAsset) {
+        // mla - test text
+        var fRnd = Math.floor(Math.random() * (4 - 0 + 1)) + 0;
+        if (fRnd == 4) {
+//        if (index == 0) {
+          jsonAsset.about = 'This is example text used to describe this piece of media.';
         }
 
+        if (jsonBlock.assets.length == (nMaxAssets - 1)) {
+          var fRnd = Math.floor(Math.random() * (4 - 0 + 1)) + 0;
+          if (fRnd == 4) {
+            // add placeholder
+            var jsonAdAsset = {type: 'advert', filename: 'http://tbassets2.imgix.net/images/competition/_0001_sky.jpg', tags: {height: 806, width: 806}};
+            processAsset(jsonAdAsset);
+          }
+        }
+
+        processAsset(jsonAsset);
       });
       //one left to push
       if (jsonBlock) {
