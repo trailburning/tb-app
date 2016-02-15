@@ -21,7 +21,6 @@
 <script>
 //var TB_TRAIL = 53;
 var TB_TRAIL = 425;
-//var TB_TRAIL = 33;
 </script>
 
 <div class="container-fluid">
@@ -31,58 +30,60 @@ var TB_TRAIL = 425;
 <script type="text/template" id="assetsViewTemplate">
   <div class="row title">
     <div class="col-md-12 nopadding">
-      <div class="scale-container image" style="background-image: url(http://tbmedia2.imgix.net/<%= media.versions[0].path %>?fm=jpg&q=80&w=1024&fit=fill);">
+      <div class="scale-container image" style="background-image: url(http://tbmedia2.imgix.net/<%= media.versions[0].path %>?fm=jpg&q=80&w=1024&h=768&fit=crop);">
       </div>
     </div>
     <div class="col-md-12 nopadding about text"><%= about %></div>
   </div>
 
-  <div class="row">
-  <% _.each(assetBlocks.blocks, function(block, index) { %>
-    <% var mediaCols = 12%>
-    <% var textCols = 12%>
+  <div class="row assets-view">
+    <% _.each(assetBlocks.blocks, function(block, index) { %>
+      <% var mediaCols = 12%>
+      <% var textCols = 12%>
 
-    <% _.each(block.assets, function(asset, index) { %>
-      <% if (block.assets.length == 1) { %>
-        <% mediaCols = 12 %>
-      <% } else if (block.assets.length == 2) { %>
-        <% mediaCols = 6 %>
-      <% } else if (block.assets.length == 3) { %>
-        <% mediaCols = 4 %>
-      <% } %>
+      <% _.each(block.assets, function(asset, index) { %>
+        <% if (block.assets.length == 1) { %>
+          <% mediaCols = 12 %>
+        <% } else if (block.assets.length == 2) { %>
+          <% mediaCols = 6 %>
+        <% } else if (block.assets.length == 3) { %>
+          <% mediaCols = 4 %>
+        <% } %>
 
-      <% var strImage = '' %>
-      <% if (asset.type == 'advert') { %>
-        <% strImage = asset.filename %>
-      <% } else { %>  
-        <% strImage = 'http://tbmedia2.imgix.net/' + asset.versions[0].path %>
-      <% } %>
+        <% var strImage = '' %>
+        <% if (asset.type == 'advert') { %>
+          <% strImage = asset.filename %>
+        <% } else { %>  
+          <% strImage = 'http://tbmedia2.imgix.net/' + asset.versions[0].path %>
+        <% } %>
 
-      <div class="col-md-<%= mediaCols %> nopadding">
-        <div class="scale-container">
-          <% if (Number(asset.tags.height) >= Number(asset.tags.width)) { %>
-            <div class="image" style="background-image: url(<%= strImage %>?fm=jpg&w=1024&q=80&blur=100)"></div>
-            <div class="overlay"></div>
-            <div class="image portrait fix" style="background-image: url(<%= strImage %>?fm=jpg&w=1024&q=80)"></div>
-          <% } else { %>
-            <div class="image" style="background-image: url(<%= strImage %>?fm=jpg&q=80&w=1024&fit=fill);"></div>
-          <% } %>
+        <div class="col-md-<%= mediaCols %> nopadding">
+          <div class="scale-container asset-container" data-pos="<%= asset.pos %>">
+            <% if (Number(asset.tags.height) >= Number(asset.tags.width)) { %>
+              <div class="image" style="background-image: url(<%= strImage %>?fm=jpg&w=1024&h=768&fit=crop&blur=100)"></div>
+              <div class="overlay"></div>
+              <div class="image portrait fix" style="background-image: url(<%= strImage %>?fm=jpg&q=80&w=1024&h=768&fit=crop)"></div>
+            <% } else { %>
+              <div class="image" style="background-image: url(<%= strImage %>?fm=jpg&q=80&w=1024&h=768&fit=crop);"></div>
+            <% } %>
+          </div>
         </div>
-      </div>
 
-      <% if (asset.about) { %>
-        <div class="col-md-<%= textCols %> nopadding text"><%= asset.about %></div>
-      <% } %>
+        <% if (asset.about) { %>
+          <div class="col-md-<%= textCols %> nopadding text"><%= asset.about %></div>
+        <% } %>
 
+      <% }); %>
     <% }); %>
-  <% }); %>
-  </div>
 
-  <div class="row map">
     <div class="col-md-8 col-md-offset-2 nopadding map-view">
       <div id="mapbox-view"></div>
     </div>
-  </div>  
+  </div>
+
+  <div id="mapbox-asset-view-container">
+    <div id="mapbox-asset-view"></div>
+  </div>
 </script>
 
 <script data-main="assets/js/main-app" src="assets/js/libs/require.min.js"></script>

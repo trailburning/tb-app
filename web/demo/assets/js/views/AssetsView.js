@@ -5,15 +5,18 @@ define([
   'backbone',
   'turf',
   'mapbox',
+  'views/MapAssetView',
   'views/MapView',
   'views/DistanceMarkerView'
-], function(_, Backbone, turf, mapbox, MapView, DistanceMarkerView){
+], function(_, Backbone, turf, mapbox, MapAssetView, MapView, DistanceMarkerView){
 
   var AssetsView = Backbone.View.extend({
     initialize: function(options){
       this.options = options;
 
       this.template = _.template($('#assetsViewTemplate').text());
+
+      app.dispatcher.on("MarkerView:click", this.onMarkerSelect, this);
 
       var self = this;
 
@@ -83,6 +86,7 @@ define([
 
       // setup blocks
       $.each(this.options.jsonAssets, function(index, jsonAsset) {
+        jsonAsset.pos = index;
         // mla - test text
         var fRnd = Math.floor(Math.random() * (4 - 0 + 1)) + 0;
         if (fRnd == 4) {
@@ -129,6 +133,7 @@ define([
       });
 
       L.mapbox.accessToken = 'pk.eyJ1IjoibWFsbGJldXJ5IiwiYSI6IjJfV1MzaE0ifQ.scrjDE31p7wBx7-GemqV3A';
+
       this.map = L.mapbox.map('mapbox-view', 'mallbeury.8d4ad8ec', {dragging: true, touchZoom: false, scrollWheelZoom: false, doubleClickZoom:false, boxZoom:false, tap:false, zoomControl:false, zoomAnimation:true, markerZoomAnimation:true, attributionControl:false, minZoom: 2, maxZoom: 17})
       .setView([self.jsonRoute.geometry.coordinates[0][1], self.jsonRoute.geometry.coordinates[0][0]], 12);
 
@@ -142,6 +147,18 @@ define([
 
       this.addDistanceMarkers();
       this.map.addLayer(this.markerLayer);
+
+      this.mapAssetView = new MapAssetView({ map: this.map, elCntrls: '#view_map_btns', jsonRoute: this.jsonRoute });
+      this.mapAssetView.render();
+
+      $('.asset-container', this.el).click(function(evt){
+        $('#mapbox-asset-view-container').appendTo(this);
+
+        $('#mapbox-asset-view-container').show();
+
+        var jsonAsset = self.options.jsonAssets[$(this).attr('data-pos')];
+        self.mapAssetView.focus(jsonAsset);
+      });
 
       return this;
     },
@@ -165,6 +182,10 @@ define([
           this.addDistanceMarker(nCurrMarker);
         }
       }
+    },
+
+    onMarkerSelect: function(markerView) {
+      $('#mapbox-asset-view-container').hide();
     }
 
   });

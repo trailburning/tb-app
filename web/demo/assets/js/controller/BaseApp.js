@@ -1,6 +1,7 @@
 var app = app || {};
 
 var BASE_URL = 'http://www.trailburning.com/api';
+//var BASE_URL = 'http://10.0.1.5:8888/trailburning_api/app_dev.php';
 //var BASE_URL = 'http://localhost:8888/trailburning_api/app_dev.php';
 
 var HEIGHT_WIDE_ASPECT_PERCENT = 56;
