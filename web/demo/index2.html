@@ -29,7 +29,7 @@ var TB_TRAIL = 626;
 <script type="text/template" id="assetsViewTemplate">
   <div class="row title">
     <div class="col-md-12 nopadding">
-      <div class="scale-container image" style="background-image: url(http://tbmedia2.imgix.net/<%= media.versions[0].path %>?fm=jpg&q=80&w=1024&fit=fill);">
+      <div class="scale-container image" style="background-image: url(http://tbmedia2.imgix.net/<%= media.versions[0].path %>?fm=jpg&q=80&w=1024fit=fill);">
       </div>
     </div>
     <div class="col-md-12 nopadding about text"><%= about %></div>
@@ -59,11 +59,11 @@ var TB_TRAIL = 626;
         <div class="col-md-<%= mediaCols %> nopadding">
           <div class="scale-container asset-container" data-pos="<%= asset.pos %>">
             <% if (Number(asset.tags.height) >= Number(asset.tags.width)) { %>
-              <div class="image" style="background-image: url(<%= strImage %>?fm=jpg&w=1024&h=768&fit=crop&blur=100)"></div>
+              <div class="image" style="background-image: url(<%= strImage %>?fm=jpg&w=1024&fit=fill&blur=100)"></div>
               <div class="overlay"></div>
-              <div class="image portrait fix" style="background-image: url(<%= strImage %>?fm=jpg&q=80&w=1024&h=768&fit=crop)"></div>
+              <div class="image portrait fix" style="background-image: url(<%= strImage %>?fm=jpg&q=80&w=1024&fit=fill)"></div>
             <% } else { %>
-              <div class="image" style="background-image: url(<%= strImage %>?fm=jpg&q=80&w=1024&h=768&fit=crop);"></div>
+              <div class="image" style="background-image: url(<%= strImage %>?fm=jpg&q=80&w=1024&fit=fill);"></div>
             <% } %>
           </div>
         </div>
