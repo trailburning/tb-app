@@ -29,6 +29,10 @@ require.config({
   }
 });
 
+function CRtoBR(str) {
+  return str.replace(/(?:\n)/g, '<br />')
+}
+
 // Load our app module and pass it to our definition function
 require(['controller/BaseApp'], function(App){
   App.initialize();

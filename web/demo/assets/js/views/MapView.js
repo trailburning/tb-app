@@ -1,10 +1,12 @@
 define([
   'underscore', 
   'backbone',
+  'turf',
   'mapbox',
   'markercluster',
-  'views/MarkerView'
-], function(_, Backbone, mapbox, markercluster, MarkerView){
+  'views/MarkerView',
+  'views/DistanceMarkerView'
+], function(_, Backbone, turf, mapbox, markercluster, MarkerView, DistanceMarkerView){
   
   var MapView = Backbone.View.extend({
     initialize: function(options){
@@ -16,6 +18,12 @@ define([
 
       this.bRendered = false;
       this.currMarkerView = null;
+
+      L.mapbox.accessToken = 'pk.eyJ1IjoibWFsbGJldXJ5IiwiYSI6IjJfV1MzaE0ifQ.scrjDE31p7wBx7-GemqV3A';
+
+      this.map = L.mapbox.map('mapbox-view', 'mallbeury.8d4ad8ec', {dragging: true, touchZoom: false, scrollWheelZoom: false, doubleClickZoom:false, boxZoom:false, tap:false, zoomControl:true, zoomAnimation:true, markerZoomAnimation:true, attributionControl:false, minZoom: 2});
+
+      this.markerLayer = L.layerGroup();
 
       this.markerCluster = new L.MarkerClusterGroup({ showCoverageOnHover: false, spiderfyOnMaxZoom: true,
         iconCreateFunction: function(cluster) {
@@ -49,9 +57,8 @@ define([
             if (self.currMarkerView) {
               self.currMarkerView.focus();
             }
-          }       
-        }     
-        self.updateZoomCtrls();
+          }
+        }
       }, this);
 
       this.markerCluster.on('clustermouseover', function (evt) {
@@ -61,9 +68,8 @@ define([
       this.markerCluster.on('clustermouseout', function (evt) {
         $(evt.layer._icon).removeClass('focus');
       });
-
-      this.buildBtns();
 	  },
+
     setSelected: function(nSelected){
       var self = this;
 
@@ -92,53 +98,6 @@ define([
       self.currMarkerView.focus();
       this.options.map.panTo(new L.LatLng(modelPost.get("lat"), modelPost.get("lng")), {animate: true});
     },
-    updateZoomCtrls: function(){
-      if(this.options.map.getZoom() > this.options.map.getMinZoom()) {
-        $('.zoomout_btn', $(this.options.elCntrls)).attr('disabled', false);
-      }
-      else {
-        $('.zoomout_btn', $(this.options.elCntrls)).attr('disabled', true);     
-      }     
-    
-      if(this.options.map.getZoom() < this.options.map.getMaxZoom()) {
-        $('.zoomin_btn', $(this.options.elCntrls)).attr('disabled', false);
-      }
-      else {
-        $('.zoomin_btn', $(this.options.elCntrls)).attr('disabled', true);
-      }
-    },
-    buildBtns: function(){
-      var self = this;
-
-      $('.centre_btn', $(this.options.elCntrls)).click(function(evt){       
-        // fire event
-        app.dispatcher.trigger("MapView:centreclick", self);                
-      });
-
-      $('.zoomin_btn', $(this.options.elCntrls)).click(function(evt){       
-        if (!$(this).attr('disabled')) {
-          $('.view_btn', $(self.options.elCntrls)).attr('disabled', false);              
-          self.options.map.zoomIn();      
-          // fire event
-          app.dispatcher.trigger("MapView:zoominclick", self);                
-        }
-      });
-
-      $('.zoomout_btn', $(this.options.elCntrls)).click(function(evt){
-        if (!$(this).attr('disabled')) {
-          $('.view_btn', $(self.options.elCntrls)).attr('disabled', false);              
-          self.options.map.zoomOut();
-          // fire event
-          app.dispatcher.trigger("MapView:zoomoutclick", self);                
-        }
-      });
-      
-      $('.view_btn', $(this.options.elCntrls)).click(function(evt){
-        if (!$(this).attr('disabled')) {
-          $(this).attr('disabled', true);
-        }
-      });
-    },
     
     render: function(){
       var self = this;
@@ -147,6 +106,13 @@ define([
       if (this.bRendered) {
         return;
       }
+
+      this.map.setView([this.options.jsonRoute.geometry.coordinates[0][1], this.options.jsonRoute.geometry.coordinates[0][0]], 12);
+
+      this.map.featureLayer.setGeoJSON(this.options.jsonRoute);
+
+      this.map.invalidateSize(false);
+      this.map.fitBounds(this.map.featureLayer.getBounds(), {padding: [100, 100], reset: true});
 
       function onLayerAdd() {
         // the focussed marker/cluster may not be available due to out of bounds layers not be rendered.
@@ -159,23 +125,43 @@ define([
           }
         }
       }
-      this.options.map.on("layeradd", onLayerAdd);
+      this.map.on("layeradd", onLayerAdd);
 
       $.each(this.options.jsonMedia, function(index, jsonMedia) {
         var markerView = new MarkerView({jsonMedia: jsonMedia, map: self.options.map, mapLayer: self.markerCluster});
         markerView.render();
       });
-      this.options.map.addLayer(this.markerCluster);
+      this.map.addLayer(this.markerCluster);
 
-      this.updateZoomCtrls(); 
-
-      $('.view_btn', $(this.options.elCntrls)).attr('disabled', true);
-      $(this.options.elCntrls).show();
+      this.addDistanceMarkers();
+      this.map.addLayer(this.markerLayer);
 
       this.bRendered = true;
 
       return this;
     },
+
+    addDistanceMarker: function(nKM) {
+      var along = turf.along(this.options.jsonRoute, nKM, 'kilometers');
+      var modelDistance = new Backbone.Model({lat: along.geometry.coordinates[1], lng: along.geometry.coordinates[0], distance: nKM});
+      var distanceMarkerView = new DistanceMarkerView({model: modelDistance, layer: this.markerLayer, map: this.map});
+      distanceMarkerView.render();
+    },
+
+    addDistanceMarkers: function() {
+      var length = turf.lineDistance(this.options.jsonRoute, 'kilometers');
+      var nInc = 5;
+      var nMarkers = Math.floor(length / nInc);
+      var nCurrMarker = 0;
+
+      for (var nMarker=0; nMarker <= nMarkers; nMarker += 1) {
+        nCurrMarker = nInc * nMarker;
+        if (nCurrMarker) {
+          this.addDistanceMarker(nCurrMarker);
+        }
+      }
+    },
+
     onMarkerViewClick: function(markerView){
       // fire event
       app.dispatcher.trigger("MapView:click", markerView.options.model);

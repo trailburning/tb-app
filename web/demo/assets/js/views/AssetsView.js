@@ -3,12 +3,9 @@ var MAX_ASSETS = 3;
 define([
   'underscore', 
   'backbone',
-  'turf',
-  'mapbox',
   'views/MapAssetView',
-  'views/MapView',
-  'views/DistanceMarkerView'
-], function(_, Backbone, turf, mapbox, MapAssetView, MapView, DistanceMarkerView){
+  'views/MapView'
+], function(_, Backbone, MapAssetView, MapView, DistanceMarkerView){
 
   var AssetsView = Backbone.View.extend({
     initialize: function(options){
@@ -31,8 +28,6 @@ define([
           "coordinates": []
         }
       };
-
-      this.markerLayer = L.layerGroup();
 
       var nMaxAssets = MAX_ASSETS;
       var bAdShown = false;
@@ -125,6 +120,7 @@ define([
       this.model.set('assetBlocks', this.jsonBlocks);
 
       var attribs = this.model.toJSON();
+      attribs.about = CRtoBR(attribs.about);
       $(this.el).html(this.template(attribs));
 
       // build geoJSON route
@@ -132,27 +128,14 @@ define([
         self.jsonRoute.geometry.coordinates.push(this.coords);
       });
 
-      L.mapbox.accessToken = 'pk.eyJ1IjoibWFsbGJldXJ5IiwiYSI6IjJfV1MzaE0ifQ.scrjDE31p7wBx7-GemqV3A';
-
-      this.map = L.mapbox.map('mapbox-view', 'mallbeury.8d4ad8ec', {dragging: true, touchZoom: false, scrollWheelZoom: false, doubleClickZoom:false, boxZoom:false, tap:false, zoomControl:false, zoomAnimation:true, markerZoomAnimation:true, attributionControl:false, minZoom: 2, maxZoom: 17})
-      .setView([self.jsonRoute.geometry.coordinates[0][1], self.jsonRoute.geometry.coordinates[0][0]], 12);
-
-      this.map.featureLayer.setGeoJSON(this.jsonRoute);
-
-      this.map.invalidateSize(false);
-      this.map.fitBounds(this.map.featureLayer.getBounds(), {padding: [100, 100], reset: true});
-
-      this.mapView = new MapView({ map: this.map, elCntrls: '#view_map_btns', jsonMedia: this.options.jsonAssets });
+      this.mapView = new MapView({ jsonRoute: this.jsonRoute, jsonMedia: this.options.jsonAssets });
       this.mapView.render();
 
-      this.addDistanceMarkers();
-      this.map.addLayer(this.markerLayer);
-
-      this.mapAssetView = new MapAssetView({ map: this.map, elCntrls: '#view_map_btns', jsonRoute: this.jsonRoute });
+      this.mapAssetView = new MapAssetView({ jsonRoute: this.jsonRoute });
       this.mapAssetView.render();
 
       $('.asset-container', this.el).click(function(evt){
-        $('#mapbox-asset-view-container').appendTo(this);
+        $('#mapbox-asset-view-container').appendTo($(this).parent());
 
         $('#mapbox-asset-view-container').show();
 
@@ -161,27 +144,6 @@ define([
       });
 
       return this;
-    },
-
-    addDistanceMarker: function(nKM) {
-      var along = turf.along(this.jsonRoute, nKM, 'kilometers');
-      var modelDistance = new Backbone.Model({lat: along.geometry.coordinates[1], lng: along.geometry.coordinates[0], distance: nKM});     
-      var distanceMarkerView = new DistanceMarkerView({model: modelDistance, layer: this.markerLayer, map: this.map});
-      distanceMarkerView.render();
-    },
-
-    addDistanceMarkers: function() {
-      var length = turf.lineDistance(this.jsonRoute, 'kilometers');
-      var nInc = 5;
-      var nMarkers = Math.floor(length / nInc);
-      var nCurrMarker = 0;
-
-      for (var nMarker=0; nMarker <= nMarkers; nMarker += 1) {
-        nCurrMarker = nInc * nMarker;
-        if (nCurrMarker) {
-          this.addDistanceMarker(nCurrMarker);
-        }
-      }
     },
 
     onMarkerSelect: function(markerView) {

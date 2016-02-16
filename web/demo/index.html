@@ -21,6 +21,7 @@
 <script>
 //var TB_TRAIL = 53;
 var TB_TRAIL = 425;
+//var TB_TRAIL = 42;
 </script>
 
 <div class="container-fluid">
@@ -33,10 +34,11 @@ var TB_TRAIL = 425;
       <div class="scale-container image" style="background-image: url(http://tbmedia2.imgix.net/<%= media.versions[0].path %>?fm=jpg&q=80&w=1024fit=fill);">
       </div>
     </div>
-    <div class="col-md-12 nopadding about text"><%= about %></div>
   </div>
 
   <div class="row assets-view">
+    <div class="col-md-12 nopadding about text"><%= about %></div>
+
     <% _.each(assetBlocks.blocks, function(block, index) { %>
       <% var mediaCols = 12%>
       <% var textCols = 12%>
@@ -58,7 +60,9 @@ var TB_TRAIL = 425;
         <% } %>
 
         <div class="col-md-<%= mediaCols %> nopadding">
-          <div class="scale-container asset-container" data-pos="<%= asset.pos %>">
+          <div class="scale-container">
+            <div class="asset-container" data-pos="<%= asset.pos %>">
+
             <% if (Number(asset.tags.height) >= Number(asset.tags.width)) { %>
               <div class="image" style="background-image: url(<%= strImage %>?fm=jpg&w=1024&fit=fill&blur=100)"></div>
               <div class="overlay"></div>
@@ -66,6 +70,8 @@ var TB_TRAIL = 425;
             <% } else { %>
               <div class="image" style="background-image: url(<%= strImage %>?fm=jpg&q=80&w=1024&fit=fill);"></div>
             <% } %>
+
+            </div>
           </div>
         </div>
 

@@ -14,7 +14,7 @@ define([
       this.bRendered = false;
 
       this.markerView = null;
-      this.map = L.mapbox.map('mapbox-asset-view', 'mallbeury.8d4ad8ec', {dragging: true, touchZoom: false, scrollWheelZoom: false, doubleClickZoom:false, boxZoom:false, tap:false, zoomControl:false, zoomAnimation:false, markerZoomAnimation:false, attributionControl:false, minZoom: 2, maxZoom: 17});
+      this.map = L.mapbox.map('mapbox-asset-view', 'mallbeury.8d4ad8ec', {dragging: true, touchZoom: false, scrollWheelZoom: false, doubleClickZoom:false, boxZoom:false, tap:false, zoomControl:true, zoomAnimation:true, markerZoomAnimation:false, attributionControl:false, minZoom: 2});
 	  },
     
     render: function(){
@@ -43,7 +43,7 @@ define([
       this.markerView.render();
 
       this.map.invalidateSize(false);
-      this.map.setView([jsonAsset.coords.lat, jsonAsset.coords.long], 14, {animate: false});
+      this.map.setView([jsonAsset.coords.lat, jsonAsset.coords.long], 17, {animate: false});
     }
 	
   });
