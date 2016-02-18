@@ -5,6 +5,13 @@ body {
   line-height: 1.4em;
 }
 
+body.fs {
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  background: #000;
+}
+
 .nopadding {
   padding: 5px;
 }
@@ -31,8 +38,33 @@ body {
   overflow: hidden;
 }
 
+/* FS ASSET */
+/******************************************/
+#fs-asset-view-container {
+  display: none;
+  position: fixed !important;
+  height: auto !important;
+  width: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  z-index: 2147483647 !important;
+  top: 0 !important;
+  left: 0 !important;
+  bottom: 0 !important;
+  right: 0 !important;
+  background-color: #000;
+}
+
+#fs-asset-view {
+  width: 100%;
+  height: 100%;
+}
+
 /* ASSETS */
 /******************************************/
+#assets-view {
+}
+
 .assets-view {
   margin: 0px 5px 0 5px;
 }

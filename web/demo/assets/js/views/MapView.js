@@ -128,7 +128,7 @@ define([
       this.map.on("layeradd", onLayerAdd);
 
       $.each(this.options.jsonMedia, function(index, jsonMedia) {
-        var markerView = new MarkerView({jsonMedia: jsonMedia, map: self.options.map, mapLayer: self.markerCluster});
+        var markerView = new MarkerView({parentID: MAP_VIEW, jsonMedia: jsonMedia, map: self.options.map, mapLayer: self.markerCluster});
         markerView.render();
       });
       this.map.addLayer(this.markerCluster);

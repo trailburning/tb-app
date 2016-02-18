@@ -7,6 +7,9 @@ define([
     initialize: function(options){
       this.options = options;
       
+      this.ID = this.options.jsonMedia.id;
+      this.parentID = this.options.parentID;
+      this.jsonMedia = this.options.jsonMedia;
       this.bSelected = false;
       this.marker = null;
 	  },

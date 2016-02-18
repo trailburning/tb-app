@@ -1,3 +1,4 @@
+var HEIGHT_WIDE_ASPECT_PERCENT = 56;
 var MAX_ASSETS = 3;
 
 define([
@@ -89,14 +90,11 @@ define([
           jsonAsset.about = 'This is example text used to describe this piece of media.';
         }
 
-        if (jsonBlock.assets.length == (nMaxAssets - 1)) {
-          var fRnd = Math.floor(Math.random() * (4 - 0 + 1)) + 0;
-          if (fRnd == 1 && !bAdShown) {
-            bAdShown = true;
-            // add placeholder
-            var jsonAdAsset = {type: 'advert', filename: 'http://tbassets2.imgix.net/images/competition/_0001_sky.jpg', tags: {height: 806, width: 806}};
-            processAsset(jsonAdAsset);
-          }
+        if (!bAdShown && (jsonBlock.assets.length == (nMaxAssets - 1))) {
+          bAdShown = true;
+          // add placeholder
+          var jsonAdAsset = {type: 'advert', filename: 'http://tbassets2.imgix.net/images/competition/_0001_sky.jpg', tags: {height: 806, width: 806}};
+          processAsset(jsonAdAsset);
         }
 
         processAsset(jsonAsset);
@@ -107,7 +105,9 @@ define([
       }
     },
     
-    resize: function(nHeightWideAspectPercent){
+    resize: function(){
+      var nHeightWideAspectPercent = HEIGHT_WIDE_ASPECT_PERCENT;
+
       $('.scale-container', $(this.el)).each(function(){
         var nHeight = ($(this).width() * nHeightWideAspectPercent) / 100;
         $(this).height(nHeight);
@@ -134,6 +134,13 @@ define([
       this.mapAssetView = new MapAssetView({ jsonRoute: this.jsonRoute });
       this.mapAssetView.render();
 
+      $('#fs-asset-view-container').click(function(evt){
+        $('#fs-asset-view-container').hide();
+        $('body').removeClass('fs');
+
+        $('#assets-View').css('visibility', 'visible');
+      });
+
       $('.asset-container', this.el).click(function(evt){
         $('#mapbox-asset-view-container').appendTo($(this).parent());
 
@@ -147,7 +154,27 @@ define([
     },
 
     onMarkerSelect: function(markerView) {
-      $('#mapbox-asset-view-container').hide();
+      switch (markerView.parentID) {
+        case MAP_VIEW:
+          $('body').addClass('fs');
+          $('#fs-asset-view .image').removeClass('portrait');
+
+          var strImage = 'http://tbmedia2.imgix.net/' + markerView.jsonMedia.versions[0].path;
+
+          if (Number(markerView.jsonMedia.tags.height) >= Number(markerView.jsonMedia.tags.width)) {
+            $('#fs-asset-view .image').addClass('portrait');
+          }
+          $('#fs-asset-view .image').css('background-image', 'url(' + strImage + '?fm=jpg&q=80&w=1024&fit=fill)');
+
+          $('#fs-asset-view-container').show();
+
+          $('#assets-View').css('visibility', 'hidden');
+          break;
+
+        case MAP_ASSET_VIEW:
+          $('#mapbox-asset-view-container').hide();
+          break;
+      }
     }
 
   });

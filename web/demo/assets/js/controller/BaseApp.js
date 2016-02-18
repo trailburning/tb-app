@@ -5,6 +5,8 @@ var BASE_URL = 'http://www.trailburning.com/api';
 //var BASE_URL = 'http://localhost:8888/trailburning_api/app_dev.php';
 
 var HEIGHT_WIDE_ASPECT_PERCENT = 56;
+var MAP_VIEW = 0;
+var MAP_ASSET_VIEW = 1;
 
 define([
   'underscore', 
@@ -40,7 +42,7 @@ define([
     }
 
     function resize() {
-      if (this.assetsView) this.assetsView.resize(HEIGHT_WIDE_ASPECT_PERCENT);
+      if (this.assetsView) this.assetsView.resize();
     }
     $(window).resize(function() {
       resize();

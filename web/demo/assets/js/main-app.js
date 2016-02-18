@@ -6,7 +6,7 @@ require.config({
     backbone: 'libs/backbone-min',
     async: 'libs/async',
     bootstrap: '//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min',
-    mapbox: 'http://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox',
+    mapbox: 'http://api.tiles.mapbox.com/mapbox.js/v2.3.0/mapbox',
     turf: 'http://api.tiles.mapbox.com/mapbox.js/plugins/turf/v1.4.0/turf.min',
     markercluster: 'http://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster',
     videojs: '//vjs.zencdn.net/4.12/video',
