@@ -83,16 +83,13 @@ body.fs {
   overflow: hidden;
 }
 
-#mapbox-asset-view-container {
-  display: none;
-}
 #mapbox-asset-view {
   position: absolute;
   top: 0px;
   left: 0px;
   margin: 0;
-  width: 100%;
-  height: 100%;
+  width: 30%;
+  height: 30%;
   overflow: hidden;
 }
 

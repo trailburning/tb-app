@@ -16,7 +16,7 @@ define([
       this.markerView = null;
       this.map = L.mapbox.map('mapbox-asset-view', 'mallbeury.8d4ad8ec', {dragging: true, touchZoom: false, scrollWheelZoom: false, doubleClickZoom:false, boxZoom:false, tap:false, zoomControl:true, zoomAnimation:true, markerZoomAnimation:false, attributionControl:false, minZoom: 2});
 //      this.map = L.mapbox.map('mapbox-asset-view', null, {dragging: true, touchZoom: false, scrollWheelZoom: false, doubleClickZoom:false, boxZoom:false, tap:false, zoomControl:true, zoomAnimation:true, markerZoomAnimation:false, attributionControl:false, minZoom: 2});
-//      L.mapbox.styleLayer('mapbox://styles/mallbeury/cikp9i44p00m4bylvcn2sm99u').addTo(this.map);
+//      L.mapbox.styleLayer('mapbox://styles/mallbeury/ciks2hvs9001odcmb8ds1srsy').addTo(this.map);
 	  },
     
     render: function(){
@@ -37,15 +37,19 @@ define([
       return this;
     },
 
-    focus: function(jsonAsset){
+    focus: function(jsonAsset, bAnimate){
       if (this.markerView) {
         this.markerView.destroy();
       }
       this.markerView = new MarkerView({parentID: MAP_ASSET_VIEW, jsonMedia: jsonAsset, map: this.map, mapLayer: this.map, bLarge: true});
       this.markerView.render();
 
+      this.map.setZoom(14);
+
       this.map.invalidateSize(false);
-      this.map.setView([jsonAsset.coords.lat, jsonAsset.coords.long], 17, {animate: false});
+//      this.map.setView([jsonAsset.coords.lat, jsonAsset.coords.long], 17, {animate: false});
+
+      this.map.panTo([jsonAsset.coords.lat, jsonAsset.coords.long], {animate: bAnimate});
     }
 	
   });

@@ -31,6 +31,7 @@ define([
       };
 
       var nMaxAssets = MAX_ASSETS;
+      this.nCurrAsset = 0;
       var bAdShown = false;
       this.jsonBlocks = {blocks: []};
       var jsonBlock = {assets: []};
@@ -103,6 +104,31 @@ define([
       if (jsonBlock) {
         self.jsonBlocks.blocks.push(jsonBlock);
       }
+
+      // keyboard control
+      $(document).keydown(function(e){
+        switch (e.keyCode) {
+          case 37: // previous
+            if (self.nCurrAsset-1 < 0) {
+              self.nCurrAsset = self.options.jsonAssets.length-1;
+            }
+            else {
+              self.nCurrAsset--;
+            }
+            self.showFullscreenAsset(self.options.jsonAssets[self.nCurrAsset], true);
+            break;
+
+          case 39: // next
+            if (self.nCurrAsset+1 > self.options.jsonAssets.length-1) {
+              self.nCurrAsset = 0;
+            }
+            else {
+              self.nCurrAsset++;
+            }
+            self.showFullscreenAsset(self.options.jsonAssets[self.nCurrAsset], true);
+            break;
+        }
+      });
     },
     
     resize: function(){
@@ -142,37 +168,45 @@ define([
       });
 
       $('.asset-container', this.el).click(function(evt){
-        $('#mapbox-asset-view-container').appendTo($(this).parent());
-
-        $('#mapbox-asset-view-container').show();
-
-        var jsonAsset = self.options.jsonAssets[$(this).attr('data-pos')];
-        self.mapAssetView.focus(jsonAsset);
+        self.nCurrAsset = Number($(this).attr('data-pos'));
+        self.showFullscreen(self.options.jsonAssets[self.nCurrAsset]);
       });
 
       return this;
     },
 
+    showFullscreenAsset: function(jsonMedia, bAnimate) {
+      $('#fs-asset-view .image').removeClass('portrait');
+
+      var strImage = 'http://tbmedia2.imgix.net/' + jsonMedia.versions[0].path;
+
+      if (Number(jsonMedia.tags.height) >= Number(jsonMedia.tags.width)) {
+        $('#fs-asset-view .image').addClass('portrait');
+      }
+      $('#fs-asset-view .image').css('background-image', 'url(' + strImage + '?fm=jpg&q=80&w=1024&fit=fill)');
+
+      $('#fs-asset-view-container').show();
+
+      this.mapAssetView.focus(jsonMedia, bAnimate);
+    },
+
+    showFullscreen: function(jsonMedia) {
+      $('body').addClass('fs');
+
+      this.showFullscreenAsset(jsonMedia, false);
+
+      $('#assets-View').css('visibility', 'hidden');
+    },
+
     onMarkerSelect: function(markerView) {
+      this.nCurrAsset = markerView.pos;
+
       switch (markerView.parentID) {
         case MAP_VIEW:
-          $('body').addClass('fs');
-          $('#fs-asset-view .image').removeClass('portrait');
-
-          var strImage = 'http://tbmedia2.imgix.net/' + markerView.jsonMedia.versions[0].path;
-
-          if (Number(markerView.jsonMedia.tags.height) >= Number(markerView.jsonMedia.tags.width)) {
-            $('#fs-asset-view .image').addClass('portrait');
-          }
-          $('#fs-asset-view .image').css('background-image', 'url(' + strImage + '?fm=jpg&q=80&w=1024&fit=fill)');
-
-          $('#fs-asset-view-container').show();
-
-          $('#assets-View').css('visibility', 'hidden');
+          this.showFullscreen(markerView.jsonMedia);
           break;
 
         case MAP_ASSET_VIEW:
-          $('#mapbox-asset-view-container').hide();
           break;
       }
     }
