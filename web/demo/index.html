@@ -9,6 +9,7 @@
 
 <meta name="google" value="notranslate">
 
+<link href="http://fonts.googleapis.com/css?family=Signika:400,300,700" rel="stylesheet">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <link href="//vjs.zencdn.net/4.12/video-js.css" rel="stylesheet">
@@ -36,10 +37,16 @@ var TB_TRAIL = 425;
 </div>
 
 <script type="text/template" id="assetsViewTemplate">
-  <div class="row title">
+  <div class="row title cover">
     <div class="col-md-12 nopadding">
       <div class="scale-container image" style="background-image: url(http://tbmedia2.imgix.net/<%= media.versions[0].path %>?fm=jpg&q=80&w=1024fit=fill);">
       </div>
+      <% if (user.type != 'brand') { %>
+      <div class="trail_avatar">
+        <div class="tb-avatar tb-avatar-feature"><div class="photo"><img src="<%= user.avatar %>"></div></div>
+      </div>
+      <% } %>
+      <div class="titles"><h1 class="tb"><%= name %>, <%= region %></h1></div>
     </div>
   </div>
 
