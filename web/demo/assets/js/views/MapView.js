@@ -127,14 +127,14 @@ define([
       }
       this.map.on("layeradd", onLayerAdd);
 
+      this.addDistanceMarkers();
+      this.map.addLayer(this.markerLayer);
+
       $.each(this.options.jsonMedia, function(index, jsonMedia) {
         var markerView = new MarkerView({parentID: MAP_VIEW, pos: index, jsonMedia: jsonMedia, map: self.options.map, mapLayer: self.markerCluster});
         markerView.render();
       });
       this.map.addLayer(this.markerCluster);
-
-      this.addDistanceMarkers();
-      this.map.addLayer(this.markerLayer);
 
       this.bRendered = true;
 
@@ -150,7 +150,13 @@ define([
 
     addDistanceMarkers: function() {
       var length = turf.lineDistance(this.options.jsonRoute, 'kilometers');
-      var nInc = 5;
+      var nInc = 1;
+      if (length > 10) {
+        nInc = 2;
+      }
+      if (length > 20) {
+        nInc = 5;
+      }
       var nMarkers = Math.floor(length / nInc);
       var nCurrMarker = 0;
 

@@ -274,6 +274,10 @@ body.fs {
   border-color: #ed1c24 transparent transparent transparent;
 }
 
+.tb-map-cluster { 
+  z-index: 999 !important;
+}
+
 .tb-map-cluster img { 
   vertical-align: top;
   width: 100%;
