@@ -6,6 +6,9 @@ var FEED_URL = 'http://www.eggontop.com/live/trailburning/tb-campaignviewer/serv
 //var BASE_URL = 'http://localhost:8888/trailburning_api/app_dev.php';
 //var FEED_URL = 'http://localhost:8888/projects/Trailburning/tb-campaignviewer/server/feed_cache.php';
 
+//var BASE_URL = 'http://10.0.1.5:8888/trailburning_api/app_dev.php';
+//var FEED_URL = 'http://10.0.1.5:8888/projects/Trailburning/tb-campaignviewer/server/feed_cache.php';
+
 var HEIGHT_WIDE_ASPECT_PERCENT = 56;
 var MAP_VIEW = 0;
 var MAP_ASSET_VIEW = 1;

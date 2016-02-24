@@ -223,7 +223,7 @@ define([
       if (Number(jsonMedia.tags.height) >= Number(jsonMedia.tags.width)) {
         $('#fs-asset-view .image').addClass('portrait');
       }
-      $('#fs-asset-view .image').css('background-image', 'url(' + jsonMedia.standard_res);
+      $('#fs-asset-view .image').css('background-image', 'url(' + jsonMedia.standard_res + ')');
 
       $('#fs-asset-view-container').show();
       $('#fs-asset-view .type').hide();
