@@ -162,6 +162,14 @@ body.fs {
   height: 100%;
 }
 
+#fs-asset-view .type {
+  position: absolute;
+  bottom: 10px;
+  right: 12px;
+  color: #FFF;
+  font-size: 2em;
+}
+
 /* ASSETS */
 /******************************************/
 #assets-view {
@@ -169,6 +177,14 @@ body.fs {
 
 .assets-view {
   margin: 0px 5px 0 5px;
+}
+
+.assets-view .type {
+  position: absolute;
+  bottom: 10px;
+  right: 12px;
+  color: #FFF;
+  font-size: 2em;
 }
 
 /* MAP */

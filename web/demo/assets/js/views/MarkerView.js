@@ -15,6 +15,9 @@ define([
       this.marker = null;
 	  },
     render: function(){
+      if (!this.options.jsonMedia.coords) {
+        return;
+      }
       var self = this;
 
       function onClick(evt) {
@@ -29,7 +32,8 @@ define([
       }
 
       this.marker = L.marker([this.options.jsonMedia.coords.lat, this.options.jsonMedia.coords.long]).on('click', onClick).on('mouseover', onMouseOver).on('mouseout', onMouseOut);
-      var strImage = 'http://tbmedia2.imgix.net/'+this.options.jsonMedia.versions[0].path+'?fm=jpg&q=80&w=128&h=128&fit=crop';
+//      var strImage = 'http://tbmedia2.imgix.net/'+this.options.jsonMedia.versions[0].path+'?fm=jpg&q=80&w=128&h=128&fit=crop';
+      var strImage = this.options.jsonMedia.thumb_res;
 
       if (this.options.bLarge) {
         this.marker.setIcon(L.divIcon({className: 'tb-map-media-marker large', html: '<div class="icon"><div class="marker"><div class="avatar"><img src="'+strImage+'"></div><div class="overlay"></div></div></div><div class="pointer"></div>', iconSize: [100, 109], iconAnchor: [50, 109]}));

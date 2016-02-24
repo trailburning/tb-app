@@ -4,9 +4,10 @@ var MAX_ASSETS = 3;
 define([
   'underscore', 
   'backbone',
+  'turf',
   'views/MapAssetView',
   'views/MapView'
-], function(_, Backbone, MapAssetView, MapView, DistanceMarkerView){
+], function(_, Backbone, turf, MapAssetView, MapView, DistanceMarkerView){
 
   var AssetsView = Backbone.View.extend({
     initialize: function(options){
@@ -30,9 +31,17 @@ define([
         }
       };
 
+      this.jsonAssetsLine = {
+        "type": "Feature",
+        "properties": {},
+        "geometry": {
+          "type": "LineString",
+          "coordinates": []
+        }
+      };
+
       var nMaxAssets = MAX_ASSETS;
       this.nCurrAsset = 0;
-      var bAdShown = false;
       this.jsonBlocks = {blocks: []};
       var jsonBlock = {assets: []};
 
@@ -81,6 +90,21 @@ define([
         }
       }
 
+      $.each(this.options.jsonAssets, function(index, jsonAsset) {
+        // mla
+        jsonAsset.standard_res = 'http://tbmedia2.imgix.net/' + jsonAsset.versions[0].path + '?fm=jpg&q=80&w=1024&fit=fill';
+        jsonAsset.thumb_res = 'http://tbmedia2.imgix.net/' + jsonAsset.versions[0].path + '?fm=jpg&q=80&w=128&h=128&fit=crop';
+      });
+
+      $.each(this.options.jsonFeed, function(index, item) {
+        self.insertFeedAsset(item);
+      });
+
+      var fRnd = Math.floor(Math.random() * ((this.options.jsonAssets.length) - 0 + 1)) + 0;
+      this.options.jsonAssets.splice(fRnd, 0,
+        {type: 'advert', standard_res: 'http://tbassets2.imgix.net/images/competition/_0001_sky.jpg', thumb_res: 'http://tbassets2.imgix.net/images/competition/_0001_sky.jpg', tags: {height: 806, width: 806}}
+      );
+
       // setup blocks
       $.each(this.options.jsonAssets, function(index, jsonAsset) {
         jsonAsset.pos = index;
@@ -90,14 +114,6 @@ define([
 //        if (index == 0) {
           jsonAsset.about = 'This is example text used to describe this piece of media.';
         }
-
-        if (!bAdShown && (jsonBlock.assets.length == (nMaxAssets - 1))) {
-          bAdShown = true;
-          // add placeholder
-          var jsonAdAsset = {type: 'advert', filename: 'http://tbassets2.imgix.net/images/competition/_0001_sky.jpg', tags: {height: 806, width: 806}};
-          processAsset(jsonAdAsset);
-        }
-
         processAsset(jsonAsset);
       });
       //one left to push
@@ -175,18 +191,45 @@ define([
       return this;
     },
 
+    insertFeedAsset: function(jsonFeedAsset) {
+      var arrCoords = new Array;
+      $.each(this.options.jsonAssets, function(index, jsonAsset) {
+        arrCoords.push([jsonAsset.coords.lat, jsonAsset.coords.long]);
+      });
+      this.jsonAssetsLine.geometry.coordinates = arrCoords;
+
+      // look for point on assets line
+      var pt = {
+        "type": "Feature",
+        "properties": {},
+        "geometry": {
+          "type": "Point",
+          "coordinates": [jsonFeedAsset.location.latitude, jsonFeedAsset.location.longitude]
+        }
+      }
+
+      var snapped = turf.pointOnLine(this.jsonAssetsLine, pt);
+      if (snapped.properties.dist < 1) {
+//        console.log(snapped);
+        this.options.jsonAssets.splice(snapped.properties.index+1, 0, 
+          {type: 'instagram', tags: {width: 1080, height: 1080}, standard_res: jsonFeedAsset.images.standard_resolution.url, thumb_res: jsonFeedAsset.images.low_resolution.url, coords: {lat: jsonFeedAsset.location.latitude, long: jsonFeedAsset.location.longitude}}
+        );
+      }
+    },
+
     showFullscreenAsset: function(jsonMedia, bAnimate) {
       $('#fs-asset-view .image').removeClass('portrait');
-
-      var strImage = 'http://tbmedia2.imgix.net/' + jsonMedia.versions[0].path;
 
       if (Number(jsonMedia.tags.height) >= Number(jsonMedia.tags.width)) {
         $('#fs-asset-view .image').addClass('portrait');
       }
-      $('#fs-asset-view .image').css('background-image', 'url(' + strImage + '?fm=jpg&q=80&w=1024&fit=fill)');
+      $('#fs-asset-view .image').css('background-image', 'url(' + jsonMedia.standard_res);
 
       $('#fs-asset-view-container').show();
-
+      $('#fs-asset-view .type').hide();
+      if (jsonMedia.type == 'instagram') {
+        $('#fs-asset-view .type').show();
+      }
       this.mapAssetView.focus(jsonMedia, bAnimate);
     },
 

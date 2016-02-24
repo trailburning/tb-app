@@ -1,8 +1,10 @@
 var app = app || {};
 
 var BASE_URL = 'http://www.trailburning.com/api';
-//var BASE_URL = 'http://10.0.1.5:8888/trailburning_api/app_dev.php';
+var FEED_URL = 'http://www.eggontop.com/live/trailburning/tb-campaignviewer/server/feed_cache.php';
+
 //var BASE_URL = 'http://localhost:8888/trailburning_api/app_dev.php';
+//var FEED_URL = 'http://localhost:8888/projects/Trailburning/tb-campaignviewer/server/feed_cache.php';
 
 var HEIGHT_WIDE_ASPECT_PERCENT = 56;
 var MAP_VIEW = 0;
@@ -15,7 +17,9 @@ define([
   'views/AssetsView'
 ], function(_, Backbone, imageScale, AssetsView){
   app.dispatcher = _.clone(Backbone.Events);
-    
+  
+  var jsonFeed = {};
+
   var initialize = function() {
     function getJourney(nJourneyID) {
       var url = BASE_URL + "/v1/route/" + nJourneyID;
@@ -28,14 +32,31 @@ define([
     function getJourneyMedia(nJourneyID) {
       var url = BASE_URL + "/v1/route/" + nJourneyID + "/medias";
       $.getJSON(url, function(result){
-        buildPage(result.value);
+        buildPage(result.value, jsonFeed);
       });
     }
 
-    function buildPage(jsonAssets) {
+    function getFeed(strHashTag) {
+      if (strHashTag != '') {
+        var url = FEED_URL + '?tag=' + strHashTag;
+
+        $.getJSON(url, function(result){
+          if(!result || !result.data || !result.data.length){
+            return;
+          }  
+          jsonFeed = result.data;
+          getJourney(TB_TRAIL);
+        });
+      }
+      else {
+        getJourney(TB_TRAIL);
+      }
+    }
+
+    function buildPage(jsonAssets, jsonFeed) {
       var self = this;
 
-      this.assetsView = new AssetsView({ el: '#assets-View', model: journeyModel, jsonAssets: jsonAssets });
+      this.assetsView = new AssetsView({ el: '#assets-View', model: journeyModel, jsonAssets: jsonAssets, jsonFeed: jsonFeed });
       this.assetsView.render();
 
       resize();
@@ -48,7 +69,7 @@ define([
       resize();
     });
 
-    getJourney(TB_TRAIL);
+    getFeed(TB_HASHTAG);
   };
 
   return {

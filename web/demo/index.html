@@ -20,8 +20,10 @@
 <body>
 
 <script>
+var TB_HASHTAG = '';
 //var TB_TRAIL = 53;
 var TB_TRAIL = 425;
+var TB_HASHTAG = 'mtbuller';
 //var TB_TRAIL = 42;
 </script>
 
@@ -33,6 +35,7 @@ var TB_TRAIL = 425;
   <div id="fs-asset-view">
     <div class="image"></div>
     <div id="mapbox-asset-view"></div>
+    <div class="type"><i class="fa fa-instagram"></i></div>
   </div>
 </div>
 
@@ -66,17 +69,12 @@ var TB_TRAIL = 425;
           <% mediaCols = 4 %>
         <% } %>
 
-        <% var strImage = '' %>
-        <% if (asset.type == 'advert') { %>
-          <% strImage = asset.filename %>
-        <% } else { %>  
-          <% strImage = 'http://tbmedia2.imgix.net/' + asset.versions[0].path %>
-        <% } %>
+        <% var strImage = asset.standard_res %>
 
         <div class="col-md-<%= mediaCols %> nopadding">
           <div class="scale-container">
             <div class="asset-container" data-id="<%= asset.id %>" data-pos="<%= asset.pos %>">
-            <% if (Number(asset.tags.height) >= Number(asset.tags.width)) { %>
+            <% if (Number(asset.tags.height) > Number(asset.tags.width)) { %>
               <div class="image" style="background-image: url(<%= strImage %>?fm=jpg&w=1024&fit=fill&blur=100)"></div>
               <div class="overlay"></div>
               <div class="image portrait fix" style="background-image: url(<%= strImage %>?fm=jpg&q=80&w=1024&fit=fill)"></div>
@@ -85,6 +83,9 @@ var TB_TRAIL = 425;
             <% } %>
             </div>
           </div>
+          <% if (asset.type == 'instagram') { %>
+            <div class="type"><i class="fa fa-instagram"></i></div>
+          <% } %>
         </div>
 
         <% if (asset.about) { %>
