@@ -92,8 +92,8 @@ define([
 
       $.each(this.options.jsonAssets, function(index, jsonAsset) {
         // mla
-        jsonAsset.standard_res = 'http://tbmedia2.imgix.net/' + jsonAsset.versions[0].path + '?fm=jpg&q=80&w=1024&fit=fill';
-        jsonAsset.thumb_res = 'http://tbmedia2.imgix.net/' + jsonAsset.versions[0].path + '?fm=jpg&q=80&w=128&h=128&fit=crop';
+        jsonAsset.standard_res = 'http://tbmedia2.imgix.net' + jsonAsset.versions[0].path + '?fm=jpg&q=80&w=1024&fit=fill';
+        jsonAsset.thumb_res = 'http://tbmedia2.imgix.net' + jsonAsset.versions[0].path + '?fm=jpg&q=80&w=128&h=128&fit=crop';
       });
 
       $.each(this.options.jsonFeed, function(index, item) {

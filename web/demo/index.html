@@ -42,7 +42,7 @@ var TB_HASHTAG = 'mtbuller';
 <script type="text/template" id="assetsViewTemplate">
   <div class="row title cover">
     <div class="col-md-12 nopadding">
-      <div class="scale-container lazy image" data-src="http://tbmedia2.imgix.net/<%= media.versions[0].path %>?fm=jpg&q=80&w=1024fit=fill">
+      <div class="scale-container lazy image" data-src="http://tbmedia2.imgix.net<%= media.versions[0].path %>?fm=jpg&q=80&w=1024&fit=fill">
       </div>
       <% if (user.type != 'brand') { %>
       <div class="trail_avatar">
