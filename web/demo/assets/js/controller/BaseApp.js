@@ -26,7 +26,11 @@ define([
 
   var initialize = function() {
     function getJourney(nJourneyID) {
+      console.log('getJourney');
+
       var url = BASE_URL + "/v1/route/" + nJourneyID;
+
+      console.log(url);
       $.getJSON(url, function(result){
         journeyModel = new Backbone.Model(result.value.route);
         getJourneyMedia(nJourneyID);
@@ -34,16 +38,23 @@ define([
     }
 
     function getJourneyMedia(nJourneyID) {
+      console.log('getJourneyMedia');
+
       var url = BASE_URL + "/v1/route/" + nJourneyID + "/medias";
+      console.log(url);
+
       $.getJSON(url, function(result){
         buildPage(result.value, jsonFeed);
       });
     }
 
     function getFeed(strHashTag) {
+      console.log('getFeed');
+
       if (strHashTag != '') {
         var url = FEED_URL + '?tag=' + strHashTag;
 
+        console.log(url);
         $.getJSON(url, function(result){
           if(!result || !result.data || !result.data.length){
             return;
@@ -58,6 +69,8 @@ define([
     }
 
     function buildPage(jsonAssets, jsonFeed) {
+      console.log('buildPage');
+
       var self = this;
 
       this.assetsView = new AssetsView({ el: '#assets-View', model: journeyModel, jsonAssets: jsonAssets, jsonFeed: jsonFeed });
