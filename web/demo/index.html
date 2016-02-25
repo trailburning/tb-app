@@ -75,11 +75,11 @@ var TB_HASHTAG = 'mtbuller';
           <div class="scale-container">
             <div class="asset-container" data-id="<%= asset.id %>" data-pos="<%= asset.pos %>">
             <% if (Number(asset.tags.height) > Number(asset.tags.width)) { %>
-              <div class="image" style="background-image: url(<%= strImage %>?fm=jpg&w=1024&fit=fill&blur=100)"></div>
+              <div class="image lazy" data-src="<%= strImage %>&blur=100"></div>
               <div class="overlay"></div>
-              <div class="image portrait fix" style="background-image: url(<%= strImage %>?fm=jpg&q=80&w=1024&fit=fill)"></div>
+              <div class="image lazy portrait fix" data-src="<%= strImage %>"></div>
             <% } else { %>
-              <div class="image" style="background-image: url(<%= strImage %>?fm=jpg&q=80&w=1024&fit=fill);"></div>
+              <div class="image lazy" data-src="<%= strImage %>"></div>
             <% } %>
             </div>
           </div>

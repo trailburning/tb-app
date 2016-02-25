@@ -16,9 +16,10 @@ var MAP_ASSET_VIEW = 1;
 define([
   'underscore', 
   'backbone',
+  'imageloader',
   'imageScale',
   'views/AssetsView'
-], function(_, Backbone, imageScale, AssetsView){
+], function(_, Backbone, imageloader, imageScale, AssetsView){
   app.dispatcher = _.clone(Backbone.Events);
   
   var jsonFeed = {};
@@ -61,6 +62,13 @@ define([
 
       this.assetsView = new AssetsView({ el: '#assets-View', model: journeyModel, jsonAssets: jsonAssets, jsonFeed: jsonFeed });
       this.assetsView.render();
+
+      $('.lazy').imageloader({
+        background: true,
+        callback: function (elm) {
+          $(elm).fadeIn();
+        }
+      });
 
       resize();
     }

@@ -47,9 +47,10 @@ define([
       this.map.setZoom(14);
 
       this.map.invalidateSize(false);
-//      this.map.setView([jsonAsset.coords.lat, jsonAsset.coords.long], 17, {animate: false});
 
-      this.map.panTo([jsonAsset.coords.lat, jsonAsset.coords.long], {animate: bAnimate});
+      if (jsonAsset.coords) {
+        this.map.panTo([jsonAsset.coords.lat, jsonAsset.coords.long], {animate: bAnimate});
+      }
     }
 	
   });
