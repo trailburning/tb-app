@@ -71,6 +71,27 @@ body.fs {
 
 /* COVER */
 /******************************************/
+.cover .logo {
+  position: absolute;
+  top: 0px;
+  margin: 14px 0px 0px 16px;
+  height: 17px;
+  line-height: 17px;
+}
+
+.cover .logo a {
+  display: block;
+  text-align: center;
+  margin: 0 auto;
+  line-height: 20px;
+  text-indent: -10000px;
+  overflow: hidden;
+  text-decoration: none;
+  width: 132px;
+  height: 17px;
+  background: url("../images/tb_logo.png") no-repeat top left;
+}
+
 .cover .image:before {
   content: " ";
   display: block;
@@ -192,6 +213,7 @@ body.fs {
 .map-view {
   position: relative;
   height: 486px;
+  margin-bottom: 20px;
 }
 
 #mapbox-view {

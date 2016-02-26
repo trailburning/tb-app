@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Photo Viewer</title>
+<title>Trailburning - Concept</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -20,8 +20,8 @@
 <body>
 
 <script>
-var TB_HASHTAG = '';
-var TB_TRAIL = 278;
+var TB_TRAIL = 42;
+var TB_HASHTAG = 'ultraks';
 </script>
 
 <div class="container-fluid">
@@ -32,7 +32,7 @@ var TB_TRAIL = 278;
   <div id="fs-asset-view">
     <div class="image"></div>
     <div id="mapbox-asset-view"></div>
-    <div class="type"><i class="fa fa-instagram"></i></div>
+    <div class="link"><a target="_blank"><div class="type"><i class="fa fa-instagram"></i></div></a></div>
   </div>
 </div>
 
@@ -47,6 +47,7 @@ var TB_TRAIL = 278;
       </div>
       <% } %>
       <div class="titles"><h1 class="tb"><%= name %></h1><h2 class="tb"><%= region %></h2></div>
+      <div class="logo"><a href="http://www.trailburning.com">Home</a></div>
     </div>
   </div>
 
@@ -81,14 +82,12 @@ var TB_TRAIL = 278;
             </div>
           </div>
           <% if (asset.type == 'instagram') { %>
-            <div class="type"><i class="fa fa-instagram"></i></div>
+            <a href="<%= asset.link %>" target="_blank"><div class="type"><i class="fa fa-instagram"></i></div></a>
           <% } %>
         </div>
-
         <% if (asset.about) { %>
           <div class="col-md-<%= textCols %> nopadding text"><%= asset.about %></div>
         <% } %>
-
       <% }); %>
     <% }); %>
 

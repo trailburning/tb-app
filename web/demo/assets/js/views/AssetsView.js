@@ -99,12 +99,12 @@ define([
       $.each(this.options.jsonFeed, function(index, item) {
         self.insertFeedAsset(item);
       });
-
+/*
       var fRnd = Math.floor(Math.random() * ((this.options.jsonAssets.length) - 0 + 1)) + 0;
       this.options.jsonAssets.splice(fRnd, 0,
         {type: 'advert', standard_res: 'http://tbassets2.imgix.net/images/competition/_0001_sky.jpg', thumb_res: 'http://tbassets2.imgix.net/images/competition/_0001_sky.jpg', tags: {height: 806, width: 806}}
       );
-
+*/
       // setup blocks
       $.each(this.options.jsonAssets, function(index, jsonAsset) {
         jsonAsset.pos = index;
@@ -211,8 +211,9 @@ define([
       var snapped = turf.pointOnLine(this.jsonAssetsLine, pt);
       if (snapped.properties.dist < 1) {
 //        console.log(snapped);
+
         this.options.jsonAssets.splice(snapped.properties.index+1, 0, 
-          {type: 'instagram', tags: {width: 1080, height: 1080}, standard_res: jsonFeedAsset.images.standard_resolution.url, thumb_res: jsonFeedAsset.images.low_resolution.url, coords: {lat: jsonFeedAsset.location.latitude, long: jsonFeedAsset.location.longitude}}
+          {type: 'instagram', link: jsonFeedAsset.link, tags: {width: 1080, height: 1080}, standard_res: jsonFeedAsset.images.standard_resolution.url, thumb_res: jsonFeedAsset.images.low_resolution.url, coords: {lat: jsonFeedAsset.location.latitude, long: jsonFeedAsset.location.longitude}}
         );
       }
     },
@@ -226,9 +227,10 @@ define([
       $('#fs-asset-view .image').css('background-image', 'url(' + jsonMedia.standard_res + ')');
 
       $('#fs-asset-view-container').show();
-      $('#fs-asset-view .type').hide();
+      $('#fs-asset-view .link').hide();
       if (jsonMedia.type == 'instagram') {
-        $('#fs-asset-view .type').show();
+        $('#fs-asset-view .link a').attr('href', jsonMedia.link);
+        $('#fs-asset-view .link').show();
       }
       this.mapAssetView.focus(jsonMedia, bAnimate);
     },
