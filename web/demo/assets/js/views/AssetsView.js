@@ -1,5 +1,6 @@
 var HEIGHT_WIDE_ASPECT_PERCENT = 56;
 var MAX_ASSETS = 3;
+var MAX_FEED_ASSETS = 6;
 
 define([
   'underscore', 
@@ -96,8 +97,13 @@ define([
         jsonAsset.thumb_res = 'http://tbmedia2.imgix.net' + jsonAsset.versions[0].path + '?fm=jpg&q=80&w=128&h=128&fit=crop';
       });
 
+      var nAdded = 0;
       $.each(this.options.jsonFeed, function(index, item) {
-        self.insertFeedAsset(item);
+        if (nAdded < MAX_FEED_ASSETS) {
+          if (self.insertFeedAsset(item)) {
+            nAdded++;
+          }
+        }
       });
 /*
       var fRnd = Math.floor(Math.random() * ((this.options.jsonAssets.length) - 0 + 1)) + 0;
@@ -159,6 +165,10 @@ define([
     render: function(){
       var self = this;
 
+      if (this.model.get('media') == undefined) {
+        this.model.set('media', this.options.jsonAssets[0]);
+      }
+
       this.model.set('assetBlocks', this.jsonBlocks);
 
       var attribs = this.model.toJSON();
@@ -192,6 +202,8 @@ define([
     },
 
     insertFeedAsset: function(jsonFeedAsset) {
+      var bRet = false;
+
       var arrCoords = new Array;
       $.each(this.options.jsonAssets, function(index, jsonAsset) {
         arrCoords.push([jsonAsset.coords.lat, jsonAsset.coords.long]);
@@ -211,11 +223,12 @@ define([
       var snapped = turf.pointOnLine(this.jsonAssetsLine, pt);
       if (snapped.properties.dist < 1) {
 //        console.log(snapped);
-
         this.options.jsonAssets.splice(snapped.properties.index+1, 0, 
           {type: 'instagram', link: jsonFeedAsset.link, tags: {width: 1080, height: 1080}, standard_res: jsonFeedAsset.images.standard_resolution.url, thumb_res: jsonFeedAsset.images.low_resolution.url, coords: {lat: jsonFeedAsset.location.latitude, long: jsonFeedAsset.location.longitude}}
         );
+        bRet = true;
       }
+      return bRet;
     },
 
     showFullscreenAsset: function(jsonMedia, bAnimate) {
