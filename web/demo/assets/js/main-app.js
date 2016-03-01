@@ -10,16 +10,12 @@ require.config({
     turf: 'http://api.tiles.mapbox.com/mapbox.js/plugins/turf/v1.4.0/turf.min',
     markercluster: 'http://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster',
     videojs: '//vjs.zencdn.net/4.12/video',
-    'imageloader': 'libs/jquery.imageloader',
-    imageScale: 'libs/image-scale.min'
+    imageScale: 'libs/image-scale.min',
+    lazyload: 'libs/jquery.lazy'
   },
   shim: {
     'modernizr': {
       exports: 'Modernizr'
-    },
-    'imageloader': {
-      deps: ['jquery'],
-      exports: 'imageloader'
     },
     'imageScale': {
       deps: ['jquery'],
@@ -30,6 +26,9 @@ require.config({
     },
     'markercluster': {
       deps: ['mapbox']
+    },
+    'lazyload': {
+      deps: ['jquery']
     }
   }
 });

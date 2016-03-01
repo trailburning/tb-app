@@ -21,7 +21,8 @@
 
 <script>
 var TB_TRAIL = 278;
-var TB_HASHTAG = '';
+var TB_HASHTAG = 'racebaseasia';
+var TB_HASHTAG_DIST_IN_KM = 40;
 </script>
 
 <div class="container-fluid">
@@ -39,7 +40,7 @@ var TB_HASHTAG = '';
 <script type="text/template" id="assetsViewTemplate">
   <div class="row title cover">
     <div class="col-md-12 nopadding">
-      <div class="scale-container lazy image" data-src="http://tbmedia2.imgix.net<%= media.versions[0].path %>?fm=jpg&q=80&w=1024&fit=fill">
+      <div class="scale-container lazy image" data-src="http://tbmedia2.imgix.net<%= media.versions[0].path %>?fm=jpg&amp;q=80&amp;w=1024&amp;fit=fill">
       </div>
       <% if (user.type != 'brand') { %>
       <div class="trail_avatar">
@@ -73,7 +74,7 @@ var TB_HASHTAG = '';
           <div class="scale-container">
             <div class="asset-container" data-id="<%= asset.id %>" data-pos="<%= asset.pos %>">
             <% if (Number(asset.tags.height) > Number(asset.tags.width)) { %>
-              <div class="image lazy" data-src="<%= strImage %>&blur=100"></div>
+              <div class="image lazy" data-src="<%= strImage %>&amp;blur=100"></div>
               <div class="overlay"></div>
               <div class="image lazy portrait fix" data-src="<%= strImage %>"></div>
             <% } else { %>
