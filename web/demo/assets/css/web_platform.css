@@ -117,25 +117,41 @@ body.fs {
   background: rgba(0,0,0,0.5);
 }
 
-.cover .titles {
+.cover .overlay {
   position: absolute;
-  z-index: 6;
-  text-align: center;
-  color: #fff;
-  top: 54%;
+  top: 25%;
+  left: 0;
   width: 100%;
-  margin-top: 0px;
-  padding: 0 50px 0 50px;
+}
+
+.cover .titles {
+  text-align: left;
+  color: #fff;
+  width: 100%;
+  padding: 0 10px 0 10px;
+  margin: 0px auto 0px auto;
 }
 
 .trail_avatar {
-  display: none;
-  position: absolute;
-  top: 16px;
-  left: 16px;
+  width: 100%;
+  padding: 0 10px 0 10px;
+  margin: 0px auto 0px auto;
+}
+
+.author {
+  float: left;
+  margin-top: 20px;
+  margin-left: 10px;
+  line-height: 66px;
+  font-family: 'Signika', sans-serif;
+  color: #FFF;
+  text-transform: uppercase;
+  font-weight: 300;
 }
 
 .tb-avatar {
+  margin-top: 20px;
+  float: left;
   width: 48px;
   height: 48px;
   box-shadow: 1px 1px 1px #888888;
@@ -145,8 +161,8 @@ body.fs {
 }
 
 .tb-avatar-feature {
-  width: 128px;
-  height: 128px;
+  width: 66px;
+  height: 66px;
 }
 
 .tb-avatar .photo {
@@ -448,6 +464,9 @@ body.fs {
 }
 
 @media (min-width: 768px) {
+  .about.text {
+    padding: 50px 5px 60px 5px;
+  }
   .text {
     padding: 50px 60px 60px 60px;
     font-size: 1.3em;
@@ -456,8 +475,16 @@ body.fs {
 }
 
 @media (min-width: 1200px) {
+  .cover .titles {
+    width: 960px;
+  }
+
+  .trail_avatar {
+    width: 960px;
+  }
+
   .assets-view {
     margin: 0 auto 0 auto;
-    width: 1190px;
+    width: 960px;
   }
 }

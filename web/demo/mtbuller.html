@@ -42,12 +42,22 @@ var TB_HASHTAG_DIST_IN_KM = 1;
     <div class="col-md-12 nopadding">
       <div class="scale-container lazy image" data-src="http://tbmedia2.imgix.net<%= media.versions[0].path %>?fm=jpg&amp;q=80&amp;w=1024&amp;fit=fill">
       </div>
-      <% if (user.type != 'brand') { %>
-      <div class="trail_avatar">
-        <div class="tb-avatar tb-avatar-feature"><div class="photo"><img src="<%= user.avatar %>"></div></div>
+      
+      <div class="overlay">
+        <div class="titles"><h1 class="tb"><%= name %></h1><h2 class="tb"><%= region %></h2></div>
+        <div class="trail_avatar">
+          t:<%= user.id %>
+          <div class="tb-avatar tb-avatar-feature"><div class="photo">
+          <% if (user.type != 'brand' && user.name != 'admin') { %>
+          <img src="<%= user.avatar %>">
+          <% } else { %>
+          <img src="http://www.gravatar.com/avatar/e426b949d824bc81fe01caf1ad88abd7">
+          <% } %>
+          </div></div>
+          <div class="author"><%= user.title %></div>
+        </div>
       </div>
-      <% } %>
-      <div class="titles"><h1 class="tb"><%= name %></h1><h2 class="tb"><%= region %></h2></div>
+
       <div class="logo"><a href="http://www.trailburning.com">Home</a></div>
     </div>
   </div>
