@@ -439,7 +439,6 @@ body.fs {
 /* IMAGE/TEXT */
 /******************************************/
 .lazy {
-  display: none;
 }
 
 .image {

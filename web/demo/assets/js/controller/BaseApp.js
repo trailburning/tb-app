@@ -64,7 +64,9 @@ define([
       this.assetsView = new AssetsView({ el: '#assets-View', model: journeyModel, jsonAssets: jsonAssets, jsonFeed: jsonFeed });
       this.assetsView.render();
 
-      $('.lazy').lazy();
+      $('.lazy').lazy({
+        delay: 500
+      });
 
       resize();
     }
