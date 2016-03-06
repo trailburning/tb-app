@@ -32,7 +32,6 @@ define([
       }
 
       this.marker = L.marker([this.options.jsonMedia.coords.lat, this.options.jsonMedia.coords.long]).on('click', onClick).on('mouseover', onMouseOver).on('mouseout', onMouseOut);
-//      var strImage = 'http://tbmedia2.imgix.net/'+this.options.jsonMedia.versions[0].path+'?fm=jpg&q=80&w=128&h=128&fit=crop';
       var strImage = this.options.jsonMedia.thumb_res;
 
       if (this.options.bLarge) {

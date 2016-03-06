@@ -30,6 +30,7 @@ define([
       var url = BASE_URL + "/v1/route/" + nJourneyID;
 
       $.getJSON(url, function(result){
+//        console.log(result.value.route);
         journeyModel = new Backbone.Model(result.value.route);
         getJourneyMedia(nJourneyID);
       });

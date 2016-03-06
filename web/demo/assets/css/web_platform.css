@@ -149,6 +149,15 @@ body.fs {
   font-weight: 300;
 }
 
+.brand {
+  margin-top: 20px;
+  width: 160px;
+}
+
+.brand img {
+  width: 100%;
+}
+
 .tb-avatar {
   margin-top: 20px;
   float: left;
@@ -475,11 +484,11 @@ body.fs {
 
 @media (min-width: 1200px) {
   .cover .titles {
-    width: 960px;
+    width: 740px;
   }
 
   .trail_avatar {
-    width: 960px;
+    width: 740px;
   }
 
   .assets-view {
