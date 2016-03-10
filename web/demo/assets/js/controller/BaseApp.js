@@ -17,9 +17,10 @@ define([
   'underscore', 
   'backbone',
   'imageScale',
-  'lazyload',
+  'lazyLoadXT',
+  'lazyLoadXTbg',
   'views/AssetsView'
-], function(_, Backbone, imageScale, lazyload, AssetsView){
+], function(_, Backbone, imageScale, lazyLoadXT, lazyLoadXTbg, AssetsView){
 
   app.dispatcher = _.clone(Backbone.Events);
   
@@ -65,9 +66,7 @@ define([
       this.assetsView = new AssetsView({ el: '#assets-View', model: journeyModel, jsonAssets: jsonAssets, jsonFeed: jsonFeed });
       this.assetsView.render();
 
-      $('.lazy').lazy({
-        delay: 500
-      });
+      $('.lazy').lazyLoadXT();
 
       resize();
     }

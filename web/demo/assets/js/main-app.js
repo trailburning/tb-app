@@ -11,7 +11,8 @@ require.config({
     markercluster: 'http://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster',
     videojs: '//vjs.zencdn.net/4.12/video',
     imageScale: 'libs/image-scale.min',
-    lazyload: 'libs/jquery.lazy'
+    lazyLoadXT: 'libs/jquery.lazyloadxt.min',
+    lazyLoadXTbg: 'libs/jquery.lazyloadxt.bg.min'
   },
   shim: {
     'modernizr': {
@@ -28,6 +29,12 @@ require.config({
       deps: ['mapbox']
     },
     'lazyload': {
+      deps: ['jquery']
+    },
+    'lazyLoadXT': {
+      deps: ['jquery']
+    },
+    'lazyLoadXTbg': {
       deps: ['jquery']
     }
   }

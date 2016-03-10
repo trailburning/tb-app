@@ -40,15 +40,19 @@ var TB_HASHTAG_DIST_IN_KM = 1;
 <script type="text/template" id="assetsViewTemplate">
   <div class="row title cover">
     <div class="col-md-12 nopadding">
-      <div class="scale-container lazy image" data-src="http://tbmedia2.imgix.net<%= media.versions[0].path %>?fm=jpg&amp;q=80&amp;w=1024&amp;fit=fill">
+      <div class="scale-container lazy image" data-bg="http://tbmedia2.imgix.net<%= media.versions[0].path %>?fm=jpg&amp;q=80&amp;w=1024&amp;fit=fill">
       </div>
       
       <div class="overlay">
         <div class="titles"><h1 class="tb"><%= name %></h1><h2 class="tb"><%= region %></h2></div>
         <div class="trail_avatar">
           <% if (user.type != 'brand') { %>
-            <div class="tb-avatar tb-avatar-feature"><div class="photo"><img src="<%= user.avatar %>"></div></div>
-            <div class="author"><%= user.title %></div>
+            <% if (user.name != 'admin') { %>
+              <div class="tb-avatar tb-avatar-feature"><div class="photo"><img src="<%= user.avatar %>"></div></div>
+              <div class="author"><%= user.title %></div>
+            <% } else { %>
+              <img src="http://assets.trailburning.com/images/event/ultraks/logo_ultraks.png">
+            <% } %>
           <% } else { %>
             <div class="brand"><img src="<%= user.avatar %>"></div>
           <% } %>
@@ -81,11 +85,11 @@ var TB_HASHTAG_DIST_IN_KM = 1;
           <div class="scale-container">
             <div class="asset-container" data-id="<%= asset.id %>" data-pos="<%= asset.pos %>">
             <% if (Number(asset.tags.height) > Number(asset.tags.width)) { %>
-              <div class="image lazy" data-src="<%= strImage %>&amp;blur=100"></div>
+              <div class="image lazy" data-bg="<%= strImage %>&amp;blur=100"></div>
               <div class="overlay"></div>
-              <div class="image lazy portrait fix" data-src="<%= strImage %>"></div>
+              <div class="image lazy portrait fix" data-bg="<%= strImage %>"></div>
             <% } else { %>
-              <div class="image lazy" data-src="<%= strImage %>"></div>
+              <div class="image lazy" data-bg="<%= strImage %>"></div>
             <% } %>
             </div>
           </div>
