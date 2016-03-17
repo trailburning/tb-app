@@ -1,0 +1,115 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Trailburning - Concept</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+<meta name="google" value="notranslate">
+
+<link href="http://fonts.googleapis.com/css?family=Signika:400,300,700" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link href="//vjs.zencdn.net/4.12/video-js.css" rel="stylesheet">
+<link href="http://api.tiles.mapbox.com/mapbox.js/v2.3.0/mapbox.css" rel="stylesheet">
+<link href="assets/css/web_platform.css" rel="stylesheet">
+
+</head>
+<body>
+
+<script>
+var TB_TRAIL = 164;
+var TB_HASHTAG = 'trailburning';
+var TB_HASHTAG_DIST_IN_KM = 2;
+</script>
+
+<div class="container-fluid">
+  <div id="assets-View"></div>
+</div>
+
+<div id="fs-asset-view-container">
+  <div id="fs-asset-view">
+    <div class="image"></div>
+    <div id="mapbox-asset-view"></div>
+    <div class="link"><a target="_blank"><div class="type"><i class="fa fa-instagram"></i></div></a></div>
+  </div>
+</div>
+
+<script type="text/template" id="assetsViewTemplate">
+  <div class="row title cover">
+    <div class="col-md-12 nopadding">
+      <div class="scale-container lazy image" data-bg="http://tbmedia2.imgix.net<%= media.versions[0].path %>?fm=jpg&amp;q=80&amp;w=1024&amp;fit=fill">
+      </div>
+      
+      <div class="overlay">
+        <div class="titles"><h1 class="tb"><%= name %></h1><h2 class="tb"><%= region %></h2></div>
+        <div class="trail_avatar">
+          <% if (user.type != 'brand') { %>
+            <% if (user.name != 'admin') { %>
+              <div class="tb-avatar tb-avatar-feature"><div class="photo"><img src="<%= user.avatar %>"></div></div>
+              <div class="author"><%= user.title %></div>
+            <% } else { %>
+              <img src="http://assets.trailburning.com/images/event/ultraks/logo_ultraks.png">
+            <% } %>
+          <% } else { %>
+            <div class="brand"><img src="<%= user.avatar %>"></div>
+          <% } %>
+        </div>
+      </div>
+
+      <div class="logo"><a href="http://www.trailburning.com">Home</a></div>
+    </div>
+  </div>
+
+  <div class="row assets-view">
+    <div class="col-md-12 nopadding about text"><%= about %></div>
+
+    <% _.each(assetBlocks.blocks, function(block, index) { %>
+      <% var mediaCols = 12%>
+      <% var textCols = 12%>
+
+      <% _.each(block.assets, function(asset, index) { %>
+        <% if (block.assets.length == 1) { %>
+          <% mediaCols = 12 %>
+        <% } else if (block.assets.length == 2) { %>
+          <% mediaCols = 6 %>
+        <% } else if (block.assets.length == 3) { %>
+          <% mediaCols = 4 %>
+        <% } %>
+
+        <% var strImage = asset.standard_res %>
+
+        <div class="col-md-<%= mediaCols %> nopadding">
+          <div class="scale-container">
+            <div class="asset-container" data-id="<%= asset.id %>" data-pos="<%= asset.pos %>">
+            <% if (Number(asset.tags.height) > Number(asset.tags.width)) { %>
+              <div class="image lazy" data-bg="<%= strImage %>&amp;blur=100"></div>
+              <div class="overlay"></div>
+              <div class="image lazy portrait fix" data-bg="<%= strImage %>"></div>
+            <% } else { %>
+              <div class="image lazy" data-bg="<%= strImage %>"></div>
+            <% } %>
+            </div>
+          </div>
+          <% if (asset.type == 'instagram') { %>
+            <a href="<%= asset.link %>" target="_blank"><div class="type"><i class="fa fa-instagram"></i></div></a>
+          <% } %>
+        </div>
+        <% if (asset.about) { %>
+          <div class="col-md-<%= textCols %> nopadding text"><%= asset.about %></div>
+        <% } %>
+      <% }); %>
+    <% }); %>
+
+    <div class="col-md-12 nopadding map-view">
+      <div id="mapbox-view"></div>
+    </div>
+  </div>
+</script>
+
+<script data-main="assets/js/main-app" src="assets/js/libs/require.min.js"></script>
+
+</body>
+</html>

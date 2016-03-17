@@ -221,8 +221,8 @@ define([
       }
 
       var snapped = turf.pointOnLine(this.jsonAssetsLine, pt);
+//      console.log(snapped.properties.dist);
       if (snapped.properties.dist < TB_HASHTAG_DIST_IN_KM) {
-//        console.log(snapped);
         this.options.jsonAssets.splice(snapped.properties.index+1, 0, 
           {type: 'instagram', link: jsonFeedAsset.link, tags: {width: 1080, height: 1080}, standard_res: jsonFeedAsset.images.standard_resolution.url, thumb_res: jsonFeedAsset.images.low_resolution.url, coords: {lat: jsonFeedAsset.location.latitude, long: jsonFeedAsset.location.longitude}}
         );
