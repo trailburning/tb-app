@@ -30,10 +30,10 @@ define([
  	    nHeight = 1050;
  	  }
  	    
- 	  strImage = 'http://tbmedia2.imgix.net/'+model.get('versions')[0].path+'?fm=jpg&q=80&w='+nWidth+'&fit=fill';
+ 	  strImage = 'http://tbmedia2.imgix.net'+model.get('versions')[0].path+'?fm=jpg&q=80&w='+nWidth+'&fit=fill';
 	  if (Number(model.get('tags').height) > Number(model.get('tags').width)) {
 	  	// fix width and height and add background
-	  	strImage = 'http://tbmedia2.imgix.net/'+model.get('versions')[0].path+'?fm=jpg&q=80&w='+nWidth+'&h='+nHeight+'&fit=fill&bg=000000';
+	  	strImage = 'http://tbmedia2.imgix.net'+model.get('versions')[0].path+'?fm=jpg&q=80&w='+nWidth+'&h='+nHeight+'&fit=fill&bg=000000';
  	  }
  	    
  	  var strHTML = '<div class="rsImg">'+strImage+'</div>';
